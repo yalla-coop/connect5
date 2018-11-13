@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./server/bin/www",
     "dev": "nodemon ./server/bin/www",
-    "dev:both": "cd client && npm start && cd .. && nodemon ./server/bin/www",
+    "dev:both": "concurrently --kill-others-on-fail \"cd client && npm start\" \"nodemon ./server/bin/www\"",
     "test": "jest",
     "client:init": "cd client && npm i",
     "client:dev": "cd client && npm start",
@@ -14,15 +14,15 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "concurrently": "^4.0.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "env2": "^2.2.2",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.3.12",
     "morgan": "~1.9.0",
-    "pg": "^7.6.1",
-    "pug": "2.0.0-beta11",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
