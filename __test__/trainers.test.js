@@ -23,7 +23,7 @@ describe('Test Trainer model', () => {
     expect(Trainer).toBeDefined();
   });
 
-// test to create Trainer
+// test to sign up Trainer
   it('gets a trainer', async () => {
     const testTrainer = new Trainer({
       firstName: 'Tester',
