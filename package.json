@@ -13,7 +13,7 @@
     "dev:both": "concurrently --kill-others-on-fail \"cd client && npm start\" \"nodemon ./server/bin/www\"",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "test:client": "cd client && npm test --coverage",
+    "test:client": "cd client && npm test",
     "test:client:coverage": "cd client && npm run test:coverage",
     "client:init": "cd client && npm i",
     "client:dev": "cd client && npm start",

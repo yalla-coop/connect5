@@ -8,13 +8,13 @@ cache:
 install:
   - npm install
   - npm run client:init
+  
+before_script:
+  - npm run client:build
 
 script:
-  - npm test
-  - npm run test:client
-  - npm run test:coverage
-  - npm run test:client:coverage
-  - npm run client:build
+  - npm run test:coverage && npm run test:client:coverage
 
 on:
   branch: master
+
