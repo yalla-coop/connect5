@@ -19,6 +19,7 @@ class Register extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  // sumbmit to send object to backend to be stored in DB
   onSubmit(e) {
     e.preventDefault();
     const newTrainer = {
@@ -28,8 +29,7 @@ class Register extends Component {
       password: this.state.password,
       // password2: this.state.password2,
     };
-    console.log(newTrainer);
-    axios.post('/trainer/register', newTrainer);
+    axios.post('/register', newTrainer);
   }
 
   render() {
