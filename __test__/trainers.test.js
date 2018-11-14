@@ -21,21 +21,21 @@ describe('Test Trainer model', () => {
   // check for Trainer model existence
   it('has a module', () => {
     expect(Trainer).toBeDefined();
-    console.log('successful');
   });
-  // check if we can create,save and get a user
-  // it('gets a user', async () => {
-  //   const user = new User({
-  //     name: 'tester',
-  //     email: 'tester@tester.com',
-  //     password: '123456'
-  //   });
-  //   await user.save();
 
-  //   const foundUser = await User.findOne({ name: 'tester' });
-  //   console.log(foundUser);
-  //   const expected = 'tester';
-  //   const actual = foundUser.name;
-  //   expect(actual).toEqual(expected);
-  // });
+// test to create Trainer
+  it('gets a trainer', async () => {
+    const testTrainer = new Trainer({
+      firstName: 'Tester',
+      lastName: 'Jones',
+      email: 'tester@tester.com',
+      password: '123456'
+    });
+    await testTrainer.save();
+    const foundTrainer = await Trainer.findOne({ firstName: 'Tester' });
+    console.log(foundTrainer);
+    const expected = 'Tester';
+    const actual = foundTrainer.firstName;
+    expect(actual).toEqual(expected);
+  });
 });
