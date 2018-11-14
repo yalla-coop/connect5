@@ -5,6 +5,9 @@ cache:
   directories:
     - node_modules
 script:
+  - npm i 
+  - mpn client:init
   - npm test
+  - client:build
 on:
   branch: master
