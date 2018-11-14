@@ -9,30 +9,41 @@ const Contianer = styled.div`
   margin: 0 auto;
   text-align: center;
   height: 100%;
+  margin-top: 115px
 `;
 
 const Heading = styled.h1`
   font-size: 1.7em;
+  margin: 0 auto
 `;
 
 const Paragraph = styled.p`
-  color: gray
+  color: gray;
+  font-weight: 100;
+  margin-top: 50px;
+  font-size: 0.85em
+  text-align: justify;
 `;
 
 const Button = styled.button`
 background: none;
-border: 1px solid black;
+border: 2px solid black;
 line-height: 35px;
 margin: 15px 0;
 border-radius: 5px;
 text-transform: uppercase;
-font-weight: 700
+font-weight: 700;
+font-size: 1.4em
+
 `;
 
 const TrainersLandingPage = () => (
   <Contianer>
     <Heading>
-      Welcome Connect 5 Trainer
+      Welcome
+    </Heading>
+    <Heading>
+      Connect 5 Trainer
     </Heading>
     <Paragraph>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
