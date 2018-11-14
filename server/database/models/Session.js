@@ -8,7 +8,7 @@ const SessionSchema = new Schema({
     // connect each session to a trainer
     type: Schema.Types.ObjectId, //FK ref trainer_id
     ref: 'trainers'
-  }
+  },
   type: {
     type: Number,
     required: true
@@ -31,5 +31,7 @@ const SessionSchema = new Schema({
     type: String,
   }
 });
+
+// variable = Session, name = sessions, schema = SessionSchema
 
 module.exports = Session = mongoose.model('sessions', SessionSchema);

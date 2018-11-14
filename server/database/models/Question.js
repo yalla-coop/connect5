@@ -9,23 +9,22 @@ const QuestionSchema = new Schema({
     type: Number,
     required: true
   },
-
-      questionText: {
-        type: String,
-        required: true
-      },
+  questionText: {
+    type: String,
+    required: true
+  },
       // checkbox, textfield, dropdown ..
-      inputType: {
-        type: String,
-        required: true
-      },
-      helperText: {
-        type: String
-      },
+  inputType: {
+    type: String,
+    required: true
+  },
+  helperText: {
+    type: String
+  },
       // options related to inputType
-      options: {
-        type: Array
-      }
+  options: {
+    type: Array
+  }
 });
 
 module.exports = Question = mongoose.model('questions', QuestionSchema);

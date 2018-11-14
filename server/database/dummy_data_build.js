@@ -4,7 +4,6 @@ const mongoDB = require('../../config/keys').mongoURI;
 // connect to db
 mongoose.connect(mongoDB);
 
-
 // load models
 const Trainer = require('./models/Trainer');
 
