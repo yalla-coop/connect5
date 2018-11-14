@@ -14,7 +14,7 @@ class App extends Component {
 
           <Fragment>
             <Route path="/" exact component={Home} />
-            <Route path="/trainers-landing-page" exact component={TrainersLandingPage} />
+            <Route path="/trainer" exact component={TrainersLandingPage} />
           </Fragment>
 
         </Router>

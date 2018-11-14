@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { Link } from 'react-router-dom';
 
 const Contianer = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ const Paragraph = styled.p`
   text-align: justify;
 `;
 
-const Button = styled.button`
+const Button = styled(Link)`
 background: none;
 border: 2px solid black;
 line-height: 35px;
@@ -34,7 +34,8 @@ border-radius: 5px;
 text-transform: uppercase;
 font-weight: 700;
 font-size: 1.4em
-
+color: black;
+text-decoration: none;
 `;
 
 const TrainersLandingPage = () => (
@@ -50,8 +51,8 @@ const TrainersLandingPage = () => (
       do eiusmod tempor incididunt ut labore et dolore
       magna aliquaUt co laboris nisi ut aliquip ex ea commodo consequat.
     </Paragraph>
-    <Button>Sign up</Button>
-    <Button>Login</Button>
+    <Button to="/trainer/signup">Sign up</Button>
+    <Button to="/trainer/login">Login</Button>
   </Contianer>
 );
 
