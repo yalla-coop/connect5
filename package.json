@@ -3,13 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "jest": {
-    "testRegex": "__test__/*"
+    "testRegex": "__test__/*",
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   },
   "scripts": {
     "start": "node ./server/bin/www",
     "dev": "nodemon ./server/bin/www",
     "dev:both": "concurrently --kill-others-on-fail \"cd client && npm start\" \"nodemon ./server/bin/www\"",
     "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:client": "cd client && npm test --coverage",
+    "test:client:coverage": "cd client && npm run test:coverage",
     "client:init": "cd client && npm i",
     "client:dev": "cd client && npm start",
     "heroku-postbuild": "npm run client:init && npm run client:build",
@@ -35,6 +40,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
+    "istanbul": "^0.4.5",
     "jest": "^23.6.0",
     "nodemon": "^1.18.6"
   }
