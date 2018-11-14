@@ -7,14 +7,14 @@ cache:
 
 install:
   - npm install
-  - mpn client:init
+  - mpn run client:init
 
 script:
   - npm test
   - npm run test:client
   - npm run test:coverage
   - npm run test:client:coverage
-  - npm client:build
+  - npm run client:build
 
 on:
   branch: master
