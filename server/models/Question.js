@@ -4,13 +4,12 @@ const Schema = mongoose.Schema;
 // Create Schema
 // Defines what kind of survey gets created: Pre(0), 1, 2 or 3
 
-const SurveySchema = new Schema({
-  type: {
+const QuestionSchema = new Schema({
+  surveyType: {
     type: Number,
     required: true
   },
-  questions: [
-    {
+
       questionText: {
         type: String,
         required: true
@@ -27,8 +26,6 @@ const SurveySchema = new Schema({
       options: {
         type: Array
       }
-    }
-  ]
 });
 
-module.exports = Survey = mongoose.model('surveys', SurveySchema);
+module.exports = Question = mongoose.model('questions', QuestionSchema);
