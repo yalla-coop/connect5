@@ -21,7 +21,6 @@ class Register extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-
     const newTrainer = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -29,7 +28,8 @@ class Register extends Component {
       password: this.state.password,
       // password2: this.state.password2,
     };
-    axios.post('http://localhost:9000/trainer/register', newTrainer);
+    console.log(newTrainer);
+    axios.post('/trainer/register', newTrainer);
   }
 
   render() {
