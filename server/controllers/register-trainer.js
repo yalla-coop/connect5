@@ -12,6 +12,8 @@ const validateRegisterTrainer = require('../validation/register-trainer');
 router.post('/', (req, res) => {
 // destructuring of errors and isValid from validation file to check incoming request from frontend
 const { errors, isValid } = validateRegisterTrainer(req.body);
+console.log(req.body);
+
 
 // Check Validation and if errors exist -> send those to server
 if (!isValid) {
