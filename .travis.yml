@@ -17,4 +17,7 @@ script:
 
 on:
   branch: master
+  
+after_success:
+  - npm run coverage
 
