@@ -62,3 +62,6 @@ typings/
 
 # config file
 /config
+
+# DS store
+.DS_Store
