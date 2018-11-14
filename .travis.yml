@@ -7,7 +7,7 @@ cache:
 
 install:
   - npm install
-  - mpn run client:init
+  - npm run client:init
 
 script:
   - npm test
