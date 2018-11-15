@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-import Logo from './Logo.jpg';
+import Logo from "./Logo.jpg";
 
-const Contianer = styled.div`
+const container = styled.div`
   position: fixed;
   top: 0;
   right: 0;
@@ -42,12 +42,12 @@ const Image = styled.img`
 `;
 
 const Header = () => (
-  <Contianer>
+  <container>
     <Link to="/">
       <I className="fas fa-home" />
     </Link>
     <Image src={Logo} alt="Logo" />
-  </Contianer>
+  </container>
 );
 
 export default Header;

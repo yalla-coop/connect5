@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header matches snapshot 1`] = `
+<container>
+  <a
+    href="/"
+    onClick={[Function]}
+  >
+    <i
+      className="fas fa-home sc-bwzfXH jyqnUy"
+    />
+  </a>
+  <img
+    alt="Logo"
+    className="sc-htpNat gFDNQJ"
+    src="Logo.jpg"
+  />
+</container>
+`;
