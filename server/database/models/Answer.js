@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Answer Schema
@@ -8,12 +8,12 @@ const AnswerSchema = new Schema({
   session: {
     // connect each survey response to the exact session
     type: Schema.Types.ObjectId, //FK ref session_id
-    ref: 'sessions'
+    ref: "sessions"
   },
   question: {
     // connect each survey response to the exact question
     type: Schema.Types.ObjectId, //FK ref question_id
-    ref: 'questions'
+    ref: "questions"
   },
   answer: {
     type: Mixed,
@@ -21,4 +21,4 @@ const AnswerSchema = new Schema({
   }
 });
 
-module.exports = Answer = mongoose.model('answers', AnswerSchema);
+module.exports = Answer = mongoose.model("answers", AnswerSchema);
