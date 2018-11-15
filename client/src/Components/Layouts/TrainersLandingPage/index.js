@@ -9,12 +9,13 @@ const Contianer = styled.div`
   margin: 0 auto;
   text-align: center;
   height: 100%;
-  margin-top: 115px
+  margin-top: 70px
 `;
 
 const Heading = styled.h1`
   font-size: 1.7em;
-  margin: 0 auto
+  margin: 0 auto;
+  color: var(--heading-color)
 `;
 
 const Paragraph = styled.p`
@@ -23,11 +24,11 @@ const Paragraph = styled.p`
   margin-top: 50px;
   font-size: 0.85em
   text-align: justify;
+  color: var(--paragraph-color)
 `;
 
 const Button = styled(Link)`
 background: none;
-border: 2px solid black;
 line-height: 35px;
 margin: 15px 0;
 border-radius: 5px;
@@ -36,6 +37,9 @@ font-weight: 700;
 font-size: 1.4em
 color: black;
 text-decoration: none;
+background-color: var(--button-background-color);
+color: var(--button-text-color);
+
 `;
 
 const TrainersLandingPage = () => (
