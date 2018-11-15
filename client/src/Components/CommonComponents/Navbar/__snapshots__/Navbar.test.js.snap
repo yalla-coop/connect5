@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar matches snapshot 1`] = `
+<div
+  className="sc-bdVaJa gbzGSz"
+>
+  <parent>
+    <a
+      aria-current="page"
+      className="sc-htpNat jkoPwQ active"
+      href="/"
+      onClick={[Function]}
+      style={Object {}}
+    >
+      <div
+        className="sc-bxivhb chVevO"
+      >
+        <i
+          className="fas fa-home sc-ifAKCX hKCaJA"
+        />
+      </div>
+      <div>
+        <span
+          className="sc-EHOje khcqyW"
+        >
+          Home
+        </span>
+      </div>
+    </a>
+  </parent>
+  <parent>
+    <a
+      aria-current="page"
+      className="sc-htpNat jkoPwQ active"
+      href="/"
+      onClick={[Function]}
+      style={Object {}}
+    >
+      <div
+        className="sc-bxivhb chVevO"
+      >
+        <i
+          className="fas fa-poll-h sc-ifAKCX hKCaJA"
+        />
+      </div>
+      <div>
+        <span
+          className="sc-EHOje khcqyW"
+        >
+          Results
+        </span>
+      </div>
+    </a>
+  </parent>
+  <parent>
+    <a
+      aria-current="page"
+      className="sc-htpNat jkoPwQ active"
+      href="/"
+      onClick={[Function]}
+      style={Object {}}
+    >
+      <div
+        className="sc-bxivhb chVevO"
+      >
+        <i
+          className="fas fa-list-alt sc-ifAKCX hKCaJA"
+        />
+      </div>
+      <div>
+        <span
+          className="sc-EHOje khcqyW"
+        >
+          Sessions
+        </span>
+      </div>
+    </a>
+  </parent>
+  <parent>
+    <a
+      aria-current="page"
+      className="sc-htpNat jkoPwQ active"
+      href="/"
+      onClick={[Function]}
+      style={Object {}}
+    >
+      <div
+        className="sc-bxivhb chVevO"
+      >
+        <i
+          className="fas fa-plus-circle sc-ifAKCX hKCaJA"
+        />
+      </div>
+      <div>
+        <span
+          className="sc-bZQynM dOjMWW"
+        >
+          Add
+        </span>
+      </div>
+    </a>
+  </parent>
+</div>
+`;

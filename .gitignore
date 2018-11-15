@@ -15,7 +15,9 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
+.nyc_output
 coverage
+*.lcov
 
 # nyc test coverage
 .nyc_output
@@ -59,3 +61,9 @@ typings/
 
 # next.js build output
 .next
+
+# config file
+/config
+
+# DS store
+.DS_Store
