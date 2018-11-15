@@ -5,8 +5,6 @@ const validateRegisterTrainer = require('./register-trainer-val');
 const errorcheck = (object) => {
   const { errors, isValid } = validateRegisterTrainer(object);
   if (!isValid) {
-    console.log('submit errors: ', errors);
-
     return errors;
   }
 }

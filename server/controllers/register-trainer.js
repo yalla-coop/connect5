@@ -3,6 +3,7 @@ const router = express.Router();
 // Load Trainer Model
 const Trainer = require('../database/models/Trainer');
 // Load Input Validation File
+const validateRegisterTrainer = require('../validation/register-trainer-val');
 const errorcheck = require('../validation/errorcheck');
 
 // @route   POST /
@@ -10,6 +11,9 @@ const errorcheck = require('../validation/errorcheck');
 // @access  Public
 // send form via frontend getting request.body obj via body-parser
 router.post('/', (req, res) => {
+  console.log(req.body)
+
+const { errors, isValid } = validateRegisterTrainer(req.body);
 // check for errors
 if(!errorcheck(req.body)){
 // check if email already exists
