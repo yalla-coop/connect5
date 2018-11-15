@@ -1,6 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import moment from "moment"
+import "react-datepicker/dist/react-datepicker.css";
+
 
 const Contianer = styled.div`
 
@@ -19,15 +23,34 @@ const Input = styled.input`
 `;
 
 
-const CreateSession = () => (
-  <Contianer>
-    <Heading>
-      Create New Session
-    </Heading>
-    <Form>
-      <Input type="input" />
+class CreateSession extends Component {
+  state = {
+    startDate: moment(),
+  };
 
-    </Form>
-  </Contianer>
-);
+  handleChange=(date)=> {
+    this.setState({
+      startDate: date
+    });
+  }
+
+  render() {
+    return (
+      <Contianer>
+        <DatePicker
+          selected={this.state.startDate}
+          onChange={this.handleChange}
+        />
+        <Heading>
+        Create New Session
+        </Heading>
+        <Form>
+          <Input type="input" />
+          <Input type="input" />
+
+        </Form>
+      </Contianer>
+    );
+  }
+}
 export default CreateSession;
