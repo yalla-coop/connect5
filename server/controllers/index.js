@@ -1,7 +1,8 @@
-const express = require('express');
+const express = require("express");
 
 const trainerController = require('./trainer');
 const registerTrainer = require('./register-trainer');
+
 const router = express.Router();
 
 router.use('/trainer', trainerController);

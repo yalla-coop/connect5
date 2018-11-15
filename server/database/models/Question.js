@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -13,7 +13,7 @@ const QuestionSchema = new Schema({
     type: String,
     required: true
   },
-      // checkbox, textfield, dropdown ..
+  // checkbox, textfield, dropdown ..
   inputType: {
     type: String,
     required: true
@@ -21,10 +21,10 @@ const QuestionSchema = new Schema({
   helperText: {
     type: String
   },
-      // options related to inputType
+  // options related to inputType
   options: {
     type: Array
   }
 });
 
-module.exports = Question = mongoose.model('questions', QuestionSchema);
+module.exports = Question = mongoose.model("questions", QuestionSchema);
