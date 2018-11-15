@@ -47,7 +47,7 @@ const Icon = styled.i`
 const Span = styled.span`
   display: block;
   position: relative;
-  font-size: 17px
+  font-size: 17px;
   margin-left: 3px;
   color: #42c4de;
 `;
@@ -55,11 +55,10 @@ const Span = styled.span`
 const Span4 = styled.span`
   display: block;
   position: relative;
-  font-size: 17px
+  font-size: 17px;
   margin-left: 10px;
   color: #42c4de;
 `;
-
 
 class Navbar extends Component {
   render() {
