@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import Logo from "./Logo.jpg";
 
-const container = styled.div`
+const Container = styled.div`
   position: fixed;
   top: 0;
   right: 0;
@@ -42,12 +42,12 @@ const Image = styled.img`
 `;
 
 const Header = () => (
-  <container>
+  <Container>
     <Link to="/">
       <I className="fas fa-home" />
     </Link>
     <Image src={Logo} alt="Logo" />
-  </container>
+  </Container>
 );
 
 export default Header;
