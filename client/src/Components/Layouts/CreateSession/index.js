@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import moment from "moment"
+import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 
 
@@ -28,26 +27,28 @@ class CreateSession extends Component {
     startDate: moment(),
   };
 
-  handleChange=(date)=> {
+  handleChange=(date) => {
     this.setState({
-      startDate: date
+      startDate: date,
     });
   }
 
   render() {
+    const { startDate } = this.state;
+
     return (
       <Contianer>
-        <DatePicker
-          selected={this.state.startDate}
-          onChange={this.handleChange}
-        />
+
         <Heading>
         Create New Session
         </Heading>
+        <DatePicker
+          selected={startDate}
+          onChange={this.handleChange}
+        />
         <Form>
-          <Input type="input" />
-          <Input type="input" />
-
+          <Input type="number" />
+          <Input type="number" />
         </Form>
       </Contianer>
     );
