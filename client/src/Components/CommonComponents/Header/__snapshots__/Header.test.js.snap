@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header matches snapshot 1`] = `
-<container>
+<div
+  className="sc-bdVaJa dJIpua"
+>
   <a
     href="/"
     onClick={[Function]}
@@ -15,5 +17,5 @@ exports[`Header matches snapshot 1`] = `
     className="sc-htpNat gFDNQJ"
     src="Logo.jpg"
   />
-</container>
+</div>
 `;
