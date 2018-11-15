@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require("express");
 
-const trainerController = require('./trainer');
+const trainerController = require("./trainer");
 
 const router = express.Router();
 
-router.use('/trainer', trainerController);
+router.use("/trainer", trainerController);
 
 module.exports = router;

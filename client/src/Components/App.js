@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React, { Component, Fragment } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import Home from './Layouts/Home';
-import TrainersLandingPage from './Layouts/TrainersLandingPage';
+import Home from "./Layouts/Home";
+import TrainersLandingPage from "./Layouts/TrainersLandingPage";
 
-import './App.css';
+import "./App.css";
 
 class App extends Component {
   render() {
