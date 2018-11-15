@@ -1,4 +1,4 @@
-// global function to check any input if empty/ undefined/ null
+// global function to check any input if empty/ undefined/ null to identify errors
 // addition to validators isEmpty function which only checks for empty strings
 
 const isEmpty = value =>

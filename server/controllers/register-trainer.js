@@ -3,23 +3,15 @@ const router = express.Router();
 // Load Trainer Model
 const Trainer = require('../database/models/Trainer');
 // Load Input Validation File
-const validateRegisterTrainer = require('../validation/register-trainer');
+const errorcheck = require('../validation/errorcheck');
 
 // @route   POST /
 // @desc    Register Trainer
 // @access  Public
 // send form via frontend getting request.body obj via body-parser
 router.post('/', (req, res) => {
-// destructuring of errors and isValid from validation file to check incoming request from frontend
-const { errors, isValid } = validateRegisterTrainer(req.body);
-console.log(req.body);
-
-
-// Check Validation and if errors exist -> send those to server
-if (!isValid) {
-  return res.status(400).json(errors);
-}
-
+// check for errors
+if(!errorcheck(req.body)){
 // check if email already exists
 Trainer.findOne({ email: req.body.email }).then(trainer => {
   if (trainer) {
@@ -41,6 +33,7 @@ newTrainer
 .catch(err => console.log(err))
   }
  })
+}
 });
 
 module.exports = router;

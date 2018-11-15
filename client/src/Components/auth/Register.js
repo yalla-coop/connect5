@@ -27,7 +27,7 @@ class Register extends Component {
       lastName: this.state.lastName,
       email: this.state.email,
       password: this.state.password,
-      // password2: this.state.password2,
+      password2: this.state.password2,
     };
     axios.post('/register', newTrainer);
   }
