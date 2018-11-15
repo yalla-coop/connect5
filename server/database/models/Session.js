@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create Schema
+// Stores the sessions created by the trainer. Links up to the trainer_id so we know which session is for which trainer
 
 const SessionSchema = new Schema({
   trainer: {
