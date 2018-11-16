@@ -23,7 +23,7 @@ const QuestionSchema = new Schema({
   },
   // options related to inputType
   options: {
-    type: Array
+    type: Schema.Types.Mixed
   }
 });
 

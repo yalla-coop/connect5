@@ -21,7 +21,7 @@ const AnswerSchema = new Schema({
     ref: "questions"
   },
   answer: {
-    type: Mixed,
+    type: Schema.Types.Mixed,
     required: true
   }
 });
