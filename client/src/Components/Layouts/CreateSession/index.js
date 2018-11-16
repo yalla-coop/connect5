@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from "axios";
+import moment from "moment";
 
 import {
   Button,
@@ -40,18 +42,33 @@ class CreateSession extends Component {
     });
   }
 
+  checkError = () => {
+    const { startDate, attendantsNumber, session } = this.state;
+    const isError = !(!!startDate && !!attendantsNumber && !!session);
+
+    this.setState({
+      err: isError,
+    });
+    console.log(isError, "iserrere");
+
+    return isError;
+  }
+
+  fetch = () => {
+    const { startDate, attendantsNumber, session } = this.state;
+    console.log("don");
+
+    axios.post("/session",
+      {
+        session: session.value,
+        startDate: moment(startDate).format("YYYY,MM,DD"),
+        attendantsNumber,
+      }).then(res => console.log(res));
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
-    const { startDate, attendantsNumber, session } = this.state;
-    if (!!startDate && !!attendantsNumber && !!session) {
-      this.setState({
-        err: false,
-      });
-    } else {
-      this.setState({
-        err: true,
-      });
-    }
+    return !this.checkError() && this.fetch();
   }
 
   render() {
