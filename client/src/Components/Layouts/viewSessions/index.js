@@ -1,30 +1,37 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import { Link } from "react-router-dom";
+import {
+  Main, Container, Header, Heading, Borderbottom, TableHeading, TableRow, TableHead, TableBody, TableCell, Icon,
+} from "./styledComponents";
 
-
-const Main = styled.div`
- width: 100%;
- height: 100%
-`;
 
 class ViewSessions extends Component {
   render() {
     return (
       <Main>
-        <div>
-          <div>
-            <div>No.</div>
-          </div>
-        </div>
+        <Header>
+          <Heading>
+            <h1>Sessions</h1>
+          </Heading>
+          <Borderbottom />
+        </Header>
+        <Container>
+          <TableHeading>
+            <TableRow>
+              <TableHead>Date</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead>Details</TableHead>
+            </TableRow>
+          </TableHeading>
 
-        <div>
-          <div>
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-          </div>
-        </div>
-
+          <TableBody>
+            <TableRow>
+              <TableCell>1</TableCell>
+              <TableCell>2</TableCell>
+              <TableCell><Link to="/"><Icon className="fas fa-angle-right" /></Link></TableCell>
+            </TableRow>
+          </TableBody>
+        </Container>
       </Main>
     );
   }
