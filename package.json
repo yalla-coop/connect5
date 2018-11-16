@@ -19,7 +19,9 @@
     "client:dev": "cd client && npm start",
     "heroku-postbuild": "npm run client:init && npm run client:build",
     "client:build": "cd client && npm run build",
-    "coverage": "codecov"
+    "coverage": "codecov",
+    "surveybuild": "node server/database/surveyBuild.js",
+    "dummybuild": "node server/database/dummy_data_build.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
