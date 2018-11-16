@@ -8,16 +8,16 @@ const ResponseSchema = new Schema({
   session: {
     // connect each response to the exact session
     type: Schema.Types.ObjectId, //FK ref trainer_id
-    ref: "sessions"
+    ref: "sessions",
   },
   trainer: {
     // connect each response to a trainer
     type: Schema.Types.ObjectId, //FK ref trainer_id
-    ref: "trainers"
+    ref: "trainers",
   },
   participantId: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 // variable = Response, name = responses, schema = ResponseSchema
