@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
 class Register extends Component {
   constructor() {
     super();
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      password2: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      password2: "",
+      errors: {},
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -29,10 +30,20 @@ class Register extends Component {
       password: this.state.password,
       password2: this.state.password2,
     };
-    axios.post('/register', newTrainer);
+    this.registerUser(newTrainer);
   }
 
+  registerUser = (trainerData) => {
+    axios
+      .post("/register", trainerData)
+      .then(res => this.props.history.push("/login")) // redirect after reguster success
+      .catch(err => this.setState({
+        errors: err.response.data,
+      }));
+  };
+
   render() {
+    const { errors } = this.state;
     return (
       <div className="register">
         <h1>Create your Account</h1>
@@ -44,6 +55,7 @@ class Register extends Component {
             value={this.state.firstName}
             onChange={this.onChange}
           />
+          {errors.firstName && <div className="invalid-feedback">{errors.firstName}</div>}
           <input
             type="text"
             placeholder="Last Name"
@@ -51,6 +63,8 @@ class Register extends Component {
             value={this.state.lastName}
             onChange={this.onChange}
           />
+          {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
+          {" "}
           <input
             type="email"
             placeholder="Email Address"
@@ -58,6 +72,7 @@ class Register extends Component {
             value={this.state.email}
             onChange={this.onChange}
           />
+          {errors.email && <div className="invalid-feedback">{errors.email}</div>}
           <input
             type="password"
             placeholder="Password"
@@ -65,13 +80,15 @@ class Register extends Component {
             value={this.state.password}
             onChange={this.onChange}
           />
+          {errors.password && <div className="invalid-feedback">{errors.password}</div>}
           <input
             type="password"
             placeholder="Confirm Password"
-            name="password"
+            name="password2"
             value={this.state.password2}
             onChange={this.onChange}
           />
+          {errors.password2 && <div className="invalid-feedback">{errors.password2}</div>}
           <input type="submit" />
         </form>
       </div>
