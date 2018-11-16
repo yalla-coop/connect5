@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: space-around;
   margin: 0 20px 0 0;
-  padding: 10px 0;
   width: 100%;
-  height: 64px;
+  height: 72px;
   border-top: 1px solid #42c4de;
+  position: fixed;
+  bottom: 0;
 `;
 
 const parent = styled.div`
@@ -16,7 +18,7 @@ const parent = styled.div`
   text-align: center;
   display: block;
   border-radius: 50%;
-  border-right: 1px solid rgba(0,0,0,.2)
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
 const Navlink = styled(NavLink)`
@@ -27,7 +29,7 @@ const Navlink = styled(NavLink)`
 
 const Container = styled.div`
   width: 50px;
-  height:50px;
+  height: 50px;
   text-align: center;
   margin: 0 auto;
   border-radius: 50%;
@@ -40,7 +42,7 @@ const Icon = styled.i`
   font-size: 35px;
   color: #42c4de;
   &:hover {
-    color: #0288D1;
+    color: #0288d1;
   }
 `;
 
@@ -69,7 +71,9 @@ class Navbar extends Component {
             <Container>
               <Icon className="fas fa-home" />
             </Container>
-            <div><Span>Home</Span></div>
+            <div>
+              <Span>Home</Span>
+            </div>
           </Navlink>
         </parent>
 
@@ -78,7 +82,9 @@ class Navbar extends Component {
             <Container>
               <Icon className="fas fa-poll-h" />
             </Container>
-            <div><Span>Results</Span></div>
+            <div>
+              <Span>Results</Span>
+            </div>
           </Navlink>
         </parent>
 
@@ -87,7 +93,9 @@ class Navbar extends Component {
             <Container>
               <Icon className="fas fa-list-alt" />
             </Container>
-            <div><Span>Sessions</Span></div>
+            <div>
+              <Span>Sessions</Span>
+            </div>
           </Navlink>
         </parent>
 
@@ -96,10 +104,11 @@ class Navbar extends Component {
             <Container>
               <Icon className="fas fa-plus-circle" />
             </Container>
-            <div><Span4>Add</Span4></div>
+            <div>
+              <Span4>Add</Span4>
+            </div>
           </Navlink>
         </parent>
-
       </Wrapper>
     );
   }
