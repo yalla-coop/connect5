@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const mongoDB_test = require('../config/keys').mongoURI_TEST
+const bcrypt = require('bcryptjs');
 
 mongoose.connect(mongoDB_test);
 
@@ -134,5 +135,33 @@ describe('Test Trainer model', () => {
          expect(actual).toEqual(expected);
       })
     }
+  })
+  // 5) check if password hashing works
+  it('checks if password hashing works', async () => {
+    const { errors, isValid } = validateRegisterTrainer(request1);
+    // check for errors
+        if (!isValid) {
+          return errors;
+        }
+    // register new trainer
+     const testTrainer = new Trainer({
+        firstName: request1.firstName,
+        lastName: request1.lastName,
+        email: request1.email,
+        password: request1.password,
+     });
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(testTrainer.password, salt, (err, hash) => {
+        if (err) throw err;
+        testTrainer.password = hash;
+        testTrainer.save()
+        .then(trainer => {
+          const expected = hash;
+          const actual = trainer.password
+          expect(actual).toEqual(expected);
+        })
+        .catch(err => console.log(err));
+       })
+    })
   })
 });

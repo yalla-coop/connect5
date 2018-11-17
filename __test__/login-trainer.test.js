@@ -23,6 +23,12 @@ const request2 =
   password: 'abcdef',
 };
 
+const request3 =
+{
+  email: 'tester@tester.com',
+  password: 'abcded',
+};
+
 // start test build
 describe('Test Trainer model', () => {
   // clear db before each test
@@ -59,7 +65,7 @@ describe('Test Trainer model', () => {
         return errors;
         } else {
           const email = request2.email
-          Trainer.findOne({email})
+          Trainer.findOne({ email })
           .then(trainer => {
           if(!trainer) {
             errors.email = 'Trainer not found';
