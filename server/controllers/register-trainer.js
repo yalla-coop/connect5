@@ -4,21 +4,14 @@ const router = express.Router();
 const Trainer = require('../database/models/Trainer');
 // Load Input Validation File
 const validateRegisterTrainer = require('../validation/register-trainer-val');
-const errorcheck = require('../validation/errorcheck');
-
 
 // @route   POST /
 // @desc    Register Trainer
 // @access  Public
 // send form via frontend getting request.body obj via body-parser
 router.post('/', (req, res) => {
-
   const { errors, isValid } = validateRegisterTrainer(req.body);
 // check for errors
-  // if(!errorcheck(req.body)){
-  //   return res.status(400).json(errors);
-  // }
-
     if (!isValid) {
       return res.status(400).json(errors);
     }
@@ -30,6 +23,7 @@ router.post('/', (req, res) => {
     return res.status(400).json(errors);
 
     } else {
+
 // mongoose syntax = new + modelName and then pass in data
       const newTrainer = new Trainer({
       firstName: req.body.firstName,

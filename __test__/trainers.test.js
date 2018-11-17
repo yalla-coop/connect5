@@ -6,7 +6,6 @@ mongoose.connect(mongoDB_test);
 const Trainer = require('../server/database/models/Trainer');
 
 const validateRegisterTrainer = require('../server/validation/register-trainer-val');
-const errorcheck = require('../server/validation/errorcheck')
 
 // dummy data requests to be tested
 const request1 =
@@ -58,7 +57,12 @@ describe('Test Trainer model', () => {
 
 // 2) test to sign up Trainer using req 1
   it('gets a trainer', async () => {
-    if (!errorcheck(request1)) {
+    const { errors, isValid } = validateRegisterTrainer(request1);
+    // check for errors
+        if (!isValid) {
+          return errors;
+        } else {
+    // register new trainer
      const testTrainer = new Trainer({
         firstName: request1.firstName,
         lastName: request1.lastName,
@@ -74,8 +78,11 @@ describe('Test Trainer model', () => {
   });
 // 3) test for validation of input
   it('returns an error object', async () => {
-    const { errors } = validateRegisterTrainer(request2);
-   if (!errorcheck(request2)) {
+    const { errors, isValid } = validateRegisterTrainer(request2);
+    // check for errors
+        if (!isValid) {
+          return errors;
+        } else {
     const testTrainer2 = new Trainer({
       firstName: request2.firstName,
       lastName: request2.lastName,
@@ -104,8 +111,11 @@ describe('Test Trainer model', () => {
     })
     await testTrainer1.save();
     // try to save second test trainer using email validation
-    const { errors } = validateRegisterTrainer(request3);
-    if(!errorcheck(request3)) {
+    const { errors, isValid } = validateRegisterTrainer(request3);
+    // check for errors
+        if (!isValid) {
+          return errors;
+        } else {
       Trainer.findOne({ email: request3.email })
       .then(trainer => {
         if (trainer) {
