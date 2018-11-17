@@ -248,7 +248,7 @@ async function buildDb() {
   console.log("survey answers added: ", await Answer.find());
 }
 
-// buildDb().catch(err => console.error(err.stack));
+buildDb().catch(err => console.error(err.stack));
 
 export default buildDb;
 
