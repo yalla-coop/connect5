@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+
 import axios from "axios";
 import moment from "moment";
+import swal from "sweetalert";
 
 import {
   Button,
@@ -49,21 +51,30 @@ class CreateSession extends Component {
     this.setState({
       err: isError,
     });
-    console.log(isError, "iserrere");
 
     return isError;
   }
 
   fetch = () => {
     const { startDate, attendantsNumber, session } = this.state;
-    console.log("don");
+    const { history } = this.props;
 
     axios.post("/session",
       {
-        session: session.value,
+        sessionType: session.value,
         startDate: moment(startDate).format("YYYY,MM,DD"),
         attendantsNumber,
-      }).then(res => console.log(res));
+      })
+
+      .then(
+        swal("Done!", "The session has been added successfully!", "success")
+          .then(() => history.push(history.push("/tainer/sessions"))),
+      )
+
+      .catch(err => swal({
+        icon: "error",
+        title: err.response.data.message,
+      }));
   }
 
   handleSubmit = (event) => {
