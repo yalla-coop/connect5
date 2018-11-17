@@ -98,7 +98,7 @@ describe('Test Trainer model', () => {
         if (!isValid) {
           return errors;
         }
-    await testTrainer2.save();
+    await testTrainer2.save()
     const expected = {
       firstName: 'First name must be between 2 and 30 characters',
       lastName: 'Last name field is required',

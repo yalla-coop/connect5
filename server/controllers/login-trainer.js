@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
   .then(isMatch => {
     if(isMatch) {
       // trainer matched
-      return res.status(200).json(trainer.id, trainer.name)
+      return res.status(200).json(trainer.id)
     //  const payload = { id: trainer.id, name: trainer.name } // prepare for jwt
     } else {
       errors.password = 'Passwords incorrect'

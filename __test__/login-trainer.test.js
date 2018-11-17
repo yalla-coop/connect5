@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const mongoDB_test = require('../config/keys').mongoURI_TEST
+const bcrypt = require('bcryptjs');
 
 mongoose.connect(mongoDB_test);
 
@@ -50,20 +51,19 @@ describe('Test Trainer model', () => {
   });
 
 // 2) test to log in Trainer using wrong email (request2)
-  it('gets a trainer', async () => {
-  const testTrainer = new Trainer({
+  it('tests to log in wrong email', async () => {
+   const testTrainer = new Trainer({
       firstName: request1.firstName,
       lastName: request1.lastName,
       email: request1.email,
       password: request1.password,
-   });
+    });
    await testTrainer.save();
-
    const { errors, isValid } = validateLoginTrainer(request2);
     // check for errors
       if (!isValid) {
         return errors;
-        } else {
+        }
           const email = request2.email
           Trainer.findOne({ email })
           .then(trainer => {
@@ -71,10 +71,49 @@ describe('Test Trainer model', () => {
             errors.email = 'Trainer not found';
             return errors;
           }
-    const expected = 'Trainer not found';
-    const actual = errors;
-    expect(actual).toEqual(expected);
+          const expected = 'Trainer not found';
+          const actual = errors;
+          expect(actual).toEqual(expected);
     })
-  }
   });
+
+// 3) test to log in Trainer using wrong password (request3)
+it('tests to log in with wrong password', async () => {
+  const testTrainer = new Trainer({
+    firstName: request1.firstName,
+    lastName: request1.lastName,
+    email: request1.email,
+    password: request1.password,
+  });
+
+  await testTrainer.save();
+  const { errors, isValid } = validateLoginTrainer(request3);
+   // check for errors
+     if (!isValid) {
+       return errors;
+       }
+         const email = request3.email
+         const password = request3.password
+         Trainer.findOne({ email })
+         .then(trainer => {
+           console.log(trainer);
+
+         if(!trainer) {
+           errors.email = 'Trainer not found';
+           return errors;
+         }
+         bcrypt.compare(password, trainer.password)
+         .then(isMatch => {
+          if(isMatch) {
+          return isMatch;
+          } else {
+          errors.password = 'Passwords incorrect'
+          return errors;
+          }
+      })
+          const expected = 'Passwords incorrect'
+          const actual = errors;
+          expect(actual).toEqual(expected);
+     })
+  })
 });
