@@ -36,6 +36,27 @@ const request3 =
   password2: 'dfghjk'
 };
 
+const testTrainer1 = new Trainer({
+  firstName: request1.firstName,
+  lastName: request1.lastName,
+  email: request1.email,
+  password: request1.password,
+});
+
+const testTrainer2 = new Trainer({
+  firstName: request2.firstName,
+  lastName: request2.lastName,
+  email: request2.email,
+  password: request2.password,
+});
+
+const testTrainer3 = new Trainer({
+  firstName: request3.firstName,
+  lastName: request3.lastName,
+  email: request3.email,
+  password: request3.password,
+});
+
 // start test build
 describe('Test Trainer model', () => {
   // clear db before each test
@@ -62,20 +83,13 @@ describe('Test Trainer model', () => {
     // check for errors
         if (!isValid) {
           return errors;
-        } else {
+        }
     // register new trainer
-     const testTrainer = new Trainer({
-        firstName: request1.firstName,
-        lastName: request1.lastName,
-        email: request1.email,
-        password: request1.password,
-     });
-    await testTrainer.save();
+    await testTrainer1.save();
     const foundTrainer = await Trainer.findOne({ firstName: 'Tester' });
     const expected = 'Tester';
     const actual = foundTrainer.firstName;
     expect(actual).toEqual(expected);
-    }
   });
 // 3) test for validation of input
   it('returns an error object', async () => {
@@ -83,13 +97,7 @@ describe('Test Trainer model', () => {
     // check for errors
         if (!isValid) {
           return errors;
-        } else {
-    const testTrainer2 = new Trainer({
-      firstName: request2.firstName,
-      lastName: request2.lastName,
-      email: request2.email,
-      password: request2.password,
-    });
+        }
     await testTrainer2.save();
     const expected = {
       firstName: 'First name must be between 2 and 30 characters',
@@ -99,7 +107,6 @@ describe('Test Trainer model', () => {
     }
     const actual = errors;
     expect(actual).toEqual(expected);
-  }
   });
   // 4) check validation of trainer already registered
   it('checks if email is already registered and returns error', async () => {
@@ -116,25 +123,18 @@ describe('Test Trainer model', () => {
     // check for errors
         if (!isValid) {
           return errors;
-        } else {
+        }
       Trainer.findOne({ email: request3.email })
       .then(trainer => {
         if (trainer) {
           errors.email = 'Email already exists';
         } else {
-         const testTrainer2 = new Trainer({
-            firstName: request3.firstName,
-            lastName: request3.lastName,
-            email: request3.email,
-            password: request3.password,
-          })
-          testTrainer2.save();
+          testTrainer3.save();
         }
          const expected = { email: 'Email already exists' };
          const actual = errors;
          expect(actual).toEqual(expected);
       })
-    }
   })
   // 5) check if password hashing works
   it('checks if password hashing works', async () => {
