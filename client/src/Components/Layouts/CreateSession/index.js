@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-
 import axios from "axios";
 import moment from "moment";
 import swal from "sweetalert";
+import ReactRouterPropTypes from "react-router-prop-types";
 
 import {
   Button,
@@ -19,6 +19,14 @@ import options from "./options";
 import "react-datepicker/dist/react-datepicker.css";
 
 class CreateSession extends Component {
+  static propTypes = {
+    history: ReactRouterPropTypes.history,
+  }
+
+  static defaultProps = {
+    history: null,
+  };
+
   state = {
     session: "",
     startDate: null,
@@ -68,7 +76,7 @@ class CreateSession extends Component {
 
       .then(
         swal("Done!", "The session has been added successfully!", "success")
-          .then(() => history.push(history.push("/tainer/sessions"))),
+          .then(() => history.push("/tainer/sessions")),
       )
 
       .catch(err => swal({
@@ -91,10 +99,10 @@ class CreateSession extends Component {
       <Contianer>
 
         <Heading>
-        Create New Session
+          Create New Session
         </Heading>
 
-        <Form onSubmit={e => this.handleSubmit(e)}>
+        <Form onSubmit={this.handleSubmit}>
 
           <Date
             selected={startDate}
