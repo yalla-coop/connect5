@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
-const mongoDBTest = require("../config/keys").mongoURI_TEST;
 const Session = require("../server/database/models/Session");
 const Trainer = require("../server/database/models/Trainer");
 const addSession = require("./../server/database/queries/add_session");
+const dbConnection = require("./../server/database/db_connection");
 
-mongoose.connect(mongoDBTest);
+// Connect to DB
+dbConnection();
 
 describe("addSession testing", async () => {
   // reset "Trainer" & "Session" models before firdt test
