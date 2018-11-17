@@ -249,6 +249,3 @@ async function buildDb() {
 }
 
 buildDb().catch(err => console.error(err.stack));
-
-export default buildDb;
-
