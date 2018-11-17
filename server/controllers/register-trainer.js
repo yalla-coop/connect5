@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 // Load Trainer Model
 const Trainer = require('../database/models/Trainer');
 // Load Input Validation File
@@ -31,12 +32,19 @@ router.post('/', (req, res) => {
       email: req.body.email,
       password: req.body.password
       });
+      // pw to be hashed
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newTrainer.password, salt, (err, hash) => {
+          if (err) throw err;
+          newTrainer.password = hash;
 // save new trainer
 // respond with object containing trainer info via mongoose api
     newTrainer
     .save()
     .then(trainer => res.json(trainer))
     .catch(err => console.log(err))
+  });
+});
     }
    })
 });
