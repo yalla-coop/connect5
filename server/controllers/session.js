@@ -1,12 +1,15 @@
 const express = require("express");
+const addSession = require("./add_session");
 
 const router = express.Router();
 
 // session router
 router
+
+  // main route
   .route("/")
-    .post(
-      (req,res)=>console.log(req.body)
-    )
+
+  // Post to add new session
+  .post(addSession);
 
 module.exports = router;
