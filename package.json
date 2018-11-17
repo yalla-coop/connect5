@@ -11,7 +11,7 @@
     "start": "node ./server/bin/www",
     "dev": "nodemon ./server/bin/www",
     "dev:both": "concurrently --kill-others-on-fail \"cd client && npm start\" \"nodemon ./server/bin/www\"",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "test:coverage": "jest --coverage",
     "test:client": "cd client && npm test",
     "test:client:coverage": "cd client && npm run test:coverage",
@@ -47,6 +47,7 @@
     "istanbul": "^0.4.5",
     "jest": "^23.6.0",
     "moment": "^2.22.2",
-    "nodemon": "^1.18.6"
+    "nodemon": "^1.18.6",
+    "supertest": "^3.3.0"
   }
 }

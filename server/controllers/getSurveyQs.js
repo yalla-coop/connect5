@@ -19,6 +19,7 @@ exports.get = async (req, res) => {
   const surveyQs = await Question.find({ surveyType: surveyId });
 
   const sessionDetails = await Session.findById(sessionId);
+
   const trainerDetails = await Trainer.findById(sessionDetails.trainer);
 
   console.log("session details:", sessionDetails);

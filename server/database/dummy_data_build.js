@@ -8,7 +8,7 @@ const Response = require("./models/Response");
 const Answer = require("./models/Answer");
 const Question = require("./models/Question");
 
-async function buildDb() {
+const buildDb = async () => {
   // connect to db
   mongoose.connect(
     mongoDB,
@@ -245,7 +245,9 @@ async function buildDb() {
     },
   ]);
 
-  console.log("survey answers added: ", await Answer.find());
-}
+  console.log("survey answers added");
+};
 
 buildDb().catch(err => console.error(err.stack));
+
+module.exports = buildDb;
