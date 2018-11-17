@@ -32,5 +32,5 @@ exports.get = async (req, res) => {
     surveyQs,
   };
 
-  res.send(surveyDetails);
+  res.send(JSON.stringify(surveyDetails));
 };
