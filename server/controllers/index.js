@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.use('/trainer', trainerController);
 router.use('/register', registerTrainer);
-// router.use('/login', loginTrainer);
+router.use('/login', loginTrainer);
 
 module.exports = router;
