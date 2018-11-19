@@ -13,7 +13,6 @@ class App extends Component {
 
 handleSessions = (sessions) => {
   this.setState({ sessions });
-  console.log(this.state);
 }
 
 
