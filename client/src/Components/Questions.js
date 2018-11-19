@@ -5,7 +5,7 @@ import { RadioField, TextField, RadioStarField } from "./Questions.style";
 
 export default class Questions extends React.Component {
   render() {
-    const { onChange, questions } = this.props;
+    const { onChange, questions, handleMatrix } = this.props;
     return (
       <React.Fragment>
         {questions.map((el, index) => {
@@ -13,7 +13,7 @@ export default class Questions extends React.Component {
             return (
               <TextField key={index}>
                 <h4 id={index}>{el.questionText}</h4>
-                <input id={index} name={el["_id"]} type="text" onChange={onChange} />
+                <input id={index} name={el._id} type="text" onChange={onChange} />
               </TextField>
             );
           }
@@ -26,7 +26,7 @@ export default class Questions extends React.Component {
                     <div key={i}>
                       <label htmlFor={e}>
                         {e}
-                        <input value={e} id={e} name={el["_id"]} type="radio" onChange={onChange} />
+                        <input value={e} id={e} name={el._id} type="radio" onChange={onChange} />
                         <span className="checkmark" />
                       </label>
                     </div>
@@ -44,7 +44,7 @@ export default class Questions extends React.Component {
                     <div className="rate" key={i}>
                       <label htmlFor={e}>
                         {e}
-                        <input id={e} name={el["_id"]} type="radio" value={e} onChange={onChange} />
+                        <input id={e} name={el._id} type="radio" value={e} onChange={onChange} />
                         <span className="checkmark" />
                       </label>
                     </div>
@@ -62,7 +62,7 @@ export default class Questions extends React.Component {
                     <div className="rate" key={i}>
                       <label htmlFor={e}>
                         {e}
-                        <input id={e} name={el["_id"]} type="checkbox" value={e} onChange={onChange} />
+                        <input id={e} name={el._id} type="checkbox" value={e} onChange={onChange} />
                         <span className="checkmark" />
                       </label>
                     </div>
@@ -83,7 +83,17 @@ export default class Questions extends React.Component {
                       <p id={i}>{el.options.rows[i]}</p>
                     </label>
                     {el.options.columns.map((elem, ind) => (
-                      <input key={ind} id={elem} name={i} type="radio" value={elem} />
+                      <input
+                        key={ind}
+                        id={ind}
+                        name={e}
+                        type="radio"
+                        value={elem}
+                        className={`matrix ${ind}`}
+                        onChange={() => {
+                          handleMatrix(i, elem, el._id);
+                        }}
+                      />
                     ))}
                   </div>
                 ))}

@@ -83,21 +83,23 @@ const TextField = styled.div`
   }
 `;
 
-const RadioStarField = styled.div`
-  background: red;
+// const RadioStarField = styled.div`
+//   background: red;
 
-  .rate:not(:checked) > input {
-    position: absolute;
-    top: -9999px;
-  }
+//   .rate:not(:checked) > input {
+//     position: absolute;
+//     top: -9999px;
+//   }
 
-  .rate:not(:checked) > label {
-    float: right;
-    width: 1em;
-    overflow: hidden;
-    white-space: nowrap;
-    cursor: pointer;
-  }
-`;
+//   .rate:not(:checked) > label {
+//     float: right;
+//     width: 1em;
+//     overflow: hidden;
+//     white-space: nowrap;
+//     cursor: pointer;
+//   }
+// `;
+
+const RadioStarField = styled(RadioField)``;
 
 export { RadioField, TextField, RadioStarField };

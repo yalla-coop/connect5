@@ -59,6 +59,23 @@ export default class Survey extends React.Component {
     console.log("FORMSTATE", this.state.formState);
   };
 
+  handleMatrix = (row, answer, question) => {
+    const state = this.state.formState;
+
+    if (!state[question]) {
+      state[question] = {};
+      state[question][row] = answer;
+    } else {
+      state[question][row] = answer;
+    }
+
+    this.setState(() => ({
+      formState: state,
+    }));
+
+    console.log("state question", state[question]);
+  };
+
   render() {
     const { loading, surveyDetails, formState } = this.state;
     if (loading) {
@@ -82,7 +99,12 @@ export default class Survey extends React.Component {
         </div>
         <form>
           <h3>Survey Questions:</h3>
-          <Questions questions={surveyQs} onChange={this.handleChange} answers={formState} />
+          <Questions
+            questions={surveyQs}
+            onChange={this.handleChange}
+            handleMatrix={this.handleMatrix}
+            answers={formState}
+          />
           <button type="submit">Submit Feedback</button>
         </form>
       </SurveyQs>
