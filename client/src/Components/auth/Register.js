@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Header from "../CommonComponents/Header";
+
+import {
+  Button, Paragraph, Heading, Container, Form, Input, Error,
+} from "./PageElementsAuth";
 
 class Register extends Component {
   constructor() {
@@ -36,7 +41,7 @@ class Register extends Component {
   registerUser = (trainerData) => {
     axios
       .post("/register", trainerData)
-      .then(res => this.props.history.push("/login")) // redirect after reguster success
+      .then(res => this.props.history.push("/trainer/login")) // redirect after reguster success
       .catch(err => this.setState({
         errors: err.response.data,
       }));
@@ -45,53 +50,54 @@ class Register extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <div className="register">
-        <h1>Create your Account</h1>
-        <form noValidate onSubmit={this.onSubmit}>
-          <input
+      <Container>
+        <Header />
+        <Heading>Create Your Account</Heading>
+        <Form noValidate onSubmit={this.onSubmit}>
+          <Input
             type="text"
             placeholder="First Name"
             name="firstName"
             value={this.state.firstName}
             onChange={this.onChange}
           />
-          {errors.firstName && <div className="invalid-feedback">{errors.firstName}</div>}
-          <input
+          {errors.firstName && <Error className="invalid-feedback">{errors.firstName}</Error>}
+          <Input
             type="text"
             placeholder="Last Name"
             name="lastName"
             value={this.state.lastName}
             onChange={this.onChange}
           />
-          {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
+          {errors.lastName && <Error className="invalid-feedback">{errors.lastName}</Error>}
           {" "}
-          <input
+          <Input
             type="email"
             placeholder="Email Address"
             name="email"
             value={this.state.email}
             onChange={this.onChange}
           />
-          {errors.email && <div className="invalid-feedback">{errors.email}</div>}
-          <input
+          {errors.email && <Error className="invalid-feedback">{errors.email}</Error>}
+          <Input
             type="password"
             placeholder="Password"
             name="password"
             value={this.state.password}
             onChange={this.onChange}
           />
-          {errors.password && <div className="invalid-feedback">{errors.password}</div>}
-          <input
+          {errors.password && <Error className="invalid-feedback">{errors.password}</Error>}
+          <Input
             type="password"
             placeholder="Confirm Password"
             name="password2"
             value={this.state.password2}
             onChange={this.onChange}
           />
-          {errors.password2 && <div className="invalid-feedback">{errors.password2}</div>}
-          <input type="submit" />
-        </form>
-      </div>
+          {errors.password2 && <Error className="invalid-feedback">{errors.password2}</Error>}
+          <Input type="submit" />
+        </Form>
+      </Container>
     );
   }
 }

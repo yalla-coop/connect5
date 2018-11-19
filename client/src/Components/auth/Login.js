@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import Header from "../CommonComponents/Header";
+
+import {
+  Button, Paragraph, Heading, Container, Form, Input, Error,
+} from "./PageElementsAuth";
+
 class Login extends Component {
   constructor() {
     super();
@@ -39,28 +45,29 @@ class Login extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <div className="login">
-        <h1>Login to your Account</h1>
-        <form noValidate onSubmit={this.onSubmit}>
-          <input
+      <Container>
+        <Header />
+        <Heading>Trainer Login</Heading>
+        <Form noValidate onSubmit={this.onSubmit}>
+          <Input
             type="email"
             placeholder="Email Address"
             name="email"
             value={this.state.email}
             onChange={this.onChange}
           />
-          {errors.email && <div className="invalid-feedback">{errors.email}</div>}
-          <input
+          {errors.email && <Error className="invalid-feedback">{errors.email}</Error>}
+          <Input
             type="password"
             placeholder="Password"
             name="password"
             value={this.state.password}
             onChange={this.onChange}
           />
-          {errors.password && <div className="invalid-feedback">{errors.password}</div>}
-          <input type="submit" />
-        </form>
-      </div>
+          {errors.password && <Error className="invalid-feedback">{errors.password}</Error>}
+          <Input type="submit" />
+        </Form>
+      </Container>
     );
   }
 }

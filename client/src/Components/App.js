@@ -15,8 +15,8 @@ class App extends Component {
           <Fragment>
             <Route path="/" exact component={Home} />
             <Route path="/trainer" exact component={TrainersLandingPage} />
-            <Route path="/register" exact component={Register} />
-            <Route path="/login" exact component={Login} />
+            <Route path="/trainer/register" exact component={Register} />
+            <Route path="/trainer/login" exact component={Login} />
           </Fragment>
         </Router>
       </div>
