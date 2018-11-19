@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 const mongoDB_test = require('../config/keys').mongoURI_TEST
-// const bcrypt = require('bcryptjs');
+
 const loginTrainer = require('../server/database/queries/login-trainer');
-mongoose.connect(mongoDB_test);
 const registerTrainer = require('../server/database/queries/register-trainer');
+
+mongoose.connect(mongoDB_test);
+
 const Trainer = require('../server/database/models/Trainer');
-const validateRegisterTrainer = require('../server/validation/register-trainer-val');
+
 const validateLoginTrainer = require('../server/validation/login-trainer-val');
 
 // dummy data requests to be tested
