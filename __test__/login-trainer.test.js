@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const mongoDB_test = require('../config/keys').mongoURI_TEST
-const bcrypt = require('bcryptjs');
-
+// const bcrypt = require('bcryptjs');
+const loginTrainer = require('../server/database/queries/login-trainer');
 mongoose.connect(mongoDB_test);
-
+const registerTrainer = require('../server/database/queries/register-trainer');
 const Trainer = require('../server/database/models/Trainer');
-
+const validateRegisterTrainer = require('../server/validation/register-trainer-val');
 const validateLoginTrainer = require('../server/validation/login-trainer-val');
 
 // dummy data requests to be tested
@@ -36,6 +36,13 @@ const request4 =
   password: '123456',
 };
 
+const testTrainer = new Trainer({
+  firstName: request1.firstName,
+  lastName: request1.lastName,
+  email: request1.email,
+  password: request1.password,
+});
+
 // start test build
 describe('Test Trainer model', () => {
   // clear db before each test
@@ -58,28 +65,21 @@ describe('Test Trainer model', () => {
 
 // 2) test to log in Trainer using wrong email (request2)
   it('tests to log in wrong email', async () => {
-   const testTrainer = new Trainer({
-      firstName: request1.firstName,
-      lastName: request1.lastName,
-      email: request1.email,
-      password: request1.password,
-    });
+  //save trainer to test db
    await testTrainer.save();
    const { errors, isValid } = validateLoginTrainer(request2);
+   const email = request2.email;
+   const password = request2.password;
     // check for errors
-      if (!isValid) {
-        await errors;
-        }
-          const email = request2.email
-          Trainer.findOne({ email })
-          .then(trainer => {
-          if(!trainer) {
-            errors.email = 'Trainer not found';
-          }
-          const expected = 'Trainer not found';
-          const actual = errors.email;
-          expect(actual).toEqual(expected);
-    })
+    if (!isValid) {
+     await errors;
+    }
+    await loginTrainer(email, password, errors)
+    .then(match => console.log(match))
+    .catch(err => console.log(err))
+    const expected = 'Trainer not found';
+    const actual = errors.email;
+    expect(actual).toEqual(expected);
   });
 
 // 3) test to log in Trainer using wrong password (request3)
@@ -90,70 +90,46 @@ it('tests to log in with wrong password', async () => {
     email: request1.email,
     password: request1.password,
   });
-
   await testTrainer.save();
   const { errors, isValid } = validateLoginTrainer(request3);
+  const email = request3.email;
+  const password = request3.password;
    // check for errors
-     if (!isValid) {
-       await errors;
-       }
-         const email = request3.email
-         const password = request3.password
-         Trainer.findOne({ email })
-         .then(trainer => {
-         if(!trainer) {
-           errors.email = 'Trainer not found';
-         }
-         bcrypt.compare(password, trainer.password)
-         .then(isMatch => {
-          if(isMatch) {
-          return isMatch;
-          } else {
-          errors.password = 'Passwords incorrect'
-          }
-          const expected = 'Passwords incorrect'
-          const actual = errors.password;
-          expect(actual).toEqual(expected);
-       })
-     })
-   })
-// 3) test to log in Trainer successfully (request3)
+   if (!isValid) {
+    await errors;
+   }
+   await loginTrainer(email, password, errors)
+   .then(match => console.log(match))
+   .catch(err => console.log(err))
+    const expected = 'Password incorrect'
+    const actual = errors.password;
+    expect(actual).toEqual(expected);
+})
+
+// 4) test to log in Trainer successfully (request3)
 it('tests to log in trainer with success', async () => {
+//register trainer
   const testTrainer = new Trainer({
     firstName: request1.firstName,
     lastName: request1.lastName,
     email: request1.email,
     password: request1.password,
   });
-
-  await testTrainer.save();
-  const { errors, isValid } = validateLoginTrainer(request4);
+  const noErrors = {};
+  const email = request1.email;
+   await registerTrainer(email, noErrors, testTrainer)
+   .then(trainer => trainer.save())
+   .catch(err => console.log(err))
+// log in trainer
+  const { errors, isValid } = validateLoginTrainer(request3);
+  const logInEmail = request4.email;
+  const password = request4.password;
    // check for errors
-     if (!isValid) {
-       await errors;
-       }
-         const email = request4.email
-         const password = request4.password
-         Trainer.findOne({ email })
-         .then(trainer => {
-         if(!trainer) {
-           errors.email = 'Trainer not found';
-         }
-         bcrypt.compare('123456', '123456')
-         .then(isMatch => {
-          console.log(isMatch);
-          if(isMatch) {
-            return isMatch
-          } else {
-          errors.password = 'Passwords incorrect'
-          }
-          const expected = 'Passwords incorrect'
-          const actual = errors.password;
-          expect(actual).toEqual(expected);
-       })
-     })
-   })
-
-
-
+   if (!isValid) {
+    await errors;
+   }
+  await loginTrainer(logInEmail, password, errors)
+   .then(match => console.log(match))
+   .catch(err => console.log(err))
+  })
 });

@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const mongoDB_test = require('../config/keys').mongoURI_TEST
-const bcrypt = require('bcryptjs');
 const registerTrainer = require('../server/database/queries/register-trainer');
 const validateRegisterTrainer = require('../server/validation/register-trainer-val');
 
@@ -38,15 +37,6 @@ const request3 =
   password2: 'dfghjk'
 };
 
-const request4 =
-{
-  firstName: 'John',
-  lastName: 'Doe',
-  email: 'john@tester.com',
-  password: 'abcdef',
-  password2: 'abcdef',
-};
-
 const testTrainer1 = new Trainer({
   firstName: request1.firstName,
   lastName: request1.lastName,
@@ -67,14 +57,6 @@ const testTrainer3 = new Trainer({
   email: request3.email,
   password: request3.password,
 });
-
-const testTrainer4 = new Trainer({
-  firstName: request4.firstName,
-  lastName: request4.lastName,
-  email: request4.email,
-  password: request4.password,
-});
-
 
 // start test build
 describe('Test Trainer model', () => {
