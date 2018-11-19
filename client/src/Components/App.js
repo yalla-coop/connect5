@@ -1,17 +1,21 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./Layouts/Home";
+import ViewSessions from "./Layouts/viewSessions";
 
 import "./App.css";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Router>
-          <Route path="/" exact component={Home} />
-        </Router>
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/viewSessions" exact component={ViewSessions} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }
