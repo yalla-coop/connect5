@@ -16,7 +16,6 @@ class ViewSessions extends Component {
     axios.get("/view-sessions")
       .then((res) => {
         this.setState({ sessions: res.data });
-        console.log(res.data, "state");
       })
       .catch(err => console.log(err));
   }
