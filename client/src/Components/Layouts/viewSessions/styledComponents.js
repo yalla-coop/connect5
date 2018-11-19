@@ -23,12 +23,13 @@ const Heading = styled.div`
 `;
 
 const Borderbottom = styled.div`
- width: 50%;
+ width: 43%;
  height: 1px;
  position: absolute;
  background: #000;
  top: 37px;
  background: #0B6FA4;
+ margin-left: 10px
 `;
 
 const Container = styled.div`
@@ -98,11 +99,16 @@ const TableCell = styled.div`
 `;
 
 const Icon = styled.i`
-   font-size: 18px;
+   font-size: 16px;
    color: #4b4a48;
    &:hover {
     color: #ce9a3d
    }
+`;
+
+const Button = styled.i`
+   background: none;
+   border: none
 `;
 
 export {
@@ -117,4 +123,5 @@ export {
   TableBody,
   TableCell,
   Icon,
+  Button,
 };

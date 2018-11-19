@@ -1,12 +1,33 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import moment from "moment";
+
 import {
-  Main, Container, Header, Heading, Borderbottom, TableHeading, TableRow, TableHead, TableBody, TableCell, Icon,
+  Main, Container, Header, Heading, Borderbottom, TableHeading, TableRow, TableHead, TableBody, TableCell, Icon, Button,
 } from "./styledComponents";
 
 
 class ViewSessions extends Component {
+  state = {
+    sessions: [],
+  }
+
+  componentDidMount() {
+    axios.get("/view-sessions")
+      .then((res) => {
+        this.setState({ sessions: res.data });
+        console.log(res.data, "state");
+      })
+      .catch(err => console.log(err));
+  }
+
+  handleClick = () => {
+    const { history } = this.props;
+    history.push("/session-details");
+  }
+
   render() {
+    const { sessions } = this.state;
     return (
       <Main>
         <Header>
@@ -25,12 +46,16 @@ class ViewSessions extends Component {
           </TableHeading>
 
           <TableBody>
-            <TableRow>
-              <TableCell>1</TableCell>
-              <TableCell>2</TableCell>
-              <TableCell><Link to="/"><Icon className="fas fa-angle-right" /></Link></TableCell>
-            </TableRow>
+            { sessions.map(session => (
+              <TableRow key="session.date">
+                <TableCell>{ moment(session.date).format("YYYY/MM/DD") }</TableCell>
+                <TableCell>{session.type}</TableCell>
+                <TableCell><Button onClick={this.handleClick}><Icon className="fas fa-angle-right" /></Button></TableCell>
+              </TableRow>
+            ))
+            }
           </TableBody>
+
         </Container>
       </Main>
     );

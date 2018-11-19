@@ -15,7 +15,7 @@ exports[`Header matches snapshot 1`] = `
       </h1>
     </div>
     <div
-      className="sc-bxivhb iWrwqY"
+      className="sc-bxivhb duVSGE"
     />
   </div>
   <div
@@ -46,34 +46,7 @@ exports[`Header matches snapshot 1`] = `
     </div>
     <div
       className="sc-htoDjs iZtPOa"
-    >
-      <div
-        className="sc-bZQynM bCcrvh"
-      >
-        <div
-          className="sc-dnqmqq eNItLO"
-        >
-          1
-        </div>
-        <div
-          className="sc-dnqmqq eNItLO"
-        >
-          2
-        </div>
-        <div
-          className="sc-dnqmqq eNItLO"
-        >
-          <a
-            href="/"
-            onClick={[Function]}
-          >
-            <i
-              className="fas fa-angle-right sc-iwsKbI dyIKZS"
-            />
-          </a>
-        </div>
-      </div>
-    </div>
+    />
   </div>
 </div>
 `;
