@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const mongoDB_test = require('../config/keys').mongoURI_TEST
+const dbConnection = require("../server/database/db_connection");
+// Connect to DB
+dbConnection();
 
 const loginTrainer = require('../server/database/queries/login-trainer');
 const registerTrainer = require('../server/database/queries/register-trainer');
-
-mongoose.connect(mongoDB_test);
 
 const Trainer = require('../server/database/models/Trainer');
 
