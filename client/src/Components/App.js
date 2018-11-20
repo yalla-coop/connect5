@@ -21,7 +21,7 @@ render() {
       <div className="App">
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/viewSessions" render={() => <ViewSessions handleSessions={this.handleSessions} />} exact />
+          <Route path="/view-sessions" render={() => <ViewSessions handleSessions={this.handleSessions} />} exact />
           <Route path="/trainer" exact component={TrainersLandingPage} />
         </Switch>
       </div>
