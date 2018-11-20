@@ -32,6 +32,27 @@ export default class Survey extends React.Component {
       .catch(err => console.error(err.stack));
   }
 
+  selectCheckedItem = (value, questionId) => {
+    console.log("SELECTED", value);
+    console.log("QUESTION", questionId)
+    const state = this.state.formState;
+    state[questionId] = value;
+    this.setState( { formState: state } )
+    // this.checkSelected(elementId, questionId)
+    console.log("FORMSTATE", this.state.formState);
+  }
+
+  // checkSelected = (value, questionId) => {
+  //   // const state = this.state.formState;
+  //   // console.log(value, questionId)
+
+  //   // if (state[questionId] === value) {
+  //   //   return true
+  //   // } else return false
+  //   console.log("hello")
+  //   return true
+  // }
+
   handleChange = (e) => {
     const question = e.target.name;
     const state = this.state.formState;
@@ -73,11 +94,11 @@ export default class Survey extends React.Component {
       formState: state,
     }));
 
-    console.log("state question", state[question]);
+    console.log("FORMSTATE", this.state.formState);
   };
 
   render() {
-    const { loading, surveyDetails, formState } = this.state;
+    const { loading, surveyDetails, formState, selected, questionId } = this.state;
     if (loading) {
       return <h3>Loading...</h3>;
     }
@@ -104,6 +125,7 @@ export default class Survey extends React.Component {
             onChange={this.handleChange}
             handleMatrix={this.handleMatrix}
             answers={formState}
+            selectCheckedItem={this.selectCheckedItem}
           />
           <button type="submit">Submit Feedback</button>
         </form>
