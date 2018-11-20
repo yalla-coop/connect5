@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./Layouts/Home";
 import TrainersLandingPage from "./Layouts/TrainersLandingPage";
 import ViewSessions from "./Layouts/view-sessions";
-
 import "./App.css";
 
 class App extends Component {
