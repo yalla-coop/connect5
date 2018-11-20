@@ -26,7 +26,6 @@ const H1 = styled.h1`
  padding: 15px 0
 `;
 
-
 const Borderbottom = styled.div`
  width: 46%;
  height: 1px;
