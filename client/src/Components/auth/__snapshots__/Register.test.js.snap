@@ -27,12 +27,12 @@ exports[`Register matches snapshot 1`] = `
     Create Your Account
   </h1>
   <form
-    className="sc-gzVnrw jSvUGO"
+    className="sc-EHOje hrsZkK"
     noValidate={true}
     onSubmit={[Function]}
   >
     <input
-      className="sc-htoDjs cnVDTc"
+      className="sc-bZQynM hIDwhB"
       name="firstName"
       onChange={[Function]}
       placeholder="First Name"
@@ -40,7 +40,7 @@ exports[`Register matches snapshot 1`] = `
       value=""
     />
     <input
-      className="sc-htoDjs cnVDTc"
+      className="sc-bZQynM hIDwhB"
       name="lastName"
       onChange={[Function]}
       placeholder="Last Name"
@@ -49,7 +49,7 @@ exports[`Register matches snapshot 1`] = `
     />
      
     <input
-      className="sc-htoDjs cnVDTc"
+      className="sc-bZQynM hIDwhB"
       name="email"
       onChange={[Function]}
       placeholder="Email Address"
@@ -57,7 +57,7 @@ exports[`Register matches snapshot 1`] = `
       value=""
     />
     <input
-      className="sc-htoDjs cnVDTc"
+      className="sc-bZQynM hIDwhB"
       name="password"
       onChange={[Function]}
       placeholder="Password"
@@ -65,7 +65,7 @@ exports[`Register matches snapshot 1`] = `
       value=""
     />
     <input
-      className="sc-htoDjs cnVDTc"
+      className="sc-bZQynM hIDwhB"
       name="password2"
       onChange={[Function]}
       placeholder="Confirm Password"
@@ -73,7 +73,7 @@ exports[`Register matches snapshot 1`] = `
       value=""
     />
     <input
-      className="sc-htoDjs cnVDTc"
+      className="sc-bZQynM hIDwhB"
       type="submit"
     />
   </form>

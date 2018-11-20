@@ -4,7 +4,7 @@ import axios from "axios";
 import Header from "../CommonComponents/Header";
 
 import {
-  Button, Paragraph, Heading, Container, Form, Input, Error,
+  Heading, Container, Form, Input, Error,
 } from "./PageElementsAuth";
 
 class Login extends Component {
