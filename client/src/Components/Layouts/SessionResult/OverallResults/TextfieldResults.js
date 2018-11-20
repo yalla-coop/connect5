@@ -16,11 +16,12 @@ class TextfieldResults extends Component {
 
   render() {
     const { answers } = this.props;
+
     return (
       <div>
         {
           answers && answers.map(answer => (
-            <Answer>{answer.answer}</Answer>
+            <Answer key={answer._id}>{answer.answer}</Answer>
           ))
         }
       </div>

@@ -33,6 +33,7 @@ class OverallResults extends Component {
 
   componentDidMount() {
     const { history, match } = this.props;
+
     axios.get(`/session/details/${match.params.sessionId}/${match.params.sessionType}`)
       .then(({ data }) => data.map(item => this.setState(item)))
       .catch(() => history.push("/server-error"));

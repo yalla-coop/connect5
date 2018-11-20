@@ -6,7 +6,8 @@ const getSessionResponsesNumberQuery = require("./../database/queries/get_sessio
 
 const GetSessionDetails = async (req, res) => {
   const { sessionId, sessionType } = req.params;
-
+  console.log(req.params,"param");
+  
   const promises = [
     getSessionQuestionsQuery(sessionType),
     getSessionAttendeesQuery(sessionId),
@@ -14,7 +15,9 @@ const GetSessionDetails = async (req, res) => {
   ];
   Promise.all(promises)
     .then(details => res.json(details))
-    .catch(() => {
+    .catch((err) => {
+      console.log(err);
+      
       res.status(500);
       res.send((createError(500, "Server Error")));
     });

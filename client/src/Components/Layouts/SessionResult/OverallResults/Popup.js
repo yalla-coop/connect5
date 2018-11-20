@@ -16,7 +16,7 @@ import {
 class Popup extends Component {
   static propTypes = {
     questionId: PropTypes.string,
-    sessionId: PropTypes.number,
+    sessionId: PropTypes.string,
     history: ReactRouterPropTypes.history,
     handleClosePopup: PropTypes.func,
     questionText: PropTypes.string,
