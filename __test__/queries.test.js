@@ -11,6 +11,9 @@ const Response = require("../server/database/models/Response");
 const Answer = require("../server/database/models/Answer");
 const Question = require("../server/database/models/Question");
 
+// load queries
+const surveyQs = require("../server/database/queries/surveyQuestions")
+
 // load the dummy data
 const buildDb = require("../server/database/dummy_data_build");
 
@@ -64,25 +67,30 @@ describe("Test getting survey questions", () => {
     // build the database with the dummy data
     await buildDb().catch(err => console.error(err.stack));
 
-    // CAN'T GET THIS TO WORK!!!!
+    const surveyId = 1;
+    const singleSession = await Session.findOne({
+        date: new Date("2018-04-17"),
+      });
 
-    // console.log("SESSIONS", await Session.find());
-    // const singleSession = await Session.findOne({
-    //   date: new Date("2018-04-17"),
-    // });
+    const sessionId = singleSession._id;
 
-    // const uniqueUrl = `0${singleSession._id}`;
+    const survey = await surveyQs(surveyId, sessionId);
 
-    // console.log("uniqueUrl:", uniqueUrl);
+    expect(survey).toBeDefined();
+    expect(survey.sessionDate).toEqual("17-04-2018");
+    
 
-    // Supertest(app)
-    //   .get(`/survey/${uniqueUrl}`)
-    //   .set("Accept", "application/json")
-    //   .expect(200)
-    //   .then(res => {
-    //     console.log("result:", res);
-    //   });
-
-    expect(await Trainer.count("_id")).toEqual(1);
   });
+
+  it("check getSurveyQs error handling", async () => {
+    // build the database with the dummy data
+    await buildDb().catch(err => console.error(err.stack));
+
+    const surveyId = 1;
+    const sessionId = '42343254353413413443545';
+
+    await surveyQs(surveyId, sessionId).catch(err => expect(err).toBeDefined());
+
+  });
+
 });

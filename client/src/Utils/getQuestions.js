@@ -1,4 +1,5 @@
-const getQuestions = async url => {
+const getQuestions = async (url) => {
+  // this should load the getSurveyQs controller to return the survey questions and session details
   const response = await fetch(url);
 
   const body = await response.json();

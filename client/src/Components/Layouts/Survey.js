@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import axios from "axios";
 
 import getQuestions from "../../Utils/getQuestions";
 
@@ -15,18 +16,25 @@ export default class Survey extends React.Component {
     formState: {},
     surveyDetails: null,
     loading: true,
+    surveyUrl: null,
   };
 
   componentDidMount() {
     const { location } = this.props;
     console.log("path", location.pathname);
+
+    // grab the unique url at the end which gives us survey type and session id
     const survey = location.pathname;
+    const responseId = survey.split('/')[2];
+    console.log("URL", responseId)
+
     getQuestions(survey)
       .then((res) => {
         console.log("RES", res);
         this.setState({
           surveyDetails: res,
           loading: false,
+          responseId: responseId,
         });
       })
       .catch(err => console.error(err.stack));
@@ -34,13 +42,13 @@ export default class Survey extends React.Component {
 
   selectCheckedItem = (value, questionId) => {
     console.log("SELECTED", value);
-    console.log("QUESTION", questionId)
+    console.log("QUESTION", questionId);
     const state = this.state.formState;
     state[questionId] = value;
-    this.setState( { formState: state } )
+    this.setState({ formState: state });
     // this.checkSelected(elementId, questionId)
     console.log("FORMSTATE", this.state.formState);
-  }
+  };
 
   // checkSelected = (value, questionId) => {
   //   // const state = this.state.formState;
@@ -97,8 +105,27 @@ export default class Survey extends React.Component {
     console.log("FORMSTATE", this.state.formState);
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { responseId, formState } = this.state;
+    axios
+      .post(`/submit/${responseId}`, formState)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+
+    // fetch(`/submit/${this.state.surveyUrl}`, {
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   method: "POST",
+    //   body: JSON.stringify(this.state.formState),
+    // })
+    // .catch(err => console.log(err))
+  };
+
   render() {
-    const { loading, surveyDetails, formState, selected, questionId } = this.state;
+    const { loading, surveyDetails, formState } = this.state;
     if (loading) {
       return <h3>Loading...</h3>;
     }
@@ -118,7 +145,7 @@ export default class Survey extends React.Component {
             {trainerName}
           </p>
         </div>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <h3>Survey Questions:</h3>
           <Questions
             questions={surveyQs}
