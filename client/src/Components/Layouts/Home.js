@@ -2,7 +2,11 @@ import React, { Component } from "react";
 
 class Home extends Component {
   render() {
-    return <div className="home">Home</div>;
+    return (
+      <React.Fragment>
+        <div className="home">Home</div>
+      </React.Fragment>
+    );
   }
 }
 

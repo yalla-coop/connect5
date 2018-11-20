@@ -5,15 +5,18 @@
   "dependencies": {
     "axios": "^0.18.0",
     "prop-types": "^15.6.2",
+    "moment": "^2.22.2",
     "react": "^16.6.3",
     "react-datepicker": "^1.8.0",
     "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1",
+    "react-router-prop-types": "^1.0.4",
     "react-scripts": "2.1.1",
     "react-select": "^2.1.1",
     "react-test-renderer": "^16.6.3",
     "react-validation": "^3.0.7",
-    "styled-components": "^4.1.1"
+    "styled-components": "^4.1.1",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

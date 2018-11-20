@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header matches snapshot 1`] = `
+<div
+  className="sc-bxivhb RWzGw"
+>
+  <div
+    className="sc-bdVaJa dJIpua"
+  >
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      <i
+        className="fas fa-home sc-bwzfXH jyqnUy"
+      />
+    </a>
+    <img
+      alt="Logo"
+      className="sc-htpNat gFDNQJ"
+      src="Logo.jpg"
+    />
+  </div>
+  <h1
+    className="sc-ifAKCX hMdYXU"
+  >
+    Welcome
+  </h1>
+  <h1
+    className="sc-ifAKCX hMdYXU"
+  >
+    Connect 5 Trainer
+  </h1>
+  <p
+    className="sc-EHOje jNjPuC"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquaUt co laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
+  <a
+    className="sc-bZQynM ickhtK"
+    href="/trainer/signup"
+    onClick={[Function]}
+  >
+    Sign up
+  </a>
+  <a
+    className="sc-bZQynM ickhtK"
+    href="/trainer/login"
+    onClick={[Function]}
+  >
+    Login
+  </a>
+</div>
+`;
