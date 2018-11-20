@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   background: #e9f3f5;
+  height: 496px;
   display: Grid;
   grid-template-columns: 1fr;
   grid-template-rows: 70px 300px 100px;
