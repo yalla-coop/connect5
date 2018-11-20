@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
 import swal from "sweetalert";
+
 import ReactRouterPropTypes from "react-router-prop-types";
 
 import {
   Button,
   Form,
-  Contianer,
+  Container,
   Input,
   SelectComponent,
   Date,
@@ -96,7 +97,7 @@ class CreateSession extends Component {
     } = this.state;
 
     return (
-      <Contianer>
+      <Container>
 
         <Heading>
           Create New Session
@@ -131,7 +132,7 @@ class CreateSession extends Component {
 
         </Form>
 
-      </Contianer>
+      </Container>
     );
   }
 }

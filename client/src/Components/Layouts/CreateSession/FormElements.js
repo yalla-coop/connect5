@@ -3,7 +3,7 @@ import Select from "react-select";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 
-const Contianer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 25px;
@@ -75,7 +75,7 @@ const Error = styled.p`
 `;
 
 export {
-  Contianer,
+  Container,
   Heading,
   Form,
   Input,
