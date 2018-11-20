@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header matches snapshot 1`] = `
+<div
+  className="sc-bdVaJa eTvRYH"
+>
+  <div
+    className="sc-bwzfXH fcvmml"
+  >
+    <div
+      className="sc-htpNat kWGSlD"
+    >
+      <h1
+        className="sc-bxivhb gEiGHL"
+      >
+        Sessions
+      </h1>
+    </div>
+    <div
+      className="sc-ifAKCX bmmcfm"
+    />
+  </div>
+  <div
+    className="sc-EHOje oHnXy"
+  >
+    <div
+      className="sc-bZQynM iizdYp"
+    >
+      <div
+        className="sc-gzVnrw QtCfL"
+      >
+        <div
+          className="sc-dnqmqq jaQhsM"
+        >
+          Date
+        </div>
+        <div
+          className="sc-dnqmqq jaQhsM"
+        >
+          Type
+        </div>
+        <div
+          className="sc-dnqmqq jaQhsM"
+        >
+          Details
+        </div>
+      </div>
+    </div>
+    <div
+      className="sc-iwsKbI feguYJ"
+    />
+  </div>
+</div>
+`;
