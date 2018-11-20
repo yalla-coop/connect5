@@ -5,7 +5,12 @@ import SessionContent from "./Content";
 import SessionActions from "./Actions";
 
 class SessionDetails extends Component {
+  state = {
+    sessions: [],
+  }
+
   render() {
+    console.log(this.props);
     return (
       <Wrapper>
         <SessionHeader />
