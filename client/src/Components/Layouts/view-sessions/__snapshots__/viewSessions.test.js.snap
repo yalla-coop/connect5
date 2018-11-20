@@ -27,27 +27,27 @@ exports[`Header matches snapshot 1`] = `
       className="sc-bZQynM iizdYp"
     >
       <div
-        className="sc-gzVnrw kTWXSR"
+        className="sc-gzVnrw QtCfL"
       >
         <div
-          className="sc-htoDjs YIblR"
+          className="sc-dnqmqq jaQhsM"
         >
           Date
         </div>
         <div
-          className="sc-htoDjs YIblR"
+          className="sc-dnqmqq jaQhsM"
         >
           Type
         </div>
         <div
-          className="sc-htoDjs YIblR"
+          className="sc-dnqmqq jaQhsM"
         >
           Details
         </div>
       </div>
     </div>
     <div
-      className="sc-dnqmqq fqNGUe"
+      className="sc-iwsKbI feguYJ"
     />
   </div>
 </div>

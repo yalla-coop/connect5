@@ -58,13 +58,19 @@ const TableHeading = styled.div`
   align-items: center;
 `;
 
-const TableRow = styled.div`
-   width: 95%;
-   display: flex;
-   flex-direction: row;
-   border-bottom: 1px solid #C8C7CC;
-   height: 43.5px;
-   line-height: 40px;
+const TableRowHeader = styled.div`
+width: 95%;
+display: flex;
+flex-direction: row;
+border-bottom: 1px solid #C8C7CC;
+height: 43.5px;
+line-height: 40px;
+`;
+
+const TableRow = styled(TableRowHeader)`
+   &:last-child {
+     border-bottom:none
+   }
 `;
 
 const TableHead = styled.div`
@@ -112,6 +118,7 @@ export {
   Borderbottom,
   Header,
   Heading,
+  TableRowHeader,
   TableHeading,
   TableRow,
   TableHead,

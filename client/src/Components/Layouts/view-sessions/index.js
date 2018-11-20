@@ -10,6 +10,7 @@ import {
   Heading,
   Borderbottom,
   TableHeading,
+  TableRowHeader,
   TableRow,
   TableHead,
   TableBody,
@@ -56,11 +57,11 @@ class ViewSessions extends Component {
         </Header>
         <Container>
           <TableHeading>
-            <TableRow>
+            <TableRowHeader>
               <TableHead>Date</TableHead>
               <TableHead>Type</TableHead>
               <TableHead>Details</TableHead>
-            </TableRow>
+            </TableRowHeader>
           </TableHeading>
 
           <TableBody>
