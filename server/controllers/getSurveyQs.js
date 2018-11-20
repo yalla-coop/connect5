@@ -1,47 +1,22 @@
-// // to format the date
-// const moment = require("moment");
-
-// // Load models
-// const Question = require("../database/models/Question");
-// const Session = require("../database/models/Session");
-// const Trainer = require("../database/models/Trainer");
+// controller to get the required survey questions for this route
 
 const surveyQs = require("../database/queries/surveyQuestions")
 
 
 exports.get = (req, res) => {
-  // get the id from req.params
-  // this id should then be the id of the right survey questions
-  // do a query of the mongo database to get this survey as well as the trainer and the session
-  // return the results
+
+  // get the dynamic id from req.params. This should be a string with the surveytype as the first number (e.g. 1). The rest of the string is the unique sessionId
   const { id } = req.params;
 
+  // assign the surveyId and sessionId to their own variables
   const surveyId = id[0];
   const sessionId = id.substr(1);
 
-
+  // initiate queries function to get the right questions from the database, the session details and then send these to the client
   surveyQs(surveyId, sessionId)
     .then(surveyDetails => {
       console.log("RESULT", surveyDetails)
       res.status(200).send(JSON.stringify(surveyDetails))})
     .catch(err => console.log(err))
 
-
-  // const surveyQs = await Question.find({ surveyType: surveyId });
-
-  // const sessionDetails = await Session.findById(sessionId);
-
-  // const trainerDetails = await Trainer.findById(sessionDetails.trainer);
-
-  // console.log("session details:", sessionDetails);
-  // console.log("trainer details:", trainerDetails);
-
-  // const surveyDetails = {
-  //   sessionDate: moment(sessionDetails.date).format("DD-MM-YYYY"),
-  //   trainerName: `${trainerDetails.firstName} ${trainerDetails.lastName}`,
-  //   // trainerName: "".concat(trainerDetails.firstName, trainerDetails.lastName),
-  //   surveyQs,
-  // };
-
-  // res.send(JSON.stringify(surveyDetails));
 };

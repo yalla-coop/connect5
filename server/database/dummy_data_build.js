@@ -71,10 +71,20 @@ const buildDb = async () => {
       session: singleSession._id,
       trainer: singleSession.trainer,
       participantId: "123",
+      surveyType: 0,
     },
   ]);
 
-  console.log("response added: ", await Response.find());
+  await Response.insertMany([
+    {
+      session: singleSession._id,
+      trainer: singleSession.trainer,
+      participantId: "123",
+      surveyType: 1,
+    },
+  ]);
+
+  console.log("responses added: ", await Response.find());
 
   // insert answers for that response
 

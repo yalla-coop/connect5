@@ -11,38 +11,40 @@ const SurveyQs = styled.div`
   padding: 16px;
 `;
 
+// formState will be the object where we store survey responses
+// as the participant answers the questions
 export default class Survey extends React.Component {
   state = {
     formState: {},
     surveyDetails: null,
     loading: true,
-    surveyUrl: null,
+    sessionId: null,
+    surveyType: null,
   };
 
   componentDidMount() {
-    const { location } = this.props;
-    console.log("path", location.pathname);
-
     // grab the unique url at the end which gives us survey type and session id
+    const { location } = this.props;
     const survey = location.pathname;
-    const responseId = survey.split('/')[2];
-    console.log("URL", responseId)
+    const responseId = survey.split("/")[2];
 
+    // util function that will fetch the questions and session details
     getQuestions(survey)
       .then((res) => {
-        console.log("RES", res);
+        const { sessionId, surveyId } = res;
         this.setState({
           surveyDetails: res,
           loading: false,
-          responseId: responseId,
+          responseId,
+          sessionId,
+          surveyType: surveyId,
         });
       })
       .catch(err => console.error(err.stack));
   }
 
+  // function that will check if the div for the answer has been selected and if so add that answer to the formstate
   selectCheckedItem = (value, questionId) => {
-    console.log("SELECTED", value);
-    console.log("QUESTION", questionId);
     const state = this.state.formState;
     state[questionId] = value;
     this.setState({ formState: state });
@@ -50,22 +52,13 @@ export default class Survey extends React.Component {
     console.log("FORMSTATE", this.state.formState);
   };
 
-  // checkSelected = (value, questionId) => {
-  //   // const state = this.state.formState;
-  //   // console.log(value, questionId)
-
-  //   // if (state[questionId] === value) {
-  //   //   return true
-  //   // } else return false
-  //   console.log("hello")
-  //   return true
-  // }
-
+  // check for any changes to the survey inputs and add them to the formstate
   handleChange = (e) => {
     const question = e.target.name;
     const state = this.state.formState;
     let answer;
 
+    // if a checkbox we need to treat differently as this will be an array of answers
     if (e.target.type === "checkbox") {
       answer = e.target.value;
       if (!state[question]) {
@@ -77,6 +70,7 @@ export default class Survey extends React.Component {
         state[question].splice(index, 1);
       }
     } else {
+      // if any other type we assign the value to answer and put it in the state
       answer = e.target.value;
       state[question] = answer;
     }
@@ -88,6 +82,8 @@ export default class Survey extends React.Component {
     console.log("FORMSTATE", this.state.formState);
   };
 
+  // function to deal with the matrix rating questions
+  // where there are multiple rows with sub questions and options
   handleMatrix = (row, answer, question) => {
     const state = this.state.formState;
 
@@ -105,23 +101,19 @@ export default class Survey extends React.Component {
     console.log("FORMSTATE", this.state.formState);
   };
 
+  // when participant submits form
+  // this puts the required info into an object and sends to server
   handleSubmit = (e) => {
     e.preventDefault();
-    const { responseId, formState } = this.state;
+    const {
+      responseId, formState, sessionId, surveyType,
+    } = this.state;
+    const formSubmission = { formState, sessionId, surveyType };
+    console.log(formSubmission);
     axios
-      .post(`/submit/${responseId}`, formState)
+      .post(`/submit/${responseId}`, formSubmission)
       .then(res => console.log(res))
       .catch(err => console.log(err));
-
-    // fetch(`/submit/${this.state.surveyUrl}`, {
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   method: "POST",
-    //   body: JSON.stringify(this.state.formState),
-    // })
-    // .catch(err => console.log(err))
   };
 
   render() {

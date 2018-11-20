@@ -1,25 +1,30 @@
+// this is where we map through all the questions
+// and populate the Survey component
+
 import React from "react";
 import PropTypes from "prop-types";
 
-import { RadioField, TextField, RadioStarField, MatrixField, CheckboxField } from "./Questions.style";
+import {
+  RadioField,
+  TextField,
+  RadioStarField,
+  MatrixField,
+  CheckboxField,
+} from "./Questions.style";
 
 export default class Questions extends React.Component {
   render() {
     const {
-      onChange,
-      questions,
-      handleMatrix,
-      selectCheckedItem,
-      answers,
+      onChange, questions, handleMatrix, selectCheckedItem, answers,
     } = this.props;
     return (
       <React.Fragment>
         {questions.map((el, index) => {
-          // let questionId = questionId
-          // let questionText = questionText
+          // map through all the questions
 
-          let {_id: questionId, questionText, helperText} = el;
+          const { _id: questionId, questionText, helperText } = el;
 
+          // format each question depending on the inputType
           if (el.inputType === "text") {
             return (
               <TextField key={index}>
@@ -46,7 +51,13 @@ export default class Questions extends React.Component {
                       <div key={i}>
                         <label htmlFor={uniqueId}>
                           {value}
-                          <input value={value} id={uniqueId} name={questionId} type="radio" onChange={onChange} />
+                          <input
+                            value={value}
+                            id={uniqueId}
+                            name={questionId}
+                            type="radio"
+                            onChange={onChange}
+                          />
                           <span className="checkmark" />
                         </label>
                       </div>
@@ -65,13 +76,13 @@ export default class Questions extends React.Component {
                 </header>
                 <div className="answers">
                   {el.options.map((e, i) => {
-                    let value = e;
-                    
-                    let uniqueKey = i + questionId
+                    const value = e;
+
+                    const uniqueKey = i + questionId;
                     return (
                       <div
                         key={uniqueKey}
-                        onClick={e => {
+                        onClick={(e) => {
                           selectCheckedItem(value, questionId);
                         }}
                       >
@@ -88,7 +99,8 @@ export default class Questions extends React.Component {
                           <span className="checkmark" />
                         </label>
                       </div>
-                    )})}
+                    );
+                  })}
                 </div>
               </RadioStarField>
             );
@@ -103,7 +115,13 @@ export default class Questions extends React.Component {
                 <div className="answers">
                   {el.options.map((e, i) => (
                     <label key={i} htmlFor={e}>
-                      <input id={e} name={questionId} type="checkbox" value={e} onChange={onChange} />
+                      <input
+                        id={e}
+                        name={questionId}
+                        type="checkbox"
+                        value={e}
+                        onChange={onChange}
+                      />
                       <span className="checkmark" />
                       <p>{e}</p>
                     </label>
@@ -122,8 +140,11 @@ export default class Questions extends React.Component {
                 <div>
                   {el.options.rows.map((e, i) => (
                     <div key={i} className="matrixanswers">
-                      <p className="row-questions" id={i}>{el.options.rows[i]} </p>
-                      <div class="options">
+                      <p className="row-questions" id={i}>
+                        {el.options.rows[i]}
+                        {" "}
+                      </p>
+                      <div className="options">
                         {el.options.columns.map((elem, ind) => (
                           <label key={ind} htmlFor={e}>
                             <input
@@ -141,34 +162,12 @@ export default class Questions extends React.Component {
                           </label>
                         ))}
                       </div>
-                      
                     </div>
                   ))}
                 </div>
-                {/* {el.options.columns.map((e, i) => (
-                  <div key={i}>
-                    <input id={e} name="matrix" type="radio" value={e} />
-                  </div>
-                ))} */}
               </MatrixField>
             );
           }
-
-          // if (el.inputType === "matrix") {
-          //   return (
-          //     <fieldset>
-          //       <label>
-          //         <p id={index}>{questionText}</p>
-          //       </label>
-          //       {el.options.map((e, i) => (
-          //         <div key={i}>
-          //           <input id={e} name="matrix" type="radio" value={e} />
-          //           <label htmlFor={e}>{e}</label>
-          //         </div>
-          //       ))}
-          //     </fieldset>
-          //   );
-          // }
         })}
       </React.Fragment>
     );

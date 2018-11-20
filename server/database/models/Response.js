@@ -18,6 +18,9 @@ const ResponseSchema = new Schema({
   participantId: {
     type: String,
   },
+  surveyType: {
+    type: Number,
+  }
 });
 
 // variable = Response, name = responses, schema = ResponseSchema
