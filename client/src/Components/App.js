@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./Layouts/Home";
 import TrainersLandingPage from "./Layouts/TrainersLandingPage";
-import ViewSessions from "./Layouts/viewSessions";
+import ViewSessions from "./Layouts/view-sessions";
 
 import "./App.css";
 

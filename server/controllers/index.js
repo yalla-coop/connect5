@@ -1,7 +1,7 @@
 const express = require('express');
 
 const trainerController = require('./trainer');
-const viewSessions = require('./viewSessions');
+const viewSessions = require('./view-sessions');
 
 const router = express.Router();
 
