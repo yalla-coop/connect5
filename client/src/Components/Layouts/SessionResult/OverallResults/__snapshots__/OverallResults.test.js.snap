@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot for 'OverallResults' layout 1`] = `
+<div>
+  <div
+    className="sc-ifAKCX gVwUCl"
+  >
+    <p
+      className="sc-EHOje hKuwFc"
+    >
+      <span
+        className="sc-bZQynM kYemYx"
+      >
+        Number of Replies:
+      </span>
+       
+      (out of
+       
+       
+      )
+    </p>
+    <p
+      className="sc-EHOje hKuwFc"
+    >
+      <span
+        className="sc-bZQynM kYemYx"
+      >
+        Completion Rate:
+      </span>
+      NaN
+      %
+    </p>
+  </div>
+  <h3
+    className="sc-gzVnrw gdyVTx"
+  >
+    Responses
+  </h3>
+</div>
+`;
