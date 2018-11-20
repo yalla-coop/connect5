@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "stable"
+  - 'stable'
 cache:
   directories:
     - node_modules
@@ -8,16 +8,20 @@ cache:
 install:
   - npm install
   - npm run client:init
-  
+
 before_script:
   - npm run client:build
+  - sleep 15
+  - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
 
 script:
   - npm run test:coverage && npm run test:client:coverage
 
 on:
   branch: master
-  
+
 after_success:
   - npm run coverage
 
+services:
+  - mongodb
