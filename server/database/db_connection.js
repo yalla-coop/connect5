@@ -19,5 +19,4 @@ const dbConnection = () => {
     { useNewUrlParser: true },
   );
 };
-
 module.exports = dbConnection;
