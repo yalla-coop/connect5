@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login matches snapshot 1`] = `
+<div
+  className="sc-bxivhb fmaNkn"
+>
+  <div
+    className="sc-bdVaJa dJIpua"
+  >
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      <i
+        className="fas fa-home sc-bwzfXH jyqnUy"
+      />
+    </a>
+    <img
+      alt="Logo"
+      className="sc-htpNat gFDNQJ"
+      src="Logo.jpg"
+    />
+  </div>
+  <h1
+    className="sc-ifAKCX jrXIsO"
+  >
+    Trainer Login
+  </h1>
+  <form
+    className="sc-gzVnrw jSvUGO"
+    noValidate={true}
+    onSubmit={[Function]}
+  >
+    <input
+      className="sc-htoDjs cnVDTc"
+      name="email"
+      onChange={[Function]}
+      placeholder="Email Address"
+      type="email"
+      value=""
+    />
+    <input
+      className="sc-htoDjs cnVDTc"
+      name="password"
+      onChange={[Function]}
+      placeholder="Password"
+      type="password"
+      value=""
+    />
+    <input
+      className="sc-htoDjs cnVDTc"
+      type="submit"
+    />
+  </form>
+</div>
+`;
