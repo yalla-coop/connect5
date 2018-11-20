@@ -34,7 +34,7 @@ class ViewSessions extends Component {
       .then((res) => {
         this.setState({ sessions: res.data });
       })
-      .catch(err => console.log(err));
+      .catch(() => history.push("/server-error"));
   }
 
   handleClick = () => {
