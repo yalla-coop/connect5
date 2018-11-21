@@ -90,7 +90,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           helperText: "0 stars means not confident. 6 stars means very confident",
           options: [1, 2, 3, 4, 5, 6]
         },
-  
+
         // Survey 1 questions
         {
           surveyType: 1,
@@ -253,7 +253,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "Is there anything else you would like to tell us about the Connect 5 session 1 training?",
           inputType: "textarea"
         },
-  
+
         // Survey 2 questions
         {
           surveyType: 2,
@@ -417,7 +417,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "Is there anything else you would like to tell us about the Connect 5 session 2 training?",
           inputType: "textarea"
         },
-  
+
         // Survey 3
         {
           surveyType: 3,

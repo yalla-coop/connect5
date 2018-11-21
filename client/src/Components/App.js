@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // import components
 import Home from "./Layouts/Home";
+import Register from "./auth/Register";
+import Login from "./auth/Login";
 import Survey from "./Layouts/Survey";
 import TrainersLandingPage from "./Layouts/TrainersLandingPage";
 import ViewSessions from "./Layouts/view-sessions";
@@ -25,12 +27,14 @@ class App extends Component {
         <div className="App">
           <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/trainer" exact component={TrainersLandingPage} />
+            <Route path="/trainer/register" exact component={Register} />
+            <Route path="/trainer/login" exact component={Login} />
             <Route
               path="/view-sessions"
               render={() => <ViewSessions handleSessions={this.handleSessions} />}
               exact
             />
-            <Route path="/trainer" exact component={TrainersLandingPage} />
             <Route path="/survey/:id" exact render={props => <Survey {...props} />} />
             <Route path="/create-session" exact component={CreateSession} />
             <Route
