@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const dbConnection = require("../server/database/db_connection");
+const dbConnection = require("../server/database/db_Connection");
 // Connect to DB
 dbConnection();
 
