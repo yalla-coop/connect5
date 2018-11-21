@@ -6,14 +6,10 @@ const mongoose = require("mongoose");
 
 const controllers = require("./controllers");
 
-// DB Connection
-const db = require("../config/keys").mongoURI;
+const dbConnection = require("./database/db_connection");
 
-// connect to mongoDB
-mongoose
-  .connect(db)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err));
+// Connect to DB
+dbConnection();
 
 const app = express();
 

@@ -1,13 +1,3 @@
-// Enter surveys here
-const mongoose = require("mongoose");
-const mongoDB = require("../../config/keys").mongoURI;
-
-// connect to db
-mongoose.connect(
-  mongoDB,
-  { useNewUrlParser: true }
-);
-
 // load model
 const Question = require("./models/Question");
 
