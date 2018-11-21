@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const mongoDB = require("../../config/keys").mongoURI;
+// const mongoose = require("mongoose");
+// const mongoDB = require("../../config/keys").mongoURI;
 
 // load models
 const Trainer = require("./models/Trainer");
