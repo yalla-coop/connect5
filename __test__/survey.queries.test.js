@@ -19,14 +19,14 @@ const buildDb = require("../server/database/dummy_data_build");
 // connect
 dbConnection();
 
-beforeEach(async () => {
-  // clear collections before all tests
-  await Trainer.deleteMany({});
-  await Session.deleteMany({});
-  await Response.deleteMany({});
-  await Answer.deleteMany({});
-  await Question.deleteMany({});
-});
+// beforeEach(async () => {
+//   // clear collections before all tests
+//   await Trainer.deleteMany({});
+//   await Session.deleteMany({});
+//   await Response.deleteMany({});
+//   await Answer.deleteMany({});
+//   await Question.deleteMany({});
+// });
 beforeEach(async() => {
   await buildDb().catch(err => console.error(err.stack));
   console.log("DB BUILT")
