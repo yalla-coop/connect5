@@ -39,7 +39,7 @@ const buildDb = async () => {
 
   await trainer.save();
 
-  console.log("trainer added: ", await Trainer.find());
+  console.log("trainer added");
 
   // insert session for that trainer
 
@@ -62,7 +62,7 @@ const buildDb = async () => {
     },
   ]);
 
-  console.log("sessions added: ", await Session.find());
+  console.log("sessions added");
 
   // insert response for the first session
 
@@ -88,7 +88,7 @@ const buildDb = async () => {
     },
   ]);
 
-  console.log("responses added: ", await Response.find());
+  console.log("responses added");
 
   // insert answers for that response
 

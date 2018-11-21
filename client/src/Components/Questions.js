@@ -2,7 +2,6 @@
 // and populate the Survey component
 
 import React from "react";
-import PropTypes from "prop-types";
 
 import {
   RadioField,
@@ -94,6 +93,7 @@ export default class Questions extends React.Component {
                             type="radio"
                             value={value}
                             className={value}
+                            onChange={onChange}
                             checked={answers[questionId] === value}
                           />
                           <span className="checkmark" />
@@ -175,6 +175,3 @@ export default class Questions extends React.Component {
   }
 }
 
-Questions.propTypes = {
-  questions: PropTypes.isRequired,
-};
