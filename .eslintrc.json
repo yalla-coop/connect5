@@ -1,11 +1,13 @@
 {
   "env": {
-    "browser": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": "airbnb",
   "rules": {
     "indent": ["error", 2],
+    "quotes": ["error", "double"],
+    "no-underscore-dangle": [0],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   }
 }

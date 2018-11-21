@@ -3,21 +3,12 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const dbConnection = require('./database/db_Connection')
 const controllers = require("./controllers");
 
-// connect to db
+const dbConnection = require("./database/db_connection");
 
-dbConnection()
-
-// // DB Connection
-// const db = require("../config/keys").mongoURI;
-
-// // connect to mongoDB
-// mongoose
-//   .connect(db)
-//   .then(() => console.log("MongoDB connected"))
-//   .catch(err => console.log(err));
+// Connect to DB
+dbConnection();
 
 const app = express();
 
