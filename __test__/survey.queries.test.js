@@ -28,11 +28,12 @@ beforeAll(async () => {
   await Session.deleteMany({});
   await Response.deleteMany({});
   await Answer.deleteMany({});
+  await Question.deleteMany({});
 });
-beforeEach(async() => {
-  await buildDb().catch(err => console.error(err.stack));
-  console.log("DB BUILT")
-})
+// beforeEach(async() => {
+//   await buildDb().catch(err => console.error(err.stack));
+//   console.log("DB BUILT")
+// })
 // afterEach(async () => {
 //   // clear collections after each test
 //   await Trainer.deleteMany({});
@@ -45,6 +46,10 @@ afterAll(async () => {
 });
 
 describe("Test getting survey questions", () => {
+  beforeEach(async() => {
+    await buildDb().catch(err => console.error(err.stack));
+    console.log("DB BUILT")
+  })
   
   it("successully creates the collections", async () => {
 
@@ -94,6 +99,10 @@ describe("Test getting survey questions", () => {
 })
 
 describe("Test storing answers in database", () => {
+  beforeEach(async() => {
+    await buildDb().catch(err => console.error(err.stack));
+    console.log("DB BUILT")
+  })
 
   it("storeResponse successfully stores answers and response in models", async () => {
 

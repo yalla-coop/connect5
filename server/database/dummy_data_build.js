@@ -10,6 +10,11 @@ const Question = require("./models/Question");
 
 const buildSurvey = require("./surveyBuild")
 
+const dbConnection = require("../database/db_connection");
+
+// Connect to DB
+dbConnection();
+
 const buildDb = async () => {
   // // connect to db
   // mongoose.connect(
