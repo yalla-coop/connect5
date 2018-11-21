@@ -1,6 +1,3 @@
-// const mongoose = require("mongoose");
-// const mongoDB = require("../../config/keys").mongoURI;
-
 // load models
 const Trainer = require("./models/Trainer");
 const Session = require("./models/Session");
@@ -16,11 +13,6 @@ const dbConnection = require("../database/db_connection");
 dbConnection();
 
 const buildDb = async () => {
-  // // connect to db
-  // mongoose.connect(
-  //   mongoDB,
-  //   { useNewUrlParser: true }
-  // );
 
   // clear collections
 

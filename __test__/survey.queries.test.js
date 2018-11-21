@@ -1,6 +1,3 @@
-const Supertest = require("supertest");
-const app = require("../server/controllers/index");
-
 const mongoose = require("mongoose");
 const dbConnection = require("./../server/database/db_connection");
 
@@ -34,13 +31,7 @@ beforeEach(async() => {
   await buildDb().catch(err => console.error(err.stack));
   console.log("DB BUILT")
 })
-// afterEach(async () => {
-//   // clear collections after each test
-//   await Trainer.deleteMany({});
-//   await Session.deleteMany({});
-//   await Response.deleteMany({});
-//   await Answer.deleteMany({});
-// });
+
 afterAll(async () => {
   await mongoose.connection.close();
 });
@@ -60,10 +51,6 @@ describe("Test getting survey questions", () => {
     expect(actual).toEqual(expected);
     expect(typeof foundTrainer.email).toBe("string");
 
-    // expect(await Trainer.count("_id")).toEqual(1);
-    // expect(await Session.count("_id")).toEqual(2);
-    // expect(await Response.count("_id")).toEqual(2);
-    // expect(await Answer.count()).toBeGreaterThan(1);
   });
 
   test("getSurveyQs returns the right survey questions", async () => {
@@ -80,7 +67,6 @@ describe("Test getting survey questions", () => {
     expect(survey).toBeDefined();
     expect(survey.sessionDate).toEqual("17-04-2018");
     
-
   });
 
   test("check getSurveyQs error handling", async () => {
@@ -115,7 +101,6 @@ describe("Test storing answers in database", () => {
       '5bf3f05e24be507739c5fcac': [ 'New learning around mental health approaches (e.g. 5 ways to wellbeing, 5 areas model)', 'New skills to conduct meaningful mental health related conversations' ],
       '5bf3f05e24be507739c5fcab': 3 
     }
-
 
     const storedAnswers = await storeAnswers(response._id, dummyAnswers, sessionId)
 
