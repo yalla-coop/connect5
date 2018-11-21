@@ -5,7 +5,7 @@ const Wrapper = styled.div`
   height: 496px;
   display: Grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 70px 300px 100px;
+  grid-template-rows: 70px 300px 50px;
   grid-template-areas: 'header'
                        'content'
                        'actions'
@@ -94,7 +94,7 @@ const LinkType = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 32.3%;
+  height: 30.3%;
   padding: 15px 15px 0 15px
 `;
 
@@ -118,11 +118,13 @@ const Span2 = styled.div`
 const SurveyLink = styled.div`
   display: flex;
   width: 100%;
-  height: 20.3%
+  height: 100%,
+  margin-top: 0
 `;
 
 const SLink = styled.a`
   text-decoration: none;
+  display:block;
   padding: 0px 10px 5px 25px;
   color: #000;
   & :hover {
@@ -134,7 +136,7 @@ const SLink = styled.a`
 const ResultsBtn = styled.div`
   display: flex;
   width: 100%;
-  height: 33.3%
+  top: 90px
 `;
 
 const Button = styled.button`
@@ -143,7 +145,7 @@ background-color: #2a617b;
  color: white;
  padding: 15px 35px;
  margin: 0 auto;
- margin-top: 10px;
+ margin-top: 15px;
  height: 50px;
  text-align: center;
  text-decoration: none;
@@ -183,6 +185,10 @@ const Icon = styled.i`
 const Span = styled.span`
   line-height: 25px
 `;
+const SurveyLink1 = styled.div`
+  display; flex;
+  flex-direction: column
+`;
 
 export {
   Span,
@@ -208,4 +214,5 @@ export {
   Header,
   Heading,
   Wrapper,
+  SurveyLink1,
 };

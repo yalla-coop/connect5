@@ -6,9 +6,16 @@ import SessionDetails from "./index";
 
 test("Header matches snapshot", () => {
   const context = {};
+  const object = {
+    date: 123,
+    type: 1,
+    attendees: 10,
+    surveyURL1: "123",
+    surveyURL2: "123",
+  };
   const component = renderer.create(
     <StaticRouter context={context}>
-      <SessionDetails />
+      <SessionDetails sessionDetails={object} />
     </StaticRouter>,
   );
   expect(component).toMatchSnapshot();

@@ -5,17 +5,13 @@ import SessionContent from "./Content";
 import SessionActions from "./Actions";
 
 class SessionDetails extends Component {
-  state = {
-    sessions: [],
-  }
-
   render() {
-    console.log(this.props);
+    const { sessionDetails } = this.props;
     return (
       <Wrapper>
         <SessionHeader />
-        <SessionContent />
-        <SessionActions />
+        <SessionContent sessionDetails={sessionDetails} />
+        <SessionActions sessionDetails={sessionDetails} />
       </Wrapper>
     );
   }

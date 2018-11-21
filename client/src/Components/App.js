@@ -10,21 +10,29 @@ import "./App.css";
 class App extends Component {
   state = {
     sessions: [],
+    currentSession: [],
   }
 
 handleSessions = (sessions) => {
   this.setState({ sessions });
-  console.log(this.state);
+}
+
+getCurrentSession = (session) => {
+  this.setState({
+    currentSession: session,
+  });
+  // setTimeout(() => { console.log(this.state.currentSession); }, 7000);
 }
 
 render() {
+  const { currentSession } = this.state;
   return (
     <BrowserRouter>
       <div className="App">
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/viewSessions" render={() => <ViewSessions handleSessions={this.handleSessions} />} exact />
-          <Route path="/session-details" render={() => <SessionDetails />} sessions={this.state.sessions} exact />
+          <Route path="/view-sessions" render={() => <ViewSessions handleSessions={this.handleSessions} getCurrentSession={this.getCurrentSession} />} exact />
+          <Route path="/session-details" render={() => <SessionDetails sessionDetails={currentSession} />} exact />
           <Route path="/trainer" exact component={TrainersLandingPage} />
         </Switch>
         <Navbar />

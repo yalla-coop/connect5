@@ -5,7 +5,12 @@ import {
 
 
 class SessionActions extends Component {
+  deleteSession = (_id) => {
+  }
+
   render() {
+    const { sessionDetails } = this.props;
+    const { _id } = sessionDetails;
     return (
       <Actions>
         <Action>
@@ -13,7 +18,7 @@ class SessionActions extends Component {
           <Span>edit session</Span>
         </Action>
         <Action>
-          <ActionBtn type="button"><Icon className="fas fa-trash-alt" /></ActionBtn>
+          <ActionBtn type="button" onClick={() => this.deleteSession(_id)}><Icon className="fas fa-trash-alt" /></ActionBtn>
           <Span>delete session</Span>
         </Action>
       </Actions>
