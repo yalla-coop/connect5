@@ -8,12 +8,14 @@ const Response = require("./models/Response");
 const Answer = require("./models/Answer");
 const Question = require("./models/Question");
 
+const buildSurvey = require("./surveyBuild")
+
 const buildDb = async () => {
-  // connect to db
-  mongoose.connect(
-    mongoDB,
-    { useNewUrlParser: true }
-  );
+  // // connect to db
+  // mongoose.connect(
+  //   mongoDB,
+  //   { useNewUrlParser: true }
+  // );
 
   // clear collections
 
@@ -21,8 +23,13 @@ const buildDb = async () => {
   await Session.deleteMany({});
   await Response.deleteMany({});
   await Answer.deleteMany({});
+  await Question.deleteMany({});
 
   console.log("collections deleted");
+
+  // insert questions
+
+  await buildSurvey();
 
   // insert trainer
 

@@ -9,6 +9,8 @@ const storeAnswers = require("../database/queries/storeAnswers")
 router.post('/', (req, res) => {
   
   const { formState, sessionId, surveyType } = req.body
+
+  console.log("FORM STATE", formState)
   
   // storeResponse adds the response to the Response model
   // and returns the unique Response ID
