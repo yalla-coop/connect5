@@ -168,6 +168,7 @@ export default class Questions extends React.Component {
               </MatrixField>
             );
           }
+          return "";
         })}
       </React.Fragment>
     );
