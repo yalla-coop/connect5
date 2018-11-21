@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const mongoDB = require("../../config/keys").mongoURI;
+// const mongoose = require("mongoose");
+// const mongoDB = require("../../config/keys").mongoURI;
 
 // load models
 const Trainer = require("./models/Trainer");
@@ -8,12 +8,21 @@ const Response = require("./models/Response");
 const Answer = require("./models/Answer");
 const Question = require("./models/Question");
 
-async function buildDb() {
+// load queries
+const registerTrainer = require('./queries/register-trainer');
+
+// buildSurvey
+const buildSurvey = require('./surveyBuild');
+
+const dbConnection = require('../database/db_Connection');
+dbConnection();
+
+const buildDb = async () => {
   // connect to db
-  mongoose.connect(
-    mongoDB,
-    { useNewUrlParser: true }
-  );
+  // mongoose.connect(
+  //   mongoDB,
+  //   { useNewUrlParser: true }
+  // );
 
   // clear collections
 
@@ -21,9 +30,12 @@ async function buildDb() {
   await Session.deleteMany({});
   await Response.deleteMany({});
   await Answer.deleteMany({});
+  await Question.deleteMany({});
 
   console.log("collections deleted");
 
+  // insert Questions
+  await buildSurvey();
   // insert trainer
 
   const trainer = new Trainer({
@@ -32,9 +44,13 @@ async function buildDb() {
     email: "johndoe@gmail.com",
     password: "123456"
   });
+  const email = trainer.email;
+  const errors = {};
 
-  await trainer.save();
-
+  await registerTrainer(email, errors, trainer)
+  .then(trainer => trainer.save())
+  .catch(err => console.log(err))
+  // await trainer.save();
   console.log("trainer added: ", await Trainer.find());
 
   // insert session for that trainer
@@ -249,3 +265,5 @@ async function buildDb() {
 }
 
 buildDb().catch(err => console.error(err.stack));
+
+module.exports = buildDb;

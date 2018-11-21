@@ -1,12 +1,12 @@
-// Enter surveys here
-const mongoose = require("mongoose");
-const mongoDB = require("../../config/keys").mongoURI;
+// // Enter surveys here
+// const mongoose = require("mongoose");
+// const mongoDB = require("../../config/keys").mongoURI;
 
-// connect to db
-mongoose.connect(
-  mongoDB,
-  { useNewUrlParser: true }
-);
+// // connect to db
+// mongoose.connect(
+//   mongoDB,
+//   { useNewUrlParser: true }
+// );
 
 // load model
 const Question = require("./models/Question");
@@ -14,6 +14,8 @@ const Question = require("./models/Question");
 // input pre-survey
 // drop tables before running the script
 // insert question array of objects
+
+const buildSurvey = () => new Promise((resolve, reject) => {
 
 Question.deleteMany({})
   .then(console.log("db successfully deleted"))
@@ -606,5 +608,10 @@ Question.deleteMany({})
       }
     ])
   )
-  .then(console.log("successfully inserted"))
-  .catch(err => console.log(err));
+  .then(resolve("successfully inserted"))
+  .catch(err => reject(err));
+});
+
+buildSurvey().catch(err => console.log(err));
+
+module.exports = buildSurvey;

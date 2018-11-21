@@ -2,13 +2,10 @@ const mongoose = require('mongoose');
 const dbConnection = require("../server/database/db_connection");
 const registerTrainer = require('../server/database/queries/register-trainer');
 const validateRegisterTrainer = require('../server/validation/register-trainer-val');
+const Trainer = require('../server/database/models/Trainer');
 
 // Connect to DB
 dbConnection();
-
-const Trainer = require('../server/database/models/Trainer');
-
-
 
 // dummy data requests to be tested
 const request1 =
