@@ -231,6 +231,73 @@ const Answer = styled.p`
   margin: auto;
 `;
 
+const IndividualWrapper = styled.div`
+  margin-top: 25px;
+  background-color: #EFF3F4;
+  padding-bottom: 50px;
+`;
+
+
+const NavigationWrapper = styled.div`
+display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 36%;
+  margin: 20px auto 0;
+  text-align: center;
+`;
+
+const Arrow = styled.div`
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-${props => props.direction}: 20px solid var(--button-background-color);
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-radius: 5px;
+  cursor: pointer
+`;
+
+const ResponseCounter = styled.i`
+`;
+
+const IndividualQuestion = styled.div`
+  padding: 20px 11px 10px;
+  TEXT-ALIGN: justify;
+  font-weight: 100;
+  margin-bottom: 0;
+  line-height: 26px;
+  border-bottom: 1px solid #666666;
+`;
+
+const QuestionSpan = styled.span`
+  font-weight: 900;
+  font-size: 21px;
+  margin-right: 8px;
+`;
+
+const IndividualAnswer = styled.p`
+  padding: 6px 0;
+  width: 90%;
+  color: var(--button-text-color);
+`;
+
+const MatrixAnswer = styled.p`
+  padding: 16px 0 0;
+  width: 90%;
+  margin: auto;
+  color: var(--button-text-color);
+`;
+
+const Error = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 50px;
+  font-size: 28px
+`;
+
 export {
   SessionResultWrapper,
   PageTitle,
@@ -262,4 +329,14 @@ export {
   StarIconsWrapper,
   StarIcon,
   Answer,
+
+  IndividualWrapper,
+  NavigationWrapper,
+  Arrow,
+  ResponseCounter,
+  QuestionSpan,
+  IndividualQuestion,
+  IndividualAnswer,
+  MatrixAnswer,
+  Error,
 };

@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "prop-types": "^15.6.2",
     "moment": "^2.22.2",
+    "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-datepicker": "^1.8.0",
     "react-dom": "^16.6.3",
