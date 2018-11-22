@@ -60,15 +60,16 @@ class OverallResults extends Component {
     const {
       reponsesNumber,
       attendeesNumber,
-      questions,
       isPopupActive,
       activeQuestionIndex,
     } = this.state;
-
+    let { questions } = this.state;
+    questions = questions.slice(5 - questions.length);
     const { handleOpenPopup, handleClosePopup } = this;
     const RsponsesRatio = Math.ceil((reponsesNumber / attendeesNumber) * 100);
     const activeQuestion = questions[activeQuestionIndex];
     const { match } = this.props;
+
     return (
       <div>
 

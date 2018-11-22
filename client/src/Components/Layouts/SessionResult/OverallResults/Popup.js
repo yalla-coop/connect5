@@ -6,6 +6,7 @@ import ReactRouterPropTypes from "react-router-prop-types";
 import Stars from "./Stars";
 import Radio from "./RadioResults";
 import TextfieldResults from "./TextfieldResults";
+import Matrix from "./Matrix";
 
 import {
   PopupWrapper,
@@ -54,7 +55,7 @@ class Popup extends Component {
       inputType,
       question,
     } = this.props;
-
+    
     const { answers } = this.state;
     return (
       <PopupWrapper>
@@ -62,9 +63,10 @@ class Popup extends Component {
         <PopupQuestion>
           {questionText}
         </PopupQuestion>
+        {inputType === "matrix" && <Matrix answers={answers} options={question.options} />}
         {inputType === "radiostar" && <Stars answers={answers} options={question.options} />}
-        {inputType === "radio" && <Radio answers={answers} options={question.options} />}
-        {inputType === "text" && <TextfieldResults answers={answers} />}
+        {inputType === "checkbox" && <Radio answers={answers} options={question.options} />}
+        { inputType === "textarea" && <TextfieldResults answers={answers} />}
       </PopupWrapper>
     );
   }
