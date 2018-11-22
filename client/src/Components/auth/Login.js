@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import setAuthToken from "../../Utils/setAuthToken";
 import jwt_decode from "jwt-decode";
+import setAuthToken from "../../Utils/setAuthToken";
 
 import Header from "../CommonComponents/Header";
 
@@ -46,17 +46,9 @@ class Login extends Component {
 
         // set token to local storage (only stores strings)
         localStorage.setItem("jwtToken", token);
-
         // set token to auth header
         setAuthToken(token);
-
-        // Decode Token to get trainer data
-        const decoded = jwt_decode(token);
-
-        console.log("DECODED", decoded)
-
-        this.props.history.push("/trainer/dashboard");
-      }) // redirect after login success
+      })
       .catch(err => this.setState({
         errors: err.response.data,
       }));

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter, Route, Switch, Redirect,
+} from "react-router-dom";
 
 // setup authorization
-import setAuthToken from "../Utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-
+import setAuthToken from "../Utils/setAuthToken";
 
 // import components
 import Home from "./Layouts/Home";
@@ -21,13 +22,28 @@ import "./App.css";
 class App extends Component {
   state = {
     sessions: [],
+    isAuthenticated: false,
+    loaded: false,
+    trainerId: null,
   };
+
+  componentDidMount() {
+    if (localStorage.jwtToken) {
+      setAuthToken(localStorage.jwtToken);
+      const decoded = jwt_decode(localStorage.jwtToken);
+      this.setState({
+        isAuthenticated: true,
+        trainerId: decoded.id,
+      });
+    }
+  }
 
   handleSessions = (sessions) => {
     this.setState({ sessions });
   };
 
   render() {
+    const { isAuthenticated } = this.state;
     return (
       <BrowserRouter>
         <div className="App">
@@ -36,7 +52,12 @@ class App extends Component {
             <Route path="/trainer" exact component={TrainersLandingPage} />
             <Route path="/trainer/register" exact component={Register} />
             <Route path="/trainer/login" exact component={Login} />
-            <Route path="/trainer/dashboard" exact component={Dashboard} />
+            <Route
+              path="/trainer/dashboard"
+              exact
+              render={props => (isAuthenticated ? <Dashboard {...props} /> : <Redirect to="/trainer/login" />)
+              }
+            />
             <Route
               path="/view-sessions"
               render={() => <ViewSessions handleSessions={this.handleSessions} />}
