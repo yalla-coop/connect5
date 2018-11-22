@@ -13,6 +13,10 @@ const buildSurvey = require("./surveyBuild");
 
 const dbConnection = require("../database/db_Connection");
 
+
+
+const buildDb = async () => {
+
 dbConnection();
 
 
@@ -43,10 +47,12 @@ const buildDb = async () => {
   const errors = {};
 
   await registerTrainer(email, errors, trainer)
+
     .then(trainer => trainer.save())
     .catch(err => console.log(err));
   // await trainer.save();
   console.log("trainer added");
+  
   // insert session for that trainer
 
   await Session.insertMany([
@@ -84,6 +90,7 @@ const buildDb = async () => {
       participantId: "123",
       surveyType: 0,
     },
+
   ]);
 
   await Response.insertMany([
