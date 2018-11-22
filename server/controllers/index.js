@@ -10,6 +10,7 @@ const questionController = require("./question");
 const viewSessions = require("./view-sessions");
 const registerTrainer = require('./register-trainer');
 const loginTrainer = require('./login-trainer');
+const dashboard = require("./dashboard");
 
 const router = express.Router();
 
@@ -19,6 +20,7 @@ router.use("/question", questionController);
 router.use("/view-sessions", viewSessions);
 router.use('/register', registerTrainer);
 router.use('/login', loginTrainer);
+router.use('/dashboard', dashboard);
 
 // Get data routes
 router.get("/survey/:id", surveyQs.get);
