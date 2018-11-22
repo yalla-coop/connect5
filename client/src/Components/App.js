@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+// setup authorization
+import setAuthToken from "../Utils/setAuthToken";
+import jwt_decode from "jwt-decode";
+
+
 // import components
 import Home from "./Layouts/Home";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
+import Dashboard from "./Layouts/TrainerDashboard/index";
 import Survey from "./Layouts/Survey";
 import TrainersLandingPage from "./Layouts/TrainersLandingPage";
 import ViewSessions from "./Layouts/view-sessions";
@@ -30,6 +36,7 @@ class App extends Component {
             <Route path="/trainer" exact component={TrainersLandingPage} />
             <Route path="/trainer/register" exact component={Register} />
             <Route path="/trainer/login" exact component={Login} />
+            <Route path="/trainer/dashboard" exact component={Dashboard} />
             <Route
               path="/view-sessions"
               render={() => <ViewSessions handleSessions={this.handleSessions} />}
@@ -42,6 +49,7 @@ class App extends Component {
               exact
               component={SessionResult}
             />
+            {/* <Route path="/dashboard" exact component={Dashboard} /> */}
           </Switch>
         </div>
       </BrowserRouter>
