@@ -39,6 +39,7 @@ class ViewSessions extends Component {
   }
 
   handleClick = (session) => {
+    console.log(session, "hrrrrrrrrrrrrrrrrrr");
     this.props.getCurrentSession(session);
     this.context.router.history.push("/session-details");
   };

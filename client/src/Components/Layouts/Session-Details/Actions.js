@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import {
   Actions, Action, ActionBtn, Span, Icon,
 } from "./styledComponents";
@@ -6,7 +7,13 @@ import {
 
 class SessionActions extends Component {
   deleteSession = (_id) => {
+    axios
+      .get(`/deleteSession/${_id}`)
+      .then((res) => {
+      })
+      .catch(err => this.context.router.history.push("/server-error"));
   }
+
 
   render() {
     const { sessionDetails } = this.props;
@@ -25,4 +32,5 @@ class SessionActions extends Component {
     );
   }
 }
+
 export default SessionActions;

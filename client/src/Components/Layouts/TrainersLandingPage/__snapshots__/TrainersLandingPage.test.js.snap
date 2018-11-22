@@ -38,7 +38,7 @@ exports[`Header matches snapshot 1`] = `
   </p>
   <a
     className="sc-bZQynM ickhtK"
-    href="/trainer/signup"
+    href="/trainer/register"
     onClick={[Function]}
   >
     Sign up

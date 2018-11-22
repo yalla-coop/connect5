@@ -2,7 +2,7 @@
 
 exports[`Header matches snapshot 1`] = `
 <div
-  className="sc-bdVaJa fQEtqg"
+  className="sc-bdVaJa grKoWt"
 >
   <div
     className="sc-bwzfXH cQUfqX"
@@ -58,7 +58,7 @@ exports[`Header matches snapshot 1`] = `
         <div
           className="sc-gzVnrw iYcnAa"
         >
-          Attendee
+          Attendees
         </div>
         <div
           className="sc-htoDjs qfODK"
@@ -71,62 +71,107 @@ exports[`Header matches snapshot 1`] = `
       className="sc-dnqmqq coFIU"
     >
       <div
-        className="sc-iwsKbI edkAqG"
-      >
-        <div
-          className="sc-gqjmRU jxHkFa"
-        >
-          Survey
-          1
-          Link
-        </div>
-        <div
-          className="sc-VigVT FrKLX"
-        >
-          <i
-            className="fas fa-info-circle"
-          />
-          <span
-            className="sc-gZMcBi iebefm"
-          >
-            info
-          </span>
-        </div>
-        <div
-          className="sc-VigVT FrKLX"
-        >
-          <i
-            className="far fa-clone"
-          />
-          <span
-            className="sc-gZMcBi iebefm"
-          >
-            copy
-          </span>
-        </div>
-      </div>
-      <div
         className="sc-jTzLTM loWeSC"
       >
         <div
           className="sc-dxgOiQ ibPSak"
         >
+          <div
+            className="sc-iwsKbI iSdUHD"
+          >
+            <div
+              className="sc-gqjmRU jxHkFa"
+            >
+              Survey
+              1
+              Link
+            </div>
+            <div
+              className="sc-VigVT FrKLX"
+            >
+              <i
+                className="fas fa-info-circle"
+              />
+              <span
+                className="sc-gZMcBi iebefm"
+              >
+                info
+              </span>
+            </div>
+            <div
+              className="sc-VigVT FrKLX"
+            >
+              <button
+                className="sc-ckVGcZ fipeIP"
+                onClick={[Function]}
+              >
+                <i
+                  className="far fa-clone"
+                />
+                <span
+                  className="sc-gZMcBi iebefm"
+                >
+                  copy
+                </span>
+              </button>
+            </div>
+          </div>
           <a
-            className="sc-fjdhpX kiIIjC"
-            href="sessionDetails.surveyURL1"
+            className="sc-fjdhpX QWrjU"
+            href="123"
           >
             123
           </a>
+          <div
+            className="sc-iwsKbI iSdUHD"
+          >
+            <div
+              className="sc-gqjmRU jxHkFa"
+            >
+              Survey
+              1
+              Link
+            </div>
+            <div
+              className="sc-VigVT FrKLX"
+            >
+              <i
+                className="fas fa-info-circle"
+              />
+              <span
+                className="sc-gZMcBi iebefm"
+              >
+                info
+              </span>
+            </div>
+            <div
+              className="sc-VigVT FrKLX"
+            >
+              <button
+                className="sc-ckVGcZ fipeIP"
+                onClick={[Function]}
+              >
+                <i
+                  className="far fa-clone"
+                />
+                <span
+                  className="sc-gZMcBi iebefm"
+                >
+                  copy
+                </span>
+              </button>
+            </div>
+          </div>
           <a
-            className="sc-fjdhpX kiIIjC"
-            href="sessionDetails.surveyURL2"
+            className="sc-fjdhpX QWrjU"
+            href="123"
           >
             123
           </a>
         </div>
       </div>
       <div
-        className="sc-jzJRlG iwFcxN"
+        className="sc-jzJRlG jwQlMQ"
       >
         <button
           className="sc-cSHVUG gusGZN"
@@ -140,14 +185,14 @@ exports[`Header matches snapshot 1`] = `
     className="sc-kAzzGY cJFEus"
   >
     <div
-      className="sc-chPdSV dxNFWQ"
+      className="sc-chPdSV iNQxXr"
     >
       <button
-        className="sc-kgoBCf bZaKjA"
+        className="sc-kgoBCf WFtvE"
         type="button"
       >
         <i
-          className="far fa-edit sc-kGXeez bbdQPk"
+          className="far fa-edit sc-kGXeez dUGvOA"
         />
       </button>
       <span
@@ -157,15 +202,15 @@ exports[`Header matches snapshot 1`] = `
       </span>
     </div>
     <div
-      className="sc-chPdSV dxNFWQ"
+      className="sc-chPdSV iNQxXr"
     >
       <button
-        className="sc-kgoBCf bZaKjA"
+        className="sc-kgoBCf WFtvE"
         onClick={[Function]}
         type="button"
       >
         <i
-          className="fas fa-trash-alt sc-kGXeez bbdQPk"
+          className="fas fa-trash-alt sc-kGXeez dUGvOA"
         />
       </button>
       <span

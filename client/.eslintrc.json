@@ -8,6 +8,8 @@
   "extends": "airbnb",
   "rules": {
     "indent": ["error", 2],
+    "react/no-did-update-set-state": [0, "disallow-in-func"],
+    "no-underscore-dangle": [0],
     "react/jsx-filename-extension": [
       1,
       {

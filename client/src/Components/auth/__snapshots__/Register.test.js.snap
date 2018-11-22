@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register matches snapshot 1`] = `
+<div
+  className="sc-bxivhb fmaNkn"
+>
+  <div
+    className="sc-bdVaJa dJIpua"
+  >
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      <i
+        className="fas fa-home sc-bwzfXH jyqnUy"
+      />
+    </a>
+    <img
+      alt="Logo"
+      className="sc-htpNat gFDNQJ"
+      src="Logo.jpg"
+    />
+  </div>
+  <h1
+    className="sc-ifAKCX jrXIsO"
+  >
+    Create Your Account
+  </h1>
+  <form
+    className="sc-EHOje hrsZkK"
+    noValidate={true}
+    onSubmit={[Function]}
+  >
+    <input
+      className="sc-bZQynM hIDwhB"
+      name="firstName"
+      onChange={[Function]}
+      placeholder="First Name"
+      type="text"
+      value=""
+    />
+    <input
+      className="sc-bZQynM hIDwhB"
+      name="lastName"
+      onChange={[Function]}
+      placeholder="Last Name"
+      type="text"
+      value=""
+    />
+     
+    <input
+      className="sc-bZQynM hIDwhB"
+      name="email"
+      onChange={[Function]}
+      placeholder="Email Address"
+      type="email"
+      value=""
+    />
+    <input
+      className="sc-bZQynM hIDwhB"
+      name="password"
+      onChange={[Function]}
+      placeholder="Password"
+      type="password"
+      value=""
+    />
+    <input
+      className="sc-bZQynM hIDwhB"
+      name="password2"
+      onChange={[Function]}
+      placeholder="Confirm Password"
+      type="password"
+      value=""
+    />
+    <input
+      className="sc-bZQynM hIDwhB"
+      type="submit"
+    />
+  </form>
+</div>
+`;

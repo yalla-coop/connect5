@@ -38,6 +38,7 @@ describe("addSession testing", async () => {
     // Insert trainer into DB
     await trainer.save();
 
+    console.log("TRAINERS", await Trainer.find())
     // Session data to be stored
     const sessionType = 2;
     const sessionDate = "2018-12-01";

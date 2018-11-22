@@ -1,6 +1,3 @@
-const mongoose = require("mongoose");
-const mongoDB = require("../../config/keys").mongoURI;
-
 // load models
 const Trainer = require("./models/Trainer");
 const Session = require("./models/Session");
@@ -8,21 +5,31 @@ const Response = require("./models/Response");
 const Answer = require("./models/Answer");
 const Question = require("./models/Question");
 
-async function buildDb() {
-  // connect to db
-  mongoose.connect(
-    mongoDB,
-    { useNewUrlParser: true },
-  );
+// load queries
+const registerTrainer = require("./queries/register-trainer");
 
+// buildSurvey
+const buildSurvey = require("./surveyBuild");
+
+const dbConnection = require("../database/db_Connection");
+
+dbConnection();
+
+
+const buildDb = async () => {
   // clear collections
 
   await Trainer.deleteMany({});
   await Session.deleteMany({});
   await Response.deleteMany({});
   await Answer.deleteMany({});
+  await Question.deleteMany({});
 
   console.log("collections deleted");
+
+  // insert questions
+
+  await buildSurvey();
 
   // insert trainer
 
@@ -32,11 +39,14 @@ async function buildDb() {
     email: "johndoe@gmail.com",
     password: "123456",
   });
+  const email = trainer.email;
+  const errors = {};
 
-  await trainer.save();
-
-  console.log("trainer added: ", await Trainer.find());
-
+  await registerTrainer(email, errors, trainer)
+    .then(trainer => trainer.save())
+    .catch(err => console.log(err));
+  // await trainer.save();
+  console.log("trainer added");
   // insert session for that trainer
 
   await Session.insertMany([
@@ -46,20 +56,20 @@ async function buildDb() {
       date: "2018-04-17",
       invitees: 15,
       attendees: 8,
-      surveyURL1: "connect5.com/presurvey",
-      surveyURL2: "connect5.com/survey1",
+      surveyURL1: "0",
+      surveyURL2: "1",
     },
     {
       trainer: trainer._id,
       type: 2,
       date: "2018-08-22",
       invitees: 6,
-      attendees: 10,
-      surveyURL1: "connect5.com/survey2",
+      attendees: 20,
+      surveyURL1: "2",
     },
   ]);
 
-  console.log("sessions added: ", await Session.find());
+  console.log("sessions added");
 
   // insert response for the first session
 
@@ -72,10 +82,20 @@ async function buildDb() {
       session: singleSession._id,
       trainer: singleSession.trainer,
       participantId: "123",
+      surveyType: 0,
     },
   ]);
 
-  console.log("response added: ", await Response.find());
+  await Response.insertMany([
+    {
+      session: singleSession._id,
+      trainer: singleSession.trainer,
+      participantId: "123",
+      surveyType: 1,
+    },
+  ]);
+
+  console.log("responses added");
 
   // insert answers for that response
 
@@ -246,7 +266,9 @@ async function buildDb() {
     },
   ]);
 
-  console.log("survey answers added: ", await Answer.find());
-}
+  console.log("survey answers added");
+};
 
 buildDb().catch(err => console.error(err.stack));
+
+module.exports = buildDb;
