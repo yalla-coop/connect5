@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
   Span2, Span1, LinkType, LinkInfo, Btn,
 } from "./styledComponents";
