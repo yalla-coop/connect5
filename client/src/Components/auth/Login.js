@@ -37,7 +37,9 @@ class Login extends Component {
     axios
       .post("/login", trainerData)
       .then(res => this.props.history.push("/home")) // redirect after login success
-      .catch(err => console.log(err));
+      .catch(err => this.setState({
+        errors: err.response.data,
+      }));
   };
 
   render() {
