@@ -1,19 +1,14 @@
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
-const mongoose = require("mongoose");
-
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const logger = require('morgan');
 const controllers = require("./controllers");
 
-// DB Connection
-const db = require("../config/keys").mongoURI;
+const dbConnection = require("./database/db_connection");
 
-// connect to mongoDB
-mongoose
-  .connect(db)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err));
+// Connect to DB
+dbConnection();
 
 const app = express();
 
@@ -21,6 +16,10 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(controllers);
 
