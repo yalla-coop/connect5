@@ -64,11 +64,14 @@ class OverallResults extends Component {
       activeQuestionIndex,
     } = this.state;
     let { questions } = this.state;
-    questions = questions.slice(5 - questions.length);
+    const regionQuestion = questions[1];
+    questions = questions.slice(4 - questions.length);
+    // eslint-disable-next-line no-unused-expressions
+    regionQuestion && questions.unshift(regionQuestion);
     const { handleOpenPopup, handleClosePopup } = this;
     const RsponsesRatio = Math.ceil((reponsesNumber / attendeesNumber) * 100);
     const activeQuestion = questions[activeQuestionIndex];
-    const { match } = this.props;
+    const { match, history } = this.props;
 
     return (
       <div>
@@ -118,6 +121,7 @@ class OverallResults extends Component {
               questionText={activeQuestion.questionText}
               question={activeQuestion}
               sessionId={match.params.sessionId}
+              history={history}
             />
           )
           : null}

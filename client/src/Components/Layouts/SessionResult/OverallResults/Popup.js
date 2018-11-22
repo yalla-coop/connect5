@@ -55,7 +55,6 @@ class Popup extends Component {
       inputType,
       question,
     } = this.props;
-    
     const { answers } = this.state;
     return (
       <PopupWrapper>
@@ -65,7 +64,7 @@ class Popup extends Component {
         </PopupQuestion>
         {inputType === "matrix" && <Matrix answers={answers} options={question.options} />}
         {inputType === "radiostar" && <Stars answers={answers} options={question.options} />}
-        {inputType === "checkbox" && <Radio answers={answers} options={question.options} />}
+        {(inputType === "checkbox" || inputType === "radio") && <Radio answers={answers} options={question.options} />}
         { inputType === "textarea" && <TextfieldResults answers={answers} />}
       </PopupWrapper>
     );
