@@ -22,6 +22,7 @@ router.use("/register", registerTrainer);
 router.use("/login", loginTrainer);
 router.use("/deleteSession/:_id", deleteSessionById);
 
+
 // Get data routes
 router.get("/survey/:id", surveyQs.get);
 

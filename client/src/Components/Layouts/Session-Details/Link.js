@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
-  Span2, Span1, LinkType, LinkInfo, Btn,
+  Span2,
+  Span1,
+  LinkType,
+  LinkInfo,
+  Btn,
 } from "./styledComponents";
 
 class Link extends Component {
   render() {
     const {
-      type, onCopy, saveInState, surveyURL1, surveyURL2, value,
+      type, onCopy, saveInState, surveyURL1, value,
     } = this.props;
     return (
       <LinkType>
