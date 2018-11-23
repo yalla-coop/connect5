@@ -231,6 +231,22 @@ const Answer = styled.p`
   margin: auto;
 `;
 
+const MatrixAnswer = styled.p`
+  padding: 16px 0 0;
+  width: 90%;
+  margin: auto;
+  color: var(--button-text-color);
+`;
+
+const Error = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 50px;
+  font-size: 28px
+`;
+
 export {
   SessionResultWrapper,
   PageTitle,
@@ -262,4 +278,6 @@ export {
   StarIconsWrapper,
   StarIcon,
   Answer,
+  Error,
+  MatrixAnswer,
 };

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import getOptions from "./get_options";
-import { RadioRow, Paragraph, Answer } from "./../StyledComponents";
+import { RadioRow, Paragraph, Answer } from "../StyledComponents";
 
 class RadioResults extends Component {
   static propTypes = {
