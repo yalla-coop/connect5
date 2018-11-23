@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import Link from "./Link";
 import {
   Content,
