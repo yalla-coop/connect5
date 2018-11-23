@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 import {
-  Actions, Action, ActionBtn, Span, Icon,
+  Actions,
+  Action,
+  ActionBtn,
+  Span,
+  Icon,
 } from "./styledComponents";
 
 
