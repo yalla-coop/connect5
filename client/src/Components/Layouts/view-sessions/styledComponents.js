@@ -107,7 +107,7 @@ const Icon = styled.i`
    }
 `;
 
-const Button = styled.i`
+const Button = styled.button`
    background: none;
    border: none
 `;
