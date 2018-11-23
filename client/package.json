@@ -7,6 +7,7 @@
     "moment": "^2.22.2",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-datepicker": "^1.8.0",
     "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1",
