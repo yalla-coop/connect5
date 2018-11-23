@@ -2,11 +2,11 @@
 
 exports[`snapshot for 'IndividualResults' layout 1`] = `
 <div
-  className="sc-kkGfuU zOxBq"
+  className="sc-kkGfuU hQUDDl"
 >
   <div>
     <div
-      className="sc-iAyFgw fJwzku"
+      className="sc-iAyFgw gmTSaW"
     >
       <div
         className="sc-hSdWYo cCmYPK"
@@ -15,7 +15,7 @@ exports[`snapshot for 'IndividualResults' layout 1`] = `
         onClick={[Function]}
       />
       <i
-        className="sc-eHgmQL gBlBhh"
+        className="sc-eHgmQL gmKbQu"
       >
         NaN
          
