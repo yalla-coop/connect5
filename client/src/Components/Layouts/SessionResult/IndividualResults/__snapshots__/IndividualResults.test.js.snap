@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot for 'IndividualResults' layout 1`] = `
+<div
+  className="sc-kkGfuU hQUDDl"
+>
+  <div>
+    <div
+      className="sc-iAyFgw gmTSaW"
+    >
+      <div
+        className="sc-hSdWYo cCmYPK"
+        direction="right"
+        id="-1"
+        onClick={[Function]}
+      />
+      <i
+        className="sc-eHgmQL gmKbQu"
+      >
+        NaN
+         
+        OF
+         
+      </i>
+      <div
+        className="sc-hSdWYo iBahAz"
+        direction="left"
+        id="+1"
+        onClick={[Function]}
+      />
+    </div>
+  </div>
+</div>
+`;

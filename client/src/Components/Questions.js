@@ -154,7 +154,7 @@ export default class Questions extends React.Component {
                               value={elem}
                               className={`matrix ${ind}`}
                               onChange={() => {
-                                handleMatrix(i, elem, questionId);
+                                handleMatrix(el.options.rows[i], elem, questionId);
                               }}
                             />
                             <span className="checkmark" />
@@ -174,4 +174,3 @@ export default class Questions extends React.Component {
     );
   }
 }
-

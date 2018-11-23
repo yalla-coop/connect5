@@ -11,11 +11,9 @@ const registerTrainer = require("./queries/register-trainer");
 // buildSurvey
 const buildSurvey = require("./surveyBuild");
 
-const dbConnection = require("../database/db_connection");
-
+const dbConnection = require("./db_connection");
 
 dbConnection();
-
 
 const buildDb = async () => {
   // clear collections
@@ -44,7 +42,6 @@ const buildDb = async () => {
   const errors = {};
 
   await registerTrainer(email, errors, trainer)
-
     .then(trainer => trainer.save())
     .catch(err => console.log(err));
   // await trainer.save();
@@ -87,7 +84,6 @@ const buildDb = async () => {
       participantId: "123",
       surveyType: 0,
     },
-
   ]);
 
   await Response.insertMany([
