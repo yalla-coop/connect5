@@ -1,5 +1,10 @@
 import React from "react";
-import { Header, Heading, Borderbottom } from "./styledComponents";
+import {
+  Header,
+  Heading,
+  Borderbottom,
+}
+  from "./styledComponents";
 
 const SessionHeader = () => (
   <Header>
