@@ -11,7 +11,7 @@ const registerTrainer = require("./queries/register-trainer");
 // buildSurvey
 const buildSurvey = require("./surveyBuild");
 
-const dbConnection = require("../database/db_Connection");
+const dbConnection = require("../database/db_connection");
 
 
 dbConnection();
