@@ -6,16 +6,15 @@ const Question = require("./models/Question");
 // insert question array of objects
 
 const buildSurvey = () => new Promise((resolve, reject) => {
-
   Question.deleteMany({})
     .catch(err => reject(err))
-    .then(
+    .then(() => {
       Question.insertMany([
         // Pre-survey questions
         {
           surveyType: 0,
           questionText: "Please enter your Unique ID Number (if applicable)",
-          inputType: "text"
+          inputType: "text",
         },
         {
           surveyType: 0,
@@ -31,8 +30,8 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "London",
             "South East",
             "South West",
-            "Other (please specify)"
-          ]
+            "Other (please specify)",
+          ],
         },
         {
           surveyType: 0,
@@ -40,12 +39,12 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           inputType: "text",
           helperText:
             "If you do not work in a fixed location please put the postcode your are most often working in",
-          options: []
+          options: [],
         },
         {
           surveyType: 0,
           questionText: "Please enter your job title",
-          inputType: "text"
+          inputType: "text",
         },
         {
           surveyType: 0,
@@ -61,8 +60,8 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "Teaching and educational professionals (e.g. headteachers, teachers, teaching assistants, admin staff working in education settings)",
             "Childcare related professions (e.g. nursery staff, childminders)",
             "Sports and fitness occupations (e.g. sports coaches, fitness instructors and leisure centre employees)",
-            "Other (please specify)"
-          ]
+            "Other (please specify)",
+          ],
         },
         {
           surveyType: 0,
@@ -71,7 +70,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           inputType: "radiostar",
           helperText:
             "0 stars means no understanding. 6 stars means excellent understanding",
-          options: [1, 2, 3, 4, 5, 6]
+          options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 0,
@@ -80,7 +79,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           inputType: "radiostar",
           helperText:
             "0 stars means not important. 6 stars means every important",
-          options: [1, 2, 3, 4, 5, 6]
+          options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 0,
@@ -88,14 +87,14 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
           inputType: "radiostar",
           helperText: "0 stars means not confident. 6 stars means very confident",
-          options: [1, 2, 3, 4, 5, 6]
+          options: [1, 2, 3, 4, 5, 6],
         },
 
         // Survey 1 questions
         {
           surveyType: 1,
           questionText: "Please enter your Unique ID Number (if applicable)",
-          inputType: "text"
+          inputType: "text",
         },
         {
           surveyType: 1,
@@ -111,8 +110,8 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "London",
             "South East",
             "South West",
-            "Other (please specify)"
-          ]
+            "Other (please specify)",
+          ],
         },
         {
           surveyType: 1,
@@ -120,12 +119,12 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           inputType: "text",
           helperText:
             "If you do not work in a fixed location please put the postcode your are most often working in",
-          options: []
+          options: [],
         },
         {
           surveyType: 1,
           questionText: "Please enter your job title",
-          inputType: "text"
+          inputType: "text",
         },
         {
           surveyType: 1,
@@ -141,8 +140,8 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "Teaching and educational professionals (e.g. headteachers, teachers, teaching assistants, admin staff working in education settings)",
             "Childcare related professions (e.g. nursery staff, childminders)",
             "Sports and fitness occupations (e.g. sports coaches, fitness instructors and leisure centre employees)",
-            "Other (please specify)"
-          ]
+            "Other (please specify)",
+          ],
         },
         {
           surveyType: 1,
@@ -151,7 +150,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           inputType: "radiostar",
           helperText:
             "0 stars means no understanding. 6 stars means excellent understanding",
-          options: [1, 2, 3, 4, 5, 6]
+          options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 1,
@@ -160,7 +159,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           inputType: "radiostar",
           helperText:
             "0 stars means not important. 6 stars means every important",
-          options: [1, 2, 3, 4, 5, 6]
+          options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 1,
@@ -168,7 +167,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
           inputType: "radiostar",
           helperText: "0 stars means not confident. 6 stars means very confident",
-          options: [1, 2, 3, 4, 5, 6]
+          options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 1,
@@ -184,8 +183,8 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "Teacher / facilitator",
             "Everything",
             "Nothing",
-            "Other (please specify)"
-          ]
+            "Other (please specify)",
+          ],
         },
         {
           surveyType: 1,
@@ -200,7 +199,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
               "Moderate improvement (2)",
               "Improved (3)",
               "Well improved (4)",
-              "Greatly improved (5)"
+              "Greatly improved (5)",
             ],
             rows: [
               "Your understanding of emotional health & wellbeing through the '5 areas' model",
@@ -208,9 +207,9 @@ const buildSurvey = () => new Promise((resolve, reject) => {
               "How to start a conversation with people about their mental health & wellbeing",
               "Your confidence to talk to people about their mental health & wellbeing",
               "Your understanding of the importance of self- help material and its uses",
-              "Your understanding of local mental health & wellbeing services and how to signpost people to them"
-            ]
-          }
+              "Your understanding of local mental health & wellbeing services and how to signpost people to them",
+            ],
+          },
         },
         {
           surveyType: 1,
@@ -225,40 +224,40 @@ const buildSurvey = () => new Promise((resolve, reject) => {
               "Trainer knowledge about the subject",
               "Pace of training",
               "Training content",
-              "Overall view of training"
-            ]
-          }
+              "Overall view of training",
+            ],
+          },
         },
         {
           surveyType: 1,
           questionText: "Did the training fulfil your expectations?",
           inputType: "radio",
-          options: ["Yes", "No"]
+          options: ["Yes", "No"],
         },
         {
           surveyType: 1,
           questionText:
             "How will your practice/work change as a result of attending this event?",
-          inputType: "textarea"
+          inputType: "textarea",
         },
         {
           surveyType: 1,
           questionText:
             "What are your suggestions, if any, for changes that would improve this course?",
-          inputType: "textarea"
+          inputType: "textarea",
         },
         {
           surveyType: 1,
           questionText:
             "Is there anything else you would like to tell us about the Connect 5 session 1 training?",
-          inputType: "textarea"
+          inputType: "textarea",
         },
 
         // Survey 2 questions
         {
           surveyType: 2,
           questionText: "Please enter your Unique ID Number (if applicable)",
-          inputType: "text"
+          inputType: "text",
         },
         {
           surveyType: 2,
@@ -274,8 +273,8 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "London",
             "South East",
             "South West",
-            "Other (please specify)"
-          ]
+            "Other (please specify)",
+          ],
         },
         {
           surveyType: 2,
@@ -283,12 +282,12 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           inputType: "text",
           helperText:
             "If you do not work in a fixed location please put the postcode your are most often working in",
-          options: []
+          options: [],
         },
         {
           surveyType: 2,
           questionText: "Please enter your job title",
-          inputType: "text"
+          inputType: "text",
         },
         {
           surveyType: 2,
@@ -304,8 +303,8 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "Teaching and educational professionals (e.g. headteachers, teachers, teaching assistants, admin staff working in education settings)",
             "Childcare related professions (e.g. nursery staff, childminders)",
             "Sports and fitness occupations (e.g. sports coaches, fitness instructors and leisure centre employees)",
-            "Other (please specify)"
-          ]
+            "Other (please specify)",
+          ],
         },
         {
           surveyType: 2,
@@ -314,7 +313,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           inputType: "radiostar",
           helperText:
             "0 stars means no understanding. 6 stars means excellent understanding",
-          options: [1, 2, 3, 4, 5, 6]
+          options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 2,
@@ -323,7 +322,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           inputType: "radiostar",
           helperText:
             "0 stars means not important. 6 stars means every important",
-          options: [1, 2, 3, 4, 5, 6]
+          options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 2,
@@ -331,7 +330,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
           inputType: "radiostar",
           helperText: "0 stars means not confident. 6 stars means very confident",
-          options: [1, 2, 3, 4, 5, 6]
+          options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 2,
@@ -348,8 +347,8 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "Teacher / facilitator",
             "Everything",
             "Nothing",
-            "Other (please specify)"
-          ]
+            "Other (please specify)",
+          ],
         },
         {
           surveyType: 2,
@@ -363,7 +362,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
               "Moderate improvement (2)",
               "Improved (3)",
               "Well improved (4)",
-              "Greatly improved (5)"
+              "Greatly improved (5)",
             ],
             rows: [
               "Your confidence to use the '5 areas' model in conversation with people when talking about their mental health & wellbeing",
@@ -372,9 +371,9 @@ const buildSurvey = () => new Promise((resolve, reject) => {
               "How to use the different tools to help people unravel their distressing feelings and experiences",
               "How to start, follow and end a conversation with someone about mental health & wellbeing",
               "How to promote and use self-help resources",
-              "How to respond appropriately to different levels of distress experienced by people, including feelings of hopelessness and thoughts of suicide"
-            ]
-          }
+              "How to respond appropriately to different levels of distress experienced by people, including feelings of hopelessness and thoughts of suicide",
+            ],
+          },
         },
         {
           surveyType: 2,
@@ -389,40 +388,40 @@ const buildSurvey = () => new Promise((resolve, reject) => {
               "Trainer knowledge about the subject",
               "Pace of training",
               "Training content",
-              "Overall view of training"
-            ]
-          }
+              "Overall view of training",
+            ],
+          },
         },
         {
           surveyType: 2,
           questionText: "Did the training fulfil your expectations?",
           inputType: "radio",
-          options: ["Yes", "No"]
+          options: ["Yes", "No"],
         },
         {
           surveyType: 2,
           questionText:
             "How will your practice/work change as a result of attending this event?",
-          inputType: "textarea"
+          inputType: "textarea",
         },
         {
           surveyType: 2,
           questionText:
             "What are your suggestions, if any, for changes that would improve this course?",
-          inputType: "textarea"
+          inputType: "textarea",
         },
         {
           surveyType: 2,
           questionText:
             "Is there anything else you would like to tell us about the Connect 5 session 2 training?",
-          inputType: "textarea"
+          inputType: "textarea",
         },
 
         // Survey 3
         {
           surveyType: 3,
           questionText: "Please enter your Unique ID Number (if applicable)",
-          inputType: "text"
+          inputType: "text",
         },
         {
           surveyType: 3,
@@ -438,8 +437,8 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "London",
             "South East",
             "South West",
-            "Other (please specify)"
-          ]
+            "Other (please specify)",
+          ],
         },
         {
           surveyType: 3,
@@ -447,12 +446,12 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           inputType: "text",
           helperText:
             "If you do not work in a fixed location please put the postcode your are most often working in",
-          options: []
+          options: [],
         },
         {
           surveyType: 3,
           questionText: "Please enter your job title",
-          inputType: "text"
+          inputType: "text",
         },
         {
           surveyType: 3,
@@ -468,8 +467,8 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "Teaching and educational professionals (e.g. headteachers, teachers, teaching assistants, admin staff working in education settings)",
             "Childcare related professions (e.g. nursery staff, childminders)",
             "Sports and fitness occupations (e.g. sports coaches, fitness instructors and leisure centre employees)",
-            "Other (please specify)"
-          ]
+            "Other (please specify)",
+          ],
         },
         {
           surveyType: 3,
@@ -478,7 +477,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           inputType: "radiostar",
           helperText:
             "0 stars means no understanding. 6 stars means excellent understanding",
-          options: [1, 2, 3, 4, 5, 6]
+          options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 3,
@@ -487,7 +486,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           inputType: "radiostar",
           helperText:
             "0 stars means not important. 6 stars means every important",
-          options: [1, 2, 3, 4, 5, 6]
+          options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 3,
@@ -495,7 +494,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
           inputType: "radiostar",
           helperText: "0 stars means not confident. 6 stars means very confident",
-          options: [1, 2, 3, 4, 5, 6]
+          options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 3,
@@ -512,8 +511,8 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "Teacher / facilitator",
             "Everything",
             "Nothing",
-            "Other (please specify)"
-          ]
+            "Other (please specify)",
+          ],
         },
         {
           surveyType: 3,
@@ -527,7 +526,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
               "Moderate improvement (2)",
               "Improved (3)",
               "Well improved (4)",
-              "Greatly improved (5)"
+              "Greatly improved (5)",
             ],
             rows: [
               "How to use existing knowledge, skills and techniques to offer people more effective support",
@@ -535,9 +534,9 @@ const buildSurvey = () => new Promise((resolve, reject) => {
               "How to respond to different levels of distress experienced by people, including feelings of hopelessness and thoughts of suicide",
               "How to work alongside someone to make an action plan they are likely to complete",
               "Explore and respond to someone's troubling situation including the potential for harm",
-              "How to facilitate the use of self-management strategies by others to support a successful change"
-            ]
-          }
+              "How to facilitate the use of self-management strategies by others to support a successful change",
+            ],
+          },
         },
         {
           surveyType: 3,
@@ -551,8 +550,8 @@ const buildSurvey = () => new Promise((resolve, reject) => {
             "Reflection",
             "Summarizing",
             "Everything",
-            "Nothing"
-          ]
+            "Nothing",
+          ],
         },
         {
           surveyType: 3,
@@ -567,39 +566,38 @@ const buildSurvey = () => new Promise((resolve, reject) => {
               "Trainer knowledge about the subject",
               "Pace of training",
               "Training content",
-              "Overall view of training"
-            ]
-          }
+              "Overall view of training",
+            ],
+          },
         },
         {
           surveyType: 3,
           questionText: "Did the training fulfil your expectations?",
           inputType: "radio",
-          options: ["Yes", "No"]
+          options: ["Yes", "No"],
         },
         {
           surveyType: 3,
           questionText:
             "How will your practice/work change as a result of attending this event?",
-          inputType: "textarea"
+          inputType: "textarea",
         },
         {
           surveyType: 3,
           questionText:
             "What are your suggestions, if any, for changes that would improve this course?",
-          inputType: "textarea"
+          inputType: "textarea",
         },
         {
           surveyType: 3,
           questionText:
             "Is there anything else you would like to tell us about the Connect 5 session 3 training?",
-          inputType: "textarea"
-        }
-      ])
-    )
+          inputType: "textarea",
+        },
+      ]);
+    })
     .then(resolve("successfully added"))
     .catch(err => reject(err));
-
 });
 
 buildSurvey().catch(err => console.log(err));
