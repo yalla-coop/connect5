@@ -7,7 +7,6 @@ const Question = require("./models/Question");
 
 const buildSurvey = () => new Promise((resolve, reject) => {
   Question.deleteMany({})
-    .catch(err => reject(err))
     .then(() => {
       Question.insertMany([
         // Pre-survey questions
@@ -596,7 +595,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         },
       ]);
     })
-    .then(resolve("successfully added"))
+    .then(() => resolve("successfully added"))
     .catch(err => reject(err));
 });
 
