@@ -1,28 +1,27 @@
-const pgp = require("pg-promise")();
-const url = require("url");
-require("env2")("./config.env");
+const mongoose = require("mongoose");
 
-let DB_URL = process.env.DATABASE_URL;
-
-if (process.env.NODE_ENV === "test") {
-  DB_URL = process.env.TEST_DB_URL;
+// read "config.env" file and add it's varaible to "process.env"
+if (!process.env.TRAVIS) {
+  require("env2")("./config/config.env");
 }
 
-if (!DB_URL) throw new Error("Environment variable must be set");
+console.log("TRAVIS", process.env.TRAVIS);
 
-const params = url.parse(DB_URL);
-const [username, password] = params.auth.split(":");
+const dbConnection = () => {
+  // get DB url from process.env
+  let { mongoURI } = process.env;
 
-const options = {
-  host: params.hostname,
-  port: params.port,
-  database: params.path.split("/")[1],
-  max: process.env.MAX_DB_CONNECTIONS || 2,
-  user: username,
-  password,
-  ssl: params.hostname !== "localhost",
+  // check if the environment is test
+  if (process.env.NODE_ENV === "test") {
+    // let DB url equal testing DB
+    mongoURI = process.env.mongoURI_TEST;
+  }
+
+  // create DB connection
+  mongoose.connect(
+    mongoURI,
+    { useNewUrlParser: true },
+  );
 };
 
-const db = pgp(options);
-
-module.exports = db;
+module.exports = dbConnection;
