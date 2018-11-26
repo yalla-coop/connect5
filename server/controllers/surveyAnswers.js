@@ -2,23 +2,27 @@
 
 const express = require("express");
 const router = express.Router();
+const createError = require("http-errors");
 
 const storeResponse = require("../database/queries/storeResponse");
 const storeAnswers = require("../database/queries/storeAnswers")
 
 router.post('/', (req, res) => {
-  
+
   const { formState, sessionId, surveyType } = req.body
 
-  console.log("FORM STATE", formState)
-  
+  console.log("FORM STATE", req.body)
+
   // storeResponse adds the response to the Response model
   // and returns the unique Response ID
   // storeAnswers adds all answers to the Answer model
   storeResponse(sessionId, surveyType)
-    .then(response => storeAnswers(response._id, formState, sessionId)
-    .then(res => console.log("RES", res)))
-    .catch(err => console.log(err))
+    .then(response => storeAnswers(response._id, formState, sessionId))
+    .then(result => res.status(200).json(result))
+    .catch(() => {
+      res.status(500);
+      res.send((createError(500, "Error in inserting the survey response")));
+    });
 
 })
 

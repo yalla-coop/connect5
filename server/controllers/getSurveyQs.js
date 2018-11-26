@@ -1,7 +1,7 @@
 // controller to get the required survey questions for this route
 
 const surveyQs = require("../database/queries/surveyQuestions")
-
+const createError = require("http-errors");
 
 exports.get = (req, res) => {
 
@@ -16,7 +16,11 @@ exports.get = (req, res) => {
   surveyQs(surveyId, sessionId)
     .then(surveyDetails => {
       console.log("RESULT", surveyDetails)
-      res.status(200).send(JSON.stringify(surveyDetails))})
-    .catch(err => console.log(err))
+      res.status(200).json(surveyDetails)})
+    .catch(err => {
+      console.log(err)
+      res.status(500);
+      res.send((createError(500, "Server Error")));
+    })
 
 };
