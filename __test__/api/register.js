@@ -26,9 +26,15 @@ describe("Test for /register route", () => {
     // Build the dummy data
     await buildDb();
   });
+
+  // test if dummy data builds correctly
+  test("test if dummy data trainer registers successfully", async () => {
+    const trainer = await Trainer.findOne({ firstName: "John" });
+    expect(trainer).toBeDefined();
+  });
+
   // test client request sending empty object --> 400 Bad Request Error
   test("test for register unsuccessfully", async () => {
-    // const trainer = await Trainer.findOne({ firstName: "John" });
     const trainer = {};
     const response = await request(app).post("/register", trainer);
     expect(response.statusCode).toBe(400);
