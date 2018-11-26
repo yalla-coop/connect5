@@ -38,7 +38,7 @@ describe("Test for /register route", () => {
   });
 
   // test client request sending 'wrong' object --> 400 Bad Request Error
-  test("test for register unsuccessfully sending extra fields", async () => {
+  test("test for register sending extra fields", async () => {
     const trainer = {
       firstName: "Tester",
       lastName: "Jones",
@@ -52,14 +52,13 @@ describe("Test for /register route", () => {
       .post("/register")
       .send(trainer)
       .set("Accept", "application/json");
-    console.log(response.body);
 
     expect(response.statusCode).toBe(200);
     expect(response.body.company).toBeUndefined();
   });
 
   // test client request sending successful object --> 200 success
-  test("test for register unsuccessfully", async () => {
+  test("test for register successfully", async () => {
     const trainer = {
       firstName: "Tester",
       lastName: "Jones",
