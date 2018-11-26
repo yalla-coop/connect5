@@ -39,7 +39,36 @@ describe("Test for /register route", () => {
     const response = await request(app).post("/register", trainer);
     expect(response.statusCode).toBe(400);
   });
+
+  // test client request sending 'wrong' object --> 400 Bad Request Error
+  test("test for register unsuccessfully", async () => {
+    const trainer = {
+      firstName: "Tester",
+      lastName: "Jones",
+      email: "tester@tester.com",
+      password: "abcdef",
+      password2: "abcdef",
+      company: "testUS",
+    };
+    const response = await request(app).post("/register", trainer);
+    expect(response.statusCode).toBe(400);
+  });
+
+  // test client request sending successful object --> 200 success
+  test("test for register unsuccessfully", async () => {
+    const trainer = {
+      firstName: "Tester",
+      lastName: "Jones",
+      email: "tester@tester.com",
+      password: "abcdef",
+      password2: "abcdef",
+    };
+    const response = await request(app).post("/register", trainer);
+    expect(response.statusCode).toBe(400);
+  });
 });
+
+// test client request sending
 
 // const response = await request(app).get(`/session/details/${storedSession._id}/1`);
 // expect(response.statusCode).toBe(200);
