@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // import components
-import LangingPge from "./Layouts/LangingPge";
+import LandingPage from "./Layouts/LandingPage";
 
 import SessionDetails from "./Layouts/Session-Details";
 import Register from "./auth/Register";
@@ -37,7 +37,7 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Switch>
-            <Route path="/" exact component={LangingPge} />
+            <Route path="/" exact component={LandingPage} />
             <Route path="/trainer" exact component={TrainersLandingPage} />
             <Route path="/trainer/register" exact component={Register} />
             <Route path="/trainer/login" exact component={Login} />
