@@ -38,10 +38,8 @@ class ViewSessions extends Component {
       .catch(err => this.context.router.history.push("/server-error"));
   }
 
-  handleClick = () => {
-    const { sessions } = this.state;
-    const { handleSessions } = this.props;
-    handleSessions(sessions);
+  handleClick = (session) => {
+    this.props.getCurrentSession(session);
     this.context.router.history.push("/session-details");
   };
 
@@ -72,7 +70,7 @@ class ViewSessions extends Component {
                 </TableCell>
                 <TableCell>{session.type}</TableCell>
                 <TableCell>
-                  <Button onClick={this.handleClick}>
+                  <Button onClick={() => this.handleClick(session)}>
                     <Icon className="fas fa-angle-right" />
                   </Button>
                 </TableCell>

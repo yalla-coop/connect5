@@ -6,17 +6,16 @@ const Answer = require("./models/Answer");
 const Question = require("./models/Question");
 
 // load queries
-const registerTrainer = require('./queries/register-trainer');
+const registerTrainer = require("./queries/register-trainer");
 
 // buildSurvey
-const buildSurvey = require('./surveyBuild');
+const buildSurvey = require("./surveyBuild");
 
-const dbConnection = require('../database/db_Connection');
+const dbConnection = require("./db_connection");
+
 dbConnection();
 
-
 const buildDb = async () => {
-
   // clear collections
 
   await Trainer.deleteMany({});
@@ -43,8 +42,8 @@ const buildDb = async () => {
   const errors = {};
 
   await registerTrainer(email, errors, trainer)
-  .then(trainer => trainer.save())
-  .catch(err => console.log(err))
+    .then(trainer => trainer.save())
+    .catch(err => console.log(err));
   // await trainer.save();
   console.log("trainer added");
 
@@ -65,6 +64,7 @@ const buildDb = async () => {
       type: 2,
       date: "2018-08-22",
       invitees: 6,
+      attendees: 20,
       surveyURL1: "2",
     },
   ]);

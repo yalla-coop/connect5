@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 // require("env2")("./config/config.env");
-const keys = require("../../../config/key")
+const keys = require("../../../config/keys")
 
 // let { passportKey } = process.env;
 
@@ -30,7 +30,7 @@ const loginTrainer = (email, password, errors) => new Promise ((resolve, reject)
           token: 'Bearer ' + token
         });
       });
-      
+
       } else {
         errors.password = 'Password incorrect'
         reject(errors)

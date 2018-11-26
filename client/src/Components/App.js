@@ -9,6 +9,8 @@ import setAuthToken from "../Utils/setAuthToken";
 
 // import components
 import Home from "./Layouts/Home";
+
+import SessionDetails from "./Layouts/Session-Details";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 import Dashboard from "./Layouts/TrainerDashboard/index";
@@ -28,13 +30,22 @@ class App extends Component {
   };
 
   componentDidMount() {
+    // check to see if valid jwt token in local storage
     if (localStorage.jwtToken) {
+      // if so we set it to auth header so we can access it
       setAuthToken(localStorage.jwtToken);
+      // decode the jwt so we can put the unique trainer id in the state
       const decoded = jwt_decode(localStorage.jwtToken);
       this.setState({
         isAuthenticated: true,
         trainerId: decoded.id,
+        loaded: true
       });
+    } else {
+      this.setState ({
+        isAuthenticated: false,
+        loaded: true
+      })
     }
   }
 
@@ -42,8 +53,17 @@ class App extends Component {
     this.setState({ sessions });
   };
 
+  getCurrentSession = (session) => {
+    this.setState({
+      currentSession: session,
+    });
+    // setTimeout(() => { console.log(this.state.currentSession); }, 7000);
+  }
+
   render() {
-    const { isAuthenticated } = this.state;
+    const { currentSession, isAuthenticated, loaded } = this.state;
+    // make sure that component has mounted before loading
+    if (!loaded) return null;
     return (
       <BrowserRouter>
         <div className="App">
@@ -52,17 +72,19 @@ class App extends Component {
             <Route path="/trainer" exact component={TrainersLandingPage} />
             <Route path="/trainer/register" exact component={Register} />
             <Route path="/trainer/login" exact component={Login} />
+            {/* private routes: check if authenticated is true. If not send back to login page */}
             <Route
               path="/trainer/dashboard"
               exact
-              render={props => (isAuthenticated ? <Dashboard {...props} /> : <Redirect to="/trainer/login" />)
+              render={props => (isAuthenticated ? <Dashboard {...props} trainerId={this.state.trainerId} /> : <Redirect to="/trainer/login" />)
               }
             />
             <Route
               path="/view-sessions"
-              render={() => <ViewSessions handleSessions={this.handleSessions} />}
+              render={() => <ViewSessions handleSessions={this.handleSessions} getCurrentSession={this.getCurrentSession} />}
               exact
             />
+            <Route path="/session-details" render={() => <SessionDetails sessionDetails={currentSession} />} exact />
             <Route path="/survey/:id" exact render={props => <Survey {...props} />} />
             <Route path="/create-session" exact component={CreateSession} />
             <Route
@@ -70,12 +92,15 @@ class App extends Component {
               exact
               component={SessionResult}
             />
-            {/* <Route path="/dashboard" exact component={Dashboard} /> */}
           </Switch>
         </div>
       </BrowserRouter>
     );
   }
+
+
+
+
 }
 
 export default App;

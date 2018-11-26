@@ -66,8 +66,8 @@ class Stars extends Component {
           <StarsRow>
             <StarIconsWrapper>
               {
-                Array(...Array(6 - index)).map(() => (
-                  <StarIcon className="fas fa-star" />
+                Array(...Array(6 - index)).map(item => (
+                  <StarIcon className="fas fa-star" key={item} />
                 ))
               }
             </StarIconsWrapper>

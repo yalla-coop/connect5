@@ -65,7 +65,7 @@ class SessionResult extends Component {
         {
           activeTab === "overall"
             ? <OverallResults match={match} history={history} />
-            : <IndividualResults />
+            : <IndividualResults match={match} history={history} />
         }
       </SessionResultWrapper>
     );
