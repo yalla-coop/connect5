@@ -74,8 +74,6 @@ describe("Test storing answers in database", () => {
     const sessionId = singleSession._id;
     const response = await storeResponse(sessionId, surveyType);
 
-    console.log("RESPONSE", response);
-
     expect(response.session).toBe(sessionId);
 
     const dummyAnswers = {
