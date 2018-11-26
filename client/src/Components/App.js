@@ -12,7 +12,7 @@ import TrainersLandingPage from "./Layouts/TrainersLandingPage";
 import ViewSessions from "./Layouts/view-sessions";
 import CreateSession from "./Layouts/CreateSession/index";
 import SessionResult from "./Layouts/SessionResult";
-import ResultsOverview from "./Layouts/ResultsOverview";
+import OverviewResults from "./Layouts/OverviewResults";
 
 import "./App.css";
 
@@ -47,7 +47,7 @@ render() {
           <Route path="/session-details" render={() => <SessionDetails sessionDetails={currentSession} />} exact />
           <Route path="/survey/:id" exact render={props => <Survey {...props} />} />
           <Route path="/create-session" exact component={CreateSession} />
-          <Route path="/results-overview" exact component={ResultsOverview} />
+          <Route path="/overview-results" exact component={OverviewResults} />
           <Route
             path="/session/details/:sessionId/:sessionType"
             exact
