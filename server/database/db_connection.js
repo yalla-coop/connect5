@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 // read "config.env" file and add it's varaible to "process.env"
-if ( process.env.TRAVIS !== true ) {
+if ( !process.env.TRAVIS ) {
   require("env2")("./config/config.env");
 }
 
