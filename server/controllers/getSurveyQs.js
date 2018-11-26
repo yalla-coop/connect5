@@ -18,7 +18,6 @@ exports.get = (req, res) => {
       console.log("RESULT", surveyDetails)
       res.status(200).json(surveyDetails)})
     .catch(err => {
-      console.log("ERROR!!!!!!!", err)
       if (err.message.indexOf('Cast to ObjectId failed') !== -1) {
         res.status(404);
         res.send((createError(404, "Data was not found")));

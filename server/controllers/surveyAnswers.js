@@ -11,8 +11,6 @@ router.post('/', (req, res) => {
 
   const { formState, sessionId, surveyType } = req.body
 
-  console.log("FORM STATE", req.body)
-
   // storeResponse adds the response to the Response model
   // and returns the unique Response ID
   // storeAnswers adds all answers to the Answer model

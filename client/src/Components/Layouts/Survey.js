@@ -122,7 +122,7 @@ export default class Survey extends React.Component {
     } = this.state;
     console.log("RESPONSEID", responseId)
     const formSubmission = { formState, sessionId, surveyType };
-    console.log(formSubmission);
+    // console.log(formSubmission);
     axios
       .post(`/submit/${responseId}`, formSubmission)
       .then(
