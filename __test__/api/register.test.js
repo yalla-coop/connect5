@@ -10,6 +10,7 @@ const buildDb = require("../../server/database/dummy_data_build");
 const app = require("../../server/app");
 
 dbConnection();
+
 beforeEach(async () => {
   await buildDb().catch(err => console.log(err));
 });
@@ -19,27 +20,6 @@ afterAll(async () => {
 });
 
 describe("Test for /register route", () => {
-  // afterAll(async () => {
-  //   // Drop the DB after all tests.
-  //   await Trainer.deleteMany();
-  //   // Build the dummy data
-  //   await buildDb();
-  //   // Close the connection
-  //   await mongoose.connection.close();
-  // });
-  // beforeAll(async () => {
-  //   // connect to DB before the tests start
-  //   dbConnection();
-  //   // Drop the DB before the tests start
-  //   await Trainer.deleteMany();
-  //   // Build the dummy data
-  //   await buildDb();
-  // });
-
-  // beforeEach(async () => {
-  //   await
-  // })
-
   // test if dummy data builds correctly
   test("test if dummy data trainer registers successfully", async () => {
     const trainer = await Trainer.findOne({ firstName: "John" });
@@ -97,30 +77,3 @@ describe("Test for /register route", () => {
     expect(response.body.firstName).toBe("Tester");
   });
 });
-
-// describe('POST /user', function() {
-//   it('user.name should be an case-insensitive match for "john"', function(done) {
-//     request(app)
-//       .post('/user')
-//       .send('name=john') // x-www-form-urlencoded upload
-//       .set('Accept', 'application/json')
-//       .expect(function(res) {
-//         res.body.id = 'some fixed id';
-//         res.body.name = res.body.name.toLowerCase();
-//       })
-//       .expect(200, {
-//         id: 'some fixed id',
-//         name: 'john'
-//       }, done);
-//   });
-// });
-
-// test client request sending
-
-// const response = await request(app).get(`/session/details/${storedSession._id}/1`);
-// expect(response.statusCode).toBe(200);
-// expect(Array.isArray(response.body)).toBe(true);
-// expect(response.body[0].questions).toBeDefined();
-// expect(response.body[0].questions.length).toBe(15);
-// expect(response.body[1].attendeesNumber).toBe(8);
-// expect(response.body[2].reponsesNumber).toBe(1);
