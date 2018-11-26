@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 
 // read "config.env" file and add it's varaible to "process.env"
-require("env2")("./config/config.env");
+if ( process.env.TRAVIS !== true ) {
+  require("env2")("./config/config.env");
+}
 
 const dbConnection = () => {
   // get DB url from process.env
