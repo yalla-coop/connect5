@@ -43,7 +43,7 @@ test("Test for pre-survey", async () => {
 
 test("Test survey doesn't load if session doesn't exist", async() => {
   const response = await request(app).get(`/survey/0123456`);
-  expect(response.statusCode).toBe(500);
+  expect(response.statusCode).toBe(404);
 })
 
 test("Test without params", async () => {

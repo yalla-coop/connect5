@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
+import swal from "sweetalert";
+
+import ReactRouterPropTypes from "react-router-prop-types";
 
 import getQuestions from "../../Utils/getQuestions";
 
@@ -13,6 +16,15 @@ const SurveyQs = styled.div`
 // formState will be the object where we store survey responses
 // as the participant answers the questions
 export default class Survey extends React.Component {
+
+  static propTypes = {
+    history: ReactRouterPropTypes.history,
+  }
+
+  static defaultProps = {
+    history: null,
+  };
+
   state = {
     formState: {},
     surveyDetails: null,
@@ -104,6 +116,7 @@ export default class Survey extends React.Component {
   // this puts the required info into an object and sends to server
   handleSubmit = (e) => {
     e.preventDefault();
+    const { history } = this.props;
     const {
       responseId, formState, sessionId, surveyType,
     } = this.state;
@@ -112,8 +125,15 @@ export default class Survey extends React.Component {
     console.log(formSubmission);
     axios
       .post(`/submit/${responseId}`, formSubmission)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+      .then(
+        swal("Done!", "Thanks for submitting your feedback!", "success")
+          .then(() => history.push("/home")),
+      )
+      .catch(err => swal({
+        icon: "error",
+        title: err.response.data.message,
+      }));
+
   };
 
   render() {
