@@ -20,6 +20,7 @@ import ViewSessions from "./Layouts/view-sessions";
 import CreateSession from "./Layouts/CreateSession/index";
 import SessionResult from "./Layouts/SessionResult";
 import "./App.css";
+import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute"
 
 class App extends Component {
   state = {
@@ -36,11 +37,31 @@ class App extends Component {
       setAuthToken(localStorage.jwtToken);
       // decode the jwt so we can put the unique trainer id in the state
       const decoded = jwt_decode(localStorage.jwtToken);
-      this.setState({
-        isAuthenticated: true,
-        trainerId: decoded.id,
-        loaded: true
-      });
+
+      // check for expired token
+      const currentTime = Date.now() / 1000;
+      console.log("current", currentTime);
+      console.log("expiration", decoded.exp)
+      if (decoded.exp < currentTime) {
+        // remove token from ls
+        localStorage.removeItem("jwtToken");
+        // remove auth header for future reqs
+        setAuthToken(false);
+        // reset state to user is logged out
+        this.setState({
+          isAuthenticated: false,
+          trainerId: null,
+          loaded: true
+        })
+      } else {
+        this.setState({
+          isAuthenticated: true,
+          trainerId: decoded.id,
+          loaded: true
+        });
+
+      }
+
     } else {
       this.setState ({
         isAuthenticated: false,
@@ -72,25 +93,44 @@ class App extends Component {
             <Route path="/trainer" exact component={TrainersLandingPage} />
             <Route path="/trainer/register" exact component={Register} />
             <Route path="/trainer/login" exact component={Login} />
-            {/* private routes: check if authenticated is true. If not send back to login page */}
-            <Route
+            <Route path="/survey/:id" exact render={props => <Survey {...props} />} />
+            {/* private routes: use the common component PrivateRoute and check if authenticated is true. If not send back to login page */}
+            <PrivateRoute
               path="/trainer/dashboard"
               exact
-              render={props => (isAuthenticated ? <Dashboard {...props} trainerId={this.state.trainerId} /> : <Redirect to="/trainer/login" />)
-              }
+              component={Dashboard}
+              isAuthenticated={isAuthenticated}
+              trainerId={this.state.trainerId}
             />
-            <Route
+            <PrivateRoute
               path="/view-sessions"
-              render={() => <ViewSessions handleSessions={this.handleSessions} getCurrentSession={this.getCurrentSession} />}
               exact
+              component={ViewSessions}
+              isAuthenticated={isAuthenticated}
+              handleSessions={this.handleSessions}
+              getCurrentSession={this.getCurrentSession}
+              trainerId={this.state.trainerId}
             />
-            <Route path="/session-details" render={() => <SessionDetails sessionDetails={currentSession} />} exact />
-            <Route path="/survey/:id" exact render={props => <Survey {...props} />} />
-            <Route path="/create-session" exact component={CreateSession} />
-            <Route
+            <PrivateRoute
+              path="/session-details"
+              exact
+              component={SessionDetails}
+              isAuthenticated={isAuthenticated}
+              sessionDetails={currentSession}
+              trainerId={this.state.trainerId}
+            />
+            <PrivateRoute
+              path="/create-session"
+              exact
+              component={CreateSession}
+              isAuthenticated={isAuthenticated}
+              trainerId={this.state.trainerId} />
+            <PrivateRoute
               path="/session/details/:sessionId/:sessionType"
               exact
               component={SessionResult}
+              isAuthenticated={this.Authenticated}
+              trainerId={this.state.trainerId}
             />
           </Switch>
         </div>
