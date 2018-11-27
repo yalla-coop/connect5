@@ -5,10 +5,10 @@ exports[`Header matches snapshot 1`] = `
   className="sc-bdVaJa eTvRYH"
 >
   <div
-    className="sc-bwzfXH fcvmml"
+    className="sc-bwzfXH kJcqWX"
   >
     <div
-      className="sc-htpNat kWGSlD"
+      className="sc-htpNat cEuftn"
     >
       <h1
         className="sc-bxivhb gEiGHL"
@@ -17,7 +17,7 @@ exports[`Header matches snapshot 1`] = `
       </h1>
     </div>
     <div
-      className="sc-ifAKCX bmmcfm"
+      className="sc-ifAKCX hfMJUh"
     />
   </div>
   <div
