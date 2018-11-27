@@ -17,7 +17,7 @@ const app = express();
 app.use(passport.initialize());
 
 // Passport config
-require("../config/passport.js")(passport);
+require("./passport")(passport);
 
 app.use(logger("dev"));
 app.use(express.json());
