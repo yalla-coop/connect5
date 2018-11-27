@@ -29,16 +29,25 @@ describe("Test for /dashboard route", () => {
     expect(result.token).toBeDefined();
   });
 
-  test("test if cookie passes the passport authentication", async () => {
+  test("test if token passes the passport authentication", async () => {
     const token = await loginTrainer("johndoe@gmail.com", "123456", null);
     // console.log("TOKEN!!!!!!!!", token)
 
-    const response = await request(app).get(`/dashboard`).set({Authorization: token.token})
+    const response = await request(app)
+      .get("/dashboard")
+      .set({ Authorization: token.token });
 
     expect(response.status).toBe(200);
     expect(response.body).toBeDefined();
     expect(response.body.firstName).toEqual("John");
+  });
 
-  })
+  test("test if token fails the passport authentication", async () => {
+    const response = await request(app)
+      .get("/dashboard")
+      .set({ Authorization: "wrong token" });
 
+    expect(response.status).toBe(401);
+    expect(response.text).toEqual("Unauthorized");
+  });
 });
