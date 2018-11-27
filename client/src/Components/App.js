@@ -38,12 +38,24 @@ class App extends Component {
       // decode the jwt so we can put the unique trainer id in the state
       const decoded = jwt_decode(localStorage.jwtToken);
 
+      const currentTime = Date.now() / 1000;
+
+      if (decoded.exp < currentTime) {
+        localStorage.removeItem('jwtToken');
+
+        setAuthToken(false);
         this.setState({
+          isAuthenticated: false,
+          trainerId: null,
+          loaded: true
+        })
+      } else {
+         this.setState({
           isAuthenticated: true,
           trainerId: decoded.id,
           loaded: true
         });
-
+      }
     } else {
       this.setState ({
         isAuthenticated: false,
