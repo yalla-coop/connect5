@@ -14,6 +14,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           surveyType: 0,
           questionText: "Please enter your Unique ID Number (if applicable)",
           inputType: "text",
+          isRequired: false,
         },
         {
           surveyType: 0,
@@ -37,7 +38,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText: "Please enter the postcode where you are active",
           inputType: "text",
           helperText:
-            "If you do not work in a fixed location please put the postcode your are most often working in",
+              "If you do not work in a fixed location please put the postcode your are most often working in",
           options: [],
         },
         {
@@ -65,25 +66,23 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         {
           surveyType: 0,
           questionText:
-            "How would you rate your current knowledge and understanding of mental health and wellbeing?",
+              "How would you rate your current knowledge and understanding of mental health and wellbeing?",
           inputType: "radiostar",
-          helperText:
-            "0 stars means no understanding. 6 stars means excellent understanding",
+          helperText: "0 stars means no understanding. 6 stars means excellent understanding",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 0,
           questionText:
-            "In your role, how important is it for you to support somebody with their mental health and wellbeing?",
+              "In your role, how important is it for you to support somebody with their mental health and wellbeing?",
           inputType: "radiostar",
-          helperText:
-            "0 stars means not important. 6 stars means every important",
+          helperText: "0 stars means not important. 6 stars means every important",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 0,
           questionText:
-            "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
+              "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
           inputType: "radiostar",
           helperText: "0 stars means not confident. 6 stars means very confident",
           options: [1, 2, 3, 4, 5, 6],
@@ -94,6 +93,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           surveyType: 1,
           questionText: "Please enter your Unique ID Number (if applicable)",
           inputType: "text",
+          isRequired: false,
         },
         {
           surveyType: 1,
@@ -117,7 +117,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText: "Please enter the postcode where you are active",
           inputType: "text",
           helperText:
-            "If you do not work in a fixed location please put the postcode your are most often working in",
+              "If you do not work in a fixed location please put the postcode your are most often working in",
           options: [],
         },
         {
@@ -145,25 +145,23 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         {
           surveyType: 1,
           questionText:
-            "How would you rate your current knowledge and understanding of mental health and wellbeing?",
+              "How would you rate your current knowledge and understanding of mental health and wellbeing?",
           inputType: "radiostar",
-          helperText:
-            "0 stars means no understanding. 6 stars means excellent understanding",
+          helperText: "0 stars means no understanding. 6 stars means excellent understanding",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 1,
           questionText:
-            "In your role, how important is it for you to support somebody with their mental health and wellbeing?",
+              "In your role, how important is it for you to support somebody with their mental health and wellbeing?",
           inputType: "radiostar",
-          helperText:
-            "0 stars means not important. 6 stars means every important",
+          helperText: "0 stars means not important. 6 stars means every important",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 1,
           questionText:
-            "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
+              "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
           inputType: "radiostar",
           helperText: "0 stars means not confident. 6 stars means very confident",
           options: [1, 2, 3, 4, 5, 6],
@@ -188,7 +186,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         {
           surveyType: 1,
           questionText:
-            "Please rate how the training improved your learning on the following areas:",
+              "Please rate how the training improved your learning on the following areas:",
           inputType: "matrix",
           helperText: "",
           options: {
@@ -212,8 +210,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         },
         {
           surveyType: 1,
-          questionText:
-            "Please rate the following elements of the training delivery",
+          questionText: "Please rate the following elements of the training delivery",
           inputType: "matrix",
           options: {
             columns: ["Poor", "Fair", "Average", "Good", "Excellent"],
@@ -235,21 +232,22 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         },
         {
           surveyType: 1,
-          questionText:
-            "How will your practice/work change as a result of attending this event?",
+          questionText: "How will your practice/work change as a result of attending this event?",
           inputType: "textarea",
         },
         {
           surveyType: 1,
           questionText:
-            "What are your suggestions, if any, for changes that would improve this course?",
+              "What are your suggestions, if any, for changes that would improve this course?",
           inputType: "textarea",
+          isRequired: true,
         },
         {
           surveyType: 1,
           questionText:
-            "Is there anything else you would like to tell us about the Connect 5 session 1 training?",
+              "Is there anything else you would like to tell us about the Connect 5 session 1 training?",
           inputType: "textarea",
+          isRequired: true,
         },
 
         // Survey 2 questions
@@ -257,6 +255,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           surveyType: 2,
           questionText: "Please enter your Unique ID Number (if applicable)",
           inputType: "text",
+          isRequired: false,
         },
         {
           surveyType: 2,
@@ -280,7 +279,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText: "Please enter the postcode where you are active",
           inputType: "text",
           helperText:
-            "If you do not work in a fixed location please put the postcode your are most often working in",
+              "If you do not work in a fixed location please put the postcode your are most often working in",
           options: [],
         },
         {
@@ -308,33 +307,30 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         {
           surveyType: 2,
           questionText:
-            "How would you rate your current knowledge and understanding of mental health and wellbeing?",
+              "How would you rate your current knowledge and understanding of mental health and wellbeing?",
           inputType: "radiostar",
-          helperText:
-            "0 stars means no understanding. 6 stars means excellent understanding",
+          helperText: "0 stars means no understanding. 6 stars means excellent understanding",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 2,
           questionText:
-            "In your role, how important is it for you to support somebody with their mental health and wellbeing?",
+              "In your role, how important is it for you to support somebody with their mental health and wellbeing?",
           inputType: "radiostar",
-          helperText:
-            "0 stars means not important. 6 stars means every important",
+          helperText: "0 stars means not important. 6 stars means every important",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 2,
           questionText:
-            "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
+              "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
           inputType: "radiostar",
           helperText: "0 stars means not confident. 6 stars means very confident",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 2,
-          questionText:
-            "What did you find most useful from the Connect 5 session 2 training?",
+          questionText: "What did you find most useful from the Connect 5 session 2 training?",
           inputType: "checkbox",
           helperText: "Tick as many as you like",
           options: [
@@ -352,7 +348,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         {
           surveyType: 2,
           questionText:
-            "Please rate how the training improved your learning on the following areas",
+              "Please rate how the training improved your learning on the following areas",
           inputType: "matrix",
           options: {
             columns: [
@@ -376,8 +372,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         },
         {
           surveyType: 2,
-          questionText:
-            "Please rate the following elements of the training delivery",
+          questionText: "Please rate the following elements of the training delivery",
           inputType: "matrix",
           options: {
             columns: ["Poor", "Fair", "Average", "Good", "Excellent"],
@@ -399,21 +394,22 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         },
         {
           surveyType: 2,
-          questionText:
-            "How will your practice/work change as a result of attending this event?",
+          questionText: "How will your practice/work change as a result of attending this event?",
           inputType: "textarea",
         },
         {
           surveyType: 2,
           questionText:
-            "What are your suggestions, if any, for changes that would improve this course?",
+              "What are your suggestions, if any, for changes that would improve this course?",
           inputType: "textarea",
+          isRequired: true,
         },
         {
           surveyType: 2,
           questionText:
-            "Is there anything else you would like to tell us about the Connect 5 session 2 training?",
+              "Is there anything else you would like to tell us about the Connect 5 session 2 training?",
           inputType: "textarea",
+          isRequired: true,
         },
 
         // Survey 3
@@ -421,6 +417,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           surveyType: 3,
           questionText: "Please enter your Unique ID Number (if applicable)",
           inputType: "text",
+          isRequired: false,
         },
         {
           surveyType: 3,
@@ -444,7 +441,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText: "Please enter the postcode where you are active",
           inputType: "text",
           helperText:
-            "If you do not work in a fixed location please put the postcode your are most often working in",
+              "If you do not work in a fixed location please put the postcode your are most often working in",
           options: [],
         },
         {
@@ -472,33 +469,30 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         {
           surveyType: 3,
           questionText:
-            "How would you rate your current knowledge and understanding of mental health and wellbeing?",
+              "How would you rate your current knowledge and understanding of mental health and wellbeing?",
           inputType: "radiostar",
-          helperText:
-            "0 stars means no understanding. 6 stars means excellent understanding",
+          helperText: "0 stars means no understanding. 6 stars means excellent understanding",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 3,
           questionText:
-            "In your role, how important is it for you to support somebody with their mental health and wellbeing?",
+              "In your role, how important is it for you to support somebody with their mental health and wellbeing?",
           inputType: "radiostar",
-          helperText:
-            "0 stars means not important. 6 stars means every important",
+          helperText: "0 stars means not important. 6 stars means every important",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 3,
           questionText:
-            "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
+              "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
           inputType: "radiostar",
           helperText: "0 stars means not confident. 6 stars means very confident",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 3,
-          questionText:
-            "What did you find most useful from the Connect 5 session 3 training?",
+          questionText: "What did you find most useful from the Connect 5 session 3 training?",
           inputType: "checkbox",
           helperText: "Tick as many as you like",
           options: [
@@ -516,7 +510,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         {
           surveyType: 3,
           questionText:
-            "Please rate how the training improved your learning on the following areas",
+              "Please rate how the training improved your learning on the following areas",
           inputType: "matrix",
           options: {
             columns: [
@@ -540,7 +534,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         {
           surveyType: 3,
           questionText:
-            "Which of your skills at having wellbeing conversations have improved (if any).",
+              "Which of your skills at having wellbeing conversations have improved (if any).",
           inputType: "checkbox",
           options: [
             "Attentive listening",
@@ -554,8 +548,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         },
         {
           surveyType: 3,
-          questionText:
-            "Please rate the following elements of the training delivery",
+          questionText: "Please rate the following elements of the training delivery",
           inputType: "matrix",
           options: {
             columns: ["Poor", "Fair", "Average", "Good", "Excellent"],
@@ -577,21 +570,22 @@ const buildSurvey = () => new Promise((resolve, reject) => {
         },
         {
           surveyType: 3,
-          questionText:
-            "How will your practice/work change as a result of attending this event?",
+          questionText: "How will your practice/work change as a result of attending this event?",
           inputType: "textarea",
         },
         {
           surveyType: 3,
           questionText:
-            "What are your suggestions, if any, for changes that would improve this course?",
+              "What are your suggestions, if any, for changes that would improve this course?",
           inputType: "textarea",
+          isRequired: true,
         },
         {
           surveyType: 3,
           questionText:
-            "Is there anything else you would like to tell us about the Connect 5 session 3 training?",
+              "Is there anything else you would like to tell us about the Connect 5 session 3 training?",
           inputType: "textarea",
+          isRequired: true,
         },
       ]);
     })
