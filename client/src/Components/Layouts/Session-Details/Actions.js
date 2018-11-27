@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import swal from "sweetalert";
 import axios from "axios";
+import PropTypes from "prop-types";
+// import EditSession from "./EditSession";
 import {
   Actions,
   Action,
@@ -10,22 +13,49 @@ import {
 
 
 class SessionActions extends Component {
-  deleteSession = (_id) => {
-    axios
-      .get(`/deleteSession/${_id}`)
-      .then((res) => {
-      })
-      .catch(err => this.context.router.history.push("/server-error"));
+  static contextTypes = {
+    router: PropTypes.object,
+  };
+
+  state = {
+    editSession: false,
   }
 
+  handleEdit = () => {
+    this.context.router.history.push("/edit-session");
+  }
+
+  deleteSession = (_id) => {
+    swal({
+      text: "Are you sure that you want to delete this session?",
+      button: {
+        text: "Delete!",
+        closeModal: false,
+      },
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          return axios
+            .get(`/deleteSession/${_id}`)
+            .then(
+              swal("This session has been successfully deleted ")
+                .then(() => this.context.router.history.push("/view-sessions")),
+            );
+        }
+      })
+      .catch((err) => {
+        swal("Oops!", "Seems like we couldn't fetch the info");
+      });
+  }
 
   render() {
     const { sessionDetails } = this.props;
+    const { handleEdit } = this;
     const { _id } = sessionDetails;
     return (
       <Actions>
         <Action>
-          <ActionBtn type="button"><Icon className="far fa-edit" /></ActionBtn>
+          <ActionBtn type="button" onClick={() => handleEdit()}><Icon className="far fa-edit" /></ActionBtn>
           <Span>edit session</Span>
         </Action>
         <Action>
