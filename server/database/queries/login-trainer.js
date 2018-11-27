@@ -2,8 +2,8 @@ const Trainer = require('../models/Trainer');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
-// require("env2")("./config/config.env");
-const keys = require("../../../config/keys")
+// const keys = require("../../../config/keys")
+require("env2")("./config/config.env");
 
 // let { passportKey } = process.env;
 
@@ -24,7 +24,7 @@ const loginTrainer = (email, password, errors) => new Promise ((resolve, reject)
 
       // Sign token
 
-      jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+      jwt.sign(payload, process.env.secretOrKey, { expiresIn: 3600 }, (err, token) => {
         resolve({
           success: true,
           token: 'Bearer ' + token
