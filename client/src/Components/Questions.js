@@ -20,15 +20,21 @@ export default class Questions extends React.Component {
       <React.Fragment>
         {questions.map((el, index) => {
           // map through all the questions
+          // el is one question
 
-          const { _id: questionId, questionText, helperText } = el;
+          const {
+            _id: questionId, questionText, helperText, isRequired,
+          } = el;
 
           // format each question depending on the inputType
           if (el.inputType === "text") {
             return (
               <TextField key={index}>
                 <header>
-                  <h4 id={index}>{questionText}</h4>
+                  <h4 id={index}>
+                    {questionText}
+                    {isRequired ? " *" : ""}
+                  </h4>
                   <p className="helpertext">{helperText}</p>
                 </header>
                 <input id={index} name={questionId} type="text" onChange={onChange} />
@@ -39,7 +45,10 @@ export default class Questions extends React.Component {
             return (
               <RadioField key={index}>
                 <header>
-                  <h4 id={index}>{questionText}</h4>
+                  <h4 id={index}>
+                    {questionText}
+                    {isRequired ? " *" : ""}
+                  </h4>
                   <p className="helpertext">{helperText}</p>
                 </header>
                 <div className="answers">
@@ -70,7 +79,10 @@ export default class Questions extends React.Component {
             return (
               <RadioStarField key={index}>
                 <header>
-                  <h4 id={index}>{questionText}</h4>
+                  <h4 id={index}>
+                    {questionText}
+                    {isRequired ? " *" : ""}
+                  </h4>
                   <p className="helpertext">{helperText}</p>
                 </header>
                 <div className="answers">
@@ -109,7 +121,10 @@ export default class Questions extends React.Component {
             return (
               <CheckboxField key={index}>
                 <header>
-                  <h4 id={index}>{questionText}</h4>
+                  <h4 id={index}>
+                    {questionText}
+                    {isRequired ? " *" : ""}
+                  </h4>
                   <p className="helpertext">{helperText}</p>
                 </header>
                 <div className="answers">
@@ -134,7 +149,10 @@ export default class Questions extends React.Component {
             return (
               <MatrixField key={index}>
                 <header>
-                  <h4 id={index}>{questionText}</h4>
+                  <h4 id={index}>
+                    {questionText}
+                    {isRequired ? " *" : ""}
+                  </h4>
                   <p className="helpertext">{helperText}</p>
                 </header>
                 <div>
