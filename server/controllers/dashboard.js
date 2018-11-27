@@ -5,7 +5,6 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 
 router.get("/", passport.authenticate("jwt", { session: false }), (req, res) => {
-  console.log("REQUEST", req);
   console.log("REACHED");
   res.send({
     id: req.user.id,
