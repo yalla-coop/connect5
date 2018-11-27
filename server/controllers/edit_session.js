@@ -4,7 +4,7 @@ const editSessionQurery = require("./../database/queries/edit_session");
 const editSession = (req, res) => {
   const { _id } = req.params;
   const { sessionType, startDate, attendeesNumber } = req.body;
-  console.log(sessionType, startDate, attendeesNumber, _id);
+
   editSessionQurery(sessionType, startDate, attendeesNumber, _id)
     .then(() => {
       res.status(200);
