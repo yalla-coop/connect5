@@ -14,8 +14,10 @@ import {
 export default class Questions extends React.Component {
   render() {
     const {
-      onChange, questions, handleMatrix, selectCheckedItem, answers,
+      onChange, questions, handleMatrix, selectCheckedItem, answers, errors,
     } = this.props;
+    const errorArray = Object.keys(errors);
+
     return (
       <React.Fragment>
         {questions.map((el, index) => {
@@ -29,7 +31,7 @@ export default class Questions extends React.Component {
           // format each question depending on the inputType
           if (el.inputType === "text") {
             return (
-              <TextField key={index}>
+              <TextField key={index} unanswered={errorArray.includes(questionId) && isRequired}>
                 <header>
                   <h4 id={index}>
                     {questionText}

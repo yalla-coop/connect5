@@ -141,7 +141,7 @@ export default class Survey extends React.Component {
   };
 
   render() {
-    const { loading, surveyDetails, formState } = this.state;
+    const { loading, surveyDetails, formState, errors } = this.state;
     if (loading) {
       return <h3>Loading...</h3>;
     }
@@ -169,6 +169,7 @@ export default class Survey extends React.Component {
             handleMatrix={this.handleMatrix}
             answers={formState}
             selectCheckedItem={this.selectCheckedItem}
+            errors={errors}
           />
           <button type="submit">Submit Feedback</button>
         </form>

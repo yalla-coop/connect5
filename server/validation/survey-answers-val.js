@@ -16,7 +16,7 @@ const validateSurveyInput = async (data) => {
     questionIDList.forEach(e => (errors[e] = "this question must be answered"));
   } else {
     questionIDList.filter((e) => {
-      if (answers.includes(e)) {
+      if (!answers.includes(e)) {
         errors[e] = "this question must be answered";
       }
     });

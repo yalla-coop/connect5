@@ -97,6 +97,7 @@ const TextField = styled(CommonStyles)`
     width: 100%;
     padding: 8px;
   }
+  ${({ unanswered }) => unanswered && "color: red; input { border: 1px solid red} "}
 `;
 
 const MatrixField = styled(CommonStyles)`
