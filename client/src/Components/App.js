@@ -20,7 +20,7 @@ import ViewSessions from "./Layouts/view-sessions";
 import CreateSession from "./Layouts/CreateSession/index";
 import SessionResult from "./Layouts/SessionResult";
 import "./App.css";
-import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute"
+import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute";
 
 class App extends Component {
   state = {
@@ -39,28 +39,28 @@ class App extends Component {
       const decoded = jwt_decode(localStorage.jwtToken);
 
       const currentTime = Date.now() / 1000;
-
+      // log out user if toke expired
       if (decoded.exp < currentTime) {
-        localStorage.removeItem('jwtToken');
+        localStorage.removeItem("jwtToken");
 
         setAuthToken(false);
         this.setState({
           isAuthenticated: false,
           trainerId: null,
-          loaded: true
-        })
+          loaded: true,
+        });
       } else {
-         this.setState({
+        this.setState({
           isAuthenticated: true,
           trainerId: decoded.id,
-          loaded: true
+          loaded: true,
         });
       }
     } else {
-      this.setState ({
+      this.setState({
         isAuthenticated: false,
-        loaded: true
-      })
+        loaded: true,
+      });
     }
   }
 
@@ -73,7 +73,7 @@ class App extends Component {
       currentSession: session,
     });
     // setTimeout(() => { console.log(this.state.currentSession); }, 7000);
-  }
+  };
 
   render() {
     const { currentSession, isAuthenticated, loaded } = this.state;
@@ -118,7 +118,8 @@ class App extends Component {
               exact
               component={CreateSession}
               isAuthenticated={isAuthenticated}
-              trainerId={this.state.trainerId} />
+              trainerId={this.state.trainerId}
+            />
             <PrivateRoute
               path="/session/details/:sessionId/:sessionType"
               exact
@@ -131,10 +132,6 @@ class App extends Component {
       </BrowserRouter>
     );
   }
-
-
-
-
 }
 
 export default App;
