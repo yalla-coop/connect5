@@ -5,7 +5,7 @@ const Trainer = require("../server/database/models/Trainer");
 const editSessionQurery = require("../server/database/queries/edit_session");
 
 // Connect to DB
-describe(" testing", async () => {
+describe(" testing edit session", async () => {
   afterAll(async () => {
     // Drop the DB after all tests.
     await Session.deleteMany();
@@ -67,7 +67,6 @@ describe(" testing", async () => {
           .then(() => {
             Session.findById(storedSession._id)
               .then((res) => {
-                console.log(res, "------------------------------");
                 expect(res.attendees).toBe(40);
                 expect(res.type).toBe(1);
                 expect(res.date).toEqual(new Date("2018-03-5"));
