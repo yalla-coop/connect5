@@ -9,13 +9,21 @@ const storeResponse = require("../database/queries/storeResponse");
 const storeAnswers = require("../database/queries/storeAnswers");
 const validateSurveyInput = require("../validation/survey-answers-val");
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   // put the req.body into a validate function
   // this function at the end returns either errors or isValid
   // if errors we send the errors back to the client
   // if valid then carry on with this code below
-  validateSurveyInput(req.body);
+  console.log("SUBSMISSION", req.body);
+
+  const { errors, isValid } = await validateSurveyInput(req.body);
+  console.log("ERRORS BACK", errors);
+
   const { formState, sessionId, surveyType } = req.body;
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
 
   // storeResponse adds the response to the Response model
   // and returns the unique Response ID

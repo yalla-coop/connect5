@@ -16,10 +16,9 @@ const SurveyQs = styled.div`
 // formState will be the object where we store survey responses
 // as the participant answers the questions
 export default class Survey extends React.Component {
-
   static propTypes = {
     history: ReactRouterPropTypes.history,
-  }
+  };
 
   static defaultProps = {
     history: null,
@@ -31,6 +30,7 @@ export default class Survey extends React.Component {
     loading: true,
     sessionId: null,
     surveyType: null,
+    errors: {},
   };
 
   componentDidMount() {
@@ -120,20 +120,24 @@ export default class Survey extends React.Component {
     const {
       responseId, formState, sessionId, surveyType,
     } = this.state;
-    console.log("RESPONSEID", responseId)
+    console.log("RESPONSEID", responseId);
     const formSubmission = { formState, sessionId, surveyType };
     // console.log(formSubmission);
     axios
       .post(`/submit/${responseId}`, formSubmission)
       .then(
-        swal("Done!", "Thanks for submitting your feedback!", "success")
-          .then(() => history.push("/home")),
+        swal("Done!", "Thanks for submitting your feedback!", "success").then(() => history.push("/home")),
       )
-      .catch(err => swal({
-        icon: "error",
-        title: err.response.data.message,
-      }));
-
+      .catch((err) => {
+        console.log("ERR", err);
+        this.setState({
+          errors: err.response.data,
+        });
+        swal({
+          icon: "error",
+          title: "Please answer all required questions",
+        });
+      });
   };
 
   render() {
