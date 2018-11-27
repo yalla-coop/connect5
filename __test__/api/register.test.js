@@ -19,7 +19,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-describe("Test for /login route", () => {
+describe("Test for /register route", () => {
   // test if dummy data builds correctly
   test("test if dummy data trainer registers successfully", async () => {
     const trainer = await Trainer.findOne({ firstName: "John" });
@@ -27,42 +27,52 @@ describe("Test for /login route", () => {
   });
 
   // test client request sending empty object --> 400 Bad Request Error
-  test("test to login sending empty obj", async () => {
+  test("test for register unsuccessfully sending empty obj", async () => {
     const trainer = {};
     const response = await request(app)
-      .post("/login")
+      .post("/register")
       .send(trainer)
       .set("Accept", "application/json");
 
     expect(response.statusCode).toBe(400);
   });
 
-  // test client request sending wrong login details object --> 400 Bad Request Error
-  test("test to login sending wrong details obj", async () => {
+  // test client request sending 'wrong' object --> 400 Bad Request Error
+  test("test for register sending extra fields", async () => {
     const trainer = {
-      email: "johndoe@gmail.com",
-      password: "123466",
+      firstName: "Tester",
+      lastName: "Jones",
+      email: "tester@tester.com",
+      password: "abcdef",
+      password2: "abcdef",
+      company: "testUS",
     };
+
     const response = await request(app)
-      .post("/login")
+      .post("/register")
       .send(trainer)
       .set("Accept", "application/json");
 
-    expect(response.statusCode).toBe(400);
+    expect(response.statusCode).toBe(200);
+    expect(response.body.company).toBeUndefined();
   });
-  // test client request sending right login details object --> 200 success
-  test("test to login sending right details obj", async () => {
+
+  // test client request sending successful object --> 200 success
+  test("test for register successfully", async () => {
     const trainer = {
-      email: "johndoe@gmail.com",
-      password: "123456",
+      firstName: "Tester",
+      lastName: "Jones",
+      email: "tester@tester.com",
+      password: "abcdef",
+      password2: "abcdef",
     };
     const response = await request(app)
-      .post("/login")
+      .post("/register")
       .send(trainer)
       .set("Accept", "application/json");
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toBeDefined();
-    // further test to be inserted after authentication setup
+    expect(response.body.firstName).toBe("Tester");
   });
 });

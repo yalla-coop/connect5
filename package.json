@@ -31,6 +31,7 @@
     "dummybuild": "node server/database/dummy_data_build.js"
   },
   "dependencies": {
+    "audit": "0.0.6",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "codecov": "^3.1.0",
@@ -39,6 +40,7 @@
     "debug": "~2.6.9",
     "env2": "^2.2.2",
     "express": "~4.16.0",
+    "fix": "0.0.6",
     "http-errors": "~1.6.2",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.3.12",
