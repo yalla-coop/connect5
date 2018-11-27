@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import swal from "sweetalert";
 import axios from "axios";
 import PropTypes from "prop-types";
-// import EditSession from "./EditSession";
 import {
   Actions,
   Action,
