@@ -61,7 +61,7 @@ const Button = styled.button`
   text-transform: uppercase;
   font-weight: 700;
   font-size: 1.2em
-  color: #e73e64;
+  color: #fff;
   text-decoration: none;
   background-color:#42C4DE;
   outline: none;
