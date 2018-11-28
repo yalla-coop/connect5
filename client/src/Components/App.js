@@ -37,7 +37,7 @@ getCurrentSession = (session) => {
 }
 
 hydrateState() {
-  if (this.state.currentSession.length == 0 && localStorage.hasOwnProperty("currentSession")) {
+  if (this.state.currentSession.length === 0 && localStorage.hasOwnProperty("currentSession")) {
     
     let value = localStorage.getItem("currentSession");
 
