@@ -64,7 +64,7 @@ class ViewSessions extends Component {
 
           <TableBody>
             {sessions.map(session => (
-              <TableRow key={Date.now()}>
+              <TableRow key={session._id}>
                 <TableCell>
                   {moment(session.date).format("DD/MM/YYYY")}
                 </TableCell>

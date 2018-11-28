@@ -1,38 +1,68 @@
 import React, { Component } from "react";
+import swal from "sweetalert";
 import axios from "axios";
+import PropTypes from "prop-types";
 import {
-  Actions,
-  Action,
-  ActionBtn,
-  Span,
-  Icon,
+  ActionsWrapper, ActionWrapper, ActionBtn, Span, Icon,
 } from "./styledComponents";
 
-
 class SessionActions extends Component {
-  deleteSession = (_id) => {
-    axios
-      .get(`/deleteSession/${_id}`)
-      .then((res) => {
-      })
-      .catch(err => this.context.router.history.push("/server-error"));
-  }
+  static contextTypes = {
+    router: PropTypes.object,
+  };
 
+  state = {
+    editSession: false,
+  };
+
+  handleEdit = (session) => {
+    this.props.getCurrentSession(session);
+    this.context.router.history.push("/edit-session");
+  };
+
+  deleteSession = (_id) => {
+    swal({
+      icon: "warning",
+      text: "Are you sure that you want to delete this session?",
+      button: {
+        text: "Delete!",
+        closeModal: false,
+      },
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          return axios
+            .get(`/deleteSession/${_id}`)
+            .then(
+              swal("This session has been successfully deleted ").then(() => this.context.router.history.push("/view-sessions")),
+            );
+        }
+      })
+      .catch((err) => {
+        swal("Oops!", "Seems like we couldn't fetch the info");
+      });
+  };
 
   render() {
     const { sessionDetails } = this.props;
+    const { handleEdit } = this;
     const { _id } = sessionDetails;
     return (
-      <Actions>
-        <Action>
-          <ActionBtn type="button"><Icon className="far fa-edit" /></ActionBtn>
+      <ActionsWrapper>
+        <ActionWrapper>
+          <ActionBtn type="button" onClick={() => handleEdit(sessionDetails)}>
+            <Icon className="far fa-edit" />
+          </ActionBtn>
           <Span>edit session</Span>
-        </Action>
-        <Action>
-          <ActionBtn type="button" onClick={() => this.deleteSession(_id)}><Icon className="fas fa-trash-alt" /></ActionBtn>
+        </ActionWrapper>
+        <ActionWrapper>
+          <ActionBtn type="button" onClick={() => this.deleteSession(_id)}>
+            <Icon className="fas fa-trash-alt" />
+          </ActionBtn>
           <Span>delete session</Span>
-        </Action>
-      </Actions>
+        </ActionWrapper>
+      </ActionsWrapper>
     );
   }
 }

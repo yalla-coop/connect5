@@ -2,219 +2,257 @@
 
 exports[`Header matches snapshot 1`] = `
 <div
-  className="sc-bdVaJa grKoWt"
+  className="sc-bdVaJa jFbWwR"
 >
   <div
-    className="sc-bwzfXH cQUfqX"
+    className="sc-bwzfXH ekyToE"
   >
     <div
-      className="sc-htpNat cEuftn"
+      className="sc-htpNat dDDduC"
     >
       <h1>
         Session Details
       </h1>
     </div>
     <div
-      className="sc-bxivhb ovXZF"
+      className="sc-bxivhb cMkSyr"
     />
   </div>
   <div
-    className="sc-ifAKCX bctwdS"
+    className="sc-ifAKCX ivJThE"
   >
     <div
-      className="sc-EHOje bdUdO"
+      className="sc-EHOje etMTDo"
     >
       <div
-        className="sc-bZQynM jkbpEq"
+        className="sc-bZQynM fTLMmD"
       >
         <div
-          className="sc-gzVnrw iYcnAa"
+          className="sc-dnqmqq gcaUrs"
         >
           Date
         </div>
         <div
-          className="sc-htoDjs qfODK"
+          className="sc-iwsKbI fjRoaU"
         >
           01/01/1970
         </div>
       </div>
       <div
-        className="sc-bZQynM jkbpEq"
+        className="sc-bZQynM fTLMmD"
       >
         <div
-          className="sc-gzVnrw iYcnAa"
+          className="sc-dnqmqq gcaUrs"
         >
           Type
         </div>
         <div
-          className="sc-htoDjs qfODK"
+          className="sc-iwsKbI fjRoaU"
         >
           1
         </div>
       </div>
       <div
-        className="sc-bZQynM jkbpEq"
+        className="sc-bZQynM fTLMmD"
       >
         <div
-          className="sc-gzVnrw iYcnAa"
+          className="sc-dnqmqq gcaUrs"
         >
           Attendees
         </div>
         <div
-          className="sc-htoDjs qfODK"
+          className="sc-iwsKbI fjRoaU"
         >
           10
         </div>
       </div>
     </div>
     <div
-      className="sc-dnqmqq coFIU"
+      className="sc-gZMcBi hRbZzM"
     >
       <div
-        className="sc-jTzLTM loWeSC"
+        className="sc-kAzzGY atmIv"
       >
         <div
-          className="sc-dxgOiQ ibPSak"
+          className="sc-gqjmRU ecWkXe"
         >
           <div
-            className="sc-iwsKbI iSdUHD"
+            className="sc-gzVnrw bdhGJd"
           >
             <div
-              className="sc-gqjmRU jxHkFa"
+              className="sc-htoDjs bnXiQO"
             >
-              Survey
-              1
-              Link
-            </div>
-            <div
-              className="sc-VigVT FrKLX"
-            >
-              <i
-                className="fas fa-info-circle"
-              />
-              <span
-                className="sc-gZMcBi iebefm"
+              <div
+                className="sc-fjdhpX zrTrX"
               >
-                info
-              </span>
-            </div>
-            <div
-              className="sc-VigVT FrKLX"
-            >
-              <button
-                className="sc-ckVGcZ fipeIP"
+                <span
+                  className="sc-jTzLTM gkQkbK"
+                >
+                  Pre-Survey
+                </span>
+                Link
+              </div>
+              <div
+                className="sc-jzJRlG iLzlvl"
                 onClick={[Function]}
               >
                 <i
-                  className="far fa-clone"
+                  className="fas fa-info-circle"
                 />
                 <span
-                  className="sc-gZMcBi iebefm"
+                  className="sc-VigVT gGKHMo"
                 >
-                  copy
+                  info
                 </span>
-              </button>
+              </div>
+              <copyLink>
+                <button
+                  className="sc-eNQAEJ eEQhZo"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
+                >
+                  <i
+                    className="far fa-clone"
+                  />
+                  <span
+                    className="sc-VigVT gGKHMo"
+                  >
+                    copy
+                  </span>
+                </button>
+              </copyLink>
             </div>
+            <a
+              className="sc-chPdSV enPzWF"
+              href="localhost/survey/0undefined"
+            >
+              localhost/survey/0undefined
+            </a>
+            <button
+              className="sc-hMqMXs gAuTYf"
+            >
+              <a
+                aria-current={null}
+                className="sc-kEYyzF bLOOzH"
+                href="/session/details/undefined/1"
+                onClick={[Function]}
+              >
+                 Survey Results 
+              </a>
+            </button>
           </div>
-          <a
-            className="sc-fjdhpX QWrjU"
-            href="123"
-          >
-            123
-          </a>
           <div
-            className="sc-iwsKbI iSdUHD"
+            className="sc-gzVnrw bdhGJd"
           >
             <div
-              className="sc-gqjmRU jxHkFa"
+              className="sc-htoDjs bnXiQO"
             >
-              Survey
-              1
-              Link
-            </div>
-            <div
-              className="sc-VigVT FrKLX"
-            >
-              <i
-                className="fas fa-info-circle"
-              />
-              <span
-                className="sc-gZMcBi iebefm"
+              <div
+                className="sc-fjdhpX zrTrX"
               >
-                info
-              </span>
-            </div>
-            <div
-              className="sc-VigVT FrKLX"
-            >
-              <button
-                className="sc-ckVGcZ fipeIP"
+                <span
+                  className="sc-jTzLTM gkQkbK"
+                >
+                  Survey 1
+                </span>
+                Link
+              </div>
+              <div
+                className="sc-jzJRlG iLzlvl"
                 onClick={[Function]}
               >
                 <i
-                  className="far fa-clone"
+                  className="fas fa-info-circle"
                 />
                 <span
-                  className="sc-gZMcBi iebefm"
+                  className="sc-VigVT gGKHMo"
                 >
-                  copy
+                  info
                 </span>
-              </button>
+              </div>
+              <copyLink>
+                <button
+                  className="sc-eNQAEJ eEQhZo"
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
+                >
+                  <i
+                    className="far fa-clone"
+                  />
+                  <span
+                    className="sc-VigVT gGKHMo"
+                  >
+                    copy
+                  </span>
+                </button>
+              </copyLink>
             </div>
+            <a
+              className="sc-chPdSV enPzWF"
+              href="localhost/survey/1undefined"
+            >
+              localhost/survey/1undefined
+            </a>
+            <button
+              className="sc-hMqMXs gAuTYf"
+            >
+              <a
+                aria-current={null}
+                className="sc-kEYyzF bLOOzH"
+                href="/session/details/undefined/1"
+                onClick={[Function]}
+              >
+                 Survey Results 
+              </a>
+            </button>
           </div>
-          <a
-            className="sc-fjdhpX QWrjU"
-            href="123"
-          >
-            123
-          </a>
         </div>
-      </div>
-      <div
-        className="sc-jzJRlG jwQlMQ"
-      >
-        <button
-          className="sc-cSHVUG gusGZN"
-        >
-          View Servey Results
-        </button>
       </div>
     </div>
   </div>
   <div
-    className="sc-kAzzGY cJFEus"
+    className="sc-kGXeez hRHuQG"
   >
     <div
-      className="sc-chPdSV iNQxXr"
+      className="sc-kpOJdX ieBFuD"
     >
       <button
-        className="sc-kgoBCf WFtvE"
+        className="sc-dxgOiQ hvurjS"
+        onClick={[Function]}
         type="button"
       >
         <i
-          className="far fa-edit sc-kGXeez dUGvOA"
+          className="far fa-edit sc-ckVGcZ ewqYsR"
         />
       </button>
       <span
-        className="sc-kpOJdX kuUvAl"
+        className="sc-jKJlTe libXlj"
       >
         edit session
       </span>
     </div>
     <div
-      className="sc-chPdSV iNQxXr"
+      className="sc-kpOJdX ieBFuD"
     >
       <button
-        className="sc-kgoBCf WFtvE"
+        className="sc-dxgOiQ hvurjS"
         onClick={[Function]}
         type="button"
       >
         <i
-          className="fas fa-trash-alt sc-kGXeez dUGvOA"
+          className="fas fa-trash-alt sc-ckVGcZ ewqYsR"
         />
       </button>
       <span
-        className="sc-kpOJdX kuUvAl"
+        className="sc-jKJlTe libXlj"
       >
         delete session
       </span>
