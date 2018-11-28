@@ -94,7 +94,7 @@ describe("Test /submit/:responseid", () => {
 
     const response = await request(app).post(`/submit/0123456`).send(dummyFormResponse).set("Accept", "application/json");
 
-    expect(response.statusCode).toBe(500);
+    expect(response.statusCode).toBe(400);
   })
 
 })

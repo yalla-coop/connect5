@@ -32,6 +32,7 @@ router.post("/", async (req, res) => {
     .then(response => storeAnswers(response._id, formState, sessionId))
     .then(result => res.status(200).json(result))
     .catch(() => {
+      console.log("error reached")
       res.status(500);
       res.send(createError(500, "Error in inserting the survey response"));
     });
