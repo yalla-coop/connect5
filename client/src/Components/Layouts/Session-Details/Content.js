@@ -70,7 +70,9 @@ class SessionContent extends Component {
                     saveInState={() => this.saveInState(surveyURL1)}
                     value={surveyURL1}
                   />
-                  <SLink href={surveyURL1}>{surveyURL1}</SLink>
+                  <SLink href={`${window.location.host}/survey/${type}${_id}`}>
+                    {`/survey/${type}${_id}`}
+                  </SLink>
                   <ResultBtn id={_id} type={type} />
                 </Container>
                 <Container>
@@ -80,7 +82,9 @@ class SessionContent extends Component {
                     saveInState={() => this.saveInState(surveyURL2)}
                     value={surveyURL2}
                   />
-                  <SLink href={surveyURL2}>http:connectsjhfszipuyfg</SLink>
+                  <SLink href={`${window.location.host}/survey/${type}${_id}`}>
+                    {`/survey/${type}${_id}`}
+                  </SLink>
                   <ResultBtn id={_id} type={type} />
                 </Container>
               </SurveyLink1>
@@ -93,7 +97,9 @@ class SessionContent extends Component {
                     saveInState={() => this.saveInState(surveyURL1)}
                     value={surveyURL1}
                   />
-                  <SLink href={surveyURL1}>{surveyURL1}</SLink>
+                  <SLink href={`${window.location.host}/survey/${type}${_id}`}>
+                    {`/survey/${type}${_id}`}
+                  </SLink>
                   <ResultBtn id={_id} type={type} />
                 </Container>
               </SurveyLink1>
