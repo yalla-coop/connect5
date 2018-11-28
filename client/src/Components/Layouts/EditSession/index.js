@@ -19,6 +19,7 @@ class EditSession extends Component {
     sessionType: null,
     attendeesNumber: "",
     selectedOption: null,
+    loaded: false,
   };
 
   componentDidMount() {
@@ -29,6 +30,7 @@ class EditSession extends Component {
       startDate: date,
       sessionType: type,
       attendeesNumber: parseInt(attendees || 0, 10),
+      loaded: true,
     });
   }
 
@@ -70,8 +72,12 @@ class EditSession extends Component {
   };
 
   render() {
+
+    if(!this.state.loaded) {
+      return <h1>Loading...</h1>
+    }
+
     const { startDate, attendeesNumber, sessionType } = this.state;
-    console.log("SESSION", sessionType)
     const {
       handleDate, handleAttendees, handleSession, handleSubmit,
     } = this;

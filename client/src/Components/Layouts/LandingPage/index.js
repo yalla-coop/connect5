@@ -9,7 +9,7 @@ import {
   Paragraph,
   Button,
 } from "./StyledComponents";
-import Logo from "./logo.jpg";
+import Logo from "../../../assets/connect5_logo_main.jpg";
 
 class LandingPage extends Component {
   render() {
@@ -20,12 +20,10 @@ class LandingPage extends Component {
             <Image src={Logo} />
           </ImageWrapper>
           <TextWrapper>
-            <Heading>
-            CONNECT 5
-            </Heading>
+            <Heading>CONNECT 5</Heading>
             <Paragraph>
               Connect 5 has been developed to give frontline staff the confidence to have more
-               effective conversations with the public about their mental health and wellbeing
+              effective conversations with the public about their mental health and wellbeing
             </Paragraph>
           </TextWrapper>
           <Button to="/trainer">I’m a Connect 5 Trainer</Button>

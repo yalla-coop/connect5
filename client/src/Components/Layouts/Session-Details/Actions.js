@@ -3,7 +3,7 @@ import swal from "sweetalert";
 import axios from "axios";
 import PropTypes from "prop-types";
 import {
-  Actions, Action, ActionBtn, Span, Icon,
+  ActionsWrapper, ActionWrapper, ActionBtn, Span, Icon,
 } from "./styledComponents";
 
 class SessionActions extends Component {
@@ -15,7 +15,8 @@ class SessionActions extends Component {
     editSession: false,
   };
 
-  handleEdit = () => {
+  handleEdit = (session) => {
+    this.props.getCurrentSession(session);
     this.context.router.history.push("/edit-session");
   };
 
@@ -48,20 +49,20 @@ class SessionActions extends Component {
     const { handleEdit } = this;
     const { _id } = sessionDetails;
     return (
-      <Actions>
-        <Action>
-          <ActionBtn type="button" onClick={() => handleEdit()}>
+      <ActionsWrapper>
+        <ActionWrapper>
+          <ActionBtn type="button" onClick={() => handleEdit(sessionDetails)}>
             <Icon className="far fa-edit" />
           </ActionBtn>
           <Span>edit session</Span>
-        </Action>
-        <Action>
+        </ActionWrapper>
+        <ActionWrapper>
           <ActionBtn type="button" onClick={() => this.deleteSession(_id)}>
             <Icon className="fas fa-trash-alt" />
           </ActionBtn>
           <Span>delete session</Span>
-        </Action>
-      </Actions>
+        </ActionWrapper>
+      </ActionsWrapper>
     );
   }
 }
