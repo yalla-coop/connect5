@@ -2,14 +2,14 @@
 
 exports[`Header matches snapshot 1`] = `
 <div
-  className="sc-bdVaJa dJIpua"
+  className="sc-bdVaJa iFrhpa"
 >
   <a
     href="/"
     onClick={[Function]}
   >
     <i
-      className="fas fa-home sc-bwzfXH jyqnUy"
+      className="fas fa-home sc-bwzfXH LBneQ"
     />
   </a>
   <img
