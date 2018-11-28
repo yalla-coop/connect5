@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter, Route, Switch,
-} from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // setup authorization
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../Utils/setAuthToken";
 
 // import components
-import Home from "./Layouts/Home";
+import LandingPage from "./Layouts/LandingPage";
 
 import SessionDetails from "./Layouts/Session-Details";
+import EditSession from "./Layouts/EditSession/index";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 import Dashboard from "./Layouts/TrainerDashboard/index";
@@ -31,7 +30,20 @@ class App extends Component {
     trainerId: null,
   };
 
+  handleSessions = (sessions) => {
+    this.setState({ sessions });
+  };
+
+  getCurrentSession = (session) => {
+    this.setState({
+      currentSession: session,
+    });
+    // update localStorage
+    localStorage.setItem("currentSession", JSON.stringify(session));
+  };
+
   componentDidMount() {
+    this.hydrateState();
     // check to see if valid jwt token in local storage
     if (localStorage.jwtToken) {
       // if so we set it to auth header so we can access it
@@ -43,7 +55,7 @@ class App extends Component {
       // log out user if toke expired
       if (decoded.exp < currentTime) {
         localStorage.removeItem("jwtToken");
-
+        // setTimeout(() => { console.log(this.state.currentSession); }, 7000);
         setAuthToken(false);
         this.setState({
           isAuthenticated: false,
@@ -65,16 +77,20 @@ class App extends Component {
     }
   }
 
-  handleSessions = (sessions) => {
-    this.setState({ sessions });
-  };
+  hydrateState() {
+    if (this.state.currentSession.length === 0 && localStorage.hasOwnProperty("currentSession")) {
+      let value = localStorage.getItem("currentSession");
 
-  getCurrentSession = (session) => {
-    this.setState({
-      currentSession: session,
-    });
-    // setTimeout(() => { console.log(this.state.currentSession); }, 7000);
-  };
+      try {
+        value = JSON.parse(value);
+        this.setState({ currentSession: value, loaded: true });
+      } catch (err) {
+        this.setState({ currentSession: value, loaded: true });
+      }
+    } else {
+      this.setState({ loaded: true });
+    }
+  }
 
   render() {
     const { currentSession, isAuthenticated, loaded } = this.state;
@@ -84,7 +100,7 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Switch>
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact component={LandingPage} />
             <Route path="/trainer" exact component={TrainersLandingPage} />
             <Route path="/trainer/register" exact component={Register} />
             <Route path="/trainer/login" exact component={Login} />
@@ -113,6 +129,7 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               sessionDetails={currentSession}
               trainerId={this.state.trainerId}
+              getCurrentSession={this.getCurrentSession}
             />
             <PrivateRoute
               path="/create-session"
@@ -122,10 +139,18 @@ class App extends Component {
               trainerId={this.state.trainerId}
             />
             <PrivateRoute
+              path="/edit-session"
+              exact
+              component={EditSession}
+              isAuthenticated={isAuthenticated}
+              trainerId={this.state.trainerId}
+              sessionDetails={currentSession}
+            />
+            <PrivateRoute
               path="/session/details/:sessionId/:sessionType"
               exact
               component={SessionResult}
-              isAuthenticated={this.Authenticated}
+              isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
             />
           </Switch>
