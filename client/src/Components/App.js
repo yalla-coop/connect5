@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./Layouts/Home";
 
 import SessionDetails from "./Layouts/Session-Details";
+import EditSession from "./Layouts/EditSession/index";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 import Survey from "./Layouts/Survey";
@@ -44,6 +45,7 @@ render() {
           <Route path="/trainer/login" exact component={Login} />
           <Route path="/view-sessions" render={() => <ViewSessions handleSessions={this.handleSessions} getCurrentSession={this.getCurrentSession} />} exact />
           <Route path="/session-details" render={() => <SessionDetails sessionDetails={currentSession} />} exact />
+          <Route path="/edit-session" render={() => <EditSession sessionDetails={currentSession} />} exact />
           <Route path="/survey/:id" exact render={props => <Survey {...props} />} />
           <Route path="/create-session" exact component={CreateSession} />
           <Route

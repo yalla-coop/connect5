@@ -11,13 +11,17 @@ const Header = styled.div`
  width: 100%;
  height: 40px;
  position: relative;
- font-size: 15px,
- padding: 10px 0
+ font-size: 14px,
+ padding: 10px 0;
+ @media (min-width:1040px) {
+   width: 95%;
+   margin: 0 auto;
+ }
 `;
 
 const Heading = styled.div`
  width: 100%;
- color:  #000;
+ color: #0B6FA4;
  padding-left: 10px
 `;
 
@@ -27,10 +31,10 @@ const H1 = styled.h1`
 `;
 
 const Borderbottom = styled.div`
- width: 46%;
+ width:  150px;
  height: 1px;
  position: absolute;
- background: #000;
+ background: #0B6FA4;
  top: 50px;
  margin-left: 10px
 `;
