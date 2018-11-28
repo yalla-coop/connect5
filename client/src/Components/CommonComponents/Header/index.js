@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import Logo from "../../../assets/logo.jpg";
+import Logo from "../../../assets/connect5_logo_main.jpg";
 
 const Container = styled.div`
   position: fixed;
