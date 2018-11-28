@@ -71,6 +71,7 @@ class EditSession extends Component {
 
   render() {
     const { startDate, attendeesNumber, sessionType } = this.state;
+    console.log("SESSION", sessionType)
     const {
       handleDate, handleAttendees, handleSession, handleSubmit,
     } = this;
@@ -95,7 +96,7 @@ class EditSession extends Component {
             value={attendeesNumber}
             name="attendeesNumber"
           />
-          <SelectComponent placeholder={sessionType} onChange={handleSession} options={options} />
+          <SelectComponent placeholder={sessionType > 0 ? sessionType : "N/A"} onChange={handleSession} options={options} />
           <Button type="submit">Submit</Button>
         </Form>
       </Container>
