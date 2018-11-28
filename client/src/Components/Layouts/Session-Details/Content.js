@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import moment from "moment";
+import PropTypes from "prop-types";
 import Link from "./Link";
+import ResultBtn from "./ResultBtn";
 import {
   Content,
   Statistic,
@@ -10,31 +12,42 @@ import {
   SurveyLink,
   SLink,
   Links,
-  ResultsBtn,
-  Button,
   SurveyLink1,
+  Container,
 } from "./styledComponents";
 
-
 class SessionContent extends Component {
-  state ={
+  static contextTypes = {
+    router: PropTypes.object,
+  };
+
+  state = {
     value: " ",
     copied: false,
-  }
+  };
 
   onCopy = () => {
     this.setState({ copied: true });
   };
 
-  saveInState = (surveyURL1) => {
-    this.setState({ value: surveyURL1, copied: false });
+  saveInState = (surveyURL) => {
+    this.setState({ value: surveyURL, copied: false });
+  };
+
+  redirect = (_id, type) => {
+    this.context.router.history.push(`/session/details/${_id}/${type}`);
   };
 
   render() {
     const { sessionDetails } = this.props;
     const {
-      date, type, attendees, surveyURL1, surveyURL2,
+      date, type, attendees, _id,
     } = sessionDetails;
+
+    const surveyURL = `${window.location.host}/survey/${type}${_id}`;
+
+    const preSurveyUrl = `${window.location.host}/survey/0${_id}`;
+
     return (
       <Content>
         <Statistic>
@@ -53,38 +66,44 @@ class SessionContent extends Component {
         </Statistic>
         <Links>
           <SurveyLink>
-            {type === 1
-              ? (<SurveyLink1>
-                <Link
-                  type={type}
-                  onCopy={this.onCopy}
-                  saveInState={() => this.saveInState(surveyURL1)}
-                  value={this.state.value}
-                />
-                <SLink href={surveyURL1}>{surveyURL1}</SLink>
-                <Link
-                  type={type}
-                  onCopy={this.onCopy}
-                  saveInState={() => this.saveInState(surveyURL2)}
-                  value={this.state.value}
-                />
-                <SLink href={surveyURL2}>{surveyURL2}</SLink>
-                 </SurveyLink1>
-              ) : (<SurveyLink1>
-                <Link
-                  type={type}
-                  onCopy={this.onCopy}
-                  saveInState={() => this.saveInState(surveyURL1)}
-                  value={this.state.value}
-                />
-                <SLink href={surveyURL1}>{surveyURL1}</SLink>
+            {type === 1 ? (
+              <SurveyLink1>
+                <Container>
+                  <Link
+                    type="Pre-Survey"
+                    onCopy={this.onCopy}
+                    saveInState={() => this.saveInState(preSurveyUrl)}
+                    value={preSurveyUrl}
+                  />
+                  <SLink href={preSurveyUrl}>{preSurveyUrl}</SLink>
+                  <ResultBtn id={_id} type={type} />
+                </Container>
+                <Container>
+                  <Link
+                    type={`Survey ${type}`}
+                    onCopy={this.onCopy}
+                    saveInState={() => this.saveInState(surveyURL)}
+                    value={surveyURL}
+                  />
+                  <SLink href={surveyURL}>{surveyURL}</SLink>
+                  <ResultBtn id={_id} type={type} />
+                </Container>
               </SurveyLink1>
-              )
-            }
+            ) : (
+              <SurveyLink1>
+                <Container>
+                  <Link
+                    type={`Survey ${type}`}
+                    onCopy={this.onCopy}
+                    saveInState={() => this.saveInState(surveyURL)}
+                    value={surveyURL}
+                  />
+                  <SLink href={surveyURL}>{surveyURL}</SLink>
+                  <ResultBtn id={_id} type={type} />
+                </Container>
+              </SurveyLink1>
+            )}
           </SurveyLink>
-          <ResultsBtn>
-            <Button>View Servey Results</Button>
-          </ResultsBtn>
         </Links>
       </Content>
     );

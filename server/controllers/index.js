@@ -18,6 +18,7 @@ const getRadiostarQuestions = require("./get_radiostar_questions");
 
 const getQuestionOverview = require("./get_question_overview");
 
+const editSession = require("./edit_session");
 
 const router = express.Router();
 
@@ -30,6 +31,7 @@ router.use("/deleteSession/:_id", deleteSessionById);
 router.get("/trainer/overview", passport.authenticate("jwt", { session: false }), getOverviewResults);
 router.get("/question/radiostart/all", getRadiostarQuestions);
 router.use("/question/overview/results", passport.authenticate("jwt", { session: false }), getQuestionOverview);
+router.use("/edit-session/:_id", editSession);
 
 // PUBLIC ROUTES
 router.use("/trainer", trainerController);
