@@ -5,8 +5,7 @@ import SessionContent from "./Content";
 import SessionActions from "./Actions";
 
 class SessionDetails extends Component {
-
-
+  // gg
   render() {
     const { sessionDetails, getCurrentSession } = this.props;
     return (
