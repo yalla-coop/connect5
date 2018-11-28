@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
-import { log } from "util";
 import Link from "./Link";
 import ResultBtn from "./ResultBtn";
 import {
@@ -31,8 +30,8 @@ class SessionContent extends Component {
     this.setState({ copied: true });
   };
 
-  saveInState = (surveyURL1) => {
-    this.setState({ value: surveyURL1, copied: false });
+  saveInState = (surveyURL) => {
+    this.setState({ value: surveyURL, copied: false });
   };
 
   redirect = (_id, type) => {
@@ -48,10 +47,6 @@ class SessionContent extends Component {
     const surveyURL = `${window.location.host}/survey/${type}${_id}`;
 
     const preSurveyUrl = `${window.location.host}/survey/0${_id}`;
-
-    const surveyURLDisp = `/survey/${type}${_id}`;
-
-    const preSurveyUrlDisp = `/survey/0${_id}`;
 
     return (
       <Content>
@@ -80,7 +75,7 @@ class SessionContent extends Component {
                     saveInState={() => this.saveInState(preSurveyUrl)}
                     value={preSurveyUrl}
                   />
-                  <SLink href={preSurveyUrl}>{preSurveyUrlDisp}</SLink>
+                  <SLink href={preSurveyUrl}>{preSurveyUrl}</SLink>
                   <ResultBtn id={_id} type={type} />
                 </Container>
                 <Container>
@@ -90,7 +85,7 @@ class SessionContent extends Component {
                     saveInState={() => this.saveInState(surveyURL)}
                     value={surveyURL}
                   />
-                  <SLink href={surveyURL}>{surveyURLDisp}</SLink>
+                  <SLink href={surveyURL}>{surveyURL}</SLink>
                   <ResultBtn id={_id} type={type} />
                 </Container>
               </SurveyLink1>
@@ -103,7 +98,7 @@ class SessionContent extends Component {
                     saveInState={() => this.saveInState(surveyURL)}
                     value={surveyURL}
                   />
-                  <SLink href={surveyURL}>{surveyURLDisp}</SLink>
+                  <SLink href={surveyURL}>{surveyURL}</SLink>
                   <ResultBtn id={_id} type={type} />
                 </Container>
               </SurveyLink1>

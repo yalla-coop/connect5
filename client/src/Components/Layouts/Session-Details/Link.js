@@ -14,9 +14,13 @@ class Link extends Component {
     });
   };
 
+  handleCopy = () => {
+    swal("Link copied!", "", "success");
+  };
+
   render() {
     const {
-      type, onCopy, saveInState, surveyURL1, value,
+      type, onCopy, saveInState, surveyURL, value,
     } = this.props;
     return (
       <LinkType>
@@ -24,13 +28,18 @@ class Link extends Component {
           <SurveyType>{type}</SurveyType>
           Link
         </Span1>
-        <Span2 onClick={this.handleInfo} style={{ cursor: "pointer" }}>
+        <Span2 onClick={this.handleInfo}>
           <i className="fas fa-info-circle" />
           <LinkInfo>info</LinkInfo>
         </Span2>
         <copyLink>
-          <CopyToClipboard onCopy={onCopy} text={value}>
-            <Btn onClick={() => saveInState(surveyURL1)}>
+          <CopyToClipboard onCopy={onCopy} text={value} style={{ cursor: "pointer" }}>
+            <Btn
+              onClick={() => {
+                saveInState(surveyURL);
+                this.handleCopy();
+              }}
+            >
               <i className="far fa-clone" />
               <LinkInfo>copy</LinkInfo>
             </Btn>
