@@ -61,12 +61,6 @@ const AttendanceResults = styled.div`
   margin: 12px auto;
 `;
 
-
-const ResponsesResults = styled.div`
-  display: flex;
-  justify-content: space-around;
-  margin: 12px auto;
-`;
 const CircleWrapper = styled.div`
   margin: 0 auto;
   display: flex;
@@ -75,36 +69,28 @@ const CircleWrapper = styled.div`
 `;
 
 const Circle = styled.div`
-width: 40px;
-    height: 40px;
-    background: var(--paragraph-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #FFF;
-    font-size: 20px
+  width: 40px;
+  height: 40px;
+  background: var(--paragraph-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFF;
+  font-size: 20px
 
 `;
 const CircleTitle = styled.span`
-
-text-align: center;
-
-margin-top: 8px;
-display: block;
-padding: 0 5px;
+  text-align: center;
+  margin-top: 8px;
+  display: block;
+  padding: 0 5px;
 `;
 
-const CircleNumber = styled.span`
+const CircleNumber = styled.span``;
 
+const SmallTitle = styled.h5``;
 
-`;
-
-const SmallTitle = styled.h5`
-
-
-
-`;
 const QuestionWrapper = styled.div`
   width: 100%;
   background-color: var(--button-background-color);
@@ -207,17 +193,6 @@ const BarSpan = styled.span`
   color: var(--button-text-color);
 `;
 
-const StarsRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 20px;
-`;
-const StarIconsWrapper = styled.div``;
-
-const StarIcon = styled.i`
-  margin: 0 2px;
-`;
 const Responses = styled.p`
   display: inline-block;
   margin: 10px 0;
@@ -229,15 +204,21 @@ const P = styled.p`
   font-size: 25px;
 `;
 
+const ResponsesResults = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin: 12px auto;
+`;
+
 
 export {
   ResultsOverviewWrapper,
   PageTitle,
   StatisicsContainer,
+  ResponsesResults,
   TabsWrapper,
   Tab,
   AttendanceResults,
-  ResponsesResults,
   Circle,
   CircleWrapper,
   CircleTitle,
@@ -255,9 +236,6 @@ export {
   BarContainer,
   Bar,
   BarSpan,
-  StarsRow,
-  StarIconsWrapper,
-  StarIcon,
   Responses,
   P,
 };
