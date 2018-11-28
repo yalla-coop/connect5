@@ -26,8 +26,6 @@ class EditSession extends Component {
     const { sessionDetails } = this.props;
     const { date, type, attendees } = sessionDetails;
 
-    console.log("COMP PROPS", this.props)
-
     this.setState({
       startDate: date,
       sessionType: type,
@@ -80,10 +78,7 @@ class EditSession extends Component {
     }
 
     const { sessionDetails } = this.props;
-    console.log("SESSION", sessionDetails)
-    console.log("in state", this.state.startDate)
     const { startDate, attendeesNumber, sessionType } = this.state;
-    console.log("SESSION", sessionType)
     const {
       handleDate, handleAttendees, handleSession, handleSubmit,
     } = this;
