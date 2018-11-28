@@ -9,13 +9,12 @@ import setAuthToken from "../Utils/setAuthToken";
 
 // import components
 import Home from "./Layouts/Home";
-
 import SessionDetails from "./Layouts/Session-Details";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 import Dashboard from "./Layouts/TrainerDashboard/index";
 import Survey from "./Layouts/Survey";
-import TrainersLandingPage from "./Layouts/TrainersLandingPage";
+import TrainersLandingPage from "./Layouts/TrainersLandingPage/index";
 import ViewSessions from "./Layouts/view-sessions";
 import CreateSession from "./Layouts/CreateSession/index";
 import SessionResult from "./Layouts/SessionResult";
@@ -25,6 +24,7 @@ import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute";
 class App extends Component {
   state = {
     sessions: [],
+    currentSession: [],
     isAuthenticated: false,
     loaded: false,
     trainerId: null,
