@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import setAuthToken from "../../Utils/setAuthToken";
 
 import Header from "../CommonComponents/Header";
 
@@ -36,7 +37,18 @@ class Login extends Component {
   loginTrainer = (trainerData) => {
     axios
       .post("/login", trainerData)
-      .then(res => this.props.history.push("/home")) // redirect after login success
+      .then(async (res) => {
+        console.log("CLIENT TOKEN", res);
+
+        // save token to local storage
+        const { token } = res.data;
+
+        // set token to local storage (only stores strings)
+        await localStorage.setItem("jwtToken", token);
+        // set token to auth header
+        await setAuthToken(token);
+      })
+      .then(() => window.location.href = "/trainer/dashboard")
       .catch(err => this.setState({
         errors: err.response.data,
       }));

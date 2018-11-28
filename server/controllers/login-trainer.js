@@ -14,7 +14,9 @@ router.post('/', (req, res) => {
     return res.status(400).json(errors);
   }
   loginTrainer(email, password, errors)
-  .then(loggedInTrainer => res.status(200).json(loggedInTrainer.id))
+  .then(token => {
+    console.log("TOKEN CONTROLLER", token)
+    res.status(200).json(token)})
   .catch(err => res.status(400).json(err))
 });
 
