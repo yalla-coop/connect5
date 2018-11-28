@@ -35,7 +35,8 @@ const SessionDetails = styled.div`
 
 const Intro = styled.div``;
 
-const Disclaimer = styled.div``;
+const Disclaimer = styled.div`
+p { font-weight: 300;}`;
 
 const Form = styled.form`
   display: flex;
