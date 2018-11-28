@@ -28,10 +28,10 @@ exports[`EditSession matches snapshot 1`] = `
           onClick={[Function]}
           onFocus={[Function]}
           onKeyDown={[Function]}
-          placeholder={"1970-01-01T00:00:00.123Z"}
+          placeholder="2018-11-01"
           readOnly={false}
           type="text"
-          value="1970-01-01"
+          value="2018-11-01"
         />
       </div>
     </div>

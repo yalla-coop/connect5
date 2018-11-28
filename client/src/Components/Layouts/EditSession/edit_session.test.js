@@ -7,7 +7,7 @@ import EditSession from "./index";
 test("EditSession matches snapshot", () => {
   const context = {};
   const object = {
-    date: 123,
+    date: "2018-11-01",
     type: 1,
     attendees: 10,
   };
