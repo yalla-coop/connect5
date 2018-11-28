@@ -17,6 +17,7 @@ export default class Questions extends React.Component {
       onChange, questions, handleMatrix, selectCheckedItem, answers, errors,
     } = this.props;
     const errorArray = Object.keys(errors);
+    // const answerArray = Object.keys(answers);
 
     return (
       <React.Fragment>
@@ -31,7 +32,7 @@ export default class Questions extends React.Component {
           // format each question depending on the inputType
           if (el.inputType === "text") {
             return (
-              <TextField key={index} unanswered={errorArray.includes(questionId) && isRequired}>
+              <TextField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
                 <header>
                   <h4 id={index}>
                     {questionText}
@@ -45,7 +46,7 @@ export default class Questions extends React.Component {
           }
           if (el.inputType === "radio") {
             return (
-              <RadioField key={index}>
+              <RadioField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
                 <header>
                   <h4 id={index}>
                     {questionText}
@@ -79,7 +80,7 @@ export default class Questions extends React.Component {
           }
           if (el.inputType === "radiostar") {
             return (
-              <RadioStarField key={index}>
+              <RadioStarField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
                 <header>
                   <h4 id={index}>
                     {questionText}
@@ -120,8 +121,9 @@ export default class Questions extends React.Component {
             );
           }
           if (el.inputType === "checkbox") {
+            console.log("ANSWERS", answers)
             return (
-              <CheckboxField key={index}>
+              <CheckboxField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
                 <header>
                   <h4 id={index}>
                     {questionText}
@@ -149,7 +151,7 @@ export default class Questions extends React.Component {
           }
           if (el.inputType === "matrix") {
             return (
-              <MatrixField key={index}>
+              <MatrixField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
                 <header>
                   <h4 id={index}>
                     {questionText}

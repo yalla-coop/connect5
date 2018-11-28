@@ -125,8 +125,9 @@ export default class Survey extends React.Component {
     // console.log(formSubmission);
     axios
       .post(`/submit/${responseId}`, formSubmission)
-      .then(
-        swal("Done!", "Thanks for submitting your feedback!", "success").then(() => history.push("/home")),
+      .then((result) => {
+        swal("Done!", "Thanks for submitting your feedback!", "success").then(() => history.push("/home"))
+      }
       )
       .catch((err) => {
         console.log("ERR", err);

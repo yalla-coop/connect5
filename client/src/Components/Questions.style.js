@@ -16,6 +16,8 @@ const CommonStyles = styled.div`
     opacity: 0.8;
     size: 16px;
   }
+
+  ${({ unanswered }) => unanswered && "color: red;"}
 `;
 
 const RadioField = styled(CommonStyles)`
