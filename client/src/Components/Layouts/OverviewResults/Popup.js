@@ -54,7 +54,7 @@ class Popup extends Component {
     const questionsIDs = getQuestionsIDs(this.props.question.questions);
     axios({
       method: "post",
-      url: "/test",
+      url: "/question/overview/results",
       data: {
         questionsIDs,
       },
