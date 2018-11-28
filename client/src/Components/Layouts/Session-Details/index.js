@@ -8,12 +8,12 @@ class SessionDetails extends Component {
 
 
   render() {
-    const { sessionDetails } = this.props;
+    const { sessionDetails, getCurrentSession } = this.props;
     return (
       <Wrapper>
         <SessionHeader />
         <SessionContent sessionDetails={sessionDetails} />
-        <SessionActions sessionDetails={sessionDetails} />
+        <SessionActions sessionDetails={sessionDetails} getCurrentSession={getCurrentSession} />
       </Wrapper>
     );
   }

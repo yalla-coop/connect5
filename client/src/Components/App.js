@@ -19,6 +19,7 @@ class App extends Component {
   state = {
     sessions: [],
     currentSession: [],
+    loaded: false,
   }
 
 handleSessions = (sessions) => {
@@ -42,9 +43,9 @@ hydrateState() {
 
     try {
       value = JSON.parse(value);
-      this.setState({ currentSession: value});
+      this.setState({ currentSession: value, loaded: true});
     } catch (err) {
-      this.setState( { currentSession: value});
+      this.setState( { currentSession: value, loaded: true});
     }
   }
 }
@@ -56,7 +57,11 @@ componentDidMount() {
 
 
 render() {
-  const { currentSession } = this.state;
+  
+  const { currentSession, loaded } = this.state;
+  if(!loaded) {
+    return <h1>Loading...</h1>
+  }
   return (
     <BrowserRouter>
       <div className="App">
@@ -66,7 +71,7 @@ render() {
           <Route path="/trainer/register" exact component={Register} />
           <Route path="/trainer/login" exact component={Login} />
           <Route path="/view-sessions" render={() => <ViewSessions handleSessions={this.handleSessions} getCurrentSession={this.getCurrentSession} />} exact />
-          <Route path="/session-details" render={() => <SessionDetails sessionDetails={currentSession} />} exact />
+          <Route path="/session-details" render={() => <SessionDetails sessionDetails={currentSession} getCurrentSession={this.getCurrentSession} />} exact />
           <Route path="/edit-session" render={() => <EditSession sessionDetails={currentSession} />} exact />
           <Route path="/survey/:id" exact render={props => <Survey {...props} />} />
           <Route path="/create-session" exact component={CreateSession} />

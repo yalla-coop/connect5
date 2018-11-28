@@ -15,7 +15,8 @@ class SessionActions extends Component {
     editSession: false,
   };
 
-  handleEdit = () => {
+  handleEdit = (session) => {
+    this.props.getCurrentSession(session);
     this.context.router.history.push("/edit-session");
   };
 
@@ -50,7 +51,7 @@ class SessionActions extends Component {
     return (
       <Actions>
         <Action>
-          <ActionBtn type="button" onClick={() => handleEdit()}>
+          <ActionBtn type="button" onClick={() => handleEdit(sessionDetails)}>
             <Icon className="far fa-edit" />
           </ActionBtn>
           <Span>edit session</Span>

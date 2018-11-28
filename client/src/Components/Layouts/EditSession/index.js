@@ -19,16 +19,20 @@ class EditSession extends Component {
     sessionType: null,
     attendeesNumber: "",
     selectedOption: null,
+    loaded: false,
   };
 
   componentDidMount() {
     const { sessionDetails } = this.props;
     const { date, type, attendees } = sessionDetails;
 
+    console.log("COMP PROPS", this.props)
+
     this.setState({
       startDate: date,
       sessionType: type,
       attendeesNumber: parseInt(attendees || 0, 10),
+      loaded: true,
     });
   }
 
@@ -70,6 +74,14 @@ class EditSession extends Component {
   };
 
   render() {
+
+    if(!this.state.loaded) {
+      return <h1>Loading...</h1>
+    }
+
+    const { sessionDetails } = this.props;
+    console.log("SESSION", sessionDetails)
+    console.log("in state", this.state.startDate)
     const { startDate, attendeesNumber, sessionType } = this.state;
     const {
       handleDate, handleAttendees, handleSession, handleSubmit,
