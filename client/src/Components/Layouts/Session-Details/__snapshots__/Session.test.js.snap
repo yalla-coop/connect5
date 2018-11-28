@@ -2,119 +2,124 @@
 
 exports[`Header matches snapshot 1`] = `
 <div
-  className="sc-bdVaJa eFTkEE"
+  className="sc-bdVaJa jFbWwR"
 >
   <div
-    className="sc-bwzfXH kaIhcG"
+    className="sc-bwzfXH ekyToE"
   >
     <div
-      className="sc-htpNat eMvqjo"
+      className="sc-htpNat dDDduC"
     >
       <h1>
         Session Details
       </h1>
     </div>
     <div
-      className="sc-bxivhb buwnwm"
+      className="sc-bxivhb cMkSyr"
     />
   </div>
   <div
-    className="sc-ifAKCX bbevxC"
+    className="sc-ifAKCX ivJThE"
   >
     <div
-      className="sc-EHOje bdUdO"
+      className="sc-EHOje etMTDo"
     >
       <div
-        className="sc-bZQynM jkbpEq"
+        className="sc-bZQynM fTLMmD"
       >
         <div
-          className="sc-dnqmqq fEwpeR"
+          className="sc-dnqmqq gcaUrs"
         >
           Date
         </div>
         <div
-          className="sc-iwsKbI cqvfrA"
+          className="sc-iwsKbI fjRoaU"
         >
           01/01/1970
         </div>
       </div>
       <div
-        className="sc-bZQynM jkbpEq"
+        className="sc-bZQynM fTLMmD"
       >
         <div
-          className="sc-dnqmqq fEwpeR"
+          className="sc-dnqmqq gcaUrs"
         >
           Type
         </div>
         <div
-          className="sc-iwsKbI cqvfrA"
+          className="sc-iwsKbI fjRoaU"
         >
           1
         </div>
       </div>
       <div
-        className="sc-bZQynM jkbpEq"
+        className="sc-bZQynM fTLMmD"
       >
         <div
-          className="sc-dnqmqq fEwpeR"
+          className="sc-dnqmqq gcaUrs"
         >
           Attendees
         </div>
         <div
-          className="sc-iwsKbI cqvfrA"
+          className="sc-iwsKbI fjRoaU"
         >
           10
         </div>
       </div>
     </div>
     <div
-      className="sc-gZMcBi jtcjKm"
+      className="sc-gZMcBi hRbZzM"
     >
       <div
         className="sc-kAzzGY atmIv"
       >
         <div
-          className="sc-gqjmRU cUKnWR"
+          className="sc-gqjmRU ecWkXe"
         >
           <div
             className="sc-gzVnrw bdhGJd"
           >
             <div
-              className="sc-htoDjs kJlkIW"
+              className="sc-htoDjs bnXiQO"
             >
               <div
-                className="sc-fjdhpX iSGqbN"
+                className="sc-fjdhpX zrTrX"
               >
-                Survey
                 <span
-                  className="sc-jTzLTM fpMWXz"
+                  className="sc-jTzLTM gkQkbK"
                 >
-                  1
+                  Pre-Survey
                 </span>
                 Link
               </div>
               <div
-                className="sc-jzJRlG fKWoAn"
+                className="sc-jzJRlG iLzlvl"
+                onClick={[Function]}
               >
                 <i
                   className="fas fa-info-circle"
                 />
                 <span
-                  className="sc-VigVT ggREBR"
+                  className="sc-VigVT gGKHMo"
                 >
                   info
                 </span>
               </div>
               <copyLink>
                 <button
-                  className="sc-eNQAEJ bDDHfj"
+                  className="sc-eNQAEJ eEQhZo"
                   onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
                 >
                   <i
                     className="far fa-clone"
                   />
                   <span
-                    className="sc-VigVT ggREBR"
+                    className="sc-VigVT gGKHMo"
                   >
                     copy
                   </span>
@@ -122,17 +127,17 @@ exports[`Header matches snapshot 1`] = `
               </copyLink>
             </div>
             <a
-              className="sc-chPdSV gTdovi"
-              href="123"
+              className="sc-chPdSV enPzWF"
+              href="localhost/survey/0undefined"
             >
-              123
+              localhost/survey/0undefined
             </a>
             <button
-              className="sc-hMqMXs fsgMg"
+              className="sc-hMqMXs gAuTYf"
             >
               <a
                 aria-current={null}
-                className="sc-kEYyzF fybXxD"
+                className="sc-kEYyzF bLOOzH"
                 href="/session/details/undefined/1"
                 onClick={[Function]}
               >
@@ -144,41 +149,46 @@ exports[`Header matches snapshot 1`] = `
             className="sc-gzVnrw bdhGJd"
           >
             <div
-              className="sc-htoDjs kJlkIW"
+              className="sc-htoDjs bnXiQO"
             >
               <div
-                className="sc-fjdhpX iSGqbN"
+                className="sc-fjdhpX zrTrX"
               >
-                Survey
                 <span
-                  className="sc-jTzLTM fpMWXz"
+                  className="sc-jTzLTM gkQkbK"
                 >
-                  1
+                  Survey 1
                 </span>
                 Link
               </div>
               <div
-                className="sc-jzJRlG fKWoAn"
+                className="sc-jzJRlG iLzlvl"
+                onClick={[Function]}
               >
                 <i
                   className="fas fa-info-circle"
                 />
                 <span
-                  className="sc-VigVT ggREBR"
+                  className="sc-VigVT gGKHMo"
                 >
                   info
                 </span>
               </div>
               <copyLink>
                 <button
-                  className="sc-eNQAEJ bDDHfj"
+                  className="sc-eNQAEJ eEQhZo"
                   onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
                 >
                   <i
                     className="far fa-clone"
                   />
                   <span
-                    className="sc-VigVT ggREBR"
+                    className="sc-VigVT gGKHMo"
                   >
                     copy
                   </span>
@@ -186,17 +196,17 @@ exports[`Header matches snapshot 1`] = `
               </copyLink>
             </div>
             <a
-              className="sc-chPdSV gTdovi"
-              href="123"
+              className="sc-chPdSV enPzWF"
+              href="localhost/survey/1undefined"
             >
-              http:connectsjhfszipuyfg
+              localhost/survey/1undefined
             </a>
             <button
-              className="sc-hMqMXs fsgMg"
+              className="sc-hMqMXs gAuTYf"
             >
               <a
                 aria-current={null}
-                className="sc-kEYyzF fybXxD"
+                className="sc-kEYyzF bLOOzH"
                 href="/session/details/undefined/1"
                 onClick={[Function]}
               >
@@ -215,16 +225,16 @@ exports[`Header matches snapshot 1`] = `
       className="sc-kpOJdX ieBFuD"
     >
       <button
-        className="sc-dxgOiQ gdmtJj"
+        className="sc-dxgOiQ hvurjS"
         onClick={[Function]}
         type="button"
       >
         <i
-          className="far fa-edit sc-ckVGcZ hmqegJ"
+          className="far fa-edit sc-ckVGcZ ewqYsR"
         />
       </button>
       <span
-        className="sc-jKJlTe elrnkI"
+        className="sc-jKJlTe libXlj"
       >
         edit session
       </span>
@@ -233,16 +243,16 @@ exports[`Header matches snapshot 1`] = `
       className="sc-kpOJdX ieBFuD"
     >
       <button
-        className="sc-dxgOiQ gdmtJj"
+        className="sc-dxgOiQ hvurjS"
         onClick={[Function]}
         type="button"
       >
         <i
-          className="fas fa-trash-alt sc-ckVGcZ hmqegJ"
+          className="fas fa-trash-alt sc-ckVGcZ ewqYsR"
         />
       </button>
       <span
-        className="sc-jKJlTe elrnkI"
+        className="sc-jKJlTe libXlj"
       >
         delete session
       </span>
