@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // import components
-import Home from "./Layouts/Home";
+import LandingPage from "./Layouts/LandingPage";
 
 import SessionDetails from "./Layouts/Session-Details";
 import EditSession from "./Layouts/EditSession/index";
@@ -21,6 +21,7 @@ class App extends Component {
     currentSession: [],
     loaded: false,
   }
+
 
 handleSessions = (sessions) => {
   this.setState({ sessions });
@@ -55,7 +56,6 @@ componentDidMount() {
 }
 
 
-
 render() {
   
   const { currentSession, loaded } = this.state;
@@ -66,7 +66,7 @@ render() {
     <BrowserRouter>
       <div className="App">
         <Switch>
-          <Route path="/" exact component={Home} />
+          <Route path="/" exact component={LandingPage} />
           <Route path="/trainer" exact component={TrainersLandingPage} />
           <Route path="/trainer/register" exact component={Register} />
           <Route path="/trainer/login" exact component={Login} />

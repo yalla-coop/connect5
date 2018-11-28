@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Basic test for Home layout 1`] = `
-<div
-  className="home"
->
-  Home
-</div>
-`;
