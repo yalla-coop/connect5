@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const controllers = require("./controllers");
+const passport = require("passport");
 
 const dbConnection = require("./database/db_connection");
 
@@ -11,6 +12,12 @@ const dbConnection = require("./database/db_connection");
 dbConnection();
 
 const app = express();
+
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport config
+require("./passport")(passport);
 
 app.use(logger("dev"));
 app.use(express.json());

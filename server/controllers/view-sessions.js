@@ -2,6 +2,7 @@ const createError = require("http-errors");
 const viewSessions = require("./../database/queries/View-sessions");
 
 const ViewSessions = (req, res) => {
+  console.log("REQ", req);
   viewSessions()
     .then((data) => {
       res.status(200);
