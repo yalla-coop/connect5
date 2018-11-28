@@ -25,6 +25,7 @@ import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute";
 class App extends Component {
   state = {
     sessions: [],
+    currentSession: [],
     isAuthenticated: false,
     loaded: false,
     trainerId: null,
