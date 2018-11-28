@@ -196,7 +196,7 @@ color: white;
  }
 `;
 
-const Actions = styled.div`
+const ActionsWrapper = styled.div`
   grid-area: actions;
   display: flex;
   flex-direction: row;
@@ -204,7 +204,7 @@ const Actions = styled.div`
   align-items: center;
 `;
 
-const Action = styled.div`
+const ActionWrapper = styled.div`
   display: flex;
 `;
 
@@ -258,8 +258,8 @@ export {
   Span2,
   Icon,
   ActionBtn,
-  Action,
-  Actions,
+  ActionWrapper,
+  ActionsWrapper,
   Button,
   ResultsBtn,
   SLink,
