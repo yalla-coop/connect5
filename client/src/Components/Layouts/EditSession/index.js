@@ -59,7 +59,7 @@ class EditSession extends Component {
       {
         sessionType: sessionType.value,
         startDate: moment(startDate),
-        attendeesNumber: parseInt(attendeesNumber),
+        attendeesNumber: parseInt(attendeesNumber || 0),
       })
 
       .then(
@@ -92,7 +92,7 @@ class EditSession extends Component {
 
           <Date
             selected={moment(startDate)}
-            placeholderText={moment(startDate)}
+            placeholderText={startDate}
             onChange={handleDate}
             name="startDate"
             dateFormat="YYYY-MM-DD"
@@ -101,9 +101,9 @@ class EditSession extends Component {
 
           <Input
             type="number"
-            placeholder={attendeesNumber}
+            placeholder={parseInt(attendeesNumber || 0)}
             onChange={handleAttendees}
-            value={attendeesNumber}
+            value={parseInt(attendeesNumber || 0)}
             name="attendeesNumber"
           />
 
