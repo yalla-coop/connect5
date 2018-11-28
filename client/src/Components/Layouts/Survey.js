@@ -9,7 +9,7 @@ import getQuestions from "../../Utils/getQuestions";
 
 import Questions from "../Questions";
 
-import { SurveyQs, Image, SurveyHeader, SessionDetails, Form, Intro, Disclaimer } from "./Survey.style";
+import { SurveyQs, Image, SurveyHeader, SessionDetails, Form, Disclaimer, Intro, } from "./Survey.style";
 import Logo from "../../img/Logo-White.png";
 
 // formState will be the object where we store survey responses
@@ -142,6 +142,21 @@ export default class Survey extends React.Component {
     }
 
     const { sessionDate, trainerName, surveyQs } = surveyDetails;
+
+    swal({
+      text: `Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.`,
+      button: `Next`
+    }).then(() => swal({
+      title: "Privacy notice",
+      text: `RSPH will use your information to evaluate the outcomes of our mental health promotion project Connect 5 at national and regional level. The quantitative results of this survey will be presented in an aggregated manner and all comments will be anonymous.
+      
+      Our legal basis for processing your information is to fulfill our legitimate interests as a developer of public health projects and manage the programs we offer. Managing development projects includes administering records, providing and organising activities; arranging training; events; webinars; conferences; special interest groups; awards; CPD; education; research; monitoring for equal opportunity purposes; advising you of our services; maintaining our own accounts and records.
+      
+      We will retain your personal information for the duration of your association with RSPH. When your association with us expires we will continue to retain some of your information in order to be able to prove your association if needed. We will delete the information which is no longer required for six years after your association expires. We will send you relevant information about the services we provide to our members.
+
+      We may share some of your personal information with our commissioners such as Health Education England or the organisation that has commissioned the Connect 5 training you received. We will not share your personal information with any other organisation without your prior consent, unless we are required to do so by law. For further information on how your information is used, how we maintain the security of your information, and your rights to access the information we hold on you, please see our ${<a href='https://www.rsph.org.uk/privacy-policy.html'>}privacy policy</a>}.
+    `
+    }))
 
     return (
       <SurveyQs>
