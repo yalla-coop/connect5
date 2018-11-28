@@ -77,7 +77,6 @@ class EditSession extends Component {
       return <h1>Loading...</h1>
     }
 
-    const { sessionDetails } = this.props;
     const { startDate, attendeesNumber, sessionType } = this.state;
     const {
       handleDate, handleAttendees, handleSession, handleSubmit,

@@ -48,6 +48,8 @@ hydrateState() {
     } catch (err) {
       this.setState( { currentSession: value, loaded: true});
     }
+  } else {
+    this.setState( { loaded: true });
   }
 }
 
