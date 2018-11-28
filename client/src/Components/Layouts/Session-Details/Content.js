@@ -16,17 +16,15 @@ import {
   Container,
 } from "./styledComponents";
 
-
 class SessionContent extends Component {
   static contextTypes = {
     router: PropTypes.object,
   };
 
-
-  state ={
+  state = {
     value: " ",
     copied: false,
-  }
+  };
 
   onCopy = () => {
     this.setState({ copied: true });
@@ -63,11 +61,11 @@ class SessionContent extends Component {
         </Statistic>
         <Links>
           <SurveyLink>
-            {type === 1
-              ? (<SurveyLink1>
+            {type === 1 ? (
+              <SurveyLink1>
                 <Container>
                   <Link
-                    type={type}
+                    type="Pre-Survey"
                     onCopy={this.onCopy}
                     saveInState={() => this.saveInState(surveyURL1)}
                     value={surveyURL1}
@@ -77,7 +75,7 @@ class SessionContent extends Component {
                 </Container>
                 <Container>
                   <Link
-                    type={type}
+                    type={`Survey ${type}`}
                     onCopy={this.onCopy}
                     saveInState={() => this.saveInState(surveyURL2)}
                     value={surveyURL2}
@@ -85,11 +83,12 @@ class SessionContent extends Component {
                   <SLink href={surveyURL2}>http:connectsjhfszipuyfg</SLink>
                   <ResultBtn id={_id} type={type} />
                 </Container>
-                 </SurveyLink1>
-              ) : (<SurveyLink1>
+              </SurveyLink1>
+            ) : (
+              <SurveyLink1>
                 <Container>
                   <Link
-                    type={type}
+                    type={`Survey ${type}`}
                     onCopy={this.onCopy}
                     saveInState={() => this.saveInState(surveyURL1)}
                     value={surveyURL1}
@@ -98,8 +97,7 @@ class SessionContent extends Component {
                   <ResultBtn id={_id} type={type} />
                 </Container>
               </SurveyLink1>
-              )
-            }
+            )}
           </SurveyLink>
         </Links>
       </Content>
