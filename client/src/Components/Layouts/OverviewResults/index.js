@@ -1,16 +1,33 @@
 import React, { Component } from "react";
 import axios from "axios";
+import ReactRouterPropTypes from "react-router-prop-types";
 
 import {
-  ResultsOverviewWrapper, PageTitle, StatisicsContainer, TabsWrapper, Tab, SmallTitle, QuestionWrapper, QuestionText, Triangle,
+  ResultsOverviewWrapper,
+  PageTitle,
+  StatisicsContainer,
+  TabsWrapper,
+  Tab,
+  SmallTitle,
+  QuestionWrapper,
+  QuestionText,
+  Triangle,
 } from "./StyledComponents";
-
+import Popup from "./Popup";
 import AttendanceResults from "./AttendanceResults";
 import ResponsesResults from "./ResponsesResults";
-import Popup from "./Popup";
 
+import setAuthToken from "../../../Utils/setAuthToken";
 
 class ResultsOverview extends Component {
+  static propTypes = {
+    history: ReactRouterPropTypes.history,
+  };
+
+  static defaultProps = {
+    history: null,
+  }
+
   state = {
     activeTab: "attendance",
     isPopupActive: false,
@@ -21,18 +38,20 @@ class ResultsOverview extends Component {
   }
 
   componentDidMount() {
-    const { history, match } = this.props;
-
-    axios.get("/trainer/overview")
-      .then(({ data }) => data.map(item => this.setState(item)))
-      .then(() => {
-        axios.get("/question/radiostart/all")
-          .then(({ data }) => {
-            this.setState({ radiostarQuestions: data });
-            console.log(data, "radiostarQuestions");
-          });
-      })
-      .catch(() => history.push("/server-error"));
+    const { history } = this.props;
+    if (localStorage.jwtToken) {
+      setAuthToken(localStorage.jwtToken);
+      axios.get("/trainer/overview")
+        .then(({ data }) => data.map(item => this.setState(item)))
+        .then(() => {
+          // get all questions with radiostar type
+          axios.get("/question/radiostart/all")
+            .then(({ data }) => {
+              this.setState({ radiostarQuestions: data });
+            });
+        })
+        .catch(() => history.push("/server-error"));
+    }
   }
 
   handleTabClick = (e) => {
@@ -59,9 +78,16 @@ class ResultsOverview extends Component {
   }
 
   render() {
-    const { activeTab, isPopupActive, activeQuestionIndex } = this.state;
+    const {
+      activeTab,
+      isPopupActive,
+      activeQuestionIndex,
+      attendees,
+      responses,
+      radiostarQuestions,
+    } = this.state;
     const { handleTabClick, handleOpenPopup, handleClosePopup } = this;
-
+    const { history } = this.props;
     return (
       <ResultsOverviewWrapper>
         <span>
@@ -86,8 +112,8 @@ class ResultsOverview extends Component {
           </TabsWrapper>
           {
             activeTab === "attendance"
-              ? <AttendanceResults attendees={this.state.attendees} />
-              : <ResponsesResults responses={this.state.responses} />
+              ? <AttendanceResults attendees={attendees} />
+              : <ResponsesResults responses={responses} />
           }
 
         </StatisicsContainer>
@@ -95,8 +121,8 @@ class ResultsOverview extends Component {
             Responses
         </SmallTitle>
         {
-          this.state.radiostarQuestions.map((item, index) => (
-            <QuestionWrapper onClick={handleOpenPopup} id={index}>
+          radiostarQuestions.map((item, index) => (
+            <QuestionWrapper onClick={handleOpenPopup} id={index} key={item._id}>
               <QuestionText>
                 {item._id}
               </QuestionText>
@@ -108,8 +134,9 @@ class ResultsOverview extends Component {
         {isPopupActive
           ? (
             <Popup
-              question={this.state.radiostarQuestions[activeQuestionIndex]}
+              question={radiostarQuestions[activeQuestionIndex]}
               handleClosePopup={handleClosePopup}
+              history={history}
             />
           )
           : null}
@@ -119,12 +146,3 @@ class ResultsOverview extends Component {
 }
 
 export default ResultsOverview;
-/* <Popup
-handleClosePopup={handleClosePopup}
-questionId={activeQuestion._id}
-inputType={activeQuestion.inputType}
-questionText={activeQuestion.questionText}
-question={activeQuestion}
-sessionId={match.params.sessionId}
-history={history}
-/> */

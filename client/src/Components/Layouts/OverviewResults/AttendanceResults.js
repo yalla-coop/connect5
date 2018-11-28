@@ -1,9 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-import getAttendeesNumber from "../../../Utils/get_aggregate_number";
 import { AttendanceResults as Container } from "./StyledComponents";
 import Circle from "./Circle";
 
+import getAttendeesNumber from "../../../Utils/get_aggregate_number";
 
 const AttendanceResults = ({ attendees }) => (
   <Container>
@@ -14,3 +15,7 @@ const AttendanceResults = ({ attendees }) => (
 );
 
 export default AttendanceResults;
+
+AttendanceResults.propTypes = {
+  attendees: PropTypes.arrayOf(PropTypes.number).isRequired,
+};

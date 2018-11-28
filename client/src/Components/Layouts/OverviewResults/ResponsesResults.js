@@ -1,10 +1,12 @@
 import React from "react";
-import getAttendeesNumber from "../../../Utils/get_aggregate_number";
+import PropTypes from "prop-types";
 
 import { ResponsesResults as Container } from "./StyledComponents";
 import Circle from "./Circle";
 
-const ResponsesResults = ({responses}) => (
+import getAttendeesNumber from "../../../Utils/get_aggregate_number";
+
+const ResponsesResults = ({ responses }) => (
   <Container>
     <Circle title="pre-survey" number={getAttendeesNumber(responses, 0)} />
     <Circle title="Session 1" number={getAttendeesNumber(responses, 1)} />
@@ -14,3 +16,7 @@ const ResponsesResults = ({responses}) => (
 );
 
 export default ResponsesResults;
+
+ResponsesResults.propTypes = {
+  responses: PropTypes.arrayOf(PropTypes.number).isRequired,
+};
