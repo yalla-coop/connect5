@@ -11,6 +11,11 @@ const viewSessions = require("./view-sessions");
 const registerTrainer = require("./register-trainer");
 const loginTrainer = require("./login-trainer");
 const deleteSessionById = require("./delete-sesstion");
+const getOverviewResults = require("./get_overview_results");
+const getRadiostarQuestions = require("./get_radiostar_questions");
+
+const getQuestionOverview = require("./get_question_overview");
+
 
 const router = express.Router();
 
@@ -21,6 +26,9 @@ router.use("/view-sessions", viewSessions);
 router.use("/register", registerTrainer);
 router.use("/login", loginTrainer);
 router.use("/deleteSession/:_id", deleteSessionById);
+router.get("/trainer/overview", getOverviewResults);
+router.get("/question/radiostart/all", getRadiostarQuestions);
+router.use("/question/overview/results", getQuestionOverview);
 
 
 // Get data routes
