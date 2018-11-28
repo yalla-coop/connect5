@@ -30,7 +30,29 @@ getCurrentSession = (session) => {
     currentSession: session,
   });
   // setTimeout(() => { console.log(this.state.currentSession); }, 7000);
+
+  // update localStorage
+  localStorage.setItem("currentSession", JSON.stringify(session))
 }
+
+hydrateState() {
+  if (this.state.currentSession.length == 0 && localStorage.hasOwnProperty("currentSession")) {
+    
+    let value = localStorage.getItem("currentSession");
+
+    try {
+      value = JSON.parse(value);
+      this.setState({ currentSession: value});
+    } catch (err) {
+      this.setState( { currentSession: value});
+    }
+  }
+}
+
+componentDidMount() {
+  this.hydrateState();
+}
+
 
 
 render() {

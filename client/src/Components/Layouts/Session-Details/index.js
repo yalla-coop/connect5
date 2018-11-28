@@ -5,6 +5,8 @@ import SessionContent from "./Content";
 import SessionActions from "./Actions";
 
 class SessionDetails extends Component {
+
+
   render() {
     const { sessionDetails } = this.props;
     return (
