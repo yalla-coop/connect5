@@ -9,7 +9,7 @@ exports[`LandingPage matches snapshot 1`] = `
   >
     <img
       className="sc-htpNat eLOsTG"
-      src="Logo.jpg"
+      src="logo.jpg"
     />
   </div>
   <div
