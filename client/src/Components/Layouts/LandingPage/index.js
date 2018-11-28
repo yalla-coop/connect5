@@ -9,7 +9,7 @@ import {
   Paragraph,
   Button,
 } from "./StyledComponents";
-import Logo from "./logo.jpg";
+import Logo from "../../../assets/logo.jpg";
 
 class LandingPage extends Component {
   render() {
