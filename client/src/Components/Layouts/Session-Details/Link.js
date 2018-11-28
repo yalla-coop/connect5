@@ -15,7 +15,11 @@ class Link extends Component {
   };
 
   handleCopy = () => {
-    swal("Link copied!", "", "success");
+    swal({
+      timer: 1500,
+      icon: "success",
+      text: "Link copied!",
+    });
   };
 
   render() {
