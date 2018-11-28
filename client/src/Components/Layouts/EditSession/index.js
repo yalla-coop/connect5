@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
@@ -7,15 +6,8 @@ import swal from "sweetalert";
 import PropTypes from "prop-types";
 import options from "./options";
 import {
-  Button,
-  Form,
-  Container,
-  Input,
-  SelectComponent,
-  Date,
-  Heading,
+  Button, Form, Container, Input, SelectComponent, Date, Heading,
 } from "./styledComponents";
-
 
 class EditSession extends Component {
   static contextTypes = {
@@ -26,7 +18,8 @@ class EditSession extends Component {
     startDate: null,
     sessionType: null,
     attendeesNumber: "",
-  }
+    selectedOption: null,
+  };
 
   componentDidMount() {
     const { sessionDetails } = this.props;
@@ -35,21 +28,21 @@ class EditSession extends Component {
     this.setState({
       startDate: date,
       sessionType: type,
-      attendeesNumber: parseInt(attendees || 0, 10)
+      attendeesNumber: parseInt(attendees || 0, 10),
     });
   }
 
   handleDate = (date) => {
     this.setState({ startDate: date.format("YYYY-MM-DD") });
-  }
+  };
 
   handleAttendees = (e) => {
     this.setState({ attendeesNumber: e.target.value });
-  }
+  };
 
   handleSession = ({ value }) => {
     this.setState({ sessionType: value });
-  }
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -57,29 +50,24 @@ class EditSession extends Component {
     const { _id } = sessionDetails;
     const { startDate, attendeesNumber, sessionType } = this.state;
 
-
-    axios.post(`/edit-session/${_id}`,
-      {
+    axios
+      .post(`/edit-session/${_id}`, {
         sessionType,
         startDate,
         attendeesNumber: parseInt(attendeesNumber, 10),
       })
-      .then(
-        swal("Done!", "The session has been edited successfully!"),
-      )
-      .then(
-        () => {
-          const { router: { history } } = this.context;
-          history.push("/view-sessions");
-        },
-      )
-      .catch(
-        err => swal({
-          icon: "error",
-          title: err.response.data.message,
-        }),
-      );
-  }
+      .then(swal("Done!", "The session has been edited successfully!"))
+      .then(() => {
+        const {
+          router: { history },
+        } = this.context;
+        history.push("/view-sessions");
+      })
+      .catch(err => swal({
+        icon: "error",
+        title: err.response.data.message,
+      }));
+  };
 
   render() {
     const { startDate, attendeesNumber, sessionType } = this.state;
@@ -89,14 +77,9 @@ class EditSession extends Component {
 
     return (
       <Container>
-
-        <Heading>
-          Edit Session
-        </Heading>
+        <Heading>Edit Session</Heading>
 
         <Form onSubmit={handleSubmit}>
-
-
           <Date
             selected={moment(startDate)}
             placeholderText={startDate}
@@ -105,7 +88,6 @@ class EditSession extends Component {
             dateFormat="YYYY-MM-DD"
           />
 
-
           <Input
             type="number"
             placeholder={attendeesNumber}
@@ -113,18 +95,9 @@ class EditSession extends Component {
             value={attendeesNumber}
             name="attendeesNumber"
           />
-
-          <SelectComponent
-            placeholder={options.label}
-            onChange={handleSession}
-            options={options}
-            selected={sessionType}
-          />
-
+          <SelectComponent placeholder={sessionType} onChange={handleSession} options={options} />
           <Button type="submit">Submit</Button>
-
         </Form>
-
       </Container>
     );
   }
