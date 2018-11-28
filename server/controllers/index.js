@@ -11,6 +11,7 @@ const viewSessions = require("./view-sessions");
 const registerTrainer = require("./register-trainer");
 const loginTrainer = require("./login-trainer");
 const deleteSessionById = require("./delete-sesstion");
+const editSession = require("./edit_session");
 
 const router = express.Router();
 
@@ -21,6 +22,7 @@ router.use("/view-sessions", viewSessions);
 router.use("/register", registerTrainer);
 router.use("/login", loginTrainer);
 router.use("/deleteSession/:_id", deleteSessionById);
+router.use("/edit-session/:_id", editSession);
 
 
 // Get data routes

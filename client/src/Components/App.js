@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from "./Layouts/LandingPage";
 
 import SessionDetails from "./Layouts/Session-Details";
+import EditSession from "./Layouts/EditSession/index";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 import Survey from "./Layouts/Survey";
@@ -30,31 +31,31 @@ class App extends Component {
     });
   }
 
-
-  render() {
-    const { currentSession } = this.state;
-    return (
-      <BrowserRouter>
-        <div className="App">
-          <Switch>
-            <Route path="/" exact component={LandingPage} />
-            <Route path="/trainer" exact component={TrainersLandingPage} />
-            <Route path="/trainer/register" exact component={Register} />
-            <Route path="/trainer/login" exact component={Login} />
-            <Route path="/view-sessions" render={() => <ViewSessions handleSessions={this.handleSessions} getCurrentSession={this.getCurrentSession} />} exact />
-            <Route path="/session-details" render={() => <SessionDetails sessionDetails={currentSession} />} exact />
-            <Route path="/survey/:id" exact render={props => <Survey {...props} />} />
-            <Route path="/create-session" exact component={CreateSession} />
-            <Route
-              path="/session/details/:sessionId/:sessionType"
-              exact
-              component={SessionResult}
-            />
-          </Switch>
-        </div>
-      </BrowserRouter>
-    );
-  }
+render() {
+  const { currentSession } = this.state;
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <Switch>
+          <Route path="/" exact component={LandingPage} />
+          <Route path="/trainer" exact component={TrainersLandingPage} />
+          <Route path="/trainer/register" exact component={Register} />
+          <Route path="/trainer/login" exact component={Login} />
+          <Route path="/view-sessions" render={() => <ViewSessions handleSessions={this.handleSessions} getCurrentSession={this.getCurrentSession} />} exact />
+          <Route path="/session-details" render={() => <SessionDetails sessionDetails={currentSession} />} exact />
+          <Route path="/edit-session" render={() => <EditSession sessionDetails={currentSession} />} exact />
+          <Route path="/survey/:id" exact render={props => <Survey {...props} />} />
+          <Route path="/create-session" exact component={CreateSession} />
+          <Route
+            path="/session/details/:sessionId/:sessionType"
+            exact
+            component={SessionResult}
+          />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  );
+}
 }
 
 export default App;

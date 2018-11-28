@@ -4,8 +4,10 @@ import {
   Span2,
   Span1,
   LinkType,
+  SurveyType,
   LinkInfo,
   Btn,
+  copyLink,
 } from "./styledComponents";
 
 class Link extends Component {
@@ -17,21 +19,23 @@ class Link extends Component {
       <LinkType>
         <Span1>
           Survey
-          {type}
+          <SurveyType>{type}</SurveyType>
           Link
         </Span1>
         <Span2>
           <i className="fas fa-info-circle" />
           <LinkInfo>info</LinkInfo>
         </Span2>
-        <Span2>
+        <copyLink>
           <CopyToClipboard onCopy={onCopy} text={value}>
-            <Btn onClick={() => saveInState(surveyURL1)}>
+            <Btn
+              onClick={() => saveInState(surveyURL1)}
+            >
               <i className="far fa-clone" />
               <LinkInfo>copy</LinkInfo>
             </Btn>
           </CopyToClipboard>
-        </Span2>
+        </copyLink>
       </LinkType>
     );
   }
