@@ -98,13 +98,12 @@ describe("Test /session/details/:sessionId/:sessionType route", () => {
 
   test("test with not exist session id", async () => {
     const response = await request(app).get("/session/details/0123456789/0");
-    expect(response.statusCode).toBe(500);
+    expect(response.statusCode).toBe(404);
   });
 
-  test("test without sessionId param", async (done) => {
+  test("test without sessionId param", async () => {
     const response = await request(app).get("/session/details/");
     expect(response.statusCode).toBe(404);
-    done();
   });
 });
 
@@ -160,6 +159,8 @@ describe("Test  /session/responses/:sessionId/:sessionType route", () => {
     const storedSession = await Session.findOne({ date: "2018-04-17" });
     const response = await request(app).get(`/session/responses/${storedSession._id}/1`);
 
+    console.log("storedSession", storedSession)
+
     expect(response.statusCode).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body[0].questions).toBeDefined();
@@ -182,9 +183,9 @@ describe("Test  /session/responses/:sessionId/:sessionType route", () => {
     expect(response.body[1].answers.length).toBe(23);
   });
 
-  test("Test not exist session id", async () => {
+  test("Test session id doesn't exist", async () => {
     const response = await request(app).get("/session/responses/0123456789/0");
-    expect(response.statusCode).toBe(500);
+    expect(response.statusCode).toBe(404);
   });
 
   test("Test without params", async () => {
