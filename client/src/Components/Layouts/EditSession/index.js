@@ -32,20 +32,23 @@ class EditSession extends Component {
     const { sessionDetails } = this.props;
     const { date, type, attendees } = sessionDetails;
 
-    this.setState({ startDate: date, sessionType: type, attendeesNumber: attendees });
+    this.setState({
+      startDate: date,
+      sessionType: type,
+      attendeesNumber: parseInt(attendees || 0, 10)
+    });
   }
 
-
   handleDate = (date) => {
-    this.setState({ startDate: date });
+    this.setState({ startDate: date.format("YYYY-MM-DD") });
   }
 
   handleAttendees = (e) => {
     this.setState({ attendeesNumber: e.target.value });
   }
 
-  handleSession = (sessionType) => {
-    this.setState({ sessionType });
+  handleSession = ({ value }) => {
+    this.setState({ sessionType: value });
   }
 
   handleSubmit = (e) => {
@@ -57,22 +60,26 @@ class EditSession extends Component {
 
     axios.post(`/edit-session/${_id}`,
       {
-        sessionType: sessionType.value,
-        startDate: moment(startDate),
-        attendeesNumber: parseInt(attendeesNumber || 0),
+        sessionType,
+        startDate,
+        attendeesNumber: parseInt(attendeesNumber, 10),
       })
-
       .then(
-        swal("Done!", "The session has been edited successfully!")
-          .then(() => this.context.router.history.push("/view-sessions")),
+        swal("Done!", "The session has been edited successfully!"),
       )
-
-      .catch(err => swal({
-        icon: "error",
-        title: err.response.data.message,
-      }));
+      .then(
+        () => {
+          const { router: { history } } = this.context;
+          history.push("/view-sessions");
+        },
+      )
+      .catch(
+        err => swal({
+          icon: "error",
+          title: err.response.data.message,
+        }),
+      );
   }
-
 
   render() {
     const { startDate, attendeesNumber, sessionType } = this.state;
@@ -101,9 +108,9 @@ class EditSession extends Component {
 
           <Input
             type="number"
-            placeholder={parseInt(attendeesNumber || 0)}
+            placeholder={attendeesNumber}
             onChange={handleAttendees}
-            value={parseInt(attendeesNumber || 0)}
+            value={attendeesNumber}
             name="attendeesNumber"
           />
 
@@ -111,7 +118,7 @@ class EditSession extends Component {
             placeholder={options.label}
             onChange={handleSession}
             options={options}
-            value={sessionType}
+            selected={sessionType}
           />
 
           <Button type="submit">Submit</Button>
