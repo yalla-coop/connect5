@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
+import { log } from "util";
 import Link from "./Link";
 import ResultBtn from "./ResultBtn";
 import {
@@ -41,8 +42,17 @@ class SessionContent extends Component {
   render() {
     const { sessionDetails } = this.props;
     const {
-      date, type, attendees, surveyURL1, surveyURL2, _id,
+      date, type, attendees, _id,
     } = sessionDetails;
+
+    const surveyURL = `${window.location.host}/survey/${type}${_id}`;
+
+    const preSurveyUrl = `${window.location.host}/survey/0${_id}`;
+
+    const surveyURLDisp = `/survey/${type}${_id}`;
+
+    const preSurveyUrlDisp = `/survey/0${_id}`;
+
     return (
       <Content>
         <Statistic>
@@ -67,24 +77,20 @@ class SessionContent extends Component {
                   <Link
                     type="Pre-Survey"
                     onCopy={this.onCopy}
-                    saveInState={() => this.saveInState(surveyURL1)}
-                    value={surveyURL1}
+                    saveInState={() => this.saveInState(preSurveyUrl)}
+                    value={preSurveyUrl}
                   />
-                  <SLink href={`${window.location.host}/survey/${type}${_id}`}>
-                    {`/survey/${type}${_id}`}
-                  </SLink>
+                  <SLink href={preSurveyUrl}>{preSurveyUrlDisp}</SLink>
                   <ResultBtn id={_id} type={type} />
                 </Container>
                 <Container>
                   <Link
                     type={`Survey ${type}`}
                     onCopy={this.onCopy}
-                    saveInState={() => this.saveInState(surveyURL2)}
-                    value={surveyURL2}
+                    saveInState={() => this.saveInState(surveyURL)}
+                    value={surveyURL}
                   />
-                  <SLink href={`${window.location.host}/survey/${type}${_id}`}>
-                    {`/survey/${type}${_id}`}
-                  </SLink>
+                  <SLink href={surveyURL}>{surveyURLDisp}</SLink>
                   <ResultBtn id={_id} type={type} />
                 </Container>
               </SurveyLink1>
@@ -94,12 +100,10 @@ class SessionContent extends Component {
                   <Link
                     type={`Survey ${type}`}
                     onCopy={this.onCopy}
-                    saveInState={() => this.saveInState(surveyURL1)}
-                    value={surveyURL1}
+                    saveInState={() => this.saveInState(surveyURL)}
+                    value={surveyURL}
                   />
-                  <SLink href={`${window.location.host}/survey/${type}${_id}`}>
-                    {`/survey/${type}${_id}`}
-                  </SLink>
+                  <SLink href={surveyURL}>{surveyURLDisp}</SLink>
                   <ResultBtn id={_id} type={type} />
                 </Container>
               </SurveyLink1>
