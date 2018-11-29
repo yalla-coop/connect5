@@ -14,8 +14,9 @@ const getQuestionOverview = async (req, res) => {
     .then((allAnswers) => {
       const promises = allAnswers.map(async (answer) => {
         // Check if the answer is for one of the questions array
+        const isAnswerInArray = questionsIDs
         // eslint-disable-next-line eqeqeq
-        const isAnswerInArray = questionsIDs.some(element => element == answer.question[0]._id);
+        && questionsIDs.some(element => element == answer.question[0]._id);
 
         // check if the answer is belong for trainer's sessions
         const isSessionBelongTrainer = await checkTrainerSession(answer.session, trainerId);

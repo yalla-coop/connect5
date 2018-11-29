@@ -29,8 +29,8 @@ router.use("/view-sessions", viewSessions);
 router.use("/dashboard", dashboard);
 router.use("/deleteSession/:_id", deleteSessionById);
 router.get("/trainer/overview", passport.authenticate("jwt", { session: false }), getOverviewResults);
-router.get("/question/radiostart/all", getRadiostarQuestions);
-router.use("/question/overview/results", passport.authenticate("jwt", { session: false }), getQuestionOverview);
+router.get("/question/radiostart/all", passport.authenticate("jwt", { session: false }), getRadiostarQuestions);
+router.post("/question/overview/results", passport.authenticate("jwt", { session: false }), getQuestionOverview);
 router.use("/edit-session/:_id", editSession);
 
 // PUBLIC ROUTES
