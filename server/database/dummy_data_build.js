@@ -99,7 +99,8 @@ const buildDb = async () => {
 
   // insert answers for that response
 
-  const singleResponse = await Response.findOne({ participantId: "123" });
+  const singleResponse = await Response.findOne({ surveyType: 0 });
+  const secondResponse = await Response.findOne({ surveyType: 1 });
   const presurvey = await Question.find({ surveyType: 0 });
   const survey1 = await Question.find({ surveyType: 1 });
 
@@ -160,56 +161,56 @@ const buildDb = async () => {
 
   await Answer.insertMany([
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[0]._id,
       answer: "123",
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[1]._id,
       answer: "North East",
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[2]._id,
       answer: "E2 5TY",
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[3]._id,
       answer: "Head of Testing",
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[4]._id,
       answer: "Emergency services (including fire service, police, ambulance)",
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[5]._id,
       answer: 3,
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[6]._id,
       answer: 3,
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[7]._id,
       answer: 3,
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[8]._id,
       answer: [
         "Group discussion",
@@ -219,8 +220,8 @@ const buildDb = async () => {
       ],
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[9]._id,
       answer: [
         "Moderate improvement (2)",
@@ -232,34 +233,34 @@ const buildDb = async () => {
       ],
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[10]._id,
       answer: ["Fair", "Average", "Good", "Poor", "Excellent", "Good"],
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[11]._id,
       answer: "Yes",
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[12]._id,
       answer:
         "Random text here answering the question about how my work will change due to coming to this first session.",
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[13]._id,
       answer:
         "Random text here answering the question about suggestions for how they can improve the course.",
     },
     {
-      response: singleResponse._id,
-      session: singleResponse.session,
+      response: secondResponse._id,
+      session: secondResponse.session,
       question: survey1[14]._id,
       answer:
         "Random text here answering the question about anything else I'd like to tell them about the session 1 training.",

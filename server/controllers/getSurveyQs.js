@@ -15,7 +15,6 @@ exports.get = (req, res) => {
   // initiate queries function to get the right questions from the database, the session details and then send these to the client
   surveyQs(surveyId, sessionId)
     .then(surveyDetails => {
-      console.log("RESULT", surveyDetails)
       res.status(200).json(surveyDetails)})
     .catch(err => {
       if (err.message.indexOf('Cast to ObjectId failed') !== -1) {
