@@ -22,12 +22,12 @@ const Header = styled.div`
 `;
 
 const Welcome = styled.div`
-text-align: center;
-line-height: 1px;
-font-size: 20px;
-color: #0b6fa4;
-margin: 0 auto;
-margin-top: -10px;
+  text-align: center;
+  line-height: 1px;
+  font-size: 20px;
+  color: #0b6fa4;
+  margin: 0 auto;
+  margin-top: -10px;
 `;
 
 const UserName = styled.span`
