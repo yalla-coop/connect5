@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import PropTypes from "prop-types";
 import setAuthToken from "../../../Utils/setAuthToken";
 import DashboardLinks from "./links";
 import Statistic from "./statistics";
