@@ -25,7 +25,6 @@ class Dashboard extends Component {
       axios
         .get("/dashboard")
         .then((res) => {
-          console.log(res, "llllllllllllll");
           this.setState({
             trainerFirstName: res.data.firstName,
             loaded: true,
