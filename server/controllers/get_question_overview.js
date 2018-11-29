@@ -3,9 +3,8 @@ const getAllAnswers = require("./../database/queries/get_all_answers");
 const checkTrainerSession = require("./../database/queries/check_trainer_session");
 
 const getQuestionOverview = async (req, res) => {
-  // select default trainer
+  // get the trainer Id from req
   const trainerId = req.user.id;
-
   const { questionsIDs } = req.body;
 
   // a two dimentional array, consist of 3 arrays, each one for survey type
@@ -17,6 +16,7 @@ const getQuestionOverview = async (req, res) => {
         // Check if the answer is for one of the questions array
         // eslint-disable-next-line eqeqeq
         const isAnswerInArray = questionsIDs.some(element => element == answer.question[0]._id);
+
         // check if the answer is belong for trainer's sessions
         const isSessionBelongTrainer = await checkTrainerSession(answer.session, trainerId);
         if (isAnswerInArray && isSessionBelongTrainer) {

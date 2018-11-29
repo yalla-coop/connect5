@@ -1,23 +1,23 @@
 const createError = require("http-errors");
-const Trainer = require("./../database/models/Trainer");
+const mongoose = require("mongoose");
 const getTrainerAttendees = require("./../database/queries/get_trainer_attendees");
 const getTrainerResponses = require("./../database/queries/get_trainer_responses");
 
 const getOverviewResults = async (req, res) => {
+  // get trainer id from the request
   const trainerId = req.user.id;
-  const trainer = await Trainer.findOne({ email: "johndoe@gmail.com" });
-  // console.log();
-  
+
+  // convert the Id from string into mongo ObjectId
+  const trainerObjectId = mongoose.Types.ObjectId(trainerId);
+
   const promises = [
-    getTrainerAttendees(trainerId),
-    getTrainerResponses(trainerId),
+    getTrainerAttendees(trainerObjectId),
+    getTrainerResponses(trainerObjectId),
   ];
 
   Promise.all(promises)
     .then(details => res.json(details))
-    .catch((err) => {
-      console.log(err);
-
+    .catch(() => {
       res.status(500);
       res.send((createError(500, "Server Error")));
     });
