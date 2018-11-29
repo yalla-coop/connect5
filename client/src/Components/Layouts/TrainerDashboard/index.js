@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 import setAuthToken from "../../../Utils/setAuthToken";
-import {
-  Wrapper, Header, Statistics, Links, Welcome, Container, ItemCount, StatisticItems, ItemName, Span, LinkWrapper, IconDiv, Navlink, Icon, UserName,
-} from "./StyledComponents";
+import DashboardLinks from "./links";
+import Statistic from "./statistics";
+import DashboardHeader from "./header";
+import Header from "../../CommonComponents/Header";
+import { Wrapper } from "./styledComponents";
 
 // NOTE: Trainer's unique ID gets passed down as a prop from the top App state
 
@@ -11,32 +14,49 @@ class Dashboard extends Component {
   state = {
     trainerFirstName: "",
     loaded: false,
+    sessionCount: "",
+    responsesCount: "",
+    surveysCount: "",
   };
 
   componentDidMount() {
+    const { history } = this.props;
     if (localStorage.jwtToken) {
       setAuthToken(localStorage.jwtToken);
       axios
         .get("/dashboard")
         .then((res) => {
+          console.log(res, "llllllllllllll");
           this.setState({
             trainerFirstName: res.data.firstName,
             loaded: true,
           });
-          console.log("RES", res);
-          console.log(this.props);
+          setTimeout(() => { console.log(this.state); }, 4000);
         })
-        .catch(err => console.log(err));
+        .catch(() => history.push("/server-error"));
     }
 
     axios
-      .get("/dashboard-Statistics")
+      .get("/view-sessions")
       .then((res) => {
+        this.setState({ sessionCount: res.data.length });
+        const surveysCount = res.data.reduce((total, amount) => ((amount.type === 1) ? total + 2 : total + 1), 0);
+        this.setState({ surveysCount });
+      });
+
+    axios
+      .get("/trainer/overview")
+      .then((res) => {
+        const responsesCount = res.data[1].responses.reduce((total, amount) => total + amount.sum, 0);
+        this.setState({ responsesCount });
       });
   }
 
+
   render() {
-    const { loaded, trainerFirstName } = this.state;
+    const {
+      loaded, trainerFirstName, sessionCount, responsesCount, surveysCount,
+    } = this.state;
 
     if (!loaded) {
       return (<h1>Loading your details...</h1>);
@@ -45,70 +65,10 @@ class Dashboard extends Component {
     return (
 
       <Wrapper className="dashboard">
-        <Header>
-          <Welcome>
-            Welcome back,
-            <UserName>
-              {trainerFirstName}
-!
-            </UserName>
-          </Welcome>
-        </Header>
-
-        <Statistics>
-          <Container>
-            <StatisticItems>
-              <ItemName>sessions</ItemName>
-              <ItemCount>4</ItemCount>
-            </StatisticItems>
-            <StatisticItems>
-              <ItemName>surveys</ItemName>
-              <ItemCount>7</ItemCount>
-            </StatisticItems>
-            <StatisticItems>
-              <ItemName>responses</ItemName>
-              <ItemCount>8</ItemCount>
-            </StatisticItems>
-          </Container>
-        </Statistics>
-
-        <Links>
-
-          <LinkWrapper>
-            <Navlink to="/view-sessions">
-              <IconDiv>
-                <Icon className="fas fa-list-alt" />
-              </IconDiv>
-              <div>
-                <Span>Sessions</Span>
-              </div>
-            </Navlink>
-          </LinkWrapper>
-
-          <LinkWrapper>
-            <Navlink to="">
-              <IconDiv>
-                <Icon className="fas fa-poll-h" />
-              </IconDiv>
-              <div>
-                <Span>Results</Span>
-              </div>
-            </Navlink>
-          </LinkWrapper>
-
-          <LinkWrapper>
-            <Navlink to="/create-session">
-              <IconDiv>
-                <Icon className="fas fa-plus-circle" />
-              </IconDiv>
-              <div>
-                <Span>New Session</Span>
-              </div>
-            </Navlink>
-          </LinkWrapper>
-        </Links>
-
-
+        <Header />
+        <DashboardHeader trainerFirstName={trainerFirstName} />
+        <Statistic sessionCount={sessionCount} responsesCount={responsesCount} surveysCount={surveysCount} />
+        <DashboardLinks />
       </Wrapper>
     );
   }
