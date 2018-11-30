@@ -20,6 +20,7 @@ import CreateSession from "./Layouts/CreateSession/index";
 import SessionResult from "./Layouts/SessionResult";
 import "./App.css";
 import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute";
+import ExportData from "./Export.js";
 
 class App extends Component {
   state = {
@@ -101,6 +102,7 @@ class App extends Component {
         <div className="App">
           <Switch>
             <Route path="/" exact component={LandingPage} />
+            <Route path="/export-data" exact component={ExportData} />
             <Route path="/trainer" exact component={TrainersLandingPage} />
             <Route path="/trainer/register" exact component={Register} />
             <Route path="/trainer/login" exact component={Login} />

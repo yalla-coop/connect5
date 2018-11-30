@@ -27,6 +27,7 @@ const exportDetails = async (trainerId) => {
         questionText: "",
         sessionID: "",
         answer: "",
+        reponseID: responseIDArray[i]
       };
       const questionDetails = await Question.find({ _id: answers[k].question });
       const sessionDetails = await Session.find({ _id: answers[k].session });

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import setAuthToken from "../../../Utils/setAuthToken";
+import ExportData from "../../Export.js"
 
 // NOTE: Trainer's unique ID gets passed down as a prop from the top App state
 
@@ -39,6 +40,7 @@ class Dashboard extends Component {
       <React.Fragment>
         <div className="dashboard">Dashboard</div>
         <p>Hello {trainerFirstName}, this is your dashboard</p>
+        <ExportData />
       </React.Fragment>
     );
   }
