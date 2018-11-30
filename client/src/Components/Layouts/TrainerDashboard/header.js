@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, UserName, Welcome } from "./styledComponents";
+import { Header, UserName, Welcome } from "./Dashboard_StyledComponents";
 
 const DashboardHeader = ({ trainerFirstName }) => (
   <Header>

@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import {
-  Statistics, Container, ItemCount, StatisticItems, ItemName,
-} from "./styledComponents";
-
+  Statistics,
+  Container,
+  ItemCount,
+  StatisticItems,
+  ItemName,
+} from "./Dashboard_StyledComponents";
 
 class Statistic extends Component {
   render() {

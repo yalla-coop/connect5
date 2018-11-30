@@ -2,8 +2,14 @@ import React, { Component } from "react";
 import axios from "axios";
 import setAuthToken from "../../../Utils/setAuthToken";
 import {
-  Statistics, Links, LinkWrapper, IconDiv, Navlink, Icon,
-} from "./StyledComponents";
+  Statistics,
+  Links,
+  LinkWrapper,
+  IconDiv,
+  Navlink,
+  Icon,
+  Span,
+} from "./Dashboard_StyledComponents";
 
 class DashboardLinks extends Component {
   render() {
@@ -21,7 +27,7 @@ class DashboardLinks extends Component {
         </LinkWrapper>
 
         <LinkWrapper>
-          <Navlink to="">
+          <Navlink to="/overview-results">
             <IconDiv>
               <Icon className="fas fa-poll-h" />
             </IconDiv>
