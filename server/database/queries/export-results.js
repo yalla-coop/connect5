@@ -18,16 +18,16 @@ const exportDetails = async (trainerId) => {
   const exportArray = [];
 
   for (let i = 0; i < responseIDArray.length; i++) {
-    // find answers related to the responses to the trainer
+    // find all answers related to the responses to the trainer
     const answers = await Answer.find({ response: responseIDArray[i] });
     for (let k = 0; k < answers.length; k++) {
-      // define object of data for each answer
+      // define object of data for each answer --> 1 of many entries for trainer to download later
       const dataObj = {
         trainerName: `${trainerDetails.firstName} ${trainerDetails.lastName}`,
         questionText: "",
         sessionID: "",
         answer: "",
-        reponseID: responseIDArray[i]
+        reponseID: responseIDArray[i],
       };
       const questionDetails = await Question.find({ _id: answers[k].question });
       const sessionDetails = await Session.find({ _id: answers[k].session });
@@ -41,6 +41,7 @@ const exportDetails = async (trainerId) => {
       exportArray.push(dataObj);
     }
   }
+
   return exportArray;
 };
 module.exports = exportDetails;
