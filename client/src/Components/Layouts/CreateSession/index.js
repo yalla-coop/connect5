@@ -32,7 +32,7 @@ class CreateSession extends Component {
   state = {
     session: "",
     startDate: null,
-    attendantsNumber: "",
+    inviteesNumber: "",
     err: false,
   };
 
@@ -55,8 +55,8 @@ class CreateSession extends Component {
   }
 
   checkError = () => {
-    const { startDate, attendantsNumber, session } = this.state;
-    const isError = !(!!startDate && !!attendantsNumber && !!session);
+    const { startDate, inviteesNumber, session } = this.state;
+    const isError = !(!!startDate && !!inviteesNumber && !!session);
 
     this.setState({
       err: isError,
@@ -66,7 +66,7 @@ class CreateSession extends Component {
   }
 
   fetch = () => {
-    const { startDate, attendantsNumber, session } = this.state;
+    const { startDate, inviteesNumber, session } = this.state;
     const { history } = this.props;
 
     if (localStorage.jwtToken) {
@@ -76,7 +76,7 @@ class CreateSession extends Component {
         {
           sessionType: session.value,
           startDate: moment(startDate).format("YYYY,MM,DD"),
-          attendantsNumber,
+          inviteesNumber,
         })
 
         .then(
@@ -98,7 +98,7 @@ class CreateSession extends Component {
 
   render() {
     const {
-      startDate, attendantsNumber, session, err,
+      startDate, inviteesNumber, session, err,
     } = this.state;
 
     return (
@@ -120,10 +120,10 @@ class CreateSession extends Component {
 
           <Input
             type="number"
-            placeholder="Number of session attendants"
-            value={attendantsNumber}
+            placeholder="Number of session invitees"
+            value={inviteesNumber}
             onChange={this.handleInputChange}
-            name="attendantsNumber"
+            name="inviteesNumber"
           />
 
           <SelectComponent

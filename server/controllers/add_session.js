@@ -4,8 +4,8 @@ const addSessionQuery = require("./../database/queries/add_session");
 const addSession = (req, res) => {
   const trainerId = req.user.id;
 
-  const { sessionType, startDate, attendantsNumber } = req.body;
-  addSessionQuery(trainerId, sessionType, startDate, attendantsNumber)
+  const { sessionType, startDate, inviteesNumber } = req.body;
+  addSessionQuery(trainerId, sessionType, startDate, inviteesNumber)
     .then(() => {
       res.status(200);
       res.send();

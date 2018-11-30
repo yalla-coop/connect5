@@ -4,14 +4,14 @@ const addSession = (
   trainerId,
   sessionType,
   startDate,
-  attendantsNumber,
-) => new Promise((resolve, reject) => {
+  inviteesNumber,
+) => new Promise((resolve, reject) => {  
   const session = new Session({
     trainer: trainerId,
     type: sessionType,
     date: startDate,
-    invitees: 0,
-    attendees: attendantsNumber,
+    invitees: inviteesNumber,
+    attendees: 0,
     surveyURL1: "null",
   });
   // Add new session
