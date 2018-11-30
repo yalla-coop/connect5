@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import axios from "axios";
+import setAuthToken from "../../../Utils/setAuthToken";
 import {
-  Links, LinkWrapper, IconDiv, Navlink, Img, Span,
-} from "./styledComponents";
-
+  Statistics, Links, LinkWrapper, IconDiv, Navlink, Icon,
+} from "./StyledComponents";
 
 class DashboardLinks extends Component {
   render() {
@@ -11,7 +12,7 @@ class DashboardLinks extends Component {
         <LinkWrapper>
           <Navlink to="/view-sessions">
             <IconDiv>
-              <Img src="../Imgs/sessions.jpg" alt="" />
+              <Icon className="fas fa-list-alt" />
             </IconDiv>
             <div>
               <Span>Sessions</Span>
@@ -20,9 +21,9 @@ class DashboardLinks extends Component {
         </LinkWrapper>
 
         <LinkWrapper>
-          <Navlink to="/overview-results">
+          <Navlink to="">
             <IconDiv>
-              <Img src="../Imgs/results.jpg" alt="" />
+              <Icon className="fas fa-poll-h" />
             </IconDiv>
             <div>
               <Span>Results</Span>
@@ -33,7 +34,7 @@ class DashboardLinks extends Component {
         <LinkWrapper>
           <Navlink to="/create-session">
             <IconDiv>
-              <Img src="../Imgs/add.jpg" alt="" />
+              <Icon className="fas fa-plus-circle" />
             </IconDiv>
             <div>
               <Span>New Session</Span>

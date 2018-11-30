@@ -2,11 +2,10 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.div`
-  margin-top: 55px;
   background: #eff3f4;
   display: Grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 80px 90px 350px;
+  grid-template-rows: 80px 90px 320px;
   grid-template-areas:
     "header"
     "statistics"
@@ -21,13 +20,11 @@ const Header = styled.div`
   }
 `;
 
-const Welcome = styled.div`
-  text-align: center;
-  line-height: 1px;
-  font-size: 20px;
-  color: #0b6fa4;
-  margin: 0 auto;
-  margin-top: -10px;
+const Welcome = styled.p`
+text-align: center;
+line-height: 45px;
+font-size: 20px;
+color: #0b6fa4;
 `;
 
 const UserName = styled.span`
@@ -117,10 +114,11 @@ const IconDiv = styled.div`
   margin: 0 auto;
 `;
 
-const Img = styled.img`
-  margin-top: 6px;
-  width: 50px;
-  height: 50px;
+const Icon = styled.i`
+  width: 100%;
+  height: 100%;
+  line-height: 50px;
+  font-size: 35px;
   color: #000000b3;
   &:hover {
     color: #0288d1;
@@ -132,8 +130,7 @@ const Span = styled.span`
   position: relative;
   font-size: 15px;
   color: #000000b3;
-  margin-top: 15px;
-  height: 20px;
+  margin-top: 4px;
 `;
 
 
@@ -150,7 +147,7 @@ export {
   Container,
   LinkWrapper,
   UserName,
-  Img,
+  Icon,
   IconDiv,
   Navlink,
 };
