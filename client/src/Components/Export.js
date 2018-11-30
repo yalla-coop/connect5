@@ -6,17 +6,25 @@ class ExportData extends Component {
 
   state = {
     loaded: false,
-    csvData: null, 
+    csvData: ["no results found"], 
   }
 
   componentDidMount() {
     axios.get("/export-results")
       .then(res => {
-        console.log("RES", res.data) 
-        this.setState( {
-        csvData: res.data,
-        loaded: true
-      })})
+        if (res.status === 204) {
+          this.setState( {
+            csvData: "No results were found",
+            loaded: true
+          })
+        } else {
+          console.log("RES", res.status) 
+          this.setState( {
+          csvData: res.data,
+          loaded: true
+        })
+        }})
+      .catch(err => console.log(err))
   }
 
   render() {
@@ -28,12 +36,6 @@ class ExportData extends Component {
         </div>
       )
     }
-
-    // const csvData = [
-    //   { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
-    //   { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
-    //   { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" }
-    // ];
 
     return(
       <div>
