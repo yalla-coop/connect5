@@ -16,6 +16,7 @@ import {
   Error,
 } from "./FormElements";
 import options from "./options";
+import setAuthToken from "../../../Utils/setAuthToken";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -68,22 +69,26 @@ class CreateSession extends Component {
     const { startDate, attendantsNumber, session } = this.state;
     const { history } = this.props;
 
-    axios.post("/session",
-      {
-        sessionType: session.value,
-        startDate: moment(startDate).format("YYYY,MM,DD"),
-        attendantsNumber,
-      })
+    if (localStorage.jwtToken) {
+      setAuthToken(localStorage.jwtToken);
 
-      .then(
-        swal("Done!", "The session has been added successfully!", "success")
-          .then(() => history.push("/tainer/sessions")),
-      )
+      axios.post("/session",
+        {
+          sessionType: session.value,
+          startDate: moment(startDate).format("YYYY,MM,DD"),
+          attendantsNumber,
+        })
 
-      .catch(err => swal({
-        icon: "error",
-        title: err.response.data.message,
-      }));
+        .then(
+          swal("Done!", "The session has been added successfully!", "success")
+            .then(() => history.push("/tainer/sessions")),
+        )
+
+        .catch(err => swal({
+          icon: "error",
+          title: err.response.data.message,
+        }));
+    }
   }
 
   handleSubmit = (event) => {
