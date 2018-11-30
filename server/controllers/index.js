@@ -1,6 +1,5 @@
 const express = require("express");
 
-
 // load controllers
 const passport = require("passport");
 const trainerController = require("./trainer");
@@ -25,12 +24,24 @@ const router = express.Router();
 // PRIVATE ROUTES
 router.use("/session", sessionController);
 router.use("/question", questionController);
-router.use("/view-sessions", viewSessions);
+router.get("/view-sessions", passport.authenticate("jwt", { session: false }), viewSessions);
 router.use("/dashboard", dashboard);
 router.use("/deleteSession/:_id", deleteSessionById);
-router.get("/trainer/overview", passport.authenticate("jwt", { session: false }), getOverviewResults);
-router.get("/question/radiostart/all", passport.authenticate("jwt", { session: false }), getRadiostarQuestions);
-router.post("/question/overview/results", passport.authenticate("jwt", { session: false }), getQuestionOverview);
+router.get(
+  "/trainer/overview",
+  passport.authenticate("jwt", { session: false }),
+  getOverviewResults,
+);
+router.get(
+  "/question/radiostart/all",
+  passport.authenticate("jwt", { session: false }),
+  getRadiostarQuestions,
+);
+router.post(
+  "/question/overview/results",
+  passport.authenticate("jwt", { session: false }),
+  getQuestionOverview,
+);
 router.use("/edit-session/:_id", editSession);
 
 // PUBLIC ROUTES
