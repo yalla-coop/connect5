@@ -18,6 +18,8 @@ import TrainersLandingPage from "./Layouts/TrainersLandingPage";
 import ViewSessions from "./Layouts/view-sessions";
 import CreateSession from "./Layouts/CreateSession/index";
 import SessionResult from "./Layouts/SessionResult";
+import OverviewResults from "./Layouts/OverviewResults";
+
 import "./App.css";
 import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute";
 
@@ -150,6 +152,13 @@ class App extends Component {
               path="/session/details/:sessionId/:sessionType"
               exact
               component={SessionResult}
+              isAuthenticated={isAuthenticated}
+              trainerId={this.state.trainerId}
+            />
+            <PrivateRoute
+              path="/overview-results"
+              exact
+              component={OverviewResults}
               isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
             />
