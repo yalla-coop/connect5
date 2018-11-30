@@ -4,7 +4,7 @@ import { StaticRouter } from "react-router-dom";
 
 import SessionDetails from "./index";
 
-test("Header matches snapshot", () => {
+test("Session matches snapshot", () => {
   const context = {};
   const object = {
     date: 123,
