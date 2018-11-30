@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import setAuthToken from "../../../Utils/setAuthToken";
-import DashboardLinks from "./Links";
+import DashboardLinks from "./DashboardLinks";
 import Statistic from "./statistics";
 import DashboardHeader from "./header";
 import Header from "../../CommonComponents/Header";
