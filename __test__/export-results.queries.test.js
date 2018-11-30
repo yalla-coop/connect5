@@ -40,8 +40,6 @@ describe("Test getting all the results for the CSV export", () => {
 
   test("incorrect ID throws a Mongo error", () => {
 
-    // await expect(exportDetails("123")).toThrow();
-
     return exportDetails("octopus").then((result) => {
       expect(result).toHaveLength(0);
     }).catch((err) => {
