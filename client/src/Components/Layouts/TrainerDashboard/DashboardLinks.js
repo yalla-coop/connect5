@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
-import setAuthToken from "../../../Utils/setAuthToken";
 import {
-  Statistics,
   Links,
   LinkWrapper,
   IconDiv,
