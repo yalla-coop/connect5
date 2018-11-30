@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
 import PropTypes from "prop-types";
-import { log } from "util";
 import setAuthToken from "../../../Utils/setAuthToken";
 
 import {
