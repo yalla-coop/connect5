@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { CSVLink, CSVDownload } from "react-csv";
 import axios from "axios";
+import ExportButton from "./Export.style.js"
 
 class ExportData extends Component {
 
@@ -31,17 +32,17 @@ class ExportData extends Component {
 
     if (!this.state.loaded) {
       return (
-        <div>
-          <p>Loading data...</p>
-        </div>
+        <ExportButton>
+          <a className="btn" href="">Loading data...</a>
+        </ExportButton>
       )
     }
 
     return(
-      <div>
-        <CSVLink data={this.state.csvData}
+      <ExportButton>
+        <CSVLink className="btn" data={this.state.csvData}
         filename={"survey-export.csv"}>Download me</CSVLink>
-      </div>
+      </ExportButton>
     )
   }
 }
