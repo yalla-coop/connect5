@@ -3,10 +3,6 @@ const dbConnection = require("./../server/database/db_connection");
 
 // load models
 const Trainer = require("../server/database/models/Trainer");
-const Session = require("../server/database/models/Session");
-const Response = require("../server/database/models/Response");
-const Answer = require("../server/database/models/Answer");
-const Question = require("../server/database/models/Question");
 
 // load queries
 const exportDetails = require("../server/database/queries/export-results");
