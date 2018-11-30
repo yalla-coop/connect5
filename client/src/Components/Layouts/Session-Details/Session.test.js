@@ -7,7 +7,7 @@ import SessionDetails from "./index";
 test("Session matches snapshot", () => {
   const context = {};
   const object = {
-    date: 123,
+    date: "2016-05-18T16:00:00Z",
     type: 1,
     attendees: 10,
     surveyURL1: "123",

@@ -35,7 +35,7 @@ exports[`Session matches snapshot 1`] = `
         <div
           className="sc-iwsKbI fjRoaU"
         >
-          01/01/1970
+          18/05/2016
         </div>
       </div>
       <div
@@ -74,7 +74,7 @@ exports[`Session matches snapshot 1`] = `
         className="sc-kAzzGY atmIv"
       >
         <div
-          className="sc-gqjmRU ecWkXe"
+          className="sc-gZMcBi sc-gqjmRU ecWkXe"
         >
           <div
             className="sc-gzVnrw bdhGJd"
