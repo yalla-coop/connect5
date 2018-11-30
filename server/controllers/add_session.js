@@ -2,8 +2,10 @@ const createError = require("http-errors");
 const addSessionQuery = require("./../database/queries/add_session");
 
 const addSession = (req, res) => {
+  const trainerId = req.user.id;
+
   const { sessionType, startDate, attendantsNumber } = req.body;
-  addSessionQuery(sessionType, startDate, attendantsNumber)
+  addSessionQuery(trainerId, sessionType, startDate, attendantsNumber)
     .then(() => {
       res.status(200);
       res.send();
