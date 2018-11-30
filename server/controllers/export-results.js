@@ -7,7 +7,7 @@ const router = express.Router();
 const exportResults = require("../database/queries/export-results");
 
 router.get("/", (req, res) => {
-  exportResults("5c000aeb9af39342d964b69")
+  exportResults("5c000aeb9af39342d964b698")
     .then(result => res.status(200).json(result))
     .catch(err => {
       if (err.message.indexOf('Cast to ObjectId failed') !== -1) {

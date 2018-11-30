@@ -19,7 +19,7 @@ class ExportData extends Component {
             loaded: true
           })
         } else {
-          console.log("RES", res.status) 
+          console.log("RES", res) 
           this.setState( {
           csvData: res.data,
           loaded: true
