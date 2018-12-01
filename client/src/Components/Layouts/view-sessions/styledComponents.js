@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const Main = styled.div`
  width: 100%;
- height: 495px;
- background: #EFF3F4
+ background: #EFF3F4;
+ margin-bottom: 72px;
 `;
 
 const Header = styled.div`
