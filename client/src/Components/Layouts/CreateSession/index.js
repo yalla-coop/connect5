@@ -81,7 +81,7 @@ class CreateSession extends Component {
 
         .then(
           swal("Done!", "The session has been added successfully!", "success")
-            .then(() => history.push("/tainer/sessions")),
+            .then(() => history.push("/view-sessions")),
         )
 
         .catch(err => swal({
