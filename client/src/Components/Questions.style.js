@@ -21,6 +21,16 @@ const CommonStyles = styled.div`
 `;
 
 const RadioField = styled(CommonStyles)`
+
+  .other-div {
+    justify-self: center;
+    #other {
+        position: relative;
+        opacity: 1;
+        justify-self: center;
+      }
+  }
+
   .answers {
     display: flex;
     cursor: pointer;
@@ -228,6 +238,7 @@ const RadioStarField = styled(CommonStyles)`
 `;
 
 const CheckboxField = styled(CommonStyles)`
+
   .answers {
     display: flex;
     cursor: pointer;

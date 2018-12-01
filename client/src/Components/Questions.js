@@ -14,7 +14,7 @@ import {
 export default class Questions extends React.Component {
   render() {
     const {
-      onChange, questions, handleMatrix, selectCheckedItem, answers, errors,
+      onChange, questions, handleMatrix, handleOther, selectCheckedItem, answers, errors,
     } = this.props;
     const errorArray = Object.keys(errors);
     // const answerArray = Object.keys(answers);
@@ -59,21 +59,28 @@ export default class Questions extends React.Component {
                     const value = e;
                     const uniqueId = e + questionId;
                     return (
-                      <div key={i}>
-                        <label htmlFor={uniqueId}>
-                          <input
-                            value={value}
-                            id={uniqueId}
-                            name={questionId}
-                            type="radio"
-                            onChange={onChange}
-                            />
-                          <span className="checkmark" />
-                            <p>{value}</p>
-                        </label>
+                      <div>
+                        <div key={i}>
+                          <label htmlFor={uniqueId}>
+                            <input
+                              value={value}
+                              id={uniqueId}
+                              name={questionId}
+                              type="radio"
+                              onChange={onChange}
+                              />
+                            <span className="checkmark" />
+                              <p>{value}</p>
+                          </label>
+                        </div>
+                        
                       </div>
                     );
                   })}
+                </div>
+                <div className="other-div">
+                        {/* Load "Other" div */}
+                        {answers[questionId] && answers[questionId].includes("Other") ? <TextField><p>Please specify:</p><input id="other" name={questionId} type="text" onChange={handleOther} /></TextField> : ""}
                 </div>
               </RadioField>
             );

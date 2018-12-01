@@ -93,6 +93,21 @@ export default class Survey extends React.Component {
     console.log("FORMSTATE", this.state.formState);
   };
 
+  handleOther = (e) => {
+    const question = e.target.name;
+    const state = this.state.formState;
+    let answer;
+
+    answer = `Other: ${e.target.value}`;
+    state[question] = answer;
+
+    this.setState(() => ({
+      formState: state,
+    }));
+
+    console.log("FORMSTATE", this.state.formState);
+  }
+
   // function to deal with the matrix rating questions
   // where there are multiple rows with sub questions and options
   handleMatrix = (row, answer, question) => {
@@ -168,6 +183,7 @@ export default class Survey extends React.Component {
             questions={surveyQs}
             onChange={this.handleChange}
             handleMatrix={this.handleMatrix}
+            handleOther={this.handleOther}
             answers={formState}
             selectCheckedItem={this.selectCheckedItem}
             errors={errors}
