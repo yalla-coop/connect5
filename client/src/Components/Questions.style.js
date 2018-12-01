@@ -106,12 +106,13 @@ const RadioField = styled(CommonStyles)`
 `;
 
 const TextField = styled(CommonStyles)`
-  input {
+  input, textarea {
     border-radius: 1rem;
     border: 1px solid var(--heading-color);
     width: 100%;
     padding: 8px;
   }
+
   ${({ unanswered }) => unanswered && "color: red; input { border: 1px solid red} "}
 `;
 

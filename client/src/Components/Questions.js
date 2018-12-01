@@ -44,6 +44,20 @@ export default class Questions extends React.Component {
               </TextField>
             );
           }
+          if (el.inputType === "textarea") {
+            return (
+              <TextField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
+                <header>
+                  <h4 id={index}>
+                    {questionText}
+                    {isRequired ? " *" : ""}
+                  </h4>
+                  <p className="helpertext">{helperText}</p>
+                </header>
+                <textarea id={index} name={questionId} type="textarea" rows="5" onChange={onChange} />
+              </TextField>
+            );
+          }
           if (el.inputType === "radio") {
             return (
               <RadioField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
