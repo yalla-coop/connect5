@@ -15,7 +15,6 @@ class DashboardLinks extends Component {
         <LinkWrapper>
           <Navlink to="/view-sessions">
             <IconDiv>
-
               <Img src="../Imgs/sessions.jpg" alt="" />
             </IconDiv>
             <div>
