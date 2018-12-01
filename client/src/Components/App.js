@@ -8,7 +8,7 @@ import setAuthToken from "../Utils/setAuthToken";
 // import components
 import LandingPage from "./Layouts/LandingPage";
 
-import SessionDetails from "./Layouts/Session-Details";
+import SessionDetails from "./Layouts/SessionDetails";
 import EditSession from "./Layouts/EditSession/index";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
