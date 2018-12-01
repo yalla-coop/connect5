@@ -32,7 +32,6 @@ const Welcome = styled.p`
   @media (min-width: 321px) {
     width: 80%;
     margin: 0 auto;
-    margin-top: 55px;
     line-height: 95px;
   }
 `;
