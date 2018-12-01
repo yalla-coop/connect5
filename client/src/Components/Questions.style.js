@@ -23,6 +23,8 @@ const CommonStyles = styled.div`
 const RadioField = styled(CommonStyles)`
   .answers {
     display: flex;
+    cursor: pointer;
+    position: relative;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
@@ -42,24 +44,34 @@ const RadioField = styled(CommonStyles)`
 
       label {
         cursor: pointer;
-        padding-left: 35px;
-        width: 100%;
+        /* padding-left: 35px;
+        width: 100%; */
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+
+      p {
+        padding-left: 16px;
+        width: 85%;
       }
 
       input {
         position: absolute;
         opacity: 0;
         cursor: pointer;
+        height: 25px;
+        width; 25px;
       }
 
       .checkmark {
-        top: 0;
-        left: 0;
+        /* top: 0;
+        left: 0; */
         height: 25px;
         width: 25px;
         background-color: #eee;
         border-radius: 50%;
-        position: absolute;
+        display: block;
 
         :after {
           content: "";
@@ -73,14 +85,11 @@ const RadioField = styled(CommonStyles)`
       }
 
       input:checked ~ .checkmark {
-        background-color: var(--heading-color);
+        background-color: white;
+        border: 8px solid var(--heading-color);
       }
 
       input:checked ~ .checkmark:after {
-        display: block;
-      }
-
-      .checkmark:after {
         top: 9px;
         left: 9px;
         width: 8px;
@@ -88,6 +97,7 @@ const RadioField = styled(CommonStyles)`
         border-radius: 50%;
         background: white;
       }
+
     }
   }
 `;
@@ -113,6 +123,8 @@ const MatrixField = styled(CommonStyles)`
   .options {
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+    position: relative;
   }
 
   label {
@@ -122,8 +134,9 @@ const MatrixField = styled(CommonStyles)`
 
     p {
       padding-left: 16px;
+      width: 85%;
     }
-  }
+
 
   input {
     position: absolute;
@@ -158,29 +171,9 @@ const MatrixField = styled(CommonStyles)`
     border-radius: 50%;
     display: block;
 
-    /* :after {
-      content: "";
-      display: none;
-    } */
   }
+}
 `;
-
-// const RadioStarField = styled.div`
-//   background: red;
-
-//   .rate:not(:checked) > input {
-//     position: absolute;
-//     top: -9999px;
-//   }
-
-//   .rate:not(:checked) > label {
-//     float: right;
-//     width: 1em;
-//     overflow: hidden;
-//     white-space: nowrap;
-//     cursor: pointer;
-//   }
-// `;
 
 const RadioStarField = styled(CommonStyles)`
   .answers {
@@ -230,10 +223,6 @@ const RadioStarField = styled(CommonStyles)`
       border-radius: 50%;
       display: block;
 
-      /* :after {
-      content: "";
-      display: none;
-    } */
     }
   }
 `;

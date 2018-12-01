@@ -61,15 +61,15 @@ export default class Questions extends React.Component {
                     return (
                       <div key={i}>
                         <label htmlFor={uniqueId}>
-                          {value}
                           <input
                             value={value}
                             id={uniqueId}
                             name={questionId}
                             type="radio"
                             onChange={onChange}
-                          />
+                            />
                           <span className="checkmark" />
+                            <p>{value}</p>
                         </label>
                       </div>
                     );
