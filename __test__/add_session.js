@@ -38,28 +38,22 @@ describe("addSession testing", async () => {
     // Insert trainer into DB
     await trainer.save();
 
-    console.log("TRAINERS", await Trainer.find())
     // Session data to be stored
+    const trainerId = trainer._id;
     const sessionType = 2;
     const sessionDate = "2018-12-01";
-    const sessionAttendees = 25;
+    const sessionInvitees = 25;
 
-    // Get trainer default data from DB
-    await Trainer.findOne({
-      email: "johndoe@gmail.com",
-    }, "_id")
-      .then(async (storedTrainer) => {
-        // call "addSession" function to store session data into DB
-        await addSession(sessionType, sessionDate, sessionAttendees);
+    // call "addSession" function to store session data into DB
+    await addSession(trainerId, sessionType, sessionDate, sessionInvitees);
 
-        // Get "session" data from DB which insertrd before
-        await Session.findOne({ trainer: storedTrainer._id })
-          .then(async (storedSession) => {
-            // stored session must equal session data declared above
-            expect(storedSession.trainer).toEqual(storedTrainer._id);
-            expect(storedSession.type).toBe(2);
-            expect(storedSession.date).toEqual(new Date("2018-12-01"));
-          });
+    // Get "session" data from DB which insertrd before
+    await Session.findOne({ trainer: trainerId })
+      .then(async (storedSession) => {
+        // stored session must equal session data declared above
+        expect(storedSession.trainer).toEqual(trainerId);
+        expect(storedSession.type).toBe(2);
+        expect(storedSession.date).toEqual(new Date("2018-12-01"));
       });
   });
 
@@ -77,40 +71,47 @@ describe("addSession testing", async () => {
     await trainer.save();
 
     // Session data to be stored with null session type
+    const trainerId = trainer._id;
     const sessionType = null;
     const sessionDate = "2018-12-01";
-    const sessionAttendees = 25;
+    const sessionInvitees = 25;
 
-    // Get trainer default data from DB
-    await Trainer.findOne({
-      email: "johndoe@gmail.com",
-    }, "_id")
-      .then(async (storedTrainer) => {
-        // call "addSession" function to store session data into DB
-        await addSession(sessionType, sessionDate, sessionAttendees)
-          .catch(async (err) => {
-            // "addSession" must return error
-            expect(err).toBeDefined();
-          });
 
-        // Get "session" data from DB which insertrd before
-        await Session.findOne({ trainer: storedTrainer._id })
-          .then(async (storedSession) => {
-            // stored session must be null
-            expect(storedSession).toBeNull();
-          });
+    // call "addSession" function to store session data into DB
+    await addSession(trainerId, sessionType, sessionDate, sessionInvitees)
+      .catch(async (err) => {
+        // "addSession" must return error
+        expect(err).toBeDefined();
+      });
+
+    // Get "session" data from DB which insertrd before
+    await Session.findOne({ trainer: trainerId })
+      .then(async (storedSession) => {
+        // stored session must be null
+        expect(storedSession).toBeNull();
       });
   });
 
 
   test("test with no 'Trainer' data", async () => {
+    // Default trainer data to be stored
+    const trainer = new Trainer({
+      firstName: "John",
+      lastName: "Doe",
+      email: "johndoe@gmail.com",
+      password: "123456",
+    });
+
+    // Insert trainer into DB
+    await trainer.save();
+
     // Session data to be stored
     const sessionType = 2;
     const sessionDate = "2018-12-01";
-    const sessionAttendees = 25;
+    const sessionInvitees = 25;
 
     // Call "addSession" with no "Trainer" table
-    await addSession(sessionType, sessionDate, sessionAttendees)
+    await addSession(null, sessionType, sessionDate, sessionInvitees)
       .catch(async (err) => {
         // "addSession" must return error
         expect(err).toBeDefined();
