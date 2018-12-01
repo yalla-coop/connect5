@@ -113,6 +113,7 @@ class App extends Component {
               component={Dashboard}
               isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
+              navbar={false}
             />
             <PrivateRoute
               path="/view-sessions"
@@ -122,6 +123,7 @@ class App extends Component {
               handleSessions={this.handleSessions}
               getCurrentSession={this.getCurrentSession}
               trainerId={this.state.trainerId}
+              navbar={true}
             />
             <PrivateRoute
               path="/session-details"
@@ -131,6 +133,7 @@ class App extends Component {
               sessionDetails={currentSession}
               trainerId={this.state.trainerId}
               getCurrentSession={this.getCurrentSession}
+              navbar={true}
             />
             <PrivateRoute
               path="/create-session"
@@ -138,6 +141,7 @@ class App extends Component {
               component={CreateSession}
               isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
+              navbar={true}
             />
             <PrivateRoute
               path="/edit-session"
@@ -146,6 +150,7 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
               sessionDetails={currentSession}
+              navbar={true}
             />
             <PrivateRoute
               path="/session/details/:sessionId/:sessionType"
@@ -153,6 +158,7 @@ class App extends Component {
               component={SessionResult}
               isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
+              navbar={true}
             />
             <PrivateRoute
               path="/overview-results"
@@ -160,6 +166,7 @@ class App extends Component {
               component={OverviewResults}
               isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
+              navbar={true}
             />
           </Switch>
         </div>
