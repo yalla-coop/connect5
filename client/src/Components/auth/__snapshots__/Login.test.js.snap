@@ -2,37 +2,20 @@
 
 exports[`Login matches snapshot 1`] = `
 <div
-  className="sc-bxivhb fmaNkn"
+  className="sc-bdVaJa fIgRqF"
 >
-  <div
-    className="sc-bdVaJa iFrhpa"
-  >
-    <a
-      href="/"
-      onClick={[Function]}
-    >
-      <i
-        className="fas fa-home sc-bwzfXH LBneQ"
-      />
-    </a>
-    <img
-      alt="Logo"
-      className="sc-htpNat gFDNQJ"
-      src="connect5_logo_main.jpg"
-    />
-  </div>
   <h1
-    className="sc-ifAKCX jrXIsO"
+    className="sc-bwzfXH dlvvLL"
   >
     Trainer Login
   </h1>
   <form
-    className="sc-EHOje hrsZkK"
+    className="sc-htpNat fpqVLn"
     noValidate={true}
     onSubmit={[Function]}
   >
     <input
-      className="sc-bZQynM hIDwhB"
+      className="sc-bxivhb lnZpdN"
       name="email"
       onChange={[Function]}
       placeholder="Email Address"
@@ -40,7 +23,7 @@ exports[`Login matches snapshot 1`] = `
       value=""
     />
     <input
-      className="sc-bZQynM hIDwhB"
+      className="sc-bxivhb lnZpdN"
       name="password"
       onChange={[Function]}
       placeholder="Password"
@@ -48,7 +31,7 @@ exports[`Login matches snapshot 1`] = `
       value=""
     />
     <input
-      className="sc-bZQynM hIDwhB"
+      className="sc-bxivhb lnZpdN"
       type="submit"
     />
   </form>

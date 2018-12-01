@@ -4,23 +4,6 @@ exports[`Header matches snapshot 1`] = `
 <div
   className="sc-bxivhb RWzGw"
 >
-  <div
-    className="sc-bdVaJa iFrhpa"
-  >
-    <a
-      href="/"
-      onClick={[Function]}
-    >
-      <i
-        className="fas fa-home sc-bwzfXH LBneQ"
-      />
-    </a>
-    <img
-      alt="Logo"
-      className="sc-htpNat gFDNQJ"
-      src="connect5_logo_main.jpg"
-    />
-  </div>
   <h1
     className="sc-ifAKCX hMdYXU"
   >
