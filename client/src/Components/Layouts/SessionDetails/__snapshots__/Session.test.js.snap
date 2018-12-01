@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header matches snapshot 1`] = `
+exports[`SessionDetails matches snapshot 1`] = `
 <div
   className="sc-bdVaJa jExVmn"
 >
@@ -28,12 +28,12 @@ exports[`Header matches snapshot 1`] = `
         className="sc-bZQynM fTLMmD"
       >
         <div
-          className="sc-dnqmqq gcaUrs"
+          className="sc-dnqmqq jGEbHI"
         >
           Date
         </div>
         <div
-          className="sc-iwsKbI fjRoaU"
+          className="sc-iwsKbI hQYCHX"
         >
           01/01/1970
         </div>
@@ -42,12 +42,12 @@ exports[`Header matches snapshot 1`] = `
         className="sc-bZQynM fTLMmD"
       >
         <div
-          className="sc-dnqmqq gcaUrs"
+          className="sc-dnqmqq jGEbHI"
         >
           Type
         </div>
         <div
-          className="sc-iwsKbI fjRoaU"
+          className="sc-iwsKbI hQYCHX"
         >
           1
         </div>
@@ -56,12 +56,12 @@ exports[`Header matches snapshot 1`] = `
         className="sc-bZQynM fTLMmD"
       >
         <div
-          className="sc-dnqmqq gcaUrs"
+          className="sc-dnqmqq jGEbHI"
         >
           Attendees
         </div>
         <div
-          className="sc-iwsKbI fjRoaU"
+          className="sc-iwsKbI hQYCHX"
         >
           10
         </div>
