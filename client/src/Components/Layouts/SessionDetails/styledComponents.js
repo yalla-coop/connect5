@@ -101,6 +101,7 @@ const ItemName = styled.div`
   margin-top: 7px;
   font-size: 15px;
   color: #1397b1;
+  padding-bottom: 10px;
 `;
 
 const Items = styled.div`
@@ -109,6 +110,7 @@ const Items = styled.div`
   height: 35%;
   font-size: 15px;
   color: #1397b1;
+  padding-bottom: 10px;
 `;
 
 const Links = styled.div`
