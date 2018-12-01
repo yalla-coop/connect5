@@ -14,7 +14,7 @@ import Register from "./auth/Register";
 import Login from "./auth/Login";
 import Dashboard from "./Layouts/TrainerDashboard/index";
 import Survey from "./Layouts/Survey";
-import TrainersLandingPage from "./Layouts/TrainersLandingPage";
+import TrainersLandingPage from "./Layouts/TrainersLandingPage/index";
 import ViewSessions from "./Layouts/view-sessions";
 import CreateSession from "./Layouts/CreateSession/index";
 import SessionResult from "./Layouts/SessionResult";
