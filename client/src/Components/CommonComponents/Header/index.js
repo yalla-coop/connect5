@@ -15,6 +15,8 @@ const Container = styled.div`
   height: 55px;
   box-sizing: border-box;
   padding: 0 20px;
+  background-color: #fff;
+  z-index: 10000;
 
   + * {
     margin-top: 55px;
