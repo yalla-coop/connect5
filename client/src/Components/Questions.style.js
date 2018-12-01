@@ -35,22 +35,21 @@ const RadioField = styled(CommonStyles)`
     display: flex;
     cursor: pointer;
     position: relative;
-    flex-direction: row;
     flex-wrap: wrap;
-    width: 100%;
+
 
     div {
       display: flex;
-      flex-direction: row;
+      /* flex-direction: row; */
       min-width: 50%;
-      max-width: 80%;
+      /* max-width: 80%; */
       cursor: pointer;
       position: relative;
-      padding: 0.5rem 0 0.5rem 0;
-      -webkit-user-select: none;
+      /* padding: 0.5rem 0 0.5rem 0; */
+      /* -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
-      user-select: none;
+      user-select: none; */
 
       label {
         cursor: pointer;
@@ -59,11 +58,12 @@ const RadioField = styled(CommonStyles)`
         display: flex;
         align-items: center;
         position: relative;
+        /* position: relative; */
       }
 
       p {
         padding-left: 16px;
-        width: 85%;
+        max-width: 75%;
       }
 
       input {
@@ -71,7 +71,16 @@ const RadioField = styled(CommonStyles)`
         opacity: 0;
         cursor: pointer;
         height: 25px;
-        width; 25px;
+        width: 25px;
+
+        :hover ~ .checkmark {
+        background-color: #ccc;
+      }
+
+      :checked ~ .checkmark {
+        background-color: white;
+        border: 8px solid var(--heading-color);
+      }
       }
 
       .checkmark {
@@ -83,30 +92,14 @@ const RadioField = styled(CommonStyles)`
         border-radius: 50%;
         display: block;
 
-        :after {
+        /* :after {
           content: "";
           position: absolute;
           display: none;
-        }
+        } */
       }
 
-      :hover input ~ .checkmark {
-        background-color: #ccc;
-      }
-
-      input:checked ~ .checkmark {
-        background-color: white;
-        border: 8px solid var(--heading-color);
-      }
-
-      input:checked ~ .checkmark:after {
-        top: 9px;
-        left: 9px;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: white;
-      }
+      
 
     }
   }

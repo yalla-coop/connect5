@@ -68,7 +68,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText:
               "How would you rate your current knowledge and understanding of mental health and wellbeing?",
           inputType: "radiostar",
-          helperText: "0 stars means no understanding. 6 stars means excellent understanding",
+          helperText: "0 means no understanding. 6 means excellent understanding",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
@@ -76,16 +76,16 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText:
               "In your role, how important is it for you to support somebody with their mental health and wellbeing?",
           inputType: "radiostar",
-          helperText: "0 stars means not important. 6 stars means every important",
-          options: [1, 2, 3, 4, 5, 6],
+          helperText: "0 means not important. 6 means every important",
+          options: [0, 1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 0,
           questionText:
               "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
           inputType: "radiostar",
-          helperText: "0 stars means not confident. 6 stars means very confident",
-          options: [1, 2, 3, 4, 5, 6],
+          helperText: "0 means not confident. 6 means very confident",
+          options: [0, 1, 2, 3, 4, 5, 6],
         },
 
         // Survey 1 questions
@@ -147,24 +147,24 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText:
               "How would you rate your current knowledge and understanding of mental health and wellbeing?",
           inputType: "radiostar",
-          helperText: "0 stars means no understanding. 6 stars means excellent understanding",
-          options: [1, 2, 3, 4, 5, 6],
+          helperText: "0 means no understanding. 6 means excellent understanding",
+          options: [0, 1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 1,
           questionText:
               "In your role, how important is it for you to support somebody with their mental health and wellbeing?",
           inputType: "radiostar",
-          helperText: "0 stars means not important. 6 stars means every important",
-          options: [1, 2, 3, 4, 5, 6],
+          helperText: "0 means not important. 6 means very important",
+          options: [0, 1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 1,
           questionText:
               "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
           inputType: "radiostar",
-          helperText: "0 stars means not confident. 6 stars means very confident",
-          options: [1, 2, 3, 4, 5, 6],
+          helperText: "0 means not confident. 6 stars means very confident",
+          options: [0, 1, 2, 3, 4, 5, 6],
         },
         {
           surveyType: 1,
@@ -309,7 +309,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText:
               "How would you rate your current knowledge and understanding of mental health and wellbeing?",
           inputType: "radiostar",
-          helperText: "0 stars means no understanding. 6 stars means excellent understanding",
+          helperText: "0 means no understanding. 6 means excellent understanding",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
@@ -317,7 +317,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText:
               "In your role, how important is it for you to support somebody with their mental health and wellbeing?",
           inputType: "radiostar",
-          helperText: "0 stars means not important. 6 stars means every important",
+          helperText: "0 means not important. 6 means very important",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
@@ -325,7 +325,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText:
               "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
           inputType: "radiostar",
-          helperText: "0 stars means not confident. 6 stars means very confident",
+          helperText: "0 means not confident. 6 means very confident",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
@@ -471,7 +471,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText:
               "How would you rate your current knowledge and understanding of mental health and wellbeing?",
           inputType: "radiostar",
-          helperText: "0 stars means no understanding. 6 stars means excellent understanding",
+          helperText: "0 means no understanding. 6 means excellent understanding",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
@@ -479,7 +479,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText:
               "In your role, how important is it for you to support somebody with their mental health and wellbeing?",
           inputType: "radiostar",
-          helperText: "0 stars means not important. 6 stars means every important",
+          helperText: "0 means not important. 6 means very important",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
@@ -487,7 +487,7 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText:
               "How confident do you feel in having conversations with individuals about mental health and wellbeing?",
           inputType: "radiostar",
-          helperText: "0 stars means not confident. 6 stars means very confident",
+          helperText: "0 means not confident. 6 means very confident",
           options: [1, 2, 3, 4, 5, 6],
         },
         {
