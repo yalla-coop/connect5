@@ -27,11 +27,6 @@ h3 {
 
 /* ... the rest of general styles goes here */
 
-.App {
-  min-width: 100vw;
-  min-height: 100vh
-}
-
 :root {
   --heading-color: #2E3991;
   --paragraph-color: #e73e64;
