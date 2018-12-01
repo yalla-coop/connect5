@@ -124,6 +124,7 @@ class CreateSession extends Component {
             value={inviteesNumber}
             onChange={this.handleInputChange}
             name="inviteesNumber"
+            min="0"
           />
 
           <SelectComponent
