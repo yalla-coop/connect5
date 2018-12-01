@@ -7,7 +7,7 @@ const Container = styled.div`
   margin: 0 auto;
   text-align: center;
   height: 100%;
-  margin-top: 120px;
+  margin-top: 120px !important;
 `;
 
 const Heading = styled.h1`
