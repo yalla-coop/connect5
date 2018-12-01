@@ -129,11 +129,12 @@ const IconDiv = styled.div`
   margin: 0 auto;
 `;
 
-const Icon = styled.i`
-  width: 100%;
-  height: 100%;
+const Img = styled.img`
+  width: 50px;
+  height: 45px;
   line-height: 50px;
   font-size: 35px;
+  margin-top: 8px;
   color: #000000b3;
   &:hover {
     color: #0288d1;
@@ -143,9 +144,9 @@ const Icon = styled.i`
 const Span = styled.span`
   display: block;
   position: relative;
-  font-size: 15px;
+  font-size: 15.5px;
   color: #000000b3;
-  margin-top: 4px;
+  margin-top: 10px;
 `;
 
 
@@ -162,7 +163,7 @@ export {
   Container,
   LinkWrapper,
   UserName,
-  Icon,
+  Img,
   IconDiv,
   Navlink,
 };
