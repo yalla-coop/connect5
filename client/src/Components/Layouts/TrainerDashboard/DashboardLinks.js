@@ -4,7 +4,7 @@ import {
   LinkWrapper,
   IconDiv,
   Navlink,
-  Icon,
+  Img,
   Span,
 } from "./Dashboard_StyledComponents";
 
@@ -15,7 +15,7 @@ class DashboardLinks extends Component {
         <LinkWrapper>
           <Navlink to="/view-sessions">
             <IconDiv>
-              <Icon className="fas fa-list-alt" />
+              <Img src="../Imgs/sessions.jpg" alt="" />
             </IconDiv>
             <div>
               <Span>Sessions</Span>
@@ -26,7 +26,7 @@ class DashboardLinks extends Component {
         <LinkWrapper>
           <Navlink to="/overview-results">
             <IconDiv>
-              <Icon className="fas fa-poll-h" />
+              <Img src="./../../Imgs/results.jpg" alt="" />
             </IconDiv>
             <div>
               <Span>Results</Span>
@@ -37,7 +37,7 @@ class DashboardLinks extends Component {
         <LinkWrapper>
           <Navlink to="/create-session">
             <IconDiv>
-              <Icon className="fas fa-plus-circle" />
+              <Img src="../Imgs/add.jpg" alt="" />
             </IconDiv>
             <div>
               <Span>New Session</Span>

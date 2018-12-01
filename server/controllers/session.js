@@ -1,4 +1,6 @@
 const express = require("express");
+const passport = require("passport");
+
 const GetSessionDetails = require("./get_session_details");
 const GetSessionResponses = require("./get_session_responses");
 const addSession = require("./add_session");
@@ -13,7 +15,7 @@ router
   .route("/")
 
   // Post to add new session
-  .post(addSession);
+  .post(passport.authenticate("jwt", { session: false }), addSession);
 
 
 router

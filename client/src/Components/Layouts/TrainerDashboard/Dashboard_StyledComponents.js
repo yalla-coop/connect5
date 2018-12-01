@@ -5,26 +5,36 @@ const Wrapper = styled.div`
   background: #eff3f4;
   display: Grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 80px 90px 320px;
+  grid-template-rows: 130px 90px 348px;
   grid-template-areas:
     "header"
     "statistics"
     "links";
+  @media (min-width: 321px) {
+      grid-template-rows: 150px 90px 438px;
+    }
 `;
+
 const Header = styled.div`
   grid-area: header;
   position: relative;
-  @media (min-width: 1040px) {
+  @media (min-width: 321px) {
     width: 80%;
     margin: 0 auto;
   }
 `;
 
 const Welcome = styled.p`
-text-align: center;
-line-height: 45px;
-font-size: 20px;
-color: #0b6fa4;
+  line-height: 45px;
+  text-align: center;
+  font-size: 20px;
+  color: #0b6fa4;
+  @media (min-width: 321px) {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 55px;
+    line-height: 95px;
+  }
 `;
 
 const UserName = styled.span`
@@ -41,7 +51,7 @@ const Statistics = styled.div`
   background: #fff;
   border-radius: 6px;
   @media (min-width: 1040px) {
-    width: 80%;
+    width: 50%;
     margin: 0 auto;
   }
 `;
@@ -82,9 +92,11 @@ const Links = styled.div`
   grid-area: links;
   display: flex;
   flex-direction: column;
-  @media (min-width: 1040px) {
+  margin-top: 10px;
+  @media (min-width: 321px) {
     width: 80%;
     margin: 0 auto;
+    margin-top: 25px;
   }
 `;
 
@@ -99,6 +111,9 @@ const LinkWrapper = styled.div`
   margin: 0 auto;
   margin-top: 15px;
   background: #fff;
+  @media (min-width: 321px) {
+    margin-top: 30px
+  }
 `;
 
 const Navlink = styled(NavLink)`
@@ -114,11 +129,12 @@ const IconDiv = styled.div`
   margin: 0 auto;
 `;
 
-const Icon = styled.i`
-  width: 100%;
-  height: 100%;
+const Img = styled.img`
+  width: 50px;
+  height: 45px;
   line-height: 50px;
   font-size: 35px;
+  margin-top: 8px;
   color: #000000b3;
   &:hover {
     color: #0288d1;
@@ -128,9 +144,9 @@ const Icon = styled.i`
 const Span = styled.span`
   display: block;
   position: relative;
-  font-size: 15px;
+  font-size: 15.5px;
   color: #000000b3;
-  margin-top: 4px;
+  margin-top: 10px;
 `;
 
 
@@ -147,7 +163,7 @@ export {
   Container,
   LinkWrapper,
   UserName,
-  Icon,
+  Img,
   IconDiv,
   Navlink,
 };
