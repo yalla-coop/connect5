@@ -9,7 +9,7 @@ import getQuestions from "../../Utils/getQuestions";
 
 import Questions from "../Questions";
 
-import { SurveyQs, Image, SurveyHeader, SessionDetails, Form, Disclaimer, Intro, } from "./Survey.style";
+import { SurveyQs, Image, SurveyHeader, SessionDetails, Form, Disclaimer } from "./Survey.style";
 import Logo from "../../img/Logo-White.png";
 
 // formState will be the object where we store survey responses
@@ -162,7 +162,7 @@ export default class Survey extends React.Component {
     axios
       .post(`/submit/${responseId}`, formSubmission)
       .then((result) => {
-        swal("Done!", "Thanks for submitting your feedback!", "success").then(() => history.push("/home"))
+        swal("Done!", "Thanks for submitting your feedback!", "success").then(() => history.push("/"))
       }
       )
       .catch((err) => {
@@ -203,9 +203,6 @@ export default class Survey extends React.Component {
               {trainerName}
             </p>
           </SessionDetails>
-          {/* <Intro>
-            <p>Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.</p>
-          </Intro> */}
           <Disclaimer>
             <h3>Privacy notice</h3>
             <p>RSPH will use your information to evaluate the outcomes of our mental health promotion project Connect 5 at national and regional level. The quantitative results of this survey will be presented in an aggregated manner and all comments will be anonymous.</p>
