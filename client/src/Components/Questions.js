@@ -153,6 +153,10 @@ export default class Questions extends React.Component {
                     </label>
                   ))}
                 </div>
+                <div className="other-div">
+                  {/* Load "Other" div */}
+                  {answers[questionId] && answers[questionId].includes("Other (please specify)") ? <TextField><p>Please specify:</p><input id="other-checkbox" name={questionId} type="text" onFocus={handleOther} onBlur={handleOther} /></TextField> : ""}
+                </div>
               </CheckboxField>
             );
           }

@@ -98,8 +98,24 @@ export default class Survey extends React.Component {
     const state = this.state.formState;
     let answer;
 
-    answer = `Other: ${e.target.value}`;
+    if (e.target.id= "other-checkbox") {
+      answer = `Other: ${e.target.value}`;
+      if(!state[question].includes(answer)) {
+        state[question].push(answer);
+      } else if (state[question].includes(answer)) {
+        const index = state[question].indexOf(answer);
+        state[question].splice(index, 1);
+      }
+      if(state[question].includes("Other: ")) {
+        const index = state[question].indexOf("Other: ");
+        state[question].splice(index, 1);
+      }
+    } else {
+      answer = `Other: ${e.target.value}`;
     state[question] = answer;
+    }
+
+    
 
     this.setState(() => ({
       formState: state,
