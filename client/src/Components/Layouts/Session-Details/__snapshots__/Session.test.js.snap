@@ -2,7 +2,7 @@
 
 exports[`Header matches snapshot 1`] = `
 <div
-  className="sc-bdVaJa jFbWwR"
+  className="sc-bdVaJa jExVmn"
 >
   <div
     className="sc-bwzfXH ekyToE"
@@ -71,19 +71,19 @@ exports[`Header matches snapshot 1`] = `
       className="sc-gZMcBi hRbZzM"
     >
       <div
-        className="sc-kAzzGY atmIv"
+        className="sc-kAzzGY brdSJE"
       >
         <div
           className="sc-gZMcBi sc-gqjmRU ecWkXe"
         >
           <div
-            className="sc-gzVnrw bdhGJd"
+            className="sc-gzVnrw hFxObc"
           >
             <div
-              className="sc-htoDjs bnXiQO"
+              className="sc-htoDjs cTWPSR"
             >
               <div
-                className="sc-fjdhpX zrTrX"
+                className="sc-fjdhpX ejPixh"
               >
                 <span
                   className="sc-jTzLTM gkQkbK"
@@ -93,41 +93,45 @@ exports[`Header matches snapshot 1`] = `
                 Link
               </div>
               <div
-                className="sc-jzJRlG iLzlvl"
-                onClick={[Function]}
+                className="sc-kkGfuU fbneOr"
               >
-                <i
-                  className="fas fa-info-circle"
-                />
-                <span
-                  className="sc-VigVT gGKHMo"
-                >
-                  info
-                </span>
-              </div>
-              <copyLink>
-                <button
-                  className="sc-eNQAEJ eEQhZo"
+                <div
+                  className="sc-jzJRlG bEvwBw"
                   onClick={[Function]}
-                  style={
-                    Object {
-                      "cursor": "pointer",
-                    }
-                  }
                 >
                   <i
-                    className="far fa-clone"
+                    className="fas fa-info-circle"
                   />
                   <span
                     className="sc-VigVT gGKHMo"
                   >
-                    copy
+                    info
                   </span>
-                </button>
-              </copyLink>
+                </div>
+                <copyLink>
+                  <button
+                    className="sc-eNQAEJ eEQhZo"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "cursor": "pointer",
+                      }
+                    }
+                  >
+                    <i
+                      className="far fa-clone"
+                    />
+                    <span
+                      className="sc-VigVT gGKHMo"
+                    >
+                      copy
+                    </span>
+                  </button>
+                </copyLink>
+              </div>
             </div>
             <a
-              className="sc-chPdSV enPzWF"
+              className="sc-chPdSV lfKpfA"
               href="localhost/survey/0undefined"
             >
               localhost/survey/0undefined
@@ -146,13 +150,13 @@ exports[`Header matches snapshot 1`] = `
             </button>
           </div>
           <div
-            className="sc-gzVnrw bdhGJd"
+            className="sc-gzVnrw hFxObc"
           >
             <div
-              className="sc-htoDjs bnXiQO"
+              className="sc-htoDjs cTWPSR"
             >
               <div
-                className="sc-fjdhpX zrTrX"
+                className="sc-fjdhpX ejPixh"
               >
                 <span
                   className="sc-jTzLTM gkQkbK"
@@ -162,41 +166,45 @@ exports[`Header matches snapshot 1`] = `
                 Link
               </div>
               <div
-                className="sc-jzJRlG iLzlvl"
-                onClick={[Function]}
+                className="sc-kkGfuU fbneOr"
               >
-                <i
-                  className="fas fa-info-circle"
-                />
-                <span
-                  className="sc-VigVT gGKHMo"
-                >
-                  info
-                </span>
-              </div>
-              <copyLink>
-                <button
-                  className="sc-eNQAEJ eEQhZo"
+                <div
+                  className="sc-jzJRlG bEvwBw"
                   onClick={[Function]}
-                  style={
-                    Object {
-                      "cursor": "pointer",
-                    }
-                  }
                 >
                   <i
-                    className="far fa-clone"
+                    className="fas fa-info-circle"
                   />
                   <span
                     className="sc-VigVT gGKHMo"
                   >
-                    copy
+                    info
                   </span>
-                </button>
-              </copyLink>
+                </div>
+                <copyLink>
+                  <button
+                    className="sc-eNQAEJ eEQhZo"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "cursor": "pointer",
+                      }
+                    }
+                  >
+                    <i
+                      className="far fa-clone"
+                    />
+                    <span
+                      className="sc-VigVT gGKHMo"
+                    >
+                      copy
+                    </span>
+                  </button>
+                </copyLink>
+              </div>
             </div>
             <a
-              className="sc-chPdSV enPzWF"
+              className="sc-chPdSV lfKpfA"
               href="localhost/survey/1undefined"
             >
               localhost/survey/1undefined
@@ -219,7 +227,7 @@ exports[`Header matches snapshot 1`] = `
     </div>
   </div>
   <div
-    className="sc-kGXeez hRHuQG"
+    className="sc-kGXeez hmiuWc"
   >
     <div
       className="sc-kpOJdX ieBFuD"
