@@ -2,20 +2,14 @@ import React from "react";
 import renderer from "react-test-renderer";
 import { StaticRouter } from "react-router-dom";
 
-import SessionDetails from "./index";
+import Dashboard from "./index";
 
-test("Header matches snapshot", () => {
+test("Dashboard matches snapshot", () => {
   const context = {};
-  const object = {
-    date: 123,
-    type: 1,
-    attendees: 10,
-    surveyURL1: "123",
-    surveyURL2: "123",
-  };
+
   const component = renderer.create(
     <StaticRouter context={context}>
-      <SessionDetails sessionDetails={object} />
+      <Dashboard />
     </StaticRouter>,
   );
   expect(component).toMatchSnapshot();

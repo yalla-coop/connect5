@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
 import PropTypes from "prop-types";
+import setAuthToken from "../../../Utils/setAuthToken";
 
 import {
   Main,
@@ -30,12 +31,17 @@ class ViewSessions extends Component {
   };
 
   componentDidMount() {
-    axios
-      .get("/view-sessions")
-      .then((res) => {
-        this.setState({ sessions: res.data });
-      })
-      .catch(err => this.context.router.history.push("/server-error"));
+    if (localStorage.jwtToken) {
+      setAuthToken(localStorage.jwtToken);
+      axios
+        .get("/view-sessions")
+        .then((res) => {
+          console.log("view sess", res);
+
+          this.setState({ sessions: res.data });
+        })
+        .catch(err => this.context.router.history.push("/server-error"));
+    }
   }
 
   handleClick = (session) => {
@@ -64,10 +70,8 @@ class ViewSessions extends Component {
 
           <TableBody>
             {sessions.map(session => (
-              <TableRow key={Date.now()}>
-                <TableCell>
-                  {moment(session.date).format("DD/MM/YYYY")}
-                </TableCell>
+              <TableRow key={session._id}>
+                <TableCell>{moment(session.date).format("DD/MM/YYYY")}</TableCell>
                 <TableCell>{session.type}</TableCell>
                 <TableCell>
                   <Button onClick={() => this.handleClick(session)}>
