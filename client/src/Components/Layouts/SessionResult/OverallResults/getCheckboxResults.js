@@ -21,6 +21,7 @@ const getCheckboxResults = (answers, options) => {
         }
         return cumm;
       }, 0);
+      
       return output.push({ value: option, cummulative });
     });
 

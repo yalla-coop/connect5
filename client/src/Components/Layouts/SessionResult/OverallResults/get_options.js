@@ -2,6 +2,12 @@ const getOptions = (answers, options, isReversed) => {
   const output = [];
   const newAnswers = [];
 
+  answers.map(answer => {
+    if (!options.includes(answer.answer)) {
+      options.push(answer.answer)
+    }
+    })
+
   options.map((option) => {
     const cummulative = answers.reduce((cumm, answer) => {
       if (answer.answer === option) {
