@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import getCheckboxResults from "./getCheckboxResults";
-import { RadioRow, Paragraph, Answer } from "../StyledComponents";
+import { RadioRow, Paragraph } from "../StyledComponents";
 
 class CheckboxResults extends Component {
   static propTypes = {
@@ -26,11 +26,11 @@ class CheckboxResults extends Component {
   componentDidUpdate(prevProps) {
     const { answers, options: rawOptions } = this.props;
     const totalAnswers = [];
-    answers.map((answer) => {
+    answers.map((answer) => (
       answer.answer.map((subAnswer) => {
-        totalAnswers.push(subAnswer)
+        return totalAnswers.push(subAnswer)
       })
-    })
+    ))
     console.log("TOTAL", totalAnswers)
     if (prevProps.answers !== answers) {
       const { newOptions, newAnswers } = getCheckboxResults(totalAnswers, rawOptions);
@@ -42,7 +42,7 @@ class CheckboxResults extends Component {
   }
 
   render() {
-    const { newOptions, newAnswers } = this.state;
+    const { newOptions } = this.state;
     console.log("CHECKBOX", this.props)
     console.log("TOTAL ANSWERS", this.state)
     return (

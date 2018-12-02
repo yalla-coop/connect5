@@ -6,6 +6,7 @@ const getOptions = (answers, options, isReversed) => {
     if (!options.includes(answer.answer)) {
       options.push(answer.answer)
     }
+    return options;
     })
 
   options.map((option) => {

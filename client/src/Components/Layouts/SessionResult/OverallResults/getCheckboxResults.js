@@ -8,10 +8,11 @@ const getCheckboxResults = (answers, options) => {
   const newAnswers = answers;
   const output = [];
 
-  answers.map(answer => {
+  answers.map((answer) => {
     if (!options.includes(answer)) {
-      totalOptions.push(answer)
+      return totalOptions.push(answer)
     }
+    return totalOptions;
     })
 
     totalOptions.map((option) => {
