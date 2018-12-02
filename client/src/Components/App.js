@@ -107,8 +107,6 @@ class App extends Component {
             <Route path="/trainer/register" exact component={Register} />
             <Route path="/trainer/login" exact component={Login} />
             <Route path="/survey/:id" exact render={props => <Survey {...props} />} />
-            <Route component={PageNotFound} />
-
             {/* private routes: use the common component PrivateRoute and check if authenticated is true. If not send back to login page */}
             <PrivateRoute
               path="/trainer/dashboard"
@@ -164,6 +162,9 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
             />
+
+            <Route component={PageNotFound} />
+
           </Switch>
         </div>
       </BrowserRouter>
