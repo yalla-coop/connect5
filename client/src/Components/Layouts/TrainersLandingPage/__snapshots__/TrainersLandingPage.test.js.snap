@@ -2,49 +2,53 @@
 
 exports[`Header matches snapshot 1`] = `
 <div
-  className="sc-bxivhb RWzGw"
+  className="sc-gzVnrw jKSCBY"
 >
   <div
-    className="sc-bdVaJa iFrhpa"
+    className="sc-bxivhb uyAvB"
   >
-    <a
-      href="/"
-      onClick={[Function]}
-    >
-      <i
-        className="fas fa-home sc-bwzfXH LBneQ"
-      />
-    </a>
     <img
       alt="Logo"
-      className="sc-htpNat gFDNQJ"
+      className="sc-bZQynM fSermK"
       src="connect5_logo_main.jpg"
     />
+    <div
+      className="sc-EHOje eLNQHg"
+    >
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        <i
+          className="fas fa-home sc-ifAKCX kOjVaV"
+        />
+      </a>
+    </div>
   </div>
   <h1
-    className="sc-ifAKCX hMdYXU"
+    className="sc-htoDjs iWVRaJ"
   >
     Welcome
   </h1>
   <h1
-    className="sc-ifAKCX hMdYXU"
+    className="sc-htoDjs iWVRaJ"
   >
     Connect 5 Trainer
   </h1>
   <p
-    className="sc-EHOje jNjPuC"
+    className="sc-dnqmqq hsbdQn"
   >
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquaUt co laboris nisi ut aliquip ex ea commodo consequat.
   </p>
   <a
-    className="sc-bZQynM ickhtK"
+    className="sc-iwsKbI kcvTXn"
     href="/trainer/register"
     onClick={[Function]}
   >
     Sign up
   </a>
   <a
-    className="sc-bZQynM ickhtK"
+    className="sc-iwsKbI kcvTXn"
     href="/trainer/login"
     onClick={[Function]}
   >
