@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { MatrixAnswer, StarsRow } from "../StyledComponents";
+import { StarsRow } from "../StyledComponents";
 
 import getOptions from "./get_options"
 import findRate from "./find_rate"
