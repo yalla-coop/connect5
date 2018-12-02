@@ -19,6 +19,7 @@ import CreateSession from "./Layouts/CreateSession/index";
 import SessionResult from "./Layouts/SessionResult";
 import OverviewResults from "./Layouts/OverviewResults";
 import PageNotFound from "./Layouts/404Page";
+import ServerError from "./Layouts/500Page";
 
 import "./App.css";
 import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute";
@@ -163,6 +164,7 @@ class App extends Component {
               trainerId={this.state.trainerId}
             />
 
+            <Route path="/server-error" component={ServerError} />
             <Route component={PageNotFound} />
 
           </Switch>
