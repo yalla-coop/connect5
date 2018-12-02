@@ -294,6 +294,23 @@ const Error = styled.div`
   margin-top: 50px;
   font-size: 28px;
 `;
+const MatrixRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+`;
+const SubQuestionWrapper = styled.div`
+  width: 90%;
+  margin: 0 auto;
+`;
+
+
+const OptionValue = styled.span`
+  font-weight: 900;
+  font-size: 1.4em
+`;
 
 export {
   SessionResultWrapper,
@@ -334,4 +351,7 @@ export {
   IndividualAnswer,
   MatrixAnswer,
   Error,
+  SubQuestionWrapper,
+  OptionValue,
+  MatrixRow,
 };

@@ -1,70 +1,69 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { StarsRow } from "../StyledComponents";
+import {
+  SubQuestionWrapper,
+  OptionValue, MatrixRow,
+} from "../StyledComponents";
 
-import getOptions from "./get_options"
-import findRate from "./find_rate"
+import getSubQuestionResult from "./get_sub_question_results";
 
 class Matrix extends Component {
-
   static propTypes = {
     answers: PropTypes.arrayOf(PropTypes.shape({
       answer: PropTypes.arrayOf(PropTypes.string),
     })),
+    options: PropTypes.shape({
+      columns: PropTypes.arrayOf(PropTypes.string),
+      rows: PropTypes.arrayOf(PropTypes.string),
+    }),
   };
 
   static defaultProps = {
     answers: [],
-    options: [],
+    options: {},
   };
 
   state = {
-    options: [],
+    matrixCumm: {},
   }
-  
+
   componentDidUpdate(prevProps) {
     const { answers, options: rawOptions } = this.props;
+    // get the cummulative number for each option
+    const matrixCumm = getSubQuestionResult(rawOptions.columns, rawOptions.rows, answers);
     if (prevProps.answers !== answers) {
-      const { options } = getOptions(answers, rawOptions.columns, true);
       this.setState({
-        options,
+        matrixCumm,
       });
     }
   }
 
-  
-  // const questionArray = Object.keys(answers[0].answer);
-  // console.log("Questions", questionArray)
-  
   render() {
-
-    const { answers, options: rawOptions } = this.props;
-    const subQuestions = rawOptions.rows;
-    const { options } = this.state;
-
-    const rate = answers && findRate(answers);
-    console.log("MATRIX", this.props)
-    console.log("STATE OPTS", this.state.options)
-    console.log("RATE", rate)
-    
-    
+    const { matrixCumm } = this.state;
     return (
-    
-    <React.Fragment>
-      {rawOptions && subQuestions.map(question => (
-        <div key={Math.random()}>
-          <h4>{question}</h4>
-          {options && options.map(option => (
-            <StarsRow key={Math.random()}>
-              <p>{option.value}</p>
-            </StarsRow>
-          ))}
-        </div>
-      ))}
-      
-    </React.Fragment>
-  )};
+
+      <React.Fragment>
+        {
+          Object.keys(matrixCumm).map(question => (
+            <SubQuestionWrapper>
+              <h4>{question}</h4>
+              { Object.keys(matrixCumm[question]).map(answer => (
+                <MatrixRow key={Math.random()}>
+                  <p>{answer}</p>
+                  <div>
+                    <OptionValue>{matrixCumm[question][answer]}</OptionValue>
+                    {"  "}
+                    <span>Vote(s)</span>
+                  </div>
+                </MatrixRow>
+              ))}
+            </SubQuestionWrapper>
+          ))
+
+        }
+      </React.Fragment>
+    );
   }
+}
 
 export default Matrix;
-
