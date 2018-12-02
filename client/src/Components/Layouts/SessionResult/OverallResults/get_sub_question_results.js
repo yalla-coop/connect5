@@ -1,21 +1,21 @@
 const getSubQuestionResult = (columns, rows, answers) => {
   const output = {};
-  rows.map((row) => {
+  rows.forEach((row) => {
     const columnsWithCumm = {};
-    columns.map((item) => {
+    columns.forEach((item) => {
       columnsWithCumm[item] = 0;
     });
     output[row] = columnsWithCumm;
   });
 
 
-  answers.map((inputanswer) => {
+  answers.forEach((inputanswer) => {
     const inputQuestions = Object.keys(inputanswer.answer);
 
-    inputQuestions.map((inputQuestion) => {
+    inputQuestions.forEach((inputQuestion) => {
       const inputColumn = inputanswer.answer[inputQuestion];
-
-      output[inputQuestion][inputColumn] = output[inputQuestion][inputColumn] + 1;
+      const oldValue = output[inputQuestion][inputColumn];
+      output[inputQuestion][inputColumn] = oldValue + 1;
     });
   });
   return output;
