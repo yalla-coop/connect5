@@ -9,8 +9,8 @@ const TrainersLandingPage = () => (
     <Heading>Welcome</Heading>
     <Heading>Connect 5 Trainer</Heading>
     <Paragraph>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-      labore et dolore magna aliquaUt co laboris nisi ut aliquip ex ea commodo consequat.
+      If you are a Connect 5 trainer please register a new account or, if you have already
+      registered, log in using your existing details.
     </Paragraph>
     <Button to="/trainer/register">Sign up</Button>
     <Button to="/trainer/login">Login</Button>
