@@ -49,7 +49,7 @@ router.use("/trainer", trainerController);
 router.use("/register", registerTrainer);
 router.use("/login", loginTrainer);
 router.use("/submit/:responseid", surveyAnswers);
-router.get("/survey/:id", surveyQs.get);
+router.get("/get/survey/:id", surveyQs.get);
 
 // ERROR HANDLING
 router.use((err, req, res, next) => {
