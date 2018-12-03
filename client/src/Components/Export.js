@@ -47,7 +47,7 @@ class ExportData extends Component {
     return (
       <ExportButton>
         <CSVLink className="btn" data={this.state.csvData} filename="survey-export.csv">
-          Download me
+          Download All Survey Results
         </CSVLink>
       </ExportButton>
     );

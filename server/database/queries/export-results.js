@@ -21,7 +21,6 @@ const exportDetails = async (trainerId) => {
     // find all answers related to the responses to the trainer
     const answers = await Answer.find({ response: responseIDArray[i] });
     for (let k = 0; k < answers.length; k++) {
-      console.log(answers);
       // define object of data for each answer --> 1 of many entries for trainer to download later
       const dataObj = {
         trainerName: `${trainerDetails.firstName} ${trainerDetails.lastName}`,
