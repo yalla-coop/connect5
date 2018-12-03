@@ -2,15 +2,14 @@
 
 exports[`Navbar matches snapshot 1`] = `
 <div
-  className="sc-bdVaJa eWrLkf"
+  className="sc-bdVaJa gwLcwU"
 >
   <parent>
     <a
-      aria-current="page"
-      className="sc-htpNat jkoPwQ active"
-      href="/"
+      aria-current={null}
+      className="sc-htpNat jkoPwQ"
+      href="/trainer/dashboard"
       onClick={[Function]}
-      style={Object {}}
     >
       <div
         className="sc-bxivhb KbSGe"
@@ -30,11 +29,10 @@ exports[`Navbar matches snapshot 1`] = `
   </parent>
   <parent>
     <a
-      aria-current="page"
-      className="sc-htpNat jkoPwQ active"
-      href="/"
+      aria-current={null}
+      className="sc-htpNat jkoPwQ"
+      href="/overview-results"
       onClick={[Function]}
-      style={Object {}}
     >
       <div
         className="sc-bxivhb KbSGe"
@@ -54,11 +52,10 @@ exports[`Navbar matches snapshot 1`] = `
   </parent>
   <parent>
     <a
-      aria-current="page"
-      className="sc-htpNat jkoPwQ active"
-      href="/"
+      aria-current={null}
+      className="sc-htpNat jkoPwQ"
+      href="/view-sessions"
       onClick={[Function]}
-      style={Object {}}
     >
       <div
         className="sc-bxivhb KbSGe"
@@ -78,11 +75,10 @@ exports[`Navbar matches snapshot 1`] = `
   </parent>
   <parent>
     <a
-      aria-current="page"
-      className="sc-htpNat jkoPwQ active"
-      href="/"
+      aria-current={null}
+      className="sc-htpNat jkoPwQ"
+      href="/create-session"
       onClick={[Function]}
-      style={Object {}}
     >
       <div
         className="sc-bxivhb KbSGe"

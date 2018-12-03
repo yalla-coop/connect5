@@ -50,7 +50,7 @@ class Stars extends Component {
     const { answers } = this.props;
     const { options } = this.state;
     const rate = answers && findRate(answers);
-
+    console.log("STARS", this.props)
     return (
       <StarsWrapper>
         <BarWrapper>

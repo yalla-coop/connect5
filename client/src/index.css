@@ -10,15 +10,18 @@ html {
 }
 
 /* General styles */
+
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600,700|Roboto:300,400,500,700");
+
 body {
-  font-family: 'Karla', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  font-family: 'Dosis', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 h3 {
@@ -27,16 +30,11 @@ h3 {
 
 /* ... the rest of general styles goes here */
 
-.App {
-  min-width: 100vw;
-  min-height: 100vh
-}
-
 :root {
-  --heading-color: #2E3991;
+  --heading-color: #2e3991;
   --paragraph-color: #e73e64;
-  --button-background-color: #42C4DE;
-  --button-text-color: #3D3D3D;
-  --line-color: #FAA634;
-  --border-color: #A0CE67;
+  --button-background-color: #42c4de;
+  --button-text-color: #3d3d3d;
+  --line-color: #faa634;
+  --border-color: #a0ce67;
 }

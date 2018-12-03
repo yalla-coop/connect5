@@ -9,7 +9,7 @@ const Wrapper = styled.div`
     "header"
     "statistics"
     "links";
-  margin-top: 55px
+  margin-top: 55px;
   background: #eff3f4;
   @media (min-width: 321px) {
       grid-template-rows: 100px 90px 415px;
@@ -34,7 +34,6 @@ const Welcome = styled.p`
   @media (min-width: 321px) {
     width: 80%;
     margin: 0 auto;
-    margin-top: 55px;
     line-height: 40px;
   }
 `;

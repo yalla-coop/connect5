@@ -2,53 +2,32 @@
 
 exports[`Header matches snapshot 1`] = `
 <div
-  className="sc-gzVnrw jKSCBY"
+  className="sc-bdVaJa dJMkdb"
 >
-  <div
-    className="sc-bxivhb uyAvB"
-  >
-    <img
-      alt="Logo"
-      className="sc-bZQynM fSermK"
-      src="connect5_logo_main.jpg"
-    />
-    <div
-      className="sc-EHOje eLNQHg"
-    >
-      <a
-        href="/"
-        onClick={[Function]}
-      >
-        <i
-          className="fas fa-home sc-ifAKCX kOjVaV"
-        />
-      </a>
-    </div>
-  </div>
   <h1
-    className="sc-htoDjs iWVRaJ"
+    className="sc-bwzfXH OsXWH"
   >
     Welcome
   </h1>
   <h1
-    className="sc-htoDjs iWVRaJ"
+    className="sc-bwzfXH OsXWH"
   >
     Connect 5 Trainer
   </h1>
   <p
-    className="sc-dnqmqq hsbdQn"
+    className="sc-htpNat eDNKDL"
   >
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquaUt co laboris nisi ut aliquip ex ea commodo consequat.
   </p>
   <a
-    className="sc-iwsKbI kcvTXn"
+    className="sc-bxivhb ckLoXo"
     href="/trainer/register"
     onClick={[Function]}
   >
     Sign up
   </a>
   <a
-    className="sc-iwsKbI kcvTXn"
+    className="sc-bxivhb ckLoXo"
     href="/trainer/login"
     onClick={[Function]}
   >
