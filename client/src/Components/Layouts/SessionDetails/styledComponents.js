@@ -3,10 +3,8 @@ import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.div`
   background: #eff3f4;
-  height: 496px;
   display: Grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 70px 360px 70px;
   grid-template-areas:
     "header"
     "content"
@@ -86,6 +84,7 @@ const Container = styled.div`
   border-radius: 5px;
   margin: 0 auto;
   margin-top: 10px;
+  padding-bottom: 10px;
 `;
 
 const LinkType = styled.div`
@@ -93,8 +92,8 @@ const LinkType = styled.div`
   flex-direction: row;
   width: 100%;
   height: 25%;
-  margin-left: 15px;
-  padding: 15px 15px 0 15px;
+  padding: 15px 0 0;
+  justify-content: space-between;
 `;
 const ItemName = styled.div`
   display: flex;
@@ -103,6 +102,7 @@ const ItemName = styled.div`
   margin-top: 7px;
   font-size: 15px;
   color: #1397b1;
+  padding-bottom: 10px;
 `;
 
 const Items = styled.div`
@@ -111,6 +111,7 @@ const Items = styled.div`
   height: 35%;
   font-size: 15px;
   color: #1397b1;
+  padding-bottom: 10px;
 `;
 
 const Links = styled.div`
@@ -142,14 +143,13 @@ const SurveyType = styled.span`
 const Span1 = styled.div`
   font-size: 18px;
   display: flex;
-  width: 50%;
   cursor: pointer;
+  padding-left: 6px;
 `;
 
 const Span2 = styled.div`
   font-size: 18px;
   display: flex;
-  width: 20%;
   cursor: pointer;
 `;
 
@@ -162,8 +162,9 @@ const copyLink = styled.div`
 const SurveyLink = styled.div`
 display: flex;
  width: 100%;
- height: 100%,
- margin-top: 0
+ height: 100%;
+ margin-top: 0;
+ margin-bottom: 20px;
 `;
 
 const SLink = styled.a`
@@ -173,6 +174,8 @@ const SLink = styled.a`
   margin-left: 15px;
   color: #3d3d3df2;
   cursor: default;
+  word-break: break-all;
+
   & :hover {
     color: blue;
     text-decoration: underline;
@@ -202,7 +205,8 @@ const ActionsWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: center;
+  margin: 12px auto;
+  
 `;
 
 const ActionWrapper = styled.div`
@@ -250,6 +254,10 @@ const Navlink = styled(NavLink)`
   padding: 0 12px;
   color: white;
 `;
+const IconsContainer = styled.div`
+
+display: flex;
+`;
 
 export {
   Navlink,
@@ -281,4 +289,5 @@ export {
   copyLink,
   Container,
   SurveyType,
+  IconsContainer,
 };
