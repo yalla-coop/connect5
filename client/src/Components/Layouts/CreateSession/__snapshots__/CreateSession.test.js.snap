@@ -45,7 +45,7 @@ exports[`Create Section test 1`] = `
       value=""
     />
     <div
-      className="css-10nd86i sc-bZQynM eSZgMT"
+      className="css-10nd86i sc-bZQynM LKWBx"
       onKeyDown={[Function]}
     >
       <div
@@ -59,7 +59,7 @@ exports[`Create Section test 1`] = `
           <div
             className="css-1492t68"
           >
-            Click to selesct session No.
+            Click to select session No.
           </div>
           <div
             className="css-1g6gooi"
