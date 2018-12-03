@@ -87,6 +87,7 @@ class EditSession extends Component {
         <Heading>Edit Session</Heading>
 
         <Form onSubmit={handleSubmit}>
+          <h4>Session Date:</h4>
           <Date
             selected={moment(startDate)}
             placeholderText={startDate}
@@ -95,6 +96,7 @@ class EditSession extends Component {
             dateFormat="YYYY-MM-DD"
           />
 
+          <h4>Attendees:</h4>
           <Input
             type="number"
             placeholder={attendeesNumber}
@@ -102,6 +104,8 @@ class EditSession extends Component {
             value={attendeesNumber}
             name="attendeesNumber"
           />
+
+          <h4>Session Type:</h4>
           <SelectComponent
             placeholder={sessionType > 0 ? sessionType : "N/A"}
             onChange={handleSession}

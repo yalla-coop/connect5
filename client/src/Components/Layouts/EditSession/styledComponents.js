@@ -34,6 +34,10 @@ const Form = styled.form`
     margin: 0 auto;
     top: 40%
   }
+
+  h4 {
+    margin-bottom: 8px;
+  }
 `;
 
 const Input = styled.input`
@@ -73,6 +77,7 @@ const SelectComponent = styled(Select)`
     height: 50px;
     border-radius: 5px;
     border: 1px solid #42C4DE;
+    margin: 13px 0;
   }
 `;
 
