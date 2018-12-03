@@ -8,7 +8,9 @@ import getQuestions from "../../Utils/getQuestions";
 
 import Questions from "../Questions";
 
-import { SurveyQs, Image, SurveyHeader, SessionDetails, Form, Disclaimer } from "./Survey.style";
+import {
+  SurveyQs, Image, SurveyHeader, SessionDetails, Form, Disclaimer,
+} from "./Survey.style";
 import Logo from "../../img/Logo-White.png";
 
 // formState will be the object where we store survey responses
@@ -34,8 +36,9 @@ export default class Survey extends React.Component {
   componentDidMount() {
     // grab the unique url at the end which gives us survey type and session id
     const { location } = this.props;
-    const survey = location.pathname;
+    const survey = `/get${location.pathname}`;
     const responseId = survey.split("/")[2];
+    console.log(survey);
 
     // util function that will fetch the questions and session details
     getQuestions(survey)
@@ -51,9 +54,10 @@ export default class Survey extends React.Component {
       })
       .then(() => {
         swal({
-          text: `Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.`,
-          button: `Begin`
-        })
+          text:
+            "Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.",
+          button: "Begin",
+        });
       })
       .catch(err => console.error(err.stack));
   }
@@ -104,29 +108,27 @@ export default class Survey extends React.Component {
 
     if (e.target.id === "other-checkbox") {
       answer = `Other: ${e.target.value}`;
-      if(!state[question].includes(answer)) {
+      if (!state[question].includes(answer)) {
         state[question].push(answer);
       } else if (state[question].includes(answer)) {
         const index = state[question].indexOf(answer);
         state[question].splice(index, 1);
       }
-      if(state[question].includes("Other: ")) {
+      if (state[question].includes("Other: ")) {
         const index = state[question].indexOf("Other: ");
         state[question].splice(index, 1);
       }
     } else {
       answer = `Other: ${e.target.value}`;
-    state[question] = answer;
+      state[question] = answer;
     }
-
-    
 
     this.setState(() => ({
       formState: state,
     }));
 
     console.log("FORMSTATE", this.state.formState);
-  }
+  };
 
   // function to deal with the matrix rating questions
   // where there are multiple rows with sub questions and options
@@ -161,9 +163,8 @@ export default class Survey extends React.Component {
     axios
       .post(`/submit/${responseId}`, formSubmission)
       .then((result) => {
-        swal("Done!", "Thanks for submitting your feedback!", "success").then(() => history.push("/"))
-      }
-      )
+        swal("Done!", "Thanks for submitting your feedback!", "success").then(() => history.push("/"));
+      })
       .catch((err) => {
         console.log("ERR", err);
         this.setState({
@@ -177,7 +178,9 @@ export default class Survey extends React.Component {
   };
 
   render() {
-    const { loading, surveyDetails, formState, errors } = this.state;
+    const {
+      loading, surveyDetails, formState, errors,
+    } = this.state;
     if (loading) {
       return <h3>Loading...</h3>;
     }
@@ -204,10 +207,38 @@ export default class Survey extends React.Component {
           </SessionDetails>
           <Disclaimer>
             <h3>Privacy notice</h3>
-            <p>RSPH will use your information to evaluate the outcomes of our mental health promotion project Connect 5 at national and regional level. The quantitative results of this survey will be presented in an aggregated manner and all comments will be anonymous.</p>
-            <p>Our legal basis for processing your information is to fulfill our legitimate interests as a developer of public health projects and manage the programs we offer. Managing development projects includes administering records, providing and organising activities; arranging training; events; webinars; conferences; special interest groups; awards; CPD; education; research; monitoring for equal opportunity purposes; advising you of our services; maintaining our own accounts and records.</p>
-            <p>We will retain your personal information for the duration of your association with RSPH. When your association with us expires we will continue to retain some of your information in order to be able to prove your association if needed. We will delete the information which is no longer required for six years after your association expires. We will send you relevant information about the services we provide to our members.</p>
-            <p>We may share some of your personal information with our commissioners such as Health Education England or the organisation that has commissioned the Connect 5 training you received. We will not share your personal information with any other organisation without your prior consent, unless we are required to do so by law. For further information on how your information is used, how we maintain the security of your information, and your rights to access the information we hold on you, please see our <a href="https://www.rsph.org.uk/privacy-policy.html">privacy policy</a>.</p>
+            <p>
+              RSPH will use your information to evaluate the outcomes of our mental health promotion
+              project Connect 5 at national and regional level. The quantitative results of this
+              survey will be presented in an aggregated manner and all comments will be anonymous.
+            </p>
+            <p>
+              Our legal basis for processing your information is to fulfill our legitimate interests
+              as a developer of public health projects and manage the programs we offer. Managing
+              development projects includes administering records, providing and organising
+              activities; arranging training; events; webinars; conferences; special interest
+              groups; awards; CPD; education; research; monitoring for equal opportunity purposes;
+              advising you of our services; maintaining our own accounts and records.
+            </p>
+            <p>
+              We will retain your personal information for the duration of your association with
+              RSPH. When your association with us expires we will continue to retain some of your
+              information in order to be able to prove your association if needed. We will delete
+              the information which is no longer required for six years after your association
+              expires. We will send you relevant information about the services we provide to our
+              members.
+            </p>
+            <p>
+              We may share some of your personal information with our commissioners such as Health
+              Education England or the organisation that has commissioned the Connect 5 training you
+              received. We will not share your personal information with any other organisation
+              without your prior consent, unless we are required to do so by law. For further
+              information on how your information is used, how we maintain the security of your
+              information, and your rights to access the information we hold on you, please see our
+              {" "}
+              <a href="https://www.rsph.org.uk/privacy-policy.html">privacy policy</a>
+.
+            </p>
           </Disclaimer>
           <Form onSubmit={this.handleSubmit}>
             <h3>Survey Questions:</h3>
