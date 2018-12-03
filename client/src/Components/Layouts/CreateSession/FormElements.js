@@ -7,6 +7,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 25px;
+  margin-bottom: 72px
 `;
 const Heading = styled.h1`
   color: var( --heading-color);
@@ -65,6 +66,7 @@ const SelectComponent = styled(Select)`
     height: 50px;
     border-radius: 5px;
     border: 1px solid var(--border-color);
+    margin: 13px 0;
   }
 `;
 

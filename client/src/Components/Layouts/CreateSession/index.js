@@ -130,7 +130,7 @@ class CreateSession extends Component {
           <SelectComponent
             options={options}
             onChange={this.handleSelectChange}
-            placeholder="Click to selesct session No."
+            placeholder="Click to select session No."
             selected={session}
           />
           { err && <Error>All inputs are required</Error> }

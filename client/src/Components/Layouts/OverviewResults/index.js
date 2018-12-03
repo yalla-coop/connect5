@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import ReactRouterPropTypes from "react-router-prop-types";
+import ExportData from "../../Export";
 
 import {
   ResultsOverviewWrapper,
@@ -26,7 +27,7 @@ class ResultsOverview extends Component {
 
   static defaultProps = {
     history: null,
-  }
+  };
 
   state = {
     activeTab: "attendance",
@@ -35,20 +36,20 @@ class ResultsOverview extends Component {
     attendees: [],
     responses: [],
     radiostarQuestions: [],
-  }
+  };
 
   componentDidMount() {
     const { history } = this.props;
     if (localStorage.jwtToken) {
       setAuthToken(localStorage.jwtToken);
-      axios.get("/trainer/overview")
+      axios
+        .get("/trainer/overview")
         .then(({ data }) => data.map(item => this.setState(item)))
         .then(() => {
           // get all questions with radiostar type
-          axios.get("/question/radiostart/all")
-            .then(({ data }) => {
-              this.setState({ radiostarQuestions: data });
-            });
+          axios.get("/question/radiostart/all").then(({ data }) => {
+            this.setState({ radiostarQuestions: data });
+          });
         })
         .catch(() => history.push("/server-error"));
     }
@@ -58,14 +59,13 @@ class ResultsOverview extends Component {
     this.setState({
       activeTab: e.target.name,
     });
-  }
+  };
 
   handleClosePopup = () => {
     this.setState({
       isPopupActive: false,
     });
-  }
-
+  };
 
   handleOpenPopup = (event) => {
     window.scrollTo(0, 0);
@@ -75,7 +75,7 @@ class ResultsOverview extends Component {
       isPopupActive: true,
       activeQuestionIndex: id,
     });
-  }
+  };
 
   render() {
     const {
@@ -95,51 +95,35 @@ class ResultsOverview extends Component {
         </span>
         <StatisicsContainer>
           <TabsWrapper>
-            <Tab
-              name="attendance"
-              active={activeTab === "attendance"}
-              onClick={handleTabClick}
-            >
-            Attendance
+            <Tab name="attendance" active={activeTab === "attendance"} onClick={handleTabClick}>
+              Attendance
             </Tab>
-            <Tab
-              name="responses"
-              active={activeTab === "responses"}
-              onClick={handleTabClick}
-            >
-           Responses
+            <Tab name="responses" active={activeTab === "responses"} onClick={handleTabClick}>
+              Responses
             </Tab>
           </TabsWrapper>
-          {
-            activeTab === "attendance"
-              ? <AttendanceResults attendees={attendees} />
-              : <ResponsesResults responses={responses} />
-          }
-
+          {activeTab === "attendance" ? (
+            <AttendanceResults attendees={attendees} />
+          ) : (
+            <ResponsesResults responses={responses} />
+          )}
         </StatisicsContainer>
-        <SmallTitle>
-            Responses
-        </SmallTitle>
-        {
-          radiostarQuestions.map((item, index) => (
-            <QuestionWrapper onClick={handleOpenPopup} id={index} key={item._id}>
-              <QuestionText>
-                {item._id}
-              </QuestionText>
-              <Triangle />
-            </QuestionWrapper>
-          ))
-        }
+        <ExportData />
+        <SmallTitle>Responses</SmallTitle>
+        {radiostarQuestions.map((item, index) => (
+          <QuestionWrapper onClick={handleOpenPopup} id={index} key={item._id}>
+            <QuestionText>{item._id}</QuestionText>
+            <Triangle />
+          </QuestionWrapper>
+        ))}
 
-        {isPopupActive
-          ? (
-            <Popup
-              question={radiostarQuestions[activeQuestionIndex]}
-              handleClosePopup={handleClosePopup}
-              history={history}
-            />
-          )
-          : null}
+        {isPopupActive ? (
+          <Popup
+            question={radiostarQuestions[activeQuestionIndex]}
+            handleClosePopup={handleClosePopup}
+            history={history}
+          />
+        ) : null}
       </ResultsOverviewWrapper>
     );
   }

@@ -2,7 +2,7 @@
 
 exports[`EditSession matches snapshot 1`] = `
 <div
-  className="sc-bdVaJa gLEEtT"
+  className="sc-bdVaJa hvbROJ"
 >
   <h1
     className="sc-bwzfXH hLAnGD"
@@ -10,9 +10,12 @@ exports[`EditSession matches snapshot 1`] = `
     Edit Session
   </h1>
   <form
-    className="sc-htpNat fPMthr"
+    className="sc-htpNat jPyelA"
     onSubmit={[Function]}
   >
+    <h4>
+      Session Date:
+    </h4>
     <div
       className="react-datepicker-wrapper"
     >
@@ -35,6 +38,9 @@ exports[`EditSession matches snapshot 1`] = `
         />
       </div>
     </div>
+    <h4>
+      Attendees:
+    </h4>
     <input
       className="sc-bxivhb kQxymJ"
       name="attendeesNumber"
@@ -43,8 +49,11 @@ exports[`EditSession matches snapshot 1`] = `
       type="number"
       value={10}
     />
+    <h4>
+      Session Type:
+    </h4>
     <div
-      className="css-10nd86i sc-bZQynM ZpPqx"
+      className="css-10nd86i sc-bZQynM kkCRTX"
       onKeyDown={[Function]}
     >
       <div

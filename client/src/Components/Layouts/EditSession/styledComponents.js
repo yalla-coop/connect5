@@ -6,6 +6,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 25px;
+  margin-bottom: 72px;
   @media (min-width:1040px) {
     width: 40%;
     margin: 0 auto;
@@ -32,6 +33,10 @@ const Form = styled.form`
   @media (min-width:1040px) {
     margin: 0 auto;
     top: 40%
+  }
+
+  h4 {
+    margin-bottom: 8px;
   }
 `;
 
@@ -72,6 +77,7 @@ const SelectComponent = styled(Select)`
     height: 50px;
     border-radius: 5px;
     border: 1px solid #42C4DE;
+    margin: 13px 0;
   }
 `;
 
