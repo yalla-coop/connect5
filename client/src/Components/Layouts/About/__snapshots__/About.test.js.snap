@@ -1,0 +1,174 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`About matches snapshot 1`] = `
+<div
+  className="sc-gzVnrw gCpeHT"
+>
+  <div
+    className="sc-bxivhb fRqFSc"
+  >
+    <img
+      alt="Logo"
+      className="sc-bZQynM fSermK"
+      src="connect5_logo_main.jpg"
+    />
+    <div
+      className="sc-EHOje eLNQHg"
+    >
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        <i
+          className="fas fa-home sc-ifAKCX kOjVaV"
+        />
+      </a>
+    </div>
+  </div>
+  <div
+    className="sc-dnqmqq hAHjsa"
+  >
+    <h2
+      className="sc-iwsKbI iVbqJu"
+    >
+      Connect5
+    </h2>
+    <p
+      className="sc-gqjmRU jfgWIf"
+    >
+      Connect 5 has been developed to give frontline staff the confidence to have more effective conversations with the public about their mental health and wellbeing
+    </p>
+  </div>
+  <div
+    className="sc-VigVT gYOfdU"
+  >
+    <h2
+      className="sc-iwsKbI sc-gZMcBi hRWwId"
+    >
+      -Our Mission-
+    </h2>
+    <p
+      className="sc-gqjmRU jfgWIf"
+    >
+      To provides participants with skills and competencies that build confidence in having conversations about mental health and wellbeing in their routine practice.
+    </p>
+  </div>
+  <div
+    className="sc-jTzLTM bEifkQ"
+  >
+    <h2
+      className="sc-iwsKbI sc-gZMcBi hRWwId"
+    >
+      About
+    </h2>
+    <div
+      className="sc-fjdhpX fpFkRU"
+    >
+      <h3>
+        What is Connect 5?
+      </h3>
+      <p
+        className="sc-jzJRlG cSUhzZ"
+      >
+        Connect 5 is focused on training staff to enable them to support their patients or clients to live well mentally, to better manage their mental health, increase their resilience and ultimately improve wellbeing.
+      </p>
+      <p
+        className="sc-jzJRlG cSUhzZ"
+      >
+        The techniques used by Connect 5 are underpinned by the Five Ways to Wellbeing and a cognitive behavioural model for understanding stress, distress and learning tools for self-management.
+      </p>
+      <p
+        className="sc-jzJRlG cSUhzZ"
+      >
+        Connect 5 training is tailored to the needs of your staff – and can take place for between a half-day and two and a half days depending on who it is for and how much support they can provide.
+      </p>
+    </div>
+    <div
+      className="sc-fjdhpX fpFkRU"
+    >
+      <h3>
+        Why has it been developed?
+      </h3>
+      <p
+        className="sc-jzJRlG cSUhzZ"
+      >
+        With mental health emerging as a pressing priority, and services struggling to cope with the burden, promoting self-management is at the heart of current health and social care policy.
+      </p>
+      <p
+        className="sc-jzJRlG cSUhzZ"
+      >
+        There are currently many obstacles preventing people from accessing the help they need with mental health issues. Stigma associated with mental health means that those not working in mental health often don’t feel skilled or confident enough to speak about mental health issues.
+      </p>
+      <p
+        className="sc-jzJRlG cSUhzZ"
+      >
+        Connect 5 has been developed to help address these problems by releasing some of the core knowledge and skills held by specialist mental health services into the wider health and care workforce, enabling people to feel confident having conversations around health and wellbeing, and make more effective referrals in to mental health services.
+      </p>
+    </div>
+    <div
+      className="sc-fjdhpX fpFkRU"
+    >
+      <h3>
+        How does Connect 5 fit with national health and care priorities?
+      </h3>
+      <li
+        className="sc-cSHVUG jdvvgH"
+      >
+        <li
+          className="sc-kAzzGY eXhUlk"
+        >
+          Builds capacity and capability to support prevention and reduce demand, supporting the Five Year Forward View (FYFV) and specifically the FYFV for Mental Health workforce strategy.
+        </li>
+        <li
+          className="sc-kAzzGY eXhUlk"
+        >
+          Delivers brief interventions for mental wellbeing as part of Making Every Contact Count (MECC), as agreed in the MECC national consensus statement.
+        </li>
+        <li
+          className="sc-kAzzGY eXhUlk"
+        >
+          Promotes a self-care and self-management approach and increases mental health literacy.
+        </li>
+        <li
+          className="sc-kAzzGY eXhUlk"
+        >
+          Champions the public’s health, wellbeing, independence and control, supporting the Care Act and Public Health priorities.
+        </li>
+        <li
+          className="sc-kAzzGY eXhUlk"
+        >
+          Develops the role of the ‘wider workforce’ to embed prevention and public health across a broader system, in line with the Fit for the Future Public Health strategy and the Public
+        </li>
+        <li
+          className="sc-kAzzGY eXhUlk"
+        >
+          Mental Health Leadership and Workforce Development Framework
+        </li>
+      </li>
+    </div>
+  </div>
+  <div
+    className="sc-chPdSV hmThef"
+  >
+    <h2
+      className="sc-iwsKbI sc-gZMcBi hRWwId"
+    >
+      What did people say about us?
+    </h2>
+    <blockquote
+      className="sc-kgoBCf kVSTZj"
+    >
+      <p
+        className="sc-kGXeez kyrwpq"
+      >
+        Connect 5 helps to support the aspirations outlined in the PHE Prevention Concordat by facilitating universal responsibility for prevention and the promotion of mental wellbeing. It is applicable across the whole of the public sector workforce, employers and community groups everywhere.
+      </p>
+      <p
+        className="sc-kpOJdX cSLMdC"
+      >
+        Julie Daneshyar, Health and Wellbeing Programme Manager, Public Health England
+      </p>
+    </blockquote>
+  </div>
+</div>
+`;

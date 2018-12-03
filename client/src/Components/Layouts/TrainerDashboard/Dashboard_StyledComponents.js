@@ -4,12 +4,11 @@ import { NavLink } from "react-router-dom";
 const Wrapper = styled.div`
   display: Grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 75px 90px 348px;
+  grid-template-rows: 131px 90px 348px;
   grid-template-areas:
     "header"
     "statistics"
     "links";
-  margin-top: 55px;
   background: #eff3f4;
   @media (min-width: 321px) {
       grid-template-rows: 100px 90px 415px;
@@ -19,7 +18,7 @@ const Wrapper = styled.div`
 const Header = styled.div`
   grid-area: header;
   position: relative;
-  margin-top: 0px;
+  margin-top: 0;
   @media (min-width: 321px) {
     width: 80%;
     margin: 0 auto;
@@ -27,7 +26,7 @@ const Header = styled.div`
 `;
 
 const Welcome = styled.p`
-  line-height: 45px;
+  line-height: 38px;
   text-align: center;
   font-size: 20px;
   color: #565858;
@@ -145,9 +144,9 @@ const Img = styled.img`
 const Span = styled.span`
   display: block;
   position: relative;
-  font-size: 15.5px;
-  color: #000000b3;
-  margin-top: 10px;
+  font-size: 14.5px;
+  color: #000000e8;
+  margin-top: 13px;
 `;
 
 

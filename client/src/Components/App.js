@@ -7,7 +7,6 @@ import setAuthToken from "../Utils/setAuthToken";
 
 // import components
 import LandingPage from "./Layouts/LandingPage";
-
 import SessionDetails from "./Layouts/SessionDetails";
 import EditSession from "./Layouts/EditSession/index";
 import Register from "./auth/Register";
@@ -22,7 +21,7 @@ import OverviewResults from "./Layouts/OverviewResults";
 import PageNotFound from "./Layouts/404Page";
 import ServerError from "./Layouts/500Page";
 import PublicRoutes from "./CommonComponents/PublicRoutes";
-
+import AboutUs from "./Layouts/About";
 import "./App.css";
 import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute";
 
@@ -110,6 +109,7 @@ class App extends Component {
             <PublicRoutes path="/trainer/register" exact component={Register} header />
             <PublicRoutes path="/trainer/login" exact component={Login} header />
             <PublicRoutes path="/survey/:id" exact component={Survey} header />
+            <Route path="/about-us" exact component={AboutUs} />
 
             {/* private routes: use the common component PrivateRoute and check if authenticated is true. If not send back to login page */}
             <PrivateRoute
