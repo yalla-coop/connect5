@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`404Page test 1`] = `
+<div
+  className="sc-bdVaJa cRZeis"
+>
+  <div
+    className="sc-bwzfXH TLLze"
+  >
+    <img
+      className="sc-htpNat sANgi"
+      src="four.png"
+    />
+    <div
+      className="sc-bxivhb dRQcnG"
+    >
+      <img
+        className="sc-ifAKCX WhZFg"
+        src="zero.png"
+      />
+      <img
+        className="sc-EHOje fwpVaj"
+        src="nail.png"
+      />
+    </div>
+    <img
+      className="sc-htpNat sANgi"
+      src="four.png"
+    />
+  </div>
+  <img
+    className="sc-bZQynM fKipjg"
+    src="wall.png"
+  />
+  <div
+    className="sc-gzVnrw cWKmhT"
+  >
+    <h1
+      className="sc-htoDjs cdXsEY"
+    >
+      Page Not Found!
+    </h1>
+    <p
+      className="sc-dnqmqq ckCVVF"
+    >
+      The page you are looking for was moved, removed, renamed or might never have existed.
+    </p>
+    <a
+      className="sc-iwsKbI fblPTq"
+      href="/"
+    >
+      Go Home
+    </a>
+  </div>
+</div>
+`;
