@@ -36,8 +36,6 @@ class ViewSessions extends Component {
       axios
         .get("/view-sessions")
         .then((res) => {
-          console.log("view sess", res);
-
           this.setState({ sessions: res.data });
         })
         .catch(err => this.context.router.history.push("/server-error"));
