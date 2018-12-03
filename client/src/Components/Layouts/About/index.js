@@ -7,9 +7,7 @@ import {
   Blockquote,
   Li,
   Ul,
-  How,
-  Why,
-  What,
+  Question,
   About,
   Mission,
   Paragraph,
@@ -41,7 +39,7 @@ const AboutUs = () => (
     </Mission>
     <About>
       <H3>About</H3>
-      <What>
+      <Question>
         <h3>What is Connect 5?</h3>
         <Paragraph>
           Connect 5 is focused on training staff to enable them to support their
@@ -59,8 +57,8 @@ const AboutUs = () => (
           take place for between a half-day and two and a half days depending on
           who it is for and how much support they can provide.
         </Paragraph>
-      </What>
-      <Why>
+      </Question>
+      <Question>
         <h3>Why has it been developed?</h3>
         <Paragraph>
           With mental health emerging as a pressing priority, and services
@@ -82,8 +80,8 @@ const AboutUs = () => (
           and wellbeing, and make more effective referrals in to mental health
           services.
         </Paragraph>
-      </Why>
-      <How>
+      </Question>
+      <Question>
         <h3>
           How does Connect 5 fit with national health and care priorities?
         </h3>
@@ -113,7 +111,7 @@ const AboutUs = () => (
           </Li>
           <Li>Mental Health Leadership and Workforce Development Framework</Li>
         </Ul>
-      </How>
+      </Question>
     </About>
     <Blockquote>
       <H3>What did people say about us?</H3>
