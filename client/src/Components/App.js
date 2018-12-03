@@ -105,35 +105,11 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Switch>
-            <PublicRoutes
-              path="/"
-              exact
-              component={LandingPage}
-            />
-            <PublicRoutes
-              path="/trainer"
-              exact
-              component={TrainersLandingPage}
-              header
-            />
-            <PublicRoutes
-              path="/trainer/register"
-              exact
-              component={Register}
-              header
-            />
-            <PublicRoutes
-              path="/trainer/login"
-              exact
-              component={Login}
-              header
-            />
-            <PublicRoutes
-              path="/survey/:id"
-              exact
-              component={Survey}
-              header
-            />
+            <PublicRoutes path="/" exact component={LandingPage} />
+            <PublicRoutes path="/trainer" exact component={TrainersLandingPage} header />
+            <PublicRoutes path="/trainer/register" exact component={Register} header />
+            <PublicRoutes path="/trainer/login" exact component={Login} header />
+            <PublicRoutes path="/survey/:id" exact component={Survey} header />
 
             {/* private routes: use the common component PrivateRoute and check if authenticated is true. If not send back to login page */}
             <PrivateRoute
@@ -200,7 +176,6 @@ class App extends Component {
 
             <Route path="/server-error" component={ServerError} />
             <Route component={PageNotFound} />
-
           </Switch>
         </div>
       </BrowserRouter>

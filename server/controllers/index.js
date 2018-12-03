@@ -18,14 +18,15 @@ const getRadiostarQuestions = require("./get_radiostar_questions");
 const getQuestionOverview = require("./get_question_overview");
 
 const editSession = require("./edit_session");
+const exportResults = require("./export-results");
 
 const router = express.Router();
 
 // PRIVATE ROUTES
 router.use("/session", sessionController);
 router.use("/question", questionController);
-router.get("/view-sessions", passport.authenticate("jwt", { session: false }), viewSessions);
 router.use("/dashboard", dashboard);
+router.get("/view-sessions", passport.authenticate("jwt", { session: false }), viewSessions);
 router.use("/deleteSession/:_id", deleteSessionById);
 router.get(
   "/trainer/overview",
@@ -43,6 +44,7 @@ router.post(
   getQuestionOverview,
 );
 router.use("/edit-session/:_id", editSession);
+router.use("/export-results", exportResults);
 
 // PUBLIC ROUTES
 router.use("/trainer", trainerController);

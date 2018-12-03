@@ -2,30 +2,30 @@
 
 exports[`snapshot for 'OverviewResults' layout 1`] = `
 <div
-  className="sc-bdVaJa kTUVFc"
+  className="sc-bwzfXH jJtBdi"
 >
   <span>
     <h1
-      className="sc-bwzfXH WtsyX"
+      className="sc-htpNat kqLiDf"
     >
       Overview Results 
     </h1>
   </span>
   <div
-    className="sc-htpNat iXFGLO"
+    className="sc-bxivhb gnsIuN"
   >
     <div
-      className="sc-bxivhb eeJNYE"
+      className="sc-ifAKCX mbVNo"
     >
       <button
-        className="sc-ifAKCX vhGKj"
+        className="sc-EHOje kGZfxh"
         name="attendance"
         onClick={[Function]}
       >
         Attendance
       </button>
       <button
-        className="sc-ifAKCX eOvkkD"
+        className="sc-EHOje fMghwS"
         name="responses"
         onClick={[Function]}
       >
@@ -33,58 +33,58 @@ exports[`snapshot for 'OverviewResults' layout 1`] = `
       </button>
     </div>
     <div
-      className="sc-EHOje ekEMBI"
+      className="sc-bZQynM ifpLOs"
     >
       <div
-        className="sc-bZQynM wptwZ"
+        className="sc-gzVnrw dOqhgu"
       >
         <div
-          className="sc-gzVnrw jbyqyY"
+          className="sc-htoDjs gscSDV"
         >
           <span
-            className="sc-dnqmqq bDsesi"
+            className="sc-iwsKbI jQhHGA"
           >
             0
           </span>
         </div>
         <span
-          className="sc-htoDjs jdnEDT"
+          className="sc-dnqmqq DaDRR"
         >
           Session 1
         </span>
       </div>
       <div
-        className="sc-bZQynM wptwZ"
+        className="sc-gzVnrw dOqhgu"
       >
         <div
-          className="sc-gzVnrw jbyqyY"
+          className="sc-htoDjs gscSDV"
         >
           <span
-            className="sc-dnqmqq bDsesi"
+            className="sc-iwsKbI jQhHGA"
           >
             0
           </span>
         </div>
         <span
-          className="sc-htoDjs jdnEDT"
+          className="sc-dnqmqq DaDRR"
         >
           Session 2 
         </span>
       </div>
       <div
-        className="sc-bZQynM wptwZ"
+        className="sc-gzVnrw dOqhgu"
       >
         <div
-          className="sc-gzVnrw jbyqyY"
+          className="sc-htoDjs gscSDV"
         >
           <span
-            className="sc-dnqmqq bDsesi"
+            className="sc-iwsKbI jQhHGA"
           >
             0
           </span>
         </div>
         <span
-          className="sc-htoDjs jdnEDT"
+          className="sc-dnqmqq DaDRR"
         >
           Session 3
         </span>
@@ -92,7 +92,7 @@ exports[`snapshot for 'OverviewResults' layout 1`] = `
     </div>
   </div>
   <h5
-    className="sc-iwsKbI jQhHGA"
+    className="sc-gZMcBi giNnHm"
   >
     Responses
   </h5>
