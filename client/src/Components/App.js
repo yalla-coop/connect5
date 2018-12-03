@@ -18,6 +18,7 @@ import ViewSessions from "./Layouts/view-sessions";
 import CreateSession from "./Layouts/CreateSession/index";
 import SessionResult from "./Layouts/SessionResult";
 import OverviewResults from "./Layouts/OverviewResults";
+import AboutUs from "./Layouts/About";
 
 import "./App.css";
 import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute";
@@ -106,6 +107,8 @@ class App extends Component {
             <Route path="/trainer/register" exact component={Register} />
             <Route path="/trainer/login" exact component={Login} />
             <Route path="/survey/:id" exact render={props => <Survey {...props} />} />
+            <Route path="/about-us" exact component={AboutUs} />
+
             {/* private routes: use the common component PrivateRoute and check if authenticated is true. If not send back to login page */}
             <PrivateRoute
               path="/trainer/dashboard"
