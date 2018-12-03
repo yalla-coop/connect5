@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -7,24 +8,28 @@ const Schema = mongoose.Schema;
 const QuestionSchema = new Schema({
   surveyType: {
     type: Number,
-    required: true
+    required: true,
   },
   questionText: {
     type: String,
-    required: true
+    required: true,
   },
   // checkbox, textfield, dropdown ..
   inputType: {
     type: String,
-    required: true
+    required: true,
   },
   helperText: {
-    type: String
+    type: String,
   },
   // options related to inputType
   options: {
-    type: Schema.Types.Mixed
-  }
+    type: Schema.Types.Mixed,
+  },
+  isRequired: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 module.exports = Question = mongoose.model("questions", QuestionSchema);
