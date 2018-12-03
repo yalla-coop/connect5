@@ -240,14 +240,14 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText:
               "What are your suggestions, if any, for changes that would improve this course?",
           inputType: "textarea",
-          isRequired: true,
+          isRequired: false,
         },
         {
           surveyType: 1,
           questionText:
               "Is there anything else you would like to tell us about the Connect 5 session 1 training?",
           inputType: "textarea",
-          isRequired: true,
+          isRequired: false,
         },
 
         // Survey 2 questions
@@ -402,14 +402,14 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText:
               "What are your suggestions, if any, for changes that would improve this course?",
           inputType: "textarea",
-          isRequired: true,
+          isRequired: false,
         },
         {
           surveyType: 2,
           questionText:
               "Is there anything else you would like to tell us about the Connect 5 session 2 training?",
           inputType: "textarea",
-          isRequired: true,
+          isRequired: false,
         },
 
         // Survey 3
@@ -578,14 +578,14 @@ const buildSurvey = () => new Promise((resolve, reject) => {
           questionText:
               "What are your suggestions, if any, for changes that would improve this course?",
           inputType: "textarea",
-          isRequired: true,
+          isRequired: false,
         },
         {
           surveyType: 3,
           questionText:
               "Is there anything else you would like to tell us about the Connect 5 session 3 training?",
           inputType: "textarea",
-          isRequired: true,
+          isRequired: false,
         },
       ]);
     })
