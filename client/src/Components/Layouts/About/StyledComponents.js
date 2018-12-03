@@ -7,7 +7,7 @@ const Container = styled.div`
   grid-template-rows: 55px 250px 190px auto auto;
   grid-template-areas:
     "header"
-    "Summury"
+    "summury"
     "mission"
     "about"
     "blockquote"
@@ -19,7 +19,7 @@ const Headers = styled(Header)`
 `;
 
 const Summury = styled.div`
-  grid-area: Summury;
+  grid-area: summury;
   background: linear-gradient(#ffe0e7, #ecfafc);
 `;
 
@@ -60,7 +60,7 @@ const About = styled.div`
   background: #ecfafc;
 `;
 
-const What = styled.div`
+const Question = styled.div`
  display: flex;
  flex-direction: column;
  width: 90%;
@@ -74,23 +74,17 @@ const What = styled.div`
 `;
 
 const Paragraph = styled.p`
-  margin: 0 0 30px;
-  line-height: 1.4;
-  font-weight: 400;
-  color: #6a6a6a;
+ margin: 0 0 30px;
+ line-height: 1.4;
+ font-weight: 400;
+ color: #6a6a6a;
 `;
 
-const Why = styled(What)`
-
-`;
-const How = styled(What)`
-
-`;
 const Ul = styled.li`
-  padding-left: 10px;
-  margin-bottom: 20px;
-  list-style: none;
-  list-style-position: outside;
+ padding-left: 10px;
+ margin-bottom: 20px;
+ list-style: none;
+ list-style-position: outside;
 `;
 
 const Li = styled.li`
@@ -152,9 +146,7 @@ export {
   Paragraph,
   Li,
   Ul,
-  How,
-  Why,
-  What,
+  Question,
   About,
   Mission,
   P,
