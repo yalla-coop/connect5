@@ -11,6 +11,8 @@ const Wrapper = styled.div`
   border-top: 1px solid #42c4de;
   position: fixed;
   bottom: 0;
+  background-color: #fff;
+  z-index: 1000;
 `;
 
 const parent = styled.div`
@@ -67,7 +69,7 @@ class Navbar extends Component {
     return (
       <Wrapper>
         <parent>
-          <Navlink to="/">
+          <Navlink to="/trainer/dashboard">
             <Container>
               <Icon className="fas fa-home" />
             </Container>
@@ -78,7 +80,7 @@ class Navbar extends Component {
         </parent>
 
         <parent>
-          <Navlink to="">
+          <Navlink to="/overview-results">
             <Container>
               <Icon className="fas fa-poll-h" />
             </Container>
@@ -89,7 +91,7 @@ class Navbar extends Component {
         </parent>
 
         <parent>
-          <Navlink to="">
+          <Navlink to="/view-sessions">
             <Container>
               <Icon className="fas fa-list-alt" />
             </Container>
@@ -100,7 +102,7 @@ class Navbar extends Component {
         </parent>
 
         <parent>
-          <Navlink to="">
+          <Navlink to="/create-session">
             <Container>
               <Icon className="fas fa-plus-circle" />
             </Container>

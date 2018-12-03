@@ -3,6 +3,7 @@ import styled from "styled-components";
 const ResultsOverviewWrapper = styled.div`
 width: 90%;
 margin: 0 auto;
+margin-bottom: 72px;
 
 
 `;

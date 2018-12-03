@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import setAuthToken from "../../Utils/setAuthToken";
 
-import Header from "../CommonComponents/Header";
-
 import {
   Heading, Container, Form, Input, Error,
 } from "./PageElementsAuth";
@@ -58,7 +56,6 @@ class Login extends Component {
     const { errors } = this.state;
     return (
       <Container>
-        <Header />
         <Heading>Trainer Login</Heading>
         <Form noValidate onSubmit={this.onSubmit}>
           <Input
