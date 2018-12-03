@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Header from "../CommonComponents/Header";
 import {
   Heading, Container, Form, Input, Error,
 } from "./PageElementsAuth";
@@ -50,7 +49,6 @@ class Register extends Component {
     const { errors } = this.state;
     return (
       <Container>
-        <Header />
         <Heading>Create Your Account</Heading>
         <Form noValidate onSubmit={this.onSubmit}>
           <Input

@@ -222,20 +222,26 @@ const buildDb = async () => {
       response: singleResponse._id,
       session: singleResponse.session,
       question: survey1[9]._id,
-      answer: [
-        "Moderate improvement (2)",
-        "Small improvement (1)",
-        "Greatly improved (5)",
-        "Improved (3)",
-        "Well improved (4)",
-        "Improved (3)",
-      ],
+      answer: {
+        "How to start a conversation with people about their mental health & wellbeing": "Small improvement (1)",
+        "Your awareness of the qualities and attitudes needed for addressing mental health & wellbeing": "Well improved (4)",
+        "Your confidence to talk to people about their mental health & wellbeing": "Improved (3)",
+        "Your understanding of emotional health & wellbeing through the '5 areas' model": "Moderate improvement (2)",
+        "Your understanding of local mental health & wellbeing services and how to signpost people to them": "Well improved (4)",
+        "Your understanding of the importance of self- help material and its uses": "Well improved (4)",}
     },
     {
       response: singleResponse._id,
       session: singleResponse.session,
       question: survey1[10]._id,
-      answer: ["Fair", "Average", "Good", "Poor", "Excellent", "Good"],
+      answer: {
+        "Overall view of training": "Good",
+        "Pace of training": "Good",
+        "Trainer facilitation skills": "Average",
+        "Trainer knowledge about the subject": "Fair",
+        "Training content": "Excellent",
+        "Venue/Location": "Average",
+      },
     },
     {
       response: singleResponse._id,
