@@ -66,6 +66,7 @@ const SelectComponent = styled(Select)`
     height: 50px;
     border-radius: 5px;
     border: 1px solid var(--border-color);
+    margin: 13px 0;
   }
 `;
 
