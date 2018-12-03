@@ -14,32 +14,58 @@ import {
 export default class Questions extends React.Component {
   render() {
     const {
-      onChange, questions, handleMatrix, selectCheckedItem, answers,
+      onChange, questions, handleMatrix, handleOther, selectCheckedItem, answers, errors,
     } = this.props;
+    const errorArray = Object.keys(errors);
+    // const answerArray = Object.keys(answers);
+
     return (
       <React.Fragment>
         {questions.map((el, index) => {
           // map through all the questions
+          // el is one question
 
-          const { _id: questionId, questionText, helperText } = el;
+          const {
+            _id: questionId, questionText, helperText, isRequired,
+          } = el;
 
           // format each question depending on the inputType
           if (el.inputType === "text") {
             return (
-              <TextField key={index}>
+              <TextField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
                 <header>
-                  <h4 id={index}>{questionText}</h4>
+                  <h4 id={index}>
+                    {questionText}
+                    {isRequired ? " *" : ""}
+                  </h4>
                   <p className="helpertext">{helperText}</p>
                 </header>
                 <input id={index} name={questionId} type="text" onChange={onChange} />
               </TextField>
             );
           }
+          if (el.inputType === "textarea") {
+            return (
+              <TextField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
+                <header>
+                  <h4 id={index}>
+                    {questionText}
+                    {isRequired ? " *" : ""}
+                  </h4>
+                  <p className="helpertext">{helperText}</p>
+                </header>
+                <textarea id={index} name={questionId} type="textarea" rows="5" onChange={onChange} />
+              </TextField>
+            );
+          }
           if (el.inputType === "radio") {
             return (
-              <RadioField key={index}>
+              <RadioField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
                 <header>
-                  <h4 id={index}>{questionText}</h4>
+                  <h4 id={index}>
+                    {questionText}
+                    {isRequired ? " *" : ""}
+                  </h4>
                   <p className="helpertext">{helperText}</p>
                 </header>
                 <div className="answers">
@@ -47,30 +73,40 @@ export default class Questions extends React.Component {
                     const value = e;
                     const uniqueId = e + questionId;
                     return (
-                      <div key={i}>
-                        <label htmlFor={uniqueId}>
-                          {value}
-                          <input
-                            value={value}
-                            id={uniqueId}
-                            name={questionId}
-                            type="radio"
-                            onChange={onChange}
-                          />
-                          <span className="checkmark" />
-                        </label>
+                      <div>
+                        <div key={i}>
+                          <label htmlFor={uniqueId}>
+                            <input
+                              value={value}
+                              id={uniqueId}
+                              name={questionId}
+                              type="radio"
+                              onChange={onChange}
+                              />
+                            <span className="checkmark" />
+                              <p>{value}</p>
+                          </label>
+                        </div>
+                        
                       </div>
                     );
                   })}
+                </div>
+                <div className="other-div">
+                        {/* Load "Other" div */}
+                        {answers[questionId] && answers[questionId].includes("Other") ? <TextField><p>Please specify:</p><input id="other" name={questionId} type="text" onChange={handleOther} /></TextField> : ""}
                 </div>
               </RadioField>
             );
           }
           if (el.inputType === "radiostar") {
             return (
-              <RadioStarField key={index}>
+              <RadioStarField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
                 <header>
-                  <h4 id={index}>{questionText}</h4>
+                  <h4 id={index}>
+                    {questionText}
+                    {isRequired ? " *" : ""}
+                  </h4>
                   <p className="helpertext">{helperText}</p>
                 </header>
                 <div className="answers">
@@ -106,10 +142,14 @@ export default class Questions extends React.Component {
             );
           }
           if (el.inputType === "checkbox") {
+            console.log("ANSWERS", answers)
             return (
-              <CheckboxField key={index}>
+              <CheckboxField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
                 <header>
-                  <h4 id={index}>{questionText}</h4>
+                  <h4 id={index}>
+                    {questionText}
+                    {isRequired ? " *" : ""}
+                  </h4>
                   <p className="helpertext">{helperText}</p>
                 </header>
                 <div className="answers">
@@ -127,14 +167,21 @@ export default class Questions extends React.Component {
                     </label>
                   ))}
                 </div>
+                <div className="other-div">
+                  {/* Load "Other" div */}
+                  {answers[questionId] && answers[questionId].includes("Other (please specify)") ? <TextField><p>Please specify:</p><input id="other-checkbox" name={questionId} type="text" onFocus={handleOther} onBlur={handleOther} /></TextField> : ""}
+                </div>
               </CheckboxField>
             );
           }
           if (el.inputType === "matrix") {
             return (
-              <MatrixField key={index}>
+              <MatrixField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
                 <header>
-                  <h4 id={index}>{questionText}</h4>
+                  <h4 id={index}>
+                    {questionText}
+                    {isRequired ? " *" : ""}
+                  </h4>
                   <p className="helpertext">{helperText}</p>
                 </header>
                 <div>
