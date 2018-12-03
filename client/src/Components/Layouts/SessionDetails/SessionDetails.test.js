@@ -18,5 +18,6 @@ test("SessionDetails matches snapshot", () => {
       <SessionDetails sessionDetails={object} />
     </StaticRouter>,
   );
+  console.log(component);
   expect(component).toMatchSnapshot();
 });
