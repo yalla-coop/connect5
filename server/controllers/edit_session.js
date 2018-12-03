@@ -12,7 +12,7 @@ const editSession = (req, res) => {
     })
     .catch(() => {
       res.status(500);
-      res.send((createError(500, "Error in inserting the session")));
+      res.send((createError(500, "Error in editing the session")));
     });
 };
 

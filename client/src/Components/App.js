@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 // setup authorization
 import jwt_decode from "jwt-decode";
@@ -7,7 +7,8 @@ import setAuthToken from "../Utils/setAuthToken";
 
 // import components
 import LandingPage from "./Layouts/LandingPage";
-import SessionDetails from "./Layouts/Session-Details";
+
+import SessionDetails from "./Layouts/SessionDetails";
 import EditSession from "./Layouts/EditSession/index";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
@@ -18,6 +19,8 @@ import ViewSessions from "./Layouts/view-sessions";
 import CreateSession from "./Layouts/CreateSession/index";
 import SessionResult from "./Layouts/SessionResult";
 import OverviewResults from "./Layouts/OverviewResults";
+import PageNotFound from "./Layouts/404Page";
+import ServerError from "./Layouts/500Page";
 import PublicRoutes from "./CommonComponents/PublicRoutes";
 
 import "./App.css";
@@ -194,6 +197,10 @@ class App extends Component {
               trainerId={this.state.trainerId}
               navbar
             />
+
+            <Route path="/server-error" component={ServerError} />
+            <Route component={PageNotFound} />
+
           </Switch>
         </div>
       </BrowserRouter>

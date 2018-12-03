@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
+import Logout from "../Logout/index";
 import Logo from "../../../assets/connect5_logo_main.jpg";
 
 const Container = styled.div`
@@ -34,22 +34,59 @@ const Container = styled.div`
   }
 `;
 
+
 const I = styled.i`
   font-size: 35px;
-  color: var(--paragraph-color);
+  color: #42C4DE;
+  margin-right: 6px;
+`;
+
+const Icons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 75px;
+  height: 100%
 `;
 
 const Image = styled.img`
   height: 50px;
 `;
 
-const Header = () => (
-  <Container>
-    <Link to="/">
-      <I className="fas fa-home" />
-    </Link>
-    <Image src={Logo} alt="Logo" />
-  </Container>
-);
+
+class Header extends Component {
+  state= {
+    login: false,
+  }
+
+  componentDidMount() {
+    if (localStorage.jwtToken) {
+      this.setState({ login: true });
+    }
+  }
+
+  logout = () => {
+    localStorage.removeItem("jwtToken");
+    this.setState({ login: false });
+    window.location.href = "/";
+  }
+
+  render() {
+    const { logout } = this;
+    const { login } = this.state;
+    return (
+      <Container>
+        <Image src={Logo} alt="Logo" />
+        <Icons>
+          <Link to="/">
+            <I className="fas fa-home" />
+          </Link>
+          {login ? <Logout logout={logout} /> : null}
+        </Icons>
+      </Container>
+
+    );
+  }
+}
 
 export default Header;
