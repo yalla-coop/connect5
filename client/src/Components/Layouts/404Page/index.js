@@ -35,7 +35,7 @@ export default () => (
         Page Not Found!
       </MsgTitle>
       <MsgDescription>
-        The page you are looking for was moved, removed, renamed or might never existed.
+        The page you are looking for was moved, removed, renamed or might never have existed.
       </MsgDescription>
       <Button href="/">Go Home</Button>
     </MsgWrapper>

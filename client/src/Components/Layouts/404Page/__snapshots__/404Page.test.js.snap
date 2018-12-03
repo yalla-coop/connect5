@@ -43,7 +43,7 @@ exports[`404Page test 1`] = `
     <p
       className="sc-dnqmqq ckCVVF"
     >
-      The page you are looking for was moved, removed, renamed or might never existed.
+      The page you are looking for was moved, removed, renamed or might never have existed.
     </p>
     <a
       className="sc-iwsKbI fblPTq"
