@@ -21,6 +21,7 @@ const exportDetails = async (trainerId) => {
     // find all answers related to the responses to the trainer
     const answers = await Answer.find({ response: responseIDArray[i] });
     for (let k = 0; k < answers.length; k++) {
+      console.log(answers);
       // define object of data for each answer --> 1 of many entries for trainer to download later
       const dataObj = {
         trainerName: `${trainerDetails.firstName} ${trainerDetails.lastName}`,
@@ -31,11 +32,18 @@ const exportDetails = async (trainerId) => {
       };
       const questionDetails = await Question.find({ _id: answers[k].question });
       const sessionDetails = await Session.find({ _id: answers[k].session });
-
+      if (
+        !(answers[k].answer instanceof Array)
+        && typeof answers[k].answer === "object"
+        && answers[k].answer !== null
+      ) {
+        dataObj.answer = Object.entries(answers[k].answer);
+      } else {
+        dataObj.answer = answers[k].answer;
+      }
       dataObj.questionText = questionDetails[0].questionText;
       dataObj.surveyType = questionDetails[0].surveyType;
       dataObj.sessionID = answers[k].session;
-      dataObj.answer = answers[k].answer;
       dataObj.sessionDate = moment(sessionDetails[0].date).format("DD-MM-YYYY");
 
       exportArray.push(dataObj);

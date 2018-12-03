@@ -2,7 +2,7 @@
 
 exports[`Create Section test 1`] = `
 <div
-  className="sc-bdVaJa icJVhv"
+  className="sc-bdVaJa fcGoub"
 >
   <h1
     className="sc-bwzfXH dsSnwH"
@@ -37,9 +37,10 @@ exports[`Create Section test 1`] = `
     </div>
     <input
       className="sc-bxivhb lnZpdN"
-      name="attendantsNumber"
+      min="0"
+      name="inviteesNumber"
       onChange={[Function]}
-      placeholder="Number of session attendants"
+      placeholder="Number of session invitees"
       type="number"
       value=""
     />

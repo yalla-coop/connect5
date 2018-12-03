@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
@@ -72,9 +73,8 @@ class EditSession extends Component {
   };
 
   render() {
-
-    if(!this.state.loaded) {
-      return <h1>Loading...</h1>
+    if (!this.state.loaded) {
+      return <h1>Loading...</h1>;
     }
 
     const { startDate, attendeesNumber, sessionType } = this.state;

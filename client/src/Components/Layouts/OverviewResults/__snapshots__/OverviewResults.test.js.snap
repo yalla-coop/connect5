@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot for 'OverviewResults' layout 1`] = `
+<div
+  className="sc-bdVaJa kTUVFc"
+>
+  <span>
+    <h1
+      className="sc-bwzfXH WtsyX"
+    >
+      Overview Results 
+    </h1>
+  </span>
+  <div
+    className="sc-htpNat iXFGLO"
+  >
+    <div
+      className="sc-bxivhb eeJNYE"
+    >
+      <button
+        className="sc-ifAKCX vhGKj"
+        name="attendance"
+        onClick={[Function]}
+      >
+        Attendance
+      </button>
+      <button
+        className="sc-ifAKCX eOvkkD"
+        name="responses"
+        onClick={[Function]}
+      >
+        Responses
+      </button>
+    </div>
+    <div
+      className="sc-EHOje ekEMBI"
+    >
+      <div
+        className="sc-bZQynM wptwZ"
+      >
+        <div
+          className="sc-gzVnrw jbyqyY"
+        >
+          <span
+            className="sc-dnqmqq bDsesi"
+          >
+            0
+          </span>
+        </div>
+        <span
+          className="sc-htoDjs jdnEDT"
+        >
+          Session 1
+        </span>
+      </div>
+      <div
+        className="sc-bZQynM wptwZ"
+      >
+        <div
+          className="sc-gzVnrw jbyqyY"
+        >
+          <span
+            className="sc-dnqmqq bDsesi"
+          >
+            0
+          </span>
+        </div>
+        <span
+          className="sc-htoDjs jdnEDT"
+        >
+          Session 2 
+        </span>
+      </div>
+      <div
+        className="sc-bZQynM wptwZ"
+      >
+        <div
+          className="sc-gzVnrw jbyqyY"
+        >
+          <span
+            className="sc-dnqmqq bDsesi"
+          >
+            0
+          </span>
+        </div>
+        <span
+          className="sc-htoDjs jdnEDT"
+        >
+          Session 3
+        </span>
+      </div>
+    </div>
+  </div>
+  <h5
+    className="sc-iwsKbI jQhHGA"
+  >
+    Responses
+  </h5>
+</div>
+`;

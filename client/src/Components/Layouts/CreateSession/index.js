@@ -16,6 +16,7 @@ import {
   Error,
 } from "./FormElements";
 import options from "./options";
+import setAuthToken from "../../../Utils/setAuthToken";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -31,7 +32,7 @@ class CreateSession extends Component {
   state = {
     session: "",
     startDate: null,
-    attendantsNumber: "",
+    inviteesNumber: "",
     err: false,
   };
 
@@ -54,8 +55,8 @@ class CreateSession extends Component {
   }
 
   checkError = () => {
-    const { startDate, attendantsNumber, session } = this.state;
-    const isError = !(!!startDate && !!attendantsNumber && !!session);
+    const { startDate, inviteesNumber, session } = this.state;
+    const isError = !(!!startDate && !!inviteesNumber && !!session);
 
     this.setState({
       err: isError,
@@ -65,25 +66,29 @@ class CreateSession extends Component {
   }
 
   fetch = () => {
-    const { startDate, attendantsNumber, session } = this.state;
+    const { startDate, inviteesNumber, session } = this.state;
     const { history } = this.props;
 
-    axios.post("/session",
-      {
-        sessionType: session.value,
-        startDate: moment(startDate).format("YYYY,MM,DD"),
-        attendantsNumber,
-      })
+    if (localStorage.jwtToken) {
+      setAuthToken(localStorage.jwtToken);
 
-      .then(
-        swal("Done!", "The session has been added successfully!", "success")
-          .then(() => history.push("/tainer/sessions")),
-      )
+      axios.post("/session",
+        {
+          sessionType: session.value,
+          startDate: moment(startDate).format("YYYY,MM,DD"),
+          inviteesNumber,
+        })
 
-      .catch(err => swal({
-        icon: "error",
-        title: err.response.data.message,
-      }));
+        .then(
+          swal("Done!", "The session has been added successfully!", "success")
+            .then(() => history.push("/view-sessions")),
+        )
+
+        .catch(err => swal({
+          icon: "error",
+          title: err.response.data.message,
+        }));
+    }
   }
 
   handleSubmit = (event) => {
@@ -93,7 +98,7 @@ class CreateSession extends Component {
 
   render() {
     const {
-      startDate, attendantsNumber, session, err,
+      startDate, inviteesNumber, session, err,
     } = this.state;
 
     return (
@@ -115,10 +120,11 @@ class CreateSession extends Component {
 
           <Input
             type="number"
-            placeholder="Number of session attendants"
-            value={attendantsNumber}
+            placeholder="Number of session invitees"
+            value={inviteesNumber}
             onChange={this.handleInputChange}
-            name="attendantsNumber"
+            name="inviteesNumber"
+            min="0"
           />
 
           <SelectComponent
