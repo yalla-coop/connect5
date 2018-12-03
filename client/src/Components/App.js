@@ -25,7 +25,6 @@ import PublicRoutes from "./CommonComponents/PublicRoutes";
 
 import "./App.css";
 import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute";
-import ExportData from "./Export.js";
 
 class App extends Component {
   state = {

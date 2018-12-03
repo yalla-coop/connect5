@@ -35,13 +35,7 @@ class ExportData extends Component {
 
   render() {
     if (!this.state.loaded) {
-      return (
-        <ExportButton>
-          <a className="btn" href="">
-            Loading data...
-          </a>
-        </ExportButton>
-      );
+      return null;
     }
 
     return (
