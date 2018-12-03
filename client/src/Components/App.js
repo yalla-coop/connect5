@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 // setup authorization
 import jwt_decode from "jwt-decode";
@@ -19,6 +19,9 @@ import ViewSessions from "./Layouts/view-sessions";
 import CreateSession from "./Layouts/CreateSession/index";
 import SessionResult from "./Layouts/SessionResult";
 import OverviewResults from "./Layouts/OverviewResults";
+import PageNotFound from "./Layouts/404Page";
+import ServerError from "./Layouts/500Page";
+import PublicRoutes from "./CommonComponents/PublicRoutes";
 
 import "./App.css";
 import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute";
@@ -102,11 +105,36 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Switch>
-            <Route path="/" exact component={LandingPage} />
-            <Route path="/trainer" exact component={TrainersLandingPage} />
-            <Route path="/trainer/register" exact component={Register} />
-            <Route path="/trainer/login" exact component={Login} />
-            <Route path="/survey/:id" exact render={props => <Survey {...props} />} />
+            <PublicRoutes
+              path="/"
+              exact
+              component={LandingPage}
+            />
+            <PublicRoutes
+              path="/trainer"
+              exact
+              component={TrainersLandingPage}
+              header
+            />
+            <PublicRoutes
+              path="/trainer/register"
+              exact
+              component={Register}
+              header
+            />
+            <PublicRoutes
+              path="/trainer/login"
+              exact
+              component={Login}
+              header
+            />
+            <PublicRoutes
+              path="/survey/:id"
+              exact
+              component={Survey}
+              header
+            />
+
             {/* private routes: use the common component PrivateRoute and check if authenticated is true. If not send back to login page */}
             <PrivateRoute
               path="/trainer/dashboard"
@@ -114,6 +142,7 @@ class App extends Component {
               component={Dashboard}
               isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
+              navbar={false}
             />
             <PrivateRoute
               path="/view-sessions"
@@ -123,6 +152,7 @@ class App extends Component {
               handleSessions={this.handleSessions}
               getCurrentSession={this.getCurrentSession}
               trainerId={this.state.trainerId}
+              navbar
             />
             <PrivateRoute
               path="/session-details"
@@ -132,6 +162,7 @@ class App extends Component {
               sessionDetails={currentSession}
               trainerId={this.state.trainerId}
               getCurrentSession={this.getCurrentSession}
+              navbar
             />
             <PrivateRoute
               path="/create-session"
@@ -139,6 +170,7 @@ class App extends Component {
               component={CreateSession}
               isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
+              navbar
             />
             <PrivateRoute
               path="/edit-session"
@@ -147,6 +179,7 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
               sessionDetails={currentSession}
+              navbar
             />
             <PrivateRoute
               path="/session/details/:sessionId/:sessionType"
@@ -154,6 +187,7 @@ class App extends Component {
               component={SessionResult}
               isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
+              navbar
             />
             <PrivateRoute
               path="/overview-results"
@@ -161,7 +195,12 @@ class App extends Component {
               component={OverviewResults}
               isAuthenticated={isAuthenticated}
               trainerId={this.state.trainerId}
+              navbar
             />
+
+            <Route path="/server-error" component={ServerError} />
+            <Route component={PageNotFound} />
+
           </Switch>
         </div>
       </BrowserRouter>

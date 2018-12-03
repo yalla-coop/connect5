@@ -2,22 +2,24 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.div`
-  background: #eff3f4;
   display: Grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 130px 90px 348px;
+  grid-template-rows: 75px 90px 348px;
   grid-template-areas:
     "header"
     "statistics"
     "links";
+  margin-top: 55px;
+  background: #eff3f4;
   @media (min-width: 321px) {
-      grid-template-rows: 150px 90px 438px;
+      grid-template-rows: 100px 90px 415px;
     }
 `;
 
 const Header = styled.div`
   grid-area: header;
   position: relative;
+  margin-top: 0px;
   @media (min-width: 321px) {
     width: 80%;
     margin: 0 auto;
@@ -28,12 +30,11 @@ const Welcome = styled.p`
   line-height: 45px;
   text-align: center;
   font-size: 20px;
-  color: #0b6fa4;
+  color: #565858;
   @media (min-width: 321px) {
     width: 80%;
     margin: 0 auto;
-    margin-top: 55px;
-    line-height: 95px;
+    line-height: 40px;
   }
 `;
 

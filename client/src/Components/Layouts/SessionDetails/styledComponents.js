@@ -9,6 +9,7 @@ const Wrapper = styled.div`
     "header"
     "content"
     "actions";
+  margin-bottom: 72px;
 `;
 
 const Header = styled.div`

@@ -1,13 +1,11 @@
 import React from "react";
 
-import Header from "../../CommonComponents/Header";
 import {
   Button, Paragraph, Heading, Container,
 } from "./PageElements";
 
 const TrainersLandingPage = () => (
   <Container>
-    <Header />
     <Heading>Welcome</Heading>
     <Heading>Connect 5 Trainer</Heading>
     <Paragraph>

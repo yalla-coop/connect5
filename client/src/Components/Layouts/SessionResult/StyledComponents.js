@@ -5,6 +5,7 @@ const SessionResultWrapper = styled.div`
   flex-direction: column;
   width: 95%;
   margin: 0 auto;
+  margin-bottom: 72px;
 `;
 
 const PageTitle = styled.h1`
