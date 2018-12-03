@@ -5,6 +5,7 @@ const Main = styled.div`
  width: 100%;
  background: #EFF3F4;
  margin-bottom: 72px;
+ min-height: 497px;
 `;
 
 const Header = styled.div`
