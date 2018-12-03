@@ -7,6 +7,7 @@ import Stars from "./Stars";
 import Radio from "./RadioResults";
 import TextfieldResults from "./TextfieldResults";
 import Matrix from "./Matrix";
+import Checkbox from "./CheckboxResults"
 
 import {
   PopupWrapper,
@@ -64,7 +65,8 @@ class Popup extends Component {
         </PopupQuestion>
         {inputType === "matrix" && <Matrix answers={answers} options={question.options} />}
         {inputType === "radiostar" && <Stars answers={answers} options={question.options} />}
-        {(inputType === "checkbox" || inputType === "radio") && <Radio answers={answers} options={question.options} />}
+        {inputType === "checkbox" && <Checkbox answers={answers} options={question.options} />}
+        {inputType === "radio" && <Radio answers={answers} options={question.options} />}
         { inputType === "textarea" && <TextfieldResults answers={answers} />}
       </PopupWrapper>
     );
