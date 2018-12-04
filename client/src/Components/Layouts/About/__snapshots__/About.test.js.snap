@@ -5,7 +5,7 @@ exports[`About matches snapshot 1`] = `
   className="sc-gzVnrw gCpeHT"
 >
   <div
-    className="sc-bxivhb fRqFSc"
+    className="sc-bxivhb igcOnr"
   >
     <img
       alt="Logo"
@@ -20,7 +20,7 @@ exports[`About matches snapshot 1`] = `
         onClick={[Function]}
       >
         <i
-          className="fas fa-home sc-ifAKCX kOjVaV"
+          className="fas fa-home sc-ifAKCX caYIHC"
         />
       </a>
     </div>

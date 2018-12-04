@@ -2,7 +2,7 @@
 
 exports[`Navbar matches snapshot 1`] = `
 <div
-  className="sc-bdVaJa gwLcwU"
+  className="sc-bdVaJa jXoMzx"
 >
   <parent>
     <a
@@ -12,15 +12,15 @@ exports[`Navbar matches snapshot 1`] = `
       onClick={[Function]}
     >
       <div
-        className="sc-bxivhb KbSGe"
+        className="sc-bxivhb gbUEuT"
       >
         <i
-          className="fas fa-home sc-ifAKCX cKkUrM"
+          className="fas fa-home sc-ifAKCX jCFtJf"
         />
       </div>
       <div>
         <span
-          className="sc-EHOje iqUaXP"
+          className="sc-EHOje WGczL"
         >
           Home
         </span>
@@ -35,15 +35,15 @@ exports[`Navbar matches snapshot 1`] = `
       onClick={[Function]}
     >
       <div
-        className="sc-bxivhb KbSGe"
+        className="sc-bxivhb gbUEuT"
       >
         <i
-          className="fas fa-poll-h sc-ifAKCX cKkUrM"
+          className="fas fa-poll-h sc-ifAKCX jCFtJf"
         />
       </div>
       <div>
         <span
-          className="sc-EHOje iqUaXP"
+          className="sc-EHOje WGczL"
         >
           Results
         </span>
@@ -58,15 +58,15 @@ exports[`Navbar matches snapshot 1`] = `
       onClick={[Function]}
     >
       <div
-        className="sc-bxivhb KbSGe"
+        className="sc-bxivhb gbUEuT"
       >
         <i
-          className="fas fa-list-alt sc-ifAKCX cKkUrM"
+          className="fas fa-list-alt sc-ifAKCX jCFtJf"
         />
       </div>
       <div>
         <span
-          className="sc-EHOje iqUaXP"
+          className="sc-EHOje WGczL"
         >
           Sessions
         </span>
@@ -81,15 +81,15 @@ exports[`Navbar matches snapshot 1`] = `
       onClick={[Function]}
     >
       <div
-        className="sc-bxivhb KbSGe"
+        className="sc-bxivhb gbUEuT"
       >
         <i
-          className="fas fa-plus-circle sc-ifAKCX cKkUrM"
+          className="fas fa-plus-circle sc-ifAKCX jCFtJf"
         />
       </div>
       <div>
         <span
-          className="sc-bZQynM gfVsln"
+          className="sc-bZQynM jCuMCA"
         >
           Add
         </span>

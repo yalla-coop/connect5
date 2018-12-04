@@ -5,17 +5,19 @@ exports[`EditSession matches snapshot 1`] = `
   className="sc-bdVaJa hvbROJ"
 >
   <h1
-    className="sc-bwzfXH hLAnGD"
+    className="sc-bwzfXH bwoNjK"
   >
     Edit Session
   </h1>
   <form
-    className="sc-htpNat jPyelA"
+    className="sc-htpNat ctPCLA"
     onSubmit={[Function]}
   >
-    <h4>
+    <label
+      className="sc-ifAKCX gvcYAU"
+    >
       Session Date:
-    </h4>
+    </label>
     <div
       className="react-datepicker-wrapper"
     >
@@ -23,7 +25,7 @@ exports[`EditSession matches snapshot 1`] = `
         className="react-datepicker__input-container"
       >
         <input
-          className="sc-ifAKCX hMKBkt"
+          className="sc-EHOje VOIbf"
           disabled={false}
           name="startDate"
           onBlur={[Function]}
@@ -38,22 +40,26 @@ exports[`EditSession matches snapshot 1`] = `
         />
       </div>
     </div>
-    <h4>
+    <label
+      className="sc-ifAKCX gvcYAU"
+    >
       Attendees:
-    </h4>
+    </label>
     <input
-      className="sc-bxivhb kQxymJ"
+      className="sc-bxivhb gRSScZ"
       name="attendeesNumber"
       onChange={[Function]}
       placeholder={10}
       type="number"
       value={10}
     />
-    <h4>
+    <label
+      className="sc-ifAKCX gvcYAU"
+    >
       Session Type:
-    </h4>
+    </label>
     <div
-      className="css-10nd86i sc-bZQynM kkCRTX"
+      className="css-10nd86i sc-gzVnrw leSZML"
       onKeyDown={[Function]}
     >
       <div
@@ -155,7 +161,7 @@ exports[`EditSession matches snapshot 1`] = `
       </div>
     </div>
     <button
-      className="sc-EHOje cbJUBu"
+      className="sc-bZQynM emONDU"
       type="submit"
     >
       Submit

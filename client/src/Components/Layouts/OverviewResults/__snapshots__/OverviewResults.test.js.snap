@@ -2,30 +2,30 @@
 
 exports[`snapshot for 'OverviewResults' layout 1`] = `
 <div
-  className="sc-bwzfXH jJtBdi"
+  className="sc-bwzfXH gMHSsl"
 >
   <span>
     <h1
-      className="sc-htpNat kqLiDf"
+      className="sc-htpNat hRLiew"
     >
       Overview Results 
     </h1>
   </span>
   <div
-    className="sc-bxivhb gnsIuN"
+    className="sc-bxivhb hpvpuf"
   >
     <div
-      className="sc-ifAKCX mbVNo"
+      className="sc-ifAKCX jEPAMp"
     >
       <button
-        className="sc-EHOje kGZfxh"
+        className="sc-EHOje geSHOh"
         name="attendance"
         onClick={[Function]}
       >
         Attendance
       </button>
       <button
-        className="sc-EHOje fMghwS"
+        className="sc-EHOje lgbUUx"
         name="responses"
         onClick={[Function]}
       >
@@ -33,13 +33,13 @@ exports[`snapshot for 'OverviewResults' layout 1`] = `
       </button>
     </div>
     <div
-      className="sc-bZQynM ifpLOs"
+      className="sc-bZQynM bSnEZl"
     >
       <div
         className="sc-gzVnrw dOqhgu"
       >
         <div
-          className="sc-htoDjs gscSDV"
+          className="sc-htoDjs iObFNo"
         >
           <span
             className="sc-iwsKbI jQhHGA"
@@ -57,7 +57,7 @@ exports[`snapshot for 'OverviewResults' layout 1`] = `
         className="sc-gzVnrw dOqhgu"
       >
         <div
-          className="sc-htoDjs gscSDV"
+          className="sc-htoDjs iObFNo"
         >
           <span
             className="sc-iwsKbI jQhHGA"
@@ -75,7 +75,7 @@ exports[`snapshot for 'OverviewResults' layout 1`] = `
         className="sc-gzVnrw dOqhgu"
       >
         <div
-          className="sc-htoDjs gscSDV"
+          className="sc-htoDjs iObFNo"
         >
           <span
             className="sc-iwsKbI jQhHGA"
@@ -91,10 +91,10 @@ exports[`snapshot for 'OverviewResults' layout 1`] = `
       </div>
     </div>
   </div>
-  <h5
+  <h3
     className="sc-gZMcBi giNnHm"
   >
-    Responses
-  </h5>
+    Responses:
+  </h3>
 </div>
 `;

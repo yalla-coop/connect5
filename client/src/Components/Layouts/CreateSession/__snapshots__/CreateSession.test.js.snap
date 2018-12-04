@@ -2,15 +2,15 @@
 
 exports[`Create Section test 1`] = `
 <div
-  className="sc-bdVaJa fcGoub"
+  className="sc-bdVaJa bZxcIo"
 >
   <h1
-    className="sc-bwzfXH dsSnwH"
+    className="sc-bwzfXH dJbeoB"
   >
     Create New Session
   </h1>
   <form
-    className="sc-htpNat dIxJZa"
+    className="sc-htpNat ighOBe"
     onSubmit={[Function]}
   >
     <div
@@ -20,7 +20,7 @@ exports[`Create Section test 1`] = `
         className="react-datepicker__input-container"
       >
         <input
-          className="sc-ifAKCX boIWPv"
+          className="sc-ifAKCX cHvjyU"
           disabled={false}
           name="startDate"
           onBlur={[Function]}
@@ -36,7 +36,7 @@ exports[`Create Section test 1`] = `
       </div>
     </div>
     <input
-      className="sc-bxivhb lnZpdN"
+      className="sc-bxivhb QobIj"
       min="0"
       name="inviteesNumber"
       onChange={[Function]}
@@ -45,7 +45,7 @@ exports[`Create Section test 1`] = `
       value=""
     />
     <div
-      className="css-10nd86i sc-bZQynM LKWBx"
+      className="css-10nd86i sc-bZQynM iYsjMZ"
       onKeyDown={[Function]}
     >
       <div
@@ -147,7 +147,7 @@ exports[`Create Section test 1`] = `
       </div>
     </div>
     <button
-      className="sc-EHOje kNTiin"
+      className="sc-EHOje cWUerd"
       type="submit"
     >
       Submit
