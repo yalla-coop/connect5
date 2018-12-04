@@ -175,7 +175,6 @@ const SLink = styled.a`
   color: #3d3d3df2;
   cursor: default;
   word-break: break-all;
-
   & :hover {
     color: blue;
     text-decoration: underline;
@@ -206,7 +205,7 @@ const ActionsWrapper = styled.div`
   flex-direction: row;
   justify-content: space-around;
   margin: 12px auto;
-  
+
 `;
 
 const ActionWrapper = styled.div`
@@ -251,12 +250,11 @@ const ResultsBtn = styled.button`
 const Navlink = styled(NavLink)`
   display: block;
   text-decoration: none;
-  padding: 0 12px;
+  padding: 0 10px;
   color: white;
 `;
 const IconsContainer = styled.div`
-
-display: flex;
+ display: flex;
 `;
 
 export {

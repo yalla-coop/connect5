@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Redirect } from "react-router";
 import setAuthToken from "../../Utils/setAuthToken";
-
 import {
   Heading, Container, Form, Input, Error,
 } from "./PageElementsAuth";
@@ -13,9 +13,16 @@ class Login extends Component {
       email: "",
       password: "",
       errors: {},
+      login: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    if (localStorage.jwtToken) {
+      this.setState({ login: true });
+    }
   }
 
   onChange(e) {
@@ -54,29 +61,33 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
+    const { login } = this.state;
     return (
-      <Container>
-        <Heading>Trainer Login</Heading>
-        <Form noValidate onSubmit={this.onSubmit}>
-          <Input
-            type="email"
-            placeholder="Email Address"
-            name="email"
-            value={this.state.email}
-            onChange={this.onChange}
-          />
-          {errors.email && <Error className="invalid-feedback">{errors.email}</Error>}
-          <Input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={this.state.password}
-            onChange={this.onChange}
-          />
-          {errors.password && <Error className="invalid-feedback">{errors.password}</Error>}
-          <Input type="submit" />
-        </Form>
-      </Container>
+      login ? (<Redirect to="/trainer/dashboard" />)
+        : (
+          <Container>
+            <Heading>Trainer Login</Heading>
+            <Form noValidate onSubmit={this.onSubmit}>
+              <Input
+                type="email"
+                placeholder="Email Address"
+                name="email"
+                value={this.state.email}
+                onChange={this.onChange}
+              />
+              {errors.email && <Error className="invalid-feedback">{errors.email}</Error>}
+              <Input
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={this.state.password}
+                onChange={this.onChange}
+              />
+              {errors.password && <Error className="invalid-feedback">{errors.password}</Error>}
+              <Input type="submit" />
+            </Form>
+          </Container>
+        )
     );
   }
 }
