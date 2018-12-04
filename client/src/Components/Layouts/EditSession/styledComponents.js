@@ -14,7 +14,7 @@ const Container = styled.div`
   }
 `;
 const Heading = styled.h1`
-  color: #0B6FA4;
+  color: var(--main-heading);
   font-size: 28px;
   text-align: center;
   font-weight: 900
@@ -27,9 +27,9 @@ const Form = styled.form`
   width: 90%;
   margin: 0 auto;
   padding: 15px 14px;
-  background-color: #ECECEC;
+  background-color: var(--form-background);
   border-radius: 15px;
-  border: 1px solid #42C4DE;
+  border: 1px solid var(--light-gray-border);
   @media (min-width:1040px) {
     margin: 0 auto;
     top: 40%
@@ -44,17 +44,21 @@ const Input = styled.input`
   height: 50px;
   border-radius: 4px;
   outline: none;
-  margin: 13px 0;
-  border: 1px solid #42C4DE;
+  margin: 6px 0;
+  border: 1px solid var(--light-gray-border);
   padding-left: 25px;
 `;
+
+const Label = styled.label`
+  margin-top:10px
+`
 
 const Date = styled(DatePicker)`
   height: 50px;
   border-radius: 4px;
   outline: none;
-  margin: 13px 0;
-  border: 1px solid #42C4DE;
+  margin: 6px 0;
+  border: 1px solid var(--light-gray-border);
   padding-left: 25px;
   width: 100%;
 `;
@@ -66,18 +70,19 @@ const Button = styled.button`
   text-transform: uppercase;
   font-weight: 700;
   font-size: 1.2em
-  color: #fff;
+  color: var(--large-button-text);
   text-decoration: none;
-  background-color:#42C4DE;
+  background-color: var(--large-button-background);
   outline: none;
   border: none;
+  margin-bottom: 18px;
 `;
 const SelectComponent = styled(Select)`
   > :first-child{
     height: 50px;
     border-radius: 5px;
-    border: 1px solid #42C4DE;
-    margin: 13px 0;
+    border: 1px solid var(--light-gray-border);
+    margin: 6px 0;
   }
 `;
 
@@ -89,4 +94,5 @@ export {
   Button,
   SelectComponent,
   Date,
+  Label,
 };

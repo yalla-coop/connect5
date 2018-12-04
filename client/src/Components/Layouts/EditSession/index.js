@@ -7,7 +7,7 @@ import swal from "sweetalert";
 import PropTypes from "prop-types";
 import options from "./options";
 import {
-  Button, Form, Container, Input, SelectComponent, Date, Heading,
+  Button, Form, Container, Input, SelectComponent, Date, Heading, Label
 } from "./styledComponents";
 
 class EditSession extends Component {
@@ -87,7 +87,7 @@ class EditSession extends Component {
         <Heading>Edit Session</Heading>
 
         <Form onSubmit={handleSubmit}>
-          <h4>Session Date:</h4>
+          <Label>Session Date:</Label>
           <Date
             selected={moment(startDate)}
             placeholderText={startDate}
@@ -96,7 +96,7 @@ class EditSession extends Component {
             dateFormat="YYYY-MM-DD"
           />
 
-          <h4>Attendees:</h4>
+          <Label>Attendees:</Label>
           <Input
             type="number"
             placeholder={attendeesNumber}
@@ -105,7 +105,7 @@ class EditSession extends Component {
             name="attendeesNumber"
           />
 
-          <h4>Session Type:</h4>
+          <Label>Session Type:</Label>
           <SelectComponent
             placeholder={sessionType > 0 ? sessionType : "N/A"}
             onChange={handleSession}
