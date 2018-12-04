@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.div`
-  background: #eff3f4;
   display: Grid;
   grid-template-columns: 1fr;
   grid-template-areas:
@@ -24,20 +23,11 @@ const Header = styled.div`
 `;
 
 const Heading = styled.div`
-  color: #0b6fa4;
+  color: var(--main-heading);
   width: 100%;
-  padding-left: 10px;
+  padding-left: 10%;
 `;
 
-const Borderbottom = styled.div`
-  width: 230px;
-  height: 1px;
-  position: absolute;
-  background: #000;
-  top: 60px;
-  background: #0b6fa4;
-  margin-left: 10px;
-`;
 
 const Content = styled.div`
   grid-area: content;
@@ -45,8 +35,7 @@ const Content = styled.div`
   flex-direction: column;
   background: #fff;
   border-radius: 10px;
-  top: 100px;
-  margin: 15px 10px 0 10px;
+  margin: 0 1rem;
   @media (min-width: 1040px) {
     width: 80%;
     margin: 0 auto;
@@ -54,15 +43,26 @@ const Content = styled.div`
 `;
 
 const Statistic = styled.div`
+  position:relative;
   display: flex;
   flex-direction: row;
-  width: 80%;
+  width: 100%;
   height: 25.3%;
   margin: 0 auto;
-  margin-top: 15px;
-  border-bottom: 1px solid #a8a193
   > :last-child {
     border-right: none;
+  }
+  :before{
+    display:block;
+    content: "";
+    position: absolute;
+    width: 90%;
+    height:1px;
+    background: var(--statistics-borders);
+    margin: 0 auto;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%,-50%);
   }
 `;
 
@@ -71,8 +71,9 @@ const StatisticItems = styled.div`
   flex-direction: column;
   width: 100%;
   height: 85%;
-  border-right: 1px solid #a8a193;
-  padding-right: 5px;
+  border-right: 1px solid var(--statistics-borders);
+  padding: 0 6px;
+  margin: 8px 0;
 `;
 
 const Container = styled.div`
@@ -80,11 +81,11 @@ const Container = styled.div`
   flex-direction: column;
   width: 90%;
   height: 50%;
-  background: #c9dae18a;
+  background: var(--light-div);
   border-radius: 5px;
   margin: 0 auto;
-  margin-top: 10px;
-  padding-bottom: 10px;
+  margin-top: 20px;
+  padding-bottom: 16px;
 `;
 
 const LinkType = styled.div`
@@ -100,9 +101,10 @@ const ItemName = styled.div`
   margin: 0 auto;
   height: 65%;
   margin-top: 7px;
-  font-size: 15px;
-  color: #1397b1;
+  color: var(--button-text-color);
   padding-bottom: 10px;
+  font-weight:900;
+  font-size:1.2rem;
 `;
 
 const Items = styled.div`
@@ -110,7 +112,7 @@ const Items = styled.div`
   margin: 0 auto;
   height: 35%;
   font-size: 15px;
-  color: #1397b1;
+  color: var(--button-text-color);
   padding-bottom: 10px;
 `;
 
@@ -129,6 +131,7 @@ const SurveyLink1 = styled(Links)`
   flex-direction: column;
   width: 100%;
   height: 100%;
+  color: var(--main-heading)
 `;
 
 const LinkInfo = styled.span`
@@ -145,12 +148,15 @@ const Span1 = styled.div`
   display: flex;
   cursor: pointer;
   padding-left: 6px;
+  color: #333;
+  font-weight:700;
 `;
 
 const Span2 = styled.div`
   font-size: 18px;
   display: flex;
   cursor: pointer;
+  color: #333;
 `;
 
 const copyLink = styled.div`
@@ -170,9 +176,9 @@ display: flex;
 const SLink = styled.a`
   text-decoration: none;
   display: block;
-  padding: 10px 10px 10px 25px;
+  padding: 10px;
   margin-left: 15px;
-  color: #3d3d3df2;
+  color: var(--heading-color);
   cursor: default;
   word-break: break-all;
 
@@ -231,11 +237,12 @@ const Btn = styled.button`
   background: none;
   border: none;
   display: flex;
-`;
+ 
+  `;
 
 const ResultsBtn = styled.button`
   background: #42c4de;
-  border: 1px solid #42c4de;
+  border: none;
   margin: 0 auto;
   padding: 10px 3px;
   width: 140px;
@@ -251,8 +258,14 @@ const ResultsBtn = styled.button`
 const Navlink = styled(NavLink)`
   display: block;
   text-decoration: none;
-  padding: 0 12px;
-  color: white;
+  font-weight: 700;
+  color: var(--large-button-text);
+  background: var(--large-button-background);
+  padding: 9px 0;
+  width: 150px;
+  border-radius: 3px;
+  margin: 0 auto;
+  text-align: center;
 `;
 const IconsContainer = styled.div`
 
@@ -280,7 +293,6 @@ export {
   StatisticItems,
   Statistic,
   Content,
-  Borderbottom,
   Header,
   Heading,
   Wrapper,
