@@ -9,7 +9,6 @@ const Wrapper = styled.div`
     "header"
     "statistics"
     "links";
-  background: #eff3f4;
   @media (min-width: 321px) {
       grid-template-rows: 100px 90px 415px;
     }
@@ -29,7 +28,7 @@ const Welcome = styled.p`
   line-height: 38px;
   text-align: center;
   font-size: 20px;
-  color: #565858;
+  color: var(--main-heading);
   @media (min-width: 321px) {
     width: 80%;
     margin: 0 auto;
@@ -38,8 +37,9 @@ const Welcome = styled.p`
 `;
 
 const UserName = styled.span`
-  color: #000;
+  color: var(--button-text-color);
   margin-left: 5px;
+  font-weight: 700
 `;
 
 const Statistics = styled.div`
@@ -50,6 +50,8 @@ const Statistics = styled.div`
   position: relative;
   background: #fff;
   border-radius: 6px;
+  border: solid 1px var(--statistics-borders);
+  background: var(--light-div);
   @media (min-width: 1040px) {
     width: 50%;
     margin: 0 auto;
@@ -77,15 +79,17 @@ const StatisticItems = styled.div`
 
 const ItemName = styled.p`
   text-align: center;
-  margin: 5 10px 0;
+  margin: 5px 10px 0;
   display: block;
-
+  color: var(--button-text-color);
+  font-weight: 700;
 `;
 
 const ItemCount = styled.p`
   text-align: center;
-  margin-top: -5px;
   display:block;
+  color: var(--main-heading);
+  font-weight: 700
 `;
 
 const Links = styled.div`
@@ -104,7 +108,7 @@ const LinkWrapper = styled.div`
   text-align: center;
   display: block;
   border-radius: 5px;
-  border: 1px solid #000;
+  border: 1px solid var(--large-button-background);
   width: 118px;
   height: 88px;
   font-size: 18px;
