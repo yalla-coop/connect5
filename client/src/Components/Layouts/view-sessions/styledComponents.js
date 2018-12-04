@@ -2,10 +2,9 @@ import styled from "styled-components";
 
 
 const Main = styled.div`
- width: 100%;
- background: #EFF3F4;
- margin-bottom: 72px;
- min-height: 497px;
+  width: 100%;
+  margin-bottom: 72px;
+  min-height: 497px;
 `;
 
 const Header = styled.div`
@@ -21,35 +20,30 @@ const Header = styled.div`
 `;
 
 const Heading = styled.div`
- width: 100%;
- color: #0B6FA4;
- padding-left: 10px
+  width: 100%;
+  padding-left: 10%;
+  color: var(--main-heading);
+  
 `;
 
 const H1 = styled.h1`
- margin: 0;
- padding: 15px 0
-`;
-
-const Borderbottom = styled.div`
- width:  150px;
- height: 1px;
- position: absolute;
- background: #0B6FA4;
- top: 50px;
- margin-left: 10px
+  margin: 0;
+  padding: 20px 0;
+  font-size: 2em;
 `;
 
 const Container = styled.div`
   display: table;
   flex-direction: column;
-  width:95%;
+  width:90%;
   text-align: center;
   border-collapse: collapse;
   margin:auto;
   margin-top: 50px ;
   padding: 3px 2px;
-  background: #fff;
+  background: var(--light-div);
+  border-radius: 5px;
+  overflow: hidden;
 `;
 
 const TableHeading = styled.div`
@@ -61,18 +55,21 @@ const TableHeading = styled.div`
   text-align: center;
   width: 80%;
   align-items: center;
+ background: var(--active-tab-background);
+ 
 `;
 
 const TableRowHeader = styled.div`
-width: 95%;
-display: flex;
-flex-direction: row;
-border-bottom: 1px solid #C8C7CC;
-height: 43.5px;
-line-height: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #fff;
+  height: 50px;
+  line-height: 40px;
 `;
 
 const TableRow = styled(TableRowHeader)`
+  height: 50px;
    &:last-child {
      border-bottom:none
    }
@@ -81,7 +78,7 @@ const TableRow = styled(TableRowHeader)`
 const TableHead = styled.div`
   font-size: 17px;
   font-weight: bold;
-  color: #000;
+  color: var(--active-tab-text);
   padding: 3px 2px;
   margin: 0 5px;
   text-align: center;
@@ -101,12 +98,12 @@ const TableCell = styled.div`
    width: 33.3%;
    height: 30px;
    margin-left: 10px;
-   color: #4b4a48
+   color: var(--button-text-color)
 `;
 
 const Icon = styled.i`
    font-size: 16px;
-   color: #4b4a48;
+   color: var(--large-button-background);
    &:hover {
     color: #ce9a3d
    }
@@ -120,7 +117,6 @@ const Button = styled.button`
 export {
   Main,
   Container,
-  Borderbottom,
   Header,
   Heading,
   TableRowHeader,
