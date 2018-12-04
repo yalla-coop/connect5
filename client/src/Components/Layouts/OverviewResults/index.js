@@ -109,7 +109,7 @@ class ResultsOverview extends Component {
           )}
         </StatisicsContainer>
         <ExportData />
-        <SmallTitle>Responses</SmallTitle>
+        <SmallTitle>Responses:</SmallTitle>
         {radiostarQuestions.map((item, index) => (
           <QuestionWrapper onClick={handleOpenPopup} id={index} key={item._id}>
             <QuestionText>{item._id}</QuestionText>
@@ -129,4 +129,4 @@ class ResultsOverview extends Component {
   }
 }
 
-export default ResultsOverview;
+export default ResultsOverview ;

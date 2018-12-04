@@ -72,7 +72,7 @@ class Popup extends Component {
           {question._id}
         </PopupQuestion>
         {
-          ["Pre-survey", "Session 1", "Session 2", "Session3"].map((item, index) => (
+          ["Pre-survey", "Session 1", "Session 2", "Session 3"].map((item, index) => (
             <StarsWrapper key={item}>
               <BarWrapper>
                 <BarTitle>
@@ -81,8 +81,8 @@ class Popup extends Component {
                 {(averages && averages[index])
                   ? (
                     <BarContainer>
-                      <Bar width={averages[index]}><P>{averages[index]}</P></Bar>
-                      <BarSpan>out of 6</BarSpan>
+                      <Bar width={averages[index]}/>
+                      <BarSpan><P> {averages[index]} </P> Of  6</BarSpan>
                     </BarContainer>
                   )
                   : <p>No Responses</p>
