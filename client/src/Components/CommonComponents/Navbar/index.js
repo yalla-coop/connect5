@@ -7,8 +7,8 @@ const Wrapper = styled.div`
   justify-content: space-around;
   margin: 0 20px 0 0;
   width: 100%;
-  height: 72px;
-  border-top: 1px solid #42c4de;
+  height: 60px;
+  border-top: 1px solid var(--light-gray-border);
   position: fixed;
   bottom: 0;
   background-color: #fff;
@@ -31,7 +31,7 @@ const Navlink = styled(NavLink)`
 
 const Container = styled.div`
   width: 50px;
-  height: 50px;
+  height: 38px;
   text-align: center;
   margin: 0 auto;
   border-radius: 50%;
@@ -41,27 +41,27 @@ const Icon = styled.i`
   width: 100%;
   height: 100%;
   line-height: 50px;
-  font-size: 35px;
-  color: #42c4de;
+  font-size: 25px;
+  color: var(--button-text-color);
   &:hover {
-    color: #0288d1;
+    color: var(--main-heading);
   }
 `;
 
 const Span = styled.span`
   display: block;
   position: relative;
-  font-size: 17px;
+  font-size: 14px;
   margin-left: 3px;
-  color: #42c4de;
+  color: var(--button-text-color);
 `;
 
 const Span4 = styled.span`
   display: block;
   position: relative;
-  font-size: 17px;
+  font-size: 14px;
   margin-left: 10px;
-  color: #42c4de;
+  color: var(--button-text-color);
 `;
 
 class Navbar extends Component {

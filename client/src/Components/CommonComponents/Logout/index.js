@@ -8,7 +8,7 @@ const Btn = styled.button`
 
 const I = styled.i`
   font-size: 30px;
-  color: var(--paragraph-color);
+  color: var(--large-button-background);
 `;
 
 const IconDiv = styled.div`
