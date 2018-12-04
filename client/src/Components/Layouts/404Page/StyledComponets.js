@@ -91,7 +91,7 @@ const Button = styled.a`
   font-size: 1.4em
   color: black;
   text-decoration: none;
-  background-color: var(--button-background-color);
+  background-color: var(--large-button-background);
   color: var(--button-text-color);
   outline: none;
   border: none;
