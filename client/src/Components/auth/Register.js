@@ -92,7 +92,7 @@ class Register extends Component {
             onChange={this.onChange}
           />
           {errors.password2 && <Error className="invalid-feedback">{errors.password2}</Error>}
-          <Input type="submit" />
+          <Input type="submit" submit/>
         </Form>
       </Container>
     );
