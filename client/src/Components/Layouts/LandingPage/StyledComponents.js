@@ -9,17 +9,16 @@ const LandingPageWrapper = styled.div`
 `;
 
 const ImageWrapper = styled.div`
-  box-shadow: 2px 4px 8px var(--line-color);
-  margin-bottom: 70px;
-  width: 100%
-`;
-
-const Image = styled.img`
-  width: 75%;
-  padding : 10px 0;
-  max-width: 700px;
-  margin: 0 auto;
+  box-shadow: 2px 4px 8px var(--light-gray-border);
+  margin-bottom: 50px;
+  width: 100%;
   background: #fff;
+  background-image: url(${props=> props.url});
+  height: 160px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  background-position: center;
 `;
 
 const TextWrapper = styled.div`
@@ -28,12 +27,12 @@ const TextWrapper = styled.div`
 `;
 
 const Heading = styled.h1`
-  color: var(--heading-color);
+  color: var(--main-heading);
   font-size: 1.7em;
 `;
 
 const Paragraph = styled.p`
-  color: var( --button-text-color);
+  color: var(--button-text-color);
   width: 86%;
   margin: 0 auto;
   font-size: 14px;
@@ -48,8 +47,8 @@ const Button = styled(Link)`
   font-weight: 700;
   font-size: 1em
   text-decoration: none;
-  background-color: var(--button-background-color);
-  color: var(--button-text-color);
+  background-color: var(--large-button-background);
+  color: var(--large-button-text);
   width: 80%;
   text-align: center
 `;
@@ -57,7 +56,6 @@ const Button = styled(Link)`
 export {
   LandingPageWrapper,
   ImageWrapper,
-  Image,
   TextWrapper,
   Heading,
   Paragraph,

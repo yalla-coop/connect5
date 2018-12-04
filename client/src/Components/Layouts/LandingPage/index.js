@@ -3,22 +3,19 @@ import React, { Component } from "react";
 import {
   LandingPageWrapper,
   ImageWrapper,
-  Image,
   TextWrapper,
   Heading,
   Paragraph,
   Button,
 } from "./StyledComponents";
-import Logo from "../../../assets/connect5_logo_main.jpg";
+import Logo from "../../../assets/connect5_banner.jpg";
 
 class LandingPage extends Component {
   render() {
     return (
       <React.Fragment>
         <LandingPageWrapper>
-          <ImageWrapper>
-            <Image src={Logo} />
-          </ImageWrapper>
+          <ImageWrapper url={Logo} />
           <TextWrapper>
             <Heading>CONNECT 5</Heading>
             <Paragraph>
