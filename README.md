@@ -7,7 +7,7 @@ Connect 5 has been developed to give frontline staff the confidence to have more
 This initial MVP is an app for Connect 5 trainers, where they can create and track upcoming sessions, send out surveys to workshop participants and immediately get all data visualised on the platform to track the impact of the delivery. They also have the ability to export all results to work with further. 
 
 ### The Team
-[Ramy](https://github.com/developess) | [Marwa](https://github.com/thejoefriel) | [Simon](https://github.com/VirtualDOM) | [Joe](https://github.com/SleepySheepy172)
+[Ramy](https://github.com/ramyalshurafa) | [Marwa](https://github.com/marwajomaa) | [Simon](https://github.com/dupreesi) | [Joe](https://github.com/thejoefriel)
 
 ### Tech Stack
 
