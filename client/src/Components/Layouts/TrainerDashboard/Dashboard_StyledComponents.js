@@ -81,15 +81,15 @@ const ItemName = styled.p`
   text-align: center;
   margin: 5px 10px 0;
   display: block;
-  color: var(--active-tab-background);
-  font-weight: 700;
+  color: var(--logout-button);
+  font-weight: 600;
 `;
 
 const ItemCount = styled.p`
   text-align: center;
   display:block;
-  color: var(--active-tab-background);
-  font-weight: 700
+  color: var(--logout-button);
+  font-weight: 600
 `;
 
 const Links = styled.div`
