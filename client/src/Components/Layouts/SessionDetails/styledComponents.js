@@ -51,6 +51,7 @@ const Statistic = styled.div`
   margin: 5px auto 0;
   border-radius: 4px;
   background:var(--statistics);
+  border: 1px solid #69c3c4;
   box-shadow: 0 4px 7px -2px grey
   > :last-child {
     border-right: none;
@@ -73,12 +74,12 @@ const Container = styled.div`
   flex-direction: column;
   width: 95%;
   height: 50%;
-  background: var(--container);
   border-radius: 3px;
   margin: 0 auto;
   margin-top: 20px;
   padding-bottom: 16px;
-  box-shadow: 0 3px 6px -2px grey
+  border: 1px solid #77dedf;
+  box-shadow: 0 4px 11px -2px grey
 `;
 
 const LinkType = styled.div`
@@ -115,7 +116,7 @@ const Links = styled.div`
   width: 100%;
   height: 100%;
   @media (min-width: 1040px) {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
   }
 `;
@@ -241,17 +242,21 @@ const Btn = styled.button`
 const Navlink = styled(NavLink)`
   display: block;
   text-decoration: none;
-  font-weight: 500;
-  color: #1b77ad;
-  background: #f9f5f5;
+  font-weight: 550;
+  color: #fff;
+  background: #69c3c4;
   padding: 9px 0;
   width: 130px;
   border-radius: 5px;
   margin: 0 auto;
   margin-top: 5px;
   text-align: center;
-  border: 1px solid #1b77ad;
-  box-shadow: 0 4px 5px -2px grey
+  border: 1px solid #69c3c4;
+  box-shadow: 0 4px 5px -2px grey;
+  & :hover{
+    background: #fff;
+    color: #69c3c4;
+  }
 `;
 
 const IconsContainer = styled.div`

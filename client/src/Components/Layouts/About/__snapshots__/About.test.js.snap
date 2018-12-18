@@ -26,10 +26,10 @@ exports[`About matches snapshot 1`] = `
     </div>
   </div>
   <div
-    className="sc-dnqmqq diEhLl"
+    className="sc-dnqmqq enFpMa"
   >
     <h2
-      className="sc-iwsKbI kJYTio"
+      className="sc-iwsKbI cAKfPL"
     >
       Connect5
     </h2>
@@ -43,7 +43,7 @@ exports[`About matches snapshot 1`] = `
     className="sc-VigVT gYOfdU"
   >
     <h2
-      className="sc-iwsKbI sc-gZMcBi crTscG"
+      className="sc-iwsKbI sc-gZMcBi fmHcAu"
     >
       -Our Mission-
     </h2>
@@ -57,7 +57,7 @@ exports[`About matches snapshot 1`] = `
     className="sc-jTzLTM hEAqqe"
   >
     <h2
-      className="sc-iwsKbI sc-gZMcBi crTscG"
+      className="sc-iwsKbI sc-gZMcBi fmHcAu"
     >
       About
     </h2>
@@ -151,7 +151,7 @@ exports[`About matches snapshot 1`] = `
     className="sc-chPdSV bzBafG"
   >
     <h2
-      className="sc-iwsKbI sc-gZMcBi crTscG"
+      className="sc-iwsKbI sc-gZMcBi fmHcAu"
     >
       What did people say about us?
     </h2>

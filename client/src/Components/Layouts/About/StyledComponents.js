@@ -20,7 +20,7 @@ const Headers = styled(Header)`
 
 const Summury = styled.div`
   grid-area: summury;
-  background: #b3b3b338;
+  background: #dbeeed;
 `;
 
 const H2 = styled.h2`
@@ -31,7 +31,7 @@ const H2 = styled.h2`
   line-height: 1.2;
   margin-bottom: 22px;
   text-align: center;
-  color: #1d5d90;
+  color: var(--main-heading);
 `;
 
 const H3 = styled(H2)`

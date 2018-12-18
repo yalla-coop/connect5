@@ -27,7 +27,7 @@ const Buttons = styled.div`
 
 const Paragraph = styled.p`
   color: #555
-  font-weight: 100;
+  font-weight: 400;
   margin-top: 50px;
   font-size: 0.85em
   text-align: center;

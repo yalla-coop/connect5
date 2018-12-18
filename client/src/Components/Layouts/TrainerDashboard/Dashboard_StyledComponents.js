@@ -50,8 +50,8 @@ const Statistics = styled.div`
   position: relative;
   background: #fff;
   border-radius: 6px;
-  background: var(--statistics-div);
-  box-shadow: 0 3px 5px -2px grey;
+  border: 1px solid #69c3c4;
+  box-shadow: 0 4px 11px -2px grey;
   @media (min-width: 1040px) {
     width: 50%;
     margin: 0 auto;
@@ -71,7 +71,7 @@ const StatisticItems = styled.div`
   display: flex;
   flex-direction: column;
   width: 45%;
-  border-right: 1px solid #ede5d6cf;
+  border-right: 1px solid #d8d7d7;
   &:last-child {
     border-right: none;
   }
@@ -81,14 +81,14 @@ const ItemName = styled.p`
   text-align: center;
   margin: 5px 10px 0;
   display: block;
-  color: var(--normal-tab-background);
+  color: var(--active-tab-background);
   font-weight: 700;
 `;
 
 const ItemCount = styled.p`
   text-align: center;
   display:block;
-  color: var(--normal-tab-background);
+  color: var(--active-tab-background);
   font-weight: 700
 `;
 
@@ -108,7 +108,8 @@ const LinkWrapper = styled.div`
   text-align: center;
   display: block;
   border-radius: 5px;
-  border: 1px solid var(--statistics-div);
+  border: 1px solid var(--statistics);
+  box-shadow: 0 3px 9px -2px grey;
   width: 118px;
   height: 88px;
   font-size: 18px;
