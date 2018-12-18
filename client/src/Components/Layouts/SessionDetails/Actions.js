@@ -52,15 +52,15 @@ class SessionActions extends Component {
       <ActionsWrapper>
         <ActionWrapper>
           <ActionBtn type="button" onClick={() => handleEdit(sessionDetails)}>
-            <Icon className="far fa-edit" />
+            <Icon className="far fa-edit" style={{ color: "#1d5d90" }} />
           </ActionBtn>
-          <Span>edit session</Span>
+          <Span style={{ color: "#1d5d90" }}>edit session</Span>
         </ActionWrapper>
         <ActionWrapper>
           <ActionBtn type="button" onClick={() => this.deleteSession(_id)}>
-            <Icon className="fas fa-trash-alt" />
+            <Icon className="fas fa-trash-alt" style={{ color: "#f12222f2" }} />
           </ActionBtn>
-          <Span>delete session</Span>
+          <Span style={{ color: "#f12222f2" }}>delete session</Span>
         </ActionWrapper>
       </ActionsWrapper>
     );

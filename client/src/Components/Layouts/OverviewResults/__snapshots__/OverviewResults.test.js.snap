@@ -6,7 +6,7 @@ exports[`snapshot for 'OverviewResults' layout 1`] = `
 >
   <span>
     <h1
-      className="sc-htpNat hRLiew"
+      className="sc-htpNat gCowZa"
     >
       Overview Results 
     </h1>
@@ -25,7 +25,7 @@ exports[`snapshot for 'OverviewResults' layout 1`] = `
         Attendance
       </button>
       <button
-        className="sc-EHOje lgbUUx"
+        className="sc-EHOje dYbbg"
         name="responses"
         onClick={[Function]}
       >

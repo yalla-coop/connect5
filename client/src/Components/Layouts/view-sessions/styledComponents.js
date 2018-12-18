@@ -98,7 +98,7 @@ const TableCell = styled.div`
    width: 33.3%;
    height: 30px;
    margin-left: 10px;
-   color: var(--button-text-color)
+   color: var(--text-color)
 `;
 
 const Icon = styled.i`

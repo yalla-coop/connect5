@@ -20,16 +20,16 @@ exports[`About matches snapshot 1`] = `
         onClick={[Function]}
       >
         <i
-          className="fas fa-home sc-ifAKCX caYIHC"
+          className="fas fa-home sc-ifAKCX bmGznW"
         />
       </a>
     </div>
   </div>
   <div
-    className="sc-dnqmqq hAHjsa"
+    className="sc-dnqmqq diEhLl"
   >
     <h2
-      className="sc-iwsKbI iVbqJu"
+      className="sc-iwsKbI kJYTio"
     >
       Connect5
     </h2>
@@ -43,7 +43,7 @@ exports[`About matches snapshot 1`] = `
     className="sc-VigVT gYOfdU"
   >
     <h2
-      className="sc-iwsKbI sc-gZMcBi hRWwId"
+      className="sc-iwsKbI sc-gZMcBi crTscG"
     >
       -Our Mission-
     </h2>
@@ -54,15 +54,15 @@ exports[`About matches snapshot 1`] = `
     </p>
   </div>
   <div
-    className="sc-jTzLTM bEifkQ"
+    className="sc-jTzLTM hEAqqe"
   >
     <h2
-      className="sc-iwsKbI sc-gZMcBi hRWwId"
+      className="sc-iwsKbI sc-gZMcBi crTscG"
     >
       About
     </h2>
     <div
-      className="sc-fjdhpX fpFkRU"
+      className="sc-fjdhpX bBIaYn"
     >
       <h3>
         What is Connect 5?
@@ -84,7 +84,7 @@ exports[`About matches snapshot 1`] = `
       </p>
     </div>
     <div
-      className="sc-fjdhpX fpFkRU"
+      className="sc-fjdhpX bBIaYn"
     >
       <h3>
         Why has it been developed?
@@ -106,7 +106,7 @@ exports[`About matches snapshot 1`] = `
       </p>
     </div>
     <div
-      className="sc-fjdhpX fpFkRU"
+      className="sc-fjdhpX bBIaYn"
     >
       <h3>
         How does Connect 5 fit with national health and care priorities?
@@ -148,10 +148,10 @@ exports[`About matches snapshot 1`] = `
     </div>
   </div>
   <div
-    className="sc-chPdSV hmThef"
+    className="sc-chPdSV bzBafG"
   >
     <h2
-      className="sc-iwsKbI sc-gZMcBi hRWwId"
+      className="sc-iwsKbI sc-gZMcBi crTscG"
     >
       What did people say about us?
     </h2>

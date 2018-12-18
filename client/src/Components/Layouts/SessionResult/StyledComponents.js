@@ -6,11 +6,11 @@ const SessionResultWrapper = styled.div`
   width: 95%;
   margin: 0 auto;
   margin-bottom: 72px;
-  
+
 `;
 
 const PageTitle = styled.h1`
-  font-size: 32px;
+  font-size: 30px;
   color: var(--main-heading);
   display: inline-block;
   margin-left: 5%;
@@ -37,7 +37,7 @@ width: 50%;
 padding: 0 6px 0 17px;
 text-align: center;
 background-color: ${props => (props.active ? "var(--active-tab-background)" : "var(--normal-tab-background)")};
-color: ${props => (props.active ? "var(--active-tab-text)" : "var(--button-text-color)")};
+color: ${props => (props.active ? "var(--active-tab-text)" : "var(--text-color)")};
 outline: none;
 border: none;
 z-index: 2;
@@ -46,7 +46,7 @@ font-weight: 900;
 
 const StatisticsWrapper = styled.div`
   width: 100%;
-  background-color: var(--statistics-div);
+  background-color: var(--statistics);
   margin: 0;
   margin: 32px auto;
   border-radius: 3px;
@@ -78,7 +78,7 @@ const QuestionWrapper = styled.div`
   color: #fff;
   margin: 0 auto 5px;
   position: relative;
-  color: var(--button-text-color);
+  color: var(--text-color);
   padding: 0 17px;
   display: flex;
   justify-content: space-between;
@@ -89,8 +89,9 @@ const QuestionWrapper = styled.div`
 `;
 
 const QuestionText = styled.p`
-  font-weight: 900;
-  color: var(--button-text-color);
+  font-weight: 600;
+  font-size: 15px
+  color: var(--text-color);
 `;
 
 const Triangle = styled.div`
@@ -109,7 +110,7 @@ const Inline = styled.div`
 const PopupWrapper = styled.div`
   position: absolute;
   width: 95%;
-  top: 75px;
+  top:  73px;
   background-color: #eff3f4;
   z-index: 3;
   border-radius: 3px;
@@ -121,7 +122,7 @@ const XButton = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: var(--button-text-color);
+  background: #666666c9;
   transform: translate(18%, -50%);
   right: 0;
   text-align: center;
@@ -134,6 +135,7 @@ const PopupQuestion = styled.p`
   font-weight: 900;
   padding: 0 29px 0 15px;
   font-size: 20px;
+  color: var(--text-color);
 `;
 
 const RadioRow = styled.div`
@@ -141,7 +143,7 @@ const RadioRow = styled.div`
   flex-direction: row;
   justify-content: space-between;
   position: relative;
-  border-bottom: 1px solid #666666;
+  border-bottom: 1px solid #66666666;
 `;
 const Paragraph = styled.p`
   width: ${props => (props.counter ? "25%" : "75%")};
@@ -149,7 +151,7 @@ const Paragraph = styled.p`
   align-items: center;
   justify-content: ${props => (props.counter ? "center" : "flex-start")};
   margin: 0;
-  ${props => (props.counter ? "" : "border-right: 1px solid black")};
+  ${props => (props.counter ? "" : "border-right: 1px solid #66666666")};
   padding: ${props => (props.counter ? "0" : "20px 10px")};
 `;
 
@@ -189,7 +191,7 @@ font-size: .9rem;
 `;
 
 const Bar = styled.div`
-  background-color: var(--button-text-color);
+  background-color: var(--text-color);
   width: ${props => (props.width / 6) * 100}%;
   height: 100%;
   border-radius: 0% 30px 30px 0%;
@@ -202,8 +204,8 @@ const Bar = styled.div`
 const BarSpan = styled.span`
   font-size:.8rem;
   font-family:sans-serif;
-  float:right;  
-  color: var(--button-text-color);
+  float:right;
+  color: var(--text-color);
 `;
 
 const StarsRow = styled.div`
@@ -227,7 +229,7 @@ const StarIcon = styled.i`
 
 const Answer = styled.p`
   padding: 16px 0 28px;
-  border-bottom: 1px solid #666666;
+  border-bottom: 1px solid #66666666;
   width: 90%;
   margin: auto;
 `;
@@ -266,7 +268,7 @@ const IndividualQuestion = styled.div`
   font-weight: 100;
   margin-bottom: 0;
   line-height: 26px;
-  border-bottom: 1px solid #666666;
+  border-bottom: 1px solid #66666666;
 `;
 
 const QuestionSpan = styled.span`
@@ -278,14 +280,14 @@ const QuestionSpan = styled.span`
 const IndividualAnswer = styled.p`
   padding: 6px 0;
   width: 90%;
-  color: var(--button-text-color);
+  color: var(--text-color);
 `;
 
 const MatrixAnswer = styled.p`
   padding: 16px 0 0;
   width: 90%;
   margin: auto;
-  color: var(--button-text-color);
+  color: var(--text-color);
 `;
 
 const Error = styled.div`

@@ -92,7 +92,7 @@ const Button = styled.a`
   color: black;
   text-decoration: none;
   background-color: var(--large-button-background);
-  color: var(--button-text-color);
+  color: var(--text-color);
   outline: none;
   border: none;
   width: 100%;

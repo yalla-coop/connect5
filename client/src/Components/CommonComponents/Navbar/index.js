@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   margin: 0 20px 0 0;
   width: 100%;
   height: 60px;
-  border-top: 1px solid var(--light-gray-border);
+  border-top: 1px solid var(--small-button);
   position: fixed;
   bottom: 0;
   background-color: #fff;
@@ -42,7 +42,7 @@ const Icon = styled.i`
   height: 100%;
   line-height: 50px;
   font-size: 25px;
-  color: var(--button-text-color);
+  color: var(--small-button);
   &:hover {
     color: var(--main-heading);
   }
@@ -53,7 +53,7 @@ const Span = styled.span`
   position: relative;
   font-size: 14px;
   margin-left: 3px;
-  color: var(--button-text-color);
+  color: var(--small-button);
 `;
 
 const Span4 = styled.span`
@@ -61,7 +61,7 @@ const Span4 = styled.span`
   position: relative;
   font-size: 14px;
   margin-left: 10px;
-  color: var(--button-text-color);
+  color: var(--small-button);
 `;
 
 class Navbar extends Component {

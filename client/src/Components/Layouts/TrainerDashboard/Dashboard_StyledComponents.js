@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const Wrapper = styled.div`
   display: Grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 131px 90px 348px;
+  grid-template-rows: 130px 90px 348px;
   grid-template-areas:
     "header"
     "statistics"
@@ -28,7 +28,7 @@ const Welcome = styled.p`
   line-height: 38px;
   text-align: center;
   font-size: 20px;
-  color: var(--main-heading);
+  color: var(--line-color);
   @media (min-width: 321px) {
     width: 80%;
     margin: 0 auto;
@@ -37,7 +37,7 @@ const Welcome = styled.p`
 `;
 
 const UserName = styled.span`
-  color: var(--button-text-color);
+  color: var(--line-color);
   margin-left: 5px;
   font-weight: 700
 `;
@@ -50,8 +50,8 @@ const Statistics = styled.div`
   position: relative;
   background: #fff;
   border-radius: 6px;
-  border: solid 1px var(--statistics-borders);
-  background: var(--light-div);
+  background: var(--statistics-div);
+  box-shadow: 0 3px 5px -2px grey;
   @media (min-width: 1040px) {
     width: 50%;
     margin: 0 auto;
@@ -71,7 +71,7 @@ const StatisticItems = styled.div`
   display: flex;
   flex-direction: column;
   width: 45%;
-  border-right: 1px solid #a8a193;
+  border-right: 1px solid #ede5d6cf;
   &:last-child {
     border-right: none;
   }
@@ -81,14 +81,14 @@ const ItemName = styled.p`
   text-align: center;
   margin: 5px 10px 0;
   display: block;
-  color: var(--button-text-color);
+  color: var(--normal-tab-background);
   font-weight: 700;
 `;
 
 const ItemCount = styled.p`
   text-align: center;
   display:block;
-  color: var(--main-heading);
+  color: var(--normal-tab-background);
   font-weight: 700
 `;
 
@@ -108,7 +108,7 @@ const LinkWrapper = styled.div`
   text-align: center;
   display: block;
   border-radius: 5px;
-  border: 1px solid var(--large-button-background);
+  border: 1px solid var(--statistics-div);
   width: 118px;
   height: 88px;
   font-size: 18px;

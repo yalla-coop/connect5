@@ -9,7 +9,7 @@ exports[`Logout matches snapshot 1`] = `
     type="button"
   >
     <i
-      className="fas fa-sign-out-alt sc-bwzfXH dNKQjU"
+      className="fas fa-sign-out-alt sc-bwzfXH klZesC"
     />
   </button>
 </div>

@@ -11,9 +11,9 @@ const Container = styled.div`
 `;
 
 const Heading = styled.h1`
-  font-size: 1.7em;
+  font-size: 1.6em;
   margin: 20px auto;
-  color: var(--main-heading);
+  color:   var(--gray);
 `;
 
 const Form = styled.form`
@@ -33,11 +33,10 @@ const Input = styled.input`
   border-radius: 4px;
   outline: none;
   margin: 13px 0;
+  text-indent: 10px;
   border: 1px solid var(--light-gray-border);
-  padding-left: 25px;
   ${({ submit }) => submit
-   &&
-   ` background-color: var(--large-button-background);
+   && ` background-color: var(--large-button-background);
     color: var(--large-button-text);
     font-weight: 900;
     font-size: 24px;

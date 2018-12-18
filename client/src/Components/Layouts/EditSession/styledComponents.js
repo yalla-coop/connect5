@@ -17,7 +17,7 @@ const Heading = styled.h1`
   color: var(--main-heading);
   font-size: 28px;
   text-align: center;
-  font-weight: 900
+  font-weight: 700
 `;
 
 const Form = styled.form`
@@ -50,8 +50,9 @@ const Input = styled.input`
 `;
 
 const Label = styled.label`
-  margin-top:10px
-`
+  margin-top:10px;
+  color: gray;
+`;
 
 const Date = styled(DatePicker)`
   height: 50px;

@@ -2,7 +2,7 @@
 
 exports[`Navbar matches snapshot 1`] = `
 <div
-  className="sc-bdVaJa jXoMzx"
+  className="sc-bdVaJa cOwiPj"
 >
   <parent>
     <a
@@ -15,12 +15,12 @@ exports[`Navbar matches snapshot 1`] = `
         className="sc-bxivhb gbUEuT"
       >
         <i
-          className="fas fa-home sc-ifAKCX jCFtJf"
+          className="fas fa-home sc-ifAKCX kIzMkQ"
         />
       </div>
       <div>
         <span
-          className="sc-EHOje WGczL"
+          className="sc-EHOje dcbQTt"
         >
           Home
         </span>
@@ -38,12 +38,12 @@ exports[`Navbar matches snapshot 1`] = `
         className="sc-bxivhb gbUEuT"
       >
         <i
-          className="fas fa-poll-h sc-ifAKCX jCFtJf"
+          className="fas fa-poll-h sc-ifAKCX kIzMkQ"
         />
       </div>
       <div>
         <span
-          className="sc-EHOje WGczL"
+          className="sc-EHOje dcbQTt"
         >
           Results
         </span>
@@ -61,12 +61,12 @@ exports[`Navbar matches snapshot 1`] = `
         className="sc-bxivhb gbUEuT"
       >
         <i
-          className="fas fa-list-alt sc-ifAKCX jCFtJf"
+          className="fas fa-list-alt sc-ifAKCX kIzMkQ"
         />
       </div>
       <div>
         <span
-          className="sc-EHOje WGczL"
+          className="sc-EHOje dcbQTt"
         >
           Sessions
         </span>
@@ -84,12 +84,12 @@ exports[`Navbar matches snapshot 1`] = `
         className="sc-bxivhb gbUEuT"
       >
         <i
-          className="fas fa-plus-circle sc-ifAKCX jCFtJf"
+          className="fas fa-plus-circle sc-ifAKCX kIzMkQ"
         />
       </div>
       <div>
         <span
-          className="sc-bZQynM jCuMCA"
+          className="sc-bZQynM keeOyE"
         >
           Add
         </span>

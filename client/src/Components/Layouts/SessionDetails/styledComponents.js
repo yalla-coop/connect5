@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 const Header = styled.div`
   grid-area: header;
   position: relative;
-  color: #0b6fa4;
+  color: #e14281;
   font-size: 15px;
   @media (min-width: 1040px) {
     width: 80%;
@@ -46,24 +46,16 @@ const Statistic = styled.div`
   position:relative;
   display: flex;
   flex-direction: row;
-  width: 100%;
-  height: 25.3%;
-  margin: 0 auto;
+  width: 95%;
+  height: 27.3%;
+  margin: 5px auto 0;
+  border-radius: 4px;
+  background:var(--statistics);
+  box-shadow: 0 4px 7px -2px grey
   > :last-child {
     border-right: none;
   }
-  :before{
-    display:block;
-    content: "";
-    position: absolute;
-    width: 90%;
-    height:1px;
-    background: var(--statistics-borders);
-    margin: 0 auto;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%,-50%);
-  }
+
 `;
 
 const StatisticItems = styled.div`
@@ -71,7 +63,7 @@ const StatisticItems = styled.div`
   flex-direction: column;
   width: 100%;
   height: 85%;
-  border-right: 1px solid var(--statistics-borders);
+  border-right: 1px solid #ede5d6cf;;
   padding: 0 6px;
   margin: 8px 0;
 `;
@@ -79,13 +71,14 @@ const StatisticItems = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 95%;
   height: 50%;
-  background: var(--light-div);
-  border-radius: 5px;
+  background: var(--container);
+  border-radius: 3px;
   margin: 0 auto;
   margin-top: 20px;
   padding-bottom: 16px;
+  box-shadow: 0 3px 6px -2px grey
 `;
 
 const LinkType = styled.div`
@@ -101,10 +94,10 @@ const ItemName = styled.div`
   margin: 0 auto;
   height: 65%;
   margin-top: 7px;
-  color: var(--button-text-color);
+  color:var(--normal-tab-background);
   padding-bottom: 10px;
   font-weight:900;
-  font-size:1.2rem;
+  font-size:0.9rem;
 `;
 
 const Items = styled.div`
@@ -112,7 +105,7 @@ const Items = styled.div`
   margin: 0 auto;
   height: 35%;
   font-size: 15px;
-  color: var(--button-text-color);
+  color: var(--normal-tab-background);
   padding-bottom: 10px;
 `;
 
@@ -131,7 +124,7 @@ const SurveyLink1 = styled(Links)`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  color: var(--main-heading)
+  color: #545454;
 `;
 
 const LinkInfo = styled.span`
@@ -144,19 +137,19 @@ const SurveyType = styled.span`
 `;
 
 const Span1 = styled.div`
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   cursor: pointer;
-  padding-left: 6px;
-  color: #333;
-  font-weight:700;
+  padding-left: 13px;
+  margin-right: 10px;
+  font-weight:500;
+  color: #424242;
 `;
 
 const Span2 = styled.div`
   font-size: 18px;
   display: flex;
   cursor: pointer;
-  color: #333;
 `;
 
 const copyLink = styled.div`
@@ -178,10 +171,10 @@ const SLink = styled.a`
   display: block;
   padding: 10px;
   margin-left: 15px;
-  color: var(--heading-color);
+  color: #868686;
   cursor: default;
   word-break: break-all;
-
+  font-size: 13px;
   & :hover {
     color: blue;
     text-decoration: underline;
@@ -212,65 +205,64 @@ const ActionsWrapper = styled.div`
   flex-direction: row;
   justify-content: space-around;
   margin: 12px auto;
-  
+
 `;
 
 const ActionWrapper = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ActionBtn = styled.button`
   background: none;
   border: none;
-  width: 40px;
+  width: 30px;
 `;
 
 const Icon = styled.i`
-  font-size: 18px;
+  font-size: 20px;
 `;
 
 const Span = styled.span`
   line-height: 25px;
+  color: gray;
+  font-size: 15px;
+  margin-right: 6px;
 `;
 
 const Btn = styled.button`
   background: none;
   border: none;
   display: flex;
- 
-  `;
 
-const ResultsBtn = styled.button`
-  background: #42c4de;
-  border: none;
-  margin: 0 auto;
-  padding: 10px 3px;
-  width: 140px;
-  display: inline-block;
-  color: white;
-  text-decoration: none;
-  -webkit-border-radius: 2.5em;
-  -moz-border-radius: 2.5em;
-  border-radius: 2em;
-  margin-bottom: 6px;
-`;
+  `;
 
 const Navlink = styled(NavLink)`
   display: block;
   text-decoration: none;
-  font-weight: 700;
-  color: var(--large-button-text);
-  background: var(--large-button-background);
+  font-weight: 500;
+  color: #1b77ad;
+  background: #f9f5f5;
   padding: 9px 0;
-  width: 150px;
-  border-radius: 3px;
+  width: 130px;
+  border-radius: 5px;
   margin: 0 auto;
+  margin-top: 5px;
   text-align: center;
+  border: 1px solid #1b77ad;
+  box-shadow: 0 4px 5px -2px grey
 `;
-const IconsContainer = styled.div`
 
+const IconsContainer = styled.div`
 display: flex;
+margin-right: 8px
 `;
+
+const I = styled.i`
+ color: var(--gray);
+`;
+
 
 export {
   Navlink,
@@ -278,11 +270,11 @@ export {
   Span1,
   Span2,
   Icon,
+  I,
   ActionBtn,
   ActionWrapper,
   ActionsWrapper,
   Button,
-  ResultsBtn,
   SLink,
   SurveyLink,
   LinkType,

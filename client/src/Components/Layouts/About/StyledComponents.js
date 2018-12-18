@@ -20,25 +20,26 @@ const Headers = styled(Header)`
 
 const Summury = styled.div`
   grid-area: summury;
-  background: linear-gradient(#ffe0e7, #ecfafc);
+  background: #b3b3b338;
 `;
 
 const H2 = styled.h2`
   display: block;
-  font-size: 1.8rem;
-  font-family: 'Courgette', cursive,serif;
+  font-size: 1.5rem;
+  font-family: cursive,serif;
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 22px;
   text-align: center;
-  color: #3e3326;
+  color: #1d5d90;
 `;
 
 const H3 = styled(H2)`
   display: block;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 400;
   text-align: center;
+  color: #393939;
 `;
 
 const P = styled.p`
@@ -57,7 +58,7 @@ const About = styled.div`
   grid-area: about;
   display: flex;
   flex-direction: column;
-  background: #ecfafc;
+  background: #fff8fd;
 `;
 
 const Question = styled.div`
@@ -65,12 +66,16 @@ const Question = styled.div`
  flex-direction: column;
  width: 90%;
  margin: 0 auto;
- background: #fff;
  margin-bottom: 20px;
  color: #6a6a6a;
  padding: 0 10px;
  border: 2px solid #fff;
- border-radius: 15px;
+ border-radius: 9px;
+ overflow: hidden;
+ box-sizing: border-box;
+ -webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.31);
+ -moz-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.31);
+ box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.31);
 `;
 
 const Paragraph = styled.p`
@@ -100,7 +105,7 @@ const Li = styled.li`
 const Blockquote = styled.div`
   display: block;
   grid-area: blockquote;
-  background-color: rgba(223,215,206,.2);
+  background-color: #fbeef7;
   border: none;
   color: #e73e64;
   font-family: Merriweather,serif;

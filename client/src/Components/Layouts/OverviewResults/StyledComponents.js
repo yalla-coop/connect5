@@ -7,10 +7,11 @@ const ResultsOverviewWrapper = styled.div`
 `;
 
 const PageTitle = styled.h1`
-  font-size: 2em;
+  font-size: 1.8em;
   color: var(--main-heading);
   display: inline-block;
   margin-bottom: 26px;
+  margin-left: 5px;
 `;
 
 const StatisicsContainer = styled.div`
@@ -43,7 +44,7 @@ const Tab = styled.button`
   padding: 0 6px 0 17px;
   text-align: center;
   background-color: ${props => (props.active ? "var(--active-tab-background)" : "var(--normal-tab-background)")};
-  color: ${props => (props.active ? "var(--active-tab-text)" : "var(--button-text-color)")};
+  color: ${props => (props.active ? "var(--active-tab-text)" : "var(--text-color)")};
   outline: none;
   border: none;
   z-index: 2;
@@ -95,7 +96,7 @@ const QuestionWrapper = styled.div`
   color: #fff;
   margin: 0 auto 5px;
   position: relative;
-  color: var(--button-text-color);
+  color: var(--text-color);
   padding: 0 17px;
   display: flex;
   justify-content: space-between;
@@ -108,7 +109,9 @@ const QuestionWrapper = styled.div`
 `;
 
 const QuestionText = styled.p`
-  font-weight: 900;
+  font-weight: 550;
+  font-size: 14px;
+  color: var(--text-color);
 `;
 
 const Triangle = styled.div`
@@ -135,7 +138,7 @@ const XButton = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: var(--button-text-color);
+  background: var(--text-color);
   transform: translate(18%, -50%);
   right: 0;
   text-align: center;
@@ -175,7 +178,7 @@ const BarContainer = styled.div`
   position: relative;
 `;
 const Bar = styled.div`
-  background-color: var(--button-text-color);
+  background-color: var(--text-color);
   width: ${props => (props.width / 6) * 100}%;
   height: 100%;
   border-radius: 0% 30px 30px 0%;
@@ -188,8 +191,8 @@ const Bar = styled.div`
 const BarSpan = styled.span`
   font-size:.8rem;
   font-family:sans-serif;
-  float:right;  
-  color: var(--button-text-color);
+  float:right;
+  color: var(--text-color);
 `;
 
 const Responses = styled.p`

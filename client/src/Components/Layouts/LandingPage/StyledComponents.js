@@ -13,7 +13,7 @@ const ImageWrapper = styled.div`
   margin-bottom: 50px;
   width: 100%;
   background: #fff;
-  background-image: url(${props=> props.url});
+  background-image: url(${props => props.url});
   height: 160px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -32,10 +32,11 @@ const Heading = styled.h1`
 `;
 
 const Paragraph = styled.p`
-  color: var(--button-text-color);
+  color: var(--text-color);
   width: 86%;
   margin: 0 auto;
   font-size: 14px;
+  font-weight: 400px;
 `;
 
 const Button = styled(Link)`

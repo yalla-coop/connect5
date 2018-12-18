@@ -5,7 +5,7 @@ exports[`EditSession matches snapshot 1`] = `
   className="sc-bdVaJa hvbROJ"
 >
   <h1
-    className="sc-bwzfXH bwoNjK"
+    className="sc-bwzfXH szuyu"
   >
     Edit Session
   </h1>
@@ -14,7 +14,7 @@ exports[`EditSession matches snapshot 1`] = `
     onSubmit={[Function]}
   >
     <label
-      className="sc-ifAKCX gvcYAU"
+      className="sc-ifAKCX rsrlr"
     >
       Session Date:
     </label>
@@ -41,7 +41,7 @@ exports[`EditSession matches snapshot 1`] = `
       </div>
     </div>
     <label
-      className="sc-ifAKCX gvcYAU"
+      className="sc-ifAKCX rsrlr"
     >
       Attendees:
     </label>
@@ -54,7 +54,7 @@ exports[`EditSession matches snapshot 1`] = `
       value={10}
     />
     <label
-      className="sc-ifAKCX gvcYAU"
+      className="sc-ifAKCX rsrlr"
     >
       Session Type:
     </label>

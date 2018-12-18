@@ -17,7 +17,7 @@ exports[`Header matches snapshot 1`] = `
       onClick={[Function]}
     >
       <i
-        className="fas fa-home sc-ifAKCX caYIHC"
+        className="fas fa-home sc-ifAKCX bmGznW"
       />
     </a>
   </div>

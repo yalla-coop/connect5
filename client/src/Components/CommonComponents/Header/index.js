@@ -37,7 +37,7 @@ const Container = styled.div`
 
 const I = styled.i`
   font-size: 35px;
-  color: var(--button-text-color);
+  color: var(--home-color);
   margin-right: 6px;
 `;
 

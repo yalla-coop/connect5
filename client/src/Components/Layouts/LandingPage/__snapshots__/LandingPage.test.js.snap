@@ -15,11 +15,6 @@ exports[`LandingPage matches snapshot 1`] = `
     >
       CONNECT 5
     </h1>
-    <p
-      className="sc-ifAKCX cJGtUA"
-    >
-      Connect 5 has been developed to give frontline staff the confidence to have more effective conversations with the public about their mental health and wellbeing
-    </p>
   </div>
   <a
     className="sc-EHOje haoTq"

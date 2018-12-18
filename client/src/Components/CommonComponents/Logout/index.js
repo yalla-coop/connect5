@@ -8,7 +8,7 @@ const Btn = styled.button`
 
 const I = styled.i`
   font-size: 30px;
-  color: var(--large-button-background);
+  color: var(--logout-button);
 `;
 
 const IconDiv = styled.div`

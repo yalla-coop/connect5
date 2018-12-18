@@ -5,7 +5,7 @@ exports[`Login matches snapshot 1`] = `
   className="sc-bdVaJa jvBJEN"
 >
   <h1
-    className="sc-bwzfXH jEECPK"
+    className="sc-bwzfXH hIJRJv"
   >
     Trainer Login
   </h1>
@@ -15,7 +15,7 @@ exports[`Login matches snapshot 1`] = `
     onSubmit={[Function]}
   >
     <input
-      className="sc-bxivhb fMhTxf"
+      className="sc-bxivhb jCrkAs"
       name="email"
       onChange={[Function]}
       placeholder="Email Address"
@@ -23,7 +23,7 @@ exports[`Login matches snapshot 1`] = `
       value=""
     />
     <input
-      className="sc-bxivhb fMhTxf"
+      className="sc-bxivhb jCrkAs"
       name="password"
       onChange={[Function]}
       placeholder="Password"
@@ -31,7 +31,7 @@ exports[`Login matches snapshot 1`] = `
       value=""
     />
     <input
-      className="sc-bxivhb fAnZYx"
+      className="sc-bxivhb jxQDzy"
       type="submit"
     />
   </form>

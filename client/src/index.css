@@ -33,23 +33,28 @@ h3 {
 :root {
   --heading-color: #2e3991;
   --button-background-color: #42c4de;
-  --line-color: #faa634;
-  --button-text-color: #3d3d3d;
+  --line-color: #fdb451e0;
+  --text-color: #3b3b3b;
   --page-background: #fff;
-  --main-heading: #FF7F65;
-  --light-div: #00adae2b;
-  --large-button-background: #4DC3A3;
+  --main-heading: #ff7471;
+  --light-div: #dcf1ffba;
+  --large-button-background: #5ca6df;
   --large-button-text: #fff;
   --form-background: #00adae08;
   --light-gray-border: #33333333;
-  --active-tab-background: #00ADAE;
+  --active-tab-background: #1e7aafe3;
   --normal-tab-background: #fff;
   --active-tab-text: #fff;
-  --tabs-border: #00ADAE;
-  --small-button: #00ADAE;
+  --tabs-border: #1e7aafe3;
+  --small-button: #1b77ad;
   --statistics-borders: #3333335c;
-  --statistics-div: #3d3d3d9e;
-  --golden: #c7bc04
+  --statistics-div: #5ca6df;
+  --golden: #c7bc04;
+  --logout-button: #3d3d3db8;
+  --home-color: #68b8ea;
+  --container: #dcf1ffba;
+  --statistics: #1e7aafe3;
+  --gray: #666363;
 }
 
 html{

@@ -15,16 +15,22 @@ const Container = styled.div`
 const Heading = styled.h1`
   font-size: 1.7em;
   margin: 0 auto;
-  color: var(--main-heading)
+  color: var(--line-color);
+`;
+const Buttons = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 100%;
 `;
 
+
 const Paragraph = styled.p`
-  color: gray;
+  color: #555
   font-weight: 100;
   margin-top: 50px;
   font-size: 0.85em
-  text-align: justify;
-  color: var(--button-text-color);
+  text-align: center;
   margin-bottom: 40px
 `;
 
@@ -47,4 +53,5 @@ export {
   Paragraph,
   Heading,
   Container,
+  Buttons,
 };
