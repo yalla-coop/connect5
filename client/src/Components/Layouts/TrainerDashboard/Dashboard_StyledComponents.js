@@ -48,7 +48,7 @@ const Statistics = styled.div`
   width: 90%;
   margin: 0 auto;
   position: relative;
-  background: #fff;
+  background: #69c3c4;
   border-radius: 6px;
   border: 1px solid #69c3c4;
   box-shadow: 0 4px 11px -2px grey;
@@ -81,14 +81,14 @@ const ItemName = styled.p`
   text-align: center;
   margin: 5px 10px 0;
   display: block;
-  color: #0a8889;
+  color: var(--normal-tab-background);
   font-weight: 600;
 `;
 
 const ItemCount = styled.p`
   text-align: center;
   display:block;
-  color: #0a8889;
+  color: var(--normal-tab-background);
   font-weight: 600
 `;
 

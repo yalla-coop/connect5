@@ -243,15 +243,15 @@ const Navlink = styled(NavLink)`
   display: block;
   text-decoration: none;
   font-weight: 550;
-  color: #fff;
-  background: #69c3c4;
+  color: #32b3b5;
+  background: var(--light-div);
   padding: 9px 0;
   width: 130px;
   border-radius: 5px;
   margin: 0 auto;
   margin-top: 5px;
   text-align: center;
-  border: 1px solid #69c3c4;
+  border: 1px solid #77dedf;
   box-shadow: 0 4px 5px -2px grey;
   & :hover{
     background: #fff;
