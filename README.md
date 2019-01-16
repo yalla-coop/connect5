@@ -1,16 +1,60 @@
 [![Build Status](https://travis-ci.com/techforbetter/connect5.svg?branch=master)](https://travis-ci.com/techforbetter/connect5)
 
-# Connect 5
+# An App related to Tech for Better
+[Tech for Better](https://www.foundersandcoders.com/techforbetter/) is a pro-bono programme for nonprofits to design, test and build new digital service ideas using developers in London and Gaza,
 
-Connect 5 has been developed to give frontline staff the confidence to have more effective conversations with the public about their mental health and wellbeing.
+## About the client
+Connect 5 is a UK-wide mental health promotion training programme developed from a unique collaboration between Public Health England (PHE) & Health Education England (HEE). It is designed to increase the confidence and core skills of front line staff so that they can be more effective in having conversations about mental health and wellbeing, help people to manage mental health problems and increase their resilience and mental wellbeing through positive changes.
 
-This initial MVP is an app for Connect 5 trainers, where they can create and track upcoming sessions, send out surveys to workshop participants and immediately get all data visualised on the platform to track the impact of the delivery. They also have the ability to export all results to work with further. 
+The vision is to facilitate Connect 5’s internal organisation process by creating a mobile application
 
-### The Team
+## About the MVP
+This current version of the app is a Minimum Viable Product (MVP) focussing on the most relevant features and needs. Working in agile software development it is important to constantly test products with users. MVPs can be taken out as proof-of-concepts challenging own pre-assumptions and to eventually improve digitalised ideas and needs.
+
+## What the app does
+The Connect 5 App aims to improve internal monitoring activities to ensure that training sessions are effective. The web-app is a tool that focuses primarily on trainers to easily share survey forms with course participants and to collect results. Moreover the App shows and visualises individual and overall average survey results. Finally trainers can export and download all of their results. Using the app Connect 5 trainers can gain insights about their teaching outcomes over time. 
+Secure authentication was managed to be set up on top of the initial planned scope meaning that each trainer can have their own unique log in, with all their data protected.
+
+As stated above what has been built to date is a MVP that will enable the product owner to do further user testing. 
+
+### Fun Stats!
+120,000+ lines of code created
+220+ files created
+400+ commits to the codebase
+80+ tests across the codebase to ensure functionality
+
+<img width="383" alt="start" src="https://user-images.githubusercontent.com/23721486/51248988-c18d7d00-1989-11e9-9242-8c5b7bd76ab3.png">
+<img width="357" alt="signuplogin" src="https://user-images.githubusercontent.com/23721486/51248898-796e5a80-1989-11e9-81fc-d435ce375bdc.png">
+<img width="393" alt="dashboard" src="https://user-images.githubusercontent.com/23721486/51248908-812dff00-1989-11e9-9073-0bc33cb9b65c.png">
+<img width="410" alt="sessiondetails" src="https://user-images.githubusercontent.com/23721486/51248912-87bc7680-1989-11e9-9aba-7b7285300f7c.png">
+<img width="400" alt="sessionresults" src="https://user-images.githubusercontent.com/23721486/51248926-8f7c1b00-1989-11e9-8bee-793f0cf9306a.png">
+<img width="412" alt="sessionresultsind" src="https://user-images.githubusercontent.com/23721486/51248936-9dca3700-1989-11e9-8c1c-16daa5eeed5f.png">
+<img width="431" alt="sessionresultsover" src="https://user-images.githubusercontent.com/23721486/51248956-a6bb0880-1989-11e9-85a2-e8e6eda047e5.png">
+
+
+## Workflow summary
+
+### November 5th-6th - Initial Project planning
+Meet and greed between the London and Gaza teams, creating preferred tech-stack, personal project goals etc., final client workshop in London including Gaza-team via Google hangouts
+
+### November 7th-12th - Design Sprint and User Testing
+Creating prototype for client and user testing, user testing with three connect 5 trainers and one coordinator
+
+### November 13th to 19th - Core sprint 1 (5 days)
+Features absolutely essential to the platform i.e.: navbar (w/o home icon), sign up and log in (simple), add sessions, view sessions, delete sessions, results for single session
+
+### November 20th to 26th - Core sprint 2 (5 days)
+Features that are important for the initial scope, i.e.: dashboard and home icon, sign up and log in (secure), results overview (all sessions), data compliance, export results (email / pdf download)
+
+### November 27th to December 2nd - Debugging and Bonus sprint (4 days)
+Iron out bugs, have a contingency for first two sprints, bringing in bonus features, i.e.: edit sessions / add attendance, info page (learn about C5), extend results overview (add more stats)
+
+## The Team
+![teamc5](https://user-images.githubusercontent.com/23721486/51249138-437da600-198a-11e9-8330-b052824ec543.png)
 [Ramy](https://github.com/ramyalshurafa) | [Marwa](https://github.com/marwajomaa) | [Simon](https://github.com/dupreesi) | [Joe](https://github.com/thejoefriel)
 
-### Tech Stack
 
+## Tech Stack
 | Core | Testing | Other |
 | - | -------- | -------- |
 |Node|jest|babel
@@ -20,6 +64,16 @@ This initial MVP is an app for Connect 5 trainers, where they can create and tra
 |HTML|nodemon|env2|
 |CSS|concurrently||
 |Styled-Components|||
+
+## Summary
+The remote working process turned out to be very efficient and successful. The communication between the developers and the product owner went great and the final product exceeded expectations as most of the bonus features could be implemented. The product handover went smoothly and the product owner was really pleased with the MVP. 
+ 
+## Future Sprint suggestions 
+Different level users
+Full user authentication
+Advanced Data Visualisation and Exporting
+Content Management System
+Full integration of all Connect 5 content
 
 
 ## Getting Started
