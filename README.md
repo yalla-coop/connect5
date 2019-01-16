@@ -17,12 +17,6 @@ Secure authentication was managed to be set up on top of the initial planned sco
 
 As stated above what has been built to date is a MVP that will enable the product owner to do further user testing. 
 
-### Fun Stats!
-120,000+ lines of code created
-220+ files created
-400+ commits to the codebase
-80+ tests across the codebase to ensure functionality
-
 <img width="383" alt="start" src="https://user-images.githubusercontent.com/23721486/51248988-c18d7d00-1989-11e9-9242-8c5b7bd76ab3.png">
 <img width="357" alt="signuplogin" src="https://user-images.githubusercontent.com/23721486/51248898-796e5a80-1989-11e9-81fc-d435ce375bdc.png">
 <img width="393" alt="dashboard" src="https://user-images.githubusercontent.com/23721486/51248908-812dff00-1989-11e9-9073-0bc33cb9b65c.png">
@@ -67,14 +61,6 @@ Iron out bugs, have a contingency for first two sprints, bringing in bonus featu
 
 ## Summary
 The remote working process turned out to be very efficient and successful. The communication between the developers and the product owner went great and the final product exceeded expectations as most of the bonus features could be implemented. The product handover went smoothly and the product owner was really pleased with the MVP. 
- 
-## Future Sprint suggestions 
-Different level users
-Full user authentication
-Advanced Data Visualisation and Exporting
-Content Management System
-Full integration of all Connect 5 content
-
 
 ## Getting Started
 How to get a copy of the project up and running on your local machine.
