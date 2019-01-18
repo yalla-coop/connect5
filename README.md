@@ -25,6 +25,11 @@ As stated above what has been built to date is a MVP that will enable the produc
 <img width="412" alt="sessionresultsind" src="https://user-images.githubusercontent.com/23721486/51248936-9dca3700-1989-11e9-8c1c-16daa5eeed5f.png">
 <img width="431" alt="sessionresultsover" src="https://user-images.githubusercontent.com/23721486/51248956-a6bb0880-1989-11e9-85a2-e8e6eda047e5.png">
 
+## Testimonial by Product Owner
+My experience of the tech for health programme was overwhelmingly positive. The people building my app (both here in London and in Gaza) demonstrated high quality levels of attention and application to produce a product which exactly serves my project’s needs. It is a project that is highly complex; with different levels of users, different sessions and complex data collection pathways. The team, listened closely to me (who has no knowledge app building) asked questions that got beneath the skin of what was needed. I felt they really understood my produce and my needs.  The time I spent with the team and the interactions during the sprint always felt productive as well as being a pleasure
+Elysabeth Williams
+Connect5 national lead
+ewillaims@RSPH.org.uk
 
 ## Workflow summary
 
@@ -46,7 +51,6 @@ Iron out bugs, have a contingency for first two sprints, bringing in bonus featu
 ## The Team
 ![teamc5](https://user-images.githubusercontent.com/23721486/51249138-437da600-198a-11e9-8330-b052824ec543.png)
 [Ramy](https://github.com/ramyalshurafa) | [Marwa](https://github.com/marwajomaa) | [Simon](https://github.com/dupreesi) | [Joe](https://github.com/thejoefriel)
-
 
 ## Tech Stack
 | Core | Testing | Other |
