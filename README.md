@@ -11,6 +11,9 @@ The vision is to facilitate Connect 5’s internal organisation process by creat
 ## About the MVP
 This current version of the app is a Minimum Viable Product (MVP) focussing on the most relevant features and needs. Working in agile software development it is important to constantly test products with users. MVPs can be taken out as proof-of-concepts challenging own pre-assumptions and to eventually improve digitalised ideas and needs.
 
+#### Note:
+The (MVP) was designed and built over the course of 4 weeks (1 design sprint, user testing and 2 build sprints). In case the app will be developed further its important to mention that there needs to be further work on refactoring and testing the codebase. 
+
 ## What the app does
 The Connect 5 App aims to improve internal monitoring activities to ensure that training sessions are effective. The web-app is a tool that focuses primarily on trainers to easily share survey forms with course participants and to collect results. Moreover the App shows and visualises individual and overall average survey results. Finally trainers can export and download all of their results. Using the app Connect 5 trainers can gain insights about their teaching outcomes over time. 
 Secure authentication was managed to be set up on top of the initial planned scope meaning that each trainer can have their own unique log in, with all their data protected.
