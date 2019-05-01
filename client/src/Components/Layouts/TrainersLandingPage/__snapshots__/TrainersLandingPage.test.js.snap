@@ -2,36 +2,40 @@
 
 exports[`Header matches snapshot 1`] = `
 <div
-  className="sc-bdVaJa dJMkdb"
+  className="sc-bdVaJa eilYpv"
 >
   <h1
-    className="sc-bwzfXH OsXWH"
+    className="sc-bwzfXH bVGCDQ"
   >
     Welcome
   </h1>
   <h1
-    className="sc-bwzfXH OsXWH"
+    className="sc-bwzfXH bVGCDQ"
   >
     Connect 5 Trainer
   </h1>
   <p
-    className="sc-htpNat eDNKDL"
+    className="sc-bxivhb cYGKpg"
   >
     If you are a Connect 5 trainer please register a new account or, if you have already registered, log in using your existing details.
   </p>
-  <a
-    className="sc-bxivhb ckLoXo"
-    href="/trainer/register"
-    onClick={[Function]}
+  <div
+    className="sc-htpNat kXvQrY"
   >
-    Sign up
-  </a>
-  <a
-    className="sc-bxivhb ckLoXo"
-    href="/trainer/login"
-    onClick={[Function]}
-  >
-    Login
-  </a>
+    <a
+      className="sc-ifAKCX ZsYgY"
+      href="/trainer/register"
+      onClick={[Function]}
+    >
+      Sign up
+    </a>
+    <a
+      className="sc-ifAKCX ZsYgY"
+      href="/trainer/login"
+      onClick={[Function]}
+    >
+      Login
+    </a>
+  </div>
 </div>
 `;

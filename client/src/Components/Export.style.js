@@ -5,6 +5,8 @@ const ExportButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 20px;
+  margin-bottom: 30px;
   .btn {
     border: 1px solid var(--button-background-color);
     color: var(--button-background-color);
@@ -13,7 +15,7 @@ const ExportButton = styled.div`
     text-decoration: none;
 
     :hover {
-      background: var(--heading-color);
+      background: var(--light-div);
       color: white;
     }
   }

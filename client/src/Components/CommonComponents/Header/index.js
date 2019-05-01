@@ -26,7 +26,7 @@ const Container = styled.div`
     content: "";
     display: block;
     width: 100%;
-    background-color: var(--line-color);
+    background-color: var(--light-gray-border);
     position: absolute;
     top: 55px;
     height: 3px;
@@ -37,7 +37,7 @@ const Container = styled.div`
 
 const I = styled.i`
   font-size: 35px;
-  color: #42C4DE;
+  color: var(--home-color);
   margin-right: 6px;
 `;
 

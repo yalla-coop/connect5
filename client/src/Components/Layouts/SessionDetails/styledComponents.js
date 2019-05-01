@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const Wrapper = styled.div`
-  background: #eff3f4;
   display: Grid;
   grid-template-columns: 1fr;
   grid-template-areas:
@@ -15,7 +14,7 @@ const Wrapper = styled.div`
 const Header = styled.div`
   grid-area: header;
   position: relative;
-  color: #0b6fa4;
+  color: #e14281;
   font-size: 15px;
   @media (min-width: 1040px) {
     width: 80%;
@@ -24,20 +23,11 @@ const Header = styled.div`
 `;
 
 const Heading = styled.div`
-  color: #0b6fa4;
+  color: var(--main-heading);
   width: 100%;
-  padding-left: 10px;
+  padding-left: 10%;
 `;
 
-const Borderbottom = styled.div`
-  width: 230px;
-  height: 1px;
-  position: absolute;
-  background: #000;
-  top: 60px;
-  background: #0b6fa4;
-  margin-left: 10px;
-`;
 
 const Content = styled.div`
   grid-area: content;
@@ -45,8 +35,7 @@ const Content = styled.div`
   flex-direction: column;
   background: #fff;
   border-radius: 10px;
-  top: 100px;
-  margin: 15px 10px 0 10px;
+  margin: 0 1rem;
   @media (min-width: 1040px) {
     width: 80%;
     margin: 0 auto;
@@ -54,16 +43,20 @@ const Content = styled.div`
 `;
 
 const Statistic = styled.div`
+  position:relative;
   display: flex;
   flex-direction: row;
-  width: 80%;
-  height: 25.3%;
-  margin: 0 auto;
-  margin-top: 15px;
-  border-bottom: 1px solid #a8a193
+  width: 95%;
+  height: 27.3%;
+  margin: 5px auto 0;
+  border-radius: 4px;
+  background:var(--statistics);
+  border: 1px solid #69c3c4;
+  box-shadow: 0 4px 7px -2px grey
   > :last-child {
     border-right: none;
   }
+
 `;
 
 const StatisticItems = styled.div`
@@ -71,20 +64,22 @@ const StatisticItems = styled.div`
   flex-direction: column;
   width: 100%;
   height: 85%;
-  border-right: 1px solid #a8a193;
-  padding-right: 5px;
+  border-right: 1px solid #ede5d6cf;;
+  padding: 0 6px;
+  margin: 8px 0;
 `;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 95%;
   height: 50%;
-  background: #c9dae18a;
-  border-radius: 5px;
+  border-radius: 3px;
   margin: 0 auto;
-  margin-top: 10px;
-  padding-bottom: 10px;
+  margin-top: 20px;
+  padding-bottom: 16px;
+  border: 1px solid #77dedf;
+  box-shadow: 0 4px 11px -2px grey
 `;
 
 const LinkType = styled.div`
@@ -100,9 +95,10 @@ const ItemName = styled.div`
   margin: 0 auto;
   height: 65%;
   margin-top: 7px;
-  font-size: 15px;
-  color: #1397b1;
+  color:var(--normal-tab-background);
   padding-bottom: 10px;
+  font-weight:900;
+  font-size:0.9rem;
 `;
 
 const Items = styled.div`
@@ -110,7 +106,7 @@ const Items = styled.div`
   margin: 0 auto;
   height: 35%;
   font-size: 15px;
-  color: #1397b1;
+  color: var(--normal-tab-background);
   padding-bottom: 10px;
 `;
 
@@ -120,7 +116,7 @@ const Links = styled.div`
   width: 100%;
   height: 100%;
   @media (min-width: 1040px) {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
   }
 `;
@@ -129,6 +125,7 @@ const SurveyLink1 = styled(Links)`
   flex-direction: column;
   width: 100%;
   height: 100%;
+  color: #545454;
 `;
 
 const LinkInfo = styled.span`
@@ -141,10 +138,13 @@ const SurveyType = styled.span`
 `;
 
 const Span1 = styled.div`
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   cursor: pointer;
-  padding-left: 6px;
+  padding-left: 13px;
+  margin-right: 10px;
+  font-weight:500;
+  color: #424242;
 `;
 
 const Span2 = styled.div`
@@ -170,12 +170,12 @@ display: flex;
 const SLink = styled.a`
   text-decoration: none;
   display: block;
-  padding: 10px 10px 10px 25px;
+  padding: 10px;
   margin-left: 15px;
-  color: #3d3d3df2;
+  color: #868686;
   cursor: default;
   word-break: break-all;
-
+  font-size: 13px;
   & :hover {
     color: blue;
     text-decoration: underline;
@@ -206,58 +206,68 @@ const ActionsWrapper = styled.div`
   flex-direction: row;
   justify-content: space-around;
   margin: 12px auto;
-  
+
 `;
 
 const ActionWrapper = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ActionBtn = styled.button`
   background: none;
   border: none;
-  width: 40px;
+  width: 30px;
 `;
 
 const Icon = styled.i`
-  font-size: 18px;
+  font-size: 20px;
 `;
 
 const Span = styled.span`
   line-height: 25px;
+  color: gray;
+  font-size: 15px;
+  margin-right: 6px;
 `;
 
 const Btn = styled.button`
   background: none;
   border: none;
   display: flex;
-`;
 
-const ResultsBtn = styled.button`
-  background: #42c4de;
-  border: 1px solid #42c4de;
-  margin: 0 auto;
-  padding: 10px 3px;
-  width: 140px;
-  display: inline-block;
-  color: white;
-  text-decoration: none;
-  -webkit-border-radius: 2.5em;
-  -moz-border-radius: 2.5em;
-  border-radius: 2em;
-  margin-bottom: 6px;
-`;
+  `;
 
 const Navlink = styled(NavLink)`
   display: block;
   text-decoration: none;
-  padding: 0 12px;
-  color: white;
+  font-weight: 550;
+  color: #32b3b5;
+  background: var(--light-div);
+  padding: 9px 0;
+  width: 130px;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-top: 5px;
+  text-align: center;
+  border: 1px solid #77dedf;
+  box-shadow: 0 4px 5px -2px grey;
+  & :hover{
+    background: #fff;
+    color: #69c3c4;
+  }
 `;
-const IconsContainer = styled.div`
 
+const IconsContainer = styled.div`
 display: flex;
+margin-right: 8px
 `;
+
+const I = styled.i`
+ color: var(--gray);
+`;
+
 
 export {
   Navlink,
@@ -265,11 +275,11 @@ export {
   Span1,
   Span2,
   Icon,
+  I,
   ActionBtn,
   ActionWrapper,
   ActionsWrapper,
   Button,
-  ResultsBtn,
   SLink,
   SurveyLink,
   LinkType,
@@ -280,7 +290,6 @@ export {
   StatisticItems,
   Statistic,
   Content,
-  Borderbottom,
   Header,
   Heading,
   Wrapper,

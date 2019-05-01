@@ -9,7 +9,6 @@ import {
   Container,
   Header,
   Heading,
-  Borderbottom,
   TableHeading,
   TableRowHeader,
   TableRow,
@@ -55,7 +54,6 @@ class ViewSessions extends Component {
           <Heading>
             <H1>Sessions</H1>
           </Heading>
-          <Borderbottom />
         </Header>
         <Container>
           <TableHeading>

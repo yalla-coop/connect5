@@ -9,7 +9,7 @@ exports[`snapshot for 'IndividualResults' layout 1`] = `
       className="sc-iAyFgw gmTSaW"
     >
       <div
-        className="sc-hSdWYo cCmYPK"
+        className="sc-hSdWYo bJnYyB"
         direction="right"
         id="-1"
         onClick={[Function]}
@@ -23,7 +23,7 @@ exports[`snapshot for 'IndividualResults' layout 1`] = `
          
       </i>
       <div
-        className="sc-hSdWYo iBahAz"
+        className="sc-hSdWYo jHdbJh"
         direction="left"
         id="+1"
         onClick={[Function]}

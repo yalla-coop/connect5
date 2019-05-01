@@ -3,17 +3,17 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
-  margin: 0 auto;
+  width: 90%;
+  margin: 85px auto !important;
   text-align: center;
   height: 100%;
-  margin-top: 120px !important;
+  max-width: 355px;
 `;
 
 const Heading = styled.h1`
-  font-size: 1.7em;
-  margin: 0 auto;
-  color: var(--heading-color);
+  font-size: 1.6em;
+  margin: 20px auto;
+  color:   var(--gray);
 `;
 
 const Form = styled.form`
@@ -23,9 +23,9 @@ const Form = styled.form`
   width: 90%;
   margin: 0 auto;
   padding: 15px 14px;
-  background-color: #ececec;
+  background-color: var(--form-background);
   border-radius: 15px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--light-gray-border);
 `;
 
 const Input = styled.input`
@@ -33,8 +33,15 @@ const Input = styled.input`
   border-radius: 4px;
   outline: none;
   margin: 13px 0;
-  border: 1px solid var(--border-color);
-  padding-left: 25px;
+  text-indent: 10px;
+  border: 1px solid var(--light-gray-border);
+  ${({ submit }) => submit
+   && ` background-color: var(--large-button-background);
+    color: var(--large-button-text);
+    font-weight: 900;
+    font-size: 24px;
+    border:none;`
+}
 `;
 
 const Error = styled.p`

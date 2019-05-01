@@ -2,52 +2,49 @@
 
 exports[`Header matches snapshot 1`] = `
 <div
-  className="sc-bdVaJa fHBsgE"
+  className="sc-bdVaJa duKoVA"
 >
   <div
     className="sc-bwzfXH eItADb"
   >
     <div
-      className="sc-htpNat cEuftn"
+      className="sc-htpNat kafyHU"
     >
       <h1
-        className="sc-bxivhb gEiGHL"
+        className="sc-bxivhb eVLUcy"
       >
         Sessions
       </h1>
     </div>
-    <div
-      className="sc-ifAKCX hfMJUh"
-    />
   </div>
   <div
-    className="sc-EHOje oHnXy"
+    className="sc-ifAKCX ibWFwJ"
   >
     <div
-      className="sc-bZQynM iizdYp"
+      className="sc-EHOje cbnCUa"
     >
       <div
-        className="sc-gzVnrw QtCfL"
+        className="sc-bZQynM ebTKbK"
       >
         <div
-          className="sc-dnqmqq jaQhsM"
+          className="sc-htoDjs kCnhJU"
         >
           Date
         </div>
         <div
-          className="sc-dnqmqq jaQhsM"
+          className="sc-htoDjs kCnhJU"
         >
           Type
         </div>
         <div
-          className="sc-dnqmqq jaQhsM"
+          className="sc-htoDjs kCnhJU"
         >
           Details
         </div>
       </div>
     </div>
     <div
-      className="sc-iwsKbI feguYJ"
+      className="sc-dnqmqq fqNGUe"
     />
   </div>
 </div>

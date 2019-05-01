@@ -50,7 +50,6 @@ class Stars extends Component {
     const { answers } = this.props;
     const { options } = this.state;
     const rate = answers && findRate(answers);
-    console.log("STARS", this.props)
     return (
       <StarsWrapper>
         <BarWrapper>
@@ -58,8 +57,16 @@ class Stars extends Component {
             Overall
           </BarTitle>
           <BarContainer>
-            <Bar width={rate}><P>{rate}</P></Bar>
-            <BarSpan>out of 6</BarSpan>
+            <Bar width={rate} />
+            <BarSpan>
+              <P>
+                {" "}
+                {rate}
+                {" "}
+              </P>
+              {" "}
+              Of  6
+            </BarSpan>
           </BarContainer>
         </BarWrapper>
         {options.map((option, index) => (

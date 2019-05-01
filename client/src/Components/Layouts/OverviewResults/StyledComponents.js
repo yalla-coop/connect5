@@ -1,39 +1,33 @@
 import styled from "styled-components";
 
 const ResultsOverviewWrapper = styled.div`
-width: 90%;
-margin: 0 auto;
-margin-bottom: 72px;
-
-
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 72px;
 `;
 
 const PageTitle = styled.h1`
-  font-size: 32px;
-  color: var(--heading-color);
+  font-size: 1.8em;
+  color: var(--main-heading);
   display: inline-block;
-
-  :after {
-    content: "";
-    display: block;
-    height: 4px;
-    width: 100%;
-    background-color: var(--line-color);
-  }
+  margin-bottom: 26px;
+  margin-left: 5px;
 `;
 
 const StatisicsContainer = styled.div`
-  background-color: #80808021
-  border-radius: 8px;
+  background-color: var(--light-div);
+  border-radius: 3px;
   padding-bottom: 3px;
+  min-height: 161px;
+  margin-bottom: 18px;
 
 `;
 
 const TabsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border: 1px solid var(--tabs-border);
+  border-radius: 3px;
   width: 100%;
   margin: 0 auto;
   height: 50px;
@@ -47,19 +41,20 @@ const Tab = styled.button`
   justify-content: center;
   align-items: center;
   width: 50%;
-  padding: 0 16px;
+  padding: 0 6px 0 17px;
   text-align: center;
-  background-color: ${props => (props.active ? "var(--button-background-color)" : "#fff")};
-  color: ${props => (props.active ? "#fff" : "var(--button-text-color)")}
+  background-color: ${props => (props.active ? "var(--active-tab-background)" : "var(--normal-tab-background)")};
+  color: ${props => (props.active ? "var(--active-tab-text)" : "var(--text-color)")};
   outline: none;
   border: none;
-  z-index: 2  
+  z-index: 2;
+  font-weight: 900;
 `;
 
 const AttendanceResults = styled.div`
   display: flex;
   justify-content: space-around;
-  margin: 12px auto;
+  margin: 20px auto;
 `;
 
 const CircleWrapper = styled.div`
@@ -72,7 +67,7 @@ const CircleWrapper = styled.div`
 const Circle = styled.div`
   width: 40px;
   height: 40px;
-  background: var(--paragraph-color);
+  background: var(--small-button);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -90,36 +85,42 @@ const CircleTitle = styled.span`
 
 const CircleNumber = styled.span``;
 
-const SmallTitle = styled.h5``;
+const SmallTitle = styled.h3``;
 
 const QuestionWrapper = styled.div`
   width: 100%;
-  background-color: var(--button-background-color);
+  background-color: var(--light-div);
   margin: 0;
   margin: 20px auto;
-  border-radius: 8px;
+  border-radius: 3px;
   color: #fff;
   margin: 0 auto 5px;
   position: relative;
-  color: var(--button-text-color);
+  color: var(--text-color);
   padding: 0 17px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  margin-bottom: 14px;
+  &:last-child{
+    margin-bottom: 100px;
+  }
 `;
 
 const QuestionText = styled.p`
-  font-weight: 900;
+  font-weight: 550;
+  font-size: 14px;
+  color: var(--text-color);
 `;
 
 const Triangle = styled.div`
   width: 30px;
   height: 30px;
-  border-left: 30px solid #fff;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-radius: 5px;
+  border-left: 20px solid var(--small-button);
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-radius: 3px;
 `;
 
 const PopupWrapper = styled.div`
@@ -128,7 +129,7 @@ const PopupWrapper = styled.div`
   top: 75px;
   background-color: #eff3f4;
   z-index: 3;
-  border-radius: 8px;
+  border-radius: 3px;
   min-height: 50%;
 `;
 
@@ -137,7 +138,7 @@ const XButton = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: blue;
+  background: var(--text-color);
   transform: translate(18%, -50%);
   right: 0;
   text-align: center;
@@ -147,10 +148,8 @@ const XButton = styled.div`
 `;
 
 const PopupQuestion = styled.p`
-  font-weight: 900;
-  padding: 0 29px 0 15px;
-  text-align: justify;
-  font-size: 20px;
+  padding: 0 35px;
+  font-size: 18px;
 `;
 
 const StarsWrapper = styled.div`
@@ -165,21 +164,21 @@ const BarWrapper = styled.div`
 `;
 
 const BarTitle = styled.h2`
-  font-size: 24px;
-  color: var(--heading-color);
+  font-size: 16px;
+  color: var(--main-heading);
   display: inline-block;
-  font-weight: 100;
+  font-weight: 900;
 `;
 
 const BarContainer = styled.div`
-  width: 126px;
-  height: 30px;
-  border: 1px solid black;
+  width: 150px;
+  height: 20px;
+  border: 1px solid var(--statistics-borders);
   border-radius: 0% 30px 30px 0%;
   position: relative;
 `;
 const Bar = styled.div`
-  background-color: black;
+  background-color: var(--text-color);
   width: ${props => (props.width / 6) * 100}%;
   height: 100%;
   border-radius: 0% 30px 30px 0%;
@@ -190,8 +189,10 @@ const Bar = styled.div`
 `;
 
 const BarSpan = styled.span`
-  font-weight: 900;
-  color: var(--button-text-color);
+  font-size:.8rem;
+  font-family:sans-serif;
+  float:right;
+  color: var(--text-color);
 `;
 
 const Responses = styled.p`
@@ -199,10 +200,11 @@ const Responses = styled.p`
   margin: 10px 0;
 `;
 const P = styled.p`
-  mix-blend-mode: difference;
+font-weight: 700;
   display: inline-block;
   margin: 0;
-  font-size: 25px;
+  margin-top : .2rem;
+  font-size: .9rem;
 `;
 
 const ResponsesResults = styled.div`

@@ -74,7 +74,7 @@ class Login extends Component {
             onChange={this.onChange}
           />
           {errors.password && <Error className="invalid-feedback">{errors.password}</Error>}
-          <Input type="submit" />
+          <Input type="submit" submit />
         </Form>
       </Container>
     );
