@@ -65,7 +65,7 @@ class CreateSession extends Component {
     return isError;
   }
 
-  fetch = () => {
+  postData = () => {
     const { startDate, inviteesNumber, session } = this.state;
     const { history } = this.props;
 
@@ -93,7 +93,7 @@ class CreateSession extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    return !this.checkError() && this.fetch();
+    return !this.checkError() && this.postData();
   }
 
   render() {
