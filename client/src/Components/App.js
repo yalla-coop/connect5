@@ -46,6 +46,21 @@ class App extends Component {
     localStorage.setItem("currentSession", JSON.stringify(session));
   };
 
+  hydrateState() {
+    if (this.state.currentSession.length === 0 && localStorage.hasOwnProperty("currentSession")) {
+      let value = localStorage.getItem("currentSession");
+
+      try {
+        value = JSON.parse(value);
+        this.setState({ currentSession: value, loaded: true });
+      } catch (err) {
+        this.setState({ currentSession: value, loaded: true });
+      }
+    } else {
+      this.setState({ loaded: true });
+    }
+  }
+  
   componentDidMount() {
     this.hydrateState();
     // check to see if valid jwt token in local storage
@@ -78,21 +93,6 @@ class App extends Component {
         isAuthenticated: false,
         loaded: true,
       });
-    }
-  }
-
-  hydrateState() {
-    if (this.state.currentSession.length === 0 && localStorage.hasOwnProperty("currentSession")) {
-      let value = localStorage.getItem("currentSession");
-
-      try {
-        value = JSON.parse(value);
-        this.setState({ currentSession: value, loaded: true });
-      } catch (err) {
-        this.setState({ currentSession: value, loaded: true });
-      }
-    } else {
-      this.setState({ loaded: true });
     }
   }
 
