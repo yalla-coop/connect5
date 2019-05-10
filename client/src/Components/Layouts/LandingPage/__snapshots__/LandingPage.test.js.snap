@@ -2,7 +2,7 @@
 
 exports[`LandingPage matches snapshot 1`] = `
 <div
-  className="sc-bdVaJa hTNkow"
+  className="sc-bdVaJa hBakHo"
 >
   <div
     className="sc-bwzfXH kZOeZF"
@@ -17,14 +17,14 @@ exports[`LandingPage matches snapshot 1`] = `
     </h1>
   </div>
   <a
-    className="sc-EHOje haoTq"
+    className="sc-EHOje luTKn"
     href="/trainer"
     onClick={[Function]}
   >
     I’m a Connect 5 Trainer
   </a>
   <a
-    className="sc-EHOje haoTq"
+    className="sc-EHOje luTKn"
     href="/about-us"
     onClick={[Function]}
   >
