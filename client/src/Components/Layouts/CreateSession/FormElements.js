@@ -11,6 +11,7 @@ const Container = styled.div`
   max-width: 600px;
   margin-bottom: 80px;
 `;
+
 const Heading = styled.h1`
   color: var( --main-heading);
   font-size: 28px;
@@ -55,7 +56,7 @@ const Button = styled.button`
   border-radius: 5px;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 1.4em
+  font-size: 1.4em;
   color: black;
   text-decoration: none;
   background-color: var(--large-button-background);

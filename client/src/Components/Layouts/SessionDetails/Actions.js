@@ -11,13 +11,13 @@ class SessionActions extends Component {
     router: PropTypes.object,
   };
 
-  state = {
-    editSession: false,
-  };
 
   handleEdit = (session) => {
-    this.props.getCurrentSession(session);
-    this.context.router.history.push("/edit-session");
+    const { getCurrentSession } = this.props;
+    const { router } = this.context;
+
+    getCurrentSession(session);
+    router.history.push("/edit-session");
   };
 
   deleteSession = (_id) => {
@@ -31,15 +31,17 @@ class SessionActions extends Component {
       dangerMode: true,
     })
       .then((willDelete) => {
+        const { router } = this.context;
+
         if (willDelete) {
-          return axios
+          axios
             .get(`/deleteSession/${_id}`)
             .then(
-              swal("This session has been successfully deleted ").then(() => this.context.router.history.push("/view-sessions")),
+              swal("This session has been successfully deleted ").then(() => router.history.push("/view-sessions")),
             );
         }
       })
-      .catch((err) => {
+      .catch(() => {
         swal("Oops!", "Seems like we couldn't fetch the info");
       });
   };

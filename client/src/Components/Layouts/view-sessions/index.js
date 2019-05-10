@@ -37,13 +37,18 @@ class ViewSessions extends Component {
         .then((res) => {
           this.setState({ sessions: res.data });
         })
-        .catch(err => this.context.router.history.push("/server-error"));
+        .catch(() => {
+          const { router } = this.context;
+          router.history.push("/server-error");
+        });
     }
   }
 
   handleClick = (session) => {
-    this.props.getCurrentSession(session);
-    this.context.router.history.push("/session-details");
+    const { router } = this.context;
+    const { getCurrentSession } = this.props;
+    getCurrentSession(session);
+    router.history.push("/session-details");
   };
 
   render() {

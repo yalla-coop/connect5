@@ -35,7 +35,6 @@ class RadioResults extends Component {
 
   render() {
     const { options, newAnswers } = this.state;
-    console.log("RADIO", this.props)
     return (
       <div>
         {options.map(option => (

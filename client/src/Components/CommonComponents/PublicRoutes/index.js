@@ -7,17 +7,15 @@ const PublicRoutes = ({
   component: Component,
   header,
   ...rest
-}) => {
-  return (
-    <Fragment>
-      {header && <Header />}
-      <Route
-        {...rest}
-        render={props => <Component {...props} />}
-      />
+}) => (
+  <Fragment>
+    {header && <Header />}
+    <Route
+      {...rest}
+      render={props => <Component {...props} />}
+    />
 
-    </Fragment>
-  );
-};
+  </Fragment>
+);
 
 export default PublicRoutes;

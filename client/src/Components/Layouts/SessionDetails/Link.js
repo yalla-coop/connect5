@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import swal from "sweetalert";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
-  Span2, Span1, LinkType, Btn, copyLink, IconsContainer, I,
+  Span2, Span1, LinkType, Btn, CopyLink, IconsContainer, I,
 } from "./styledComponents";
 
 class Link extends Component {
@@ -38,7 +38,7 @@ Link
           <Span2 onClick={this.handleInfo}>
             <I className="fas fa-info-circle" />
           </Span2>
-          <copyLink>
+          <CopyLink>
             <CopyToClipboard onCopy={onCopy} text={value} style={{ cursor: "pointer" }}>
               <Btn
                 onClick={() => {
@@ -49,7 +49,7 @@ Link
                 <I className="far fa-clone" />
               </Btn>
             </CopyToClipboard>
-          </copyLink>
+          </CopyLink>
         </IconsContainer>
       </LinkType>
     );

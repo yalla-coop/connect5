@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 // setup authorization
-import jwt_decode from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import setAuthToken from "../Utils/setAuthToken";
 
 // import components
@@ -27,40 +27,13 @@ import PrivateRoute from "./CommonComponents/PrivateRoute/PrivateRoute";
 
 class App extends Component {
   state = {
-    sessions: [],
     currentSession: [],
     isAuthenticated: false,
     loaded: false,
     trainerId: null,
   };
 
-  handleSessions = (sessions) => {
-    this.setState({ sessions });
-  };
 
-  getCurrentSession = (session) => {
-    this.setState({
-      currentSession: session,
-    });
-    // update localStorage
-    localStorage.setItem("currentSession", JSON.stringify(session));
-  };
-
-  hydrateState() {
-    if (this.state.currentSession.length === 0 && localStorage.hasOwnProperty("currentSession")) {
-      let value = localStorage.getItem("currentSession");
-
-      try {
-        value = JSON.parse(value);
-        this.setState({ currentSession: value, loaded: true });
-      } catch (err) {
-        this.setState({ currentSession: value, loaded: true });
-      }
-    } else {
-      this.setState({ loaded: true });
-    }
-  }
-  
   componentDidMount() {
     this.hydrateState();
     // check to see if valid jwt token in local storage
@@ -68,7 +41,7 @@ class App extends Component {
       // if so we set it to auth header so we can access it
       setAuthToken(localStorage.jwtToken);
       // decode the jwt so we can put the unique trainer id in the state
-      const decoded = jwt_decode(localStorage.jwtToken);
+      const decoded = jwtDecode(localStorage.jwtToken);
 
       const currentTime = Date.now() / 1000;
       // log out user if toke expired
@@ -96,8 +69,36 @@ class App extends Component {
     }
   }
 
+  getCurrentSession = (session) => {
+    this.setState({
+      currentSession: session,
+    });
+    // update localStorage
+    localStorage.setItem("currentSession", JSON.stringify(session));
+  };
+
+  hydrateState() {
+    const { currentSession } = this.state;
+    // need to be refactored and we shouldnt use local storage {todo}
+    // eslint-disable-next-line no-prototype-builtins
+    if (currentSession.length === 0 && localStorage.hasOwnProperty("currentSession")) {
+      let value = localStorage.getItem("currentSession");
+
+      try {
+        value = JSON.parse(value);
+        this.setState({ currentSession: value, loaded: true });
+      } catch (err) {
+        this.setState({ currentSession: value, loaded: true });
+      }
+    } else {
+      this.setState({ loaded: true });
+    }
+  }
+
   render() {
-    const { currentSession, isAuthenticated, loaded } = this.state;
+    const {
+      currentSession, isAuthenticated, loaded, trainerId,
+    } = this.state;
     // make sure that component has mounted before loading
     if (!loaded) return null;
     return (
@@ -111,13 +112,17 @@ class App extends Component {
             <PublicRoutes path="/survey/:id" exact component={Survey} header />
             <Route path="/about-us" exact component={AboutUs} />
 
-            {/* private routes: use the common component PrivateRoute and check if authenticated is true. If not send back to login page */}
+            {/*
+              private routes: use the common component PrivateRoute
+              and check if authenticated is true.
+              If not send back to login page
+            */}
             <PrivateRoute
               path="/trainer/dashboard"
               exact
               component={Dashboard}
               isAuthenticated={isAuthenticated}
-              trainerId={this.state.trainerId}
+              trainerId={trainerId}
               navbar={false}
             />
             <PrivateRoute
@@ -125,9 +130,8 @@ class App extends Component {
               exact
               component={ViewSessions}
               isAuthenticated={isAuthenticated}
-              handleSessions={this.handleSessions}
               getCurrentSession={this.getCurrentSession}
-              trainerId={this.state.trainerId}
+              trainerId={trainerId}
               navbar
             />
             <PrivateRoute
@@ -136,7 +140,7 @@ class App extends Component {
               component={SessionDetails}
               isAuthenticated={isAuthenticated}
               sessionDetails={currentSession}
-              trainerId={this.state.trainerId}
+              trainerId={trainerId}
               getCurrentSession={this.getCurrentSession}
               navbar
             />
@@ -145,7 +149,7 @@ class App extends Component {
               exact
               component={CreateSession}
               isAuthenticated={isAuthenticated}
-              trainerId={this.state.trainerId}
+              trainerId={trainerId}
               navbar
             />
             <PrivateRoute
@@ -153,7 +157,7 @@ class App extends Component {
               exact
               component={EditSession}
               isAuthenticated={isAuthenticated}
-              trainerId={this.state.trainerId}
+              trainerId={trainerId}
               sessionDetails={currentSession}
               navbar
             />
@@ -162,7 +166,7 @@ class App extends Component {
               exact
               component={SessionResult}
               isAuthenticated={isAuthenticated}
-              trainerId={this.state.trainerId}
+              trainerId={trainerId}
               navbar
             />
             <PrivateRoute
@@ -170,7 +174,7 @@ class App extends Component {
               exact
               component={OverviewResults}
               isAuthenticated={isAuthenticated}
-              trainerId={this.state.trainerId}
+              trainerId={trainerId}
               navbar
             />
 

@@ -8,19 +8,25 @@ import {
 } from "./styledComponents";
 
 class Actions extends Component {
-  render(){
+  render() {
     const { handleEdit, deleteSession, _id } = this.props;
-    return(
+    return (
       <ActionsWrapper>
         <ActionWrapper>
-          <ActionBtn type="button" onClick={()=> handleEdit()}><Icon className="far fa-edit" /><Span>edit session</Span></ActionBtn>
+          <ActionBtn type="button" onClick={() => handleEdit()}>
+            <Icon className="far fa-edit" />
+            <Span>edit session</Span>
+          </ActionBtn>
         </ActionWrapper>
         <ActionWrapper>
-          <ActionBtn type="button" onClick={() => deleteSession(_id)}><Icon className="fas fa-trash-alt" /><Span>delete session</Span></ActionBtn>
+          <ActionBtn type="button" onClick={() => deleteSession(_id)}>
+            <Icon className="fas fa-trash-alt" />
+            <Span>delete session</Span>
+          </ActionBtn>
         </ActionWrapper>
       </ActionsWrapper>
-    )
+    );
   }
 }
 
-  export default Actions;
+export default Actions;

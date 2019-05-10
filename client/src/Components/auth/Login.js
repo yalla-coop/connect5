@@ -24,10 +24,11 @@ class Login extends Component {
 
   // sumbmit to send object to backend to be stored in DB
   onSubmit(e) {
+    const { email, password } = this.state;
     e.preventDefault();
     const trainer = {
-      email: this.state.email,
-      password: this.state.password,
+      email,
+      password,
     };
     this.loginTrainer(trainer);
   }
@@ -36,8 +37,6 @@ class Login extends Component {
     axios
       .post("/login", trainerData)
       .then(async (res) => {
-        console.log("CLIENT TOKEN", res);
-
         // save token to local storage
         const { token } = res.data;
 
@@ -46,14 +45,14 @@ class Login extends Component {
         // set token to auth header
         await setAuthToken(token);
       })
-      .then(() => window.location.href = "/trainer/dashboard")
+      .then(() => { window.location.href = "/trainer/dashboard"; })
       .catch(err => this.setState({
         errors: err.response.data,
       }));
   };
 
   render() {
-    const { errors } = this.state;
+    const { errors, email, password } = this.state;
     return (
       <Container>
         <Heading>Trainer Login</Heading>
@@ -62,7 +61,7 @@ class Login extends Component {
             type="email"
             placeholder="Email Address"
             name="email"
-            value={this.state.email}
+            value={email}
             onChange={this.onChange}
           />
           {errors.email && <Error className="invalid-feedback">{errors.email}</Error>}
@@ -70,7 +69,7 @@ class Login extends Component {
             type="password"
             placeholder="Password"
             name="password"
-            value={this.state.password}
+            value={password}
             onChange={this.onChange}
           />
           {errors.password && <Error className="invalid-feedback">{errors.password}</Error>}

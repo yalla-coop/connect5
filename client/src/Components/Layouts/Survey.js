@@ -38,7 +38,6 @@ export default class Survey extends React.Component {
     const { location } = this.props;
     const survey = `/get${location.pathname}`;
     const responseId = survey.split("/")[2];
-    console.log(survey);
 
     // util function that will fetch the questions and session details
     getQuestions(survey)
@@ -59,22 +58,26 @@ export default class Survey extends React.Component {
           button: "Begin",
         });
       })
-      .catch(err => console.error(err.stack));
+      .catch((err) => {
+        // {todo} handle errors
+        // eslint-disable-next-line no-console
+        console.error(err.stack);
+      });
   }
 
-  // function that will check if the div for the answer has been selected and if so add that answer to the formstate
+  // function that will check if the div for the answer has been selected
+  //  and if so add that answer to the formstate
   selectCheckedItem = (value, questionId) => {
-    const state = this.state.formState;
+    const { formState: state } = this.state;
     state[questionId] = value;
     this.setState({ formState: state });
-    // this.checkSelected(elementId, questionId)
-    console.log("FORMSTATE", this.state.formState);
   };
 
   // check for any changes to the survey inputs and add them to the formstate
   handleChange = (e) => {
+    const { formState } = this.state;
     const question = e.target.name;
-    const state = this.state.formState;
+    const state = formState;
     let answer;
 
     // if a checkbox we need to treat differently as this will be an array of answers
@@ -97,13 +100,12 @@ export default class Survey extends React.Component {
     this.setState(() => ({
       formState: state,
     }));
-
-    console.log("FORMSTATE", this.state.formState);
   };
 
   handleOther = (e) => {
+    const { formState: state } = this.state;
+
     const question = e.target.name;
-    const state = this.state.formState;
     let answer;
 
     if (e.target.id === "other-checkbox") {
@@ -126,15 +128,12 @@ export default class Survey extends React.Component {
     this.setState(() => ({
       formState: state,
     }));
-
-    console.log("FORMSTATE", this.state.formState);
   };
 
   // function to deal with the matrix rating questions
   // where there are multiple rows with sub questions and options
   handleMatrix = (row, answer, question) => {
-    const state = this.state.formState;
-
+    const { formState: state } = this.state;
     if (!state[question]) {
       state[question] = {};
       state[question][row] = answer;
@@ -145,8 +144,6 @@ export default class Survey extends React.Component {
     this.setState(() => ({
       formState: state,
     }));
-
-    console.log("FORMSTATE", this.state.formState);
   };
 
   // when participant submits form
@@ -157,16 +154,14 @@ export default class Survey extends React.Component {
     const {
       responseId, formState, sessionId, surveyType,
     } = this.state;
-    console.log("RESPONSEID", responseId);
     const formSubmission = { formState, sessionId, surveyType };
-    // console.log(formSubmission);
     axios
       .post(`/submit/${responseId}`, formSubmission)
-      .then((result) => {
-        swal("Done!", "Thanks for submitting your feedback!", "success").then(() => history.push("/"));
+      .then(() => {
+        swal("Done!", "Thanks for submitting your feedback!", "success")
+          .then(() => history.push("/"));
       })
       .catch((err) => {
-        console.log("ERR", err);
         this.setState({
           errors: err.response.data,
         });

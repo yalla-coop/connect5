@@ -9,9 +9,9 @@ class ResultBtn extends Component {
   render() {
     const { id, type } = this.props;
     return (
-        <Navlink to={`/session/details/${id}/${type}`}>
+      <Navlink to={`/session/details/${id}/${type}`}>
          Survey Results
-          </Navlink>
+      </Navlink>
     );
   }
 }

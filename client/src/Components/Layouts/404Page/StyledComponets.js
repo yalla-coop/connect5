@@ -88,7 +88,7 @@ const Button = styled.a`
   border-radius: 5px;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 1.4em
+  font-size: 1.4em;
   color: black;
   text-decoration: none;
   background-color: var(--large-button-background);

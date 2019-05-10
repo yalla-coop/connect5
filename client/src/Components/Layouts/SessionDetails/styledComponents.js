@@ -52,7 +52,8 @@ const Statistic = styled.div`
   border-radius: 4px;
   background:var(--statistics);
   border: 1px solid #69c3c4;
-  box-shadow: 0 4px 7px -2px grey
+  box-shadow: 0 4px 7px -2px grey;
+
   > :last-child {
     border-right: none;
   }
@@ -153,7 +154,7 @@ const Span2 = styled.div`
   cursor: pointer;
 `;
 
-const copyLink = styled.div`
+const CopyLink = styled.div`
   font-size: 15px;
   margin-left: 5px;
   margin-top: -7px;
@@ -295,7 +296,7 @@ export {
   Wrapper,
   SurveyLink1,
   Btn,
-  copyLink,
+  CopyLink,
   Container,
   SurveyType,
   IconsContainer,

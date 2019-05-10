@@ -29,9 +29,6 @@ class Dashboard extends Component {
             trainerFirstName: res.data.firstName,
             loaded: true,
           });
-          setTimeout(() => {
-            console.log(this.state);
-          }, 4000);
         })
         .catch(() => history.push("/server-error"));
     }

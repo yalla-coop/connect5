@@ -60,8 +60,8 @@ const StatisticsText = styled.p`
 `;
 
 const StatisticsSpan = styled.span`
-  font-weight: 900
-  margin-right: 10px
+  font-weight: 900;
+  margin-right: 10px;
 
 `;
 
@@ -90,7 +90,7 @@ const QuestionWrapper = styled.div`
 
 const QuestionText = styled.p`
   font-weight: 600;
-  font-size: 15px
+  font-size: 15px;
   color: var(--text-color);
 `;
 
@@ -253,11 +253,11 @@ const Arrow = styled.div`
   display: inline-block;
   width: 20px;
   height: 20px;
-  border-${props => props.direction}: 20px solid var(--small-button);
   border-top: 15px solid transparent;
   border-bottom: 15px solid transparent;
   border-radius: 5px;
-  cursor: pointer
+  cursor: pointer;
+  border-${props => props.direction}: 20px solid var(--small-button);
 `;
 
 const ResponseCounter = styled.i``;

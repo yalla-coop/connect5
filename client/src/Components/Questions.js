@@ -32,7 +32,11 @@ export default class Questions extends React.Component {
           // format each question depending on the inputType
           if (el.inputType === "text") {
             return (
-              <TextField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
+              <TextField
+                key={questionId}
+                unanswered={errorArray.includes(questionId)
+               && isRequired && !answers[questionId]}
+              >
                 <header>
                   <h4 id={index}>
                     {questionText}
@@ -46,7 +50,14 @@ export default class Questions extends React.Component {
           }
           if (el.inputType === "textarea") {
             return (
-              <TextField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
+              <TextField
+                key={questionId}
+                unanswered={
+                  errorArray.includes(questionId)
+                  && isRequired
+                  && !answers[questionId]
+                }
+              >
                 <header>
                   <h4 id={index}>
                     {questionText}
@@ -60,7 +71,14 @@ export default class Questions extends React.Component {
           }
           if (el.inputType === "radio") {
             return (
-              <RadioField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
+              <RadioField
+                key={`${questionId}radio`}
+                unanswered={
+                  errorArray.includes(questionId)
+              && isRequired
+              && !answers[questionId]
+                }
+              >
                 <header>
                   <h4 id={index}>
                     {questionText}
@@ -69,12 +87,12 @@ export default class Questions extends React.Component {
                   <p className="helpertext">{helperText}</p>
                 </header>
                 <div className="answers">
-                  {el.options.map((e, i) => {
+                  {el.options.map((e) => {
                     const value = e;
                     const uniqueId = e + questionId;
                     return (
-                      <div>
-                        <div key={i}>
+                      <div key={uniqueId}>
+                        <div>
                           <label htmlFor={uniqueId}>
                             <input
                               value={value}
@@ -82,26 +100,31 @@ export default class Questions extends React.Component {
                               name={questionId}
                               type="radio"
                               onChange={onChange}
-                              />
+                            />
                             <span className="checkmark" />
-                              <p>{value}</p>
+                            <p>{value}</p>
                           </label>
                         </div>
-                        
+
                       </div>
                     );
                   })}
                 </div>
                 <div className="other-div">
-                        {/* Load "Other" div */}
-                        {answers[questionId] && answers[questionId].includes("Other") ? <TextField><p>Please specify:</p><input id="other" name={questionId} type="text" onChange={handleOther} /></TextField> : ""}
+                  {/* Load "Other" div */}
+                  {answers[questionId] && answers[questionId].includes("Other") ? (
+                    <TextField>
+                      <p>Please specify:</p>
+                      <input id="other" name={questionId} type="text" onChange={handleOther} />
+                    </TextField>
+                  ) : ""}
                 </div>
               </RadioField>
             );
           }
           if (el.inputType === "radiostar") {
             return (
-              <RadioStarField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
+              <RadioStarField key={`${questionId}radiostar`} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
                 <header>
                   <h4 id={index}>
                     {questionText}
@@ -115,9 +138,11 @@ export default class Questions extends React.Component {
 
                     const uniqueKey = i + questionId;
                     return (
+                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                       <div
-                        key={uniqueKey}
-                        onClick={(e) => {
+                        key={`${questionId}${e}`}
+                        onClick={() => {
                           selectCheckedItem(value, questionId);
                         }}
                       >
@@ -142,9 +167,13 @@ export default class Questions extends React.Component {
             );
           }
           if (el.inputType === "checkbox") {
-            console.log("ANSWERS", answers)
             return (
-              <CheckboxField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
+              <CheckboxField
+                key={`${questionId}checkbox`}
+                unanswered={errorArray.includes(questionId)
+              && isRequired
+              && !answers[questionId]}
+              >
                 <header>
                   <h4 id={index}>
                     {questionText}
@@ -153,8 +182,8 @@ export default class Questions extends React.Component {
                   <p className="helpertext">{helperText}</p>
                 </header>
                 <div className="answers">
-                  {el.options.map((e, i) => (
-                    <label key={i} htmlFor={e}>
+                  {el.options.map(e => (
+                    <label key={`${questionId}${e}`} htmlFor={e}>
                       <input
                         id={e}
                         name={questionId}
@@ -169,14 +198,23 @@ export default class Questions extends React.Component {
                 </div>
                 <div className="other-div">
                   {/* Load "Other" div */}
-                  {answers[questionId] && answers[questionId].includes("Other (please specify)") ? <TextField><p>Please specify:</p><input id="other-checkbox" name={questionId} type="text" onFocus={handleOther} onBlur={handleOther} /></TextField> : ""}
+                  {answers[questionId] && answers[questionId].includes("Other (please specify)") ? (
+                    <TextField>
+                      <p>Please specify:</p>
+                      <input id="other-checkbox" name={questionId} type="text" onFocus={handleOther} onBlur={handleOther} />
+                    </TextField>
+                  ) : ""}
                 </div>
               </CheckboxField>
             );
           }
           if (el.inputType === "matrix") {
             return (
-              <MatrixField key={index} unanswered={errorArray.includes(questionId) && isRequired && !answers[questionId]}>
+              <MatrixField
+                key={`${questionId}matrix`}
+                unanswered={errorArray.includes(questionId)
+              && isRequired && !answers[questionId]}
+              >
                 <header>
                   <h4 id={index}>
                     {questionText}
@@ -186,14 +224,14 @@ export default class Questions extends React.Component {
                 </header>
                 <div>
                   {el.options.rows.map((e, i) => (
-                    <div key={i} className="matrixanswers">
+                    <div key={`${questionId}${el.options.rows[i]}`} className="matrixanswers">
                       <p className="row-questions" id={i}>
                         {el.options.rows[i]}
                         {" "}
                       </p>
                       <div className="options">
                         {el.options.columns.map((elem, ind) => (
-                          <label key={ind} htmlFor={e}>
+                          <label key={`${questionId}${elem}`} htmlFor={e}>
                             <input
                               id={ind}
                               name={e}

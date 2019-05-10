@@ -6,7 +6,6 @@ const getQuestions = async (url) => {
 
   if (response.status !== 200) throw Error(body.message);
 
-  console.log("BODY", body);
   return body;
 };
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { CSVLink } from "react-csv";
 import axios from "axios";
-import ExportButton from "./Export.style.js";
+import ExportButton from "./Export.style";
 import setAuthToken from "../Utils/setAuthToken";
 
 class ExportData extends Component {
@@ -16,7 +16,6 @@ class ExportData extends Component {
       axios
         .get("/export-results")
         .then((res) => {
-          console.log("resss", res);
           if (res.status === 204) {
             this.setState({
               csvData: "No results were found",
@@ -29,18 +28,23 @@ class ExportData extends Component {
             });
           }
         })
-        .catch(err => console.log(err));
+        .catch((err) => {
+          // {todo} handle error
+          // eslint-disable-next-line no-console
+          console.log(err);
+        });
     }
   }
 
   render() {
-    if (!this.state.loaded) {
+    const { loaded, csvData } = this.state;
+    if (!loaded) {
       return null;
     }
 
     return (
       <ExportButton>
-        <CSVLink className="btn" data={this.state.csvData} filename="survey-export.csv">
+        <CSVLink className="btn" data={csvData} filename="survey-export.csv">
           Download All Survey Results
         </CSVLink>
       </ExportButton>

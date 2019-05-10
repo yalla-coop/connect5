@@ -18,33 +18,25 @@ class CheckboxResults extends Component {
   };
 
   state = {
-    options: [],
-    newAnswers: [],
     newOptions: [],
   }
 
   componentDidUpdate(prevProps) {
     const { answers, options: rawOptions } = this.props;
     const totalAnswers = [];
-    answers.map((answer) => (
-      answer.answer.map((subAnswer) => {
-        return totalAnswers.push(subAnswer)
-      })
-    ))
-    console.log("TOTAL", totalAnswers)
+    answers.map(answer => (
+      answer.answer.map(subAnswer => totalAnswers.push(subAnswer))
+    ));
     if (prevProps.answers !== answers) {
-      const { newOptions, newAnswers } = getCheckboxResults(totalAnswers, rawOptions);
+      const { newOptions } = getCheckboxResults(totalAnswers, rawOptions);
       this.setState({
         newOptions,
-        newAnswers,
       });
     }
   }
 
   render() {
     const { newOptions } = this.state;
-    console.log("CHECKBOX", this.props)
-    console.log("TOTAL ANSWERS", this.state)
     return (
       <div>
         {newOptions.map(option => (

@@ -81,8 +81,16 @@ class Popup extends Component {
                 {(averages && averages[index])
                   ? (
                     <BarContainer>
-                      <Bar width={averages[index]}/>
-                      <BarSpan><P> {averages[index]} </P> Of  6</BarSpan>
+                      <Bar width={averages[index]} />
+                      <BarSpan>
+                        <P>
+                          {" "}
+                          {averages[index]}
+                          {" "}
+                        </P>
+                        {" "}
+Of  6
+                      </BarSpan>
                     </BarContainer>
                   )
                   : <p>No Responses</p>

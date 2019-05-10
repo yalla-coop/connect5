@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const LandingPageWrapper = styled.div`
-  text-align: center
+  text-align: center;
   max-width: 600px;
   margin: 0 auto;
   min-height: 100vh;
@@ -46,7 +46,7 @@ const Button = styled(Link)`
   border-radius: 5px;
   text-transform: capitalize;
   font-weight: 700;
-  font-size: 1em
+  font-size: 1em;
   text-decoration: none;
   background-color: var(--large-button-background);
   color: var(--large-button-text);

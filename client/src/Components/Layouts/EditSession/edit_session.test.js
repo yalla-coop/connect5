@@ -5,7 +5,7 @@ import axios from "axios";
 import { render, fireEvent, cleanup } from "react-testing-library";
 
 import EditSession from "./index";
-const moment = require("moment");
+
 
 afterEach(cleanup);
 
@@ -65,7 +65,7 @@ test("Edit session :: user can change date and submit", () => {
       <EditSession sessionDetails={object} />
     </StaticRouter>,
   );
-  const date = container.querySelector('input[name="startDate"]');
+  const date = container.querySelector("input[name=\"startDate\"]");
   fireEvent.change(date, { target: { value: "2011-10-10" } });
   const submit = getByText("Submit");
   fireEvent.click(submit);

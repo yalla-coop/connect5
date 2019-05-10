@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   z-index: 1000;
 `;
 
-const parent = styled.div`
+const div = styled.div`
   position: absolute;
   text-align: center;
   display: block;
@@ -68,7 +68,7 @@ class Navbar extends Component {
   render() {
     return (
       <Wrapper>
-        <parent>
+        <div>
           <Navlink to="/trainer/dashboard">
             <Container>
               <Icon className="fas fa-home" />
@@ -77,9 +77,9 @@ class Navbar extends Component {
               <Span>Home</Span>
             </div>
           </Navlink>
-        </parent>
+        </div>
 
-        <parent>
+        <div>
           <Navlink to="/overview-results">
             <Container>
               <Icon className="fas fa-poll-h" />
@@ -88,9 +88,9 @@ class Navbar extends Component {
               <Span>Results</Span>
             </div>
           </Navlink>
-        </parent>
+        </div>
 
-        <parent>
+        <div>
           <Navlink to="/view-sessions">
             <Container>
               <Icon className="fas fa-list-alt" />
@@ -99,9 +99,9 @@ class Navbar extends Component {
               <Span>Sessions</Span>
             </div>
           </Navlink>
-        </parent>
+        </div>
 
-        <parent>
+        <div>
           <Navlink to="/create-session">
             <Container>
               <Icon className="fas fa-plus-circle" />
@@ -110,7 +110,7 @@ class Navbar extends Component {
               <Span4>Add</Span4>
             </div>
           </Navlink>
-        </parent>
+        </div>
       </Wrapper>
     );
   }

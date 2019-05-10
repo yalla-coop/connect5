@@ -129,4 +129,4 @@ class ResultsOverview extends Component {
   }
 }
 
-export default ResultsOverview ;
+export default ResultsOverview;

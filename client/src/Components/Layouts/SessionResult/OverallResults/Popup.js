@@ -7,7 +7,7 @@ import Stars from "./Stars";
 import Radio from "./RadioResults";
 import TextfieldResults from "./TextfieldResults";
 import Matrix from "./Matrix";
-import Checkbox from "./CheckboxResults"
+import Checkbox from "./CheckboxResults";
 
 import {
   PopupWrapper,

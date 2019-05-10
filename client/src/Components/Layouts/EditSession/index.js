@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
@@ -7,7 +6,7 @@ import swal from "sweetalert";
 import PropTypes from "prop-types";
 import options from "./options";
 import {
-  Button, Form, Container, Input, SelectComponent, Date, Heading, Label
+  Button, Form, Container, Input, SelectComponent, Date, Heading, Label,
 } from "./styledComponents";
 
 class EditSession extends Component {
@@ -19,7 +18,6 @@ class EditSession extends Component {
     startDate: null,
     sessionType: null,
     attendeesNumber: "",
-    selectedOption: null,
     loaded: false,
   };
 
@@ -73,7 +71,8 @@ class EditSession extends Component {
   };
 
   render() {
-    if (!this.state.loaded) {
+    const { loaded } = this.state;
+    if (!loaded) {
       return <h1>Loading...</h1>;
     }
 
