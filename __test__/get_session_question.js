@@ -81,7 +81,6 @@ describe("getSessionQuestions testing", async () => {
 
     await getSessionQuestions(1)
       .then((result) => {
-        console.log("RESULT", result)
         expect(result.questions.length).toBe(2);
         expect(result.questions[0].questionText).toBe("surveyType - 1");
       });

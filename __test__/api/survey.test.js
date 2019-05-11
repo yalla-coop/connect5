@@ -2,10 +2,7 @@ const mongoose = require("mongoose");
 
 const request = require("supertest");
 
-const Trainer = require("../../server/database/models/Trainer");
 const Session = require("../../server/database/models/Session");
-const Response = require("../../server/database/models/Response");
-const Answer = require("../../server/database/models/Answer");
 const Question = require("../../server/database/models/Question");
 
 const dbConnection = require("./../../server/database/db_connection");
@@ -19,7 +16,6 @@ dbConnection();
 
 beforeEach(async () => {
   await buildDb().catch(err => console.error(err.stack));
-  console.log("DB BUILT");
 });
 
 afterAll(async () => {
@@ -54,8 +50,6 @@ describe("Test /submit/:responseid", () => {
     const storedSession = await Session.findOne({ date: "2018-04-17" });
 
     const questionIds = await Question.find({ surveyType: 0 });
-
-    console.log("questionIds", questionIds[0]._id);
 
     const answers = {};
 

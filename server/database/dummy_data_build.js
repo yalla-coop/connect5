@@ -24,7 +24,6 @@ const buildDb = async () => {
   await Answer.deleteMany({});
   await Question.deleteMany({});
 
-  console.log("collections deleted");
 
   // insert questions
 
@@ -45,7 +44,6 @@ const buildDb = async () => {
     .then(trainer => trainer.save())
     .catch(err => console.log(err));
   // await trainer.save();
-  console.log("trainer added");
 
   // insert session for that trainer
 
@@ -69,7 +67,6 @@ const buildDb = async () => {
     },
   ]);
 
-  console.log("sessions added");
 
   // insert response for the first session
 
@@ -95,7 +92,6 @@ const buildDb = async () => {
     },
   ]);
 
-  console.log("responses added");
 
   // insert answers for that response
 
@@ -229,7 +225,8 @@ const buildDb = async () => {
         "Your confidence to talk to people about their mental health & wellbeing": "Improved (3)",
         "Your understanding of emotional health & wellbeing through the '5 areas' model": "Moderate improvement (2)",
         "Your understanding of local mental health & wellbeing services and how to signpost people to them": "Well improved (4)",
-        "Your understanding of the importance of self- help material and its uses": "Well improved (4)",}
+        "Your understanding of the importance of self- help material and its uses": "Well improved (4)",
+      },
     },
     {
       response: secondResponse._id,
@@ -272,8 +269,6 @@ const buildDb = async () => {
         "Random text here answering the question about anything else I'd like to tell them about the session 1 training.",
     },
   ]);
-
-  console.log("survey answers added");
 };
 
 buildDb().catch(err => console.error(err.stack));

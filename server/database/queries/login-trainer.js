@@ -18,7 +18,6 @@ const loginTrainer = (email, password, errors) => new Promise((resolve, reject) 
         // password check (req vs. database)
         bcrypt.compare(password, trainer.password)
           .then((match) => {
-            console.log("login", match);
             if (match) {
               // resolve(match)
               const payload = { id: trainer.id, firstName: trainer.firstName }; // prepare for jwt

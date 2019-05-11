@@ -16,7 +16,6 @@ router.post("/", (req, res) => {
   }
   loginTrainer(email, password, errors)
     .then((token) => {
-      console.log("TOKEN CONTROLLER", token);
       res.status(200).json(token);
     })
     .catch(err => res.status(400).json(err));

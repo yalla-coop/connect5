@@ -24,9 +24,6 @@ const validateSurveyInput = async (data) => {
 
   // filter questionIdArray to find unanswered questions and put them into error obj
 
-  console.log("ERRORS VALIDATE", errors);
-  console.log("ISEMPTY", isEmpty(errors));
-
   return { errors, isValid: isEmpty(errors) };
 };
 

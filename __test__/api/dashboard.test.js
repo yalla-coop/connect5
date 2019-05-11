@@ -4,7 +4,6 @@ const request = require("supertest");
 
 const loginTrainer = require("../../server/database/queries/login-trainer");
 
-const Trainer = require("../../server/database/models/Trainer");
 const dbConnection = require("../../server/database/db_connection");
 
 const buildDb = require("../../server/database/dummy_data_build");
@@ -31,7 +30,6 @@ describe("Test for /dashboard route", () => {
 
   test("test if token passes the passport authentication", async () => {
     const token = await loginTrainer("johndoe@gmail.com", "123456", null);
-    // console.log("TOKEN!!!!!!!!", token)
 
     const response = await request(app)
       .get("/dashboard")

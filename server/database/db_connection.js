@@ -5,7 +5,6 @@ if (!process.env.TRAVIS) {
   require("env2")("./config/config.env");
 }
 
-console.log("TRAVIS", process.env.TRAVIS)
 
 const dbConnection = () => {
   // get DB url from process.env
