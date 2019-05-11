@@ -1,6 +1,6 @@
 const JwtStrategy = require("passport-jwt").Strategy;
-const ExtractJwt = require("passport-jwt").ExtractJwt;
-const mongoose = require("mongoose");
+const { ExtractJwt } = require("passport-jwt");
+// const mongoose = require("mongoose");
 const Trainer = require("./database/models/Trainer");
 // const keys = require('../config/keys');
 require("env2")("./config/config.env");
@@ -15,7 +15,7 @@ module.exports = (passport) => {
     // use mongoose findById method and pass it the id stemming from the bearer toke auth object named jwt payload
 
     new JwtStrategy(opts, (jwt_payload, done) => {
-      console.log("JWT", jwt_payload);
+      // console.log("JWT", jwt_payload);
       Trainer.findById(jwt_payload.id)
         .then((trainer) => {
           // use done function without error and either user or false
