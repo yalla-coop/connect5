@@ -56,7 +56,6 @@ describe("getQuestionResults testing", async () => {
           .then(() => {
             Session.findById(storedSession._id)
               .then((res) => {
-                console.log(res);
                 expect(storedSession).toBeNull();
               });
           });

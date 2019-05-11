@@ -15,7 +15,6 @@ module.exports = (passport) => {
     // use mongoose findById method and pass it the id stemming from the bearer toke auth object named jwt payload
 
     new JwtStrategy(opts, (jwt_payload, done) => {
-      // console.log("JWT", jwt_payload);
       Trainer.findById(jwt_payload.id)
         .then((trainer) => {
           // use done function without error and either user or false

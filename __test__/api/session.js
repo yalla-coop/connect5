@@ -159,7 +159,6 @@ describe("Test  /session/responses/:sessionId/:sessionType route", () => {
     const storedSession = await Session.findOne({ date: "2018-04-17" });
     const response = await request(app).get(`/session/responses/${storedSession._id}/1`);
 
-    console.log("storedSession", storedSession)
 
     expect(response.statusCode).toBe(200);
     expect(Array.isArray(response.body)).toBe(true);

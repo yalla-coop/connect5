@@ -14,10 +14,8 @@ router.post("/", async (req, res) => {
   // this function at the end returns either errors or isValid
   // if errors we send the errors back to the client
   // if valid then carry on with this code below
-  console.log("SUBSMISSION", req.body);
 
   const { errors, isValid } = await validateSurveyInput(req.body);
-  console.log("ERRORS BACK", errors);
 
   const { formState, sessionId, surveyType } = req.body;
 
@@ -32,7 +30,6 @@ router.post("/", async (req, res) => {
     .then(response => storeAnswers(response._id, formState, sessionId))
     .then(result => res.status(200).json(result))
     .catch(() => {
-      console.log("error reached")
       res.status(500);
       res.send(createError(500, "Error in inserting the survey response"));
     });

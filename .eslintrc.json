@@ -8,6 +8,8 @@
     "indent": ["error", 2],
     "quotes": ["error", "double"],
     "no-underscore-dangle": [0],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-unused-vars": ["error", { "args": "none" }],
+    "no-multi-assign": [0]
   }
 }

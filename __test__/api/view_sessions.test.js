@@ -76,7 +76,6 @@ describe("Test '/trainer/overview' route", () => {
     expect(response.body).toBeDefined();
     expect(response.body[0].attendees).toBeDefined();
     expect(response.body[1].type).toBeDefined();
-    console.log(response.body);
   });
 
 
