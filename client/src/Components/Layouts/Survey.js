@@ -11,7 +11,8 @@ import Questions from "../Questions";
 import {
   SurveyQs, Image, SurveyHeader, SessionDetails, Form, Disclaimer,
 } from "./Survey.style";
-import Logo from "../../img/Logo-White.png";
+// import Logo from "../../assets/Logo-White.png";
+import Logo from "../../assets/Logo-White.png";
 
 // formState will be the object where we store survey responses
 // as the participant answers the questions
