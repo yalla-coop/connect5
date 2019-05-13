@@ -1,14 +1,15 @@
 // controller to send the answers to the database
 
 const express = require("express");
-
-const router = express.Router();
 const createError = require("http-errors");
 
 const storeResponse = require("../database/queries/storeResponse");
 const storeAnswers = require("../database/queries/storeAnswers");
 const validateSurveyInput = require("../validation/survey-answers-val");
 
+const router = express.Router();
+
+// eslint-disable-next-line consistent-return
 router.post("/", async (req, res) => {
   // put the req.body into a validate function
   // this function at the end returns either errors or isValid

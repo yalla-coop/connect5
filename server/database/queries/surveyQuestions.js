@@ -1,4 +1,5 @@
-// query to get the right survey questions and session details from the database and send them to the controller
+// query to get the right survey questions and session details from the database
+// and send them to the controller
 
 // to format the date
 const moment = require("moment");
@@ -8,8 +9,7 @@ const Question = require("../models/Question");
 const Session = require("../models/Session");
 const Trainer = require("../models/Trainer");
 
-const surveyQs = async (surveyId, sessionId) => {
-
+const surveyQ = async (surveyId, sessionId) => {
   // get the survey questions
   const surveyQs = await Question.find({ surveyType: surveyId });
 
@@ -26,11 +26,10 @@ const surveyQs = async (surveyId, sessionId) => {
     // trainerName: "".concat(trainerDetails.firstName, trainerDetails.lastName),
     surveyQs,
     sessionId,
-    surveyId
+    surveyId,
   };
 
   return surveyDetails;
+};
 
-}
-
-module.exports = surveyQs
+module.exports = surveyQ;

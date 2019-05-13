@@ -12,8 +12,10 @@ opts.secretOrKey = process.env.secretOrKey;
 
 module.exports = (passport) => {
   passport.use(
-    // use mongoose findById method and pass it the id stemming from the bearer toke auth object named jwt payload
+    // use mongoose findById method and pass it the id stemming
+    // from the bearer toke auth object named jwt payload
 
+    // eslint-disable-next-line camelcase
     new JwtStrategy(opts, (jwt_payload, done) => {
       Trainer.findById(jwt_payload.id)
         .then((trainer) => {

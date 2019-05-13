@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Schema, model } = require("mongoose");
 
 // Create Schema
 // Creates a new trainer so they can log in and use the app
@@ -7,20 +6,21 @@ const Schema = mongoose.Schema;
 const TrainerSchema = new Schema({
   firstName: {
     type: String,
-    required: true
+    required: true,
   },
   lastName: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
-module.exports = Trainer = mongoose.model("trainers", TrainerSchema);
+const Trainer = model("trainers", TrainerSchema);
+module.exports = Trainer;

@@ -14,7 +14,7 @@ const GetSessionDetails = async (req, res) => {
     .catch((err) => {
       if (err.message.indexOf("Cast to ObjectId failed") !== -1) {
         res.status(404);
-        res.send((createError(404, "Data was not found")))
+        res.send((createError(404, "Data was not found")));
       } else {
         res.status(500);
         res.send((createError(500, "Server Error")));

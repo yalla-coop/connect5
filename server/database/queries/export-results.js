@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const moment = require("moment");
 
 // Load models
@@ -5,22 +6,25 @@ const Response = require("../models/Response");
 const Answer = require("../models/Answer");
 const Question = require("../models/Question");
 const Trainer = require("../models/Trainer");
+const Session = require("../models/Session");
 
 // function that creates array of data for trainer to export as csv
 
 const exportDetails = async (trainerId) => {
   // get response Ids for trainer
-  const responseIDArray = await Response.find({ trainer: trainerId }).then(responses => responses.map(e => e._id));
+  const responseIDArray = await Response.find({ trainer: trainerId })
+    .then(responses => responses.map(e => e._id));
 
   // get trainer details
   const trainerDetails = await Trainer.findById(trainerId);
   // set up export array
   const exportArray = [];
 
-  for (let i = 0; i < responseIDArray.length; i++) {
+  for (let i = 0; i < responseIDArray.length; i += 1) {
     // find all answers related to the responses to the trainer
+    // eslint-disable-next-line no-await-in-loop
     const answers = await Answer.find({ response: responseIDArray[i] });
-    for (let k = 0; k < answers.length; k++) {
+    for (let k = 0; k < answers.length; k += 1) {
       // define object of data for each answer --> 1 of many entries for trainer to download later
       const dataObj = {
         trainerName: `${trainerDetails.firstName} ${trainerDetails.lastName}`,

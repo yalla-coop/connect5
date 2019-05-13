@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 // read "config.env" file and add it's varaible to "process.env"
 if (!process.env.TRAVIS) {
+  // eslint-disable-next-line global-require
   require("env2")("./config/config.env");
 }
 

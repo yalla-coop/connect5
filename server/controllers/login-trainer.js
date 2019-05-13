@@ -7,8 +7,7 @@ const validateLoginInput = require("../validation/login-trainer-val");
 
 router.post("/", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
-  const email = req.body.email;
-  const password = req.body.password;
+  const { email, password } = req.body;
 
   // Check Validation
   if (!isValid) {

@@ -1,11 +1,9 @@
+/* eslint-disable no-param-reassign */
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const passport = require("passport");
 const Trainer = require("../models/Trainer");
-// const keys = require("../../../config/keys")
-require("env2")("./config/config.env");
 
-// let { passportKey } = process.env;
+require("env2")("./config/config.env");
 
 const loginTrainer = (email, password, errors) => new Promise((resolve, reject) => {
   // Find trainer by email

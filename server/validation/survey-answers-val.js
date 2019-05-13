@@ -1,3 +1,4 @@
+/* eslint-disable */
 const isEmpty = require("./is-empty");
 const Questions = require("../database/models/Question");
 

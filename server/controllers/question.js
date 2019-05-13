@@ -1,7 +1,6 @@
 const express = require("express");
 const GetQuestionResults = require("./get_question_results");
 
-
 const router = express.Router();
 
 router

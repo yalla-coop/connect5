@@ -1,38 +1,42 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Schema, model } = require("mongoose");
+
+// const Schema = mongoose.Schema;
 
 // Create Schema
-// Stores the sessions created by the trainer. Links up to the trainer_id so we know which session is for which trainer
+// Stores the sessions created by the trainer. Links up to the trainer_id
+// so we know which session is for which trainer
 
 const SessionSchema = new Schema({
   trainer: {
     // connect each session to a trainer
-    type: Schema.Types.ObjectId, //FK ref trainer_id
-    ref: "trainers"
+    type: Schema.Types.ObjectId, // FK ref trainer_id
+    ref: "trainers",
   },
   type: {
     type: Number,
-    required: true
+    required: true,
   },
   date: {
     type: Date,
-    required: true
+    required: true,
   },
   invitees: {
-    type: Number
+    type: Number,
   },
   attendees: {
-    type: Number
+    type: Number,
   },
   surveyURL1: {
     type: String,
-    required: true
+    required: true,
   },
   surveyURL2: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 // variable = Session, name = sessions, schema = SessionSchema
 
-module.exports = Session = mongoose.model("sessions", SessionSchema);
+// eslint-disable-next-line no-undef
+const Session = model("sessions", SessionSchema);
+module.exports = Session;

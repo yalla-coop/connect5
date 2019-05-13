@@ -37,10 +37,11 @@ const buildDb = async () => {
     email: "johndoe@gmail.com",
     password: "123456",
   });
-  const email = trainer.email;
+  const { email } = trainer;
   const errors = {};
 
   await registerTrainer(email, errors, trainer)
+    // eslint-disable-next-line no-shadow
     .then(trainer => trainer.save())
     .catch(err => console.log(err));
   // await trainer.save();
