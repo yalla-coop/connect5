@@ -1,3 +1,4 @@
+v1
 # Logs
 logs
 *.log
@@ -64,6 +65,8 @@ typings/
 
 # config file
 /config
+
+v1/*
 
 # DS store
 .DS_Store
