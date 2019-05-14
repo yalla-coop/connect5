@@ -46,6 +46,11 @@ describe('Test Question schema', () => {
     const storedQuestion = await Question.create(question);
 
     expect(storedQuestion.questionType.desc).toBe(question.questionType.desc);
+
+    expect(storedQuestion.options).toEqual(
+      expect.arrayContaining(question.options)
+    );
+
     expect(storedQuestion.surveyType).toBe(question.surveyType);
     done();
   });
