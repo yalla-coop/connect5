@@ -9,6 +9,7 @@ module.exports = async () => {
   const trainTheTrainersResponses = await Response.find({
     surveyType: 'pre-train-trainers',
   });
+
   const preTrainTrainerQuestions = await Question.find({
     surveyType: 'pre-train-the-trainer',
   });
@@ -21,56 +22,48 @@ module.exports = async () => {
     // DEMOGRAPHIC
     {
       question: preDay1Question[0],
-
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: '18-24 years old',
     },
     {
       question: preDay1Question[1],
-
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: 'Male',
     },
     {
       question: preDay1Question[2],
-
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: 'White and Black Caribbean',
     },
     {
       question: preDay1Question[3],
-
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: 'North East',
     },
     {
       question: preDay1Question[4],
-
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: '00441',
     },
     {
       question: preDay1Question[5],
-
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: '2019-05-15',
     },
     {
       question: preDay1Question[6],
-
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: 'nurse',
     },
     {
       question: preDay1Question[7],
-
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer:
@@ -79,14 +72,12 @@ module.exports = async () => {
     // behavioural1
     {
       question: preDay1Question[8],
-
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: 10,
     },
     {
       question: preDay1Question[9],
-
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: 5,

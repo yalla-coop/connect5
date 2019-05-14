@@ -4,7 +4,7 @@ const Question = require('../../../database/models/Question');
 
 const buildDB = require('../../../database/data/test');
 
-describe('Test Response schema', () => {
+describe('Test Question schema', () => {
   beforeAll(async () => {
     // build dummy data
     await buildDB();
