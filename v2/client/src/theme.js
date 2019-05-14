@@ -39,6 +39,10 @@ const colorCodes = {
   gray: '#D4D4D8',
   lightGray: '#EFEFF4',
   black: '#4F4F4F',
+
+  // transparent
+  transGray: 'rgba(212, 212, 216, 0.3)',
+  transLightGray: 'rgba(239, 239, 244, 0.3)',
 };
 
 // general colors
@@ -58,4 +62,5 @@ export const shadows = {
 // borders
 export const borders = {
   inputBox: `1px solid ${colors.lightGray}`,
+  button: `1px solid ${colors.gray}`,
 };
