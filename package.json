@@ -29,8 +29,8 @@
     "client:build": "cd ./v2/client && npm run build",
     "heroku-postbuild": "npm run client:init && npm run client:build",
     "coverage": "codecov",
-    "surveybuild": "node server/database/surveyBuild.js",
-    "dummybuild": "node server/database/dummy_data_build.js",
+    "build:data:dev": "NODE_ENV=dev node v2/server/database/data/development/index.js",
+    "build:data:prd": "node v2/server/database/data/production/index.js",
     "lint": "eslint ."
   },
   "dependencies": {
