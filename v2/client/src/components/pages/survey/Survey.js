@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 
 // import ReactRouterPropTypes from 'react-router-prop-types';
 
@@ -27,14 +27,13 @@ export default class Survey extends React.Component {
   //   history: null,
   // };
 
-  // state = {
-  //   formState: {},
-  //   surveyDetails: null,
-  //   loading: true,
-  //   sessionId: null,
-  //   surveyType: null,
-  //   errors: {},
-  // };
+  state = {
+    formState: {},
+    surveyDetails: null,
+    loading: true,
+    sessionId: null,
+    errors: {},
+  };
 
   componentWillMount() {
     // grab the unique url at the end which gives us survey type and session id
@@ -44,29 +43,23 @@ export default class Survey extends React.Component {
     const surveyParts = survey.split('/')[2];
 
     axios.get(`/api/survey/${surveyParts}`).then(res => {
-      console.log(res.data);
-    });
+      const { sessionId, surveyType } = res.data;
 
-    // // util function that will fetch the questions and session details
-    // getQuestions(survey)
-    //   .then(res => {
-    //     const { sessionId, surveyId } = res;
-    //     this.setState({
-    //       surveyDetails: res,
-    //       loading: false,
-    //       responseId,
-    //       sessionId,
-    //       surveyType: surveyId,
-    //     });
-    //   })
-    //   .then(() => {
-    //     swal({
-    //       text:
-    //         'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.',
-    //       button: 'Begin',
-    //     });
-    //   })
-    //   .catch(err => console.error(err.stack));
+      this.setState({
+        surveyDetails: res.data,
+        loading: false,
+        sessionId,
+        surveyType,
+      });
+    });
+    // .then(() => {
+    //   swal.fire({
+    //     text:
+    //       'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.',
+    //     button: 'Begin',
+    //   });
+    // })
+    // .catch(err => console.error(err.stack));
   }
 
   // function that will check if the div for the answer has been selected and if so add that answer to the formstate
@@ -184,13 +177,23 @@ export default class Survey extends React.Component {
   //     });
   // };
 
-  render() {
-    // const { loading, surveyDetails, formState, errors } = this.state;
-    // if (loading) {
-    //   return <h3>Loading...</h3>;
-    // }
+  // function to create a list of names from an array...
+  renderTrainerNames = array =>
+    array.map((e, i) => {
+      if (array.length - 1 === i) {
+        return `and ${e}`;
+      }
+      return `${e} `;
+    });
 
-    // const { sessionDate, trainerName, surveyQs } = surveyDetails;
+  render() {
+    const { loading, surveyDetails, formState, errors } = this.state;
+    if (loading) {
+      return <h3>Loading...</h3>;
+    }
+
+    const { sessionDate, trainerNames, questionsForSurvey } = surveyDetails;
+    // console.log(surveyDetails);
 
     return (
       <SurveyQs>
@@ -202,14 +205,14 @@ export default class Survey extends React.Component {
             <h3>Session Details:</h3>
             <p>
               <span>Session Date: </span>
-              {/* {sessionDate} */}
+              {sessionDate}
             </p>
             <p>
-              <span>Trainer: </span>
-              {/* {trainerName} */}
+              <span>Trainers: </span>
+              {this.renderTrainerNames(trainerNames)}
             </p>
           </SessionDetails>
-          <Disclaimer>
+          {/* <Disclaimer>
             <h3>Privacy notice</h3>
             <p>
               RSPH will use your information to evaluate the outcomes of our
@@ -250,18 +253,18 @@ export default class Survey extends React.Component {
               </a>
               .
             </p>
-          </Disclaimer>
+          </Disclaimer> */}
           <Form>
             <h3>Survey Questions:</h3>
-            {/* <Questions
-              questions={surveyQs}
-              onChange={this.handleChange}
-              handleMatrix={this.handleMatrix}
-              handleOther={this.handleOther}
-              answers={formState}
-              selectCheckedItem={this.selectCheckedItem}
-              errors={errors}
-            /> */}
+            <Questions
+              questions={questionsForSurvey}
+              // onChange={this.handleChange}
+              // handleMatrix={this.handleMatrix}
+              // handleOther={this.handleOther}
+              // answers={formState}
+              // selectCheckedItem={this.selectCheckedItem}
+              // errors={errors}
+            />
             <button type="submit">Submit Feedback</button>
           </Form>
         </main>
