@@ -12,7 +12,7 @@ const sharedStyles = css`
 `;
 
 export const sectionHeader = css`
-  top: ${props => props.nudge ? "31px" : 0};
+  top: ${props => (props.nudge ? '31px' : 0)};
   background-color: ${colors.primary};
   color: ${colors.offWhite};
   height: 48px;
@@ -47,7 +47,7 @@ export const viewHeader = css`
     font-size: 1rem;
     font-weight: 300;
   }
-`
+`;
 
 const StyledHeader = styled.div`
   ${sharedStyles}
@@ -55,7 +55,7 @@ const StyledHeader = styled.div`
   ${props => props.type === 'view' && viewHeader}
 `;
 
-// NOTE: If you need Section and View header at same time 
+// NOTE: If you need Section and View header at same time
 // then give your section header the nudge prop to shift it down
 
 const Header = ({ label, ...props }) => {
