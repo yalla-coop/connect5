@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import Home from './pages/LandingPage';
 import TrainerResutls from './pages/TrainerResults';
+import Survey from './pages/survey/Survey';
 
 const Wrapper = styled.div`
   min-width: 100vw;
@@ -20,6 +21,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/trainer-results" component={TrainerResutls} />
+            <Route exact path="/survey/:id" component={Survey} />
             <Route
               render={() => (
                 <h1>

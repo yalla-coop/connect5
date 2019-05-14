@@ -10,7 +10,6 @@ import Questions from './Questions';
 
 import {
   SurveyQs,
-  Image,
   SurveyHeader,
   SessionDetails,
   Form,
@@ -28,43 +27,47 @@ export default class Survey extends React.Component {
   //   history: null,
   // };
 
-  state = {
-    formState: {},
-    surveyDetails: null,
-    loading: true,
-    sessionId: null,
-    surveyType: null,
-    errors: {},
-  };
+  // state = {
+  //   formState: {},
+  //   surveyDetails: null,
+  //   loading: true,
+  //   sessionId: null,
+  //   surveyType: null,
+  //   errors: {},
+  // };
 
-  // componentDidMount() {
-  //   // grab the unique url at the end which gives us survey type and session id
-  //   const { location } = this.props;
-  //   const survey = `/get${location.pathname}`;
-  //   const responseId = survey.split('/')[2];
-  //   console.log(survey);
+  componentWillMount() {
+    // grab the unique url at the end which gives us survey type and session id
+    // hardcoded url for now: pre-day-1_5cdac6bf97f66747f7c86c90
+    const { location } = this.props;
+    const survey = `${location.pathname}`;
+    const surveyParts = survey.split('/')[2];
 
-  //   // util function that will fetch the questions and session details
-  //   getQuestions(survey)
-  //     .then(res => {
-  //       const { sessionId, surveyId } = res;
-  //       this.setState({
-  //         surveyDetails: res,
-  //         loading: false,
-  //         responseId,
-  //         sessionId,
-  //         surveyType: surveyId,
-  //       });
-  //     })
-  //     .then(() => {
-  //       swal({
-  //         text:
-  //           'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.',
-  //         button: 'Begin',
-  //       });
-  //     })
-  //     .catch(err => console.error(err.stack));
-  // }
+    axios.get(`/api/survey/${surveyParts}`).then(res => {
+      console.log(res.data);
+    });
+
+    // // util function that will fetch the questions and session details
+    // getQuestions(survey)
+    //   .then(res => {
+    //     const { sessionId, surveyId } = res;
+    //     this.setState({
+    //       surveyDetails: res,
+    //       loading: false,
+    //       responseId,
+    //       sessionId,
+    //       surveyType: surveyId,
+    //     });
+    //   })
+    //   .then(() => {
+    //     swal({
+    //       text:
+    //         'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.',
+    //       button: 'Begin',
+    //     });
+    //   })
+    //   .catch(err => console.error(err.stack));
+  }
 
   // function that will check if the div for the answer has been selected and if so add that answer to the formstate
   // selectCheckedItem = (value, questionId) => {
