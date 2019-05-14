@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  padding-bottom: 2rem;
 `;
 
 export const Header = styled.div`
@@ -35,6 +36,11 @@ export const TypeHeader = styled.h3`
 export const DetailsHeader = styled.h3`
   ${sharedHeaderStyles};
   text-align: center;
+`;
+
+export const NameHeader = styled.h3`
+  ${sharedHeaderStyles};
+  padding-left: 2rem;
 `;
 
 export const List = styled.div`
@@ -85,4 +91,10 @@ export const StyledLink = styled(Link)`
   :hover {
     color: ${colors.primary};
   }
+`;
+
+export const Name = styled.p`
+  ${sharedItemStyles}
+  text-transform: capitalize;
+  padding-left: 2rem;
 `;

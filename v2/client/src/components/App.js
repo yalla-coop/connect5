@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
+import { colors } from '../theme';
 import Home from './pages/LandingPage';
 import TrainerResutls from './pages/TrainerResults';
 
 const Wrapper = styled.div`
   min-width: 100vw;
   min-height: 100vh;
+  background-color: ${colors.offWhite};
 `;
 
 // eslint-disable-next-line react/prefer-stateless-function
