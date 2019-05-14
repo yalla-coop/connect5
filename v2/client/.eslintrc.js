@@ -18,6 +18,7 @@ module.exports = {
     "jest": true
   },
   "rules": {
+    "react/jsx-no-undef": 1,
     // disables the windows/unix linebreak checks.
     "linebreak-style": 0,
     "linebreak-style": [0, "error", "windows"],
