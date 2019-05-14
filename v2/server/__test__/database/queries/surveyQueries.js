@@ -30,5 +30,7 @@ describe('test survey queries', () => {
     expect(survey).toBeDefined();
     expect(survey.questionsForSurvey[1]).toBeDefined();
     expect(survey.sessionDate).toBeDefined();
+    expect(survey.trainerNames).toBeDefined();
+    expect(survey.trainerNames.length).toBe(2);
   });
 });

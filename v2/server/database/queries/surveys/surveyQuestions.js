@@ -6,7 +6,7 @@ const moment = require('moment');
 // Load models
 const Question = require('../../models/Question');
 const Session = require('../../models/Session');
-// const User = require('../../models/User');
+const User = require('../../models/User');
 
 const surveyQs = async (surveyType, sessionId) => {
   // get the survey questions as an array of objects
@@ -15,17 +15,27 @@ const surveyQs = async (surveyType, sessionId) => {
   // get the session details
   const sessionDetails = await Session.findById(sessionId);
 
-  // get the trainer details
-  // const trainerDetails = await User.findById(sessionDetails.trainer);
+  // get the trainer details as an array of ids
+  const { trainers } = sessionDetails;
+
+  // get users
+  const users = await User.find();
+
+  const trainerNames = users.reduce((acc, cur) => {
+    const matched = trainers.indexOf(cur._id) > -1 ? cur.name : null;
+    if (matched != null) {
+      acc.push(matched);
+    }
+    return acc;
+  }, []);
 
   // put all this information into an object we can send to client
   const surveyDetails = {
     sessionDate: moment(sessionDetails.date).format('DD-MM-YYYY'),
-    // trainerName: `${trainerDetails.firstName} ${trainerDetails.lastName}`,
-    // trainerName: "".concat(trainerDetails.firstName, trainerDetails.lastName),
+    trainerNames,
     questionsForSurvey,
     sessionId,
-    // surveyId
+    surveyType,
   };
 
   return surveyDetails;
