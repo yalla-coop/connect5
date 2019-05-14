@@ -15,6 +15,7 @@ module.exports = {
   },
   rules: {
     "no-unused-vars": ["error", { "args": "none" }],
+    "no-underscore-dangle": [0],
      // configure the prettier plugin
     "prettier/prettier": [
       "error",
