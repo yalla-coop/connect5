@@ -33,4 +33,11 @@ describe('test survey queries', () => {
     expect(survey.trainerNames).toBeDefined();
     expect(survey.trainerNames.length).toBe(2);
   });
+
+  test('check getSurveyQs error handling', async () => {
+    const surveyId = 1;
+    const sessionId = '42343254353413413443545';
+
+    await surveyQs(surveyId, sessionId).catch(err => expect(err).toBeDefined());
+  });
 });
