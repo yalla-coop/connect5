@@ -20,6 +20,7 @@
     "client": "npm start --prefix v2/client",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "test": "NODE_ENV=test jest --detectOpenHandles --forceExit --runInBand",
+    "init:both": "cd ./v2 && npm i && cd ./client && npm i ",
     "test:coverage": "NODE_ENV=test  jest --coverage --detectOpenHandles --forceExit --runInBand",
     "test:client": "cd ./v2/client && npm test",
     "test:client:coverage": "cd ./v2/client && npm run test:coverage",
