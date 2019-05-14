@@ -1,5 +1,9 @@
 import React from 'react';
 
 export default function LandingPage() {
-  return <div>LandingPage</div>;
+  return (
+    <div>
+      <h1>LandingPage</h1>
+    </div>
+  );
 }
