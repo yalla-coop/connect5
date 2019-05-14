@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'test') {
   // change mongoURI to testing database URI
   mongoURI = process.env.MONGOURI_DEV;
 }
-
+// mongodb://localhost:27017/connect5db
 // create DB connection
 const dbConnection = () =>
   mongoose.connect(mongoURI, {
