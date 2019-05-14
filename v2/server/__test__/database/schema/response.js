@@ -17,7 +17,7 @@ describe('Test Response schema', () => {
   });
 
   test('should Response schema be defined', async () => {
-    expect(User).toBeDefined();
+    expect(Response).toBeDefined();
   });
 
   test('should Response schema get data correctly', async done => {
