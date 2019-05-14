@@ -21,6 +21,7 @@ const surveyQs = async (surveyType, sessionId) => {
   // get users
   const users = await User.find();
 
+  // get trainer names
   const trainerNames = users.reduce((acc, cur) => {
     const matched = trainers.indexOf(cur._id) > -1 ? cur.name : null;
     if (matched != null) {
