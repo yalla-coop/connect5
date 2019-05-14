@@ -76,7 +76,7 @@ const demographics = surveyType => [
         options: ['Arab', 'Any other ethnic group, please describe'],
       },
     ],
-    questionType: questionConstants.questionTypes.radioGroup,
+    questionType: questionConstants.questionTypes.matrix,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
   },

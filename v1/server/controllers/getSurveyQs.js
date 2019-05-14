@@ -1,11 +1,14 @@
 // controller to get the required survey questions for this route
 
-const createError = require("http-errors");
-const surveyQs = require("../database/queries/surveyQuestions");
+const createError = require('http-errors');
+const surveyQs = require('../database/queries/surveyQuestions');
 
 exports.get = (req, res) => {
+
   // get the dynamic id from req.params. This should be a string with the surveytype as the first number (e.g. 1). The rest of the string is the unique sessionId
   const { id } = req.params;
+
+  console.log(id);
 
   // assign the surveyId and sessionId to their own variables
   const surveyId = id[0];
@@ -13,16 +16,16 @@ exports.get = (req, res) => {
 
   // initiate queries function to get the right questions from the database, the session details and then send these to the client
   surveyQs(surveyId, sessionId)
-    .then((surveyDetails) => {
+    .then(surveyDetails => {
       res.status(200).json(surveyDetails);
     })
-    .catch((err) => {
-      if (err.message.indexOf("Cast to ObjectId failed") !== -1) {
+    .catch(err => {
+      if (err.message.indexOf('Cast to ObjectId failed') !== -1) {
         res.status(404);
-        res.send(createError(404, "Data was not found"));
+        res.send(createError(404, 'Data was not found'));
       } else {
         res.status(500);
-        res.send(createError(500, "Server Error"));
+        res.send(createError(500, 'Server Error'));
       }
     });
 };

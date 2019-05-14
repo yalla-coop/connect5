@@ -24,7 +24,7 @@ export default class Questions extends React.Component {
     } = this.props;
     // const errorArray = Object.keys(errors);
     // const answerArray = Object.keys(answers);
-
+    console.log(questions);
     return (
       <React.Fragment>
         {questions.map((el, index) => {
@@ -35,7 +35,6 @@ export default class Questions extends React.Component {
             _id: questionId,
             text: questionText,
             helperText,
-            group,
             options,
           } = el;
           const inputType = el.questionType.desc;
@@ -64,7 +63,6 @@ export default class Questions extends React.Component {
               </TextField>
             );
           }
-          // format each question depending on the inputType
           if (inputType === 'date') {
             return (
               <TextField
@@ -113,33 +111,7 @@ export default class Questions extends React.Component {
               </TextField>
             );
           }
-          // if (el.inputType === 'textarea') {
-          //   return (
-          //     <TextField
-          //       key={index}
-          //       unanswered={
-          //         errorArray.includes(questionId) &&
-          //         isRequired &&
-          //         !answers[questionId]
-          //       }
-          //     >
-          //       <header>
-          //         <h4 id={index}>
-          //           {questionText}
-          //           {isRequired ? ' *' : ''}
-          //         </h4>
-          //         <p className="helpertext">{helperText}</p>
-          //       </header>
-          //       <textarea
-          //         id={index}
-          //         name={questionId}
-          //         type="textarea"
-          //         rows="5"
-          //         onChange={onChange}
-          //       />
-          //     </TextField>
-          //   );
-          // }
+
           if (inputType === 'radio') {
             return (
               <RadioField
@@ -153,9 +125,10 @@ export default class Questions extends React.Component {
                   <h4 id={index}>{questionText}</h4>
                   <p className="helpertext">{helperText}</p>
                 </header>
-                {/* <div className="answers">
-                  {el.options.map((e, i) => {
+                <div className="answers">
+                  {options.map((e, i) => {
                     const value = e;
+
                     const uniqueId = e + questionId;
                     return (
                       <div>
@@ -166,18 +139,18 @@ export default class Questions extends React.Component {
                               id={uniqueId}
                               name={questionId}
                               type="radio"
-                              onChange={onChange}
+                              // onChange={onChange}
                             />
                             <span className="checkmark" />
-                            <p>{value}</p>
+                            {/* <p>{value}</p> */}
                           </label>
                         </div>
                       </div>
                     );
                   })}
                 </div>
-                <div className="other-div">
-                  {/* Load "Other" div */}
+                {/* <div className="other-div"> */}
+                {/* Load "Other" div */}
                 {/* {answers[questionId] &&
                   answers[questionId].includes('Other') ? (
                     <TextField>
@@ -196,160 +169,79 @@ export default class Questions extends React.Component {
               </RadioField>
             );
           }
-          // if (el.inputType === 'radiostar') {
-          //   return (
-          //     <RadioStarField
-          //       key={index}
-          //       unanswered={
-          //         errorArray.includes(questionId) &&
-          //         isRequired &&
-          //         !answers[questionId]
-          //       }
-          //     >
-          //       <header>
-          //         <h4 id={index}>
-          //           {questionText}
-          //           {isRequired ? ' *' : ''}
-          //         </h4>
-          //         <p className="helpertext">{helperText}</p>
-          //       </header>
-          //       <div className="answers">
-          //         {el.options.map((e, i) => {
-          //           const value = e;
 
-          //           const uniqueKey = i + questionId;
-          //           return (
-          //             <div
-          //               key={uniqueKey}
-          //               onClick={e => {
-          //                 selectCheckedItem(value, questionId);
-          //               }}
-          //             >
-          //               <label htmlFor={uniqueKey}>
-          //                 <p>{value}</p>
-          //                 <input
-          //                   id={uniqueKey}
-          //                   name={questionId}
-          //                   type="radio"
-          //                   value={value}
-          //                   className={value}
-          //                   onChange={onChange}
-          //                   checked={answers[questionId] === value}
-          //                 />
-          //                 <span className="checkmark" />
-          //               </label>
-          //             </div>
-          //           );
-          //         })}
-          //       </div>
-          //     </RadioStarField>
-          //   );
-          // }
-          // if (el.inputType === 'checkbox') {
-          //   console.log('ANSWERS', answers);
-          //   return (
-          //     <CheckboxField
-          //       key={index}
-          //       unanswered={
-          //         errorArray.includes(questionId) &&
-          //         isRequired &&
-          //         !answers[questionId]
-          //       }
-          //     >
-          //       <header>
-          //         <h4 id={index}>
-          //           {questionText}
-          //           {isRequired ? ' *' : ''}
-          //         </h4>
-          //         <p className="helpertext">{helperText}</p>
-          //       </header>
-          //       <div className="answers">
-          //         {el.options.map((e, i) => (
-          //           <label key={i} htmlFor={e}>
-          //             <input
-          //               id={e}
-          //               name={questionId}
-          //               type="checkbox"
-          //               value={e}
-          //               onChange={onChange}
-          //             />
-          //             <span className="checkmark" />
-          //             <p>{e}</p>
-          //           </label>
-          //         ))}
-          //       </div>
-          //       <div className="other-div">
-          //         {/* Load "Other" div */}
-          //         {answers[questionId] &&
-          //         answers[questionId].includes('Other (please specify)') ? (
-          //           <TextField>
-          //             <p>Please specify:</p>
-          //             <input
-          //               id="other-checkbox"
-          //               name={questionId}
-          //               type="text"
-          //               onFocus={handleOther}
-          //               onBlur={handleOther}
-          //             />
-          //           </TextField>
-          //         ) : (
-          //           ''
-          //         )}
-          //       </div>
-          //     </CheckboxField>
-          //   );
-          // }
-          // if (el.inputType === 'matrix') {
-          //   return (
-          //     <MatrixField
-          //       key={index}
-          //       unanswered={
-          //         errorArray.includes(questionId) &&
-          //         isRequired &&
-          //         !answers[questionId]
-          //       }
-          //     >
-          //       <header>
-          //         <h4 id={index}>
-          //           {questionText}
-          //           {isRequired ? ' *' : ''}
-          //         </h4>
-          //         <p className="helpertext">{helperText}</p>
-          //       </header>
-          //       <div>
-          //         {el.options.rows.map((e, i) => (
-          //           <div key={i} className="matrixanswers">
-          //             <p className="row-questions" id={i}>
-          //               {el.options.rows[i]}{' '}
-          //             </p>
-          //             <div className="options">
-          //               {el.options.columns.map((elem, ind) => (
-          //                 <label key={ind} htmlFor={e}>
-          //                   <input
-          //                     id={ind}
-          //                     name={e}
-          //                     type="radio"
-          //                     value={elem}
-          //                     className={`matrix ${ind}`}
-          //                     onChange={() => {
-          //                       handleMatrix(
-          //                         el.options.rows[i],
-          //                         elem,
-          //                         questionId
-          //                       );
-          //                     }}
-          //                   />
-          //                   <span className="checkmark" />
-          //                   <p>{elem}</p>
-          //                 </label>
-          //               ))}
-          //             </div>
-          //           </div>
-          //         ))}
-          //       </div>
-          //     </MatrixField>
-          //   );
-          // }
+          if (inputType === 'matrix') {
+            return (
+              <MatrixField
+
+              // unanswered={
+              //   errorArray.includes(questionId) &&
+              //   isRequired &&
+              //   !answers[questionId]
+              // }
+              >
+                <header>
+                  <h4 id={index}>{questionText}</h4>
+                  <p className="helpertext">{helperText}</p>
+                </header>
+                <div>
+                  {options.map((option, i) => (
+                    <div key={i} className="matrixanswers">
+                      <p className="row-questions" id={i}>
+                        {option.text}
+                      </p>
+                      <div className="options">
+                        {option.options.map((subOption, ind) => {
+                          if (option.options.length === ind + 1) {
+                            return (
+                              <TextField
+
+                              // unanswered={
+                              //   errorArray.includes(questionId) &&
+                              //   isRequired &&
+                              //   !answers[questionId]
+                              // }
+                              >
+                                <header>
+                                  <p id={ind}>{subOption}</p>
+                                </header>
+                                <input
+                                  id={ind}
+                                  name={subOption}
+                                  type="text"
+                                  // onChange={onChange}
+                                />
+                              </TextField>
+                            );
+                          }
+                          return (
+                            <label htmlFor={option}>
+                              <input
+                                id={ind}
+                                name={option}
+                                type="radio"
+                                value={subOption}
+                                className={`matrix ${ind}`}
+                                // onChange={() => {
+                                //   handleMatrix(
+                                //     el.options.rows[i],
+                                //     elem,
+                                //     questionId
+                                //   );
+                                // }}
+                              />
+                              <span className="checkmark" />
+                              <p>{subOption}</p>
+                            </label>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </MatrixField>
+            );
+          }
           return '';
         })}
       </React.Fragment>
