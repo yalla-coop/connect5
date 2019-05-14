@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Icon } from 'antd';
+
 import {
   Wrapper,
   Header,
@@ -34,7 +36,9 @@ const SessionList = ({ dataList }) => {
                   pathname: '/session-details',
                   state: { sessionId: dataItem.id },
                 }}
-              />
+              >
+                <Icon type="right" />
+              </StyledLink>
             </Row>
           ))}
       </List>

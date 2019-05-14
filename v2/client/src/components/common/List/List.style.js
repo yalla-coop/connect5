@@ -20,6 +20,7 @@ const sharedHeaderStyles = css`
   font-weight: 500;
   width: 100%;
   font-size: 1rem;
+  margin: 0;
 `;
 
 export const DateHeader = styled.h3`
@@ -52,6 +53,7 @@ export const Row = styled.div`
 const sharedItemStyles = css`
   width: 100%;
   font-weight: 300;
+  margin: 0;
 `;
 
 export const Date = styled.p`
@@ -66,14 +68,21 @@ export const Type = styled.div`
   p {
     background-color: ${colors.lightGray};
     width: 1.75rem;
-    height: 1.5rem;
+    height: 1.75rem;
     padding: 0.25rem 0;
     text-align: center;
     border-radius: 4px;
+    margin: 0;
   }
 `;
 
 export const StyledLink = styled(Link)`
   ${sharedItemStyles}
   text-align: center;
+  color: ${colors.gray};
+  transition: all ease 0.2s;
+
+  :hover {
+    color: ${colors.primary};
+  }
 `;
