@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const request = require('supertest');
 
-const dbConnection = require('../../database/dbConnection');
-
 const buildDB = require('../../database/data/test/index');
 
 const app = require('../../app');
@@ -24,19 +22,23 @@ describe('test get survey questions route', () => {
     const singleSession = await Session.findOne({ type: '1' });
     const sessionId = singleSession._id;
 
-    // const response = request(app).get(
-    //   `/api/get/survey/${surveyType}${sessionId}`
-    // );
-
-    // console.log(response);
-
     request(app)
-      .get(`/api/survey/${surveyType}${sessionId}`)
+      .get(`/api/survey/${surveyType}_${sessionId}`)
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, res) => {
-        expect(res).toBeDefined();
-        expect(res).toBe(0);
+        expect(res.body).toBeDefined();
+        expect(res.body.questionsForSurvey).toBeDefined();
+        done(err);
       });
+  });
+  test("Test survey doesn't load if session doesn't exist", async () => {
+    const response = await request(app).get('/api/survey/pre-day-1_0123456');
+    expect(response.statusCode).toBe(500);
+  });
+
+  test('Test without params', async () => {
+    const response = await request(app).get('/api/get/survey/');
+    expect(response.statusCode).toBe(404);
   });
 });

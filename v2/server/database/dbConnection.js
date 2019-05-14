@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'test') {
   mongoURI = process.env.MONGOURI_TEST;
 } else if (process.env.NODE_ENV !== 'production') {
   // change mongoURI to testing database URI
-  mongoURI = process.env.MONGOURI_DEV;
+  mongoURI = 'mongodb://localhost:27017/connect5db';
 }
 // mongodb://localhost:27017/connect5db
 // create DB connection
