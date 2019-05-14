@@ -63,5 +63,6 @@ export const shadows = {
 export const borders = {
   inputBox: `1px solid ${colors.lightGray}`,
   button: `1px solid ${colors.gray}`,
-  header: `1px solid ${colors.offWhite}`
+  header: `1px solid ${colors.offWhite}`,
+  toggle: `1px solid ${colors.black}`
 };
