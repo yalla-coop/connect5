@@ -1,7 +1,7 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-import { colors, borders, shadows } from "../../../theme";
+import { colors, borders } from "../../../theme";
 
 
 const ToggleWrapper = styled.div`
