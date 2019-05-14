@@ -34,9 +34,7 @@ const SessionList = ({ dataList }) => {
                   pathname: '/session-details',
                   state: { sessionId: dataItem.id },
                 }}
-              >
-                ARROW
-              </StyledLink>
+              />
             </Row>
           ))}
       </List>
