@@ -24,7 +24,7 @@ const userSchema = new Schema({
   },
   region: {
     type: String,
-    enum: regions,
+    enum: regions.map(region => region.toLocaleLowerCase()),
     lowercase: true,
   },
   role: {

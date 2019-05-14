@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 
-const { sessionTypes, regions } = require('./../DBConstants');
+const { sessionTypes } = require('./../DBConstants');
 
 const { Schema, model } = mongoose;
-
-const regionsWithOther = [...regions, 'Other (please specify)'];
 
 const sessionSchema = new Schema({
   date: {
@@ -19,7 +17,7 @@ const sessionSchema = new Schema({
   numberOfAttendees: Number,
   region: {
     type: String,
-    enum: regionsWithOther,
+    lowercase: true,
   },
   // array of trainers must be 2 max
   trainers: [

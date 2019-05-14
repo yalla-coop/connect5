@@ -9,10 +9,7 @@ const questionSchema = new Schema({
     type: String,
     required: true,
   },
-  code: {
-    type: String,
-    required: true,
-  },
+  code: String,
   // the general group
   // [ "ABOUT YOU", "ABOUT YOUR TRAINER", "ABOUT YOUR USUAL WAY OF TEACHING"]
   group: String,
@@ -23,15 +20,15 @@ const questionSchema = new Schema({
     text: String,
     order: Number,
   },
-  surveyType: [
-    {
-      type: String,
-      enum: surveyTypes,
-    },
-  ],
-  questionType: {
+  surveyType: {
     type: String,
-    enum: ['radio', 'radioGroup', 'text'],
+    enum: surveyTypes,
+  },
+
+  questionType: {
+    desc: {
+      type: String,
+    },
   },
   // question can contain multi helper text
   helperText: [String],
