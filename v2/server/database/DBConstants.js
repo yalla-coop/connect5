@@ -76,8 +76,8 @@ questionConstants.questionTypes = {
   radio: {
     desc: 'radio',
   },
-  matrix: {
-    desc: 'matrix',
+  radioGroup: {
+    desc: 'radioGroup',
     group: true,
   },
   text: {

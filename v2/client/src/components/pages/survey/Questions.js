@@ -3,27 +3,20 @@
 
 import React from 'react';
 
-import {
-  RadioField,
-  TextField,
-  RadioStarField,
-  MatrixField,
-  CheckboxField,
-} from './Questions.style';
+import { RadioField, TextField } from './Questions.style';
 
 export default class Questions extends React.Component {
   render() {
     const {
-      // onChange,
+      onChange,
       questions,
-      // handleMatrix,
-      // handleOther,
-      // selectCheckedItem,
-      // answers,
+
+      handleOther,
+      selectCheckedItem,
+      answers,
       errors,
     } = this.props;
-    // const errorArray = Object.keys(errors);
-    // const answerArray = Object.keys(answers);
+    const errorArray = Object.keys(errors);
     console.log(questions);
     return (
       <React.Fragment>
@@ -34,21 +27,19 @@ export default class Questions extends React.Component {
           const {
             _id: questionId,
             text: questionText,
+            group,
             helperText,
             options,
           } = el;
           const inputType = el.questionType.desc;
-          console.log(inputType);
+
           // format each question depending on the inputType
           if (inputType === 'text') {
             return (
               <TextField
-
-              // unanswered={
-              //   errorArray.includes(questionId) &&
-              //   isRequired &&
-              //   !answers[questionId]
-              // }
+                unanswered={
+                  errorArray.includes(questionId) && !answers[questionId]
+                }
               >
                 <header>
                   <h4 id={index}>{questionText}</h4>
@@ -58,7 +49,7 @@ export default class Questions extends React.Component {
                   id={index}
                   name={questionId}
                   type="text"
-                  // onChange={onChange}
+                  onChange={onChange}
                 />
               </TextField>
             );
@@ -66,12 +57,9 @@ export default class Questions extends React.Component {
           if (inputType === 'date') {
             return (
               <TextField
-
-              // unanswered={
-              //   errorArray.includes(questionId) &&
-              //   isRequired &&
-              //   !answers[questionId]
-              // }
+                unanswered={
+                  errorArray.includes(questionId) && !answers[questionId]
+                }
               >
                 <header>
                   <h4 id={index}>{questionText}</h4>
@@ -81,22 +69,18 @@ export default class Questions extends React.Component {
                   id={index}
                   name={questionId}
                   type="text"
-                  // onChange={onChange}
+                  onChange={onChange}
                 />
               </TextField>
             );
           }
 
-          // format each question depending on the inputType
           if (inputType === 'number') {
             return (
               <TextField
-
-              // unanswered={
-              //   errorArray.includes(questionId) &&
-              //   isRequired &&
-              //   !answers[questionId]
-              // }
+                unanswered={
+                  errorArray.includes(questionId) && !answers[questionId]
+                }
               >
                 <header>
                   <h4 id={index}>{questionText}</h4>
@@ -106,7 +90,7 @@ export default class Questions extends React.Component {
                   id={index}
                   name={questionId}
                   type="text"
-                  // onChange={onChange}
+                  onChange={onChange}
                 />
               </TextField>
             );
@@ -115,11 +99,9 @@ export default class Questions extends React.Component {
           if (inputType === 'radio') {
             return (
               <RadioField
-              // unanswered={
-              //   errorArray.includes(questionId) &&
-              //   isRequired &&
-              //   !answers[questionId]
-              // }
+                unanswered={
+                  errorArray.includes(questionId) && !answers[questionId]
+                }
               >
                 <header>
                   <h4 id={index}>{questionText}</h4>
@@ -139,19 +121,19 @@ export default class Questions extends React.Component {
                               id={uniqueId}
                               name={questionId}
                               type="radio"
-                              // onChange={onChange}
+                              onChange={onChange}
                             />
                             <span className="checkmark" />
-                            {/* <p>{value}</p> */}
+                            <p>{value}</p>
                           </label>
                         </div>
                       </div>
                     );
                   })}
                 </div>
-                {/* <div className="other-div"> */}
-                {/* Load "Other" div */}
-                {/* {answers[questionId] &&
+                <div className="other-div">
+                  {/* Load "Other" div */}
+                  {answers[questionId] &&
                   answers[questionId].includes('Other') ? (
                     <TextField>
                       <p>Please specify:</p>
@@ -165,83 +147,11 @@ export default class Questions extends React.Component {
                   ) : (
                     ''
                   )}
-                </div>  */}
+                </div>
               </RadioField>
             );
           }
 
-          if (inputType === 'matrix') {
-            return (
-              <MatrixField
-
-              // unanswered={
-              //   errorArray.includes(questionId) &&
-              //   isRequired &&
-              //   !answers[questionId]
-              // }
-              >
-                <header>
-                  <h4 id={index}>{questionText}</h4>
-                  <p className="helpertext">{helperText}</p>
-                </header>
-                <div>
-                  {options.map((option, i) => (
-                    <div key={i} className="matrixanswers">
-                      <p className="row-questions" id={i}>
-                        {option.text}
-                      </p>
-                      <div className="options">
-                        {option.options.map((subOption, ind) => {
-                          if (option.options.length === ind + 1) {
-                            return (
-                              <TextField
-
-                              // unanswered={
-                              //   errorArray.includes(questionId) &&
-                              //   isRequired &&
-                              //   !answers[questionId]
-                              // }
-                              >
-                                <header>
-                                  <p id={ind}>{subOption}</p>
-                                </header>
-                                <input
-                                  id={ind}
-                                  name={subOption}
-                                  type="text"
-                                  // onChange={onChange}
-                                />
-                              </TextField>
-                            );
-                          }
-                          return (
-                            <label htmlFor={option}>
-                              <input
-                                id={ind}
-                                name={option}
-                                type="radio"
-                                value={subOption}
-                                className={`matrix ${ind}`}
-                                // onChange={() => {
-                                //   handleMatrix(
-                                //     el.options.rows[i],
-                                //     elem,
-                                //     questionId
-                                //   );
-                                // }}
-                              />
-                              <span className="checkmark" />
-                              <p>{subOption}</p>
-                            </label>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </MatrixField>
-            );
-          }
           return '';
         })}
       </React.Fragment>
