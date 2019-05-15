@@ -6,7 +6,7 @@ import React from 'react';
 import { RadioField, TextField } from './Questions.style';
 
 export default class Questions extends React.Component {
-  renderQuestions = (
+  renderQuestionInputType = (
     inputType,
     errorArray,
     questionId,
@@ -19,7 +19,6 @@ export default class Questions extends React.Component {
     handleOther,
     subGroup
   ) => {
-    console.log(subGroup);
     if (inputType === 'text') {
       return (
         <TextField
@@ -132,7 +131,7 @@ export default class Questions extends React.Component {
     return null;
   };
 
-  loopOverQuestionsRender = (
+  questionsRender = (
     arrayOfQuestions,
     answers,
     errorArray,
@@ -161,7 +160,7 @@ export default class Questions extends React.Component {
       return (
         group &&
         group === `${category}` &&
-        this.renderQuestions(
+        this.renderQuestionInputType(
           inputType,
           errorArray,
           questionId,
@@ -199,7 +198,7 @@ export default class Questions extends React.Component {
       return (
         <React.Fragment>
           <h2>{category}</h2>
-          {this.loopOverQuestionsRender(
+          {this.questionsRender(
             questions,
             answers,
             errorArray,

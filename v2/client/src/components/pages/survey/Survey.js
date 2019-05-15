@@ -11,7 +11,7 @@ import {
   Form,
   Disclaimer,
 } from './Survey.style';
-
+import { TextField } from './Questions.style';
 // formState will be the object where we store survey responses
 // as the participant answers the questions
 export default class Survey extends React.Component {
@@ -28,6 +28,7 @@ export default class Survey extends React.Component {
     surveyDetails: null,
     loading: true,
     sessionId: null,
+    PIN: null,
     errors: {},
   };
 
@@ -94,6 +95,10 @@ export default class Survey extends React.Component {
     }));
 
     console.log('FORMSTATE', formState);
+  };
+
+  handlePIN = e => {
+    this.setState({ PIN: e.target.value });
   };
 
   // // when participant submits form
@@ -203,6 +208,26 @@ export default class Survey extends React.Component {
           </Disclaimer> */}
           <Form>
             <h3>Survey Questions:</h3>
+            <TextField>
+              <header>
+                <h4>Please enter your PIN</h4>
+                <p>
+                  We want to create a PIN code so that we can link your
+                  responses to this survey with your responses to other Connect
+                  5 surveys, whilst you remain entirely anonymous. In order to
+                  do that, please type in the third letter of your first name,
+                  the first two letters of your mother's first name and the date
+                  you were born (e.g., you would type 18 if you were born on the
+                  18th of July)
+                </p>
+              </header>
+              <input
+                id="PIN"
+                name="PIN"
+                type="text"
+                onChange={this.handlePIN}
+              />
+            </TextField>
             <Questions
               questions={questionsForSurvey}
               onChange={this.handleChange}

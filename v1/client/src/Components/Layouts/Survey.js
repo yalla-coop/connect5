@@ -30,6 +30,7 @@ export default class Survey extends React.Component {
     loading: true,
     sessionId: null,
     surveyType: null,
+    PIN: null,
     errors: {},
   };
 
