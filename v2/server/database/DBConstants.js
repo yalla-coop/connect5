@@ -65,11 +65,11 @@ questionConstants.regions = [...regions, 'Other (please specify)'];
 
 questionConstants.questionTypes = {
   positiveNumber: {
-    desc: 'number',
+    desc: 'numberPositive',
     min: 0,
   },
   fromZeroToTen: {
-    desc: 'number',
+    desc: 'numberZeroTen',
     min: 0,
     max: 10,
   },

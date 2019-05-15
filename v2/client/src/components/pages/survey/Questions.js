@@ -16,15 +16,17 @@ export default class Questions extends React.Component {
     helperText,
     onChange,
     options,
-    handleOther
+    handleOther,
+    subGroup
   ) => {
-    console.log(inputType);
+    console.log(subGroup);
     if (inputType === 'text') {
       return (
         <TextField
           unanswered={errorArray.includes(questionId) && !answers[questionId]}
         >
           <header>
+            {subGroup && <h3>{subGroup}</h3>}
             <h4 id={index}>{questionText}</h4>
             <p className="helpertext">{helperText}</p>
           </header>
@@ -38,6 +40,7 @@ export default class Questions extends React.Component {
           unanswered={errorArray.includes(questionId) && !answers[questionId]}
         >
           <header>
+            {subGroup && <h3>{subGroup}</h3>}
             <h4 id={index}>{questionText}</h4>
             <p className="helpertext">{helperText}</p>
           </header>
@@ -45,13 +48,13 @@ export default class Questions extends React.Component {
         </TextField>
       );
     }
-
-    if (inputType === 'number') {
+    if (inputType === 'numberPositive') {
       return (
         <TextField
           unanswered={errorArray.includes(questionId) && !answers[questionId]}
         >
           <header>
+            {subGroup && <h3>{subGroup}</h3>}
             <h4 id={index}>{questionText}</h4>
             <p className="helpertext">{helperText}</p>
           </header>
@@ -59,13 +62,27 @@ export default class Questions extends React.Component {
         </TextField>
       );
     }
-
+    if (inputType === 'numberZeroTen') {
+      return (
+        <TextField
+          unanswered={errorArray.includes(questionId) && !answers[questionId]}
+        >
+          <header>
+            {subGroup && <h3>{subGroup}</h3>}
+            <h4 id={index}>{questionText}</h4>
+            <p className="helpertext">{helperText}</p>
+          </header>
+          <input id={index} name={questionId} type="text" onChange={onChange} />
+        </TextField>
+      );
+    }
     if (inputType === 'radio') {
       return (
         <RadioField
           unanswered={errorArray.includes(questionId) && !answers[questionId]}
         >
           <header>
+            {subGroup && <h3>{subGroup}</h3>}
             <h4 id={index}>{questionText}</h4>
             <p className="helpertext">{helperText}</p>
           </header>
@@ -134,7 +151,13 @@ export default class Questions extends React.Component {
         options,
       } = el;
       const inputType = el.questionType.desc;
-      console.log(group);
+      const subGroupText = () => {
+        if (el.subGroup && el.subGroup.text) {
+          return el.subGroup.text;
+        }
+        return null;
+      };
+
       return (
         group &&
         group === `${category}` &&
@@ -148,7 +171,8 @@ export default class Questions extends React.Component {
           helperText,
           onChange,
           options,
-          handleOther
+          handleOther,
+          subGroupText()
         )
       );
     });
@@ -162,8 +186,14 @@ export default class Questions extends React.Component {
       answers,
       errors,
     } = this.props;
+    console.log(questions);
     const errorArray = Object.keys(errors);
-    const questionsCategories = ['demographic', 'Behavioural Insights', 'Test'];
+    const questionsCategories = [
+      'demographic',
+      'Behavioural Insights',
+      'about your trainer',
+      'about your usual way of teaching',
+    ];
 
     return questionsCategories.map(category => {
       return (
