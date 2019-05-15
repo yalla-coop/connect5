@@ -3,6 +3,7 @@ module.exports = {
     commonjs: true,
     es6: true,
     node: true,
+    jest: true
   },
   extends: ['airbnb-base', "prettier"],
   globals: {
@@ -14,6 +15,7 @@ module.exports = {
   },
   rules: {
     "no-unused-vars": ["error", { "args": "none" }],
+    "no-underscore-dangle": [0],
      // configure the prettier plugin
     "prettier/prettier": [
       "error",
