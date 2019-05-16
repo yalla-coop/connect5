@@ -1,22 +1,22 @@
 import React from 'react';
 import { Table } from 'antd';
+import styled from 'styled-components';
 
 const sessionsColumns = [
   {
     title: 'Type',
     dataIndex: 'type',
-    key: 'type',
-    // render: text => <a href="javascript:;">{text}</a>,
+    key: '1',
   },
   {
     title: 'Sessions',
     dataIndex: 'sessions',
-    key: 'sessions',
+    key: '2',
   },
   {
     title: 'Participants',
     dataIndex: 'participants',
-    key: 'participants',
+    key: '3',
   },
 ];
 
@@ -24,30 +24,35 @@ const surveysColumns = [
   {
     title: 'Type',
     dataIndex: '_id',
-    key: 'type',
+    key: '1',
   },
   {
     title: '# of Responses',
     dataIndex: 'responses',
-    key: 'responses',
+    key: '2',
   },
   {
     title: 'Response Rate',
     dataIndex: 'responseRate',
-    key: 'responseRate',
+    key: '3',
   },
 ];
+
+const Head = styled.h3`
+  font-size: 18px;
+  color: #4f4f4f;
+`;
 
 const Reach = ({ data }) => {
   return (
     <div>
-      <h2>Sessions</h2>
+      <Head>Sessions</Head>
       <Table
         columns={sessionsColumns}
         dataSource={data.sessions}
         pagination={false}
       />
-      <h2>Surveys</h2>
+      <Head>Surveys</Head>
       <Table
         columns={surveysColumns}
         dataSource={data.surveys}
