@@ -67,6 +67,7 @@ const getTrainerSuerveys = trainerId => {
     {
       $group: {
         _id: '$surveyType',
+        key: { $first: '$_id' },
         responses: { $sum: 1 },
         participants: { $first: { $sum: '$numberOfAttendees' } },
         type: {
@@ -148,6 +149,7 @@ const getTrainerSuerveys = trainerId => {
     {
       $project: {
         _id: 1,
+        key: 1,
         order: 1,
         type: 1,
         responses: 1,
