@@ -1,10 +1,8 @@
 const express = require('express');
 
 const router = express.Router();
+const loginController = require('./../controllers/login');
 
-// dummy router just to run the server.
-router.use((req, res, next) => {
-  res.send('test route');
-});
+router.post('/login', loginController);
 
 module.exports = router;

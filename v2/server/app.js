@@ -2,9 +2,12 @@ const boom = require('boom');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
 const logger = require('morgan');
 require('dotenv').config();
 
+console.log(process.env.MONGO_URI);
 const router = require('./router');
 const dbConnection = require('./database/dbConnection');
 
@@ -19,6 +22,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(expressValidator());
 
 app.use('/api', router);
 
