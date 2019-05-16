@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Table, Divider, Tag } from 'antd';
+import { Table } from 'antd';
 
-const columns = [
+const sessionsColumns = [
   {
     title: 'Type',
     dataIndex: 'type',
@@ -21,38 +20,41 @@ const columns = [
   },
 ];
 
-const data = [
+const surveysColumns = [
   {
-    key: '1',
-    type: 'Session 1',
-    sessions: 32,
-    participants: 32,
+    title: 'Type',
+    dataIndex: '_id',
+    key: 'type',
   },
   {
-    key: '2',
-    type: 'Session 2',
-    sessions: 32,
-    participants: 32,
+    title: '# of Responses',
+    dataIndex: 'responses',
+    key: 'responses',
   },
   {
-    key: '3',
-    type: 'Session 3',
-    sessions: 32,
-    participants: 32,
+    title: 'Response Rate',
+    dataIndex: 'responseRate',
+    key: 'responseRate',
   },
 ];
 
-const Reach = () => {
+const Reach = ({ data }) => {
   return (
     <div>
       <h2>Sessions</h2>
-      <Table columns={columns} dataSource={data} pagination={false} />
+      <Table
+        columns={sessionsColumns}
+        dataSource={data.sessions}
+        pagination={false}
+      />
       <h2>Surveys</h2>
-      <Table columns={columns} dataSource={data} pagination={false} />
+      <Table
+        columns={surveysColumns}
+        dataSource={data.surveys}
+        pagination={false}
+      />
     </div>
   );
 };
-
-Reach.propTypes = {};
 
 export default Reach;
