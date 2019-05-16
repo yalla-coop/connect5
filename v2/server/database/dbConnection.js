@@ -4,13 +4,14 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 let mongoURI = process.env.MONGO_URI;
-
 if (process.env.NODE_ENV === 'test') {
   // change mongoURI to testing database URI
   mongoURI = process.env.MONGOURI_TEST;
+  console.log('0000000000', mongoURI);
 } else if (process.env.NODE_ENV !== 'production') {
   // change mongoURI to testing database URI
   mongoURI = process.env.MONGOURI_DEV;
+  console.log('0000000000', mongoURI);
 }
 
 // create DB connection
