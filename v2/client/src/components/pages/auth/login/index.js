@@ -149,8 +149,13 @@ class Login extends Component {
 
         <NoAccount>
           <p>
-            Don't have an account:{' '}
-            <RegisterLink to="/"> Register Now</RegisterLink>
+            Don't have an account: <RegisterLink to="/"> Sign Up!</RegisterLink>
+          </p>
+        </NoAccount>
+        <NoAccount>
+          <p>
+            Course participant?
+            <RegisterLink to="/"> Login here!</RegisterLink>
           </p>
         </NoAccount>
       </>
