@@ -1,15 +1,14 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { colors, borders } from "../../../theme";
-
+import { colors, borders } from '../../../theme';
 
 const ToggleWrapper = styled.div`
   height: 32px;
   margin: 0 8px;
   border: 1px black solid;
   display: flex;
-  width: ${props => props.width || "300px"};
+  width: ${props => props.width || '300px'};
   cursor: pointer;
   border-radius: 4px;
   border: ${borders.toggle};
@@ -22,8 +21,8 @@ const LeftHalf = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${props => props.selected === "left" && `${colors.black}`};
-  color: ${props => props.selected === "left" && `${colors.offWhite}`};
+  background-color: ${props => props.selected === 'left' && `${colors.black}`};
+  color: ${props => props.selected === 'left' && `${colors.offWhite}`};
 `;
 
 const RightHalf = styled.div`
@@ -31,21 +30,21 @@ const RightHalf = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${props => props.selected === "right" && `${colors.black}`};
-  color: ${props => props.selected === "right" && `${colors.offWhite}`};
+  background-color: ${props => props.selected === 'right' && `${colors.black}`};
+  color: ${props => props.selected === 'right' && `${colors.offWhite}`};
 `;
 
-// NOTE: To make sure it toggles give a prop called selected 
+// NOTE: To make sure it toggles give a prop called selected
 // and change to either 'right' or 'left' depending on what's the opposite
 // to what's currently been highlight on the last click
 
-const Toggle = ({ leftText, rightText, ...props}) => {
+const Toggle = ({ leftText, rightText, ...props }) => {
   return (
     <ToggleWrapper {...props}>
       <LeftHalf {...props}>{leftText}</LeftHalf>
       <RightHalf {...props}>{rightText}</RightHalf>
     </ToggleWrapper>
-  )
-}
+  );
+};
 
 export default Toggle;
