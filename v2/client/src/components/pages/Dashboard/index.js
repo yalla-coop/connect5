@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import {
   Wrapper,
-  Header,
+  TopSection,
   Title,
   Role,
   StatsWrapper,
@@ -10,6 +10,8 @@ import {
   Label,
   StatNumber,
 } from './Dashboard.style';
+
+import Header from '../../common/Header';
 
 export default class Dashboard extends Component {
   state = {
@@ -21,10 +23,11 @@ export default class Dashboard extends Component {
 
     return (
       <Wrapper>
-        <Header>
+        <Header type="home" />
+        <TopSection>
           <Title>Welcome back, Elysabeth</Title>
           <Role>Role: Trainer</Role>
-        </Header>
+        </TopSection>
         <StatsWrapper>
           <StatItem>
             <Label>Session</Label>

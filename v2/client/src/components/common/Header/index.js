@@ -1,7 +1,12 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 import { colors, borders, shadows } from '../../../theme';
+
+import Connect5Logo from "./../../../assets/connect-5-white.png"
+
+import { HOME_URL } from '../../../constants/navigationRoutes';
 
 const sharedStyles = css`
   position: fixed;
@@ -49,20 +54,54 @@ export const viewHeader = css`
   }
 `;
 
+export const homeHeader = css`
+  top: 0;
+  background-color: ${colors.primary};
+  color: ${colors.offWhite};
+  height: 48px;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const StyledHeader = styled.div`
   ${sharedStyles}
   ${props => props.type === 'section' && sectionHeader}
   ${props => props.type === 'view' && viewHeader}
+  ${props => props.type === 'home' && homeHeader}
 `;
+
+const HomeIcon = styled(NavLink)`
+  text-decoration: none;
+  color: ${colors.offWhite};
+  i {
+    font-size: 30px;
+  }
+`;
+
+const Logo = styled.img`
+  height: 32px;
+  margin: 0;
+`
 
 // NOTE: If you need Section and View header at same time
 // then give your section header the nudge prop to shift it down
 
-const Header = ({ label, ...props }) => {
+const Header = ({ label, type, ...props }) => {
   return (
-    <StyledHeader {...props}>
-      <h1>{label}</h1>
-    </StyledHeader>
+    <>
+      {type === 'home' ? (
+        <StyledHeader type={type} {...props}>
+          <HomeIcon to={HOME_URL}>
+            <i className="fas fa-home" />
+          </HomeIcon>
+          <Logo src={Connect5Logo} alt="logo" />
+        </StyledHeader>
+      ) : (
+        <StyledHeader type={type} {...props}>
+          <h1>{label}</h1>
+        </StyledHeader>
+      )}
+    </>
   );
 };
 

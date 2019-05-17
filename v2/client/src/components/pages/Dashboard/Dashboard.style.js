@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+  padding-top: 64px;
+`;
 
-export const Header = styled.div``;
+export const TopSection = styled.div``;
 
 export const Title = styled.h2``;
 
