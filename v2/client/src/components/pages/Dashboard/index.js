@@ -9,6 +9,7 @@ import {
   StatItem,
   Label,
   StatNumber,
+  StyledLink,
 } from './Dashboard.style';
 
 import Header from '../../common/Header';
@@ -25,7 +26,10 @@ export default class Dashboard extends Component {
       <Wrapper>
         <Header type="home" />
         <TopSection>
-          <Title>Welcome back, Elysabeth</Title>
+          <Title>
+            Welcome back, <br />
+            Elysabeth
+          </Title>
           <Role>Role: Trainer</Role>
         </TopSection>
         <StatsWrapper>
@@ -46,6 +50,8 @@ export default class Dashboard extends Component {
             <StatNumber>17</StatNumber>
           </StatItem>
         </StatsWrapper>
+        <StyledLink to="/change-password">Change Password</StyledLink>
+        <StyledLink to="/logout">Log out</StyledLink>
       </Wrapper>
     );
   }

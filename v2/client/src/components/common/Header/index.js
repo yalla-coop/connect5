@@ -10,6 +10,7 @@ import { HOME_URL } from '../../../constants/navigationRoutes';
 
 const sharedStyles = css`
   position: fixed;
+  left: 0;
   width: 100%;
   box-shadow: ${shadows.primary};
   color: ${colors.white};
