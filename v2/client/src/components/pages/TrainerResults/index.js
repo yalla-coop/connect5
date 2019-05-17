@@ -8,6 +8,8 @@ import Icon from 'antd/lib/icon';
 import Reach from '../../common/Reach';
 import { fetchTrainerResults } from '../../../actions/users';
 
+import Header from '../../common/Header';
+
 import {
   TrainerResultsWrapper,
   Header as StyledHeader,
@@ -33,9 +35,7 @@ class TrainerReslts extends Component {
     const { results } = this.props;
     return (
       <TrainerResultsWrapper>
-        <StyledHeader>
-          <ContentWrapper>Results</ContentWrapper>
-        </StyledHeader>
+        <Header label="results" type="section" />
         <Collapse
           accordion
           expandIconPosition="right"
