@@ -3,8 +3,17 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
+// PAGES
 import Home from './pages/LandingPage';
 import TrainerResutls from './pages/TrainerResults';
+import Dashboard from './pages/Dashboard';
+
+// ROUTES
+import {
+  HOME_URL,
+  DASHBOARD_URL,
+  TRAINER_RESULTS_URL,
+} from '../constants/navigationRoutes';
 
 const Wrapper = styled.div`
   min-width: 100vw;
@@ -18,8 +27,13 @@ class App extends Component {
       <Wrapper>
         <Router>
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/trainer-results" component={TrainerResutls} />
+            <Route exact path={HOME_URL} component={Home} />
+            <Route
+              exact
+              path={TRAINER_RESULTS_URL}
+              component={TrainerResutls}
+            />
+            <Route exact path={DASHBOARD_URL} component={Dashboard} />
             <Route
               render={() => (
                 <h1>
