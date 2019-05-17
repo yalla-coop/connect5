@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { LOGIN_SUCCESS, LOGIN_FAIL } from '../constants/actionTypes';
-import history from '../history';
+import { returnErrors } from './errorAction';
 
 // Login User
 export const loginUser = loginData => dispatch => {
   const { email, password } = loginData;
+
   // Headers
   const config = {
     headers: {
@@ -17,15 +18,16 @@ export const loginUser = loginData => dispatch => {
 
   axios
     .post('/api/login', body, config)
-    .then(
-      res =>
-        dispatch({
-          type: LOGIN_SUCCESS,
-          payload: res.data,
-        }),
-      history.push('/')
+    .then(res =>
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      })
     )
-    .catch(() => {
+    .catch(err => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL')
+      );
       dispatch({
         type: LOGIN_FAIL,
       });
