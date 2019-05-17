@@ -57,7 +57,13 @@ export default class Questions extends React.Component {
             <h4 id={index}>{questionText}</h4>
             <p className="helpertext">{helperText}</p>
           </header>
-          <input id={index} name={questionId} type="text" onChange={onChange} />
+          <input
+            id={index}
+            name={questionId}
+            type="number"
+            min="0"
+            onChange={onChange}
+          />
         </TextField>
       );
     }
@@ -71,7 +77,15 @@ export default class Questions extends React.Component {
             <h4 id={index}>{questionText}</h4>
             <p className="helpertext">{helperText}</p>
           </header>
-          <input id={index} name={questionId} type="text" onChange={onChange} />
+          <input
+            id={`sliderInput-${index}`}
+            name={questionId}
+            min="0"
+            max="10"
+            type="range"
+            onChange={onChange}
+          />
+          <output>{answers[questionId]}</output>
         </TextField>
       );
     }
@@ -185,7 +199,7 @@ export default class Questions extends React.Component {
       answers,
       errors,
     } = this.props;
-    console.log(questions);
+
     const errorArray = Object.keys(errors);
     const questionsCategories = [
       'demographic',
