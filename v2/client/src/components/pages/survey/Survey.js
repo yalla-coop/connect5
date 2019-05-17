@@ -105,27 +105,18 @@ export default class Survey extends React.Component {
   // // this puts the required info into an object and sends to server
   handleSubmit = e => {
     e.preventDefault();
-    const { history } = this.props;
-    const { responseId, formState, sessionId, surveyType } = this.state;
-    console.log('RESPONSEID', responseId);
-    const formSubmission = { formState, sessionId, surveyType };
+    // const { history } = this.props;
+    const { formState, sessionId, surveyType, PIN } = this.state;
+
+    const formSubmission = { PIN, sessionId, surveyType, formState };
     // console.log(formSubmission);
     axios
-      .post(`/submit/${responseId}`, formSubmission)
+      .post(`/api/survey/submit/`, formSubmission)
       .then(result => {
-        swal
-          .fire('Done!', 'Thanks for submitting your feedback!', 'success')
-          .then(() => history.push('/'));
+        console.log(result);
       })
       .catch(err => {
         console.log('ERR', err);
-        this.setState({
-          errors: err.response.data,
-        });
-        swal({
-          icon: 'error',
-          title: 'Please answer all required questions',
-        });
       });
   };
 
@@ -205,7 +196,7 @@ export default class Survey extends React.Component {
               .
             </p>
           </Disclaimer> */}
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
             <h3>Survey Questions:</h3>
             <TextField>
               <header>

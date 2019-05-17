@@ -2,7 +2,7 @@
 const Response = require('../../models/Response');
 const Session = require('../../models/Session');
 
-const storeResponse = async (sessionId, surveyType, PIN) => {
+const storeResponse = async (PIN, sessionId, surveyType) => {
   const sessionInfo = await Session.findById(sessionId);
 
   const response = new Response({
