@@ -1,3 +1,5 @@
 import { combineReducers } from 'redux';
 
-export default combineReducers({});
+import trainerReducer from './trainer';
+
+export default combineReducers({ results: trainerReducer });
