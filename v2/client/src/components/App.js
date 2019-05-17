@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
-import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import { colors } from '../theme';
 import Home from './pages/LandingPage';
