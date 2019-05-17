@@ -1,7 +1,7 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 
-const buildDB = require('./../../database/data/development/index');
+const buildDB = require('./../../database/data/test');
 const app = require('./../../app');
 
 describe('Tesing for login route', () => {
