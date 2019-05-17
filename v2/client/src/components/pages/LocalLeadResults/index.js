@@ -6,14 +6,14 @@ import Button from 'antd/lib/button';
 import Icon from 'antd/lib/icon';
 
 import Reach from '../../common/Reach';
-import { fetchTrainerResults } from '../../../actions/users';
+import { fetchLocalLeadResults } from '../../../actions/users';
 
 import {
   TrainerResultsWrapper,
   Header as StyledHeader,
   ContentWrapper,
   ButtonWrapper,
-} from './TrainerResults.style';
+} from '../TrainerResults/TrainerResults.style';
 
 const { Panel } = Collapse;
 
@@ -23,10 +23,10 @@ const panels = {
   feedback: { text: 'Trainer feedback', render: () => null },
 };
 
-class TrainerReslts extends Component {
+class LocalLeadResults extends Component {
   async componentDidMount() {
     // eslint-disable-next-line react/destructuring-assignment
-    await this.props.fetchTrainerResults();
+    await this.props.fetchLocalLeadResults();
   }
 
   render() {
@@ -60,10 +60,10 @@ class TrainerReslts extends Component {
 }
 
 const mapStateToProps = state => ({
-  results: state.trainer,
+  results: state.loaclLead,
 });
 
 export default connect(
   mapStateToProps,
-  { fetchTrainerResults }
-)(TrainerReslts);
+  { fetchLocalLeadResults }
+)(LocalLeadResults);
