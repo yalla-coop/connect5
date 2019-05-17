@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config();
 
-console.log(process.env.MONGO_URI);
 const router = require('./router');
 const dbConnection = require('./database/dbConnection');
 
