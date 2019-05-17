@@ -145,7 +145,7 @@ export default class Survey extends React.Component {
     }
 
     const { sessionDate, trainerNames, questionsForSurvey } = surveyDetails;
-    // console.log(surveyDetails);
+    console.log(formState);
 
     return (
       <SurveyQs>
