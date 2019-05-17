@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import styled from 'styled-components';
-import Navbar from './common/Navbar';
 
-import { colors } from '../theme';
 import Home from './pages/LandingPage';
 import TrainerResutls from './pages/TrainerResults';
 
@@ -30,7 +28,6 @@ class App extends Component {
               )}
             />
           </Switch>
-          <Navbar />
         </Router>
       </Wrapper>
     );

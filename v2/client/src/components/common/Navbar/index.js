@@ -1,15 +1,12 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-import Icon from 'antd/lib/icon';
-
-import { colors, borders, shadows } from '../../../theme';
+import { colors, borders } from '../../../theme';
 
 // antd icons
 
 import {
-  HOME_URL,
   DASHBOARD_URL,
   ADD_SESSION_URL,
   TRAINER_RESULTS_URL,
@@ -20,7 +17,6 @@ import {
   DEMOGRAPHICS_URL,
   USER_INSIGHTS,
   USER_PROGRESS,
-  USER_LOGIN,
   USER_DASHBOARD,
 } from '../../../constants/navigationRoutes';
 
@@ -64,22 +60,90 @@ const Navbar = ({ userType }) => {
 
   return (
     <Wrapper>
-      <MenuItem to={DASHBOARD_URL}>
-        <MenuIcon className="fas fa-home" />
-        Home
-      </MenuItem>
-      <MenuItem to={TRAINER_RESULTS_URL}>
-        <MenuIcon className="fas fa-poll-h" />
-        Results
-      </MenuItem>
-      <MenuItem to={TRAINER_SESSIONS_URL}>
-        <MenuIcon className="far fa-calendar-alt" />
-        Sessions
-      </MenuItem>
-      <MenuItem to={ADD_SESSION_URL}>
-        <MenuIcon className="fas fa-plus" />
-        Add
-      </MenuItem>
+      {/* TRAINER */}
+      {userType === USER_TYPES.trainer && (
+        <>
+          <MenuItem to={DASHBOARD_URL}>
+            <MenuIcon className="fas fa-home" />
+            Home
+          </MenuItem>
+          <MenuItem to={TRAINER_RESULTS_URL}>
+            <MenuIcon className="fas fa-poll-h" />
+            Results
+          </MenuItem>
+          <MenuItem to={TRAINER_SESSIONS_URL}>
+            <MenuIcon className="far fa-calendar-alt" />
+            Sessions
+          </MenuItem>
+          <MenuItem to={ADD_SESSION_URL}>
+            <MenuIcon className="fas fa-plus" />
+            Add
+          </MenuItem>
+        </>
+      )}
+      {/* ADMIN */}
+      {userType === USER_TYPES.admin && (
+        <>
+          <MenuItem to={DASHBOARD_URL}>
+            <MenuIcon className="fas fa-home" />
+            Home
+          </MenuItem>
+          <MenuItem to={GROUP_RESULTS_URL}>
+            <MenuIcon className="fas fa-poll-h" />
+            Results
+          </MenuItem>
+          <MenuItem to={GROUP_SESSIONS_URL}>
+            <MenuIcon className="far fa-calendar-alt" />
+            Sessions
+          </MenuItem>
+          <MenuItem to={TRAINERS_URL}>
+            <MenuIcon className="fas fa-users" />
+            Trainers
+          </MenuItem>
+          <MenuItem to={DEMOGRAPHICS_URL}>
+            <MenuIcon className="fas fa-chart-pie" />
+            People
+          </MenuItem>
+        </>
+      )}
+      {/* LOCAL LEAD */}
+      {userType === USER_TYPES.localLead && (
+        <>
+          <MenuItem to={DASHBOARD_URL}>
+            <MenuIcon className="fas fa-home" />
+            Home
+          </MenuItem>
+          <MenuItem to={GROUP_RESULTS_URL}>
+            <MenuIcon className="fas fa-poll-h" />
+            Results
+          </MenuItem>
+          <MenuItem to={GROUP_SESSIONS_URL}>
+            <MenuIcon className="far fa-calendar-alt" />
+            Sessions
+          </MenuItem>
+          <MenuItem to={TRAINERS_URL}>
+            <MenuIcon className="fas fa-users" />
+            Trainers
+          </MenuItem>
+        </>
+      )}
+      {/* USER */}
+      {userType === USER_TYPES.user && (
+        <>
+          <MenuItem to={USER_DASHBOARD}>
+            <MenuIcon className="fas fa-home" />
+            Home
+          </MenuItem>
+          <MenuItem to={USER_INSIGHTS}>
+            <MenuIcon className="fas fa-poll-h" />
+            Insights
+          </MenuItem>
+          <MenuItem to={USER_PROGRESS}>
+            <MenuIcon className="fas fa-tasks" />
+            Progress
+          </MenuItem>
+        </>
+      )}
     </Wrapper>
   );
 };

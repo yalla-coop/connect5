@@ -10,12 +10,7 @@ import { fetchTrainerResults } from '../../../actions/users';
 
 import Header from '../../common/Header';
 
-import {
-  TrainerResultsWrapper,
-  Header as StyledHeader,
-  ContentWrapper,
-  ButtonWrapper,
-} from './TrainerResults.style';
+import { TrainerResultsWrapper, ButtonWrapper } from './TrainerResults.style';
 
 const { Panel } = Collapse;
 
@@ -54,8 +49,6 @@ class TrainerReslts extends Component {
             Export to CSV
           </Button>
         </ButtonWrapper>
-
-        <i className="fas fa-home" />
       </TrainerResultsWrapper>
     );
   }
