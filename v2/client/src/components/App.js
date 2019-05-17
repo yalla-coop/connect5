@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import styled from 'styled-components';
+import Navbar from './common/Navbar';
+
 import { colors } from '../theme';
 import Home from './pages/LandingPage';
 import TrainerResutls from './pages/TrainerResults';
@@ -9,7 +11,6 @@ import TrainerResutls from './pages/TrainerResults';
 const Wrapper = styled.div`
   min-width: 100vw;
   min-height: 100vh;
-  background-color: ${colors.offWhite};
 `;
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -29,6 +30,7 @@ class App extends Component {
               )}
             />
           </Switch>
+          <Navbar />
         </Router>
       </Wrapper>
     );

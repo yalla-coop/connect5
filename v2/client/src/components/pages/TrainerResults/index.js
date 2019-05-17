@@ -54,6 +54,8 @@ class TrainerReslts extends Component {
             Export to CSV
           </Button>
         </ButtonWrapper>
+
+        <i className="fas fa-home" />
       </TrainerResultsWrapper>
     );
   }
