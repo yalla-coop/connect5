@@ -30,6 +30,10 @@ const questionSchema = new Schema({
       type: String,
     },
   },
+  isRequired: {
+    type: Boolean,
+    default: true,
+  },
   // question can contain multi helper text
   helperText: [String],
   options: [Schema.Types.Mixed],

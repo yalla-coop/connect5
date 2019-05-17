@@ -87,7 +87,7 @@ export default class Questions extends React.Component {
                               <p>{value}</p>
                           </label>
                         </div>
-                        
+
                       </div>
                     );
                   })}

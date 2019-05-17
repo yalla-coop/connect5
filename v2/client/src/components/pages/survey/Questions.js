@@ -3,9 +3,18 @@
 
 import React from 'react';
 
-import { RadioField, TextField } from './Questions.style';
+import { RadioField, TextField, ErrorDiv, Slider } from './Questions.style';
 
 export default class Questions extends React.Component {
+  checkErrors = (errors, questionId, answers) =>
+    errors.includes(questionId) && !answers[questionId] ? (
+      <ErrorDiv>
+        <span>Required</span>
+      </ErrorDiv>
+    ) : (
+      ''
+    );
+
   renderQuestionInputType = (
     inputType,
     errorArray,
@@ -21,13 +30,12 @@ export default class Questions extends React.Component {
   ) => {
     if (inputType === 'text') {
       return (
-        <TextField
-          unanswered={errorArray.includes(questionId) && !answers[questionId]}
-        >
+        <TextField>
           <header>
             {subGroup && <h3>{subGroup}</h3>}
-            <h4 id={index}>{questionText}</h4>
+            <p id={index}>{questionText}</p>
             <p className="helpertext">{helperText}</p>
+            {this.checkErrors(errorArray, questionId, answers)}
           </header>
           <input id={index} name={questionId} type="text" onChange={onChange} />
         </TextField>
@@ -40,10 +48,11 @@ export default class Questions extends React.Component {
         >
           <header>
             {subGroup && <h3>{subGroup}</h3>}
-            <h4 id={index}>{questionText}</h4>
+            <p id={index}>{questionText}</p>
             <p className="helpertext">{helperText}</p>
+            {this.checkErrors(errorArray, questionId, answers)}
           </header>
-          <input id={index} name={questionId} type="text" onChange={onChange} />
+          <input id={index} name={questionId} type="date" onChange={onChange} />
         </TextField>
       );
     }
@@ -56,6 +65,7 @@ export default class Questions extends React.Component {
             {subGroup && <h3>{subGroup}</h3>}
             <h4 id={index}>{questionText}</h4>
             <p className="helpertext">{helperText}</p>
+            {this.checkErrors(errorArray, questionId, answers)}
           </header>
           <input
             id={index}
@@ -69,15 +79,15 @@ export default class Questions extends React.Component {
     }
     if (inputType === 'numberZeroTen') {
       return (
-        <TextField
-          unanswered={errorArray.includes(questionId) && !answers[questionId]}
-        >
+        <TextField>
           <header>
             {subGroup && <h3>{subGroup}</h3>}
             <h4 id={index}>{questionText}</h4>
             <p className="helpertext">{helperText}</p>
+            {this.checkErrors(errorArray, questionId, answers)}
           </header>
-          <input
+          <Slider
+            unanswered={errorArray.includes(questionId) && !answers[questionId]}
             id={`sliderInput-${index}`}
             name={questionId}
             min="0"
@@ -96,8 +106,9 @@ export default class Questions extends React.Component {
         >
           <header>
             {subGroup && <h3>{subGroup}</h3>}
-            <h4 id={index}>{questionText}</h4>
+            <p id={index}>{questionText}</p>
             <p className="helpertext">{helperText}</p>
+            {this.checkErrors(errorArray, questionId, answers)}
           </header>
           <div className="answers">
             {options.map((e, i) => {

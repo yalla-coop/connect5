@@ -39,24 +39,26 @@ export default class Survey extends React.Component {
     const survey = `${location.pathname}`;
     const surveyParts = survey.split('/')[2];
 
-    axios.get(`/api/survey/${surveyParts}`).then(res => {
-      const { sessionId, surveyType } = res.data;
+    axios
+      .get(`/api/survey/${surveyParts}`)
+      .then(res => {
+        const { sessionId, surveyType } = res.data;
 
-      this.setState({
-        surveyDetails: res.data,
-        loading: false,
-        sessionId,
-        surveyType,
-      });
-    });
-    // .then(() => {
-    //   swal.fire({
-    //     text:
-    //       'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.',
-    //     button: 'Begin',
-    //   });
-    // })
-    // .catch(err => console.error(err.stack));
+        this.setState({
+          surveyDetails: res.data,
+          loading: false,
+          sessionId,
+          surveyType,
+        });
+      })
+      // .then(() => {
+      //   swal.fire({
+      //     text:
+      //       'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.',
+      //     button: 'Begin',
+      //   });
+      // })
+      .catch(err => console.error(err.stack));
   }
 
   // function that will check if the div for the answer has been selected and if so add that answer to the formstate
@@ -117,6 +119,9 @@ export default class Survey extends React.Component {
       })
       .catch(err => {
         console.log('ERR', err);
+        this.setState({
+          errors: err.response.data,
+        });
       });
   };
 
@@ -134,7 +139,7 @@ export default class Survey extends React.Component {
     if (loading) {
       return <h3>Loading...</h3>;
     }
-    console.log(this.state);
+    console.log(errors);
     const { sessionDate, trainerNames, questionsForSurvey } = surveyDetails;
 
     return (

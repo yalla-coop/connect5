@@ -1,5 +1,32 @@
 import styled from 'styled-components';
 
+const ErrorDiv = styled.div`
+  color: red;
+`;
+
+const Slider = styled.input`
+  overflow: hidden;
+  width: 80px;
+  -webkit-appearance: none;
+  background-color: gray;
+
+  &::-webkit-slider-thumb {
+    width: 10px;
+    -webkit-appearance: none;
+    height: 10px;
+    cursor: ew-resize;
+    background: #434343;
+    box-shadow: -80px 0 0 80px #43e5f7;
+  }
+
+  &::-webkit-slider-runnable-track {
+    height: 10px;
+    -webkit-appearance: none;
+    color: #13bba4;
+    margin-top: -1px;
+  }
+`;
+
 const CommonStyles = styled.div`
   margin-bottom: 32px;
 
@@ -17,7 +44,7 @@ const CommonStyles = styled.div`
     size: 16px;
   }
 
-  ${({ unanswered }) => unanswered && 'color: red;'}
+  ${({ unanswered }) => unanswered && 'input { border: 1px solid red}'}
 `;
 
 const RadioField = styled(CommonStyles)`
@@ -98,6 +125,7 @@ const RadioField = styled(CommonStyles)`
       }
     }
   }
+  ${({ unanswered }) => unanswered && 'input { border: 1px solid red}'}
 `;
 
 const TextField = styled(CommonStyles)`
@@ -109,8 +137,7 @@ const TextField = styled(CommonStyles)`
     padding: 8px;
   }
 
-  ${({ unanswered }) =>
-    unanswered && 'color: red; input { border: 1px solid red} '}
+  ${({ unanswered }) => unanswered && 'input { border: 1px solid red} '}
 `;
 
 const MatrixField = styled(CommonStyles)`
@@ -284,4 +311,12 @@ const CheckboxField = styled(CommonStyles)`
   }
 `;
 
-export { RadioField, TextField, RadioStarField, MatrixField, CheckboxField };
+export {
+  Slider,
+  ErrorDiv,
+  RadioField,
+  TextField,
+  RadioStarField,
+  MatrixField,
+  CheckboxField,
+};
