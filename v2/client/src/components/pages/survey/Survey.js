@@ -139,7 +139,7 @@ export default class Survey extends React.Component {
     if (loading) {
       return <h3>Loading...</h3>;
     }
-    console.log(errors);
+    console.log(this.state);
     const { sessionDate, trainerNames, questionsForSurvey } = surveyDetails;
 
     return (
@@ -203,30 +203,12 @@ export default class Survey extends React.Component {
           </Disclaimer> */}
           <Form onSubmit={this.handleSubmit}>
             <h3>Survey Questions:</h3>
-            <TextField>
-              <header>
-                <h4>Please enter your PIN</h4>
-                <p>
-                  We want to create a PIN code so that we can link your
-                  responses to this survey with your responses to other Connect
-                  5 surveys, whilst you remain entirely anonymous. In order to
-                  do that, please type in the third letter of your first name,
-                  the first two letters of your mother's first name and the date
-                  you were born (e.g., you would type 18 if you were born on the
-                  18th of July)
-                </p>
-              </header>
-              <input
-                id="PIN"
-                name="PIN"
-                type="text"
-                onChange={this.handlePIN}
-              />
-            </TextField>
+
             <Questions
               questions={questionsForSurvey}
               onChange={this.handleChange}
               handleOther={this.handleOther}
+              handlePIN={this.handlePIN}
               answers={formState}
               selectCheckedItem={this.selectCheckedItem}
               errors={errors}

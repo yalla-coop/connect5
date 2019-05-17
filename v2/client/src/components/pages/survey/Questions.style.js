@@ -5,10 +5,7 @@ const ErrorDiv = styled.div`
 `;
 
 const Slider = styled.input`
-  overflow: hidden;
-  width: 80px;
   -webkit-appearance: none;
-  background-color: gray;
 
   &::-webkit-slider-thumb {
     width: 10px;
@@ -16,14 +13,10 @@ const Slider = styled.input`
     height: 10px;
     cursor: ew-resize;
     background: #434343;
-    box-shadow: -80px 0 0 80px #43e5f7;
   }
 
   &::-webkit-slider-runnable-track {
-    height: 10px;
-    -webkit-appearance: none;
-    color: #13bba4;
-    margin-top: -1px;
+    border: 1px solid black;
   }
 `;
 
