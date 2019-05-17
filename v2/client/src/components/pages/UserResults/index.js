@@ -13,7 +13,7 @@ import {
   Header as StyledHeader,
   ContentWrapper,
   ButtonWrapper,
-} from '../TrainerResults/TrainerResults.style';
+} from './UserResults.style';
 
 const { Panel } = Collapse;
 
@@ -25,6 +25,7 @@ const panels = {
 
 class UserResults extends Component {
   async componentDidMount() {
+    // show results based on the logged in user id and role
     const {
       match: { params },
     } = this.props;

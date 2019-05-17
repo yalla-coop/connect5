@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-
 import styled from 'styled-components';
+
 import Home from './pages/LandingPage';
-import TrainerResults from './pages/TrainerResults';
-import LocalLeadResults from './pages/LocalLeadResults';
-import AdminResults from './pages/AdminResults';
 import UserResults from './pages/UserResults';
 
 const Wrapper = styled.div`
@@ -21,9 +18,6 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/trainer-results" component={TrainerResults} />
-            <Route exact path="/local-lead" component={LocalLeadResults} />
-            <Route exact path="/admin" component={AdminResults} />
             <Route exact path="/users/:id/results" component={UserResults} />
             <Route
               render={() => (
