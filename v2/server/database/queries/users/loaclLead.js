@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const User = require('../../models/User');
 
-exports.getLocalLeadsSessions = leadId => {
+const getLocalLeadsSessions = leadId => {
   return User.aggregate([
     {
       $match: {
@@ -71,7 +71,7 @@ exports.getLocalLeadsSessions = leadId => {
 
 // Trainer responses number grouped by survery type
 
-exports.getTeamLeadSuerveys = teamLeadId => {
+const getTeamLeadSuerveys = teamLeadId => {
   return User.aggregate([
     {
       $match: {
@@ -215,3 +215,5 @@ exports.getTeamLeadSuerveys = teamLeadId => {
     },
   ]);
 };
+
+module.exports = { getLocalLeadsSessions, getTeamLeadSuerveys };

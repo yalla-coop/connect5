@@ -1,6 +1,6 @@
 const User = require('../../models/User');
 
-exports.getAdminSessions = () => {
+const getAdminSessions = () => {
   return User.aggregate([
     {
       $lookup: {
@@ -61,7 +61,7 @@ exports.getAdminSessions = () => {
 
 // Trainer responses number grouped by survery type
 
-exports.getAdminSuerveys = () => {
+const getAdminSuerveys = () => {
   return User.aggregate([
     {
       $lookup: {
@@ -197,3 +197,5 @@ exports.getAdminSuerveys = () => {
     },
   ]);
 };
+
+module.exports = { getAdminSessions, getAdminSuerveys };
