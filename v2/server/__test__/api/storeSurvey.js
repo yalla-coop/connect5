@@ -51,7 +51,6 @@ describe('Test /survey/submit/', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body).toBeDefined();
-        expect(res.body).toBe(0);
         expect(res.body[0].answer).toBe(formState[questionIds[1]._id]);
         expect(res.body[0].response).toBeDefined();
         done(err);

@@ -7,21 +7,25 @@ const Answer = require('../../models/Answer');
 const storeAnswers = async (responseId, answers, sessionId) => {
   // this loops through the answers object and adds each answer to the Answer model
   const answersArr = Object.keys(answers).map(el => [el, answers[el]]);
+  let storableAnswers;
 
-  answersArr.map(async (el, i) => {
-    const newAnswer = {
+  answersArr.reduce((acc, cur) => {
+    const answer = {
       response: responseId,
       session: sessionId,
-      question: el[0],
-      answer: el[1],
+      question: cur[0],
+      answer: cur[1],
     };
+    acc.push(answer);
+    storableAnswers = acc;
+    return storableAnswers;
+  }, []);
 
-    await Answer.create(newAnswer);
-  });
+  await Answer.create(storableAnswers);
 
-  const newAnswers = await Answer.find({ response: responseId });
+  const storedAnswers = await Answer.find({ response: responseId });
 
-  return newAnswers;
+  return storedAnswers;
 };
 
 module.exports = storeAnswers;
