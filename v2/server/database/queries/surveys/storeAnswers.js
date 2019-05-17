@@ -1,33 +1,23 @@
 // adds all the answers from the latest survey submission
 // to the Answer model
 
-// Load models
+// Load model
 const Answer = require('../../models/Answer');
 
-const storeAnswers = async (responseId, answers, sessionId, PIN) => {
+const storeAnswers = async (responseId, answers, sessionId) => {
   // this loops through the answers object and adds each answer to the Answer model
-  const answersArr = Object.keys(answers);
-  // answersArr.map(singleAnswer => {
-  //   console.log('hello');
-  //   // const newAnswer = {
-  //   //   response: responseId,
-  //   //   session: sessionId,
-  //   //   question: key,
-  //   //   answer: answers[key],
-  //   // };
-  // });
+  const answersArr = Object.keys(answers).map(el => [el, answers[el]]);
 
-  for (const key in answers) {
-    const answer = new Answer({
-      PIN,
+  answersArr.map(async (el, i) => {
+    const newAnswer = {
       response: responseId,
       session: sessionId,
-      question: key,
-      answer: answers[key],
-    });
+      question: el[0],
+      answer: el[1],
+    };
 
-    await answer.save();
-  }
+    await Answer.create(newAnswer);
+  });
 
   const newAnswers = await Answer.find({ response: responseId });
 
