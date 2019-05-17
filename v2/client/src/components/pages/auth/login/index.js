@@ -1,16 +1,47 @@
 import React, { Component } from 'react';
-import { Input, Icon, Button } from 'antd';
+import { Input, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { H3, InputDiv, LoginForm } from './Login.style';
-import { loginUser } from '../../../../actions/auth';
+import {
+  LoginHeading,
+  H3,
+  InputDiv,
+  LoginForm,
+  LoginFail,
+  NoAccount,
+  RegisterLink,
+} from './Login.style';
+import { loginUser } from '../../../../actions/authAction';
+import { clearErrors } from '../../../../actions/errorAction';
+import history from '../../../../history';
 
 class Login extends Component {
   state = {
     fields: {},
     errors: {},
+    msg: null,
   };
 
+  componentDidUpdate(prevProps) {
+    const { error, isAuthenticated } = this.props;
+    if (error !== prevProps.error) {
+      // Check for login error
+      this.updateLogin(error);
+    }
+
+    // If authenticated,
+    if (isAuthenticated) {
+      history.push('/');
+    }
+  }
+
+  updateLogin = error => {
+    if (error.id === 'LOGIN_FAIL') {
+      this.setState({ msg: error.msg.error });
+    } else {
+      this.setState({ msg: null });
+    }
+  };
   // Check inputs validation then if not valide show error msg
 
   validateForm = () => {
@@ -74,14 +105,16 @@ class Login extends Component {
   };
 
   render() {
-    const { fields, errors } = this.state;
+    const { fields, errors, msg } = this.state;
     const { email, password } = fields;
     const { emailError, passwordError } = errors;
     const { onInputChange, onFormSubmit } = this;
     return (
       <>
         <LoginForm onSubmit={onFormSubmit}>
-          <H3>Login</H3>
+          <LoginHeading>
+            <H3>Login</H3>
+          </LoginHeading>
           <InputDiv>
             <Input
               placeholder="Enter your email"
@@ -90,10 +123,9 @@ class Login extends Component {
               value={email}
               onChange={onInputChange}
               size="large"
-              suffix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
             />
 
-            <div style={{ color: 'red' }}>{emailError}</div>
+            <LoginFail>{emailError}</LoginFail>
           </InputDiv>
           <InputDiv>
             <Input.Password
@@ -104,24 +136,41 @@ class Login extends Component {
               value={password}
               onChange={onInputChange}
             />
-            <div style={{ color: 'red' }}>{passwordError}</div>
+            <LoginFail>{passwordError}</LoginFail>
           </InputDiv>
           <InputDiv>
             <Button onClick={onFormSubmit} type="primary" block size="large">
               LOGIN
             </Button>
           </InputDiv>
+
+          <LoginFail>{msg}</LoginFail>
         </LoginForm>
+
+        <NoAccount>
+          <p>
+            Don't have an account:{' '}
+            <RegisterLink to="/"> Register Now</RegisterLink>
+          </p>
+        </NoAccount>
       </>
     );
   }
 }
 
 Login.propTypes = {
+  isAuthenticated: PropTypes.bool,
+  error: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  error: state.error,
+});
+
 export default connect(
-  null,
-  { loginUser }
+  mapStateToProps,
+  { loginUser, clearErrors }
 )(Login);
