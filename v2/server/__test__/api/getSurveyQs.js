@@ -7,16 +7,16 @@ const app = require('../../app');
 
 const Session = require('../../database/models/Session');
 
+beforeAll(async () => {
+  // build dummy data
+  await buildDB();
+});
+
+afterAll(async () => {
+  await mongoose.disconnect();
+});
+
 describe('test get survey questions route', () => {
-  beforeAll(async () => {
-    // build dummy data
-    await buildDB();
-  });
-
-  afterAll(async () => {
-    await mongoose.disconnect();
-  });
-
   test('test for get survey questions route', async done => {
     const surveyType = 'pre-day-1';
     const singleSession = await Session.findOne({ type: '1' });

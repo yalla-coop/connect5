@@ -1,6 +1,7 @@
 const express = require('express');
 
-const surveyQs = require('../controllers/getSurveyQs');
+const surveyQs = require('../controllers/survey/getSurveyQs');
+const storeSurvey = require('../controllers/survey/storeSurvey');
 
 const router = express.Router();
 
@@ -10,5 +11,7 @@ const router = express.Router();
 // });
 
 router.get('/survey/:id', surveyQs);
+
+router.post('/survey/submit/:responseid', storeSurvey);
 
 module.exports = router;

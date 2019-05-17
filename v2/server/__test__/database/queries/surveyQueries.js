@@ -62,10 +62,10 @@ describe('Tests for storing responses and answers in database', () => {
     const storedAnswers = await storeAnswers(
       response._id,
       dummyAnswers,
-      sessionId,
-      response.PIN
+      sessionId
     );
 
     expect(storedAnswers).toBeDefined();
+    expect(storedAnswers[0].answer).toBe('Under 18');
   });
 });

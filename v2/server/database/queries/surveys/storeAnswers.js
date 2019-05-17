@@ -7,17 +7,15 @@ const Answer = require('../../models/Answer');
 const storeAnswers = async (responseId, answers, sessionId, PIN) => {
   // this loops through the answers object and adds each answer to the Answer model
   const answersArr = Object.keys(answers);
-  answersArr.map(singleAnswer => {
-    console.log(singleAnswer);
-    //    const answer = new Answer({
-
-    //     PIN,
-    //     response: responseId,
-    //     session: sessionId,
-
-    //     answer: answers[key],
-    //   });
-  });
+  // answersArr.map(singleAnswer => {
+  //   console.log('hello');
+  //   // const newAnswer = {
+  //   //   response: responseId,
+  //   //   session: sessionId,
+  //   //   question: key,
+  //   //   answer: answers[key],
+  //   // };
+  // });
 
   for (const key in answers) {
     const answer = new Answer({

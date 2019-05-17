@@ -1,5 +1,5 @@
 const boom = require('boom');
-const surveyQs = require('../database/queries/surveys/surveyQuestions');
+const surveyQs = require('../../database/queries/surveys/surveyQuestions');
 
 module.exports = (req, res, next) => {
   // get the dynamic id from req.params. This should be a string with the surveytype as the first part. The rest of the string is the unique sessionId
