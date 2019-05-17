@@ -12,6 +12,6 @@ const router = express.Router();
 
 router.get('/survey/:id', surveyQs);
 
-router.post('/survey/submit/:responseid', storeSurvey);
+router.post('/survey/submit', storeSurvey);
 
 module.exports = router;

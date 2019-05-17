@@ -10,6 +10,7 @@ const storeAnswers = require('../../database/queries/surveys/storeAnswers');
 // const validateSurveyInput = require('../validation/survey-answers-val');
 
 module.exports = (req, res, next) => {
+  console.log('hello');
   const { formState, sessionId, surveyType } = req.body;
 
   // storeResponse adds the response to the Response model
