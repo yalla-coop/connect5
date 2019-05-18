@@ -6,6 +6,8 @@ import { colors } from '../theme';
 import Home from './pages/LandingPage';
 import Login from './pages/auth/login';
 import TrainerResutls from './pages/TrainerResults';
+import CreateSession from './pages/CreateSession';
+
 import history from '../history';
 
 const Wrapper = styled.div`
@@ -24,6 +26,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/trainer-results" component={TrainerResutls} />
+            <Route exact path="/create-session" component={CreateSession} />
             <Route
               render={() => (
                 <h1>

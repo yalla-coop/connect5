@@ -38,6 +38,7 @@ const colorCodes = {
   offWhite: '#F7F7F9',
   gray: '#D4D4D8',
   lightGray: '#EFEFF4',
+  mediumGray: '#E1E1E2',
   black: '#4F4F4F',
 
   // transparent
@@ -64,5 +65,5 @@ export const borders = {
   inputBox: `1px solid ${colors.lightGray}`,
   button: `1px solid ${colors.gray}`,
   header: `1px solid ${colors.offWhite}`,
-  toggle: `1px solid ${colors.black}`
+  toggle: `1px solid ${colors.black}`,
 };

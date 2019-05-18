@@ -28,7 +28,7 @@ export const InputDiv = styled.div`
 export const LoginFail = styled.div`
   width: 80%;
   color: red;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
   font-size: 1rem;
   @media (min-width: 768px) {
     width: 40%;
