@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button } from 'antd';
+import { Input } from 'antd';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -8,6 +8,7 @@ import {
   InputDiv,
   LoginForm,
   LoginFail,
+  Button,
   NoAccount,
   RegisterLink,
 } from './Login.style';
@@ -69,7 +70,7 @@ class Login extends Component {
       errors.passwordError = '*Please enter your password.';
     }
 
-    if (fields.password.length < 6) {
+    if (fields.password < 6) {
       formIsValid = false;
       errors.passwordError = '*Password is too short.';
     }
@@ -139,7 +140,7 @@ class Login extends Component {
             <LoginFail>{passwordError}</LoginFail>
           </InputDiv>
           <InputDiv>
-            <Button onClick={onFormSubmit} type="primary" block size="large">
+            <Button onClick={onFormSubmit} type="submit">
               LOGIN
             </Button>
           </InputDiv>
@@ -149,7 +150,7 @@ class Login extends Component {
 
         <NoAccount>
           <p>
-            Don't have an account: <RegisterLink to="/"> Sign Up!</RegisterLink>
+            Don't have an account? <RegisterLink to="/"> Sign Up!</RegisterLink>
           </p>
         </NoAccount>
         <NoAccount>
