@@ -37,13 +37,19 @@ export const StatsWrapper = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const StatItem = styled.div`
+export const StatItem = styled(Link)`
+  text-decoration: none;
   width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 1.5rem 0;
+  color: ${colors.profileFontColor};
+
+  :hover {
+    color: ${colors.profileFontColor};
+  }
 `;
 
 export const Label = styled.h3`

@@ -17,6 +17,14 @@ import {
 
 import Header from '../../common/Header';
 
+import {
+  TRAINER_RESULTS_URL,
+  TRAINER_SESSIONS_URL,
+  GROUP_RESULTS_URL,
+  TRAINERS_URL,
+  GROUP_SESSIONS_URL,
+} from '../../../constants/navigationRoutes';
+
 export default class Dashboard extends Component {
   state = {
     stats: {
@@ -75,25 +83,43 @@ export default class Dashboard extends Component {
               <Role>Role: {userType}</Role>
             </TopSection>
             <StatsWrapper>
-              <StatItem>
+              <StatItem
+                to={
+                  userType === 'trainer'
+                    ? TRAINER_SESSIONS_URL
+                    : GROUP_SESSIONS_URL
+                }
+              >
                 <Label>Sessions</Label>
                 <StatNumber>{stats.sessionCount}</StatNumber>
               </StatItem>
-              <StatItem>
+              <StatItem
+                to={
+                  userType === 'trainer'
+                    ? TRAINER_RESULTS_URL
+                    : GROUP_RESULTS_URL
+                }
+              >
                 <Label>Participants</Label>
                 <StatNumber>{stats.participantCount}</StatNumber>
               </StatItem>
-              <StatItem>
+              <StatItem
+                to={
+                  userType === 'trainer'
+                    ? TRAINER_RESULTS_URL
+                    : GROUP_RESULTS_URL
+                }
+              >
                 <Label>Responses</Label>
                 <StatNumber>{stats.responseCount}</StatNumber>
               </StatItem>
               {userType === 'trainer' ? (
-                <StatItem>
+                <StatItem to={TRAINER_RESULTS_URL}>
                   <Label>Response Rate</Label>
                   <StatNumber>{stats.responseRate}%</StatNumber>
                 </StatItem>
               ) : (
-                <StatItem>
+                <StatItem to={TRAINERS_URL}>
                   <Label>Trainers</Label>
                   <StatNumber>{stats.trainerCount}</StatNumber>
                 </StatItem>
