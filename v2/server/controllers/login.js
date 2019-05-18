@@ -45,6 +45,6 @@ module.exports = (req, res, next) => {
         // send the user info
         return res.json(userInfo);
       })
-      .catch(err => () => next(boom.badImplementation()));
+      .catch(err => next(boom.badImplementation()));
   });
 };
