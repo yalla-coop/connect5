@@ -41,4 +41,16 @@ describe('Test topStats query', () => {
       done();
     });
   });
+
+  test('top stats gets trainer stats', async done => {
+    const trainer = await User.findOne({ role: 'trainer' });
+
+    getTopStats(trainer.id, 'trainer').then(result => {
+      expect(result).toBeDefined();
+      expect(result).toBe('hello');
+      expect(result.participantCount).toBe(45);
+      expect(result.trainerCount).toBe(3);
+      done();
+    });
+  });
 });

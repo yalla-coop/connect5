@@ -69,6 +69,31 @@ const getTopStats = async (userId, userType) => {
       trainerCount: trainers.length,
       participantCount,
     };
+  } else {
+    // this defaults to it being the trainer
+    const sessions = await getTrainerSessionCount(userId);
+    const responses = await getTrainerResponseCount(userId);
+
+    let sessionCount = 0;
+    let participantCount = 0;
+    let responseCount = 0;
+
+    if (typeof sessions[0] === 'object') {
+      sessionCount = sessions[0].sessions;
+      participantCount = sessions[0].participants;
+    }
+
+    if (typeof responses[0] === 'object')
+      responseCount = responses[0].responses;
+
+    const responseRate = Math.ceil((responseCount / participantCount) * 100);
+
+    stats = {
+      sessionCount,
+      responseCount,
+      participantCount,
+      responseRate,
+    };
   }
 
   return stats;
