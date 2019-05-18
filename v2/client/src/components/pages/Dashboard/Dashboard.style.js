@@ -24,6 +24,7 @@ export const Title = styled.h2`
 export const Role = styled.p`
   font-size: 14px;
   font-weight: 300;
+  text-transform: capitalize;
 `;
 
 export const StatsWrapper = styled.div`
@@ -65,4 +66,9 @@ export const StyledLink = styled(Link)`
   :hover {
     color: ${colors.red};
   }
+`;
+
+export const SpinWrapper = styled.div`
+  height: 100vh;
+  width: 100vw;
 `;

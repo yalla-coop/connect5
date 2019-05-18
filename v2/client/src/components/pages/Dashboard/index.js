@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import Spin from 'antd/lib/spin';
 
 import {
   Wrapper,
@@ -10,48 +12,97 @@ import {
   Label,
   StatNumber,
   StyledLink,
+  SpinWrapper,
 } from './Dashboard.style';
 
 import Header from '../../common/Header';
 
 export default class Dashboard extends Component {
   state = {
-    stats: null,
+    stats: {
+      sessionCount: 0,
+      responseCount: 0,
+      participantCount: 0,
+      trainerCount: 0,
+      responseRate: 0,
+    },
+    userType: null,
+    userName: null,
+    loaded: false,
   };
 
+  componentDidMount() {
+    // once we have log in sorted userType and name will come from props
+    // it can then be removed from state
+    // const { userType, userName } = this.props;
+
+    const userType = 'trainer';
+    const userName = 'Elysabeth';
+
+    axios
+      .post('/api/all/dashboard', { userType })
+      .then(response => {
+        this.setState({
+          stats: response.data.stats,
+          userType,
+          userName,
+          loaded: true,
+        });
+      })
+      .catch(err => {
+        this.setState({ loaded: true });
+        console.error(err);
+      });
+  }
+
   render() {
-    const { userType } = this.props;
+    const { stats, userType, loaded, userName } = this.state;
 
     return (
       <Wrapper>
         <Header type="home" />
-        <TopSection>
-          <Title>
-            Welcome back, <br />
-            Elysabeth
-          </Title>
-          <Role>Role: Trainer</Role>
-        </TopSection>
-        <StatsWrapper>
-          <StatItem>
-            <Label>Session</Label>
-            <StatNumber>17</StatNumber>
-          </StatItem>
-          <StatItem>
-            <Label>Session</Label>
-            <StatNumber>17</StatNumber>
-          </StatItem>
-          <StatItem>
-            <Label>Session</Label>
-            <StatNumber>17</StatNumber>
-          </StatItem>
-          <StatItem>
-            <Label>Session</Label>
-            <StatNumber>17</StatNumber>
-          </StatItem>
-        </StatsWrapper>
-        <StyledLink to="/change-password">Change Password</StyledLink>
-        <StyledLink to="/logout">Log out</StyledLink>
+        {!loaded ? (
+          <SpinWrapper>
+            <Spin size="large" />
+          </SpinWrapper>
+        ) : (
+          <>
+            <TopSection>
+              <Title>
+                Welcome back, <br />
+                {userName}
+              </Title>
+              <Role>Role: {userType}</Role>
+            </TopSection>
+            <StatsWrapper>
+              <StatItem>
+                <Label>Sessions</Label>
+                <StatNumber>{stats.sessionCount}</StatNumber>
+              </StatItem>
+              <StatItem>
+                <Label>Participants</Label>
+                <StatNumber>{stats.participantCount}</StatNumber>
+              </StatItem>
+              <StatItem>
+                <Label>Responses</Label>
+                <StatNumber>{stats.responseCount}</StatNumber>
+              </StatItem>
+              {userType === 'trainer' ? (
+                <StatItem>
+                  <Label>Response Rate</Label>
+                  <StatNumber>{stats.responseRate}%</StatNumber>
+                </StatItem>
+              ) : (
+                <StatItem>
+                  <Label>Trainers</Label>
+                  <StatNumber>{stats.trainerCount}</StatNumber>
+                </StatItem>
+              )}
+            </StatsWrapper>
+            <StyledLink to="/change-password">Change Password</StyledLink>
+            <StyledLink to="/logout">Log out</StyledLink>
+          </>
+        )}
       </Wrapper>
     );
   }
