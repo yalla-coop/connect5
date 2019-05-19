@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
-// import { Router, Route, Switch, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 // PAGES
@@ -20,7 +19,6 @@ import {
 } from '../constants/navigationRoutes';
 
 const Wrapper = styled.div`
-  min-width: 100vw;
   min-height: 100vh;
 `;
 

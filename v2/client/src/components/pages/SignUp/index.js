@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Select } from 'antd';
 import { connect } from 'react-redux';
 import { fetchLocalLeads } from '../../../actions/users';
 import { signUpTrainer, checkUniqeEmail } from '../../../actions/authAction';
 
+import Button from '../../common/Button';
+
 import {
   Wrapper,
+  ContentWrapper,
   Title,
-  // Form
+  Form,
+  Input,
+  Password,
+  Select,
+  Item,
+  Redirecting,
+  StyledLink,
 } from './SignUp.style';
 
 const { Option } = Select;
@@ -116,132 +124,168 @@ class SignUp extends Component {
 
     return (
       <Wrapper>
-        <Title>Create a new Connect 5 Trainer Account</Title>
-        <Form onSubmit={this.handleSubmit} className="login-form">
-          <Form.Item hasFeedback>
-            {getFieldDecorator('name', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input your name!',
-                },
-                {
-                  min: 3,
-                  message: 'Please input valid name',
-                },
-              ],
-            })(<Input placeholder="Name" />)}
-          </Form.Item>
+        <ContentWrapper>
+          <Title>Create a new Connect 5 Trainer Account</Title>
+          <Form onSubmit={this.handleSubmit} className="login-form">
+            <Item hasFeedback>
+              {getFieldDecorator('name', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please input your name!',
+                  },
+                  {
+                    min: 3,
+                    message: 'Please input valid name',
+                  },
+                ],
+              })(<Input placeholder="Name" size="large" />)}
+            </Item>
 
-          <Form.Item hasFeedback>
-            {getFieldDecorator('email', {
-              rules: [
-                {
-                  type: 'email',
-                  message: 'The input is not valid E-mail!',
-                },
-                {
-                  required: true,
-                  message: 'Please input your E-mail!',
-                },
-                {
-                  message: 'Sorry, this email is not available',
-                  validator: this.validateUniqueEmail,
-                },
-              ],
-            })(<Input placeholder="Email" onBlur={this.handleEmailBlur} />)}
-          </Form.Item>
+            <Item hasFeedback>
+              {getFieldDecorator('email', {
+                rules: [
+                  {
+                    type: 'email',
+                    message: 'The input is not valid E-mail!',
+                  },
+                  {
+                    required: true,
+                    message: 'Please input your E-mail!',
+                  },
+                  {
+                    message: 'Already taken',
+                    validator: this.validateUniqueEmail,
+                  },
+                ],
+              })(
+                <Input
+                  placeholder="Email"
+                  onBlur={this.handleEmailBlur}
+                  size="large"
+                />
+              )}
+            </Item>
 
-          <Form.Item hasFeedback>
-            {getFieldDecorator('password', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please input your password!',
-                },
-                {
-                  pattern: /(?=.*[a-z])/,
-                  message:
-                    'Password must contain at least 1 lowercase alphabetical character',
-                },
-                {
-                  pattern: /(?=.*[A-Z])/,
-                  message:
-                    'Password must contain at least 1 uppercase alphabetical character',
-                },
-                {
-                  pattern: /(?=.*[0-9])/,
-                  message: 'Password must contain at least 1 numeric character',
-                },
-                {
-                  pattern: /(?=.{8,})/,
-                  message: 'Password must be eight characters or longer',
-                },
-                {
-                  validator: this.validateToNextPassword,
-                },
-              ],
-              validateFirst: true,
-            })(<Input.Password placeholder="Password" />)}
-          </Form.Item>
-          <Form.Item hasFeedback>
-            {getFieldDecorator('confirm', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please confirm your password!',
-                },
-                {
-                  validator: this.compareToFirstPassword,
-                },
-              ],
-            })(
-              <Input.Password
-                placeholder="Confirm Password"
-                onBlur={this.handleConfirmBlur}
-              />
-            )}
-          </Form.Item>
+            <Item hasFeedback>
+              {getFieldDecorator('password', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please input your password!',
+                  },
+                  {
+                    pattern: /(?=.*[a-z])/,
+                    message:
+                      'Password must contain at least 1 lowercase alphabetical character',
+                  },
+                  {
+                    pattern: /(?=.*[A-Z])/,
+                    message:
+                      'Password must contain at least 1 uppercase alphabetical character',
+                  },
+                  {
+                    pattern: /(?=.*[0-9])/,
+                    message:
+                      'Password must contain at least 1 numeric character',
+                  },
+                  {
+                    pattern: /(?=.{8,})/,
+                    message: 'Password must be eight characters or longer',
+                  },
+                  {
+                    validator: this.validateToNextPassword,
+                  },
+                ],
+                validateFirst: true,
+              })(<Password placeholder="Password" size="large" />)}
+            </Item>
+            <Item hasFeedback>
+              {getFieldDecorator('confirm', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please confirm your password!',
+                  },
+                  {
+                    validator: this.compareToFirstPassword,
+                  },
+                ],
+              })(
+                <Password
+                  placeholder="Confirm Password"
+                  onBlur={this.handleConfirmBlur}
+                  size="large"
+                />
+              )}
+            </Item>
 
-          <Form.Item>
-            {getFieldDecorator('localLead', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please select your local lead',
-                },
-              ],
-            })(
-              <Select placeholder="Local Lead">
-                {localLeads &&
-                  localLeads.map(({ name, _id }) => (
-                    <Option value={_id}>{name}</Option>
+            <Item>
+              {getFieldDecorator('localLead', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please select your local lead',
+                  },
+                ],
+              })(
+                <Select
+                  placeholder="Region"
+                  style={{ width: '90%' }}
+                  size="large"
+                >
+                  {localLeads &&
+                    localLeads.map(({ name, _id }) => (
+                      <Option value={_id} key={_id}>
+                        {name}
+                      </Option>
+                    ))}
+                </Select>
+              )}
+            </Item>
+
+            <Item>
+              {getFieldDecorator('region', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Please select your region',
+                  },
+                ],
+              })(
+                <Select
+                  placeholder="Region"
+                  style={{ width: '90%' }}
+                  size="large"
+                >
+                  {regions.map(region => (
+                    <Option value={region} key={region}>
+                      {region}
+                    </Option>
                   ))}
-              </Select>
-            )}
-          </Form.Item>
+                </Select>
+              )}
+            </Item>
 
-          <Form.Item>
-            {getFieldDecorator('region', {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please select your region',
-                },
-              ],
-            })(
-              <Select placeholder="Region">
-                {regions.map(region => (
-                  <Option value={region}>{region}</Option>
-                ))}
-              </Select>
-            )}
-          </Form.Item>
+            <Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                label="Sign Up"
+                width="90%"
+                height="100%"
+                style={{ fontSize: '19px' }}
+              >
+                Sign Up
+              </Button>
+            </Item>
 
-          <Button type="primary" htmlType="submit">
-            Sign Up
-          </Button>
-        </Form>
+            <Redirecting>
+              Already have an account?{' '}
+              <StyledLink to="/login">LOGIN</StyledLink>
+            </Redirecting>
+          </Form>
+        </ContentWrapper>
       </Wrapper>
     );
   }
