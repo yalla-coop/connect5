@@ -26,6 +26,7 @@ class UserResults extends Component {
       match: { params },
     } = this.props;
     const { id } = params;
+
     // eslint-disable-next-line react/destructuring-assignment
     await this.props.fetchUserResults(id);
   }

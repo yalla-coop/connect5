@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
 const boom = require('boom');
+const mongoose = require('mongoose');
+
 const User = require('../../database/models/User');
 
 const {
@@ -21,10 +23,19 @@ const getResponseRate = require('../../helpers/getResponseRate');
 
 // get the logged in user results
 const getUserResults = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findById(id);
+  const { id } = req.params;
 
+  const isValidId = mongoose.Types.ObjectId.isValid(id);
+
+  if (!isValidId) {
+    return next(boom.badData('your data is bad and you should feel bad'));
+  }
+
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return next(boom.notFound('User not found'));
+    }
     const { role } = user;
 
     let sessions;

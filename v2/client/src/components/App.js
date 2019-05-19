@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import 'antd/dist/antd.css';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { Router, Route, Switch, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 // PAGES
@@ -14,7 +13,6 @@ import { HOME_URL, DASHBOARD_URL } from '../constants/navigationRoutes';
 import history from '../history';
 
 const Wrapper = styled.div`
-  min-width: 100vw;
   min-height: 100vh;
 `;
 
@@ -30,6 +28,15 @@ class App extends Component {
             <Route exact path={HOME_URL} component={Home} />
             <Route exact path={DASHBOARD_URL} component={Dashboard} />
             <Route exact path="/login" component={Login} />
+            <Route
+              exact
+              path="/404err"
+              render={() => (
+                <h1>
+                  404 go home<Link to="/">home</Link>
+                </h1>
+              )}
+            />
             <Route
               render={() => (
                 <h1>

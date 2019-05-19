@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import history from '../history';
+
 import * as types from '../constants/actionTypes';
 
 export const fetchUserResults = id => async dispatch => {
@@ -10,6 +12,7 @@ export const fetchUserResults = id => async dispatch => {
       payload: res.data,
     });
   } catch (err) {
-    console.error('err', err);
+    // console.error('errrrrrr', err.response.data.error);
+    history.push('/404err');
   }
 };
