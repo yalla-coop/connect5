@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import 'antd/dist/antd.css';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
+// import { Router, Route, Switch, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 // PAGES
 import Home from './pages/LandingPage';
+import Login from './pages/auth/login';
 import TrainerResutls from './pages/TrainerResults';
 import Dashboard from './pages/Dashboard';
 
@@ -14,6 +17,7 @@ import {
   DASHBOARD_URL,
   TRAINER_RESULTS_URL,
 } from '../constants/navigationRoutes';
+import history from '../history';
 
 const Wrapper = styled.div`
   min-width: 100vw;
@@ -25,7 +29,7 @@ class App extends Component {
   render() {
     return (
       <Wrapper>
-        <Router>
+        <Router history={history}>
           <Switch>
             <Route exact path={HOME_URL} component={Home} />
             <Route
@@ -34,6 +38,7 @@ class App extends Component {
               component={TrainerResutls}
             />
             <Route exact path={DASHBOARD_URL} component={Dashboard} />
+            <Route exact path="/login" component={Login} />
             <Route
               render={() => (
                 <h1>
