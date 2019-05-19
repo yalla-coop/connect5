@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
+import { colorCodes, borders } from '../../../theme';
+
 const CommonStyles = styled.div`
-  margin-bottom: 32px;
+  margin-bottom: 3rem;
 
   h4 {
     margin-bottom: 0;
@@ -9,12 +11,12 @@ const CommonStyles = styled.div`
 
   header {
     p {
-      margin-top: 8px;
+      margin-top: 0.5rem;
     }
   }
   .helpertext {
     opacity: 0.8;
-    size: 16px;
+    size: 1rem;
   }
 `;
 
@@ -36,25 +38,15 @@ const RadioField = styled(CommonStyles)`
 
     div {
       display: flex;
-      /* flex-direction: row; */
       min-width: 50%;
-      /* max-width: 80%; */
       cursor: pointer;
       position: relative;
-      /* padding: 0.5rem 0 0.5rem 0; */
-      /* -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none; */
 
       label {
         cursor: pointer;
-        /* padding-left: 35px;
-        width: 100%; */
         display: flex;
         align-items: center;
         position: relative;
-        /* position: relative; */
       }
 
       p {
@@ -70,58 +62,76 @@ const RadioField = styled(CommonStyles)`
         width: 25px;
 
         :hover ~ .checkmark {
-          background-color: #ccc;
+          background-color: ${colorCodes.extralightPrimary};
         }
 
         :checked ~ .checkmark {
-          background-color: black;
-          border: 8px solid var(--heading-color);
+          border: 8px solid ${colorCodes.primary};
         }
       }
 
       .checkmark {
-        /* top: 0;
-        left: 0; */
         height: 25px;
         width: 25px;
-        background-color: #eee;
+        background-color: ${colorCodes.lightGray};
         border-radius: 50%;
         display: block;
-
-        /* :after {
-          content: "";
-          position: absolute;
-          display: none;
-        } */
       }
     }
   }
 `;
 
 const TextField = styled(CommonStyles)`
-  input,
+  input {
+    border-radius: 1rem;
+    border: 1px solid ${colorCodes.gray};
+    width: 90%;
+  }
+
   textarea {
     border-radius: 1rem;
-    border: 1px solid var(--heading-color);
+    border: 1px solid ${colorCodes.gray};
     width: 100%;
     padding: 8px;
   }
 `;
 
+const NumberSliderDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Slider = styled.input`
   -webkit-appearance: none;
 
-  &::-webkit-slider-thumb {
-    width: 10px;
-    -webkit-appearance: none;
-    height: 10px;
-    cursor: ew-resize;
-    background: #434343;
-  }
+  height: 25px;
+  border: ${borders.inputBox}
 
-  &::-webkit-slider-runnable-track {
-    border: 1px solid black;
+  &::-webkit-slider-thumb {
+    width: 20px;
+    -webkit-appearance: none;
+    height: 20px;
+    border-radius: 10px;
+    cursor: ew-resize;
+    background: ${colorCodes.primary};
   }
 `;
 
-export { Slider, RadioField, TextField };
+const NumberOutput = styled.output`
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: 300;
+  background: white;
+  border-radius: 0.8em;
+  -moz-border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: ${colorCodes.black};
+  display: inline-block;
+  line-height: 1.6em;
+  text-align: center;
+  width: 1.6em;
+`;
+
+export { Slider, RadioField, TextField, NumberOutput, NumberSliderDiv };

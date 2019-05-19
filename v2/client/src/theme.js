@@ -8,7 +8,7 @@ export const size = {
   tablet: '768px',
   laptop: '1024px',
   laptopL: '1440px',
-  desktop: '2560px',
+  desktop: '2560px'
 };
 
 export const breakpoints = {
@@ -20,10 +20,10 @@ export const breakpoints = {
   laptop: `(min-width: ${size.laptop})`,
   laptopL: `(min-width: ${size.laptopL})`,
   desktop: `(min-width: ${size.desktop})`,
-  desktopL: `(min-width: ${size.desktop})`,
+  desktopL: `(min-width: ${size.desktop})`
 };
 
-const colorCodes = {
+export const colorCodes = {
   // primary (purple)
   primary: '#2C3192',
   lightPrimary: '#787BB9',
@@ -42,7 +42,7 @@ const colorCodes = {
 
   // transparent
   transGray: 'rgba(212, 212, 216, 0.3)',
-  transLightGray: 'rgba(239, 239, 244, 0.3)',
+  transLightGray: 'rgba(239, 239, 244, 0.3)'
 };
 
 // general colors
@@ -51,12 +51,12 @@ export const colors = {
   headingUnderline: colorCodes.lightGray,
   cardBackground: colorCodes.white,
   profileFontColor: colorCodes.black,
-  links: colorCodes.primary,
+  links: colorCodes.primary
 };
 
 // shadows
 export const shadows = {
-  primary: '0px 1px 4px rgba(0, 0, 0, 0.05)',
+  primary: '0px 1px 4px rgba(0, 0, 0, 0.05)'
 };
 
 // borders

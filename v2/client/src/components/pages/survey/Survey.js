@@ -9,7 +9,7 @@ import {
   SurveyHeader,
   SessionDetails,
   Form,
-  Disclaimer,
+  Disclaimer
 } from './Survey.style';
 import { TextField } from './Questions.style';
 // formState will be the object where we store survey responses
@@ -29,7 +29,7 @@ export default class Survey extends React.Component {
     loading: true,
     sessionId: null,
     PIN: null,
-    errors: {},
+    errors: {}
   };
 
   componentWillMount() {
@@ -48,7 +48,7 @@ export default class Survey extends React.Component {
           surveyDetails: res.data,
           loading: false,
           sessionId,
-          surveyType,
+          surveyType
         });
       })
       // .then(() => {
@@ -79,7 +79,7 @@ export default class Survey extends React.Component {
     formState[question] = answer;
 
     this.setState(() => ({
-      formState,
+      formState
     }));
     console.log('FORMSTATE', formState);
   };
@@ -93,7 +93,7 @@ export default class Survey extends React.Component {
     formState[question] = answer;
 
     this.setState(() => ({
-      formState,
+      formState
     }));
 
     console.log('FORMSTATE', formState);
@@ -120,7 +120,7 @@ export default class Survey extends React.Component {
       .catch(err => {
         console.log('ERR', err);
         this.setState({
-          errors: err.response.data,
+          errors: err.response.data
         });
       });
   };
@@ -140,25 +140,35 @@ export default class Survey extends React.Component {
       return <h3>Loading...</h3>;
     }
     console.log(this.state);
-    const { sessionDate, trainerNames, questionsForSurvey } = surveyDetails;
+    const {
+      sessionDate,
+      trainerNames,
+      questionsForSurvey,
+      surveyType
+    } = surveyDetails;
 
     return (
       <SurveyQs>
         <SurveyHeader>
-          <h1>Training Survey</h1>
+          <h1>Welcome: Connect 5 Survey</h1>
         </SurveyHeader>
+
+        <SessionDetails>
+          <h3>Session Details:</h3>
+          <p>
+            <span>Session Date: </span>
+            {sessionDate}
+          </p>
+          <p>
+            <span>Trainers: </span>
+            {this.renderTrainerNames(trainerNames)}
+          </p>
+          <p>
+            <span>Session Type: </span>
+            {surveyType}
+          </p>
+        </SessionDetails>
         <main>
-          <SessionDetails>
-            <h3>Session Details:</h3>
-            <p>
-              <span>Session Date: </span>
-              {sessionDate}
-            </p>
-            <p>
-              <span>Trainers: </span>
-              {this.renderTrainerNames(trainerNames)}
-            </p>
-          </SessionDetails>
           {/* <Disclaimer>
             <h3>Privacy notice</h3>
             <p>
@@ -202,8 +212,6 @@ export default class Survey extends React.Component {
             </p>
           </Disclaimer> */}
           <Form onSubmit={this.handleSubmit}>
-            <h3>Survey Questions:</h3>
-
             <Questions
               questions={questionsForSurvey}
               onChange={this.handleChange}

@@ -4,7 +4,13 @@
 import React from 'react';
 
 import { Alert } from 'antd';
-import { RadioField, TextField, Slider } from './Questions.style';
+import {
+  RadioField,
+  TextField,
+  Slider,
+  NumberSliderDiv,
+  NumberOutput
+} from './Questions.style';
 
 const checkErrors = (errors, questionId, answers) =>
   errors.includes(questionId) && !answers[questionId] ? (
@@ -84,16 +90,20 @@ const renderQuestionInputType = (
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers)}
         </header>
-        <Slider
-          unanswered={errorArray.includes(questionId) && !answers[questionId]}
-          id={`sliderInput-${index}`}
-          name={questionId}
-          min="0"
-          max="10"
-          type="range"
-          onChange={onChange}
-        />
-        <output>{answers[questionId]}</output>
+        <NumberSliderDiv>
+          <Slider
+            unanswered={errorArray.includes(questionId) && !answers[questionId]}
+            id={`sliderInput-${index}`}
+            name={questionId}
+            min="0"
+            max="10"
+            type="range"
+            onChange={onChange}
+          />
+          <NumberOutput>
+            {answers[questionId] ? answers[questionId] : '5'}
+          </NumberOutput>
+        </NumberSliderDiv>
       </TextField>
     );
   }
@@ -169,7 +179,7 @@ const questionsRender = (
       text: questionText,
       group,
       helperText,
-      options,
+      options
     } = el;
     const inputType = el.questionType.desc;
     const subGroupText = () => {
@@ -199,7 +209,14 @@ const questionsRender = (
 
 export default class Questions extends React.Component {
   render() {
-    const { onChange, questions, handleOther, answers, errors } = this.props;
+    const {
+      onChange,
+      questions,
+      handleOther,
+      handlePIN,
+      answers,
+      errors
+    } = this.props;
 
     const errorArray = Object.keys(errors);
 
