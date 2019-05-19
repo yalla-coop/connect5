@@ -50,9 +50,7 @@ html {
   background-color: #f7f7f9;
 }
 
-*,
-*:after,
-*:before {
+* {
   margin: 0;
   padding: 0;
   box-sizing: inherit;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const TrainerResultsWrapper = styled.div`
   max-width: 800px;
   margin: 0 auto;
+  padding-top: 48px;
 `;
 
 export const ContentWrapper = styled.div`
