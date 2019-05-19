@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { colors } from '../../../../theme';
+import { colors } from '../../../theme';
 
 export const LoginHeading = styled.div`
   margin: 0 auto;
@@ -21,9 +21,11 @@ export const InputDiv = styled.div`
   width: 80%;
   margin: 0 auto;
   margin-bottom: 2rem;
+
   @media (min-width: 768px) {
     width: 30%;
-    background: ${colors.ligthGray}
+    background: ${colors.ligthGray};
+  }
 `;
 
 export const LoginFail = styled.div`
@@ -31,9 +33,11 @@ export const LoginFail = styled.div`
   color: red;
   margin-left: 3rem;
   font-size: 1rem;
+
   @media (min-width: 768px) {
     width: 30%;
     margin-left: 1rem;
+  }
 `;
 
 export const Button = styled.div`
@@ -47,24 +51,30 @@ export const Button = styled.div`
   border: 1px solid ${colors.primary};
   background-color: ${colors.primary};
   color: ${colors.white};
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-color: ${colors.white};
     color: ${colors.primary};
   }
+
   @media (min-width: 768px) {
     width: 100%;
-    margin: 0 auto
+    margin: 0 auto;
+  }
 `;
 
 export const NoAccount = styled(InputDiv)`
   color: ${colors.black};
   margin-bottom: 0;
+
   &:not(:last-child) {
     margin-top: 6rem;
-  };
+  }
+
   @media (min-width: 768px) {
     width: 30%;
-    text-align: center
+    text-align: center;
+  }
 `;
 
 export const RegisterLink = styled(Link)`

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Input } from 'antd';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   LoginHeading,
@@ -12,9 +11,8 @@ import {
   NoAccount,
   RegisterLink,
 } from './Login.style';
-import { loginUser } from '../../../../actions/authAction';
-import { clearErrors } from '../../../../actions/errorAction';
-import history from '../../../../history';
+import { loginUser } from '../../../actions/authAction';
+import { clearErrors } from '../../../actions/errorAction';
 
 class Login extends Component {
   state = {
@@ -24,7 +22,7 @@ class Login extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { error, isAuthenticated } = this.props;
+    const { error, isAuthenticated, history } = this.props;
     if (error !== prevProps.error) {
       // Check for login error
       this.updateLogin(error);
@@ -32,7 +30,7 @@ class Login extends Component {
 
     // If authenticated,
     if (isAuthenticated) {
-      history.push('/');
+      history.push('/dashboard');
     }
   }
 
@@ -82,19 +80,17 @@ class Login extends Component {
   };
 
   onFormSubmit = e => {
+    const { fields } = this.state;
+    const { loginUser: loginUserActionCreator } = this.props;
     e.preventDefault();
     const isValide = this.validateForm();
     if (isValide) {
-      const fields = {};
-      fields.email = '';
-      fields.password = '';
-      this.setState({ fields });
-    }
-    const { email, password } = this.state.fields;
-    const loginData = { email, password };
+      const { email, password } = fields;
+      const loginData = { email, password };
 
-    // call action creator then give it email and password
-    this.props.loginUser(loginData);
+      // call action creator then give it email and password
+      loginUserActionCreator(loginData);
+    }
   };
 
   onInputChange = e => {
@@ -150,7 +146,8 @@ class Login extends Component {
 
         <NoAccount>
           <p>
-            Don't have an account? <RegisterLink to="/"> Sign Up!</RegisterLink>
+            {"Don't have an account? "}
+            <RegisterLink to="/"> Sign Up!</RegisterLink>
           </p>
         </NoAccount>
         <NoAccount>
@@ -163,13 +160,6 @@ class Login extends Component {
     );
   }
 }
-
-Login.propTypes = {
-  isAuthenticated: PropTypes.bool,
-  error: PropTypes.object.isRequired,
-  loginUser: PropTypes.func.isRequired,
-  clearErrors: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
