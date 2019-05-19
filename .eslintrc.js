@@ -16,6 +16,7 @@ module.exports = {
   rules: {
     "no-unused-vars": ["error", { "args": "none" }],
     "no-underscore-dangle": [0],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
      // configure the prettier plugin
     "prettier/prettier": [
       "error",
