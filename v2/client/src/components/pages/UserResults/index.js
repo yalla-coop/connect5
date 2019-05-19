@@ -8,12 +8,8 @@ import Icon from 'antd/lib/icon';
 import Reach from '../../common/Reach';
 import { fetchUserResults } from '../../../actions/users';
 
-import {
-  TrainerResultsWrapper,
-  Header as StyledHeader,
-  ContentWrapper,
-  ButtonWrapper,
-} from './UserResults.style';
+import { TrainerResultsWrapper, ButtonWrapper } from './UserResults.style';
+import Header from '../../common/Header';
 
 const { Panel } = Collapse;
 
@@ -38,9 +34,7 @@ class UserResults extends Component {
     const { results } = this.props;
     return (
       <TrainerResultsWrapper>
-        <StyledHeader>
-          <ContentWrapper>Results</ContentWrapper>
-        </StyledHeader>
+        <Header label="results" type="section" />
         <Collapse
           accordion
           expandIconPosition="right"

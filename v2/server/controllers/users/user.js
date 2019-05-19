@@ -21,15 +21,15 @@ const getResponseRate = require('../../helpers/getResponseRate');
 
 // get the logged in user results
 const getUserResults = async (req, res, next) => {
-  const { id } = req.params;
-  const user = await User.findById(id);
-
-  const { role } = user;
-
-  let sessions;
-  let surveys;
-
   try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    const { role } = user;
+
+    let sessions;
+    let surveys;
+
     switch (role) {
       case 'localLead':
         sessions = await getLocalLeadsSessions(id);
