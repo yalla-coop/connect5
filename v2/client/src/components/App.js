@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
-// import { Router, Route, Switch, Link } from 'react-router-dom';
+import { Router, Route, Switch, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../theme';
 import Home from './pages/LandingPage';
 import Login from './pages/auth/login';
+import ParticipantLogin from './pages/auth/login-participant';
 import TrainerResutls from './pages/TrainerResults';
 import history from '../history';
 
@@ -25,6 +26,11 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
+            <Route
+              exact
+              path="/participant-login"
+              component={ParticipantLogin}
+            />
             <Route exact path="/trainer-results" component={TrainerResutls} />
             <Route
               render={() => (
