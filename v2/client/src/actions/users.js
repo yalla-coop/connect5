@@ -13,3 +13,17 @@ export const fetchTrainerResults = () => async dispatch => {
     console.error('err', err);
   }
 };
+
+export const fetchLocalLeads = () => async dispatch => {
+  try {
+    const res = await axios.get('/api/local-leads');
+    const { data } = res;
+
+    dispatch({
+      type: types.FETCH_LOCAL_LEADS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Select } from 'antd';
+import { connect } from 'react-redux';
+import { fetchLocalLeads } from '../../../actions/users';
 
 import {
   Wrapper,
@@ -24,6 +26,11 @@ class SignUp extends Component {
   state = {
     confirmDirty: false,
   };
+
+  componentDidMount() {
+    const { fetchLocalLeads: fetchLocalLeadsActionCreator } = this.props;
+    fetchLocalLeadsActionCreator();
+  }
 
   handleSubmit = e => {
     const { form } = this.props;
@@ -56,6 +63,7 @@ class SignUp extends Component {
   render() {
     const {
       form: { getFieldDecorator },
+      localLeads,
     } = this.props;
 
     return (
@@ -138,7 +146,10 @@ class SignUp extends Component {
               ],
             })(
               <Select placeholder="Local Lead">
-                {/* to be fetched from back-end */}
+                {localLeads &&
+                  localLeads.map(({ name, _id }) => (
+                    <Option value={_id}>{name}</Option>
+                  ))}
               </Select>
             )}
           </Form.Item>
@@ -160,12 +171,8 @@ class SignUp extends Component {
             )}
           </Form.Item>
 
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            Log in
+          <Button type="primary" htmlType="submit">
+            Sign Up
           </Button>
         </Form>
       </Wrapper>
@@ -173,4 +180,17 @@ class SignUp extends Component {
   }
 }
 
-export default Form.create({ name: 'SignUp' })(SignUp);
+const mapStateToProps = state => {
+  return {
+    localLeads: state.fetchedData.localLeadsList,
+  };
+};
+
+// see http://react-component.github.io/form/examples/redux.html
+// to understand the syntax
+export default connect(
+  mapStateToProps,
+  {
+    fetchLocalLeads,
+  }
+)(Form.create({ name: 'SignUp' })(SignUp));
