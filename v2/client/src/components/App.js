@@ -8,6 +8,7 @@ import { colors } from '../theme';
 import Home from './pages/LandingPage';
 import Login from './pages/login';
 import TrainerResutls from './pages/TrainerResults';
+import SignUp from './pages/SignUp';
 
 const Wrapper = styled.div`
   min-width: 100vw;
@@ -24,6 +25,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={SignUp} />
             <Route exact path="/trainer-results" component={TrainerResutls} />
             <Route
               render={() => (
