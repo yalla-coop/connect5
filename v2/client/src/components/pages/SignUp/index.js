@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Input, Button, Select } from 'antd';
 import { connect } from 'react-redux';
 import { fetchLocalLeads } from '../../../actions/users';
+import { signUpTrainer, checkUniqeEmail } from '../../../actions/authAction';
 
 import {
   Wrapper,
@@ -28,16 +29,43 @@ class SignUp extends Component {
   };
 
   componentDidMount() {
+    const { isAuthenticated, history } = this.props;
+    if (isAuthenticated) {
+      return history.push('/dashboard');
+    }
     const { fetchLocalLeads: fetchLocalLeadsActionCreator } = this.props;
-    fetchLocalLeadsActionCreator();
+    return fetchLocalLeadsActionCreator();
   }
 
+  componentDidUpdate(prevProps) {
+    const { isEmailUnique, form } = this.props;
+    const { isEmailUnique: oldIsEmailUnique } = prevProps;
+
+    if (oldIsEmailUnique !== isEmailUnique) {
+      form.validateFields(['email'], { force: true });
+    }
+  }
+
+  handleConfirmBlur = e => {
+    const { confirmDirty } = this.state;
+    const { value } = e.target;
+    this.setState({ confirmDirty: confirmDirty || !!value });
+  };
+
+  handleEmailBlur = e => {
+    const { checkUniqeEmail: checkUniqeEmailActionCreator } = this.props;
+    const { value } = e.target;
+    if (value) {
+      checkUniqeEmailActionCreator(value);
+    }
+  };
+
   handleSubmit = e => {
-    const { form } = this.props;
+    const { form, signUpTrainer: signUpTrainerActionCreator } = this.props;
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        signUpTrainerActionCreator(values);
       }
     });
   };
@@ -47,6 +75,19 @@ class SignUp extends Component {
     if (value && value !== form.getFieldValue('password')) {
       callback('Two passwords that you enter is inconsistent!');
     } else {
+      callback();
+    }
+  };
+
+  validateUniqueEmail = (rule, value, callback) => {
+    const { isEmailUnique, form } = this.props;
+
+    if (isEmailUnique === null) {
+      callback();
+    } else if (!isEmailUnique) {
+      callback(true);
+    } else {
+      form.validateFields(['email'], { force: true });
       callback();
     }
   };
@@ -64,12 +105,34 @@ class SignUp extends Component {
     const {
       form: { getFieldDecorator },
       localLeads,
+      isAuthenticated,
+      history,
     } = this.props;
+
+    if (isAuthenticated) {
+      history.push('/dashboard');
+      return null;
+    }
 
     return (
       <Wrapper>
         <Title>Create a new Connect 5 Trainer Account</Title>
         <Form onSubmit={this.handleSubmit} className="login-form">
+          <Form.Item hasFeedback>
+            {getFieldDecorator('name', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your name!',
+                },
+                {
+                  min: 3,
+                  message: 'Please input valid name',
+                },
+              ],
+            })(<Input placeholder="Name" />)}
+          </Form.Item>
+
           <Form.Item hasFeedback>
             {getFieldDecorator('email', {
               rules: [
@@ -81,8 +144,12 @@ class SignUp extends Component {
                   required: true,
                   message: 'Please input your E-mail!',
                 },
+                {
+                  message: 'Sorry, this email is not available',
+                  validator: this.validateUniqueEmail,
+                },
               ],
-            })(<Input placeholder="Email" />)}
+            })(<Input placeholder="Email" onBlur={this.handleEmailBlur} />)}
           </Form.Item>
 
           <Form.Item hasFeedback>
@@ -183,6 +250,8 @@ class SignUp extends Component {
 const mapStateToProps = state => {
   return {
     localLeads: state.fetchedData.localLeadsList,
+    isAuthenticated: state.auth.isAuthenticated,
+    isEmailUnique: state.auth.isEmailUnique,
   };
 };
 
@@ -192,5 +261,7 @@ export default connect(
   mapStateToProps,
   {
     fetchLocalLeads,
+    signUpTrainer,
+    checkUniqeEmail,
   }
 )(Form.create({ name: 'SignUp' })(SignUp));

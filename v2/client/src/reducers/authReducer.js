@@ -1,8 +1,12 @@
-import { LOGIN_SUCCESS, LOGIN_FAIL } from '../constants/actionTypes';
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  CHECK_UNIQUE_EMAIL,
+} from '../constants/actionTypes';
 
 const initialState = {
   isAuthenticated: null,
-  user: null,
+  isEmailUnique: null,
 };
 
 export default function(state = initialState, action) {
@@ -20,6 +24,11 @@ export default function(state = initialState, action) {
         token: null,
         user: null,
         isAuthenticated: false,
+      };
+    case CHECK_UNIQUE_EMAIL:
+      return {
+        ...state,
+        isEmailUnique: payload,
       };
     default:
       return state;
