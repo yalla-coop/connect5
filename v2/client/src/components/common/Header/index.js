@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import { colors, borders, shadows } from '../../../theme';
 
-import Connect5Logo from "./../../../assets/connect-5-white.png"
+import Connect5Logo from '../../../assets/connect-5-white.png';
 
 import { HOME_URL } from '../../../constants/navigationRoutes';
 
@@ -82,7 +82,7 @@ const HomeIcon = styled(NavLink)`
 const Logo = styled.img`
   height: 32px;
   margin: 0;
-`
+`;
 
 // NOTE: If you need Section and View header at same time
 // then give your section header the nudge prop to shift it down
