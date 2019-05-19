@@ -1,32 +1,36 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import Collapse from 'antd/lib/collapse';
 import Button from 'antd/lib/button';
 import Icon from 'antd/lib/icon';
 
-import {
-  TrainerResultsWrapper,
-  Header as StyledHeader,
-  ContentWrapper,
-  ButtonWrapper,
-} from './TrainerResults.style';
+import Reach from '../../common/Reach';
+import { fetchTrainerResults } from '../../../actions/users';
+
+import Header from '../../common/Header';
+
+import { TrainerResultsWrapper, ButtonWrapper } from './TrainerResults.style';
 
 const { Panel } = Collapse;
 
 const panels = {
-  reach: 'Reach',
-  sessions: 'Sessions',
-  surveys: 'Surveys',
-  behavior: 'Behavioural',
-  feedback: 'Trainer feedback',
+  reach: { text: 'Reach', render: props => <Reach data={props} /> },
+  behavior: { text: 'Behavioural', render: () => null },
+  feedback: { text: 'Trainer feedback', render: () => null },
 };
 
-const TrainerReslts = () => {
-  return (
-    <TrainerResultsWrapper>
-      <StyledHeader>
-        <ContentWrapper>Results</ContentWrapper>
-      </StyledHeader>
-      <Collapse>
+class TrainerReslts extends Component {
+  async componentDidMount() {
+    // eslint-disable-next-line react/destructuring-assignment
+    await this.props.fetchTrainerResults();
+  }
+
+  render() {
+    const { results } = this.props;
+    return (
+      <TrainerResultsWrapper>
+        <Header label="results" type="section" />
         <Collapse
           accordion
           expandIconPosition="right"
@@ -35,19 +39,26 @@ const TrainerReslts = () => {
           )}
         >
           {Object.keys(panels).map(panel => (
-            <Panel header={panels[panel]} key={panel}>
-              <p>{panel}</p>
+            <Panel header={panels[panel].text} key={panel}>
+              {panels[panel].render(results)}
             </Panel>
           ))}
         </Collapse>
-      </Collapse>
-      <ButtonWrapper>
-        <Button icon="download" size="large">
-          Export to CSV
-        </Button>
-      </ButtonWrapper>
-    </TrainerResultsWrapper>
-  );
-};
+        <ButtonWrapper>
+          <Button icon="download" size="large">
+            Export to CSV
+          </Button>
+        </ButtonWrapper>
+      </TrainerResultsWrapper>
+    );
+  }
+}
 
-export default TrainerReslts;
+const mapStateToProps = state => ({
+  results: state.results,
+});
+
+export default connect(
+  mapStateToProps,
+  { fetchTrainerResults }
+)(TrainerReslts);

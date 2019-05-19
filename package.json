@@ -18,7 +18,7 @@
     "start": "node ./v2/server/index.js",
     "server": "nodemon ./v2/server/index.js",
     "client": "npm start --prefix v2/client",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "dev": "NODE_ENV=dev concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "test": "NODE_ENV=test jest --detectOpenHandles --forceExit --runInBand",
     "init:both": "cd ./v2 && npm i && cd ./client && npm i ",
     "test:coverage": "NODE_ENV=test  jest --coverage --detectOpenHandles --forceExit --runInBand",
@@ -34,8 +34,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@hapi/joi": "^15.0.3",
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
     "boom": "^7.3.0",
     "codecov": "^3.1.0",
     "concurrently": "^4.0.1",
@@ -43,29 +43,28 @@
     "dotenv": "^8.0.0",
     "env2": "^2.2.2",
     "express": "~4.16.0",
-    "joi": "^14.3.0",
     "jsonwebtoken": "^8.4.0",
     "moment": "^2.24.0",
     "mongoose": "^5.3.12",
     "morgan": "~1.9.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "supertest": "^4.0.2"
   },
   "devDependencies": {
-    "eslint": "5.16.0",
     "babel-eslint": "10.0.1",
+    "eslint": "5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1",
-    "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-prettier": "^3.0.1",
-    "prettier": "^1.17.0",
+    "eslint-plugin-react": "^7.11.1",
     "istanbul": "^0.4.5",
     "jest": "24.7.1",
     "nodemon": "^1.18.6",
-    "supertest": "^3.3.0"
+    "prettier": "^1.17.0"
   }
 }
