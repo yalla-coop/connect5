@@ -12,6 +12,8 @@ module.exports = async () => {
 
   await User.create(admin);
 
+  const trainers = await User.find({ role: 'trainer' });
+
   const localLeads = [
     {
       name: 'nisha',
@@ -20,6 +22,7 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'PHE (public health england)',
       region: regions[7],
+      localLeadGroup: [trainers[0], trainers[1], trainers[2], trainers[3]],
     },
     {
       name: 'tez',
@@ -28,6 +31,7 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'Hampshire council',
       region: regions[7],
+      localLeadGroup: [trainers[4], trainers[5], trainers[6], trainers[7]],
     },
     {
       name: 'sara',
@@ -87,17 +91,15 @@ module.exports = async () => {
     },
   ];
 
-  const storedLocalLeads = await User.create(localLeads);
+  await User.create(localLeads);
 
   const trianers = [
-    // Group 1
     {
       name: 'alex',
       email: 'alex@connect5.uk',
       password: '123456',
       role: 'trainer',
       region: regions[0],
-      localLead: storedLocalLeads[0],
     },
     {
       name: 'mark',
@@ -105,7 +107,6 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[0],
-      localLead: storedLocalLeads[0],
     },
     {
       name: 'john',
@@ -113,16 +114,13 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[1],
-      localLead: storedLocalLeads[0],
     },
-    // Group 2
     {
       name: 'nadia',
       email: 'nadia@connect5.uk',
       password: '123456',
       role: 'trainer',
       region: regions[1],
-      localLead: storedLocalLeads[1],
     },
     {
       name: 'sozan',
@@ -130,7 +128,6 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[1],
-      localLead: storedLocalLeads[1],
     },
     {
       name: 'anne',
@@ -138,16 +135,13 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[2],
-      localLead: storedLocalLeads[1],
     },
-    // Group 3
     {
       name: 'max',
       email: 'max@connect5.uk',
       password: '123456',
       role: 'trainer',
       region: regions[2],
-      localLead: storedLocalLeads[2],
     },
     {
       name: 'matt',
@@ -155,7 +149,6 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[2],
-      localLead: storedLocalLeads[2],
     },
     {
       name: 'tom',
@@ -163,7 +156,6 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[0],
-      localLead: storedLocalLeads[2],
     },
     {
       name: 'joncy',
@@ -171,7 +163,6 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[0],
-      localLead: storedLocalLeads[2],
     },
   ];
 
