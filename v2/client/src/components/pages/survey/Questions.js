@@ -9,7 +9,8 @@ import {
   TextField,
   Slider,
   NumberSliderDiv,
-  NumberOutput
+  NumberOutput,
+  QuestionCategory
 } from './Questions.style';
 
 const checkErrors = (errors, questionId, answers) =>
@@ -36,8 +37,8 @@ const renderQuestionInputType = (
     return (
       <TextField>
         <header>
-          {subGroup && <p>{subGroup}</p>}
-          <p id={index}>{questionText}</p>
+          {subGroup && <h3>{subGroup}</h3>}
+          <h3 id={index}>{questionText}</h3>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers)}
         </header>
@@ -52,7 +53,7 @@ const renderQuestionInputType = (
       >
         <header>
           {subGroup && <p>{subGroup}</p>}
-          <p id={index}>{questionText}</p>
+          <h3 id={index}>{questionText}</h3>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers)}
         </header>
@@ -68,6 +69,7 @@ const renderQuestionInputType = (
         <header>
           {subGroup && <p>{subGroup}</p>}
           <h4 id={index}>{questionText}</h4>
+          <p className="helpertext">Please specify number</p>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers)}
         </header>
@@ -87,6 +89,9 @@ const renderQuestionInputType = (
         <header>
           {subGroup && <p>{subGroup}</p>}
           <h4 id={index}>{questionText}</h4>
+          <p className="helpertext">
+            Please choose: 0 (strongly disagree) to 10 (strongly agree)
+          </p>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers)}
         </header>
@@ -114,7 +119,7 @@ const renderQuestionInputType = (
       >
         <header>
           {subGroup && <p>{subGroup}</p>}
-          <p id={index}>{questionText}</p>
+          <h3 id={index}>{questionText}</h3>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers)}
         </header>
@@ -164,6 +169,13 @@ const renderQuestionInputType = (
   return null;
 };
 
+const renderSubGroupText = el => {
+  if (el.subGroup && el.subGroup.text) {
+    return el.subGroup.text;
+  }
+  return null;
+};
+
 const questionsRender = (
   arrayOfQuestions,
   answers,
@@ -182,28 +194,27 @@ const questionsRender = (
       options
     } = el;
     const inputType = el.questionType.desc;
-    const subGroupText = () => {
-      if (el.subGroup && el.subGroup.text) {
-        return el.subGroup.text;
-      }
-      return null;
-    };
-
+    console.log(group);
     return (
-      group &&
-      renderQuestionInputType(
-        inputType,
-        errorArray,
-        questionId,
-        answers,
-        index,
-        questionText,
-        helperText,
-        onChange,
-        options,
-        handleOther,
-        subGroupText()
-      )
+      <div>
+        {' '}
+        <QuestionCategory>
+          Question {index + 1} - {group}
+        </QuestionCategory>
+        {renderQuestionInputType(
+          inputType,
+          errorArray,
+          questionId,
+          answers,
+          index,
+          questionText,
+          helperText,
+          onChange,
+          options,
+          handleOther,
+          renderSubGroupText(el)
+        )}
+      </div>
     );
   });
 
@@ -224,17 +235,27 @@ export default class Questions extends React.Component {
       <React.Fragment>
         <TextField>
           <header>
-            <h4>Please enter your PIN</h4>
+            <h3>Please enter your PIN</h3>
             <p>
               We want to create a PIN code so that we can link your responses to
               this survey with your responses to other Connect 5 surveys, whilst
-              you remain entirely anonymous. In order to do that, please type in
-              the third letter of your first name, the first two letters of your
-              mother's first name and the date you were born (e.g., you would
-              type 18 if you were born on the 18th of July)
+              you remain entirely anonymous. In order to do that,{' '}
+              <strong>
+                please type in the third letter of your first name, the first
+                two letters of your mother's first name and the date you were
+                born{' '}
+              </strong>
+              (e.g., you would type 01 if you were born on the 01st of July)
             </p>
           </header>
-          <input id="PIN" name="PIN" type="text" onChange={this.handlePIN} />
+          <input
+            id="PIN"
+            name="PIN"
+            type="text"
+            maxLength="5"
+            minLength="5"
+            onChange={handlePIN}
+          />
         </TextField>
         {questionsRender(questions, answers, errorArray, onChange, handleOther)}
       </React.Fragment>

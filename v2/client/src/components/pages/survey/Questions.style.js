@@ -29,6 +29,9 @@ const RadioField = styled(CommonStyles)`
       justify-self: center;
     }
   }
+  h3 {
+    font-size: 1.5rem;
+  }
 
   .answers {
     display: flex;
@@ -87,6 +90,9 @@ const TextField = styled(CommonStyles)`
     border: 1px solid ${colorCodes.gray};
     width: 90%;
   }
+  h3 {
+    font-size: 1.5rem;
+  }
 
   textarea {
     border-radius: 1rem;
@@ -134,4 +140,16 @@ const NumberOutput = styled.output`
   width: 1.6em;
 `;
 
-export { Slider, RadioField, TextField, NumberOutput, NumberSliderDiv };
+const QuestionCategory = styled.i`
+  border-bottom: 1px;
+  font-size: 1rem;
+`;
+
+export {
+  QuestionCategory,
+  Slider,
+  RadioField,
+  TextField,
+  NumberOutput,
+  NumberSliderDiv
+};

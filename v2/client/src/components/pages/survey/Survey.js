@@ -15,14 +15,6 @@ import { TextField } from './Questions.style';
 // formState will be the object where we store survey responses
 // as the participant answers the questions
 export default class Survey extends React.Component {
-  // static propTypes = {
-  //   history: ReactRouterPropTypes.history,
-  // };
-
-  // static defaultProps = {
-  //   history: null,
-  // };
-
   state = {
     formState: {},
     surveyDetails: null,
@@ -51,13 +43,13 @@ export default class Survey extends React.Component {
           surveyType
         });
       })
-      // .then(() => {
-      //   swal.fire({
-      //     text:
-      //       'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.',
-      //     button: 'Begin',
-      //   });
-      // })
+      .then(() => {
+        swal.fire({
+          text:
+            'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.',
+          button: 'Begin'
+        });
+      })
       .catch(err => console.error(err.stack));
   }
 
@@ -81,7 +73,6 @@ export default class Survey extends React.Component {
     this.setState(() => ({
       formState
     }));
-    console.log('FORMSTATE', formState);
   };
 
   handleOther = e => {
@@ -95,8 +86,6 @@ export default class Survey extends React.Component {
     this.setState(() => ({
       formState
     }));
-
-    console.log('FORMSTATE', formState);
   };
 
   handlePIN = e => {
@@ -107,21 +96,24 @@ export default class Survey extends React.Component {
   // // this puts the required info into an object and sends to server
   handleSubmit = e => {
     e.preventDefault();
-    // const { history } = this.props;
+
     const { formState, sessionId, surveyType, PIN } = this.state;
 
     const formSubmission = { PIN, sessionId, surveyType, formState };
-    // console.log(formSubmission);
+
     axios
       .post(`/api/survey/submit/`, formSubmission)
       .then(result => {
-        console.log(result);
+        swal.fire('Done!', 'Thanks for submitting your feedback!', 'success');
+        // .then(() => history.push('/'));
       })
+
       .catch(err => {
         console.log('ERR', err);
         this.setState({
           errors: err.response.data
         });
+        swal.fire('Please answer all required questions');
       });
   };
 
@@ -169,7 +161,7 @@ export default class Survey extends React.Component {
           </p>
         </SessionDetails>
         <main>
-          {/* <Disclaimer>
+          <Disclaimer>
             <h3>Privacy notice</h3>
             <p>
               RSPH will use your information to evaluate the outcomes of our
@@ -210,7 +202,7 @@ export default class Survey extends React.Component {
               </a>
               .
             </p>
-          </Disclaimer> */}
+          </Disclaimer>
           <Form onSubmit={this.handleSubmit}>
             <Questions
               questions={questionsForSurvey}
