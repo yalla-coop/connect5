@@ -162,4 +162,38 @@ const getTrainerSuerveys = trainerId => {
   ]);
 };
 
-module.exports = { getTrianerSessions, getTrainerSuerveys };
+const getTrainerSessionCount = trainerId => {
+  return Session.aggregate([
+    {
+      $match: { trainers: mongoose.Types.ObjectId(trainerId) },
+    },
+    {
+      $group: {
+        _id: null,
+        sessions: { $sum: 1 },
+        participants: { $sum: '$numberOfAttendees' },
+      },
+    },
+  ]);
+};
+
+const getTrainerResponseCount = trainerId => {
+  return Response.aggregate([
+    {
+      $match: { trainers: mongoose.Types.ObjectId(trainerId) },
+    },
+    {
+      $group: {
+        _id: null,
+        responses: { $sum: 1 },
+      },
+    },
+  ]);
+};
+
+module.exports = {
+  getTrianerSessions,
+  getTrainerSuerveys,
+  getTrainerSessionCount,
+  getTrainerResponseCount,
+};
