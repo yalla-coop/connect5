@@ -3,13 +3,12 @@
 
 import React from 'react';
 
-import { RadioField, TextField, ErrorDiv, Slider } from './Questions.style';
+import { Alert } from 'antd';
+import { RadioField, TextField, Slider } from './Questions.style';
 
 const checkErrors = (errors, questionId, answers) =>
   errors.includes(questionId) && !answers[questionId] ? (
-    <ErrorDiv>
-      <span>Required</span>
-    </ErrorDiv>
+    <Alert message="Question is required." type="error" />
   ) : (
     ''
   );
@@ -31,7 +30,7 @@ const renderQuestionInputType = (
     return (
       <TextField>
         <header>
-          {subGroup && <h3>{subGroup}</h3>}
+          {subGroup && <p>{subGroup}</p>}
           <p id={index}>{questionText}</p>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers)}
@@ -46,7 +45,7 @@ const renderQuestionInputType = (
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
       >
         <header>
-          {subGroup && <h3>{subGroup}</h3>}
+          {subGroup && <p>{subGroup}</p>}
           <p id={index}>{questionText}</p>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers)}
@@ -61,7 +60,7 @@ const renderQuestionInputType = (
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
       >
         <header>
-          {subGroup && <h3>{subGroup}</h3>}
+          {subGroup && <p>{subGroup}</p>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers)}
@@ -80,7 +79,7 @@ const renderQuestionInputType = (
     return (
       <TextField>
         <header>
-          {subGroup && <h3>{subGroup}</h3>}
+          {subGroup && <p>{subGroup}</p>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers)}
@@ -104,7 +103,7 @@ const renderQuestionInputType = (
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
       >
         <header>
-          {subGroup && <h3>{subGroup}</h3>}
+          {subGroup && <p>{subGroup}</p>}
           <p id={index}>{questionText}</p>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers)}
@@ -160,8 +159,7 @@ const questionsRender = (
   answers,
   errorArray,
   onChange,
-  handleOther,
-  category
+  handleOther
 ) =>
   arrayOfQuestions.map((el, index) => {
     // map through all the questions
@@ -183,7 +181,6 @@ const questionsRender = (
 
     return (
       group &&
-      group === `${category}` &&
       renderQuestionInputType(
         inputType,
         errorArray,
@@ -202,52 +199,28 @@ const questionsRender = (
 
 export default class Questions extends React.Component {
   render() {
-    const {
-      onChange,
-      questions,
-      handleOther,
-      handlePIN,
-      answers,
-      errors,
-    } = this.props;
+    const { onChange, questions, handleOther, answers, errors } = this.props;
 
     const errorArray = Object.keys(errors);
-    const questionsCategories = [
-      'demographic',
-      'Behavioural Insights',
-      'about your trainer',
-      'about your usual way of teaching',
-    ];
 
-    return questionsCategories.map(category => {
-      return (
-        <React.Fragment>
-          <h2>{category}</h2>
-          <TextField>
-            <header>
-              <h4>Please enter your PIN</h4>
-              <p>
-                We want to create a PIN code so that we can link your responses
-                to this survey with your responses to other Connect 5 surveys,
-                whilst you remain entirely anonymous. In order to do that,
-                please type in the third letter of your first name, the first
-                two letters of your mother's first name and the date you were
-                born (e.g., you would type 18 if you were born on the 18th of
-                July)
-              </p>
-            </header>
-            <input id="PIN" name="PIN" type="text" onChange={handlePIN} />
-          </TextField>
-          {questionsRender(
-            questions,
-            answers,
-            errorArray,
-            onChange,
-            handleOther,
-            category
-          )}
-        </React.Fragment>
-      );
-    });
+    return (
+      <React.Fragment>
+        <TextField>
+          <header>
+            <h4>Please enter your PIN</h4>
+            <p>
+              We want to create a PIN code so that we can link your responses to
+              this survey with your responses to other Connect 5 surveys, whilst
+              you remain entirely anonymous. In order to do that, please type in
+              the third letter of your first name, the first two letters of your
+              mother's first name and the date you were born (e.g., you would
+              type 18 if you were born on the 18th of July)
+            </p>
+          </header>
+          <input id="PIN" name="PIN" type="text" onChange={this.handlePIN} />
+        </TextField>
+        {questionsRender(questions, answers, errorArray, onChange, handleOther)}
+      </React.Fragment>
+    );
   }
 }

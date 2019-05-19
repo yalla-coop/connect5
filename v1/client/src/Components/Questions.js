@@ -17,7 +17,6 @@ export default class Questions extends React.Component {
       onChange, questions, handleMatrix, handleOther, selectCheckedItem, answers, errors,
     } = this.props;
     const errorArray = Object.keys(errors);
-    // const answerArray = Object.keys(answers);
 
     return (
       <React.Fragment>

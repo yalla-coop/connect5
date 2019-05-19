@@ -1,25 +1,5 @@
 import styled from 'styled-components';
 
-const ErrorDiv = styled.div`
-  color: red;
-`;
-
-const Slider = styled.input`
-  -webkit-appearance: none;
-
-  &::-webkit-slider-thumb {
-    width: 10px;
-    -webkit-appearance: none;
-    height: 10px;
-    cursor: ew-resize;
-    background: #434343;
-  }
-
-  &::-webkit-slider-runnable-track {
-    border: 1px solid black;
-  }
-`;
-
 const CommonStyles = styled.div`
   margin-bottom: 32px;
 
@@ -36,8 +16,6 @@ const CommonStyles = styled.div`
     opacity: 0.8;
     size: 16px;
   }
-
-  ${({ unanswered }) => unanswered && 'input { border: 1px solid red}'}
 `;
 
 const RadioField = styled(CommonStyles)`
@@ -96,7 +74,7 @@ const RadioField = styled(CommonStyles)`
         }
 
         :checked ~ .checkmark {
-          background-color: white;
+          background-color: black;
           border: 8px solid var(--heading-color);
         }
       }
@@ -118,7 +96,6 @@ const RadioField = styled(CommonStyles)`
       }
     }
   }
-  ${({ unanswered }) => unanswered && 'input { border: 1px solid red}'}
 `;
 
 const TextField = styled(CommonStyles)`
@@ -129,187 +106,22 @@ const TextField = styled(CommonStyles)`
     width: 100%;
     padding: 8px;
   }
-
-  ${({ unanswered }) => unanswered && 'input { border: 1px solid red} '}
 `;
 
-const MatrixField = styled(CommonStyles)`
-  .matrixanswers {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    position: relative;
+const Slider = styled.input`
+  -webkit-appearance: none;
+
+  &::-webkit-slider-thumb {
+    width: 10px;
+    -webkit-appearance: none;
+    height: 10px;
+    cursor: ew-resize;
+    background: #434343;
   }
 
-  .options {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    position: relative;
-  }
-
-  label {
-    margin: 0 4px 0 4px;
-    display: flex;
-    align-items: center;
-
-    p {
-      padding-left: 16px;
-      width: 85%;
-    }
-
-    input {
-      position: absolute;
-      height: 25px;
-      width: 25px;
-      opacity: 0;
-      cursor: pointer;
-
-      :hover ~ .checkmark {
-        background-color: #ccc;
-      }
-
-      :checked ~ .checkmark {
-        background-color: white;
-        border: 8px solid var(--heading-color);
-      }
-
-      :checked ~ .checkmark:after {
-        top: 9px;
-        left: 9px;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background-color: white;
-      }
-    }
-
-    .checkmark {
-      height: 25px;
-      width: 25px;
-      background-color: #eee;
-      border-radius: 50%;
-      display: block;
-    }
+  &::-webkit-slider-runnable-track {
+    border: 1px solid black;
   }
 `;
 
-const RadioStarField = styled(CommonStyles)`
-  .answers {
-    display: flex;
-    justify-content: space-evenly;
-    cursor: pointer;
-    position: relative;
-  }
-
-  label {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
-    input {
-      position: absolute;
-      height: 25px;
-      width: 25px;
-      opacity: 0;
-      cursor: pointer;
-
-      :hover ~ .checkmark {
-        background-color: #ccc;
-      }
-
-      :checked ~ .checkmark {
-        background-color: white;
-        border: 8px solid var(--heading-color);
-      }
-
-      :checked ~ .checkmark:after {
-        top: 9px;
-        left: 9px;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background-color: white;
-      }
-    }
-
-    .checkmark {
-      height: 25px;
-      width: 25px;
-      background-color: #eee;
-      border-radius: 50%;
-      display: block;
-    }
-  }
-`;
-
-const CheckboxField = styled(CommonStyles)`
-  .answers {
-    display: flex;
-    cursor: pointer;
-    position: relative;
-    flex-direction: column;
-  }
-
-  label {
-    display: flex;
-    align-items: center;
-    position: relative;
-
-    p {
-      padding-left: 16px;
-      width: 85%;
-    }
-
-    input {
-      position: absolute;
-      height: 25px;
-      width: 25px;
-      opacity: 0;
-      cursor: pointer;
-
-      :hover ~ .checkmark {
-        background-color: #ccc;
-      }
-
-      :checked ~ .checkmark {
-        background-color: white;
-        border: 8px solid var(--heading-color);
-      }
-
-      :checked ~ .checkmark:after {
-        top: 9px;
-        left: 9px;
-        width: 8px;
-        height: 8px;
-        border-radius: 8px;
-        background-color: white;
-      }
-    }
-
-    .checkmark {
-      height: 25px;
-      width: 25px;
-      background-color: #eee;
-      border-radius: 8px;
-      display: block;
-
-      /* :after {
-      content: "";
-      display: none;
-    } */
-    }
-  }
-`;
-
-export {
-  Slider,
-  ErrorDiv,
-  RadioField,
-  TextField,
-  RadioStarField,
-  MatrixField,
-  CheckboxField,
-};
+export { Slider, RadioField, TextField };

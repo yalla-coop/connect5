@@ -4,8 +4,7 @@ const surveyQs = require('../../database/queries/surveys/surveyQuestions');
 module.exports = (req, res, next) => {
   // get the dynamic id from req.params. This should be a string with the surveytype as the first part. The rest of the string is the unique sessionId
   const { id } = req.params;
-
-  const idParts = id.split('_');
+  const idParts = id.split('&');
 
   // assign the surveyId and sessionId to their own variables
   const surveyType = idParts[0];

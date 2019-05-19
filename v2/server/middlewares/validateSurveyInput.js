@@ -16,19 +16,18 @@ module.exports = async data => {
   const answers = Object.keys(data.formState);
 
   if (isEmpty(answers)) {
-    questionIDList.forEach(e => (errors[e] = 'this question must be answered'));
+    questionIDList.forEach(e => {
+      errors[e] = 'this question must be answered';
+      return errors;
+    });
   } else {
     questionIDList.filter(e => {
       if (!answers.includes(e)) {
         errors[e] = 'this question must be answered';
       }
+      return errors;
     });
   }
-
-  // filter questionIdArray to find unanswered questions and put them into error obj
-
-  console.log('ERRORS VALIDATE', errors);
-  console.log('ISEMPTY', isEmpty(errors));
 
   return { errors, isValid: isEmpty(errors) };
 };

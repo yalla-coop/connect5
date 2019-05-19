@@ -4,7 +4,6 @@ const validateSurveyInput = require('../../middlewares/validateSurveyInput');
 
 const storeResponse = require('../../database/queries/surveys/storeResponse');
 const storeAnswers = require('../../database/queries/surveys/storeAnswers');
-// const validateSurveyInput = require('../validation/survey-answers-val');
 
 module.exports = async (req, res, next) => {
   const { errors, isValid } = await validateSurveyInput(req.body);
