@@ -7,6 +7,10 @@ import { Icon } from 'antd';
 import Modal from '../modal';
 import Button from '../Button';
 
+// HELPERS
+import stringCutter from '../../../helpers/stringCutter';
+
+// STYLING
 import {
   Wrapper,
   Header,
@@ -20,6 +24,8 @@ import {
   ModalHeader,
   ModalRow,
   ModalContent,
+  Left,
+  Right,
 } from './List.style';
 
 // NOTE: this component expects dataList to look something like this:
@@ -59,29 +65,31 @@ export default class TrainerList extends Component {
         <ModalHeader>{selectedTrainer.name} info</ModalHeader>
         <ModalContent>
           <ModalRow>
-            <p>Organisation: </p> <p>{selectedTrainer.organization || 'N/A'}</p>
+            <Left>Organisation: </Left>{' '}
+            <Right>{stringCutter(selectedTrainer.organization || 'N/A')}</Right>
           </ModalRow>
           <ModalRow>
-            <p>Location: </p> <p>{selectedTrainer.region || 'N/A'}</p>
+            <Left>Location: </Left>{' '}
+            <p>{stringCutter(selectedTrainer.region || 'N/A')}</p>
           </ModalRow>
           {/* render local lead if trainer  */}
           {selectedTrainer.role === 'trainer' && (
             <ModalRow>
-              <p>Local lead: </p>
-              <p>{selectedTrainer.localLeadName || 'N/A'}</p>
+              <Left>Local lead: </Left>
+              <p>{stringCutter(selectedTrainer.localLeadName || 'N/A')}</p>
             </ModalRow>
           )}
           {/* render number of trainers if local lead */}
           {selectedTrainer.role === 'localLead' && (
             <ModalRow>
-              <p>No of trainers: </p>
+              <Left>No of trainers: </Left>
               <p>{`${selectedTrainer.trainerCount}` || 'N/A'}</p>
             </ModalRow>
           )}
           <ModalRow>
-            <p>Email: </p>
+            <Left>Email: </Left>
             <a href={`mailto:${selectedTrainer.email}`}>
-              {selectedTrainer.email || 'N/A'}
+              {stringCutter(selectedTrainer.email || 'N/A')}
             </a>
           </ModalRow>
         </ModalContent>

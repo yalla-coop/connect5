@@ -119,13 +119,22 @@ export const ModalRow = styled.div`
   justify-content: space-between;
   width: 100%;
   padding: 0.5rem 0;
+  flex-wrap;
 
   p {
     text-transform: capitalize;
   }
 `;
 
+export const Left = styled.p`
+  margin-right: 0.5rem;
+`;
+
+export const Right = styled.p`
+  text-align: right;
+`;
+
 export const ModalContent = styled.div`
   margin-bottom: 1.5rem;
   width: 100%;
-`
+`;
