@@ -70,11 +70,14 @@ const getUserResults = async (req, res, next) => {
 
 const getListOfTrainers = async (req, res, next) => {
   // this is temp until log in is in place
-  const user = await User.findOne({ role: 'localLead' });
+  const user = await User.findOne({ name: 'nisha' });
 
   try {
     const trainers = await getMyTrainers(user.id);
-    return res.status(200).json({ trainerCount: trainers.length, trainers });
+    const cleanedTrainers = trainers.map(trainer => trainer[0]);
+    return res
+      .status(200)
+      .json({ trainerCount: trainers.length, trainerList: cleanedTrainers });
   } catch (err) {
     return next(boom.badImplementation('Internal server error'));
   }

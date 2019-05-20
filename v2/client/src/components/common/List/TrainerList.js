@@ -39,13 +39,13 @@ const TrainerList = ({ dataList }) => {
       </Header>
       <List>
         {dataList &&
-          dataList.map(dataItem => (
-            <Row>
+          dataList.map((dataItem, index) => (
+            <Row key={index}>
               <Name>{dataItem.name}</Name>
               <StyledLink
                 to={{
                   pathname: '/session-details',
-                  state: { trainerId: dataItem.id },
+                  state: { trainer: dataItem },
                 }}
               >
                 <Icon type="right" />
