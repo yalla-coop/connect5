@@ -88,14 +88,13 @@ class SignUp extends Component {
   };
 
   validateUniqueEmail = (rule, value, callback) => {
-    const { isEmailUnique, form } = this.props;
+    const { isEmailUnique } = this.props;
 
-    if (isEmailUnique === null) {
+    if (value && isEmailUnique === null) {
       callback();
-    } else if (!isEmailUnique) {
+    } else if (value && !isEmailUnique) {
       callback(true);
     } else {
-      form.validateFields(['email'], { force: true });
       callback();
     }
   };
