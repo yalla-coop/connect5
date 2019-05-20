@@ -10,6 +10,7 @@ const initialState = {
   isAuthenticated: null,
   isEmailUnique: null,
   loaded: false,
+  role: null,
 };
 
 export default function(state = initialState, action) {

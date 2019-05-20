@@ -40,7 +40,7 @@ class App extends Component {
   }
 
   render() {
-    const { isAuthenticated, loaded } = this.props;
+    const { isAuthenticated, loaded, role } = this.props;
     return (
       <Wrapper>
         <Router history={history}>
@@ -55,6 +55,8 @@ class App extends Component {
               Component={Dashboard}
               isAuthenticated={isAuthenticated}
               loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
             />
 
             <Route
@@ -89,13 +91,28 @@ class App extends Component {
             <Route
               exact
               path="/participant-login"
-              component={ParticipantLogin}
+              render={() => {
+                if (loaded) {
+                  return isAuthenticated || (loaded && role === 'user') ? (
+                    <Redirect to="/participant-dashboard" />
+                  ) : (
+                    <ParticipantLogin />
+                  );
+                }
+                return <Spin />;
+              }}
             />
-            <Route
+
+            <PrivateRoute
               exact
               path="/participant-dashboard"
-              component={UserDashboard}
+              Component={UserDashboard}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['user']}
+              role={role}
             />
+
             <Route
               path="/404err"
               render={() => (
@@ -113,6 +130,7 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
+  role: state.auth.role,
   loaded: state.auth.loaded,
 });
 

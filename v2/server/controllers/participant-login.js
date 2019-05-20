@@ -14,11 +14,8 @@ module.exports = (req, res, next) => {
 
       // data to be sent in the response
       const responseInfo = {
-        id: response._id,
-        trainers: response.trainers,
         pin: response.PIN,
-        surveyType: response.surveyType,
-        session: response.session,
+        role: 'user',
       };
 
       // create token for 25 day
