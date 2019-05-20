@@ -124,7 +124,7 @@ describe('Test /survey/submit/', () => {
       });
   });
 
-  test('Answers dont get stored if PIN has wrong format', async () => {
+  test('Answers dont get stored if PIN has wrong format', async done => {
     const surveyType = 'pre-day-1';
     const singleSession = await Session.findOne({ type: '1' });
     const sessionId = singleSession._id;
