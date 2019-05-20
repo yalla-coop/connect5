@@ -235,6 +235,7 @@ const getMyTrainers = async leadId => {
               localLead: 1,
               name: 1,
               region: 1,
+              organization: 1,
             },
           },
         ])

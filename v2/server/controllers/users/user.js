@@ -7,6 +7,7 @@ const User = require('../../database/models/User');
 const {
   getLocalLeadsSessions,
   getTeamLeadSuerveys,
+  getMyTrainers,
 } = require('../../database/queries/users/loaclLead');
 
 const {
@@ -67,4 +68,16 @@ const getUserResults = async (req, res, next) => {
   }
 };
 
-module.exports = { getUserResults };
+const getListOfTrainers = async (req, res, next) => {
+  // this is temp until log in is in place
+  const user = await User.findOne({ role: 'localLead' });
+
+  try {
+    const trainers = await getMyTrainers(user.id);
+    return res.status(200).json({ trainerCount: trainers.length, trainers });
+  } catch (err) {
+    return next(boom.badImplementation('Internal server error'));
+  }
+};
+
+module.exports = { getUserResults, getListOfTrainers };
