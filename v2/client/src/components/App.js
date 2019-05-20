@@ -28,6 +28,8 @@ import {
   HOME_URL,
   DASHBOARD_URL,
   TRAINER_RESULTS_URL,
+  LOGIN_URL,
+  SIGN_UP_URL,
 } from '../constants/navigationRoutes';
 
 const Wrapper = styled.div`
@@ -66,7 +68,7 @@ class App extends Component {
 
             <Route
               exact
-              path="/login"
+              path={LOGIN_URL}
               render={() => {
                 if (loaded) {
                   return isAuthenticated ? (
@@ -80,7 +82,7 @@ class App extends Component {
             />
             <Route
               exact
-              path="/signup"
+              path={SIGN_UP_URL}
               render={() => {
                 if (loaded) {
                   return isAuthenticated ? (
@@ -95,7 +97,7 @@ class App extends Component {
             <Route
               render={() => (
                 <h1>
-                  404 go home<Link to="/">home</Link>
+                  404 go home<Link to={HOME_URL}>home</Link>
                 </h1>
               )}
             />
