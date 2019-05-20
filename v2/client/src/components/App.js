@@ -15,9 +15,9 @@ import { checkAuth } from '../actions/authAction';
 // PAGES
 import Home from './pages/LandingPage';
 import Login from './pages/login';
-import TrainerResutls from './pages/TrainerResults';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
+import UserResults from './pages/UserResults';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -27,10 +27,10 @@ import Spin from './common/Spin';
 import {
   HOME_URL,
   DASHBOARD_URL,
-  TRAINER_RESULTS_URL,
   LOGIN_URL,
   SIGN_UP_URL,
 } from '../constants/navigationRoutes';
+import history from '../history';
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -46,17 +46,11 @@ class App extends Component {
     const { isAuthenticated, loaded } = this.props;
     return (
       <Wrapper>
-        <Router>
+        <Router history={history}>
           <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/users/:id/results" component={UserResults} />
             <Route exact path={HOME_URL} component={Home} />
-
-            <PrivateRoute
-              exact
-              path={TRAINER_RESULTS_URL}
-              Component={TrainerResutls}
-              isAuthenticated={isAuthenticated}
-              loaded={loaded}
-            />
 
             <PrivateRoute
               exact
@@ -93,6 +87,16 @@ class App extends Component {
                 }
                 return <Spin />;
               }}
+            />
+
+            <Route
+              exact
+              path="/404err"
+              render={() => (
+                <h1>
+                  404 go home<Link to="/">home</Link>
+                </h1>
+              )}
             />
             <Route
               render={() => (

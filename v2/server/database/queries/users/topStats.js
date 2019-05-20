@@ -17,6 +17,7 @@ const getTopStats = async (userId, userType) => {
   // if trainer we want just their sessions and participants
 
   let stats = {};
+  const user = await User.findById(userId);
 
   // admin
   if (userType === 'admin') {
@@ -39,9 +40,11 @@ const getTopStats = async (userId, userType) => {
     };
   } else if (userType === 'localLead') {
     // get all the trainers who have them as a local lead
-    const trainers = await User.find({
-      localLead: mongoose.Types.ObjectId(userId),
-    });
+    // const trainers = await User.find({
+    //   localLead: mongoose.Types.ObjectId(userId),
+    // });
+
+    const trainers = user.trainersGroup;
 
     let sessionCount = 0;
     let participantCount = 0;
@@ -50,9 +53,9 @@ const getTopStats = async (userId, userType) => {
     // loop through each trainer and get their session and participant count
     // add it to the overall session and participant count
     await Promise.all(
-      trainers.map(async trainer => {
-        const session = await getTrainerSessionCount(trainer.id);
-        const responses = await getTrainerResponseCount(trainer.id);
+      trainers.map(async trainerID => {
+        const session = await getTrainerSessionCount(trainerID);
+        const responses = await getTrainerResponseCount(trainerID);
         if (typeof session[0] === 'object') {
           sessionCount += session[0].sessions;
           participantCount += session[0].participants;

@@ -13,6 +13,7 @@ import {
 } from './Login.style';
 import { loginUser } from '../../../actions/authAction';
 import { clearErrors } from '../../../actions/errorAction';
+import history from '../../../history';
 
 class Login extends Component {
   state = {
@@ -22,7 +23,7 @@ class Login extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { error, isAuthenticated, history } = this.props;
+    const { error, isAuthenticated } = this.props;
     if (error !== prevProps.error) {
       // Check for login error
       this.updateLogin(error);

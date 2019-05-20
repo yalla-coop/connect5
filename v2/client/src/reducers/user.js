@@ -2,10 +2,10 @@ import * as types from '../constants/actionTypes';
 
 const initState = {};
 
-const trainerResults = (state = initState, action) => {
+const userResults = (state = initState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case types.FETCH_TRINER_RESULTS_SUCCESS:
+    case types.FETCH_USER_RESULTS_SUCCESS:
       return payload;
 
     default:
@@ -13,4 +13,4 @@ const trainerResults = (state = initState, action) => {
   }
 };
 
-export default trainerResults;
+export default userResults;

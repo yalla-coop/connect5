@@ -15,6 +15,7 @@ const sharedStyles = css`
   box-shadow: ${shadows.primary};
   color: ${colors.white};
   padding: 0.5rem;
+  z-index: 1000;
 `;
 
 export const sectionHeader = css`
