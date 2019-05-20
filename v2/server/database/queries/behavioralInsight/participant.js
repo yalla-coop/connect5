@@ -72,10 +72,3 @@ module.exports = PIN => {
     { $group: { _id: '$_id', answers: { $push: '$$ROOT' } } },
   ]);
 };
-
-// {
-//   $project: {
-//     code: '$answers._id.code',
-//     avg: '$answers.avg',
-//   },
-// },
