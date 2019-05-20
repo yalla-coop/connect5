@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config();
 
-console.log(process.env.MONGO_URI);
 const router = require('./router');
 const dbConnection = require('./database/dbConnection');
 
@@ -35,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(boom.notFound('Not Found'));
+  return next(boom.notFound('Not Found'));
 });
 
 // error handler
