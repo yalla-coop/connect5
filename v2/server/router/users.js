@@ -2,6 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
+// import middlewares
+const authentication = require('./../middlewares/authentication');
+
+// import routes
 const { getTrianerReachData } = require('../controllers/users/trainer');
 
 const getLocalLeads = require('../controllers/users/getLocalLeads');
@@ -13,8 +17,8 @@ const { getDashboardStats } = require('../controllers/users/all');
 // then it will skip with next()
 router.get('/users', checkUniqueEmail);
 
-router.get('/trainer/info', getTrianerReachData);
-router.post('/all/dashboard', getDashboardStats);
+router.get('/trainer/info', authentication(), getTrianerReachData);
+router.post('/all/dashboard', authentication(), getDashboardStats);
 
 router.post('/trainers', signUpTrainer);
 

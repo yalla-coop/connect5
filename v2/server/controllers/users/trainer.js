@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 const boom = require('boom');
-const User = require('../../database/models/User');
 
 const {
   getTrianerSessions,
@@ -8,10 +7,7 @@ const {
 } = require('../../database/queries/users/trainerResults');
 
 exports.getTrianerReachData = async (req, res, next) => {
-  // this is temp unit the login is in-place
-  const EMAIL = 'alex@connect5.uk';
-  // const EMAIL = 'nisha.sharma@phe.gov.uk';
-  const user = await User.findOne({ email: EMAIL });
+  const { user } = req;
   try {
     const sessions = await getTrianerSessions(user.id);
     const surveys = await getTrainerSuerveys(user.id);
@@ -21,7 +17,7 @@ exports.getTrianerReachData = async (req, res, next) => {
       obj[s._id] = s.participants;
     });
 
-    surveys.map(survey => {
+    surveys.forEach(survey => {
       if (survey._id === 'pre-day-1' || survey._id === 'post-day-1') {
         survey.participants = obj['1'];
         survey.responseRate = ((survey.responses / obj['1']) * 100).toFixed(2);
