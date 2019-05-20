@@ -13,6 +13,8 @@ const {
 const {
   getAdminSessions,
   getAdminSuerveys,
+  getAllTrainers,
+  getAllLocalLeads,
 } = require('../../database/queries/users/admin');
 
 const {
@@ -83,4 +85,21 @@ const getListOfTrainers = async (req, res, next) => {
   }
 };
 
-module.exports = { getUserResults, getListOfTrainers };
+const getAllTrainersAndLeads = async (req, res, next) => {
+  // NEED TO MAKE SURE WE PUT THIS THROUGH AUTH SO ONLY ADMIN CAN ACCESS
+
+  try {
+    const trainers = await getAllTrainers();
+    const localLeads = await getAllLocalLeads();
+    return res.status(200).json({
+      trainerCount: trainers.length,
+      localLeadCount: localLeads.length,
+      trainerList: trainers,
+      localLeadList: localLeads,
+    });
+  } catch (err) {
+    return next(boom.badImplementation('Internal server error'));
+  }
+};
+
+module.exports = { getUserResults, getListOfTrainers, getAllTrainersAndLeads };
