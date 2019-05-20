@@ -12,8 +12,7 @@ module.exports = async () => {
 
   await User.create(admin);
 
-  const trainers = await User.find({ role: 'trainer' });
-
+  // initially create the localLeads
   const localLeads = [
     {
       name: 'nisha',
@@ -22,7 +21,6 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'PHE (public health england)',
       region: regions[7],
-      localLeadGroup: [trainers[0], trainers[1], trainers[2], trainers[3]],
     },
     {
       name: 'tez',
@@ -31,7 +29,6 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'Hampshire council',
       region: regions[7],
-      localLeadGroup: [trainers[4], trainers[5], trainers[6], trainers[7]],
     },
     {
       name: 'sara',
@@ -91,8 +88,9 @@ module.exports = async () => {
     },
   ];
 
-  await User.create(localLeads);
+  const storedLocalLeads = await User.create(localLeads);
 
+  // create the trainers
   const trianers = [
     {
       name: 'alex',
@@ -100,6 +98,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[0],
+      localLead: storedLocalLeads[0],
     },
     {
       name: 'mark',
@@ -107,6 +106,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[0],
+      localLead: storedLocalLeads[0],
     },
     {
       name: 'john',
@@ -114,6 +114,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[1],
+      localLead: storedLocalLeads[0],
     },
     {
       name: 'nadia',
@@ -121,6 +122,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[1],
+      localLead: storedLocalLeads[1],
     },
     {
       name: 'sozan',
@@ -128,6 +130,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[1],
+      localLead: storedLocalLeads[1],
     },
     {
       name: 'anne',
@@ -135,6 +138,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[2],
+      localLead: storedLocalLeads[1],
     },
     {
       name: 'max',
@@ -142,6 +146,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[2],
+      localLead: storedLocalLeads[2],
     },
     {
       name: 'matt',
@@ -149,6 +154,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[2],
+      localLead: storedLocalLeads[2],
     },
     {
       name: 'tom',
@@ -156,6 +162,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[0],
+      localLead: storedLocalLeads[2],
     },
     {
       name: 'joncy',
@@ -163,8 +170,27 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[0],
+      localLead: storedLocalLeads[2],
     },
   ];
 
-  return User.create(trianers);
+  await User.create(trianers);
+
+  // update the 3 local leads with trainers on the platform
+
+  const trainers = await User.find({ role: 'trainer' });
+
+  await User.findByIdAndUpdate(storedLocalLeads[0].id, {
+    trainersGroup: [trainers[0], trainers[1], trainers[2]],
+  });
+
+  await User.findByIdAndUpdate(storedLocalLeads[1].id, {
+    trainersGroup: [trainers[3], trainers[4], trainers[5]],
+  });
+
+  await User.findByIdAndUpdate(storedLocalLeads[2].id, {
+    trainersGroup: [trainers[6], trainers[7], trainers[8]],
+  });
+
+  return 'completed';
 };
