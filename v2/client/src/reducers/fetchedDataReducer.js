@@ -1,6 +1,8 @@
 import * as types from '../constants/actionTypes';
 
-const initState = { localLeadsList: [] };
+const initState = {
+  localLeadsList: [],
+};
 
 // general fetched data
 const fetchedData = (state = initState, action) => {

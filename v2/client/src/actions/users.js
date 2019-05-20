@@ -27,3 +27,17 @@ export const fetchLocalLeads = () => async dispatch => {
     console.log(error);
   }
 };
+
+export const fetchStatsData = userType => async dispatch => {
+  try {
+    const res = await axios.post('/api/all/dashboard', { userType });
+    const { data } = res;
+
+    dispatch({
+      type: types.FETCH_STATS,
+      payload: data.stats,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
