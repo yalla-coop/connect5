@@ -7,6 +7,7 @@ import Login from './pages/auth/login';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/LandingPage';
 import UserResults from './pages/UserResults';
+import AddTrainer from './pages/AddTrainer';
 
 // ROUTES
 import { HOME_URL, DASHBOARD_URL } from '../constants/navigationRoutes';
@@ -24,6 +25,7 @@ class App extends Component {
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/add-trainer" component={AddTrainer} />
             <Route exact path="/users/:id/results" component={UserResults} />
             <Route exact path={HOME_URL} component={Home} />
             <Route exact path={DASHBOARD_URL} component={Dashboard} />

@@ -57,3 +57,14 @@ html {
   font-family: "Roboto", sans-serif;
   font-size: 1rem;
 }
+
+/* style for the Select component in AddTrainer view */
+.add-trainer__select .ant-select-selection {
+  white-space: nowrap;
+  height: 50px;
+  overflow: auto
+}
+
+.ant-select-selection .ant-select-selection__rendered{
+  line-height: 48px
+}
