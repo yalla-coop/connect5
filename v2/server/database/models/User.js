@@ -17,11 +17,19 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  // the trainer's local lead
+  //  the trainer's local lead
   localLead: {
     type: Schema.Types.ObjectId,
     ref: 'users',
   },
+  // group of trainers that user is co-ordinating
+  // list of trainers ID
+  trainersGroup: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+    },
+  ],
   region: {
     type: String,
     enum: regions.map(region => region.toLocaleLowerCase()),

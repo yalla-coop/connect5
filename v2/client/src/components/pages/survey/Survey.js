@@ -11,7 +11,7 @@ import {
   Form,
   Disclaimer
 } from './Survey.style';
-import { TextField } from './Questions.style';
+
 // formState will be the object where we store survey responses
 // as the participant answers the questions
 export default class Survey extends React.Component {
@@ -96,7 +96,7 @@ export default class Survey extends React.Component {
   // // this puts the required info into an object and sends to server
   handleSubmit = e => {
     e.preventDefault();
-
+    const { history } = this.props;
     const { formState, sessionId, surveyType, PIN } = this.state;
 
     const formSubmission = { PIN, sessionId, surveyType, formState };
@@ -104,12 +104,9 @@ export default class Survey extends React.Component {
       ? axios
           .post(`/api/survey/submit/`, formSubmission)
           .then(result => {
-            swal.fire(
-              'Done!',
-              'Thanks for submitting your feedback!',
-              'success'
-            );
-            // .then(() => history.push('/'));
+            swal
+              .fire('Done!', 'Thanks for submitting your feedback!', 'success')
+              .then(() => history.push('/'));
           })
           .catch(err => {
             this.setState({
@@ -134,7 +131,7 @@ export default class Survey extends React.Component {
     if (loading) {
       return <h3>Loading...</h3>;
     }
-    console.log(this.state);
+    console.log(this.props.history);
     const {
       sessionDate,
       trainerNames,

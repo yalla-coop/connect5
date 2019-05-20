@@ -55,7 +55,7 @@ const Reach = ({ data }) => {
       <Head>Surveys</Head>
       <Table
         columns={surveysColumns}
-        dataSource={data.surveys}
+        dataSource={data.newSurveys}
         pagination={false}
       />
     </div>

@@ -1,12 +1,12 @@
 const express = require('express');
 
-const router = express.Router();
-
-const { getTrianerReachData } = require('../controllers/users/trainer');
-
+const { getUserResults } = require('../controllers/users/user');
 const { getDashboardStats } = require('../controllers/users/all');
 
-router.get('/trainer/info', getTrianerReachData);
+const router = express.Router();
+
+router.get('/users/:id/results', getUserResults);
+// router.get('/trainer/info', getTrianerReachData);
 router.post('/all/dashboard', getDashboardStats);
 
 module.exports = router;

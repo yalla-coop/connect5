@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(boom.notFound('Not Found'));
+  return next(boom.notFound('Not Found'));
 });
 
 // error handler
