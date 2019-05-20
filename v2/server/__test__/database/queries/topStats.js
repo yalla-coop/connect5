@@ -17,13 +17,10 @@ describe('Test topStats query', () => {
     mongoose.disconnect();
   });
 
-  beforeEach(async () => {
-    // build dummy data
-    await buildDB();
-  });
-
   test('top stats gets admin stats', async done => {
-    getTopStats('123213', 'admin').then(result => {
+    const admin = await User.findOne({ role: 'admin' });
+
+    getTopStats(admin.id, 'admin').then(result => {
       expect(result).toBeDefined();
       expect(result.participantCount).toBe(4);
       expect(result.trainerCount).toBe(20);
