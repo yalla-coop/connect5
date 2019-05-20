@@ -82,19 +82,49 @@ export const Type = styled.div`
   }
 `;
 
-export const StyledLink = styled(Link)`
+export const Name = styled.p`
+  ${sharedItemStyles}
+  text-transform: capitalize;
+  padding-left: 2rem;
+`;
+
+export const ArrowWrapper = styled.div`
   ${sharedItemStyles}
   text-align: center;
   color: ${colors.gray};
   transition: all ease 0.2s;
+  cursor: pointer;
 
   :hover {
     color: ${colors.primary};
   }
 `;
 
-export const Name = styled.p`
-  ${sharedItemStyles}
-  text-transform: capitalize;
-  padding-left: 2rem;
+export const ModalStyle = css`
+  background-color: ${colors.white};
+  height: auto;
 `;
+
+export const ModalHeader = styled.h2`
+  font-size: 1rem;
+  text-transform: capitalize;
+  text-align: center;
+  margin-bottom: 1rem;
+`;
+
+export const ModalRow = styled.div`
+  border-bottom: ${borders.inputBox};
+  font-weight: 300;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0;
+
+  p {
+    text-transform: capitalize;
+  }
+`;
+
+export const ModalContent = styled.div`
+  margin-bottom: 1.5rem;
+`

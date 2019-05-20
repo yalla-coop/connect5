@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-// import { colors } from '../../../theme';
+import styled, { css } from 'styled-components';
+import { colors, shadows } from '../../../theme';
 
-const modalStyles = {
-  width: '500px',
-  maxWidth: '80%',
-  height: '200px',
-  margin: '0 auto',
-  position: 'fixed',
-  left: '50%',
-  top: '45%',
-  transform: 'translate(-50%,-50%)',
-  zIndex: '999',
-  backgroundColor: '#d7d7d7',
-  padding: '10px 20px 40px',
-  borderRadius: '8px',
-  display: 'flex',
-  flexDirection: 'column',
-};
+const modalStyles = css`
+  width: 500px;
+  max-width: 80%;
+  height: 200px;
+  margin: 0 auto;
+  position: fixed;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  background-color: #d7d7d7;
+  padding: 10px 20px 40px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: ${shadows.primary};
+`;
 
 const modalCloseButtonStyles = {
   marginBottom: '15px',
@@ -32,15 +33,45 @@ const modalCloseButtonStyles = {
   alignSelf: 'flex-end',
 };
 
-const Modal = ({ modalStyle, closeButtonStyle, children, onClose, isOpen }) => {
-  let dialog = (
-    <div style={modalStyle}>
-      <button type="button" style={closeButtonStyle} onClick={onClose}>
-        x
-      </button>
+const TransWrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: ${colors.backgroundWashOut};
+  position: fixed;
+  left: 0;
+  top: 0;
+`;
 
-      <div>{children}</div>
-    </div>
+const StyledModal = styled.div`
+  ${modalStyles}
+  ${props => props.extraModalStyle}
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Modal = ({
+  modalStyle,
+  closeButtonStyle,
+  content,
+  onClose,
+  isOpen,
+  ...props
+}) => {
+  let dialog = (
+    <TransWrapper>
+      <StyledModal {...props}>
+        <button type="button" style={closeButtonStyle} onClick={onClose}>
+          x
+        </button>
+
+        <ContentWrapper>{content}</ContentWrapper>
+      </StyledModal>
+    </TransWrapper>
   );
 
   if (!isOpen) {

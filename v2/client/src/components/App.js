@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import 'antd/dist/antd.css';
+// PLEASE DO NOT PUT ANTD STYLING SHEET HERE AS OVERRIDES EXISTING STYLES
+// import 'antd/dist/antd.css';
 // import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { Router, Route, Switch, Link } from 'react-router-dom';
 import styled from 'styled-components';

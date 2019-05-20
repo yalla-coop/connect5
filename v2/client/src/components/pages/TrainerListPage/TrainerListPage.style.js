@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { colors } from '../../../theme';
+import { colors, borders } from '../../../theme';
 
 export const Wrapper = styled.div`
   padding: 5rem 0;

@@ -17,7 +17,7 @@ import {
   HeaderSection,
   HeaderText,
   HeaderNumber,
-} from './TrainerListPage.style.js';
+} from './TrainerListPage.style';
 
 export default class TrainerListPage extends Component {
   state = {
@@ -35,7 +35,6 @@ export default class TrainerListPage extends Component {
     axios
       .get('/api/users/my-trainers')
       .then(response => {
-        console.log('RES', response);
         this.setState({
           trainerCount: response.data.trainerCount,
           trainers: response.data.trainerList,
@@ -53,7 +52,9 @@ export default class TrainerListPage extends Component {
 
   render() {
     const { trainerCount, trainers, loaded, toggle } = this.state;
-    const userType = 'admin';
+
+    // this is temp and will change once we have log in set up
+    const userType = 'localLead';
 
     if (!loaded) return <p>Loading...</p>;
     return (
