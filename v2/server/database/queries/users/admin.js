@@ -229,6 +229,7 @@ const getAllTrainers = async () => {
         name: 1,
         region: 1,
         organization: 1,
+        role: 1,
       },
     },
   ]);
@@ -267,6 +268,7 @@ const getAllLocalLeads = async () => {
         name: 1,
         region: 1,
         organization: 1,
+        role: 1,
       },
     },
   ]);

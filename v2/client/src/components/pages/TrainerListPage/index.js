@@ -90,7 +90,9 @@ export default class TrainerListPage extends Component {
       <Wrapper>
         <Header type="section" label="trainers" />
         <HeaderSection>
-          <HeaderText>Total Trainers:</HeaderText>
+          <HeaderText>
+            {toggle === 'left' ? 'Total Trainers:' : 'Total Local Leads:'}
+          </HeaderText>
           <HeaderNumber>
             {toggle === 'left' ? trainerCount : localLeadCount}
           </HeaderNumber>

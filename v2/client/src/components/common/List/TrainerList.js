@@ -64,10 +64,20 @@ export default class TrainerList extends Component {
           <ModalRow>
             <p>Location: </p> <p>{selectedTrainer.region || 'N/A'}</p>
           </ModalRow>
-          <ModalRow>
-            <p>Local lead: </p>
-            <p>{selectedTrainer.localLeadName || 'N/A'}</p>
-          </ModalRow>
+          {/* render local lead if trainer  */}
+          {selectedTrainer.role === 'trainer' && (
+            <ModalRow>
+              <p>Local lead: </p>
+              <p>{selectedTrainer.localLeadName || 'N/A'}</p>
+            </ModalRow>
+          )}
+          {/* render number of trainers if local lead */}
+          {selectedTrainer.role === 'localLead' && (
+            <ModalRow>
+              <p>No of trainers: </p>
+              <p>{`${selectedTrainer.trainerCount}` || 'N/A'}</p>
+            </ModalRow>
+          )}
           <ModalRow>
             <p>Email: </p>
             <a href={`mailto:${selectedTrainer.email}`}>
@@ -81,11 +91,7 @@ export default class TrainerList extends Component {
             state: { trainer: selectedTrainer },
           }}
         >
-          <Button
-            label="view results"
-            type="outline"
-            width="150px"
-          />
+          <Button label="view results" type="outline" width="150px" />
         </Link>
       </>
     );

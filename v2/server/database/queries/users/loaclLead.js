@@ -253,6 +253,7 @@ const getMyTrainers = async leadId => {
               name: 1,
               region: 1,
               organization: 1,
+              role: 1,
             },
           },
         ])
