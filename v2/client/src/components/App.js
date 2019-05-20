@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { checkAuth } from '../actions/authAction';
 
 // PAGES
-import Login from './pages/login';
+import Login from './pages/auth/login';
 import ParticipantLogin from './pages/auth/login-participant';
 import UserDashboard from './pages/userDashboard';
 import Dashboard from './pages/Dashboard';

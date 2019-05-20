@@ -1,6 +1,6 @@
 const boom = require('boom');
 const jwt = require('jsonwebtoken');
-const { tokenMaxAge } = require('./../database/DBConstants');
+const { tokenMaxAge } = require('./../constants');
 const { findByPIN } = require('./../database/queries/user');
 
 module.exports = (req, res, next) => {
@@ -33,5 +33,7 @@ module.exports = (req, res, next) => {
       // send the response info
       return res.json(responseInfo);
     })
-    .catch(err => next(boom.badImplementation()));
+    .catch(err => {
+      next(boom.badImplementation());
+    });
 };
