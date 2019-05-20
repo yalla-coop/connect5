@@ -24,11 +24,12 @@ describe('Test /survey/submit/', () => {
     const sessionId = singleSession._id;
     const PIN = 'TES22';
 
-    console.log(sessionId);
-
     const questions = await Question.find({ surveyType });
+    const postcodeQuestion = await Question.findOne({
+      surveyType: surveyType,
+      text: 'Please enter the postcode where you are active'
+    });
     console.log(questions);
-    const formState = {};
 
     formState[questions[0]._id] = 'Under 18';
     formState[questions[1]._id] = 'Male';
@@ -73,16 +74,15 @@ describe('Test /survey/submit/', () => {
     formState[questions[39]._id] = '4';
     formState[questions[40]._id] = '4';
     formState[questions[41]._id] = '4';
-
+    formState[postcodeQuestion._id] = 'E50DW';
+    console.log(formState[postcodeQuestion._id]);
     const dummyFormResponse = {
       PIN,
       sessionId,
       surveyType,
       formState
     };
-
-    console.log(dummyFormResponse);
-
+    //try
     request(app)
       .post('/api/survey/submit')
       .send(dummyFormResponse)
@@ -90,7 +90,7 @@ describe('Test /survey/submit/', () => {
       .expect(200)
       .end((err, res) => {
         console.log(res.body);
-        expect(res.body).toBeDefined();
+        expect(res.body).toBe(0);
         expect(res.body[0].answer).toBeDefined();
         expect(res.body[0].response).toBeDefined();
         done(err);
