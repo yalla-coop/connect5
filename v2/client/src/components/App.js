@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+  Redirect,
+} from 'react-router-dom';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+
+import { checkAuth } from '../actions/authAction';
 
 // PAGES
 import Home from './pages/LandingPage';
@@ -10,6 +18,10 @@ import Login from './pages/login';
 import TrainerResutls from './pages/TrainerResults';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
+
+// COMPONENTS
+import PrivateRoute from './common/PrivateRoute';
+import Spin from './common/Spin';
 
 // ROUTES
 import {
@@ -22,23 +34,64 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-// eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
+  componentDidMount() {
+    const { checkAuth: checkAuthActionCreator } = this.props;
+    checkAuthActionCreator();
+  }
+
   render() {
+    const { isAuthenticated, loaded } = this.props;
     return (
       <Wrapper>
         <Router>
           <Switch>
             <Route exact path={HOME_URL} component={Home} />
-            <Route
+
+            <PrivateRoute
               exact
               path={TRAINER_RESULTS_URL}
-              component={TrainerResutls}
+              Component={TrainerResutls}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
             />
-            <Route exact path={DASHBOARD_URL} component={Dashboard} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/trainer-results" component={TrainerResutls} />
+
+            <PrivateRoute
+              exact
+              path={DASHBOARD_URL}
+              Component={Dashboard}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+            />
+
+            <Route
+              exact
+              path="/login"
+              render={() => {
+                if (loaded) {
+                  return isAuthenticated ? (
+                    <Redirect to={DASHBOARD_URL} />
+                  ) : (
+                    <Login />
+                  );
+                }
+                return <Spin />;
+              }}
+            />
+            <Route
+              exact
+              path="/signup"
+              render={() => {
+                if (loaded) {
+                  return isAuthenticated ? (
+                    <Redirect to={DASHBOARD_URL} />
+                  ) : (
+                    <SignUp />
+                  );
+                }
+                return <Spin />;
+              }}
+            />
             <Route
               render={() => (
                 <h1>
@@ -53,4 +106,12 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  loaded: state.auth.loaded,
+});
+
+export default connect(
+  mapStateToProps,
+  { checkAuth }
+)(App);
