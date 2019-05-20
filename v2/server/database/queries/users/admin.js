@@ -198,4 +198,85 @@ const getAdminSuerveys = () => {
   ]);
 };
 
-module.exports = { getAdminSessions, getAdminSuerveys };
+const getAllTrainers = async () => {
+  const trainers = await User.aggregate([
+    {
+      $match: {
+        role: 'trainer',
+      },
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'localLead',
+        foreignField: '_id',
+        as: 'localLead',
+      },
+    },
+    {
+      $unwind: '$localLead',
+    },
+    {
+      $addFields: {
+        localLeadName: '$localLead.name',
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        email: 1,
+        localLeadName: 1,
+        name: 1,
+        region: 1,
+        organization: 1,
+      },
+    },
+  ]);
+
+  return trainers;
+};
+
+const getAllLocalLeads = async () => {
+  const trainers = await User.aggregate([
+    {
+      $match: {
+        role: 'localLead',
+      },
+    },
+    // {
+    //   $lookup: {
+    //     from: 'users',
+    //     localField: 'localLead',
+    //     foreignField: '_id',
+    //     as: 'localLead',
+    //   },
+    // },
+    // {
+    //   $unwind: '$localLead',
+    // },
+    {
+      $addFields: {
+        trainerCount: { $size: '$trainersGroup' },
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        email: 1,
+        trainerCount: 1,
+        name: 1,
+        region: 1,
+        organization: 1,
+      },
+    },
+  ]);
+
+  return trainers;
+};
+
+module.exports = {
+  getAdminSessions,
+  getAdminSuerveys,
+  getAllTrainers,
+  getAllLocalLeads,
+};
