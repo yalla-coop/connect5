@@ -6,11 +6,10 @@ import Button from 'antd/lib/button';
 import Icon from 'antd/lib/icon';
 
 import Reach from '../../common/Reach';
-import { fetchTrainerResults } from '../../../actions/users';
+import { fetchUserResults } from '../../../actions/users';
 
+import { TrainerResultsWrapper, ButtonWrapper } from './UserResults.style';
 import Header from '../../common/Header';
-
-import { TrainerResultsWrapper, ButtonWrapper } from './TrainerResults.style';
 
 const { Panel } = Collapse;
 
@@ -20,10 +19,16 @@ const panels = {
   feedback: { text: 'Trainer feedback', render: () => null },
 };
 
-class TrainerReslts extends Component {
+class UserResults extends Component {
   async componentDidMount() {
+    // show results based on the logged in user id and role
+    const {
+      match: { params },
+    } = this.props;
+    const { id } = params;
+
     // eslint-disable-next-line react/destructuring-assignment
-    await this.props.fetchTrainerResults();
+    await this.props.fetchUserResults(id);
   }
 
   render() {
@@ -60,5 +65,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchTrainerResults }
-)(TrainerReslts);
+  { fetchUserResults }
+)(UserResults);
