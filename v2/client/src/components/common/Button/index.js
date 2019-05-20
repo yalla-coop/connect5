@@ -14,6 +14,7 @@ const sharedStyles = css`
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   opacity: ${props => props.disabled && !props.loading && 0.3};
   font-weight: 500;
+  font-size: 1.3rem;
   box-shadow: ${shadows.primary};
 
   &:hover::after {
