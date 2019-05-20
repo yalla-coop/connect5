@@ -6,6 +6,10 @@ const {
   createNewTrainer,
 } = require('./../../../database/queries/users/trainer');
 
+const {
+  addTrainertoGroup,
+} = require('./../../../database/queries/users/localLead');
+
 module.exports = async (req, res, next) => {
   const { name, email, password, localLead, region } = req.body;
   if (name && email && password && localLead && region) {
@@ -13,8 +17,8 @@ module.exports = async (req, res, next) => {
       name,
       email,
       password,
-      localLead,
       region,
+      localLead,
       role: 'localLead',
     })
       .then(trainer => {
@@ -26,17 +30,22 @@ module.exports = async (req, res, next) => {
           region: trainer.region,
           email: trainer.email,
         };
+        addTrainertoGroup(localLead, trainer._id)
+          .then(result => {
+            // create token for 25 day
+            const token = jwt.sign({ id: trainer._id }, process.env.SECRET, {
+              expiresIn: tokenMaxAge.string,
+            });
 
-        // create token for 25 day
-        const token = jwt.sign({ id: trainer._id }, process.env.SECRET, {
-          expiresIn: tokenMaxAge.string,
-        });
-
-        res.cookie('token', token, {
-          maxAge: tokenMaxAge.number,
-          httpOnly: true,
-        });
-        return res.json(trainerInfo);
+            res.cookie('token', token, {
+              maxAge: tokenMaxAge.number,
+              httpOnly: true,
+            });
+            return res.json(trainerInfo);
+          })
+          .catch(err => {
+            next(boom.badImplementation());
+          });
       })
       .catch(err => {
         next(boom.badImplementation());
