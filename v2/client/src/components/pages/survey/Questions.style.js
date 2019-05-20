@@ -85,6 +85,7 @@ const RadioField = styled(CommonStyles)`
 `;
 
 const TextField = styled(CommonStyles)`
+  margin-top: 1rem;
   input {
     border-radius: 1rem;
     border: 1px solid ${colorCodes.gray};
@@ -141,7 +142,6 @@ const NumberOutput = styled.output`
 `;
 
 const QuestionCategory = styled.i`
-  border-bottom: 1px;
   font-size: 1rem;
 `;
 

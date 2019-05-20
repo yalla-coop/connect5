@@ -13,9 +13,9 @@ import {
   QuestionCategory
 } from './Questions.style';
 
-const checkErrors = (errors, questionId, answers) =>
-  errors.includes(questionId) && !answers[questionId] ? (
-    <Alert message="Question is required." type="error" />
+const checkErrors = (errorArr, questionId, answers, errors) =>
+  errorArr.includes(questionId) && !answers[questionId] ? (
+    <Alert message={`${errors[questionId]}`} type="error" />
   ) : (
     ''
   );
@@ -31,7 +31,8 @@ const renderQuestionInputType = (
   onChange,
   options,
   handleOther,
-  subGroup
+  subGroup,
+  errors
 ) => {
   if (inputType === 'text') {
     return (
@@ -40,7 +41,7 @@ const renderQuestionInputType = (
           {subGroup && <h3>{subGroup}</h3>}
           <h3 id={index}>{questionText}</h3>
           <p className="helpertext">{helperText}</p>
-          {checkErrors(errorArray, questionId, answers)}
+          {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <input id={index} name={questionId} type="text" onChange={onChange} />
       </TextField>
@@ -48,14 +49,12 @@ const renderQuestionInputType = (
   }
   if (inputType === 'date') {
     return (
-      <TextField
-        unanswered={errorArray.includes(questionId) && !answers[questionId]}
-      >
+      <TextField>
         <header>
           {subGroup && <p>{subGroup}</p>}
           <h3 id={index}>{questionText}</h3>
           <p className="helpertext">{helperText}</p>
-          {checkErrors(errorArray, questionId, answers)}
+          {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <input id={index} name={questionId} type="date" onChange={onChange} />
       </TextField>
@@ -63,15 +62,13 @@ const renderQuestionInputType = (
   }
   if (inputType === 'numberPositive') {
     return (
-      <TextField
-        unanswered={errorArray.includes(questionId) && !answers[questionId]}
-      >
+      <TextField>
         <header>
           {subGroup && <p>{subGroup}</p>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">Please specify number</p>
           <p className="helpertext">{helperText}</p>
-          {checkErrors(errorArray, questionId, answers)}
+          {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <input
           id={index}
@@ -93,11 +90,10 @@ const renderQuestionInputType = (
             Please choose: 0 (strongly disagree) to 10 (strongly agree)
           </p>
           <p className="helpertext">{helperText}</p>
-          {checkErrors(errorArray, questionId, answers)}
+          {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <NumberSliderDiv>
           <Slider
-            unanswered={errorArray.includes(questionId) && !answers[questionId]}
             id={`sliderInput-${index}`}
             name={questionId}
             min="0"
@@ -114,14 +110,12 @@ const renderQuestionInputType = (
   }
   if (inputType === 'radio') {
     return (
-      <RadioField
-        unanswered={errorArray.includes(questionId) && !answers[questionId]}
-      >
+      <RadioField>
         <header>
           {subGroup && <p>{subGroup}</p>}
           <h3 id={index}>{questionText}</h3>
           <p className="helpertext">{helperText}</p>
-          {checkErrors(errorArray, questionId, answers)}
+          {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <div className="answers">
           {options.map((e, i) => {
@@ -181,7 +175,8 @@ const questionsRender = (
   answers,
   errorArray,
   onChange,
-  handleOther
+  handleOther,
+  errors
 ) =>
   arrayOfQuestions.map((el, index) => {
     // map through all the questions
@@ -194,7 +189,6 @@ const questionsRender = (
       options
     } = el;
     const inputType = el.questionType.desc;
-    console.log(group);
     return (
       <div>
         {' '}
@@ -212,7 +206,8 @@ const questionsRender = (
           onChange,
           options,
           handleOther,
-          renderSubGroupText(el)
+          renderSubGroupText(el),
+          errors
         )}
       </div>
     );
@@ -230,7 +225,7 @@ export default class Questions extends React.Component {
     } = this.props;
 
     const errorArray = Object.keys(errors);
-
+    const props = this.props;
     return (
       <React.Fragment>
         <TextField>
@@ -257,7 +252,14 @@ export default class Questions extends React.Component {
             onChange={handlePIN}
           />
         </TextField>
-        {questionsRender(questions, answers, errorArray, onChange, handleOther)}
+        {questionsRender(
+          questions,
+          answers,
+          errorArray,
+          onChange,
+          handleOther,
+          errors
+        )}
       </React.Fragment>
     );
   }
