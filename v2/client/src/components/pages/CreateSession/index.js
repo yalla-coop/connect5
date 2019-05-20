@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import { DatePicker, Select, Input } from 'antd';
 import moment from 'moment';
-import { sessions, regions } from './options';
+// import { sessions, regions } from './options';
 // import swal from 'sweet-alert';
 
 import {
   Form,
   CreateSessionWrapper,
-  Input,
-  SelectComponent,
-  Date,
+  InputDiv,
   Heading,
   Button,
   Error,
 } from './create-session.style';
+
+const { Option } = Select;
+const children = [];
+for (let i = 10; i < 36; i++) {
+  children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+}
 
 class CreateSession extends Component {
   state = {
@@ -22,12 +27,13 @@ class CreateSession extends Component {
     inviteesNumber: '',
     region: null,
     partner: '',
+    emails: [],
     err: false,
   };
 
-  onDateChange = date => {
+  onDateChange = defaultValue => {
     this.setState({
-      startDate: date,
+      startDate: defaultValue,
     });
   };
 
@@ -37,21 +43,27 @@ class CreateSession extends Component {
     });
   };
 
-  onSelectSessionChange = session => {
+  onSelectSessionChange = value => {
     this.setState({
-      session,
+      session: value,
     });
   };
 
-  onSelectRegionChange = region => {
+  onSelectRegionChange = value => {
     this.setState({
-      region,
+      region: value,
     });
   };
 
-  onSelectPartnerChange = partner => {
+  onSelectPartnerChange = value => {
     this.setState({
-      partner,
+      partner: value,
+    });
+  };
+
+  onEmailChange = value => {
+    this.setState({
+      emails: value,
     });
   };
 
@@ -72,19 +84,22 @@ class CreateSession extends Component {
   };
 
   fetch = () => {
-    const { startDate, inviteesNumber, session, region, partner } = this.state;
-    const sessionData = {
-      sessionType: session.value,
-      startDate: moment(startDate).format('YYYY,MM,DD'),
-      inviteesNumber,
-      region: region.value,
-      partner: partner.value,
-    };
-    axios
-      .post('/api/session', sessionData)
-      .then(res => console.log(res))
+    // const { inviteesNumber, session, region, partner, emails } = this.state;
+    // const sessionData = {
+    //   sessionType: session.value,
+    //   startDate: moment(startDate).format('YYYY,MM,DD'),
+    //   inviteesNumber,
+    //   region: region.value,
+    //   region: region.value,
+    //   partner: partner.value,
 
-      .catch(err => console.log(err));
+    // };
+    setTimeout(() => console.log(this.state), 3000);
+    //   axios
+    //     .post('/api/session', sessionData)
+    //     .then(res => console.log(res))
+    //
+    //     .catch(err => console.log(err));
   };
 
   onFormSubmit = event => {
@@ -93,20 +108,14 @@ class CreateSession extends Component {
   };
 
   render() {
-    const {
-      startDate,
-      inviteesNumber,
-      session,
-      region,
-      partner,
-      err,
-    } = this.state;
+    const { startDate, inviteesNumber, err } = this.state;
     const {
       onDateChange,
       onInputChange,
       onSelectSessionChange,
       onSelectRegionChange,
       onSelectPartnerChange,
+      onEmailChange,
       onFormSubmit,
     } = this;
     return (
@@ -114,43 +123,101 @@ class CreateSession extends Component {
         <Heading>Create New Session</Heading>
 
         <Form onSubmit={onFormSubmit}>
-          <Date
-            selected={startDate}
-            placeholderText="Click to select a date"
-            onChange={onDateChange}
-            name="startDate"
-            dateFormat="YYYY-MM-DD"
-          />
+          <InputDiv>
+            <DatePicker
+              onChange={onDateChange}
+              name="startDate"
+              defaultValue={moment('2019-01-01', 'YYYY-MM-DD')}
+              size="large"
+              style={{ width: '100%' }}
+              value={startDate}
+            />
+          </InputDiv>
 
-          <SelectComponent
-            options={sessions}
-            onChange={onSelectSessionChange}
-            placeholder="Click to select session No."
-            selected={session}
-          />
+          <InputDiv>
+            <Select
+              showSearch
+              style={{ width: '100%' }}
+              placeholder="Click to select session No."
+              optionFilterProp="children"
+              onChange={onSelectSessionChange}
+              filterOption={(input, option) =>
+                option.props.children
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              }
+              size="large"
+            >
+              <Option value="jack">Jack</Option>
+              <Option value="lucy">Lucy</Option>
+              <Option value="tom">Tom</Option>
+            </Select>
+          </InputDiv>
 
-          <Input
-            type="number"
-            placeholder="Number of session invitees"
-            value={inviteesNumber}
-            onChange={onInputChange}
-            name="inviteesNumber"
-            min="0"
-          />
+          <InputDiv>
+            <Input
+              type="number"
+              placeholder="Number of session invitees"
+              value={inviteesNumber}
+              onChange={onInputChange}
+              name="inviteesNumber"
+              size="large"
+              min="0"
+            />
+          </InputDiv>
 
-          <SelectComponent
-            options={regions}
-            onChange={onSelectRegionChange}
-            placeholder="Region"
-            selected={region}
-          />
+          <InputDiv>
+            <Select
+              showSearch
+              style={{ width: '100%' }}
+              placeholder="Region"
+              optionFilterProp="children"
+              onChange={onSelectRegionChange}
+              filterOption={(input, option) =>
+                option.props.children
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              }
+              size="large"
+            >
+              <Option value="jack">Jack</Option>
+              <Option value="lucy">Lucy</Option>
+              <Option value="tom">Tom</Option>
+            </Select>
+          </InputDiv>
 
-          <SelectComponent
-            options={regions}
-            onChange={onSelectPartnerChange}
-            placeholder="Partner Trainer"
-            selected={partner}
-          />
+          <InputDiv>
+            <Select
+              showSearch
+              style={{ width: '100%' }}
+              placeholder="Partner Trainer"
+              optionFilterProp="children"
+              onChange={onSelectPartnerChange}
+              filterOption={(input, option) =>
+                option.props.children
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              }
+              size="large"
+            >
+              <Option value="jack">Jack</Option>
+              <Option value="lucy">Lucy</Option>
+              <Option value="tom">Tom</Option>
+            </Select>
+          </InputDiv>
+
+          <InputDiv>
+            <Select
+              mode="tags"
+              size="large"
+              placeholder="participants Emails"
+              onChange={onEmailChange}
+              defaultValue={['a10', 'c12']}
+              style={{ width: '100%', height: '100%' }}
+            >
+              {children}
+            </Select>
+          </InputDiv>
           <div>
             <input
               type="checkbox"

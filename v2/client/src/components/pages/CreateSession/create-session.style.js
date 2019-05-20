@@ -1,6 +1,5 @@
 import Select from 'react-select';
 import styled from 'styled-components';
-import DatePicker from 'react-datepicker';
 import { colors } from '../../../theme';
 
 export const CreateSessionWrapper = styled.div`
@@ -33,31 +32,13 @@ export const Form = styled.form`
   }
 `;
 
-export const Input = styled.input`
-  height: 50px;
-  border-radius: 4px;
-  outline: none;
-  margin: 13px 0;
-  border: 2px solid ${colors.mediumGray};
-  padding-left: 25px;
-  &:hover,
-  :focus {
-    border: 1px solid ${colors.primary};
-  }
-`;
-
-export const Date = styled(DatePicker)`
-  height: 50px;
-  border-radius: 4px;
-  outline: none;
-  margin: 13px 0;
-  border: 2px solid ${colors.mediumGray};
-  padding-left: 25px;
-  width: 100%;
-  &:hover,
-  :focus {
-    border: 1px solid ${colors.primary};
-  }
+export const InputDiv = styled.div`
+width: 100%;
+margin: 0 auto;
+margin-bottom: 1.2rem;
+@media (min-width: 768px) {
+  width: 30%;
+  background: ${colors.ligthGray}
 `;
 
 export const Button = styled.button`
