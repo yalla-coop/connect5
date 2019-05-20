@@ -34,6 +34,7 @@ module.exports = async data => {
     const regex = /^[0-9]{1,2}$/gim;
     return regex.test(string);
   };
+
   // create array of question ids required
   const questionIDList = questions.map(e => e._id.toString());
   // create array of question ids for answers submitted
@@ -51,10 +52,10 @@ module.exports = async data => {
   }
   if (
     postcodeQuestion &&
-    answers.includes(postcodeQuestion._id) &&
-    !validPostcode(data.formState[postcodeQuestionId])
+    answers.includes(postcodeQuestion._id.toString()) &&
+    !validPostcode(data.formState[postcodeQuestion._id.toString()])
   ) {
-    errors[postcodeQuestionId] = 'enter a valid UK postcode';
+    errors[postcodeQuestion._id.toString()] = 'enter a valid UK postcode';
   }
   if (
     PIN.length === 0 ||

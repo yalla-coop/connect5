@@ -130,7 +130,7 @@ export default class Survey extends React.Component {
       questionsForSurvey,
       surveyType
     } = surveyDetails;
-
+    console.log(this.state.errors);
     return (
       <SurveyQs>
         <Header type="home" />
