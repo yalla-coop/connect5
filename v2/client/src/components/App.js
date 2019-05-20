@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 // PAGES
 import Login from './pages/auth/login';
-import TrainerResutls from './pages/TrainerResults';
 import CreateSession from './pages/CreateSession';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/LandingPage';
@@ -30,7 +29,6 @@ class App extends Component {
             <Route exact path={HOME_URL} component={Home} />
             <Route exact path={DASHBOARD_URL} component={Dashboard} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/trainer-results" component={TrainerResutls} />
             <Route exact path="/create-session" component={CreateSession} />
             <Route
               exact
