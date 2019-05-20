@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Input } from 'antd';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
 import {
@@ -32,7 +31,7 @@ class Login extends Component {
 
     // If authenticated,
     if (isAuthenticated) {
-      history.push('/');
+      history.push('/dashboard');
     }
   }
 
@@ -82,19 +81,17 @@ class Login extends Component {
   };
 
   onFormSubmit = e => {
+    const { fields } = this.state;
+    const { loginUser: loginUserActionCreator } = this.props;
     e.preventDefault();
     const isValide = this.validateForm();
     if (isValide) {
-      const fields = {};
-      fields.email = '';
-      fields.password = '';
-      this.setState({ fields });
-    }
-    const { email, password } = this.state.fields;
-    const loginData = { email, password };
+      const { email, password } = fields;
+      const loginData = { email, password };
 
-    // call action creator then give it email and password
-    this.props.loginUser(loginData);
+      // call action creator then give it email and password
+      loginUserActionCreator(loginData);
+    }
   };
 
   onInputChange = e => {
@@ -154,7 +151,8 @@ class Login extends Component {
 
         <NoAccount>
           <p>
-            Don't have an account? <AnotherLink to="/"> Sign Up!</AnotherLink>
+            {"Don't have an account? "}
+            <AnotherLink to="/signup"> Sign Up!</AnotherLink>
           </p>
           <p>
             Course participant?
@@ -165,13 +163,6 @@ class Login extends Component {
     );
   }
 }
-
-Login.propTypes = {
-  isAuthenticated: PropTypes.bool,
-  error: PropTypes.object.isRequired,
-  loginUser: PropTypes.func.isRequired,
-  clearErrors: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
