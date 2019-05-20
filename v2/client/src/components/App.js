@@ -8,6 +8,7 @@ import { colors } from '../theme';
 import Home from './pages/LandingPage';
 import Login from './pages/auth/login';
 import ParticipantLogin from './pages/auth/login-participant';
+import UserDashboard from './pages/userDashboard';
 import TrainerResutls from './pages/TrainerResults';
 import history from '../history';
 
@@ -30,6 +31,11 @@ class App extends Component {
               exact
               path="/participant-login"
               component={ParticipantLogin}
+            />
+            <Route
+              exact
+              path="/participant-dashboard"
+              component={UserDashboard}
             />
             <Route exact path="/trainer-results" component={TrainerResutls} />
             <Route

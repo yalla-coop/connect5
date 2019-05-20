@@ -1,4 +1,6 @@
 const boom = require('boom');
+const jwt = require('jsonwebtoken');
+const { tokenMaxAge } = require('./../database/DBConstants');
 const { findByPIN } = require('./../database/queries/user');
 
 module.exports = (req, res, next) => {
@@ -18,6 +20,15 @@ module.exports = (req, res, next) => {
         surveyType: response.surveyType,
         session: response.session,
       };
+
+      // create token for 25 day
+      const token = jwt.sign({ pin: response.pin }, process.env.SECRET, {
+        expiresIn: tokenMaxAge.string,
+      });
+      res.cookie('token', token, {
+        maxAge: tokenMaxAge.number,
+        httpOnly: true,
+      });
 
       // send the response info
       return res.json(responseInfo);

@@ -9,6 +9,7 @@ import {
   LoginForm,
   LoginFail,
   NoAccount,
+  Content,
   AnotherLink,
 } from './Login.style';
 import { loginParticipant } from '../../../actions/authAction';
@@ -27,7 +28,7 @@ class ParticipantLogin extends Component {
 
     // If authenticated,
     if (isAuthenticated) {
-      history.push('/dashboard');
+      history.push('/participant-dashboard');
     }
   }
 
@@ -77,12 +78,12 @@ class ParticipantLogin extends Component {
       <>
         <LoginForm onSubmit={onFormSubmit}>
           <LoginHeading>
-            <p>
+            <Content>
               To access your results, please enter your unique pin. This is the
               third letter of your first name, the first two letters of your
               mother's first name and the date you were born (e.g., you would
               type 18 if you were born on the 18th of July)
-            </p>
+            </Content>
           </LoginHeading>
           <InputDiv>
             <Input

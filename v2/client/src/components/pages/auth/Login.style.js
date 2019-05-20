@@ -52,3 +52,12 @@ export const AnotherLink = styled(Link)`
   font-weight: bold;
   color: ${colors.black};
 `;
+
+export const Content = styled.p`
+  text-align: center;
+  margin: 0 auto;
+  @media (min-width: 768px) {
+    width: 50%;
+    text-align: center;
+    margin-bottom: 2rem;
+`;
