@@ -13,12 +13,21 @@ import {
   QuestionCategory
 } from './Questions.style';
 
-const checkErrors = (errorArr, questionId, answers, errors) =>
-  errorArr.includes(questionId) && !answers[questionId] ? (
-    <Alert message={`${errors[questionId]}`} type="error" />
-  ) : (
-    ''
-  );
+const checkErrors = (errorArr, questionId, answers, errors) => {
+  if (errorArr.includes(questionId) && !answers[questionId]) {
+    return <Alert message={`${errors[questionId]}`} type="error" />;
+  }
+  if (
+    errorArr.includes(questionId) &&
+    errors[questionId] === 'enter a valid UK postcode'
+  ) {
+    return <Alert message={`${errors[questionId]}`} type="error" />;
+  }
+  return null;
+};
+
+const checkPINerror = errors =>
+  errors.PIN ? <Alert message={`${errors.PIN}`} type="error" /> : '';
 
 const renderQuestionInputType = (
   inputType,
@@ -243,6 +252,7 @@ export default class Questions extends React.Component {
               (e.g., you would type 01 if you were born on the 01st of July)
             </p>
           </header>
+          {checkPINerror(errors)}
           <input
             id="PIN"
             name="PIN"

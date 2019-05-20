@@ -1,14 +1,6 @@
 const isEmpty = require('./isEmpty');
 const Question = require('../database/models/Question');
 
-// const Joi = require('joi');
-
-// const surveyValid = {
-//  surveyQuestions : Joi.object({
-//    1:
-//  })
-// }
-
 module.exports = async data => {
   // set up error obj to store errors
   const errors = {};
@@ -33,10 +25,21 @@ module.exports = async data => {
     return regex.test(postcode);
   };
 
+  // PIN validation
+  const validLetters = string => {
+    const regex = /[a-z]{1,3}/gim;
+    return regex.test(string);
+  };
+
+  const validNumbers = string => {
+    const regex = /^[0-9]{1,2}$/gim;
+    return regex.test(string);
+  };
   // create array of question ids required
   const questionIDList = questions.map(e => e._id.toString());
   // create array of question ids for answers submitted
   const answers = Object.keys(data.formState);
+  const PIN = data.PIN;
 
   if (isEmpty(answers)) {
     questionIDList.forEach(e => (errors[e] = 'this question must be answered'));
@@ -53,14 +56,12 @@ module.exports = async data => {
   ) {
     errors[postcodeQuestionId] = 'enter a valid UK postcode';
   }
-
-  console.log(
-    'heyyy',
-    answers.includes(postcodeQuestionId) &&
-      !validPostcode(data.formState[postcodeQuestionId])
-  );
-
-  console.log(errors);
+  if (
+    PIN.length === 0 ||
+    !(validLetters(PIN.substring(0, 3)) && validNumbers(PIN.substring(3, 5)))
+  ) {
+    errors.PIN = 'enter valid PIN';
+  }
 
   return { errors };
 };
