@@ -19,8 +19,10 @@ module.exports = async data => {
   });
 
   const validPostcode = postcode => {
+    console.log('postcode', postcode);
     postcode = postcode.replace(/\s/g, '');
-    var regex = /^[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}$/i;
+
+    const regex = /^(?:gir(?: *0aa)?|[a-pr-uwyz](?:[a-hk-y]?[0-9]+|[0-9][a-hjkstuw]|[a-hk-y][0-9][abehmnprv-y])(?: *[0-9][abd-hjlnp-uw-z]{2})?)$/gim;
     return regex.test(postcode);
   };
 
