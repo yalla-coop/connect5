@@ -60,5 +60,22 @@ module.exports = PIN => {
         answers: { $push: '$$ROOT' },
       },
     },
+    {
+      $unwind: '$answers',
+    },
+    {
+      $project: {
+        code: '$answers._id.code',
+        avg: '$answers.avg',
+      },
+    },
+    { $group: { _id: '$_id', answers: { $push: '$$ROOT' } } },
   ]);
 };
+
+// {
+//   $project: {
+//     code: '$answers._id.code',
+//     avg: '$answers.avg',
+//   },
+// },
