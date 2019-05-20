@@ -47,7 +47,8 @@ describe('Tests for storing responses and answers in database', () => {
     const surveyType = 'post-day-1';
     const singleSession = await Session.findOne({ type: '1' });
     const sessionId = singleSession._id;
-    const response = await storeResponse(sessionId, surveyType, 'TEST');
+    const PIN = 'TES22';
+    const response = await storeResponse(PIN, sessionId, surveyType);
     expect(response.session).toBe(sessionId);
 
     const dummyAnswers = {
@@ -56,13 +57,14 @@ describe('Tests for storing responses and answers in database', () => {
       '5cdc2e9546fec219392004ad': 'Other: test',
       '5cdc2e9546fec219392004ae': 'North East',
       '5cdc2e9546fec219392004b3': '2',
-      '5cdc2e9546fec219392004b4': '1',
+      '5cdc2e9546fec219392004b4': '1'
     };
 
     const storedAnswers = await storeAnswers(
       response._id,
       dummyAnswers,
-      sessionId
+      sessionId,
+      PIN
     );
 
     expect(storedAnswers).toBeDefined();

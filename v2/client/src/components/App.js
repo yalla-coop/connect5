@@ -14,7 +14,11 @@ import UserResults from './pages/UserResults';
 import Survey from './pages/survey/Survey';
 
 // ROUTES
-import { HOME_URL, DASHBOARD_URL } from '../constants/navigationRoutes';
+import {
+  HOME_URL,
+  DASHBOARD_URL,
+  SURVEY_URL
+} from '../constants/navigationRoutes';
 import history from '../history';
 
 const Wrapper = styled.div`
@@ -33,7 +37,7 @@ class App extends Component {
             <Route exact path={HOME_URL} component={Home} />
             <Route exact path={DASHBOARD_URL} component={Dashboard} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/survey/:id" component={Survey} />
+            <Route exact path={SURVEY_URL} component={Survey} />
 
             <Route
               exact

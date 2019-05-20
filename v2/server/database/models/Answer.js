@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const answerSchema = new Schema({
+  PIN: {
+    type: String,
+    required: true,
+  },
   question: {
     type: Schema.Types.ObjectId,
     ref: 'questions',

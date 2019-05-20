@@ -23,7 +23,7 @@ describe('test get survey questions route', () => {
     const sessionId = singleSession._id;
 
     request(app)
-      .get(`/api/survey/${surveyType}_${sessionId}`)
+      .get(`/api/survey/${surveyType}&${sessionId}`)
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, res) => {

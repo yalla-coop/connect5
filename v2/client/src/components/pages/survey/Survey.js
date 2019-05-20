@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import swal from 'sweetalert2';
+import Header from '../../common/Header';
 
 import Questions from './Questions';
 
@@ -26,7 +27,7 @@ export default class Survey extends React.Component {
 
   componentWillMount() {
     // grab the unique url at the end which gives us survey type and session id
-    // hardcoded url for now: pre-day-1_5cdac6bf97f66747f7c86c90
+    // syntax of url: surveyType&sessionId
     const { location } = this.props;
     const survey = `${location.pathname}`;
     const surveyParts = survey.split('/')[2];
@@ -46,8 +47,7 @@ export default class Survey extends React.Component {
       .then(() => {
         swal.fire({
           text:
-            'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.',
-          button: 'Begin'
+            'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.'
         });
       })
       .catch(err => console.error(err.stack));
@@ -58,8 +58,6 @@ export default class Survey extends React.Component {
     const { formState } = this.state;
     formState[questionId] = value;
     this.setState({ formState });
-
-    console.log('FORMSTATE', formState);
   };
 
   // // check for any changes to the survey inputs and add them to the formstate
@@ -69,29 +67,24 @@ export default class Survey extends React.Component {
     // if any other type we assign the value to answer and put it in the state
     const answer = e.target.value;
     formState[question] = answer;
-
     this.setState(() => ({
       formState
     }));
   };
 
+  // handles case when user selects 'other'
   handleOther = e => {
     const question = e.target.name;
     const { formState } = this.state;
-
     const answer = `Other: ${e.target.value}`;
-
     formState[question] = answer;
-
     this.setState(() => ({
       formState
     }));
   };
 
-  handlePIN = e => {
-    this.setState({ PIN: e.target.value });
-  };
-
+  // handles user input for PIN field
+  handlePIN = e => this.setState({ PIN: e.target.value });
   // // when participant submits form
   // // this puts the required info into an object and sends to server
   handleSubmit = e => {
@@ -100,14 +93,15 @@ export default class Survey extends React.Component {
     const { formState, sessionId, surveyType, PIN } = this.state;
 
     const formSubmission = { PIN, sessionId, surveyType, formState };
+    // check if PIN was entered before API call
     PIN
       ? axios
           .post(`/api/survey/submit/`, formSubmission)
-          .then(result => {
+          .then(() =>
             swal
               .fire('Done!', 'Thanks for submitting your feedback!', 'success')
-              .then(() => history.push('/'));
-          })
+              .then(() => history.push('/'))
+          )
           .catch(err => {
             this.setState({
               errors: err.response.data
@@ -119,19 +113,17 @@ export default class Survey extends React.Component {
 
   // function to create a list of names from an array...
   renderTrainerNames = array =>
-    array.map((e, i) => {
-      if (array.length - 1 === i) {
-        return `and ${e}`;
-      }
-      return `${e} `;
-    });
+    array.map((e, i) =>
+      array.length > 1 && array.length - 1 === i ? `and ${e}` : `${e} `
+    );
 
   render() {
     const { loading, surveyDetails, formState, errors } = this.state;
+
     if (loading) {
       return <h3>Loading...</h3>;
     }
-    console.log(this.props.history);
+
     const {
       sessionDate,
       trainerNames,
@@ -141,9 +133,8 @@ export default class Survey extends React.Component {
 
     return (
       <SurveyQs>
-        <SurveyHeader>
-          <h1>Welcome: Connect 5 Survey</h1>
-        </SurveyHeader>
+        <Header type="home" />
+        <SurveyHeader />
 
         <SessionDetails>
           <h3>Session Details:</h3>
@@ -164,8 +155,8 @@ export default class Survey extends React.Component {
           <Disclaimer>
             <h3>Privacy notice</h3>
             <p>
-              RSPH will use your information to evaluate the outcomes of our
-              mental health promotion project Connect 5 at national and regional
+              Connect 5 will use your information to evaluate the outcomes of
+              our mental health promotion project at national and regional
               level. The quantitative results of this survey will be presented
               in an aggregated manner and all comments will be anonymous.
             </p>
@@ -194,13 +185,7 @@ export default class Survey extends React.Component {
               that has commissioned the Connect 5 training you received. We will
               not share your personal information with any other organisation
               without your prior consent, unless we are required to do so by
-              law. For further information on how your information is used, how
-              we maintain the security of your information, and your rights to
-              access the information we hold on you, please see our{' '}
-              <a href="https://www.rsph.org.uk/privacy-policy.html">
-                privacy policy
-              </a>
-              .
+              law.
             </p>
           </Disclaimer>
           <Form onSubmit={this.handleSubmit}>

@@ -13,6 +13,7 @@ import {
   QuestionCategory
 } from './Questions.style';
 
+// checks if errors are present (renders error msg after submit)
 const checkErrors = (errorArr, questionId, answers, errors) => {
   if (errorArr.includes(questionId) && !answers[questionId]) {
     return <Alert message={`${errors[questionId]}`} type="error" />;
@@ -26,9 +27,11 @@ const checkErrors = (errorArr, questionId, answers, errors) => {
   return null;
 };
 
+// checks and renders PIN validation msg
 const checkPINerror = errors =>
   errors.PIN ? <Alert message={`${errors.PIN}`} type="error" /> : '';
 
+// renders questions accordingly to their input type
 const renderQuestionInputType = (
   inputType,
   errorArray,
@@ -48,7 +51,7 @@ const renderQuestionInputType = (
       <TextField>
         <header>
           {subGroup && <h3>{subGroup}</h3>}
-          <h3 id={index}>{questionText}</h3>
+          <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
@@ -61,7 +64,7 @@ const renderQuestionInputType = (
       <TextField>
         <header>
           {subGroup && <p>{subGroup}</p>}
-          <h3 id={index}>{questionText}</h3>
+          <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
@@ -132,7 +135,7 @@ const renderQuestionInputType = (
 
             const uniqueId = e + questionId;
             return (
-              <div>
+              <div key={i}>
                 <div key={i}>
                   <label htmlFor={uniqueId}>
                     <input
@@ -172,13 +175,11 @@ const renderQuestionInputType = (
   return null;
 };
 
-const renderSubGroupText = el => {
-  if (el.subGroup && el.subGroup.text) {
-    return el.subGroup.text;
-  }
-  return null;
-};
+// renders sub group text if included
+const renderSubGroupText = el =>
+  el.subGroup && el.subGroup.text ? el.subGroup.text : null;
 
+// uses renderQuestionInputType fnc from above and loops over questions array
 const questionsRender = (
   arrayOfQuestions,
   answers,
@@ -199,8 +200,9 @@ const questionsRender = (
     } = el;
     const inputType = el.questionType.desc;
     return (
-      <div>
+      <div key={index}>
         {' '}
+        {/* renders headlines */}
         <QuestionCategory>
           Question {index + 1} - {group}
         </QuestionCategory>

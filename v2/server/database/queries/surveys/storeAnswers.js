@@ -4,7 +4,7 @@
 // Load model
 const Answer = require('../../models/Answer');
 
-const storeAnswers = async (responseId, answers, sessionId) => {
+const storeAnswers = async (responseId, answers, sessionId, PIN) => {
   // this loops through the answers object and adds each answer to the Answer model
   const answersArr = Object.keys(answers).map(el => [el, answers[el]]);
   let storableAnswers;
@@ -15,6 +15,7 @@ const storeAnswers = async (responseId, answers, sessionId) => {
       session: sessionId,
       question: cur[0],
       answer: cur[1],
+      PIN
     };
     acc.push(answer);
     storableAnswers = acc;
