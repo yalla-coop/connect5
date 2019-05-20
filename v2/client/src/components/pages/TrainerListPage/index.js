@@ -9,6 +9,7 @@ import { ADD_TRAINER_URL } from '../../../constants/navigationRoutes';
 import TrainerList from '../../common/List/TrainerList';
 import Header from '../../common/Header';
 import Button from '../../common/Button';
+import Toggle from '../../common/Toggle';
 
 // STYLING
 import {
@@ -23,6 +24,7 @@ export default class TrainerListPage extends Component {
     trainerCount: 0,
     trainers: null,
     loaded: false,
+    toggle: 'left',
   };
 
   componentDidMount() {
@@ -43,8 +45,15 @@ export default class TrainerListPage extends Component {
       .catch(err => console.error(err));
   };
 
+  clickToggle = () => {
+    const { toggle } = this.state;
+    if (toggle === 'left') this.setState({ toggle: 'right' });
+    else this.setState({ toggle: 'left' });
+  };
+
   render() {
-    const { trainerCount, trainers, loaded } = this.state;
+    const { trainerCount, trainers, loaded, toggle } = this.state;
+    const userType = 'admin';
 
     if (!loaded) return <p>Loading...</p>;
     return (
@@ -53,9 +62,19 @@ export default class TrainerListPage extends Component {
         <HeaderSection>
           <HeaderText>Total Trainers:</HeaderText>
           <HeaderNumber>{trainerCount}</HeaderNumber>
-          <Link to={ADD_TRAINER_URL}>
-            <Button label="Add Trainer" type="outline" width="146px" />
-          </Link>
+          {userType === 'admin' && (
+            <Toggle
+              leftText="trainers"
+              rightText="local leads"
+              selected={toggle}
+              onClick={this.clickToggle}
+            />
+          )}
+          {userType === 'localLead' && (
+            <Link to={ADD_TRAINER_URL}>
+              <Button label="Add Trainer" type="outline" width="146px" />
+            </Link>
+          )}
         </HeaderSection>
         <TrainerList dataList={trainers} />
       </Wrapper>
