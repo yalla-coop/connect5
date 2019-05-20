@@ -221,6 +221,7 @@ const getMyTrainers = async leadId => {
 
   if (userDetails.trainersGroup.length > 0) {
     const trainers = await Promise.all(
+      // map through the trainerGroup array to look up each trainer
       userDetails.trainersGroup.map(async trainerId =>
         User.aggregate([
           {
@@ -229,10 +230,26 @@ const getMyTrainers = async leadId => {
             },
           },
           {
+            $lookup: {
+              from: 'users',
+              localField: 'localLead',
+              foreignField: '_id',
+              as: 'localLead',
+            },
+          },
+          {
+            $unwind: '$localLead',
+          },
+          {
+            $addFields: {
+              localLeadName: '$localLead.name',
+            },
+          },
+          {
             $project: {
               _id: 1,
               email: 1,
-              localLead: 1,
+              localLeadName: 1,
               name: 1,
               region: 1,
               organization: 1,

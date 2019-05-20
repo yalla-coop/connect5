@@ -127,4 +127,5 @@ export const ModalRow = styled.div`
 
 export const ModalContent = styled.div`
   margin-bottom: 1.5rem;
+  width: 100%;
 `

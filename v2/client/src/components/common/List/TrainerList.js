@@ -66,7 +66,7 @@ export default class TrainerList extends Component {
           </ModalRow>
           <ModalRow>
             <p>Local lead: </p>
-            <p>{selectedTrainer.localLead || 'N/A'}</p>
+            <p>{selectedTrainer.localLeadName || 'N/A'}</p>
           </ModalRow>
           <ModalRow>
             <p>Email: </p>
