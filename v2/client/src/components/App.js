@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import 'antd/dist/antd.css';
+// import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { Router, Route, Switch, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 // PAGES
 import Login from './pages/auth/login';
+import ParticipantLogin from './pages/auth/login-participant';
+import UserDashboard from './pages/userDashboard';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/LandingPage';
 import UserResults from './pages/UserResults';
@@ -32,14 +36,16 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route
               exact
-              path="/404err"
-              render={() => (
-                <h1>
-                  404 go home<Link to="/">home</Link>
-                </h1>
-              )}
+              path="/participant-login"
+              component={ParticipantLogin}
             />
             <Route
+              exact
+              path="/participant-dashboard"
+              component={UserDashboard}
+            />
+            <Route
+              path="/404err"
               render={() => (
                 <h1>
                   404 go home<Link to="/">home</Link>
