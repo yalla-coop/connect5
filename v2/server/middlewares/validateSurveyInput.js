@@ -17,7 +17,6 @@ module.exports = async data => {
     surveyType: data.surveyType,
     text: 'Please enter the postcode where you are active'
   });
-  const postcodeQuestionId = postcodeQuestion._id.toString();
 
   const validPostcode = postcode => {
     postcode = postcode.replace(/\s/g, '');
@@ -39,7 +38,7 @@ module.exports = async data => {
   const questionIDList = questions.map(e => e._id.toString());
   // create array of question ids for answers submitted
   const answers = Object.keys(data.formState);
-  const PIN = data.PIN;
+  const PIN = data.PIN.toString();
 
   if (isEmpty(answers)) {
     questionIDList.forEach(e => (errors[e] = 'this question must be answered'));
@@ -51,6 +50,7 @@ module.exports = async data => {
     });
   }
   if (
+    postcodeQuestion &&
     answers.includes(postcodeQuestionId) &&
     !validPostcode(data.formState[postcodeQuestionId])
   ) {
@@ -63,5 +63,5 @@ module.exports = async data => {
     errors.PIN = 'enter valid PIN';
   }
 
-  return { errors };
+  return { errors, isValid: isEmpty(errors) };
 };

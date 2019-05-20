@@ -122,7 +122,7 @@ const renderQuestionInputType = (
       <RadioField>
         <header>
           {subGroup && <p>{subGroup}</p>}
-          <h3 id={index}>{questionText}</h3>
+          <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
@@ -234,7 +234,7 @@ export default class Questions extends React.Component {
     } = this.props;
 
     const errorArray = Object.keys(errors);
-    const props = this.props;
+
     return (
       <React.Fragment>
         <TextField>

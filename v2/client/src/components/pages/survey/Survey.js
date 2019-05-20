@@ -100,21 +100,24 @@ export default class Survey extends React.Component {
     const { formState, sessionId, surveyType, PIN } = this.state;
 
     const formSubmission = { PIN, sessionId, surveyType, formState };
-
-    axios
-      .post(`/api/survey/submit/`, formSubmission)
-      .then(result => {
-        swal.fire('Done!', 'Thanks for submitting your feedback!', 'success');
-        // .then(() => history.push('/'));
-      })
-
-      .catch(err => {
-        console.log('ERR', err);
-        this.setState({
-          errors: err.response.data
-        });
-        swal.fire('Please answer all required questions');
-      });
+    PIN
+      ? axios
+          .post(`/api/survey/submit/`, formSubmission)
+          .then(result => {
+            swal.fire(
+              'Done!',
+              'Thanks for submitting your feedback!',
+              'success'
+            );
+            // .then(() => history.push('/'));
+          })
+          .catch(err => {
+            this.setState({
+              errors: err.response.data
+            });
+            swal.fire('Please answer all required questions');
+          })
+      : swal.fire('Please enter your PIN');
   };
 
   // function to create a list of names from an array...
