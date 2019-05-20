@@ -12,10 +12,13 @@ const getLocalLeads = require('../controllers/users/getLocalLeads');
 const signUpTrainer = require('../controllers/users/trainer/signUp');
 const checkUniqueEmail = require('./../controllers/users/checkUniqueEmail');
 const { getDashboardStats } = require('../controllers/users/all');
+const getUserInfo = require('../controllers/users/getUserInfo');
 
 // check eamil route if the route doen't contain email query
 // then it will skip with next()
 router.get('/users', checkUniqueEmail);
+
+router.get('/users/auth', authentication(), getUserInfo);
 
 router.get('/trainer/info', authentication(), getTrianerReachData);
 router.post('/all/dashboard', authentication(), getDashboardStats);
