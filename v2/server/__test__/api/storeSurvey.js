@@ -30,7 +30,7 @@ describe('Test /survey/submit/', () => {
       text: 'Please enter the postcode where you are active'
     });
     console.log(questions);
-
+    const formState = {};
     formState[questions[0]._id] = 'Under 18';
     formState[questions[1]._id] = 'Male';
     formState[questions[2]._id] = 'Irish';
