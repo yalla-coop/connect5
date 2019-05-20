@@ -28,4 +28,15 @@ describe('Test topStats query', () => {
       done();
     });
   });
+
+  test('returns empty array if they dont have trainers', async done => {
+    // get a user who has no group of trainers stored
+    const lead = await User.findOne({ name: 'julie' });
+
+    getMyTrainers(lead.id).then(result => {
+      expect(result).toBeDefined();
+      expect(result.length).toBe(0);
+      done();
+    });
+  });
 });
