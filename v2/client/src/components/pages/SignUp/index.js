@@ -230,11 +230,7 @@ class SignUp extends Component {
                     },
                   ],
                 })(
-                  <Select
-                    placeholder="Region"
-                    style={{ width: '90%' }}
-                    size="large"
-                  >
+                  <Select placeholder="Region" size="large">
                     {localLeads &&
                       localLeads.map(({ name, _id }) => (
                         <Option value={_id} key={_id}>
@@ -254,11 +250,7 @@ class SignUp extends Component {
                     },
                   ],
                 })(
-                  <Select
-                    placeholder="Region"
-                    style={{ width: '90%' }}
-                    size="large"
-                  >
+                  <Select placeholder="Region" size="large">
                     {regions.map(region => (
                       <Option value={region} key={region}>
                         {region}
@@ -273,7 +265,7 @@ class SignUp extends Component {
                   type="primary"
                   htmlType="submit"
                   label="Sign Up"
-                  width="90%"
+                  width="100%"
                   height="100%"
                   style={{ fontSize: '19px' }}
                 >
