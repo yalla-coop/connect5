@@ -62,9 +62,9 @@ class ParticipantLogin extends Component {
     const { PIN } = this.state;
     if (isValide) {
       this.setState({ PIN: '' });
+      // CALL ACTION CREATOR AND PASS IT THE VALUE
+      this.props.loginParticipant(PIN.toUpperCase());
     }
-    // CALL ACTION CREATOR AND PASS IT THE VALUE
-    this.props.loginParticipant(PIN);
   };
 
   onInputChange = e => {
