@@ -7,12 +7,13 @@ import { colors } from '../../theme';
 const DashboardWrapper = styled.div`
   width: 90%;
   margin: 0 auto;
-  margin-top: 7rem;
+  margin-top: 9rem;
 `;
 
 const H3 = styled.h3`
   text-align: center
   margin: 0 auto;
+  padding-top: 3rem;
 `;
 
 const Content = styled.p`

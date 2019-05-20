@@ -1,13 +1,39 @@
 const mongoose = require('mongoose');
 
-const Session = require('../../models/Session');
-const Response = require('../../models/Response');
+const User = require('../../models/User');
 
-// sum of trainer sessions and atendees grouped by type
-const getTrianerSessions = trainerId => {
-  return Session.aggregate([
+const getLocalLeadsSessions = leadId => {
+  return User.aggregate([
     {
-      $match: { trainers: mongoose.Types.ObjectId(trainerId) },
+      $match: {
+        $or: [
+          { _id: mongoose.Types.ObjectId(leadId) },
+          { localLead: mongoose.Types.ObjectId(leadId) },
+        ],
+      },
+    },
+    {
+      $lookup: {
+        from: 'sessions',
+        localField: '_id',
+        foreignField: 'trainers',
+        as: 'sessions',
+      },
+    },
+    {
+      $match: { sessions: { $exists: true, $ne: [] } },
+    },
+    {
+      $unwind: '$sessions',
+    },
+    {
+      $group: { _id: null, sessions: { $addToSet: '$sessions' } },
+    },
+    {
+      $unwind: '$sessions',
+    },
+    {
+      $replaceRoot: { newRoot: '$sessions' },
     },
     {
       $group: {
@@ -44,10 +70,39 @@ const getTrianerSessions = trainerId => {
 };
 
 // Trainer responses number grouped by survery type
-const getTrainerSuerveys = trainerId => {
-  return Response.aggregate([
+
+const getTeamLeadSuerveys = teamLeadId => {
+  return User.aggregate([
     {
-      $match: { trainers: mongoose.Types.ObjectId(trainerId) },
+      $match: {
+        $or: [
+          { _id: mongoose.Types.ObjectId(teamLeadId) },
+          { localLead: mongoose.Types.ObjectId(teamLeadId) },
+        ],
+      },
+    },
+    {
+      $lookup: {
+        from: 'responses',
+        localField: '_id',
+        foreignField: 'trainers',
+        as: 'responses',
+      },
+    },
+    {
+      $match: { responses: { $exists: true, $ne: [] } },
+    },
+    {
+      $unwind: '$responses',
+    },
+    {
+      $group: { _id: null, resp: { $addToSet: '$responses' } },
+    },
+    {
+      $unwind: '$resp',
+    },
+    {
+      $replaceRoot: { newRoot: '$resp' },
     },
     {
       $lookup: {
@@ -58,18 +113,11 @@ const getTrainerSuerveys = trainerId => {
       },
     },
     {
-      $replaceRoot: {
-        newRoot: {
-          $mergeObjects: [{ $arrayElemAt: ['$session', 0] }, '$$ROOT'],
-        },
-      },
-    },
-    {
       $group: {
         _id: '$surveyType',
         key: { $first: '$_id' },
         responses: { $sum: 1 },
-        participants: { $first: { $sum: '$numberOfAttendees' } },
+        participants: { $first: { $sum: '$session.numberOfAttendees' } },
         type: {
           $first: {
             $switch: {
@@ -95,6 +143,14 @@ const getTrainerSuerveys = trainerId => {
                   then: 'Post 2-day Intensive',
                 },
                 {
+                  case: { $eq: ['$surveyType', 'pre-train-trainers'] },
+                  then: 'Pre train trainers',
+                },
+                {
+                  case: { $eq: ['$surveyType', 'post-train-trainers'] },
+                  then: 'Post train trainers',
+                },
+                {
                   case: { $eq: ['$surveyType', 'follow-up-3-month'] },
                   then: '3 month follow-up',
                 },
@@ -111,7 +167,10 @@ const getTrainerSuerveys = trainerId => {
           $first: {
             $switch: {
               branches: [
-                { case: { $eq: ['$surveyType', 'pre-day-1'] }, then: 1 },
+                {
+                  case: { $eq: ['$surveyType', 'pre-day-1'] },
+                  then: 1,
+                },
                 {
                   case: { $eq: ['$surveyType', 'post-day-1'] },
                   then: 2,
@@ -125,16 +184,24 @@ const getTrainerSuerveys = trainerId => {
                   then: 4,
                 },
                 {
+                  case: { $eq: ['$surveyType', 'pre-train-trainers'] },
+                  then: 5,
+                },
+                {
+                  case: { $eq: ['$surveyType', 'post-train-trainers'] },
+                  then: 6,
+                },
+                {
                   case: { $eq: ['$surveyType', 'post-special'] },
-                  then: 'Post 2-day Intensive',
+                  then: 7,
                 },
                 {
                   case: { $eq: ['$surveyType', 'follow-up-3-month'] },
-                  then: '3 month follow-up',
+                  then: 8,
                 },
                 {
                   case: { $eq: ['$surveyType', 'follow-up-6-month'] },
-                  then: '6 month Follow-up',
+                  then: 9,
                 },
               ],
               default: 'No match',
@@ -146,54 +213,7 @@ const getTrainerSuerveys = trainerId => {
     {
       $sort: { order: 1 },
     },
-    {
-      $project: {
-        _id: 1,
-        key: 1,
-        order: 1,
-        type: 1,
-        responses: 1,
-        participants: 1,
-        responseRate: {
-          $multiply: [{ $divide: ['$responses', '$participants'] }, 100],
-        },
-      },
-    },
   ]);
 };
 
-const getTrainerSessionCount = trainerId => {
-  return Session.aggregate([
-    {
-      $match: { trainers: mongoose.Types.ObjectId(trainerId) },
-    },
-    {
-      $group: {
-        _id: null,
-        sessions: { $sum: 1 },
-        participants: { $sum: '$numberOfAttendees' },
-      },
-    },
-  ]);
-};
-
-const getTrainerResponseCount = trainerId => {
-  return Response.aggregate([
-    {
-      $match: { trainers: mongoose.Types.ObjectId(trainerId) },
-    },
-    {
-      $group: {
-        _id: null,
-        responses: { $sum: 1 },
-      },
-    },
-  ]);
-};
-
-module.exports = {
-  getTrianerSessions,
-  getTrainerSuerveys,
-  getTrainerSessionCount,
-  getTrainerResponseCount,
-};
+module.exports = { getLocalLeadsSessions, getTeamLeadSuerveys };

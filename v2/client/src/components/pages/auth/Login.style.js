@@ -59,5 +59,5 @@ export const Content = styled.p`
   @media (min-width: 768px) {
     width: 50%;
     text-align: center;
-    margin-bottom: 2rem;
+    margin: 2rem auto;
 `;
