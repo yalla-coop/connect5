@@ -20,18 +20,18 @@ const modalStyles = css`
   box-shadow: ${shadows.primary};
 `;
 
-const modalCloseButtonStyles = {
-  marginBottom: '15px',
-  padding: '3px 8px',
-  cursor: 'pointer',
-  borderRadius: '50%',
-  backgroundColor: '#a9a9a9',
-  border: 'none',
-  width: '30px',
-  height: '30px',
-  fontWeight: 'bold',
-  alignSelf: 'flex-end',
-};
+const closeButtonStyles = css`
+  margin-bottom: 15px;
+  padding: 3px 8px;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #a9a9a9;
+  border: none;
+  width: 30px;
+  height: 30px;
+  font-weight: bold;
+  align-self: flex-end;
+`;
 
 const TransWrapper = styled.div`
   width: 100vw;
@@ -45,6 +45,11 @@ const TransWrapper = styled.div`
 const StyledModal = styled.div`
   ${modalStyles}
   ${props => props.extraModalStyle}
+`;
+
+const StyledCloseButton = styled.button`
+  ${closeButtonStyles}
+  ${props => props.extraButtonStyle}
 `;
 
 const ContentWrapper = styled.div`
@@ -65,9 +70,7 @@ const Modal = ({
   let dialog = (
     <TransWrapper>
       <StyledModal {...props}>
-        <button type="button" style={closeButtonStyle} onClick={onClose}>
-          x
-        </button>
+        <StyledCloseButton onClick={onClose}>x</StyledCloseButton>
 
         <ContentWrapper>{content}</ContentWrapper>
       </StyledModal>
@@ -78,11 +81,6 @@ const Modal = ({
     dialog = null;
   }
   return <div>{dialog}</div>;
-};
-
-Modal.defaultProps = {
-  modalStyle: modalStyles,
-  closeButtonStyle: modalCloseButtonStyles,
 };
 
 export default Modal;
