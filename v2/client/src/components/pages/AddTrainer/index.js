@@ -101,8 +101,6 @@ class AddTrainer extends Component {
                     placeholder="Region"
                     size="large"
                     style={{ height: '50px' }}
-                    className="ramy"
-                    dropdownClassName="ramy2"
                   >
                     {regions.map(region => (
                       <Option value={region} key={region}>
