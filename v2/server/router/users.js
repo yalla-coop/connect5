@@ -32,7 +32,7 @@ router.post('/trainers', signUpTrainer);
 
 router.get('/local-leads', getLocalLeads);
 
-router.get('/users/:id/results', getUserResults);
+router.use('/users/:id/results', authentication(), getUserResults);
 // router.get('/trainer/info', getTrianerReachData);
 router.post('/all/dashboard', getDashboardStats);
 router.get('/users/my-trainers', authentication(), getListOfTrainers);

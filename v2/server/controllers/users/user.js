@@ -26,7 +26,9 @@ const getResponseRate = require('../../helpers/getResponseRate');
 
 // get the logged in user results
 const getUserResults = async (req, res, next) => {
-  const { id } = req.params;
+  // const { id } = req.params;
+
+  const { id } = req.user;
 
   const isValidId = mongoose.Types.ObjectId.isValid(id);
 

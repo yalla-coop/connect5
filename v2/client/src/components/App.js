@@ -56,7 +56,7 @@ class App extends Component {
               Component={UserResults}
               isAuthenticated={isAuthenticated}
               loaded={loaded}
-              allowedRoles={['admin', 'localLead']}
+              allowedRoles={['trainer', 'admin', 'localLead']}
               role={role}
             />
             <Route exact path={HOME_URL} component={Home} />

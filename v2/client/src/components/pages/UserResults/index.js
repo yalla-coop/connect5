@@ -33,7 +33,9 @@ class UserResults extends Component {
 
   render() {
     const { results, role, history } = this.props;
-    const user = history.location.state.trainer;
+    // const user = history.location.state.trainer;
+    // NEED TO FIX THIS TO MAKE DYNAMIC
+    const user = { name: 'Joe' };
     const topLevelView = ['admin', 'localLead'].includes(role);
     return (
       <TrainerResultsWrapper>
