@@ -11,6 +11,7 @@ const initialState = {
   isEmailUnique: null,
   loaded: false,
   role: null,
+  _id: null,
 };
 
 export default function(state = initialState, action) {

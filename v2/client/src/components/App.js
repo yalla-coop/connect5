@@ -50,7 +50,15 @@ class App extends Component {
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/users/:id/results" component={UserResults} />
+            <PrivateRoute
+              exact
+              path="/users/:id/results"
+              Component={UserResults}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead']}
+              role={role}
+            />
             <Route exact path={HOME_URL} component={Home} />
 
             <PrivateRoute
@@ -63,7 +71,15 @@ class App extends Component {
               role={role}
             />
 
-            <PrivateRoute exact path={TRAINERS_URL} Component={TrainerListPage} isAuthenticated={isAuthenticated} loaded={loaded} allowedRoles={['admin', 'localLead']} role={role} />
+            <PrivateRoute
+              exact
+              path={TRAINERS_URL}
+              Component={TrainerListPage}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead']}
+              role={role}
+            />
 
             {/* <Route exact path={TRAINERS_URL} component={TrainerListPage} /> */}
             <Route

@@ -40,7 +40,8 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { userName, stats } = this.props;
+    const { userName, stats, userId } = this.props;
+    // const { id } = auth;
 
     const captalizesName =
       userName && userName[0].toUpperCase() + userName.substr(1);
@@ -113,6 +114,7 @@ const mapStateToProps = state => {
   return {
     userName: state.auth.name,
     stats: state.stats,
+    userId: state.auth.id,
   };
 };
 

@@ -95,8 +95,8 @@ export default class TrainerList extends Component {
         </ModalContent>
         <Link
           to={{
-            pathname: '/session-details',
-            state: { trainer: selectedTrainer },
+            pathname: `/users/${selectedTrainer._id}/results`,
+            state: { trainer: selectedTrainer, seniorView: true },
           }}
         >
           <Button label="view results" type="outline" width="150px" />

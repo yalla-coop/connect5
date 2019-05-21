@@ -32,10 +32,13 @@ class UserResults extends Component {
   }
 
   render() {
-    const { results } = this.props;
+    const { results, role, history } = this.props;
+    const user = history.location.state.trainer;
+    const topLevelView = ['admin', 'localLead'].includes(role);
     return (
       <TrainerResultsWrapper>
-        <Header label="results" type="section" />
+        {topLevelView && <Header label={`Viewing ${user.name}`} type="view" />}
+        <Header label="results" type="section" nudge={topLevelView} />
         <Collapse
           accordion
           expandIconPosition="right"
