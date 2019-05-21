@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
 import { DatePicker, Select, Input } from 'antd';
 import moment from 'moment';
-// import { sessions, regions } from './options';
-// import swal from 'sweet-alert';
-
+import { connect } from 'react-redux';
+import Button from '../../common/Button';
+import { fetchAllTrainers } from '../../../actions/trainerAction';
+import { createSessionAction } from '../../../actions/sessionAction';
+import { sessions, regions, pattern } from './options';
 import {
   Form,
   CreateSessionWrapper,
   InputDiv,
   Heading,
-  Button,
   Error,
 } from './create-session.style';
 
@@ -26,10 +26,15 @@ class CreateSession extends Component {
     startDate: null,
     inviteesNumber: '',
     region: null,
-    partner: '',
+    partnerTrainer1: '',
+    partnerTrainer2: '',
     emails: [],
     err: false,
   };
+
+  componentDidMount() {
+    this.props.fetchAllTrainers();
+  }
 
   onDateChange = defaultValue => {
     this.setState({
@@ -55,26 +60,49 @@ class CreateSession extends Component {
     });
   };
 
-  onSelectPartnerChange = value => {
+  onSelectPartner1Change = value => {
     this.setState({
-      partner: value,
+      partnerTrainer1: value,
+    });
+  };
+
+  onSelectPartner2Change = value => {
+    this.setState({
+      partnerTrainer2: value,
     });
   };
 
   onEmailChange = value => {
+    // check for email validation
+
+    if (!pattern.test(value)) {
+      this.setState({
+        err: '*please enter valid email',
+      });
+    }
     this.setState({
       emails: value,
     });
   };
 
   checkError = () => {
-    const { startDate, inviteesNumber, session, region, partner } = this.state;
+    const {
+      startDate,
+      inviteesNumber,
+      session,
+      region,
+      partnerTrainer1,
+      partnerTrainer2,
+      emails,
+    } = this.state;
     const isError = !(
       !!startDate &&
       !!inviteesNumber &&
       !!session &&
       !!region &&
-      !!partner
+      !!partnerTrainer1 &&
+      !!partnerTrainer2 &&
+      !!emails
     );
 
     this.setState({
@@ -83,38 +111,41 @@ class CreateSession extends Component {
     return isError;
   };
 
-  fetch = () => {
-    // const { inviteesNumber, session, region, partner, emails } = this.state;
-    // const sessionData = {
-    //   sessionType: session.value,
-    //   startDate: moment(startDate).format('YYYY,MM,DD'),
-    //   inviteesNumber,
-    //   region: region.value,
-    //   region: region.value,
-    //   partner: partner.value,
-
-    // };
-    setTimeout(() => console.log(this.state), 3000);
-    //   axios
-    //     .post('/api/session', sessionData)
-    //     .then(res => console.log(res))
-    //
-    //     .catch(err => console.log(err));
-  };
-
   onFormSubmit = event => {
     event.preventDefault();
-    return !this.checkError() && this.fetch();
+    const {
+      session,
+      startDate,
+      inviteesNumber,
+      region,
+      partnerTrainer1,
+      partnerTrainer2,
+      emails,
+    } = this.state;
+    const sessionData = {
+      session,
+      startDate,
+      inviteesNumber,
+      region,
+      partnerTrainer1,
+      partnerTrainer2,
+      emails,
+    };
+
+    // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
+    return !this.checkError() && this.props.createSessionAction(sessionData);
   };
 
   render() {
+    const { trainers, role } = this.props;
     const { startDate, inviteesNumber, err } = this.state;
     const {
       onDateChange,
       onInputChange,
       onSelectSessionChange,
       onSelectRegionChange,
-      onSelectPartnerChange,
+      onSelectPartner1Change,
+      onSelectPartner2Change,
       onEmailChange,
       onFormSubmit,
     } = this;
@@ -141,16 +172,13 @@ class CreateSession extends Component {
               placeholder="Click to select session No."
               optionFilterProp="children"
               onChange={onSelectSessionChange}
-              filterOption={(input, option) =>
-                option.props.children
-                  .toLowerCase()
-                  .indexOf(input.toLowerCase()) >= 0
-              }
               size="large"
             >
-              <Option value="jack">Jack</Option>
-              <Option value="lucy">Lucy</Option>
-              <Option value="tom">Tom</Option>
+              {sessions.map(({ value, label }) => (
+                <Option key={value} value={value}>
+                  {label}
+                </Option>
+              ))}
             </Select>
           </InputDiv>
 
@@ -173,16 +201,13 @@ class CreateSession extends Component {
               placeholder="Region"
               optionFilterProp="children"
               onChange={onSelectRegionChange}
-              filterOption={(input, option) =>
-                option.props.children
-                  .toLowerCase()
-                  .indexOf(input.toLowerCase()) >= 0
-              }
               size="large"
             >
-              <Option value="jack">Jack</Option>
-              <Option value="lucy">Lucy</Option>
-              <Option value="tom">Tom</Option>
+              {regions.map(region => (
+                <Option key={region} value={region}>
+                  {region}
+                </Option>
+              ))}
             </Select>
           </InputDiv>
 
@@ -192,19 +217,36 @@ class CreateSession extends Component {
               style={{ width: '100%' }}
               placeholder="Partner Trainer"
               optionFilterProp="children"
-              onChange={onSelectPartnerChange}
-              filterOption={(input, option) =>
-                option.props.children
-                  .toLowerCase()
-                  .indexOf(input.toLowerCase()) >= 0
-              }
+              onChange={onSelectPartner1Change}
               size="large"
             >
-              <Option value="jack">Jack</Option>
-              <Option value="lucy">Lucy</Option>
-              <Option value="tom">Tom</Option>
+              {trainers &&
+                trainers.map(({ name, _id }) => (
+                  <Option key={_id} value={_id}>
+                    {name}
+                  </Option>
+                ))}
             </Select>
           </InputDiv>
+          {role === 'localLead' && (
+            <InputDiv>
+              <Select
+                showSearch
+                style={{ width: '100%' }}
+                placeholder="Second Partner Trainer"
+                optionFilterProp="children"
+                onChange={onSelectPartner2Change}
+                size="large"
+              >
+                {trainers &&
+                  trainers.map(({ name, _id }) => (
+                    <Option key={_id} value={_id}>
+                      {name}
+                    </Option>
+                  ))}
+              </Select>
+            </InputDiv>
+          )}
 
           <InputDiv>
             <Select
@@ -212,11 +254,10 @@ class CreateSession extends Component {
               size="large"
               placeholder="participants Emails"
               onChange={onEmailChange}
-              defaultValue={['a10', 'c12']}
+              defaultValue={['example@gmail.com']}
               style={{ width: '100%', height: '100%' }}
-            >
-              {children}
-            </Select>
+            />
+            <div>{err}</div>
           </InputDiv>
           <div>
             <input
@@ -229,7 +270,16 @@ class CreateSession extends Component {
               Send the survey to participants by email
             </label>
           </div>
-          <Button type="submit">Submit</Button>
+
+          <InputDiv>
+            <Button
+              onClick={onFormSubmit}
+              type="primary"
+              label="Submit"
+              height="40px"
+              width="100%"
+            />
+          </InputDiv>
           {err && <Error>All inputs are required</Error>}
         </Form>
       </CreateSessionWrapper>
@@ -237,4 +287,12 @@ class CreateSession extends Component {
   }
 }
 
-export default CreateSession;
+const mapStateToProps = state => ({
+  trainers: state.trainers.trainers,
+  role: state.auth.role,
+});
+
+export default connect(
+  mapStateToProps,
+  { fetchAllTrainers, createSessionAction }
+)(CreateSession);
