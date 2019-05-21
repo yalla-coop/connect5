@@ -21,9 +21,11 @@ export const InputDiv = styled.div`
   width: 80%;
   margin: 0 auto;
   margin-bottom: 2rem;
+
   @media (min-width: 768px) {
     width: 30%;
-    background: ${colors.ligthGray}
+    background: ${colors.ligthGray};
+  }
 `;
 
 export const LoginFail = styled.div`
@@ -31,9 +33,11 @@ export const LoginFail = styled.div`
   color: red;
   margin-left: 3rem;
   font-size: 1rem;
+
   @media (min-width: 768px) {
     width: 30%;
     margin-left: 1rem;
+  }
 `;
 
 export const NoAccount = styled(InputDiv)`
@@ -41,10 +45,12 @@ export const NoAccount = styled(InputDiv)`
   margin-bottom: 0;
   &:not(:last-child) {
     margin-top: 6rem;
-  };
+  }
+
   @media (min-width: 768px) {
     width: 30%;
-    text-align: center
+    text-align: center;
+  }
 `;
 
 export const AnotherLink = styled(Link)`
@@ -56,8 +62,10 @@ export const AnotherLink = styled(Link)`
 export const Content = styled.p`
   text-align: center;
   margin: 0 auto;
+
   @media (min-width: 768px) {
     width: 50%;
     text-align: center;
     margin: 2rem auto;
+  }
 `;

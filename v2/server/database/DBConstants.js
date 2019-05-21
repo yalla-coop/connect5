@@ -65,11 +65,11 @@ questionConstants.regions = [...regions, 'Other (please specify)'];
 
 questionConstants.questionTypes = {
   positiveNumber: {
-    desc: 'number',
+    desc: 'numberPositive',
     min: 0,
   },
   fromZeroToTen: {
-    desc: 'number',
+    desc: 'numberZeroTen',
     min: 0,
     max: 10,
   },
@@ -77,7 +77,7 @@ questionConstants.questionTypes = {
     desc: 'radio',
   },
   radioGroup: {
-    desc: 'radio',
+    desc: 'radioGroup',
     group: true,
   },
   text: {
@@ -89,7 +89,3 @@ questionConstants.questionTypes = {
 };
 
 module.exports.questionConstants = questionConstants;
-module.exports.tokenMaxAge = {
-  string: '25d',
-  number: 2592000000,
-};

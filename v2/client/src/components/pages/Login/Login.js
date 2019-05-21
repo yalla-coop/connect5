@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import { Input } from 'antd';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Button from '../../common/Button';
 import {
   LoginHeading,
   H3,
   InputDiv,
   LoginForm,
   LoginFail,
-  Button,
   NoAccount,
-  RegisterLink,
+  AnotherLink,
 } from './Login.style';
-import { loginUser } from '../../../../actions/authAction';
-import { clearErrors } from '../../../../actions/errorAction';
-import history from '../../../../history';
+import { loginUser } from '../../../actions/authAction';
+import { clearErrors } from '../../../actions/errorAction';
+import history from '../../../history';
 
 class Login extends Component {
   state = {
@@ -32,7 +31,7 @@ class Login extends Component {
 
     // If authenticated,
     if (isAuthenticated) {
-      history.push('/');
+      history.push('/dashboard');
     }
   }
 
@@ -82,19 +81,17 @@ class Login extends Component {
   };
 
   onFormSubmit = e => {
+    const { fields } = this.state;
+    const { loginUser: loginUserActionCreator } = this.props;
     e.preventDefault();
     const isValide = this.validateForm();
     if (isValide) {
-      const fields = {};
-      fields.email = '';
-      fields.password = '';
-      this.setState({ fields });
-    }
-    const { email, password } = this.state.fields;
-    const loginData = { email, password };
+      const { email, password } = fields;
+      const loginData = { email, password };
 
-    // call action creator then give it email and password
-    this.props.loginUser(loginData);
+      // call action creator then give it email and password
+      loginUserActionCreator(loginData);
+    }
   };
 
   onInputChange = e => {
@@ -140,9 +137,13 @@ class Login extends Component {
             <LoginFail>{passwordError}</LoginFail>
           </InputDiv>
           <InputDiv>
-            <Button onClick={onFormSubmit} type="submit">
-              LOGIN
-            </Button>
+            <Button
+              onClick={onFormSubmit}
+              type="primary"
+              label="LOGIN"
+              height="40px"
+              width="100%"
+            />
           </InputDiv>
 
           <LoginFail>{msg}</LoginFail>
@@ -150,26 +151,18 @@ class Login extends Component {
 
         <NoAccount>
           <p>
-            Don't have an account? <RegisterLink to="/"> Sign Up!</RegisterLink>
+            {"Don't have an account? "}
+            <AnotherLink to="/signup"> Sign Up!</AnotherLink>
           </p>
-        </NoAccount>
-        <NoAccount>
           <p>
             Course participant?
-            <RegisterLink to="/"> Login here!</RegisterLink>
+            <AnotherLink to="/participant-login"> Login here!</AnotherLink>
           </p>
         </NoAccount>
       </>
     );
   }
 }
-
-Login.propTypes = {
-  isAuthenticated: PropTypes.bool,
-  error: PropTypes.object.isRequired,
-  loginUser: PropTypes.func.isRequired,
-  clearErrors: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,

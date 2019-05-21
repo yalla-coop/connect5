@@ -47,7 +47,6 @@ code {
 html {
   box-sizing: border-box;
   -webkit-text-size-adjust: 100%; /* 2 */
-  background-color: #f7f7f9;
 }
 
 * {

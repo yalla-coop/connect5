@@ -23,7 +23,7 @@ export const breakpoints = {
   desktopL: `(min-width: ${size.desktop})`,
 };
 
-const colorCodes = {
+export const colorCodes = {
   // primary (purple)
   primary: '#2C3192',
   lightPrimary: '#787BB9',
@@ -43,6 +43,7 @@ const colorCodes = {
   // transparent
   transGray: 'rgba(212, 212, 216, 0.3)',
   transLightGray: 'rgba(239, 239, 244, 0.3)',
+  backgroundWashOut: 'rgba(239, 239, 244, 0.6)',
 };
 
 // general colors
