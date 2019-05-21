@@ -8,8 +8,8 @@ import styled from 'styled-components';
 import { checkAuth } from '../actions/authAction';
 
 // PAGES
-import Login from './pages/auth/login';
-import ParticipantLogin from './pages/auth/login-participant';
+import Login from './pages/Login/Login';
+import ParticipantLogin from './pages/Login/LoginParticipant';
 import UserDashboard from './pages/userDashboard';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/LandingPage';
