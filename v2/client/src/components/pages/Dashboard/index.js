@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+
 import Spin from 'antd/lib/spin';
+
+import { fetchStatsData } from '../../../actions/users';
 
 import {
   Wrapper,
@@ -25,51 +28,34 @@ import {
   GROUP_SESSIONS_URL,
 } from '../../../constants/navigationRoutes';
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
   state = {
-    stats: {
-      sessionCount: 0,
-      responseCount: 0,
-      participantCount: 0,
-      trainerCount: 0,
-      responseRate: 0,
-    },
     userType: null,
-    userName: null,
-    loaded: false,
   };
 
   componentDidMount() {
     // once we have log in sorted userType and name will come from props
     // it can then be removed from state
     // const { userType, userName } = this.props;
-
     const userType = 'trainer';
-    const userName = 'Elysabeth';
 
-    axios
-      .post('/api/all/dashboard', { userType })
-      .then(response => {
-        this.setState({
-          stats: response.data.stats,
-          userType,
-          userName,
-          loaded: true,
-        });
-      })
-      .catch(err => {
-        this.setState({ loaded: true });
-        console.error(err);
-      });
+    this.setState({ userType });
+    const { fetchStatsData: fetchStatsDataActionCreator } = this.props;
+    fetchStatsDataActionCreator(userType);
   }
 
   render() {
-    const { stats, userType, loaded, userName } = this.state;
+    const { userName, stats } = this.props;
+
+    const captalizesName =
+      userName && userName[0].toUpperCase() + userName.substr(1);
+
+    const { userType } = this.state;
 
     return (
       <Wrapper>
         <Header type="home" />
-        {!loaded ? (
+        {!stats.loaded ? (
           <SpinWrapper>
             <Spin size="large" />
           </SpinWrapper>
@@ -78,7 +64,7 @@ export default class Dashboard extends Component {
             <TopSection>
               <Title>
                 Welcome back, <br />
-                {userName}
+                {captalizesName}
               </Title>
               <Role>Role: {userType}</Role>
             </TopSection>
@@ -133,3 +119,15 @@ export default class Dashboard extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    userName: state.auth.name,
+    stats: state.stats,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { fetchStatsData }
+)(Dashboard);

@@ -12,6 +12,7 @@ module.exports = async () => {
 
   await User.create(admin);
 
+  // initially create the localLeads
   const localLeads = [
     {
       name: 'nisha',
@@ -89,8 +90,8 @@ module.exports = async () => {
 
   const storedLocalLeads = await User.create(localLeads);
 
+  // create the trainers
   const trianers = [
-    // Group 1
     {
       name: 'alex',
       email: 'alex@connect5.uk',
@@ -115,7 +116,6 @@ module.exports = async () => {
       region: regions[1],
       localLead: storedLocalLeads[0],
     },
-    // Group 2
     {
       name: 'nadia',
       email: 'nadia@connect5.uk',
@@ -140,7 +140,6 @@ module.exports = async () => {
       region: regions[2],
       localLead: storedLocalLeads[1],
     },
-    // Group 3
     {
       name: 'max',
       email: 'max@connect5.uk',
@@ -175,5 +174,23 @@ module.exports = async () => {
     },
   ];
 
-  return User.create(trianers);
+  await User.create(trianers);
+
+  // update the 3 local leads with trainers on the platform
+
+  const trainers = await User.find({ role: 'trainer' });
+
+  await User.findByIdAndUpdate(storedLocalLeads[0].id, {
+    trainersGroup: [trainers[0], trainers[1], trainers[2]],
+  });
+
+  await User.findByIdAndUpdate(storedLocalLeads[1].id, {
+    trainersGroup: [trainers[3], trainers[4], trainers[5]],
+  });
+
+  await User.findByIdAndUpdate(storedLocalLeads[2].id, {
+    trainersGroup: [trainers[6], trainers[7], trainers[8]],
+  });
+
+  return 'completed';
 };

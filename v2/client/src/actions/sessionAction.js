@@ -1,9 +1,6 @@
 import axios from 'axios';
-import {
-  ADD_SESSION_SUCCESS,
-  ADD_SESSION_FAIL,
-} from '../constants/actionTypes';
-import { returnErrors } from './errorAction';
+import { ADD_SESSION_SUCCESS } from '../constants/actionTypes';
+// import { returnErrors } from './errorAction';
 
 export const createSessionAction = sessionData => dispatch => {
   axios
@@ -15,11 +12,6 @@ export const createSessionAction = sessionData => dispatch => {
       })
     )
     .catch(err => {
-      dispatch(
-        returnErrors(err.response.data, err.response.status, 'ADD_SESSION_FAIL')
-      );
-      dispatch({
-        type: ADD_SESSION_FAIL,
-      });
+      console.log(err);
     });
 };
