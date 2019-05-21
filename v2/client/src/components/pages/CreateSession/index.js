@@ -4,6 +4,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
 import { fetchAllTrainers } from '../../../actions/trainerAction';
+import { fetchLocalLeads } from '../../../actions/users';
 import { createSessionAction } from '../../../actions/sessionAction';
 import { sessions, regions, pattern } from './options';
 import {
@@ -35,6 +36,7 @@ class CreateSession extends Component {
 
   componentDidMount() {
     this.props.fetchAllTrainers();
+    this.props.fetchLocalLeads();
   }
 
   onDateChange = defaultValue => {
@@ -97,14 +99,15 @@ class CreateSession extends Component {
       emails,
     } = this.state;
     const { role } = this.props;
-    const isError = !(!!startDate &&
-    !!inviteesNumber &&
-    !!session &&
-    !!region &&
-    !!partnerTrainer1 &&
-    role === 'trainer'
-      ? !!partnerTrainer2
-      : null && !!emails);
+    const isError = !(
+      !!startDate &&
+      !!inviteesNumber &&
+      !!session &&
+      !!region &&
+      !!emails &&
+      !!partnerTrainer1 &&
+      (role !== 'localLead' || partnerTrainer2)
+    );
 
     this.setState({
       err: isError,
@@ -138,7 +141,7 @@ class CreateSession extends Component {
   };
 
   render() {
-    const { trainers, role } = this.props;
+    const { trainers, role, localLeads } = this.props;
     const { startDate, inviteesNumber, err } = this.state;
     const {
       onDateChange,
@@ -227,6 +230,12 @@ class CreateSession extends Component {
                     {name}
                   </Option>
                 ))}
+              {role === 'localLead' &&
+                localLeads.map(({ name, _id }) => (
+                  <Option key={_id} value={_id}>
+                    {name}
+                  </Option>
+                ))}
             </Select>
           </InputDiv>
           {role === 'localLead' && (
@@ -241,6 +250,12 @@ class CreateSession extends Component {
               >
                 {trainers &&
                   trainers.map(({ name, _id }) => (
+                    <Option key={_id} value={_id}>
+                      {name}
+                    </Option>
+                  ))}
+                {role === 'localLead' &&
+                  localLeads.map(({ name, _id }) => (
                     <Option key={_id} value={_id}>
                       {name}
                     </Option>
@@ -291,9 +306,10 @@ class CreateSession extends Component {
 const mapStateToProps = state => ({
   trainers: state.trainers.trainers,
   role: state.auth.role,
+  localLeads: state.fetchedData.localLeadsList,
 });
 
 export default connect(
   mapStateToProps,
-  { fetchAllTrainers, createSessionAction }
+  { fetchAllTrainers, createSessionAction, fetchLocalLeads }
 )(CreateSession);
