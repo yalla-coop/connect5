@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 
 const User = require('../../models/User');
 
-// getLocalAndTrainerSessions = leadId => {
-//   const userDetails = await User.findById(leadId)
-
-// }
-
 const getLocalLeadsSessions = leadId => {
   return User.aggregate([
     {

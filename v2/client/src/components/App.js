@@ -60,6 +60,7 @@ class App extends Component {
               loaded={loaded}
               allowedRoles={['trainer', 'admin', 'localLead']}
               role={role}
+              navbar
             />
 
             <PrivateRoute
@@ -71,6 +72,7 @@ class App extends Component {
               allowedRoles={['trainer', 'admin', 'localLead']}
               role={role}
               groupView
+              navbar
             />
 
             <Route exact path={HOME_URL} component={Home} />
@@ -83,6 +85,7 @@ class App extends Component {
               loaded={loaded}
               allowedRoles={['admin', 'localLead', 'trainer']}
               role={role}
+              navbar
             />
 
             <PrivateRoute
@@ -93,6 +96,7 @@ class App extends Component {
               loaded={loaded}
               allowedRoles={['admin', 'localLead']}
               role={role}
+              navbar
             />
 
             {/* <Route exact path={TRAINERS_URL} component={TrainerListPage} /> */}
@@ -148,6 +152,7 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               allowedRoles={['user']}
               role={role}
+              navbar
             />
 
             <Route
