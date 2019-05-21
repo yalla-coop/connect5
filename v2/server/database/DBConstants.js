@@ -89,7 +89,3 @@ questionConstants.questionTypes = {
 };
 
 module.exports.questionConstants = questionConstants;
-module.exports.tokenMaxAge = {
-  string: '25d',
-  number: 2592000000,
-};

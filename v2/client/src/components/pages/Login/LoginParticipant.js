@@ -57,13 +57,14 @@ class ParticipantLogin extends Component {
   };
 
   onFormSubmit = e => {
+    const { PIN } = this.state;
+    const { loginParticipant: loginParticipantActionCreator } = this.props;
     e.preventDefault();
     const isValide = this.validateForm();
-    const { PIN } = this.state;
     if (isValide) {
       this.setState({ PIN: '' });
       // CALL ACTION CREATOR AND PASS IT THE VALUE
-      this.props.loginParticipant(PIN.toUpperCase());
+      loginParticipantActionCreator(PIN.toUpperCase());
     }
   };
 
@@ -79,10 +80,10 @@ class ParticipantLogin extends Component {
         <LoginForm onSubmit={onFormSubmit}>
           <LoginHeading>
             <Content>
-              To access your results, please enter your unique pin. This is the
+              {`To access your results, please enter your unique pin. This is the
               third letter of your first name, the first two letters of your
               mother's first name and the date you were born (e.g., you would
-              type 18 if you were born on the 18th of July)
+              type 18 if you were born on the 18th of July)`}
             </Content>
           </LoginHeading>
           <InputDiv>

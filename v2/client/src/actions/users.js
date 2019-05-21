@@ -16,3 +16,31 @@ export const fetchUserResults = id => async dispatch => {
     history.push('/404err');
   }
 };
+
+export const fetchLocalLeads = () => async dispatch => {
+  try {
+    const res = await axios.get('/api/local-leads');
+    const { data } = res;
+
+    dispatch({
+      type: types.FETCH_LOCAL_LEADS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchStatsData = userType => async dispatch => {
+  try {
+    const res = await axios.post('/api/all/dashboard', { userType });
+    const { data } = res;
+
+    dispatch({
+      type: types.FETCH_STATS,
+      payload: data.stats,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
