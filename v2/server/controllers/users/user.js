@@ -29,6 +29,8 @@ const getUserResults = async (req, res, next) => {
   // const { id } = req.params;
 
   const { id } = req.user;
+  const { role } = req.body;
+  console.log('role', role);
 
   const isValidId = mongoose.Types.ObjectId.isValid(id);
 
@@ -41,7 +43,7 @@ const getUserResults = async (req, res, next) => {
     if (!user) {
       return next(boom.notFound('User not found'));
     }
-    const { role } = user;
+    // const { role } = user;
 
     let sessions;
     let surveys;
@@ -92,7 +94,6 @@ const getListOfTrainers = async (req, res, next) => {
 const getAllTrainersAndLeads = async (req, res, next) => {
   // NEED TO MAKE SURE WE PUT THIS THROUGH AUTH SO ONLY ADMIN CAN ACCESS
   const { user } = req;
-  console.log(user);
 
   if (user.role !== 'admin')
     return next(boom.unauthorized('Do not have admin rights'));

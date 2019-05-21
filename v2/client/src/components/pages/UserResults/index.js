@@ -24,22 +24,30 @@ class UserResults extends Component {
     // show results based on the logged in user id and role
     const {
       match: { params },
+      role,
     } = this.props;
     const { id } = params;
 
     // eslint-disable-next-line react/destructuring-assignment
-    await this.props.fetchUserResults(id);
+    await this.props.fetchUserResults(id, role);
   }
 
   render() {
-    const { results, role, history } = this.props;
-    // const user = history.location.state.trainer;
-    // NEED TO FIX THIS TO MAKE DYNAMIC
-    const user = { name: 'Joe' };
-    const topLevelView = ['admin', 'localLead'].includes(role);
+    const { results, role, history, groupView } = this.props;
+    const { state } = history.location;
+
+    // if a user has been passed on then store as the user
+    const user = state && state.trainer;
+
+    const topLevelView = !groupView && ['admin', 'localLead'].includes(role);
     return (
-      <TrainerResultsWrapper>
-        {topLevelView && <Header label={`Viewing ${user.name}`} type="view" />}
+      <TrainerResultsWrapper nudge={topLevelView}>
+        {topLevelView && (
+          <Header
+            label={user ? `Viewing ${user.name}` : 'Individual View'}
+            type="view"
+          />
+        )}
         <Header label="results" type="section" nudge={topLevelView} />
         <Collapse
           accordion

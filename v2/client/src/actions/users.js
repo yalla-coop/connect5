@@ -4,9 +4,9 @@ import history from '../history';
 
 import * as types from '../constants/actionTypes';
 
-export const fetchUserResults = id => async dispatch => {
+export const fetchUserResults = (id, role) => async dispatch => {
   try {
-    const res = await axios.get(`/api/users/${id}/results`);
+    const res = await axios.post(`/api/users/${id}/results`, { role });
     dispatch({
       type: types.FETCH_USER_RESULTS_SUCCESS,
       payload: res.data,

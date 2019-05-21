@@ -29,6 +29,8 @@ import {
   LOGIN_URL,
   SIGN_UP_URL,
   TRAINERS_URL,
+  TRAINER_RESULTS_URL,
+  GROUP_RESULTS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -52,13 +54,25 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <PrivateRoute
               exact
-              path="/users/:id/results"
+              path={TRAINER_RESULTS_URL}
               Component={UserResults}
               isAuthenticated={isAuthenticated}
               loaded={loaded}
               allowedRoles={['trainer', 'admin', 'localLead']}
               role={role}
             />
+
+            <PrivateRoute
+              exact
+              path={GROUP_RESULTS_URL}
+              Component={UserResults}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['trainer', 'admin', 'localLead']}
+              role={role}
+              groupView
+            />
+
             <Route exact path={HOME_URL} component={Home} />
 
             <PrivateRoute
