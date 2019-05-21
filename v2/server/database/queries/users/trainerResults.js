@@ -209,7 +209,7 @@ const trainerFeedback = async trainerId => {
       },
     },
     { $unwind: '$answers' },
-    // get all questions for response answers
+    // // get all questions for response answers
     {
       $lookup: {
         from: 'questions',
@@ -219,37 +219,25 @@ const trainerFeedback = async trainerId => {
       },
     },
     { $unwind: '$questions' },
-    {
-      $project: {
-        _id: 0,
-        'answers.answer': 1,
-        'questions.group': 1,
-      },
-    },
-
     // {
     //   $project: {
     //     _id: 0,
-    //     answers: {
-    //       $map:
-    //       {
-    //         input:"$answers",
-    //         as: 'answer'
-    //       }
-    //     },
+    //     surveyType: '$surveyType',
+    //     questionGroup: '$questions.group',
+    //     questionText: '$questions.text',
+    //     answer: '$answers.answer',
     //   },
     // },
-
-    // { $unwind: { $arrayElemAt: ['$answers', 0] } },
-
-    // { $group: { _id: '$answers' } },
-
-    // {
-    //   $group: {
-    //     _id: null,
-    //     responses: { $sum: 1 },
-    //   },
-    // },
+    {
+      $group: {
+        _id: {
+          surveyType: '$surveyType',
+          questionGroup: '$questions.group',
+          questionText: '$questions.text',
+          answer: '$answers.answer',
+        },
+      },
+    },
   ]);
 
   // get response ids
