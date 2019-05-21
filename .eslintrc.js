@@ -5,14 +5,15 @@ module.exports = {
     node: true,
     jest: true
   },
-  extends: ['airbnb-base', "prettier"],
+  extends: ['airbnb-base', 'prettier'],
   globals: {
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
+    SharedArrayBuffer: 'readonly'
   },
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2018
   },
+
   rules: {
     "no-unused-vars": ["error", { "args": "none" }],
     "no-underscore-dangle": [0],
@@ -21,12 +22,10 @@ module.exports = {
     "prettier/prettier": [
       "error",
       {
-        "trailingComma": "es5",
-        "singleQuote": true,
+        trailingComma: 'es5',
+        singleQuote: true
       }
     ]
   },
-   "plugins": [
-    "prettier"
-  ]
+  plugins: ['prettier']
 };

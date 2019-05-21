@@ -5,6 +5,7 @@ export const SIGN_UP_URL = '/signup';
 // ALL
 export const DASHBOARD_URL = '/dashboard';
 export const ADD_SESSION_URL = '/add-session';
+export const SURVEY_URL = '/survey/:id';
 
 // trainer
 export const TRAINER_RESULTS_URL = '/trainer-results';
