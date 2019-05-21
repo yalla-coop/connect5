@@ -72,7 +72,9 @@ const getUserResults = async (req, res, next) => {
 
 const getListOfTrainers = async (req, res, next) => {
   // this is temp until log in is in place
-  const user = await User.findOne({ name: 'nisha' });
+  // const user = await User.findOne({ name: 'nisha' });
+
+  const { user } = req;
 
   try {
     const trainers = await getMyTrainers(user.id);
@@ -87,6 +89,11 @@ const getListOfTrainers = async (req, res, next) => {
 
 const getAllTrainersAndLeads = async (req, res, next) => {
   // NEED TO MAKE SURE WE PUT THIS THROUGH AUTH SO ONLY ADMIN CAN ACCESS
+  const { user } = req;
+  console.log(user);
+
+  if (user.role !== 'admin')
+    return next(boom.unauthorized('Do not have admin rights'));
 
   try {
     const trainers = await getAllTrainers();

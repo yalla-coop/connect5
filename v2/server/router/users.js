@@ -35,7 +35,11 @@ router.get('/local-leads', getLocalLeads);
 router.get('/users/:id/results', getUserResults);
 // router.get('/trainer/info', getTrianerReachData);
 router.post('/all/dashboard', getDashboardStats);
-router.get('/users/my-trainers', getListOfTrainers);
-router.get('/users/admin/trainers-and-leads', getAllTrainersAndLeads);
+router.get('/users/my-trainers', authentication(), getListOfTrainers);
+router.get(
+  '/users/admin/trainers-and-leads',
+  authentication(),
+  getAllTrainersAndLeads
+);
 
 module.exports = router;
