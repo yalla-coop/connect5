@@ -24,6 +24,7 @@ module.exports = {
     "linebreak-style": 0,
     "linebreak-style": [0, "error", "windows"],
     "react/prop-types": [0],
+    "react/prefer-stateless-function":[0],
     //  allow .js extensions for JSX.
     "react/jsx-filename-extension": [
       1,

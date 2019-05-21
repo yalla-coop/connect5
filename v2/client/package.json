@@ -16,7 +16,8 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "sweetalert2": "^8.10.7"
   },
   "scripts": {
     "start": "react-scripts start",
