@@ -191,7 +191,17 @@ const getTrainerResponseCount = trainerId => {
   ]);
 };
 
+// gets feedback of all participants of one trainer
+const trainerFeedback = trainerId => {
+  return Response.aggregate([
+    {
+      $match: { trainers: mongoose.Types.ObjectId(trainerId) },
+    },
+  ]);
+};
+
 module.exports = {
+  trainerFeedback,
   getTrianerSessions,
   getTrainerSuerveys,
   getTrainerSessionCount,
