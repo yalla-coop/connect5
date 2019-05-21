@@ -2,10 +2,13 @@
 import React, { Component } from 'react';
 import { HorizontalBar } from 'react-chartjs-2';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
+import { fetchbehavioralInsight } from '../../../actions/users';
 
 import { Wrapper, ChartWrapper, Description } from './BehavioralInsight.style';
 
-export default class BehavioralInsight extends Component {
+class BehavioralInsight extends Component {
   state = { data: {} };
 
   componentDidMount() {
@@ -88,3 +91,12 @@ export default class BehavioralInsight extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  behavioralInsightData: state.behavioralInsight,
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(BehavioralInsight);
