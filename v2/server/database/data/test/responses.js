@@ -40,6 +40,26 @@ module.exports = async () => {
       surveyType: surveyTypes[5],
       session: trainTrainersSession,
     },
+
+    // more stuff
+    {
+      PIN: 'AIO13',
+      trainers: [trainers[0], trainers[1]],
+      surveyType: 'pre-day-1',
+      session: type1Session,
+    },
+    {
+      PIN: 'FAM14',
+      trainers: [trainers[0], trainers[1]],
+      surveyType: 'pre-day-1',
+      session: type1Session,
+    },
+    {
+      PIN: 'FAM14',
+      trainers: [trainers[0], trainers[1]],
+      surveyType: 'pre-day-1',
+      session: type1Session,
+    },
   ];
 
   return Response.create(responses);

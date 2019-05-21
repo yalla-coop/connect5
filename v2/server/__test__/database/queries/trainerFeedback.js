@@ -20,11 +20,10 @@ describe('Test trainer feedback query', () => {
   });
 
   test('gets trainer feedback', async done => {
-    const trainer = await User.findOne({ role: 'trainer' });
-    console.log(trainer._id);
+    const trainer = await User.find({ role: 'trainer' });
 
-    trainerFeedback(trainer.id).then(result => {
-      expect(result).toBe(0);
+    trainerFeedback(trainer[0].id).then(result => {
+      expect(result[0]).toBe(0);
 
       done();
     });

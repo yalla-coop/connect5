@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 
+const User = require('../../models/User');
 const Session = require('../../models/Session');
 const Response = require('../../models/Response');
-
+const Answer = require('../../models/Answer');
+const Question = require('../../models/Question');
 // sum of trainer sessions and atendees grouped by type
 const getTrianerSessions = trainerId => {
   return Session.aggregate([
@@ -192,12 +194,88 @@ const getTrainerResponseCount = trainerId => {
 };
 
 // gets feedback of all participants of one trainer
-const trainerFeedback = trainerId => {
+const trainerFeedback = async trainerId => {
   return Response.aggregate([
     {
       $match: { trainers: mongoose.Types.ObjectId(trainerId) },
     },
+    // get all answers for responses
+    {
+      $lookup: {
+        from: 'answers',
+        localField: '_id',
+        foreignField: 'response',
+        as: 'answers',
+      },
+    },
+    { $unwind: '$answers' },
+    // get all questions for response answers
+    {
+      $lookup: {
+        from: 'questions',
+        localField: 'answers.question',
+        foreignField: '_id',
+        as: 'questions',
+      },
+    },
+    { $unwind: '$questions' },
+    {
+      $project: {
+        _id: 0,
+        'answers.answer': 1,
+        'questions.group': 1,
+      },
+    },
+
+    // {
+    //   $project: {
+    //     _id: 0,
+    //     answers: {
+    //       $map:
+    //       {
+    //         input:"$answers",
+    //         as: 'answer'
+    //       }
+    //     },
+    //   },
+    // },
+
+    // { $unwind: { $arrayElemAt: ['$answers', 0] } },
+
+    // { $group: { _id: '$answers' } },
+
+    // {
+    //   $group: {
+    //     _id: null,
+    //     responses: { $sum: 1 },
+    //   },
+    // },
   ]);
+
+  // get response ids
+  // const trainerResponses = await Response.find({ trainers: trainerId });
+  // const responseIds = trainerResponses.map(response => response._id);
+
+  // // get answers for those responses
+  // const answers = await Answer.find({ response: responseIds });
+
+  // // get questions
+  // const questionIds = answers.map(answer => answer.question);
+
+  // const questions = await Question.find({ _id: questionIds });
+
+  // // const answerQuestions = answers.map(answer => {
+  // //   const question = Question.findById(answer.question);
+
+  // //   return question;
+  // //   // const newAnswer = {
+  // //   //   _id: answer._id,
+  // //   //   question,
+  // //   //   answer: answer.answer,
+  // //   // };
+  // //   // return newAnswer;
+  // // });
+  // return questions;
 };
 
 module.exports = {
