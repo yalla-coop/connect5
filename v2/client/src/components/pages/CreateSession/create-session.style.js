@@ -11,7 +11,6 @@ export const CreateSessionWrapper = styled.div`
   margin-bottom: 80px;
 `;
 export const Heading = styled.h1`
-  // color: var( --main-heading);
   font-size: 28px;
   text-align: center;
   font-weight: 900;
@@ -24,9 +23,7 @@ export const Form = styled.form`
   width: 90%;
   margin: 10px auto;
   padding: 15px 14px;
-  // background-color: var(--form-background);
   border-radius: 15px;
-  // border: 1px solid var(--light-gray-border);
   @media (min-width: 678px) {
     width: 80%;
   }
