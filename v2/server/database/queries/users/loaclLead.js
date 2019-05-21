@@ -216,4 +216,54 @@ const getTeamLeadSuerveys = teamLeadId => {
   ]);
 };
 
-module.exports = { getLocalLeadsSessions, getTeamLeadSuerveys };
+const getMyTrainers = async leadId => {
+  const userDetails = await User.findById(leadId);
+
+  if (userDetails.trainersGroup.length > 0) {
+    const trainers = await Promise.all(
+      // map through the trainerGroup array to look up each trainer
+      userDetails.trainersGroup.map(async trainerId =>
+        User.aggregate([
+          {
+            $match: {
+              _id: mongoose.Types.ObjectId(trainerId),
+            },
+          },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'localLead',
+              foreignField: '_id',
+              as: 'localLead',
+            },
+          },
+          {
+            $unwind: '$localLead',
+          },
+          {
+            $addFields: {
+              localLeadName: '$localLead.name',
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              email: 1,
+              localLeadName: 1,
+              name: 1,
+              region: 1,
+              organization: 1,
+              role: 1,
+            },
+          },
+        ])
+      )
+    );
+
+    return trainers;
+  }
+
+  return [];
+};
+
+module.exports = { getLocalLeadsSessions, getTeamLeadSuerveys, getMyTrainers };

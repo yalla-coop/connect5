@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import 'antd/dist/antd.css';
-
 import { connect } from 'react-redux';
+// import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { Router, Route, Switch, Link, Redirect } from 'react-router-dom';
+// PLEASE DO NOT PUT ANTD STYLING SHEET HERE AS OVERRIDES EXISTING STYLES
+// import 'antd/dist/antd.css';
 import styled from 'styled-components';
 
 import { checkAuth } from '../actions/authAction';
@@ -15,6 +16,7 @@ import Dashboard from './pages/Dashboard';
 import Home from './pages/LandingPage';
 import SignUp from './pages/SignUp';
 import UserResults from './pages/UserResults';
+import TrainerListPage from './pages/TrainerListPage';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -26,7 +28,9 @@ import {
   DASHBOARD_URL,
   LOGIN_URL,
   SIGN_UP_URL,
+  TRAINERS_URL,
 } from '../constants/navigationRoutes';
+
 import history from '../history';
 
 const Wrapper = styled.div`
@@ -59,6 +63,7 @@ class App extends Component {
               role={role}
             />
 
+            <Route exact path={TRAINERS_URL} component={TrainerListPage} />
             <Route
               exact
               path={LOGIN_URL}

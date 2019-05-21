@@ -7,11 +7,14 @@ const authentication = require('./../middlewares/authentication');
 
 // import routes
 const { getTrianerReachData } = require('../controllers/users/trainer');
-
 const getLocalLeads = require('../controllers/users/getLocalLeads');
 const signUpTrainer = require('../controllers/users/trainer/signUp');
 const checkUniqueEmail = require('./../controllers/users/checkUniqueEmail');
-const { getUserResults } = require('../controllers/users/user');
+const {
+  getUserResults,
+  getListOfTrainers,
+  getAllTrainersAndLeads,
+} = require('../controllers/users/user');
 const { getDashboardStats } = require('../controllers/users/all');
 const getUserInfo = require('../controllers/users/getUserInfo');
 
@@ -32,5 +35,7 @@ router.get('/local-leads', getLocalLeads);
 router.get('/users/:id/results', getUserResults);
 // router.get('/trainer/info', getTrianerReachData);
 router.post('/all/dashboard', getDashboardStats);
+router.get('/users/my-trainers', getListOfTrainers);
+router.get('/users/admin/trainers-and-leads', getAllTrainersAndLeads);
 
 module.exports = router;

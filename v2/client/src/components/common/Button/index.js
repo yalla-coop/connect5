@@ -14,6 +14,7 @@ const sharedStyles = css`
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   opacity: ${props => props.disabled && !props.loading && 0.3};
   font-weight: 500;
+  font-size: 1.125rem;
   box-shadow: ${shadows.primary};
 
   &:hover::after {
@@ -45,7 +46,7 @@ export const squareStyles = css`
 `;
 
 export const roundStyles = css`
-  height: ${props => props.height || '2rem'};
+  height: ${props => props.height || '2.5rem'};
   width: ${props => props.width || '100px'};
   border-radius: 6px;
 
