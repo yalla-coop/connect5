@@ -11,6 +11,7 @@ import {
   CreateSessionWrapper,
   InputDiv,
   Heading,
+  SubmitBtn,
   Error,
 } from './create-session.style';
 
@@ -95,15 +96,15 @@ class CreateSession extends Component {
       partnerTrainer2,
       emails,
     } = this.state;
-    const isError = !(
-      !!startDate &&
-      !!inviteesNumber &&
-      !!session &&
-      !!region &&
-      !!partnerTrainer1 &&
-      !!partnerTrainer2 &&
-      !!emails
-    );
+    const { role } = this.props;
+    const isError = !(!!startDate &&
+    !!inviteesNumber &&
+    !!session &&
+    !!region &&
+    !!partnerTrainer1 &&
+    role === 'trainer'
+      ? !!partnerTrainer2
+      : null && !!emails);
 
     this.setState({
       err: isError,
@@ -271,7 +272,7 @@ class CreateSession extends Component {
             </label>
           </div>
 
-          <InputDiv>
+          <SubmitBtn>
             <Button
               onClick={onFormSubmit}
               type="primary"
@@ -279,7 +280,7 @@ class CreateSession extends Component {
               height="40px"
               width="100%"
             />
-          </InputDiv>
+          </SubmitBtn>
           {err && <Error>All inputs are required</Error>}
         </Form>
       </CreateSessionWrapper>
