@@ -12,7 +12,6 @@ export const fetchUserResults = id => async dispatch => {
       payload: res.data,
     });
   } catch (err) {
-    // console.error('errrrrrr', err.response.data.error);
     history.push('/404err');
   }
 };

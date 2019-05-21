@@ -41,26 +41,6 @@ margin-bottom: 1.2rem;
   background: ${colors.ligthGray}
 `;
 
-export const Button = styled.button`
-  line-height: 50px;
-  margin: 15px 0;
-  border-radius: 5px;
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 1.4em
-  color: black;
-  text-decoration: none;
-  background-color: ${colors.primary};
-  color: ${colors.white};
-  outline: none;
-  border: none;
-  &:hover {
-    background-color: ${colors.white};
-    color: ${colors.primary};
-    border: 1px solid ${colors.primary};
-  }
-`;
-
 export const SelectComponent = styled(Select)`
   height: 50px;
   border-radius: 5px;
