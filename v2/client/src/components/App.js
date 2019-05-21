@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import 'antd/dist/antd.css';
+// PLEASE DO NOT PUT ANTD STYLING SHEET HERE AS OVERRIDES EXISTING STYLES
+// import 'antd/dist/antd.css';
 // import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { Router, Route, Switch, Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -12,12 +13,14 @@ import Dashboard from './pages/Dashboard';
 import Home from './pages/LandingPage';
 import UserResults from './pages/UserResults';
 import Survey from './pages/survey/Survey';
+import TrainerListPage from './pages/TrainerListPage';
 
 // ROUTES
 import {
   HOME_URL,
   DASHBOARD_URL,
-  SURVEY_URL
+  SURVEY_URL,
+  TRAINERS_URL,
 } from '../constants/navigationRoutes';
 import history from '../history';
 
@@ -36,6 +39,7 @@ class App extends Component {
             <Route exact path="/users/:id/results" component={UserResults} />
             <Route exact path={HOME_URL} component={Home} />
             <Route exact path={DASHBOARD_URL} component={Dashboard} />
+            <Route exact path={TRAINERS_URL} component={TrainerListPage} />
             <Route exact path="/login" component={Login} />
             <Route exact path={SURVEY_URL} component={Survey} />
 
