@@ -29,19 +29,14 @@ import {
 } from '../../../constants/navigationRoutes';
 
 class Dashboard extends Component {
-  state = {
-    userType: null,
-  };
-
   componentDidMount() {
-    // once we have log in sorted userType and name will come from props
+    // once we have log in sorted role and name will come from props
     // it can then be removed from state
-    // const { userType, userName } = this.props;
-    const userType = 'trainer';
+    // const { role, userName } = this.props;
+    // const role = 'trainer';
+    const { role, fetchStatsData: fetchStatsDataActionCreator } = this.props;
 
-    this.setState({ userType });
-    const { fetchStatsData: fetchStatsDataActionCreator } = this.props;
-    fetchStatsDataActionCreator(userType);
+    fetchStatsDataActionCreator(role);
   }
 
   render() {
@@ -50,7 +45,7 @@ class Dashboard extends Component {
     const captalizesName =
       userName && userName[0].toUpperCase() + userName.substr(1);
 
-    const { userType } = this.state;
+    const { role } = this.props;
 
     return (
       <Wrapper>
@@ -66,14 +61,12 @@ class Dashboard extends Component {
                 Welcome back, <br />
                 {captalizesName}
               </Title>
-              <Role>Role: {userType}</Role>
+              <Role>Role: {role}</Role>
             </TopSection>
             <StatsWrapper>
               <StatItem
                 to={
-                  userType === 'trainer'
-                    ? TRAINER_SESSIONS_URL
-                    : GROUP_SESSIONS_URL
+                  role === 'trainer' ? TRAINER_SESSIONS_URL : GROUP_SESSIONS_URL
                 }
               >
                 <Label>Sessions</Label>
@@ -81,9 +74,7 @@ class Dashboard extends Component {
               </StatItem>
               <StatItem
                 to={
-                  userType === 'trainer'
-                    ? TRAINER_RESULTS_URL
-                    : GROUP_RESULTS_URL
+                  role === 'trainer' ? TRAINER_RESULTS_URL : GROUP_RESULTS_URL
                 }
               >
                 <Label>Participants</Label>
@@ -91,15 +82,13 @@ class Dashboard extends Component {
               </StatItem>
               <StatItem
                 to={
-                  userType === 'trainer'
-                    ? TRAINER_RESULTS_URL
-                    : GROUP_RESULTS_URL
+                  role === 'trainer' ? TRAINER_RESULTS_URL : GROUP_RESULTS_URL
                 }
               >
                 <Label>Responses</Label>
                 <StatNumber>{stats.responseCount}</StatNumber>
               </StatItem>
-              {userType === 'trainer' ? (
+              {role === 'trainer' ? (
                 <StatItem to={TRAINER_RESULTS_URL}>
                   <Label>Response Rate</Label>
                   <StatNumber>{stats.responseRate}%</StatNumber>

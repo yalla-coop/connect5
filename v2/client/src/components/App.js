@@ -63,7 +63,9 @@ class App extends Component {
               role={role}
             />
 
-            <Route exact path={TRAINERS_URL} component={TrainerListPage} />
+            <PrivateRoute exact path={TRAINERS_URL} Component={TrainerListPage} isAuthenticated={isAuthenticated} loaded={loaded} allowedRoles={['admin', 'localLead']} role={role} />
+
+            {/* <Route exact path={TRAINERS_URL} component={TrainerListPage} /> */}
             <Route
               exact
               path={LOGIN_URL}

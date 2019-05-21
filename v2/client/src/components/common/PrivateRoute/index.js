@@ -28,7 +28,7 @@ const PrivateRoute = ({
           // eslint-disable-next-line no-nested-ternary
           isAuthenticated ? (
             authorized ? (
-              <Component {...LinkProps} {...rest} />
+              <Component {...LinkProps} {...rest} role={role} />
             ) : (
               history.goBack() && null
             )
