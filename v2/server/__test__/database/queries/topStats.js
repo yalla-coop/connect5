@@ -23,7 +23,7 @@ describe('Test topStats query', () => {
     getTopStats(admin.id, 'admin').then(result => {
       expect(result).toBeDefined();
       expect(result.participantCount).toBe(4);
-      expect(result.trainerCount).toBe(20);
+      expect(result.trainerCount).toBe(19);
       done();
     });
   });
@@ -39,12 +39,23 @@ describe('Test topStats query', () => {
     });
   });
 
+  test('localLead stats if they dont have trainers', async done => {
+    const localLead = await User.findOne({ name: 'julie' });
+
+    getTopStats(localLead.id, 'localLead').then(result => {
+      expect(result).toBeDefined();
+      expect(result.participantCount).toBe(0);
+      expect(result.trainerCount).toBe(0);
+      done();
+    });
+  });
+
   test('top stats gets trainer stats', async done => {
     const trainer = await User.findOne({ role: 'trainer' });
 
     getTopStats(trainer.id, 'trainer').then(result => {
       expect(result).toBeDefined();
-      expect(result.participantCount).toBe(23);
+      expect(result.participantCount).toBe(45);
       expect(result.responseRate).toBe(9);
       done();
     });

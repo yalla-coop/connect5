@@ -8,6 +8,8 @@ import styled from 'styled-components';
 
 import { checkAuth } from '../actions/authAction';
 
+import { colors } from '../theme';
+
 // PAGES
 import Login from './pages/Login/Login';
 import ParticipantLogin from './pages/Login/LoginParticipant';
@@ -37,6 +39,7 @@ import history from '../history';
 
 const Wrapper = styled.div`
   min-height: 100vh;
+  background-color: ${colors.offWhite}
 `;
 
 class App extends Component {
