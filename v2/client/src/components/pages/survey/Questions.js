@@ -10,7 +10,7 @@ import {
   Slider,
   NumberSliderDiv,
   NumberOutput,
-  QuestionCategory
+  QuestionCategory,
 } from './Questions.style';
 
 // checks if errors are present (renders error msg after submit)
@@ -130,13 +130,13 @@ const renderQuestionInputType = (
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <div className="answers">
-          {options.map((e, i) => {
+          {options.map(e => {
             const value = e;
 
             const uniqueId = e + questionId;
             return (
-              <div key={i}>
-                <div key={i}>
+              <div key={`${value}parent`}>
+                <div key={`${value}child`}>
                   <label htmlFor={uniqueId}>
                     <input
                       value={value}
@@ -196,11 +196,11 @@ const questionsRender = (
       text: questionText,
       group,
       helperText,
-      options
+      options,
     } = el;
     const inputType = el.questionType.desc;
     return (
-      <div key={index}>
+      <div key={questionId}>
         {' '}
         {/* renders headlines */}
         <QuestionCategory>
@@ -232,7 +232,7 @@ export default class Questions extends React.Component {
       handleOther,
       handlePIN,
       answers,
-      errors
+      errors,
     } = this.props;
 
     const errorArray = Object.keys(errors);
@@ -243,13 +243,13 @@ export default class Questions extends React.Component {
           <header>
             <h3>Please enter your PIN</h3>
             <p>
-              We want to create a PIN code so that we can link your responses to
+              {` We want to create a PIN code so that we can link your responses to
               this survey with your responses to other Connect 5 surveys, whilst
-              you remain entirely anonymous. In order to do that,{' '}
+              you remain entirely anonymous. In order to do that, `}
               <strong>
-                please type in the third letter of your first name, the first
+                {` please type in the third letter of your first name, the first
                 two letters of your mother's first name and the date you were
-                born{' '}
+                born `}
               </strong>
               (e.g., you would type 01 if you were born on the 01st of July)
             </p>

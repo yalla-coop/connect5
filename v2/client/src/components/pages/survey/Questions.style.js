@@ -114,9 +114,9 @@ const Slider = styled.input`
   -webkit-appearance: none;
 
   height: 25px;
-  border: ${borders.inputBox}
+  border: ${borders.inputBox};
 
-  &::-webkit-slider-thumb {
+  ::-webkit-slider-thumb {
     width: 20px;
     -webkit-appearance: none;
     height: 20px;
@@ -151,5 +151,5 @@ export {
   RadioField,
   TextField,
   NumberOutput,
-  NumberSliderDiv
+  NumberSliderDiv,
 };

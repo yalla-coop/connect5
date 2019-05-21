@@ -48,7 +48,7 @@ const Form = styled.form`
   padding-bottom: 24px;
 
   button {
-    border: ${borders.button}
+    border: ${borders.button};
     color: ${colorCodes.black};
     padding: 8px;
     border-radius: 1rem;

@@ -10,7 +10,7 @@ import {
   SurveyHeader,
   SessionDetails,
   Form,
-  Disclaimer
+  Disclaimer,
 } from './Survey.style';
 
 // formState will be the object where we store survey responses
@@ -22,7 +22,7 @@ export default class Survey extends React.Component {
     loading: true,
     sessionId: null,
     PIN: null,
-    errors: {}
+    errors: {},
   };
 
   componentWillMount() {
@@ -41,13 +41,13 @@ export default class Survey extends React.Component {
           surveyDetails: res.data,
           loading: false,
           sessionId,
-          surveyType
+          surveyType,
         });
       })
       .then(() => {
         swal.fire({
           text:
-            'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.'
+            'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.',
         });
       })
       .catch(err => console.error(err.stack));
@@ -68,7 +68,7 @@ export default class Survey extends React.Component {
     const answer = e.target.value;
     formState[question] = answer;
     this.setState(() => ({
-      formState
+      formState,
     }));
   };
 
@@ -79,12 +79,13 @@ export default class Survey extends React.Component {
     const answer = `Other: ${e.target.value}`;
     formState[question] = answer;
     this.setState(() => ({
-      formState
+      formState,
     }));
   };
 
   // handles user input for PIN field
   handlePIN = e => this.setState({ PIN: e.target.value });
+
   // // when participant submits form
   // // this puts the required info into an object and sends to server
   handleSubmit = e => {
@@ -94,21 +95,22 @@ export default class Survey extends React.Component {
 
     const formSubmission = { PIN, sessionId, surveyType, formState };
     // check if PIN was entered before API call
-    PIN
-      ? axios
-          .post(`/api/survey/submit/`, formSubmission)
-          .then(() =>
-            swal
-              .fire('Done!', 'Thanks for submitting your feedback!', 'success')
-              .then(() => history.push('/'))
-          )
-          .catch(err => {
-            this.setState({
-              errors: err.response.data
-            });
-            swal.fire('Please answer all required questions');
-          })
-      : swal.fire('Please enter your PIN');
+    if (PIN) {
+      return axios
+        .post(`/api/survey/submit/`, formSubmission)
+        .then(() =>
+          swal
+            .fire('Done!', 'Thanks for submitting your feedback!', 'success')
+            .then(() => history.push('/'))
+        )
+        .catch(err => {
+          this.setState({
+            errors: err.response.data,
+          });
+          swal.fire('Please answer all required questions');
+        });
+    }
+    return swal.fire('Please enter your PIN');
   };
 
   // function to create a list of names from an array...
@@ -128,9 +130,8 @@ export default class Survey extends React.Component {
       sessionDate,
       trainerNames,
       questionsForSurvey,
-      surveyType
+      surveyType,
     } = surveyDetails;
-    console.log(this.state.errors);
     return (
       <SurveyQs>
         <Header type="home" />
