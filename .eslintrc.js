@@ -15,26 +15,12 @@ module.exports = {
   },
 
   rules: {
-<<<<<<< HEAD
-    'no-unused-vars': ['error', { args: 'none' }],
-    'no-underscore-dangle': [0],
-    // configure the prettier plugin
-    'prettier/prettier': [
-      'error',
-||||||| merged common ancestors
-    "no-unused-vars": ["error", { "args": "none" }],
-    "no-underscore-dangle": [0],
-     // configure the prettier plugin
-    "prettier/prettier": [
-      "error",
-=======
     "no-unused-vars": ["error", { "args": "none" }],
     "no-underscore-dangle": [0],
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
      // configure the prettier plugin
     "prettier/prettier": [
       "error",
->>>>>>> master
       {
         trailingComma: 'es5',
         singleQuote: true
