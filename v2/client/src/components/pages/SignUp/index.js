@@ -230,7 +230,7 @@ class SignUp extends Component {
                     },
                   ],
                 })(
-                  <Select placeholder="Region" size="large">
+                  <Select placeholder="Local Lead" size="large">
                     {localLeads &&
                       localLeads.map(({ name, _id }) => (
                         <Option value={_id} key={_id}>
