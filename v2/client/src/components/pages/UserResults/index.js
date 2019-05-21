@@ -10,13 +10,15 @@ import { fetchUserResults } from '../../../actions/users';
 
 import { TrainerResultsWrapper, ButtonWrapper } from './UserResults.style';
 import Header from '../../common/Header';
-import BehavioralInsight from '../../common/BehavioralInsight';
 
 const { Panel } = Collapse;
 
 const panels = {
   reach: { text: 'Reach', render: props => <Reach data={props} /> },
-  behavior: { text: 'Behavioural', render: () => <BehavioralInsight /> },
+  behavior: {
+    text: 'Behavioural',
+    render: () => null,
+  },
   feedback: { text: 'Trainer feedback', render: () => null },
 };
 

@@ -9,11 +9,14 @@ const initialState = {
 export default function(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case FETCH_BEHAVIORAL_INSIGHT:
+    case FETCH_BEHAVIORAL_INSIGHT: {
+      const { data, role } = payload;
       return {
-        ...payload,
+        data,
+        role,
         loaded: true,
       };
+    }
 
     default:
       return state;

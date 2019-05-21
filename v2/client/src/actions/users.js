@@ -19,9 +19,13 @@ export const fetchUserResults = id => async dispatch => {
 
 export const fetchbehavioralInsight = (role, idOrPIN) => async dispatch => {
   try {
-    const url = `/api/api/behavioral-insight/${role}/${idOrPIN}`;
+    const url = `/api/behavioral-insight/${role}/${idOrPIN}`;
     const res = await axios.get(url);
-    dispatch({ type: types.FETCH_BEHAVIORAL_INSIGHT, payload: res.data });
+
+    dispatch({
+      type: types.FETCH_BEHAVIORAL_INSIGHT,
+      payload: { data: res.data, role },
+    });
   } catch (error) {
     // must check the error status code before
     history.push('/404err');

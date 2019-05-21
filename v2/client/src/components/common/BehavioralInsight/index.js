@@ -1,24 +1,23 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { HorizontalBar } from 'react-chartjs-2';
-import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { fetchbehavioralInsight } from '../../../actions/users';
+import Spin from '../Spin';
+
+import { fetchbehavioralInsight as fetchbehavioralInsightAction } from '../../../actions/users';
 
 import { Wrapper, ChartWrapper, Description } from './BehavioralInsight.style';
 
 class BehavioralInsight extends Component {
-  state = { data: {} };
-
   componentDidMount() {
-    axios.get('/api/behavioral-insight/participant/HIO13').then(({ data }) => {
-      this.setState({ data });
-    });
+    const { fetchbehavioralInsight, userRole, idOrPIN } = this.props;
+
+    fetchbehavioralInsight(userRole, idOrPIN);
   }
 
   render() {
-    const { data } = this.state;
+    const { data, loaded } = this.props;
     const texts = Object.keys(data);
     const chartsData = [];
     texts.forEach(text => {
@@ -44,59 +43,64 @@ class BehavioralInsight extends Component {
 
     return (
       <Wrapper>
-        {chartsData.map((dataA, index) => (
-          <>
-            <ChartWrapper>
-              <Description>{texts[index]}</Description>
-              <HorizontalBar
-                data={dataA}
-                width={30}
-                height={10}
-                options={{
-                  legend: {
-                    display: false,
-                  },
+        {loaded ? (
+          chartsData.map((dataA, index) => (
+            <div key={texts[index]}>
+              <ChartWrapper>
+                <Description>{texts[index]}</Description>
+                <HorizontalBar
+                  data={dataA}
+                  width={30}
+                  height={10}
+                  options={{
+                    legend: {
+                      display: false,
+                    },
 
-                  scales: {
-                    xAxes: [
-                      {
-                        barPercentage: 0.5,
-                        barThickness: 6,
-                        maxBarThickness: 8,
-                        minBarLength: 2,
-                        ticks: {
-                          beginAtZero: true,
+                    scales: {
+                      xAxes: [
+                        {
+                          barPercentage: 0.5,
+                          barThickness: 6,
+                          maxBarThickness: 8,
+                          minBarLength: 2,
+                          ticks: {
+                            beginAtZero: true,
+                          },
                         },
-                      },
-                    ],
-                    yAxes: [
-                      {
-                        barThickness: 20,
-                        gridLines: {
-                          offsetGridLines: true,
+                      ],
+                      yAxes: [
+                        {
+                          barThickness: 20,
+                          gridLines: {
+                            offsetGridLines: true,
+                          },
+                          ticks: {
+                            beginAtZero: true,
+                          },
                         },
-                        ticks: {
-                          beginAtZero: true,
-                        },
-                      },
-                    ],
-                  },
-                  offsetGridLines: true,
-                }}
-              />
-            </ChartWrapper>
-          </>
-        ))}
+                      ],
+                    },
+                    offsetGridLines: true,
+                  }}
+                />
+              </ChartWrapper>
+            </div>
+          ))
+        ) : (
+          <Spin />
+        )}
       </Wrapper>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  behavioralInsightData: state.behavioralInsight,
+  data: state.behavioralInsight.data,
+  loaded: state.behavioralInsight.loaded,
 });
 
 export default connect(
   mapStateToProps,
-  {}
+  { fetchbehavioralInsight: fetchbehavioralInsightAction }
 )(BehavioralInsight);
