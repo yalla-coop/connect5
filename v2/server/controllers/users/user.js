@@ -7,11 +7,14 @@ const User = require('../../database/models/User');
 const {
   getLocalLeadsSessions,
   getTeamLeadSuerveys,
+  getMyTrainers,
 } = require('../../database/queries/users/loaclLead');
 
 const {
   getAdminSessions,
   getAdminSuerveys,
+  getAllTrainers,
+  getAllLocalLeads,
 } = require('../../database/queries/users/admin');
 
 const {
@@ -67,4 +70,36 @@ const getUserResults = async (req, res, next) => {
   }
 };
 
-module.exports = { getUserResults };
+const getListOfTrainers = async (req, res, next) => {
+  // this is temp until log in is in place
+  const user = await User.findOne({ name: 'nisha' });
+
+  try {
+    const trainers = await getMyTrainers(user.id);
+    const cleanedTrainers = trainers.map(trainer => trainer[0]);
+    return res
+      .status(200)
+      .json({ trainerCount: trainers.length, trainerList: cleanedTrainers });
+  } catch (err) {
+    return next(boom.badImplementation('Internal server error'));
+  }
+};
+
+const getAllTrainersAndLeads = async (req, res, next) => {
+  // NEED TO MAKE SURE WE PUT THIS THROUGH AUTH SO ONLY ADMIN CAN ACCESS
+
+  try {
+    const trainers = await getAllTrainers();
+    const localLeads = await getAllLocalLeads();
+    return res.status(200).json({
+      trainerCount: trainers.length,
+      localLeadCount: localLeads.length,
+      trainerList: trainers,
+      localLeadList: localLeads,
+    });
+  } catch (err) {
+    return next(boom.badImplementation('Internal server error'));
+  }
+};
+
+module.exports = { getUserResults, getListOfTrainers, getAllTrainersAndLeads };
