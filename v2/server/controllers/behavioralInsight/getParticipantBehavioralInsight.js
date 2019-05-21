@@ -1,5 +1,6 @@
 const boom = require('boom');
 const getParticipantBehavioralInsight = require('./../../database/queries/behavioralInsight/participant');
+const participantBehavioralFormulae = require('./../../helpers/participantBehavioral');
 
 module.exports = (req, res, next) => {
   const { PIN } = req.params;
@@ -9,7 +10,9 @@ module.exports = (req, res, next) => {
 
   return getParticipantBehavioralInsight(PIN)
     .then(results => {
-      res.json(results);
+      const calculatedValues = participantBehavioralFormulae(results);
+
+      res.json({ ...calculatedValues });
     })
     .catch(err => {
       next(boom.badImplementation());
