@@ -109,7 +109,7 @@ export default class TrainerListPage extends Component {
             </Link>
           )}
         </HeaderSection>
-        <TrainerList dataList={toggle === 'left' ? trainers : localLeads} />
+        <TrainerList dataList={toggle === 'left' ? trainers : localLeads} viewRole={role} />
       </Wrapper>
     );
   }

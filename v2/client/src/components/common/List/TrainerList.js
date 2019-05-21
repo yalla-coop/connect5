@@ -57,7 +57,7 @@ export default class TrainerList extends Component {
   };
 
   render() {
-    const { dataList } = this.props;
+    const { dataList, viewRole } = this.props;
     const { modalOpen, selectedTrainer } = this.state;
 
     const modalContent = selectedTrainer && (
@@ -80,7 +80,7 @@ export default class TrainerList extends Component {
             </ModalRow>
           )}
           {/* render number of trainers if local lead */}
-          {selectedTrainer.role === 'localLead' && (
+          {selectedTrainer.role === 'localLead' && viewRole === 'admin' && (
             <ModalRow>
               <Left>No of trainers: </Left>
               <p>{`${selectedTrainer.trainerCount}` || 'N/A'}</p>
@@ -95,7 +95,7 @@ export default class TrainerList extends Component {
         </ModalContent>
         <Link
           to={{
-            pathname: `/users/${selectedTrainer._id}/results`,
+            pathname: `/trainer-results`,
             state: { trainer: selectedTrainer, seniorView: true },
           }}
         >

@@ -6,7 +6,7 @@ import * as types from '../constants/actionTypes';
 
 export const fetchUserResults = (id, role) => async dispatch => {
   try {
-    const res = await axios.post(`/api/users/${id}/results`, { role });
+    const res = await axios.post(`/api/users/${id}/results`, { id, role });
     dispatch({
       type: types.FETCH_USER_RESULTS_SUCCESS,
       payload: res.data,

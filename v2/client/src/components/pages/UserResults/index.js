@@ -20,16 +20,32 @@ const panels = {
 };
 
 class UserResults extends Component {
+  state = {
+    selectedUserId: null,
+  };
+
   async componentDidMount() {
     // show results based on the logged in user id and role
     const {
       match: { params },
       role,
+      userId,
+      history,
     } = this.props;
     const { id } = params;
 
+    // if trainer/localLead has been selected from trainer list then use their id and role
+    // otherwise use logged in user's id and role
+    const { state } = history.location;
+    if (state && state.trainer) {
+      await this.props.fetchUserResults(state.trainer._id, state.trainer.role);
+    } else {
+      await this.props.fetchUserResults(userId, role);
+    }
+
+    // check if localLead is in trainer or lead view and assign the role accordingly
+
     // eslint-disable-next-line react/destructuring-assignment
-    await this.props.fetchUserResults(id, role);
   }
 
   render() {
@@ -74,6 +90,7 @@ class UserResults extends Component {
 
 const mapStateToProps = state => ({
   results: state.results,
+  userId: state.auth.id,
 });
 
 export default connect(

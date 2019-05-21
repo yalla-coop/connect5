@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const User = require('../../models/User');
 
+// getLocalAndTrainerSessions = leadId => {
+//   const userDetails = await User.findById(leadId)
+
+// }
+
 const getLocalLeadsSessions = leadId => {
   return User.aggregate([
     {
@@ -238,7 +243,7 @@ const getMyTrainers = async leadId => {
             },
           },
           {
-            $unwind: '$localLead',
+            $unwind: { path: '$localLead', preserveNullAndEmptyArrays: true },
           },
           {
             $addFields: {
@@ -259,6 +264,8 @@ const getMyTrainers = async leadId => {
         ])
       )
     );
+
+    console.log('hey;', trainers);
 
     return trainers;
   }
