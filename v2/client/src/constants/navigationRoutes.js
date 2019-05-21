@@ -1,4 +1,6 @@
 export const HOME_URL = '/';
+export const LOGIN_URL = '/login';
+export const SIGN_UP_URL = '/signup';
 
 // ALL
 export const DASHBOARD_URL = '/dashboard';
@@ -12,6 +14,7 @@ export const TRAINER_SESSIONS_URL = '/trainer-sessions';
 export const GROUP_RESULTS_URL = '/group-results';
 export const TRAINERS_URL = '/trainers';
 export const GROUP_SESSIONS_URL = '/sessions';
+export const ADD_TRAINER_URL = '/add-trainer';
 
 // local lead
 

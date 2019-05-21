@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const boom = require('boom');
 const { findByEmail } = require('./../database/queries/user');
-const { tokenMaxAge } = require('./../database/DBConstants');
+const { tokenMaxAge } = require('./../constants');
 
 module.exports = (req, res, next) => {
   const { email, password } = req.body;
