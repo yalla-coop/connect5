@@ -3,7 +3,7 @@ import { FETCH_ALL_TRAINERS } from '../constants/actionTypes';
 import history from '../history';
 
 export const fetchAllTrainers = () => async dispatch => {
-  const res = await axios
+  axios
     .get(`/api/fetch-trainers`)
     .then(res =>
       dispatch({
@@ -11,5 +11,5 @@ export const fetchAllTrainers = () => async dispatch => {
         payload: res.data,
       })
     )
-    .catch(err => history.push('/404err'));
+    .catch(() => history.push('/404err'));
 };
