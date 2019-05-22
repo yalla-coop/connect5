@@ -1,6 +1,60 @@
 const mongoose = require('mongoose');
 
 const User = require('../../models/User');
+const Session = require('../../models/Session');
+
+const getTrainerGroupSessions = async leadId => {
+  const user = await User.findById(leadId);
+  const trainers = user.trainersGroup;
+
+  // get all the sessions that include at least one trainer in the group
+  const sessions = await Promise.all(
+    trainers.map(async trainerId =>
+      Session.aggregate([
+        { $match: { trainers: mongoose.Types.ObjectId(trainerId) } },
+        {
+          $project: {
+            _id: 1,
+            numberOfAttendees: 1,
+            type: 1,
+          },
+        },
+      ])
+    )
+  );
+
+  const uniqueSessions = [];
+  const map = new Map();
+
+  if (sessions.length > 0) {
+    for (const item of sessions[0]) {
+      if (!map.has(item._id)) {
+        map.set(item._id, true);
+        uniqueSessions.push({
+          _id: item._id,
+          numberOfAttendees: item.numberOfAttendees,
+          type: item.type,
+        });
+      }
+    }
+  }
+
+  const result = {
+    '1': { sessions: 0, participants: 0, type: 'Session 1' },
+    '2': { sessions: 0, participants: 0, type: 'Session 2' },
+    '3': { sessions: 0, participants: 0, type: 'Session 3' },
+    'special-2-days': { sessions: 0, participants: 0, type: '2-day intensive' },
+    'train-trainers': { sessions: 0, participants: 0, type: 'Train trainers' },
+  };
+
+  uniqueSessions.map(session => {
+    result[session.type]._id = session.type;
+    result[session.type].sessions += 1;
+    result[session.type].participants += session.numberOfAttendees;
+  });
+
+  return Object.values(result);
+};
 
 const getLocalLeadsSessions = leadId => {
   return User.aggregate([
@@ -268,4 +322,9 @@ const getMyTrainers = async leadId => {
   return [];
 };
 
-module.exports = { getLocalLeadsSessions, getTeamLeadSuerveys, getMyTrainers };
+module.exports = {
+  getLocalLeadsSessions,
+  getTeamLeadSuerveys,
+  getMyTrainers,
+  getTrainerGroupSessions,
+};
