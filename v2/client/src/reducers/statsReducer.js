@@ -11,6 +11,7 @@ const initState = {
 
 const stats = (state = initState, action) => {
   const { type, payload } = action;
+
   switch (type) {
     case types.FETCH_STATS:
       return { ...payload, loaded: true };

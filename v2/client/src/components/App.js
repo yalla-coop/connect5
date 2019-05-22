@@ -18,6 +18,7 @@ import SignUp from './pages/SignUp';
 import UserResults from './pages/UserResults';
 import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
+import ParticipantBehavioral from './pages/ParticipantBehavioral';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -52,6 +53,7 @@ class App extends Component {
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={Home} />
+
             <Route exact path="/users/:id/results" component={UserResults} />
             <Route exact path={HOME_URL} component={Home} />
 
@@ -103,7 +105,8 @@ class App extends Component {
               path="/participant-login"
               render={() => {
                 if (loaded) {
-                  return isAuthenticated || (loaded && role === 'user') ? (
+                  return isAuthenticated ||
+                    (loaded && role === 'participant') ? (
                     <Redirect to="/participant-dashboard" />
                   ) : (
                     <ParticipantLogin />
@@ -119,7 +122,17 @@ class App extends Component {
               Component={UserDashboard}
               loaded={loaded}
               isAuthenticated={isAuthenticated}
-              allowedRoles={['user']}
+              allowedRoles={['participant']}
+              role={role}
+            />
+
+            <PrivateRoute
+              exact
+              path="/participant/behavioral-insight"
+              Component={ParticipantBehavioral}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['participant']}
               role={role}
             />
 
