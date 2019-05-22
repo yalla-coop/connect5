@@ -60,7 +60,7 @@ export const checkUniqeEmail = email => async dispatch => {
 
     dispatch({
       type: CHECK_UNIQUE_EMAIL,
-      payload: data.isUnique,
+      payload: data,
     });
   } catch (error) {
     console.log(error);

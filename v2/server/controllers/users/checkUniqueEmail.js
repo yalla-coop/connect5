@@ -11,7 +11,13 @@ module.exports = (req, res, next) => {
   return getUserByEmail(email)
     .then(user => {
       if (user) {
-        res.json({ isUnique: false });
+        res.json({
+          isUnique: false,
+          id: user._id,
+          role: user.role,
+          name: user.name,
+          email: user.email,
+        });
       } else {
         res.json({ isUnique: true });
       }

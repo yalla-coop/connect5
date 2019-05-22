@@ -53,9 +53,18 @@ class App extends Component {
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/add-trainer" component={AddTrainer} />
             <Route exact path="/users/:id/results" component={UserResults} />
             <Route exact path={HOME_URL} component={Home} />
+
+            <PrivateRoute
+              exact
+              path="/add-trainer"
+              Component={AddTrainer}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+            />
 
             <PrivateRoute
               exact

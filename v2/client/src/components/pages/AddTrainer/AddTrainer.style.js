@@ -33,3 +33,10 @@ export const Item = styled(AntItem)`
   margin-bottom: 20px;
   text-align: center;
 `;
+
+export const Bold = styled.span`
+  font-weight: 900;
+  text-transform: capitalize;
+`;
+
+export const Paragraph = styled.p``;

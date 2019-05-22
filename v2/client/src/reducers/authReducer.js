@@ -10,7 +10,10 @@ const initialState = {
   isAuthenticated: null,
   isEmailUnique: null,
   loaded: false,
+  name: '',
+  email: '',
   role: null,
+  checkedUserInfo: {},
 };
 
 export default function(state = initialState, action) {
@@ -36,7 +39,8 @@ export default function(state = initialState, action) {
     case CHECK_UNIQUE_EMAIL:
       return {
         ...state,
-        isEmailUnique: payload,
+        isEmailUnique: payload.isUnique,
+        checkedUserInfo: payload,
         loaded: true,
       };
 
