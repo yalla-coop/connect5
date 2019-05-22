@@ -16,6 +16,7 @@ import Dashboard from './pages/Dashboard';
 import Home from './pages/LandingPage';
 import SignUp from './pages/SignUp';
 import UserResults from './pages/UserResults';
+import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
 
@@ -27,6 +28,7 @@ import Spin from './common/Spin';
 import {
   HOME_URL,
   DASHBOARD_URL,
+  SURVEY_URL,
   LOGIN_URL,
   SIGN_UP_URL,
   TRAINERS_URL,
@@ -66,6 +68,9 @@ class App extends Component {
             />
 
             <Route exact path={TRAINERS_URL} component={TrainerListPage} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path={SURVEY_URL} component={Survey} />
+
             <Route
               exact
               path={LOGIN_URL}
