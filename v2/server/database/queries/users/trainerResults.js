@@ -208,8 +208,15 @@ const trainerFeedback = async trainerId => {
         as: 'answers',
       },
     },
+    {
+      $project: {
+        _id: 0,
+        answers: 1,
+        surveyType: 1,
+      },
+    },
     { $unwind: '$answers' },
-    // // get all questions for response answers
+    // get all questions for response answers
     {
       $lookup: {
         from: 'questions',
@@ -219,51 +226,27 @@ const trainerFeedback = async trainerId => {
       },
     },
     { $unwind: '$questions' },
-    // {
-    //   $project: {
-    //     _id: 0,
-    //     surveyType: '$surveyType',
-    //     questionGroup: '$questions.group',
-    //     questionText: '$questions.text',
-    //     answer: '$answers.answer',
-    //   },
-    // },
+    {
+      $match: { 'questions.group': 'about your trainer' },
+    },
+    {
+      $project: {
+        surveyType: 1,
+        questionText: '$questions.text',
+        answers: '$answers.answer',
+      },
+    },
+    // group by survey type and question text
     {
       $group: {
         _id: {
           surveyType: '$surveyType',
-          questionGroup: '$questions.group',
-          questionText: '$questions.text',
-          answer: '$answers.answer',
+          questionText: '$questionText',
         },
       },
     },
+    // now what to do with the answers?
   ]);
-
-  // get response ids
-  // const trainerResponses = await Response.find({ trainers: trainerId });
-  // const responseIds = trainerResponses.map(response => response._id);
-
-  // // get answers for those responses
-  // const answers = await Answer.find({ response: responseIds });
-
-  // // get questions
-  // const questionIds = answers.map(answer => answer.question);
-
-  // const questions = await Question.find({ _id: questionIds });
-
-  // // const answerQuestions = answers.map(answer => {
-  // //   const question = Question.findById(answer.question);
-
-  // //   return question;
-  // //   // const newAnswer = {
-  // //   //   _id: answer._id,
-  // //   //   question,
-  // //   //   answer: answer.answer,
-  // //   // };
-  // //   // return newAnswer;
-  // // });
-  // return questions;
 };
 
 module.exports = {
