@@ -25,6 +25,7 @@ describe('Test getMyTrainers query', () => {
 
     getTrainerGroupSessions(lead.id).then(result => {
       expect(result).toBeDefined();
+      expect(result).toBe('hello');
       expect(result[0].type).toBe('Session 1');
       expect(result[0].sessions).toBe(3);
       done();

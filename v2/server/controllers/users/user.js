@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const User = require('../../database/models/User');
 
 const {
+  getTrainerGroupSessions,
   getLocalLeadsSessions,
   getTeamLeadSuerveys,
   getMyTrainers,
@@ -51,7 +52,7 @@ const getUserResults = async (req, res, next) => {
 
     switch (role) {
       case 'localLead':
-        sessions = await getLocalLeadsSessions(id);
+        sessions = await getTrainerGroupSessions(id);
         surveys = await getTeamLeadSuerveys(id);
         break;
       case 'admin':
@@ -64,6 +65,8 @@ const getUserResults = async (req, res, next) => {
         surveys = await getTrainerSuerveys(id);
         break;
     }
+
+    console.log('ses', sessions);
 
     // calc the responseRate and add it to the surveys object
     const newSurveys = getResponseRate(sessions, surveys);

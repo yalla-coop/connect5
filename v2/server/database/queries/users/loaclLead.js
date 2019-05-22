@@ -23,13 +23,15 @@ const getTrainerGroupSessions = async leadId => {
     )
   );
 
+  const cleanedSessions = sessions.reduce((a, b) => a.concat(b), []);
+
   const uniqueSessions = [];
   const map = new Map();
 
-  if (sessions.length > 0) {
-    for (const item of sessions[0]) {
-      if (!map.has(item._id)) {
-        map.set(item._id, true);
+  if (cleanedSessions.length > 0) {
+    for (const item of cleanedSessions) {
+      if (!map.has(item._id.toString())) {
+        map.set(item._id.toString(), true);
         uniqueSessions.push({
           _id: item._id,
           numberOfAttendees: item.numberOfAttendees,
@@ -40,11 +42,21 @@ const getTrainerGroupSessions = async leadId => {
   }
 
   const result = {
-    '1': { sessions: 0, participants: 0, type: 'Session 1' },
-    '2': { sessions: 0, participants: 0, type: 'Session 2' },
-    '3': { sessions: 0, participants: 0, type: 'Session 3' },
-    'special-2-days': { sessions: 0, participants: 0, type: '2-day intensive' },
-    'train-trainers': { sessions: 0, participants: 0, type: 'Train trainers' },
+    '1': { _id: '1', sessions: 0, participants: 0, type: 'Session 1' },
+    '2': { _id: '2', sessions: 0, participants: 0, type: 'Session 2' },
+    '3': { _id: '3', sessions: 0, participants: 0, type: 'Session 3' },
+    'special-2-days': {
+      _id: 'special-2-days',
+      sessions: 0,
+      participants: 0,
+      type: '2-day intensive',
+    },
+    'train-trainers': {
+      _id: 'train-trainers',
+      sessions: 0,
+      participants: 0,
+      type: 'Train trainers',
+    },
   };
 
   uniqueSessions.map(session => {
