@@ -2,6 +2,7 @@ const express = require('express');
 const loginController = require('./../controllers/login');
 const ParticipantLoginController = require('./../controllers/participant-login');
 const usersRouter = require('./users');
+const getParticipantBehavioralInsight = require('./../controllers/behavioralInsight/getParticipantBehavioralInsight');
 
 const surveyQs = require('../controllers/survey/getSurveyQs');
 const storeSurvey = require('../controllers/survey/storeSurvey');
@@ -10,6 +11,12 @@ const router = express.Router();
 
 router.post('/participant-login', ParticipantLoginController);
 router.post('/login', loginController);
+
+router.get(
+  '/behavioral-insight/participant/:PIN',
+  getParticipantBehavioralInsight
+);
+
 router.use(usersRouter);
 
 router.get('/survey/:id', surveyQs);
