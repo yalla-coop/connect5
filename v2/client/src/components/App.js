@@ -71,8 +71,6 @@ class App extends Component {
             />
 
             <Route exact path={TRAINERS_URL} component={TrainerListPage} />
-            <Route exact path={TRAINER_SESSIONS_URL} component={ViewSessions} />
-            <Route exact path={GROUP_SESSIONS_URL} component={ViewSessions} />
             <Route exact path="/login" component={Login} />
             <Route exact path={SURVEY_URL} component={Survey} />
 
@@ -141,6 +139,25 @@ class App extends Component {
               role={role}
             />
 
+            <PrivateRoute
+              exact
+              path={TRAINER_SESSIONS_URL}
+              component={ViewSessions}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['trainer', 'localLead', 'admin']}
+              role={role}
+            />
+
+            <PrivateRoute
+              exact
+              path={GROUP_SESSIONS_URL}
+              component={ViewSessions}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['localLead', 'admin']}
+              role={role}
+            />
             <Route
               path="/404err"
               render={() => (
