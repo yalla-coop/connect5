@@ -18,24 +18,6 @@ import {
 
 // NOTE: this component expects dataList to look something like this:
 
-// const dummySessionList = [
-//   {
-//     date: '15-10-2018',
-//     type: '2',
-//     id: '12334234234123',
-//   },
-//   {
-//     date: '15-10-2018',
-//     type: '2',
-//     id: '12334234234123',
-//   },
-//   {
-//     date: '15-10-2018',
-//     type: '2',
-//     id: '12334234234123',
-//   }
-// ];
-
 const SessionList = ({ dataList }) => {
   return (
     <Wrapper>
