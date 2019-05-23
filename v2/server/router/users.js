@@ -17,6 +17,9 @@ const {
 } = require('../controllers/users/user');
 const { getDashboardStats } = require('../controllers/users/all');
 const getUserInfo = require('../controllers/users/getUserInfo');
+const getTrainerSessions = require('../controllers/users/trainer/getTrainerSessions');
+const getLocalLeadsSessions = require('../controllers/users/getLocalLeadSessions');
+const getAllSessions = require('../controllers/users/getAllSessions');
 
 // check eamil route if the route doen't contain email query
 // then it will skip with next()
@@ -37,5 +40,8 @@ router.get('/users/:id/results', getUserResults);
 router.post('/all/dashboard', getDashboardStats);
 router.get('/users/my-trainers', getListOfTrainers);
 router.get('/users/admin/trainers-and-leads', getAllTrainersAndLeads);
+router.get('/users/trainer-sessions/:id', getTrainerSessions);
+router.get('/users/sessions/:id', authentication(), getLocalLeadsSessions);
+router.get('/users/sessions', getAllSessions);
 
 module.exports = router;
