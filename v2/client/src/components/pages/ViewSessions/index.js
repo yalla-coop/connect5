@@ -18,23 +18,35 @@ class ViewSessions extends Component {
   componentDidMount() {
     this.props.fetchALLSessions();
     const { role, id } = this.props;
+    this.fetchSessionsData(role, id);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { role, id } = this.props;
+    if (id !== prevProps.id || role !== prevProps.role) {
+      this.fetchSessionsData(role, id);
+    }
+  }
+
+  fetchSessionsData = (role, id) => {
+    this.props.fetchALLSessions();
     if (role === 'trainer') {
       this.props.fetchTrainerSessions(id);
     } else {
       this.props.fetchLocalLeadSessions(id);
     }
-  }
+  };
 
   render() {
-    const { sessions, SessionsNum } = this.props;
-    if (!sessions) {
+    const { sessions, sessionsNum } = this.props;
+    if (!sessions || !sessionsNum) {
       return <div>loading</div>;
     }
     return (
       <ViewSessionsWrapper>
         <TotalSessions>
           <Span>Total Sessions</Span>
-          <SessionsCount>{SessionsNum}</SessionsCount>
+          <SessionsCount>{sessionsNum}</SessionsCount>
           <LinkBtn to="/">Add New Session</LinkBtn>
         </TotalSessions>
         <SessionList dataList={sessions} />
@@ -44,11 +56,12 @@ class ViewSessions extends Component {
 }
 
 const mapStateToProps = state => {
+  setTimeout(() => console.log(state.auth.id), 3000);
   return {
     id: state.auth.id,
     role: state.auth.role,
     sessions: state.sessions.sessions,
-    SessionsNum: state.sessions.sessionsCount,
+    sessionsNum: state.sessions.sessionsCount,
   };
 };
 
