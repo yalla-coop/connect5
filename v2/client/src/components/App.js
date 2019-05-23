@@ -18,6 +18,7 @@ import SignUp from './pages/SignUp';
 import UserResults from './pages/UserResults';
 import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
+import ViewSessions from './pages/ViewSessions';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -31,6 +32,8 @@ import {
   LOGIN_URL,
   SIGN_UP_URL,
   TRAINERS_URL,
+  TRAINER_SESSIONS_URL,
+  GROUP_SESSIONS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -66,6 +69,8 @@ class App extends Component {
             />
 
             <Route exact path={TRAINERS_URL} component={TrainerListPage} />
+            <Route exact path={TRAINER_SESSIONS_URL} component={ViewSessions} />
+            <Route exact path={GROUP_SESSIONS_URL} component={ViewSessions} />
             <Route exact path="/login" component={Login} />
             <Route exact path={SURVEY_URL} component={Survey} />
 
