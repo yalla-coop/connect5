@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 import { colors, borders, shadows } from '../../../theme';
 
 export const Wrapper = styled.div`
@@ -14,6 +15,8 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 0.5rem;
+  background: ${colors.lightGray};
+  height: 3.5rem;
 `;
 
 const sharedHeaderStyles = css`
@@ -25,16 +28,19 @@ const sharedHeaderStyles = css`
 
 export const DateHeader = styled.h3`
   ${sharedHeaderStyles};
+  margin: 1.2rem;
 `;
 
 export const TypeHeader = styled.h3`
   ${sharedHeaderStyles};
   text-align: center;
+  margin: 1.2rem;
 `;
 
 export const DetailsHeader = styled.h3`
   ${sharedHeaderStyles};
   text-align: center;
+  margin: 1.2rem;
 `;
 
 export const NameHeader = styled.h3`
@@ -53,6 +59,7 @@ export const Row = styled.div`
   align-items: center;
   border-bottom: ${borders.inputBox};
   padding: 0.5rem 0;
+  margin-left: 0.75rem;
 `;
 
 const sharedItemStyles = css`
@@ -69,12 +76,13 @@ export const Type = styled.div`
   ${sharedItemStyles}
   display: flex;
   justify-content: center;
+  margin-left: 1rem;
 
   p {
     background-color: ${colors.lightGray};
-    width: 1.75rem;
-    height: 1.75rem;
-    padding: 0.25rem 0;
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+    padding: 0.25rem 0.5rem;
     text-align: center;
     border-radius: 4px;
     margin: 0;
@@ -136,4 +144,11 @@ export const Right = styled.p`
 export const ModalContent = styled.div`
   margin-bottom: 1.5rem;
   width: 100%;
+`;
+
+export const StyledLink = styled(Link)`
+  margin-bottom: 1.5rem;
+  width: 100%;
+  text-align: center;
+  margin-top: 1.75rem;
 `;
