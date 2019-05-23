@@ -17,6 +17,7 @@ export const Header = styled.div`
   margin-bottom: 0.5rem;
   background: ${colors.lightGray};
   height: 3.5rem;
+  margin-left: 0.25rem;
 `;
 
 const sharedHeaderStyles = css`
@@ -59,7 +60,7 @@ export const Row = styled.div`
   align-items: center;
   border-bottom: ${borders.inputBox};
   padding: 0.5rem 0;
-  margin-left: 0.75rem;
+  margin-left: 0.55rem;
 `;
 
 const sharedItemStyles = css`
