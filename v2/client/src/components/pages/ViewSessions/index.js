@@ -56,7 +56,6 @@ class ViewSessions extends Component {
 }
 
 const mapStateToProps = state => {
-  setTimeout(() => console.log(state.auth.id), 3000);
   return {
     id: state.auth.id,
     role: state.auth.role,

@@ -4,7 +4,7 @@ import {
   FETCH_TRAINERS_SESSIONS,
   FETCH_LOCAL_LEAD_SESSIONS,
 } from '../constants/actionTypes';
-// import history from '../history';
+import history from '../history';
 
 export const fetchTrainerSessions = id => async dispatch => {
   axios
@@ -15,7 +15,7 @@ export const fetchTrainerSessions = id => async dispatch => {
         payload: res.data,
       })
     )
-    .catch(err => console.log(err));
+    .catch(() => history.push('./404'));
 };
 
 export const fetchLocalLeadSessions = id => async dispatch => {
@@ -27,7 +27,7 @@ export const fetchLocalLeadSessions = id => async dispatch => {
         payload: res.data,
       })
     )
-    .catch(err => console.log(err));
+    .catch(() => history.push('./404'));
 };
 
 export const fetchALLSessions = () => async dispatch => {
@@ -39,5 +39,5 @@ export const fetchALLSessions = () => async dispatch => {
         payload: res.data,
       })
     )
-    .catch(err => console.log(err));
+    .catch(() => history.push('./404'));
 };

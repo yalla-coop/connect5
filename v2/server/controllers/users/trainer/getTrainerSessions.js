@@ -10,7 +10,6 @@ module.exports = async (req, res, next) => {
       if (!sessions) {
         return next(boom.notFound('No sessions founded'));
       }
-      console.log(sessions);
       return res.json(sessions);
     })
     .catch(err => {
