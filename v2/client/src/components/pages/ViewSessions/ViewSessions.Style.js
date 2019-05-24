@@ -41,7 +41,7 @@ export const LinkBtn = styled(Link)`
   cursor: pointer;
   color: ${colors.white};
   font-size: 1rem;
-  padding: 14px 30px;
+  padding: 14px 25px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #2f6627;
   &:hover {

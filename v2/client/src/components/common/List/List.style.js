@@ -4,7 +4,7 @@ import { colors, borders, shadows } from '../../../theme';
 
 export const Wrapper = styled.div`
   background-color: ${colors.white};
-  box-shadow: ${shadows.primary};
+  box-shadow: ${shadows.secondary};
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -59,9 +59,11 @@ export const Row = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  border-bottom: ${borders.inputBox};
   padding: 0.5rem 0;
   margin-left: 0.55rem;
+  &:not(:last-child) {
+    border-bottom: ${borders.inputBox};
+  };
   @media (min-width: 768px) {
     margin-left: 1rem;
 `;
