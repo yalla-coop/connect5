@@ -6,6 +6,7 @@ const getParticipantBehavioralInsight = require('./../controllers/behavioralInsi
 
 const surveyQs = require('../controllers/survey/getSurveyQs');
 const storeSurvey = require('../controllers/survey/storeSurvey');
+const getSessionDetails = require('../controllers/sessionDetails/getSessionDetails');
 
 const router = express.Router();
 
@@ -17,6 +18,7 @@ router.get(
   getParticipantBehavioralInsight
 );
 
+router.get('/session-details/:id', getSessionDetails);
 router.use(usersRouter);
 
 router.get('/survey/:id', surveyQs);
