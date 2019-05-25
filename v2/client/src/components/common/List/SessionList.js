@@ -19,6 +19,7 @@ import {
 // NOTE: this component expects dataList to look something like this:
 
 const SessionList = ({ dataList }) => {
+  console.log(dataList);
   return (
     <Wrapper>
       <Header>
@@ -34,12 +35,7 @@ const SessionList = ({ dataList }) => {
               <Type type={dataItem.type}>
                 <p>{dataItem.type}</p>
               </Type>
-              <StyledLink
-                to={{
-                  pathname: '/session-details',
-                  state: { sessionId: dataItem.id },
-                }}
-              >
+              <StyledLink to={`/session-details/${dataItem._id}`}>
                 <Icon type="right" />
               </StyledLink>
             </Row>
