@@ -10,10 +10,13 @@ import {
 
 class SessionActions extends Component {
   render() {
+    const { sessionDetails } = this.props;
+    const { _id } = sessionDetails;
+    console.log(sessionDetails, _id);
     return (
       <SessionActionsWrapper>
         <SessionAction>
-          <SessionActionLink to="/">
+          <SessionActionLink to={`/session-edit/${_id}`}>
             <Icon
               type="edit"
               style={{ width: '2rem', height: '2rem', color: '#08c' }}

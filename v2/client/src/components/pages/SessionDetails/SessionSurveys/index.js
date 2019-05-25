@@ -20,10 +20,10 @@ class SessionSurveys extends Component {
         </SessionSurveyContainer>
         <Buttons>
           <AttendeeBtn to="/" id={_id} type={type}>
-            View Attendees
+            View Attendees List
           </AttendeeBtn>
           <ResultBtn to="/" id={_id} type={type}>
-            View Results
+            View Survey Results
           </ResultBtn>
         </Buttons>
       </SessionSurveysWrapper>

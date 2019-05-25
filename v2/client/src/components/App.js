@@ -21,6 +21,7 @@ import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import SessionDetails from './pages/SessionDetails';
+import EditSession from './pages/SessionDetails/SessionActions/SessionEdit';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -79,6 +80,7 @@ class App extends Component {
               path="/session-details/:id"
               component={SessionDetails}
             />
+            <Route exact path="/session-edit/:id" component={EditSession} />
 
             <Route
               exact
