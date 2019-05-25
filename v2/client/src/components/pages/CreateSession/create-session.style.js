@@ -1,4 +1,3 @@
-import Select from 'react-select';
 import styled from 'styled-components';
 import { colors } from '../../../theme';
 
@@ -40,20 +39,6 @@ margin-bottom: 1.2rem;
 
 export const SubmitBtn = styled.div`
   margin-top: 2rem;
-`;
-
-export const SelectComponent = styled(Select)`
-  height: 50px;
-  border-radius: 5px;
-  border: 1px solid ${colors.mediumGray};
-  margin: 13px 0;
-  > :first-child {
-    height: 100%;
-    &:hover,
-    &:focus {
-      border: 1px solid ${colors.primary};
-    }
-  }
 `;
 
 export const Error = styled.p`

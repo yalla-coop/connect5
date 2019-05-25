@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import behavioralInsightReducer from './behavioralInsight';
 import userResults from './user';
 import authReducer from './authReducer';
 import errorReducer from './errorReducer';
@@ -16,4 +17,5 @@ export default combineReducers({
   results: userResults,
   trainers: trainerReducer,
   session: sessionReducer,
+  behavioralInsight: behavioralInsightReducer,
 });
