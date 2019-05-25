@@ -10,35 +10,45 @@ export const CreateSessionWrapper = styled.div`
   margin-bottom: 80px;
 `;
 export const Heading = styled.h1`
-  font-size: 28px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 29px;
   text-align: center;
-  font-weight: 900;
+  color: ${colors.profileFontColor};
+  margin-bottom: 1rem;
 `;
 
 export const Form = styled.form`
-  background: none;
+  background: ${colors.lightGray};
   display: flex;
   flex-direction: column;
   width: 90%;
-  margin: 10px auto;
-  padding: 15px 14px;
-  border-radius: 15px;
+  margin: 1rem auto;
+  padding: 20px 10px;
+  border-radius: 10px;
   @media (min-width: 678px) {
-    width: 80%;
+    width: 65%;
   }
 `;
 
 export const InputDiv = styled.div`
-width: 90%;
-margin: 0 auto;
-margin-bottom: 1.2rem;
-@media (min-width: 768px) {
   width: 100%;
-  background: ${colors.ligthGray}
+  margin: 0 auto;
+  border: 1px solid ${colors.lightGray};
+  &:not(:last-child) {
+    margin-bottom: 1.2rem;
+  };
+  @media (min-width: 768px) {
+    width: 90%;
 `;
 
 export const SubmitBtn = styled.div`
-  margin-top: 2rem;
+  margin: .5rem 0;
+  @media (min-width: 768px) {
+    width: 90%;
+    margin: 0 auto;
 `;
 
 export const Error = styled.p`

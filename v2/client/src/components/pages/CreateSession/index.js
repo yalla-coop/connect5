@@ -156,7 +156,6 @@ class CreateSession extends Component {
     return (
       <CreateSessionWrapper>
         <Heading>Create New Session</Heading>
-
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
             <DatePicker
@@ -275,7 +274,7 @@ class CreateSession extends Component {
             />
             <div>{err}</div>
           </InputDiv>
-          <div>
+          <InputDiv>
             <input
               type="checkbox"
               id="sendEmail"
@@ -285,7 +284,7 @@ class CreateSession extends Component {
             <label htmlFor="sendEmail">
               Send the survey to participants by email
             </label>
-          </div>
+          </InputDiv>
 
           <SubmitBtn>
             <Button
