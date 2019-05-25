@@ -20,6 +20,7 @@ import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
+import SessionDetails from './pages/SessionDetails';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -73,6 +74,11 @@ class App extends Component {
             <Route exact path={TRAINERS_URL} component={TrainerListPage} />
             <Route exact path="/login" component={Login} />
             <Route exact path={SURVEY_URL} component={Survey} />
+            <Route
+              exact
+              path="/session-details/:id"
+              component={SessionDetails}
+            />
 
             <Route
               exact
