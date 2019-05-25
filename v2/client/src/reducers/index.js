@@ -4,6 +4,8 @@ import behavioralInsightReducer from './behavioralInsight';
 import userResults from './user';
 import authReducer from './authReducer';
 import errorReducer from './errorReducer';
+import trainerReducer from './trainerReducer';
+import sessionReducer from './sessionReducer';
 import fetchedDataReducer from './fetchedDataReducer';
 import statsReducer from './statsReducer';
 import fetchedSessions from './fetchSessionReducer';
@@ -15,5 +17,7 @@ export default combineReducers({
   stats: statsReducer,
   results: userResults,
   sessions: fetchedSessions,
+  trainers: trainerReducer,
+  session: sessionReducer,
   behavioralInsight: behavioralInsightReducer,
 });
