@@ -12,7 +12,6 @@ class SessionActions extends Component {
   render() {
     const { sessionDetails } = this.props;
     const { _id } = sessionDetails;
-    console.log(sessionDetails, _id);
     return (
       <SessionActionsWrapper>
         <SessionAction>

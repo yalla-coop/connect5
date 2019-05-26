@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { colors } from '../../../../theme';
+import { colors, shadows } from '../../../../theme';
 
 export const SessionSurveysWrapper = styled.div`
   display: flex;
@@ -8,6 +8,7 @@ export const SessionSurveysWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 1.5rem;
+  padding-top: 0;
 `;
 
 export const SessionSurveyContainer = styled.div`
@@ -15,7 +16,9 @@ export const SessionSurveyContainer = styled.div`
   margin: 0 auto;
   margin-bottom: 2rem;
   border-radius: 5px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  background: ${colors.white};
+  box-shadow: ${shadows.primary};
+  border: 1px solid ${colors.extralightPrimary};
 `;
 
 export const SurveyContentWrapper = styled.div`
@@ -85,7 +88,7 @@ margin-bottom: 2rem;
 cursor: pointer;
 color: ${colors.white};
 font-size: 1rem;
-padding: 14px 25px;
+padding: 14px 15px;
 text-decoration: none;
 text-shadow: 0px 1px 0px #2f6627;
 &:hover {

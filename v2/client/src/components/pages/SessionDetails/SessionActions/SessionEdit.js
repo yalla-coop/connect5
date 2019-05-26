@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import Button from '../../../common/Button';
 import { fetchAllTrainers } from '../../../../actions/trainerAction';
 import { fetchLocalLeads } from '../../../../actions/users';
-import { sessions, regions, pattern } from './options';
+import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
+import { sessions, regions, pattern } from '../../CreateSession/options';
 import {
   Form,
   CreateSessionWrapper,
@@ -13,13 +14,9 @@ import {
   Heading,
   SubmitBtn,
   Error,
-} from './SessionActions.Style';
+} from '../../CreateSession/create-session.style';
 
 const { Option } = Select;
-const children = [];
-for (let i = 10; i < 36; i++) {
-  children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-}
 
 class EditSession extends Component {
   state = {
@@ -34,6 +31,10 @@ class EditSession extends Component {
   };
 
   componentDidMount() {
+    const { id } = this.props.match.params;
+    // call action and pass it the id of session to fetch it's details
+    this.props.fetchSessionDetails(id);
+
     this.props.fetchAllTrainers();
     this.props.fetchLocalLeads();
   }
@@ -87,33 +88,6 @@ class EditSession extends Component {
     });
   };
 
-  checkError = () => {
-    const {
-      startDate,
-      inviteesNumber,
-      session,
-      region,
-      partnerTrainer1,
-      partnerTrainer2,
-      emails,
-    } = this.state;
-    const { role } = this.props;
-    const isError = !(
-      !!startDate &&
-      !!inviteesNumber &&
-      !!session &&
-      !!region &&
-      !!emails &&
-      !!partnerTrainer1 &&
-      (role !== 'localLead' || partnerTrainer2)
-    );
-
-    this.setState({
-      err: isError,
-    });
-    return isError;
-  };
-
   onFormSubmit = event => {
     event.preventDefault();
     const {
@@ -140,7 +114,15 @@ class EditSession extends Component {
   };
 
   render() {
-    const { trainers, role, localLeads } = this.props;
+    console.log(this.props.sessionDetails, 'detttttttttttttttalis');
+    const { trainers, role, localLeads, sessionDetails } = this.props;
+    const {
+      date,
+      type,
+      numberOfAttendees,
+      region,
+      participantsEmails,
+    } = sessionDetails;
     const { startDate, inviteesNumber, err } = this.state;
     const {
       onDateChange,
@@ -154,11 +136,11 @@ class EditSession extends Component {
     } = this;
     return (
       <CreateSessionWrapper>
-        <Heading>Create New Session</Heading>
-
+        <Heading>Edit Session</Heading>
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
             <DatePicker
+              placeholder={moment(date).format('DD/MM/YYYY')}
               onChange={onDateChange}
               name="startDate"
               defaultValue={moment('2019-01-01', 'YYYY-MM-DD')}
@@ -172,7 +154,7 @@ class EditSession extends Component {
             <Select
               showSearch
               style={{ width: '100%' }}
-              placeholder="Click to select session No."
+              placeholder={type}
               optionFilterProp="children"
               onChange={onSelectSessionChange}
               size="large"
@@ -188,7 +170,7 @@ class EditSession extends Component {
           <InputDiv>
             <Input
               type="number"
-              placeholder="Number of session invitees"
+              placeholder={numberOfAttendees}
               value={inviteesNumber}
               onChange={onInputChange}
               name="inviteesNumber"
@@ -201,7 +183,7 @@ class EditSession extends Component {
             <Select
               showSearch
               style={{ width: '100%' }}
-              placeholder="Region"
+              placeholder={region}
               optionFilterProp="children"
               onChange={onSelectRegionChange}
               size="large"
@@ -267,24 +249,13 @@ class EditSession extends Component {
             <Select
               mode="tags"
               size="large"
-              placeholder="participants Emails"
+              placeholder="emails"
               onChange={onEmailChange}
-              defaultValue={['example@gmail.com']}
+              defaultValue="example"
               style={{ width: '100%', height: '100%' }}
             />
             <div>{err}</div>
           </InputDiv>
-          <div>
-            <input
-              type="checkbox"
-              id="sendEmail"
-              name="sendEmail"
-              value="value"
-            />
-            <label htmlFor="sendEmail">
-              Send the survey to participants by email
-            </label>
-          </div>
 
           <SubmitBtn>
             <Button
@@ -306,9 +277,10 @@ const mapStateToProps = state => ({
   trainers: state.trainers.trainers,
   role: state.auth.role,
   localLeads: state.fetchedData.localLeadsList,
+  sessionDetails: state.sessions.sessionDetails,
 });
 
 export default connect(
   mapStateToProps,
-  { fetchAllTrainers, fetchLocalLeads }
+  { fetchAllTrainers, fetchLocalLeads, fetchSessionDetails }
 )(EditSession);

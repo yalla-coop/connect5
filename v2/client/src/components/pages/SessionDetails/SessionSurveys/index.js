@@ -17,6 +17,7 @@ class SessionSurveys extends Component {
       <SessionSurveysWrapper>
         <SessionSurveyContainer>
           <SurveyContent />
+          <SurveyContent />
         </SessionSurveyContainer>
         <Buttons>
           <AttendeeBtn to="/" id={_id} type={type}>

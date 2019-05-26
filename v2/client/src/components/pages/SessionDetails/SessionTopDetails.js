@@ -33,12 +33,12 @@ class SessionTopDetails extends Component {
             <StatisticValue>{moment(date).format('DD/MM/YYYY')}</StatisticValue>
           </StatisticItems>
           <StatisticItems>
-            <StatisticName>Type</StatisticName>
-            <StatisticValue>{type}</StatisticValue>
-          </StatisticItems>
-          <StatisticItems>
             <StatisticName>Attendees</StatisticName>
             <StatisticValue>{numberOfAttendees}</StatisticValue>
+          </StatisticItems>
+          <StatisticItems>
+            <StatisticName>Type</StatisticName>
+            <StatisticValue>{type}</StatisticValue>
           </StatisticItems>
         </Statistic>
         <Trainers>

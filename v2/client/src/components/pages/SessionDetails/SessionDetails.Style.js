@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 // import { Link } from 'react-router-dom';
-import { borders } from '../../../theme';
+import { borders, shadows, colors } from '../../../theme';
 
 export const SessionDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   margin: 0 auto;
-  margin-top: 5rem;
   @media (min-width: 768px) {
     width: 50%;
     margin-top: 8rem
@@ -16,9 +15,12 @@ export const SessionDetailsWrapper = styled.div`
 export const SessionTopDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 88%;
   margin: 0 auto;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  margin-top: 5rem;
+  box-shadow: ${shadows.primary};
+  background: ${colors.white};
+  border: 1px solid ${colors.extralightPrimary};
   border-radius: 5px;
 `;
 
@@ -33,11 +35,10 @@ export const Statistic = styled.div`
 `;
 
 export const StatisticItems = styled.div`
-  width: 35%;
   margin: 0 auto;
   &:not(:last-child) {
     border-right: ${borders.inputBox};
-    padding: 0 0.3rem;
+    padding: 0 0.5rem;
   }
 `;
 export const StatisticName = styled.span`
@@ -49,6 +50,7 @@ export const StatisticName = styled.span`
 export const StatisticValue = styled.span`
   display: block;
   text-align: center;
+  padding-top: 0.3rem;
 `;
 
 export const Trainers = styled.p`
