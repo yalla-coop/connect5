@@ -1,5 +1,7 @@
 const boom = require('boom');
-const getSessionDetails = require('./../../database/queries/sessionDetails/session');
+const {
+  getSessionDetails,
+} = require('./../../database/queries/sessionDetails/session');
 
 module.exports = async (req, res, next) => {
   const { id } = req.params;
@@ -11,6 +13,6 @@ module.exports = async (req, res, next) => {
       return next(boom.notFound('No session founded'));
     })
     .catch(err => {
-      boom.badImplementation();
+      next(boom.badImplementation());
     });
 };
