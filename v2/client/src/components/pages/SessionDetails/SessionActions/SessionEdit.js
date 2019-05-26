@@ -90,27 +90,25 @@ class EditSession extends Component {
 
   onFormSubmit = event => {
     event.preventDefault();
-    const {
-      session,
-      startDate,
-      inviteesNumber,
-      region,
-      partnerTrainer1,
-      partnerTrainer2,
-      emails,
-    } = this.state;
-    const sessionData = {
-      session,
-      startDate,
-      inviteesNumber,
-      region,
-      partnerTrainer1,
-      partnerTrainer2,
-      emails,
-    };
-
-    // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
-    return !this.checkError() && this.props.createSessionAction(sessionData);
+    console.log('hellllllo');
+    // const {
+    //   session,
+    //   startDate,
+    //   inviteesNumber,
+    //   region,
+    //   partnerTrainer1,
+    //   partnerTrainer2,
+    //   emails,
+    // } = this.state;
+    // const sessionData = {
+    //   session,
+    //   startDate,
+    //   inviteesNumber,
+    //   region,
+    //   partnerTrainer1,
+    //   partnerTrainer2,
+    //   emails,
+    // };
   };
 
   render() {
