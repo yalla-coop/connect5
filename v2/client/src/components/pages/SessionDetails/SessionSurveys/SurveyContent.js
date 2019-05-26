@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Swal from 'sweetalert2';
 import { Icon } from 'antd';
 import {
   SurveyContentWrapper,
@@ -11,11 +12,22 @@ import {
 } from './SessionSurveys.Style';
 
 class SurveyContent extends Component {
+  onInfoClick = () => {
+    Swal.fire({
+      title: 'Info',
+      text:
+        'Please copy and send the survey link to all participants. You will see the survey results for your session as soon as they are being submitted',
+      type: 'info',
+      confirmButtonText: 'Ok',
+    });
+  };
+
   render() {
+    const { onInfoClick } = this;
     return (
       <SurveyContentWrapper>
         <SurveyLinkType>Survey 1 Link </SurveyLinkType>
-        <SurveyLinkInfo>
+        <SurveyLinkInfo onClick={onInfoClick}>
           <Icon type="info-circle" />
         </SurveyLinkInfo>
         <SurveyLink to="https://ant.design/components/icons">
