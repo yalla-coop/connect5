@@ -1,9 +1,11 @@
+/* eslint-disable react/no-did-update-set-state */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { Modal } from 'antd';
-import { fetchLocalLeads } from '../../../actions/users';
+import { fetchLocalLeads, addTrainerToGroup } from '../../../actions/users';
 import { checkUniqeEmail } from '../../../actions/authAction';
+import { resetgroup, resetUniqueEmail } from '../../../actions/reset';
 
 import Button from '../../common/Button';
 
@@ -32,13 +34,10 @@ const regions = [
   'South West',
 ];
 
+// function success(message, reset) {}
+
 class AddTrainer extends Component {
-  state = {
-    visible: false,
-    isNameRequired: true,
-    isRegionRequired: true,
-    allowAddUsedEmail: false,
-  };
+  state = {};
 
   componentDidMount() {
     const { isAuthenticated, history } = this.props;
@@ -49,54 +48,48 @@ class AddTrainer extends Component {
     return fetchLocalLeadsActionCreator();
   }
 
-  componentDidUpdate(prevProps) {
-    const { isEmailUnique, form } = this.props;
-    const { isEmailUnique: oldIsEmailUnique } = prevProps;
-
-    if (oldIsEmailUnique !== isEmailUnique) {
-      form.validateFields(['email'], { force: true });
+  componentDidUpdate() {
+    const { group } = this.props;
+    if (group.loaded && group.success) {
+      Modal.success({
+        title: 'Done!',
+        content: group.success,
+        onOk: this.handleSuccessOk,
+      });
+    }
+    if (group.loaded && group.error) {
+      Modal.error({
+        title: 'Error',
+        content: group.error,
+        onOk: this.handleSuccessOk,
+      });
     }
   }
 
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  };
-
   handleOk = e => {
-    this.setState(
-      {
-        // visible: false,
-        allowAddUsedEmail: true,
-      },
-      () => {
-        this.handleSubmit(e);
-      }
-    );
+    this.handleSubmit(e);
   };
 
   handleCancel = () => {
-    const { form } = this.props;
+    const {
+      form,
+      resetUniqueEmail: resetUniqueEmailAction,
+      resetgroup: resetgroupAction,
+    } = this.props;
     const { resetFields } = form;
     resetFields();
-
-    this.setState({
-      visible: false,
-      isNameRequired: true,
-      isRegionRequired: true,
-      allowAddUsedEmail: false,
-    });
+    resetUniqueEmailAction();
+    resetgroupAction();
   };
 
   handleSubmit = e => {
-    const { form } = this.props;
+    const { allowAddUsedEmail } = this.state;
+    const { form, addTrainerToGroup: addTrainerToGroupAction } = this.props;
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('submitting', values);
-
-        // post data to back-end
+        addTrainerToGroupAction({ ...values, newUser: !allowAddUsedEmail });
+        // this.setState({ visible: false });
       }
     });
   };
@@ -109,22 +102,16 @@ class AddTrainer extends Component {
     }
   };
 
-  validateUniqueEmail = (rule, value, callback) => {
-    const { isEmailUnique } = this.props;
-    const { allowAddUsedEmail } = this.state;
-
-    if (value && isEmailUnique === null) {
-      callback();
-    } else if (value && !isEmailUnique && !allowAddUsedEmail) {
-      callback(true);
-      this.setState({
-        visible: true,
-        isNameRequired: false,
-        isRegionRequired: false,
-      });
-    } else {
-      callback();
-    }
+  handleSuccessOk = () => {
+    const {
+      form,
+      resetUniqueEmail: resetUniqueEmailAction,
+      resetgroup: resetgroupAction,
+    } = this.props;
+    const { resetFields } = form;
+    resetFields();
+    resetUniqueEmailAction();
+    resetgroupAction();
   };
 
   render() {
@@ -132,14 +119,14 @@ class AddTrainer extends Component {
       form: { getFieldDecorator },
       localLeads,
       checkedUserInfo,
+      isEmailUnique,
     } = this.props;
 
-    const { visible, isNameRequired, isRegionRequired } = this.state;
     return (
       <Wrapper>
         <ContentWrapper>
           <Modal
-            visible={visible}
+            visible={isEmailUnique === false}
             onOk={this.handleOk}
             onCancel={this.handleCancel}
             title="Account already exists"
@@ -170,10 +157,6 @@ class AddTrainer extends Component {
                     required: true,
                     message: 'Please input your E-mail!',
                   },
-                  {
-                    message: 'Already registered',
-                    validator: this.validateUniqueEmail,
-                  },
                 ],
               })(
                 <Input
@@ -188,7 +171,7 @@ class AddTrainer extends Component {
               {getFieldDecorator('name', {
                 rules: [
                   {
-                    required: isNameRequired,
+                    required: isEmailUnique || isEmailUnique === null,
                     message: 'Please input your name!',
                   },
                   {
@@ -204,16 +187,16 @@ class AddTrainer extends Component {
                 />
               )}
             </Item>
-            <Item style={{ margin: '20px auto 40px', height: '50px' }}>
-              {getFieldDecorator('region', {
-                rules: [
-                  {
-                    required: isRegionRequired,
-                    message: 'Please select your region',
-                  },
-                ],
-              })(
-                <div className="add-trainer__select">
+            <div className="add-trainer__select">
+              <Item style={{ margin: '20px auto 40px', height: '50px' }}>
+                {getFieldDecorator('region', {
+                  rules: [
+                    {
+                      required: isEmailUnique || isEmailUnique === null,
+                      message: 'Please select your region',
+                    },
+                  ],
+                })(
                   <Select
                     placeholder="Region"
                     size="large"
@@ -225,10 +208,10 @@ class AddTrainer extends Component {
                       </Option>
                     ))}
                   </Select>
-                </div>
-              )}
-            </Item>
-            {!visible && (
+                )}
+              </Item>
+            </div>
+            {(isEmailUnique || isEmailUnique === null) && (
               <LocalLeadSelect
                 getFieldDecorator={getFieldDecorator}
                 localLeads={localLeads}
@@ -251,22 +234,6 @@ class AddTrainer extends Component {
     );
   }
 }
-const mapStateToProps = state => {
-  return {
-    localLeads: state.fetchedData.localLeadsList,
-    isAuthenticated: state.auth.isAuthenticated,
-    isEmailUnique: state.auth.isEmailUnique,
-    checkedUserInfo: state.auth.checkedUserInfo,
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  {
-    fetchLocalLeads,
-    checkUniqeEmail,
-  }
-)(Form.create({ name: 'AddTrainer' })(AddTrainer));
 
 const LocalLeadSelect = ({ getFieldDecorator, localLeads }) => (
   <div className="add-trainer__select">
@@ -291,3 +258,24 @@ const LocalLeadSelect = ({ getFieldDecorator, localLeads }) => (
     </Item>
   </div>
 );
+
+const mapStateToProps = state => {
+  return {
+    localLeads: state.fetchedData.localLeadsList,
+    isAuthenticated: state.auth.isAuthenticated,
+    isEmailUnique: state.auth.isEmailUnique,
+    checkedUserInfo: state.auth.checkedUserInfo,
+    group: state.groups,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    fetchLocalLeads,
+    checkUniqeEmail,
+    addTrainerToGroup,
+    resetgroup,
+    resetUniqueEmail,
+  }
+)(Form.create({ name: 'AddTrainer' })(AddTrainer));
