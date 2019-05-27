@@ -34,8 +34,6 @@ const regions = [
   'South West',
 ];
 
-// function success(message, reset) {}
-
 class AddTrainer extends Component {
   state = {};
 
@@ -88,8 +86,12 @@ class AddTrainer extends Component {
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        addTrainerToGroupAction({ ...values, newUser: !allowAddUsedEmail });
-        // this.setState({ visible: false });
+        addTrainerToGroupAction({
+          ...values,
+          newUser: !allowAddUsedEmail,
+          localLead: values.localLead.key,
+          localLeadName: values.localLead.label,
+        });
       }
     });
   };
@@ -246,7 +248,7 @@ const LocalLeadSelect = ({ getFieldDecorator, localLeads }) => (
           },
         ],
       })(
-        <Select placeholder="Local Lead" size="large">
+        <Select placeholder="Local Lead" size="large" labelInValue>
           {localLeads &&
             localLeads.map(({ name, _id }) => (
               <Option value={_id} key={_id}>

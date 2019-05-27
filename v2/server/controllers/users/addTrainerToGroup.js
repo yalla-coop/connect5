@@ -9,7 +9,7 @@ const {
 const { getUserByEmail } = require('./../../database/queries/users');
 
 module.exports = async (req, res, next) => {
-  const { name, email, newUser, localLead, region } = req.body;
+  const { name, email, newUser, localLead, region, localLeadName } = req.body;
   const { user } = req;
 
   if (user.role !== 'localLead') {
@@ -26,7 +26,7 @@ module.exports = async (req, res, next) => {
         password: '123456',
         region,
         localLead,
-        role: 'localLead',
+        role: 'trainer',
       });
     }
 
@@ -36,7 +36,7 @@ module.exports = async (req, res, next) => {
 
     await addTrainertoGroup(localLead, trainer._id);
     return res.json({
-      success: `${trainer.name} has been added to your group`,
+      success: `${trainer.name} has been added to ${localLeadName}'s group`,
     });
   } catch (error) {
     return next(boom.badImplementation());
