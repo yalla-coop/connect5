@@ -8,6 +8,7 @@ const getParticipantBehavioralInsight = require('./../controllers/behavioralInsi
 const surveyQs = require('../controllers/survey/getSurveyQs');
 const storeSurvey = require('../controllers/survey/storeSurvey');
 const getSessionDetails = require('../controllers/sessionDetails/getSessionDetails');
+const deleteSession = require('../controllers/sessionDetails/deleteSession');
 
 const router = express.Router();
 
@@ -22,6 +23,7 @@ router.get(
 );
 
 router.get('/session-details/:id', getSessionDetails);
+router.delete('/session-delete/:id', deleteSession);
 router.use(usersRouter);
 
 router.get('/survey/:id', surveyQs);

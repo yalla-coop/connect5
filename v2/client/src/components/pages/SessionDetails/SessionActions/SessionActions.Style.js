@@ -16,8 +16,13 @@ export const SessionAction = styled.div`
   margin-left: 0.5rem;
 `;
 
-export const SessionActionLink = styled(Link)`
+export const SessionEdit = styled(Link)`
   text-decoration: none;
+`;
+
+export const SessionDelete = styled.button`
+  border: none;
+  background: none;
 `;
 
 export const IconName = styled.span`

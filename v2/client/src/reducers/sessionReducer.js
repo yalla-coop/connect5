@@ -1,6 +1,11 @@
-import { ADD_SESSION_SUCCESS } from '../constants/actionTypes';
+import {
+  ADD_SESSION_SUCCESS,
+  DELETE_SESSION_SUCCESS,
+} from '../constants/actionTypes';
 
-const initState = {};
+const initState = {
+  msg: '',
+};
 
 export default function(state = initState, action) {
   const { type, payload } = action;
@@ -9,6 +14,11 @@ export default function(state = initState, action) {
       return {
         ...state,
         ...payload,
+      };
+    case DELETE_SESSION_SUCCESS:
+      return {
+        ...state,
+        msg: payload,
       };
     default:
       return state;

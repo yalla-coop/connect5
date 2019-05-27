@@ -4,6 +4,7 @@ import {
   FETCH_TRAINERS_SESSIONS,
   FETCH_LOCAL_LEAD_SESSIONS,
   FETCH_SESSION_DETAILS,
+  DELETE_SESSION_SUCCESS,
 } from '../constants/actionTypes';
 import history from '../history';
 
@@ -44,7 +45,6 @@ export const fetchALLSessions = () => async dispatch => {
 };
 
 export const fetchSessionDetails = id => async dispatch => {
-  console.log(id);
   axios
     .get(`/api/session-details/${id}`)
     .then(res =>
@@ -53,5 +53,18 @@ export const fetchSessionDetails = id => async dispatch => {
         payload: res.data,
       })
     )
+    .catch(() => history.push('./404'));
+};
+
+export const deleteSessionAction = id => async dispatch => {
+  axios
+    .delete(`/api/session-delete/${id}`)
+    .then(res =>
+      dispatch({
+        type: DELETE_SESSION_SUCCESS,
+        payload: res.data,
+      })
+    )
+    // .then(() => history.push('./view-sessions'))
     .catch(() => history.push('./404'));
 };

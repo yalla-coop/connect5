@@ -8,11 +8,12 @@ module.exports = async (req, res, next) => {
   getSessionDetails(id)
     .then(sessionDetails => {
       if (sessionDetails) {
+        console.log(sessionDetails, 'hhhhhhhhhhhhhhhhhhhhh');
         return res.json(sessionDetails);
       }
       return next(boom.notFound('No session founded'));
     })
     .catch(err => {
-      boom.badImplementation();
+      next(boom.badImplementation());
     });
 };
