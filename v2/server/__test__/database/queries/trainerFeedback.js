@@ -22,7 +22,7 @@ describe('Test trainer feedback query', () => {
   test('gets trainer feedback', async done => {
     const trainer = await User.find({ role: 'trainer' });
 
-    trainerFeedback(trainer[0].id).then(result => {
+    trainerFeedback(trainer[1].id).then(result => {
       expect(result).toBe(0);
 
       done();

@@ -195,7 +195,7 @@ const getTrainerResponseCount = trainerId => {
 
 // gets feedback of all participants of one trainer
 const trainerFeedback = async trainerId => {
-  return Response.aggregate([
+  const trainerFeedbackArr = await Response.aggregate([
     {
       $match: { trainers: mongoose.Types.ObjectId(trainerId) },
     },
@@ -233,20 +233,45 @@ const trainerFeedback = async trainerId => {
       $project: {
         surveyType: 1,
         questionText: '$questions.text',
-        answers: '$answers.answer',
+        answer: '$answers.answer',
       },
     },
-    // group by survey type and question text
-    {
-      $group: {
-        _id: {
-          surveyType: '$surveyType',
-          questionText: '$questionText',
-        },
-      },
-    },
-    // now what to do with the answers?
   ]);
+  // group array by question text
+  let groupedByQuestion = trainerFeedbackArr.reduce((result, item) => {
+    result[item.questionText] = result[item.questionText] || [];
+    result[item.questionText].push(item);
+    return result;
+  }, {});
+
+  groupedByQuestion = Object.entries(groupedByQuestion).map(e => e[1]);
+
+  const listAnswers = groupedByQuestion.map(outerEl => {
+    // console.log('element', outerEl);
+    return outerEl.reduce((result, innerEl) => {
+      result[innerEl.answer] = result[innerEl.answer] || [];
+      result[innerEl.answer].push(
+        `${innerEl.surveyType}/${innerEl.questionText}`
+      );
+      return result;
+    }, {});
+  });
+  // console.log(listAnswers);
+
+  const countAnswers = listAnswers.map((el, i) => {
+    // Object.entries(el)[0][0]: el[Object.keys(el)[0]].length,
+
+    const keys = el[Object.keys(el)[0]];
+    const updateKeys = keys.map(el => el.split('/')[1]);
+
+    return {
+      [updateKeys[0]]: {
+        [Object.entries(el)[0][0]]: el[Object.keys(el)[0]].length,
+      },
+    };
+  });
+
+  return countAnswers;
 };
 
 module.exports = {
@@ -256,3 +281,15 @@ module.exports = {
   getTrainerSessionCount,
   getTrainerResponseCount,
 };
+// const countAnswers2 = array => {
+//   const newArr = [];
+//   for (let index = 0; index < array.length; index++) {
+//     const element = array[index];
+//     console.log('el', element);
+
+//     for (let j = 0; j < element.length; j++) {
+//       const item = element[j];
+//       console.log('it', item.answer);
+//     }
+//   }
+// };
