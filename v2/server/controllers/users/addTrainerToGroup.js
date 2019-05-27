@@ -6,7 +6,7 @@ const {
   addTrainertoGroup,
 } = require('./../../database/queries/users/localLead');
 
-const { getUserByEmail } = require('./../../database/queries/users');
+const { getUserByEmail, update } = require('./../../database/queries/users');
 
 module.exports = async (req, res, next) => {
   const { name, email, newUser, localLead, region, localLeadName } = req.body;
@@ -35,6 +35,9 @@ module.exports = async (req, res, next) => {
     }
 
     await addTrainertoGroup(localLead, trainer._id);
+
+    await update(trainer._id, { localLead });
+
     return res.json({
       success: `${trainer.name} has been added to ${localLeadName}'s group`,
     });
