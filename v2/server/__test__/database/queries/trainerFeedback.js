@@ -4,7 +4,7 @@ const buildDB = require('../../../database/data/test');
 
 const {
   trainerFeedback,
-} = require('../../../database/queries/users/trainerResults');
+} = require('../../../database/queries/feedback/trainer');
 
 const User = require('../../../database/models/User');
 
