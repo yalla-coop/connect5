@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { DatePicker, Select, Input } from 'antd';
 import moment from 'moment';
+import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
+import history from '../../../../history';
 import Button from '../../../common/Button';
 import { fetchAllTrainers } from '../../../../actions/trainerAction';
 import { fetchLocalLeads } from '../../../../actions/users';
-import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
+import {
+  fetchSessionDetails,
+  sessionUpdateAction,
+} from '../../../../actions/groupSessionsAction';
 import { sessions, regions, pattern } from '../../CreateSession/options';
 import {
   Form,
@@ -28,6 +33,7 @@ class EditSession extends Component {
     partnerTrainer2: '',
     emails: [],
     err: false,
+    stateLoaded: false,
   };
 
   componentDidMount() {
@@ -37,6 +43,40 @@ class EditSession extends Component {
 
     this.props.fetchAllTrainers();
     this.props.fetchLocalLeads();
+  }
+
+  componentDidUpdate() {
+    const { loaded, sessionDetails } = this.props;
+    const { stateLoaded } = this.state;
+
+    if (loaded !== stateLoaded) {
+      const {
+        date,
+        type,
+        numberOfAttendees,
+        region,
+        participantsEmails,
+        trainers,
+      } = sessionDetails;
+      if (sessionDetails) {
+        this.setState({
+          session: type,
+          startDate: date,
+          inviteesNumber: numberOfAttendees,
+          region,
+          partnerTrainer1: trainers[0]._id,
+          emails: participantsEmails,
+          stateLoaded: true,
+        });
+
+        if (trainers[1]) {
+          this.setState({
+            partnerTrainer2: trainers[1]._id,
+            stateLoaded: true,
+          });
+        }
+      }
+    }
   }
 
   onDateChange = defaultValue => {
@@ -90,30 +130,44 @@ class EditSession extends Component {
 
   onFormSubmit = event => {
     event.preventDefault();
-    console.log('hellllllo');
-    // const {
-    //   session,
-    //   startDate,
-    //   inviteesNumber,
-    //   region,
-    //   partnerTrainer1,
-    //   partnerTrainer2,
-    //   emails,
-    // } = this.state;
-    // const sessionData = {
-    //   session,
-    //   startDate,
-    //   inviteesNumber,
-    //   region,
-    //   partnerTrainer1,
-    //   partnerTrainer2,
-    //   emails,
-    // };
+    const { id } = this.props.match.params;
+    const { msg } = this.props;
+    const {
+      session,
+      startDate,
+      inviteesNumber,
+      region,
+      partnerTrainer1,
+      partnerTrainer2,
+      emails,
+    } = this.state;
+    const sessionData = {
+      session,
+      startDate,
+      inviteesNumber,
+      region,
+      partnerTrainer1,
+      partnerTrainer2,
+      emails,
+    };
+
+    this.props.sessionUpdateAction(sessionData, id);
+    if (msg === 'success') {
+      Swal.fire({
+        title: 'success',
+        text: 'session has been successfully delete',
+        type: 'success',
+        confirmButtonText: 'Ok',
+      });
+      history.push('/sessions');
+    }
   };
 
   render() {
-    console.log(this.props.sessionDetails, 'detttttttttttttttalis');
     const { trainers, role, localLeads, sessionDetails } = this.props;
+    if (!sessionDetails) {
+      return null;
+    }
     const {
       date,
       type,
@@ -137,15 +191,15 @@ class EditSession extends Component {
         <Heading>Edit Session</Heading>
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
-            <DatePicker
-              placeholder={moment(date).format('DD/MM/YYYY')}
-              onChange={onDateChange}
-              name="startDate"
-              defaultValue={moment('2019-01-01', 'YYYY-MM-DD')}
-              size="large"
-              style={{ width: '100%' }}
-              value={startDate}
-            />
+            {date && startDate && (
+              <DatePicker
+                onChange={onDateChange}
+                name="startDate"
+                defaultValue={moment(date, 'YYYY-MM-DD')}
+                size="large"
+                style={{ width: '100%' }}
+              />
+            )}
           </InputDiv>
 
           <InputDiv>
@@ -249,9 +303,15 @@ class EditSession extends Component {
               size="large"
               placeholder="emails"
               onChange={onEmailChange}
-              defaultValue="example"
+              defaultValue={participantsEmails}
               style={{ width: '100%', height: '100%' }}
-            />
+            >
+              {participantsEmails.map(email => (
+                <Option key={email} value={email}>
+                  {email}
+                </Option>
+              ))}
+            </Select>
             <div>{err}</div>
           </InputDiv>
 
@@ -275,10 +335,17 @@ const mapStateToProps = state => ({
   trainers: state.trainers.trainers,
   role: state.auth.role,
   localLeads: state.fetchedData.localLeadsList,
-  sessionDetails: state.sessions.sessionDetails,
+  sessionDetails: state.sessions.sessionDetails[0],
+  loaded: state.sessions.loaded,
+  msg: state.session.msg,
 });
 
 export default connect(
   mapStateToProps,
-  { fetchAllTrainers, fetchLocalLeads, fetchSessionDetails }
+  {
+    fetchAllTrainers,
+    fetchLocalLeads,
+    fetchSessionDetails,
+    sessionUpdateAction,
+  }
 )(EditSession);

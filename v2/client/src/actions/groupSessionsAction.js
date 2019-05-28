@@ -5,6 +5,7 @@ import {
   FETCH_LOCAL_LEAD_SESSIONS,
   FETCH_SESSION_DETAILS,
   DELETE_SESSION_SUCCESS,
+  EDIT_SESSION_SUCCESS,
 } from '../constants/actionTypes';
 import history from '../history';
 
@@ -65,6 +66,18 @@ export const deleteSessionAction = id => async dispatch => {
         payload: res.data,
       })
     )
-    // .then(() => history.push('./view-sessions'))
+    .catch(() => history.push('./404'));
+};
+
+export const sessionUpdateAction = (sessionData, id) => async dispatch => {
+  // const body = JSON.stringify(sessionData);
+  axios
+    .patch(`/api/session-edit/${id}`, sessionData)
+    .then(res =>
+      dispatch({
+        type: EDIT_SESSION_SUCCESS,
+        payload: res.data,
+      })
+    )
     .catch(() => history.push('./404'));
 };

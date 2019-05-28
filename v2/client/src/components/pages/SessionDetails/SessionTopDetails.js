@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-// import { fetchTrainerNames } from '../../../actions/trainerAction';
 import {
   SessionTopDetailsWrapper,
   Statistic,
@@ -13,15 +12,10 @@ import {
 } from './SessionDetails.Style';
 
 class SessionTopDetails extends Component {
-  componentDidUpdate(prevProps) {
-    const { trainers } = this.props.sessionDetails;
-    console.log(trainers, 'trainers');
-    // this.props.fetchTrainersNames();
-  }
-
   render() {
     const { sessionDetails } = this.props;
-    const { date, type, numberOfAttendees } = sessionDetails;
+    const { date, type, numberOfAttendees, trainers } = sessionDetails;
+    console.log(date, type, numberOfAttendees, trainers, 'jjjjjjjjjjjjjjjjjj');
     if (!sessionDetails) {
       return <div>loading</div>;
     }
@@ -33,22 +27,22 @@ class SessionTopDetails extends Component {
             <StatisticValue>{moment(date).format('DD/MM/YYYY')}</StatisticValue>
           </StatisticItems>
           <StatisticItems>
-            <StatisticName>Attendees</StatisticName>
-            <StatisticValue>{numberOfAttendees}</StatisticValue>
-          </StatisticItems>
-          <StatisticItems>
             <StatisticName>Type</StatisticName>
             <StatisticValue>{type}</StatisticValue>
           </StatisticItems>
+          <StatisticItems>
+            <StatisticName>Attendees</StatisticName>
+            <StatisticValue>{numberOfAttendees}</StatisticValue>
+          </StatisticItems>
         </Statistic>
         <Trainers>
-          Trainers:<TrainersName>Marwa & Mera</TrainersName>
+          Trainers:
+          {trainers.map(trainer => (
+            <TrainersName to="/">{trainer.name}</TrainersName>
+          ))}
         </Trainers>
       </SessionTopDetailsWrapper>
     );
   }
 }
-export default connect(
-  null
-  // { fetchTrainerNames }
-)(SessionTopDetails);
+export default connect(null)(SessionTopDetails);

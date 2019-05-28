@@ -1,14 +1,14 @@
 const boom = require('boom');
 const {
-  getSessionDetails,
+  deleteSession,
 } = require('./../../database/queries/sessionDetails/session');
 
 module.exports = async (req, res, next) => {
   const { id } = req.params;
-  getSessionDetails(id)
-    .then(sessionDetails => {
-      if (sessionDetails) {
-        return res.json(sessionDetails);
+  deleteSession(id)
+    .then(sessionDelete => {
+      if (sessionDelete) {
+        return res.json('session has been successfully deleted');
       }
       return next(boom.notFound('No session founded'));
     })

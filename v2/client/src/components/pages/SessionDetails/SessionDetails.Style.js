@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { borders, shadows, colors } from '../../../theme';
 
 export const SessionDetailsWrapper = styled.div`
@@ -15,7 +15,7 @@ export const SessionDetailsWrapper = styled.div`
 export const SessionTopDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 88%;
+  width: 90%;
   margin: 0 auto;
   margin-top: 5rem;
   box-shadow: ${shadows.primary};
@@ -35,6 +35,7 @@ export const Statistic = styled.div`
 `;
 
 export const StatisticItems = styled.div`
+  min-width: 25%;
   margin: 0 auto;
   &:not(:last-child) {
     border-right: ${borders.inputBox};
@@ -58,9 +59,8 @@ export const Trainers = styled.p`
   color: #8d8888;
 `;
 
-export const TrainersName = styled.span`
+export const TrainersName = styled(Link)`
   margin-left: 1rem;
   color: #4f4f4f;
+  text-decoration: none;
 `;
-
-export const SessionContent = styled.div``;

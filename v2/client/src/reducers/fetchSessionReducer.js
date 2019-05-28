@@ -9,6 +9,7 @@ const initState = {
   sessions: [],
   sessionsCount: '',
   sessionDetails: {},
+  loaded: false,
 };
 
 const fetchedSessions = (state = initState, action) => {
@@ -20,7 +21,7 @@ const fetchedSessions = (state = initState, action) => {
     case FETCH_ALL_SESSIONS:
       return { ...state, sessionsCount: payload };
     case FETCH_SESSION_DETAILS:
-      return { ...state, sessionDetails: payload };
+      return { ...state, sessionDetails: payload, loaded: true };
     default:
       return state;
   }

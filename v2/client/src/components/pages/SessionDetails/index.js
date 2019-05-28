@@ -15,6 +15,9 @@ class SessionDetails extends Component {
 
   render() {
     const { sessionDetails } = this.props;
+    if (!sessionDetails) {
+      return <div>loading</div>;
+    }
     return (
       <SessionDetailsWrapper>
         <SessionTopDetails sessionDetails={sessionDetails} />
@@ -27,7 +30,7 @@ class SessionDetails extends Component {
 
 const mapStateToProps = state => {
   return {
-    sessionDetails: state.sessions.sessionDetails,
+    sessionDetails: state.sessions.sessionDetails[0],
   };
 };
 export default connect(
