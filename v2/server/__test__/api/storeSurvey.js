@@ -26,8 +26,8 @@ describe('Test /survey/submit/', () => {
 
     const questions = await Question.find({ surveyType });
     const postcodeQuestion = await Question.findOne({
-      surveyType: surveyType,
-      text: 'Please enter the postcode where you are active'
+      surveyType,
+      text: 'Please enter the postcode where you are active',
     });
 
     const formState = {};
@@ -80,7 +80,7 @@ describe('Test /survey/submit/', () => {
       PIN,
       sessionId,
       surveyType,
-      formState
+      formState,
     };
 
     request(app)
@@ -114,7 +114,7 @@ describe('Test /survey/submit/', () => {
       PIN,
       sessionId,
       surveyType,
-      formState
+      formState,
     };
 
     request(app)
@@ -186,7 +186,7 @@ describe('Test /survey/submit/', () => {
       PIN,
       sessionId,
       surveyType,
-      formState
+      formState,
     };
 
     request(app)

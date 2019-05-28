@@ -59,3 +59,19 @@ export const fetchStatsData = userType => async dispatch => {
     console.log(error);
   }
 };
+
+export const addTrainerToGroup = trianerInfo => async dispatch => {
+  try {
+    const res = await axios.post('/api/users/local-leads/group', trianerInfo);
+
+    dispatch({
+      type: types.ADD_TRAINER_TO_GROUP_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.ADD_TRAINER_TO_GROUP_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
