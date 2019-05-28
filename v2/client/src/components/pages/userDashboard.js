@@ -11,7 +11,7 @@ const DashboardWrapper = styled.div`
 `;
 
 const H3 = styled.h3`
-  text-align: center
+  text-align: center;
   margin: 0 auto;
   padding-top: 3rem;
 `;
@@ -50,14 +50,17 @@ const LinkBtn = styled(Link)`
   padding: 14px 30px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #2f6627;
+
   &:hover {
-	background-color: ${colors.white};
-  color: ${colors.lightPrimary};
-  border: 1px solid ${colors.lightPrimary}
-}
+    background-color: ${colors.white};
+    color: ${colors.lightPrimary};
+    border: 1px solid ${colors.lightPrimary};
+  }
+
   &:active {
-	position:relative;
-	top:1px;
+    position: relative;
+    top: 1px;
+  }
 `;
 
 const UserDashboard = ({ PIN }) => {
@@ -68,8 +71,8 @@ const UserDashboard = ({ PIN }) => {
         <Span>my pin:</Span>
         <Pin>{PIN}</Pin>
       </Content>
-      <LinkBtn to="/">Insights</LinkBtn>
-      <LinkBtn to="/">Progress</LinkBtn>
+      <LinkBtn to="/participant/behavioral-insight">Insights</LinkBtn>
+      <LinkBtn to="/participant/progress">Progress</LinkBtn>
     </DashboardWrapper>
   );
 };

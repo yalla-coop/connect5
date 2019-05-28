@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
       // data to be sent in the response
       const responseInfo = {
         pin: response.PIN,
-        role: 'user',
+        role: 'participant',
       };
 
       // create token for 25 day

@@ -17,6 +17,21 @@ export const fetchUserResults = id => async dispatch => {
   }
 };
 
+export const fetchbehavioralInsight = (role, idOrPIN) => async dispatch => {
+  try {
+    const url = `/api/behavioral-insight/${role}/${idOrPIN}`;
+    const res = await axios.get(url);
+
+    dispatch({
+      type: types.FETCH_BEHAVIORAL_INSIGHT,
+      payload: { data: res.data, role },
+    });
+  } catch (error) {
+    // must check the error status code before
+    history.push('/404err');
+  }
+};
+
 export const fetchLocalLeads = () => async dispatch => {
   try {
     const res = await axios.get('/api/local-leads');
@@ -42,5 +57,21 @@ export const fetchStatsData = userType => async dispatch => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const addTrainerToGroup = trianerInfo => async dispatch => {
+  try {
+    const res = await axios.post('/api/users/local-leads/group', trianerInfo);
+
+    dispatch({
+      type: types.ADD_TRAINER_TO_GROUP_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.ADD_TRAINER_TO_GROUP_FAIL,
+      payload: error.response.data.error,
+    });
   }
 };

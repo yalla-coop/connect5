@@ -15,7 +15,9 @@ const {
   getListOfTrainers,
   getAllTrainersAndLeads,
 } = require('../controllers/users/user');
+
 const { getDashboardStats } = require('../controllers/users/all');
+const addTrainerToGroup = require('../controllers/users/addTrainerToGroup');
 const getUserInfo = require('../controllers/users/getUserInfo');
 
 // check eamil route if the route doen't contain email query
@@ -30,6 +32,7 @@ router.post('/all/dashboard', authentication(), getDashboardStats);
 
 router.post('/trainers', signUpTrainer);
 
+router.post('/users/local-leads/group', authentication(), addTrainerToGroup);
 router.get('/local-leads', getLocalLeads);
 
 router.get('/users/:id/results', getUserResults);
