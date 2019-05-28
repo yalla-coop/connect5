@@ -21,10 +21,18 @@ describe('Test trainer feedback query', () => {
 
   test('gets trainer feedback', async done => {
     const trainer = await User.find({ role: 'trainer' });
-
     trainerFeedback(trainer[0].id).then(result => {
-      expect(result).toBe(0);
+      expect(result).toBeDefined();
+      expect(result.length).toBeDefined();
+      expect(result[0]).toBeDefined();
+      expect(result[1]).toBeDefined();
+      done();
+    });
+  });
 
+  test('throws an error with invalid request', async done => {
+    trainerFeedback('dont exist').catch(err => {
+      expect(err).toBeDefined();
       done();
     });
   });

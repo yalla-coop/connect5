@@ -194,6 +194,12 @@ const getTrainerResponseCount = trainerId => {
 };
 
 // gets feedback of all participants of one trainer
+// gets all responses for 1 trainer
+// gets all answers and questions for those responses
+// groups answers by question
+// counts duplicate answers related to question type
+// outputs an array of objects
+// [{questionText: [{answer1: {surveyType1: count, surveyType2: count}}, {answer2...}}]}, {questionText2...}...]
 const trainerFeedback = async trainerId => {
   const trainerFeedbackArr = await Response.aggregate([
     {
@@ -237,70 +243,60 @@ const trainerFeedback = async trainerId => {
       },
     },
   ]);
-  // console.log('trainerFeedbackArr', trainerFeedbackArr);
+
   // group array by question text
-  let groupedByQuestion = trainerFeedbackArr.reduce((result, item) => {
-    result[item.questionText] = result[item.questionText] || [];
-    result[item.questionText].push(item);
-    return result;
+  // {questionTxt: [{surveyType, questionTxt, answer}]}
+
+  let groupedByQuestion = trainerFeedbackArr.reduce((acc, cur) => {
+    acc[cur.questionText] = acc[cur.questionText] || [];
+    acc[cur.questionText].push(cur);
+    return acc;
   }, {});
 
+  // create array without question keys
+  // [{surveyType, question, answer}...]
   groupedByQuestion = Object.entries(groupedByQuestion).map(e => e[1]);
 
-  // console.log('groupedByQuestion', groupedByQuestion);
-
+  // group array by answer
+  // [{answer1: [surveyType/question...]}, {answer2: [surveyType/question...]}..]
   const listAnswers = groupedByQuestion.map(outerEl => {
-    // console.log('element', outerEl);
-    return outerEl.reduce((result, innerEl) => {
-      result[innerEl.answer] = result[innerEl.answer] || [];
-      result[innerEl.answer].push(
-        `${innerEl.surveyType}/${innerEl.questionText}`
-      );
-      return result;
+    // outerEl - array of answers related to 1 question
+    return outerEl.reduce((acc, cur) => {
+      acc[cur.answer] = acc[cur.answer] || [];
+      acc[cur.answer].push(`${cur.surveyType}/${cur.questionText}`);
+      return acc;
     }, {});
   });
-  // console.log('listAnswers', listAnswers);
 
-  const countAnswers = listAnswers.map((answersGroup, i) => {
-    // console.log('answersGroup', answersGroup);
+  // count occurence of answers per survey type related to 1 question
+  const countAnswers = listAnswers.map(answersGroup => {
     // answersGroup is a group of answersGroup related to same question
+    // get value
     // answersGroup: key(answer) : value(surveyType/questionText)
-    // key is always the first value
     const value = answersGroup[Object.keys(answersGroup)[0]];
     // get questionText out of value
     const questionText = value.map(stringVal => stringVal.split('/')[1]);
-    // console.log('q', questionText);
-    // get surveyType out of value
-    // const surveyType = value.map(stringVal => stringVal.split('/')[0]);
-    // console.log('surveyType', surveyType);
     // get all answers
     const answersArr = [Object.entries(answersGroup)][0].map(answer => answer);
-    // console.log('answers', answersArr);
-    // count all answers
-    // const answerCount = answersArr.map(answer => answer[1].length);
-    // console.log('answerC', answerCount);
 
-    const output = answersArr.map(answer => {
-      // console.log('answer', answer);
-      // console.log(answer);
-      const surveyAnswerCounter = {};
-      for (let i = 0; i < answer[1].length; i++) {
-        // console.log(answer[1][i].split('/')[0]);
-        surveyAnswerCounter[answer[1][i].split('/')[0]] =
-          (surveyAnswerCounter[answer[1][i].split('/')[0]] || 0) + 1;
-      }
+    const counter = answersArr.map(answer => {
+      const surveyAnswerCounter = answer[1].reduce((acc, cur) => {
+        const surveyType = cur.split('/')[0];
+        acc[surveyType] = (acc[surveyType] || 0) + 1;
+        return acc;
+      }, {});
 
-      // create second inner Obj answerText: surveyType: answerCount
-      const outputObj = {
+      // create second inner Obj { answerText: { surveyType: answerCount}}
+      const counterOutput = {
         [answer[0]]: surveyAnswerCounter,
       };
 
-      return outputObj;
+      return counterOutput;
     });
-    // console.log('output', output);
-    // create output array
+
+    // create final array
     const finalObj = {
-      [questionText[0]]: output,
+      [questionText[0]]: counter,
     };
     return finalObj;
   });
