@@ -3,6 +3,7 @@ const loginController = require('./../controllers/login');
 const ParticipantLoginController = require('./../controllers/participant-login');
 const usersRouter = require('./users');
 const getParticipantBehavioralInsight = require('./../controllers/behavioralInsight/getParticipantBehavioralInsight');
+const getSessionBehavioralInsight = require('./../controllers/behavioralInsight/getSessionBehavioralInsight');
 
 const surveyQs = require('../controllers/survey/getSurveyQs');
 const storeSurvey = require('../controllers/survey/storeSurvey');
@@ -16,6 +17,8 @@ router.get(
   '/behavioral-insight/participant/:PIN',
   getParticipantBehavioralInsight
 );
+
+router.get('/behavioral-insight/session/:id', getSessionBehavioralInsight);
 
 router.use(usersRouter);
 
