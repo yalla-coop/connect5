@@ -237,7 +237,7 @@ const trainerFeedback = async trainerId => {
       },
     },
   ]);
-  console.log('trainerFeedbackArr', trainerFeedbackArr);
+  // console.log('trainerFeedbackArr', trainerFeedbackArr);
   // group array by question text
   let groupedByQuestion = trainerFeedbackArr.reduce((result, item) => {
     result[item.questionText] = result[item.questionText] || [];
@@ -247,7 +247,7 @@ const trainerFeedback = async trainerId => {
 
   groupedByQuestion = Object.entries(groupedByQuestion).map(e => e[1]);
 
-  console.log('groupedByQuestion', groupedByQuestion);
+  // console.log('groupedByQuestion', groupedByQuestion);
 
   const listAnswers = groupedByQuestion.map(outerEl => {
     // console.log('element', outerEl);
@@ -259,22 +259,51 @@ const trainerFeedback = async trainerId => {
       return result;
     }, {});
   });
-  console.log('listAnswers', listAnswers);
+  // console.log('listAnswers', listAnswers);
 
-  const countAnswers = listAnswers.map((el, i) => {
-    const keys = el[Object.keys(el)[0]];
-    const questionText = keys.map(el => el.split('/')[1]);
-    const surveyType = keys.map(el => el.split('/')[0]);
-    const answer = [Object.entries(el)[0][0]];
-    const answerCount = el[Object.keys(el)[0]].length;
+  const countAnswers = listAnswers.map((answersGroup, i) => {
+    // console.log('answersGroup', answersGroup);
+    // answersGroup is a group of answersGroup related to same question
+    // answersGroup: key(answer) : value(surveyType/questionText)
+    // key is always the first value
+    const value = answersGroup[Object.keys(answersGroup)[0]];
+    // get questionText out of value
+    const questionText = value.map(stringVal => stringVal.split('/')[1]);
+    // console.log('q', questionText);
+    // get surveyType out of value
+    // const surveyType = value.map(stringVal => stringVal.split('/')[0]);
+    // console.log('surveyType', surveyType);
+    // get all answers
+    const answersArr = [Object.entries(answersGroup)][0].map(answer => answer);
+    // console.log('answers', answersArr);
+    // count all answers
+    // const answerCount = answersArr.map(answer => answer[1].length);
+    // console.log('answerC', answerCount);
 
-    return {
-      [questionText[0]]: {
-        [answer]: { [surveyType]: answerCount },
-      },
+    const output = answersArr.map(answer => {
+      // console.log('answer', answer);
+      // console.log(answer);
+      const surveyAnswerCounter = {};
+      for (let i = 0; i < answer[1].length; i++) {
+        // console.log(answer[1][i].split('/')[0]);
+        surveyAnswerCounter[answer[1][i].split('/')[0]] =
+          (surveyAnswerCounter[answer[1][i].split('/')[0]] || 0) + 1;
+      }
+
+      // create second inner Obj answerText: surveyType: answerCount
+      const outputObj = {
+        [answer[0]]: surveyAnswerCounter,
+      };
+
+      return outputObj;
+    });
+    // console.log('output', output);
+    // create output array
+    const finalObj = {
+      [questionText[0]]: output,
     };
+    return finalObj;
   });
-  console.log('countAnswers', countAnswers);
   return countAnswers;
 };
 
