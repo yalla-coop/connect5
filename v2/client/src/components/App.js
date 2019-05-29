@@ -20,6 +20,7 @@ import AddTrainer from './pages/AddTrainer';
 import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
+import TrainerFeedBackOverall from './pages/TrainerFeedbackOverall';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -33,6 +34,7 @@ import {
   LOGIN_URL,
   SIGN_UP_URL,
   TRAINERS_URL,
+  TRAINER_FEEDBACK_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -62,6 +64,16 @@ class App extends Component {
               exact
               path="/add-trainer"
               Component={AddTrainer}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+            />
+
+            <PrivateRoute
+              exact
+              path={TRAINER_FEEDBACK_URL}
+              Component={TrainerFeedBackOverall}
               isAuthenticated={isAuthenticated}
               loaded={loaded}
               allowedRoles={['admin', 'localLead', 'trainer']}

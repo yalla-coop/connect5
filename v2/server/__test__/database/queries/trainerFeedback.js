@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const buildDB = require('../../../database/data/test');
 
 const {
-  trainerFeedback,
+  trainerFeedbackOverall,
 } = require('../../../database/queries/feedback/trainer');
 
 const User = require('../../../database/models/User');
@@ -21,7 +21,7 @@ describe('Test trainer feedback query', () => {
 
   test('gets trainer feedback', async done => {
     const trainer = await User.find({ role: 'trainer' });
-    trainerFeedback(trainer[0].id).then(result => {
+    trainerFeedbackOverall(trainer[0].id).then(result => {
       expect(result).toBeDefined();
       expect(result.length).toBeDefined();
       expect(result[0]).toBeDefined();
@@ -31,7 +31,7 @@ describe('Test trainer feedback query', () => {
   });
 
   test('throws an error with invalid request', async done => {
-    trainerFeedback('dont exist').catch(err => {
+    trainerFeedbackOverall('dont exist').catch(err => {
       expect(err).toBeDefined();
       done();
     });

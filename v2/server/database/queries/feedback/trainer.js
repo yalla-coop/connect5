@@ -9,7 +9,7 @@
 const mongoose = require('mongoose');
 const Response = require('../../models/Response');
 
-module.exports.trainerFeedback = async trainerId => {
+module.exports.trainerFeedbackOverall = async trainerId => {
   const trainerFeedbackArr = await Response.aggregate([
     {
       $match: { trainers: mongoose.Types.ObjectId(trainerId) },

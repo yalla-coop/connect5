@@ -32,6 +32,20 @@ export const fetchbehavioralInsight = (role, idOrPIN) => async dispatch => {
   }
 };
 
+export const fetchOverallTrainerFeedback = id => async dispatch => {
+  try {
+    const url = `/api/feedback/trainer/${id}`;
+    const res = await axios.get(url);
+
+    dispatch({
+      type: types.FETCH_OVERALL_TRAINER_FEEDBACK,
+      payload: { data: res.data },
+    });
+  } catch (error) {
+    history.push('/404err');
+  }
+};
+
 export const fetchLocalLeads = () => async dispatch => {
   try {
     const res = await axios.get('/api/local-leads');

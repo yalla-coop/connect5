@@ -1,6 +1,6 @@
 const boom = require('boom');
 const {
-  trainerFeedback,
+  trainerFeedbackOverall,
 } = require('./../../database/queries/feedback/trainer');
 
 module.exports = (req, res, next) => {
@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     return next(boom.badRequest('no ID provided'));
   }
 
-  return trainerFeedback(id)
+  return trainerFeedbackOverall(id)
     .then(result => res.json(result))
     .catch(err => next(boom.badImplementation(err)));
 };
