@@ -15,3 +15,4 @@ export const Paragraph = styled.p`
   margin-bottom: 30px;
   color: #828282;
 `;
+export const ChartWrapper = styled.div``;

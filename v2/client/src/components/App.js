@@ -59,7 +59,11 @@ class App extends Component {
 
             <Route exact path="/users/:id/results" component={UserResults} />
             <Route exact path={HOME_URL} component={Home} />
-
+            {/* <Route
+              exact
+              path={TRAINER_FEEDBACK_URL}
+              component={TrainerFeedBackOverall}
+            /> */}
             <PrivateRoute
               exact
               path="/add-trainer"

@@ -89,26 +89,28 @@ module.exports.trainerFeedbackOverall = async trainerId => {
     const answersArr = [Object.entries(answersGroup)][0].map(answer => answer);
 
     // count each answer related to survey type
+
     const counter = answersArr.map(answer => {
       const surveyAnswerCounter = answer[1].reduce((acc, cur) => {
         const surveyType = cur.split('/')[0];
+
         acc[surveyType] = (acc[surveyType] || 0) + 1;
+
         return acc;
       }, {});
 
       // create second inner Obj { answerText: { surveyType: answerCount}}
       const counterOutput = {
-        [answer[0]]: surveyAnswerCounter,
+        answerText: answer[0],
+        surveyTypes: Object.entries(surveyAnswerCounter),
       };
 
       return counterOutput;
     });
 
     // create final array
-    const finalObj = {
-      [questionText[0]]: counter,
-    };
+    const finalObj = { questionText: questionText[0], counter };
     return finalObj;
   });
-  return countAnswers;
+  return countAnswers.map(el => el);
 };
