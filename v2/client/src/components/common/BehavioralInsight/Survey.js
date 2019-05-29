@@ -1,7 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable func-names */
 import React, { Component } from 'react';
 import { Chart, HorizontalBar } from 'react-chartjs-2';
-import axios from 'axios';
 
 import { connect } from 'react-redux';
 
@@ -19,45 +19,38 @@ function drawBarValues() {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'center';
   this.data.datasets.forEach(function(dataset) {
-    for (let i = 0; i < dataset.data.length; i++) {
+    for (let i = 0; i < dataset.data.length; i += 1) {
       if (
-        dataset.hidden === true &&
+        !dataset.hidden === true ||
         dataset._meta[Object.keys(dataset._meta)[0]].hidden !== false
       ) {
-        continue;
-      }
-      const model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-      if (dataset.data[i] !== null) {
-        ctx.fillText(dataset.data[i], model.x - 10, model.y + 20);
+        const model =
+          dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+        if (dataset.data[i] !== null) {
+          ctx.fillText(dataset.data[i], model.x - 10, model.y + 20);
+        }
       }
     }
   });
 }
 
 class BehavioralSurveyResults extends Component {
-  state = {
-    data: {},
-  };
-
   componentDidMount() {
-    axios
-      .get('/api/behavioral-insight/session/5cebd1450528457e77432417')
-      .then(res => {
-        this.setState({ data: res.data.calculatedFormulae });
-      });
+    const { sessionId, surveyType, fetchbehavioralInsight } = this.props;
+
+    fetchbehavioralInsight(
+      `/api/behavioral-insight/survey/${sessionId}/${surveyType}`
+    );
   }
 
   render() {
-    const { data } = this.state;
-    console.log(this.props.data);
+    const { data } = this.props;
 
     return (
       <div>
-        <h1>Hello</h1>
         {Object.entries(data).map(pairOfArray => (
           <>
             <h6>{pairOfArray[0]}</h6>
-            <h6>{pairOfArray[1]}</h6>
             <HorizontalBar
               data={{
                 layout: {

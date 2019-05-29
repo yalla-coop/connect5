@@ -6,29 +6,29 @@ import Button from 'antd/lib/button';
 import Icon from 'antd/lib/icon';
 
 import { fetchUserResults } from '../../../actions/users';
-import BehavioralSurveyResults from './BehavioralSurveyResults';
+import BehavioralSurveyResults from '../../common/BehavioralInsight/Survey';
 import { TrainerResultsWrapper, ButtonWrapper } from './SurveyResults.style';
 import Header from '../../common/Header';
 
 const { Panel } = Collapse;
 
-const panels = {
+const panels = ({ sessionId, surveyType }) => ({
   behavior: {
     text: 'Behavioural Analysis',
-    render: () => <BehavioralSurveyResults />,
+    render: () => (
+      <BehavioralSurveyResults sessionId={sessionId} surveyType={surveyType} />
+    ),
   },
   feedback: { text: 'Trainer feedback', render: () => null },
-};
+});
 
 class SurveyResults extends Component {
-  async componentDidMount() {
-    // show results based on the logged in user id and role
+  render() {
     const {
       match: { params },
     } = this.props;
-  }
 
-  render() {
+    const panelsElements = panels(params);
     const { results } = this.props;
     return (
       <TrainerResultsWrapper>
@@ -40,9 +40,9 @@ class SurveyResults extends Component {
             <Icon type="down" rotate={isActive ? 90 : 0} />
           )}
         >
-          {Object.keys(panels).map(panel => (
-            <Panel header={panels[panel].text} key={panel}>
-              {panels[panel].render(results)}
+          {Object.keys(panelsElements).map(panel => (
+            <Panel header={panelsElements[panel].text} key={panel}>
+              {panelsElements[panel].render(results)}
             </Panel>
           ))}
         </Collapse>

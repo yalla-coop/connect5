@@ -19,6 +19,7 @@ import UserResults from './pages/UserResults';
 import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
+import SurveyResults from './pages/SurveyResults';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -52,6 +53,11 @@ class App extends Component {
       <Wrapper>
         <Router history={history}>
           <Switch>
+            <Route
+              exact
+              path="/survey/:sessionId/:surveyType/results"
+              component={SurveyResults}
+            />
             <Route exact path="/" component={Home} />
 
             <Route exact path="/users/:id/results" component={UserResults} />
