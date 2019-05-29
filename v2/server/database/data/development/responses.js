@@ -40,6 +40,26 @@ module.exports = async () => {
       surveyType: 'pre-day-1',
       session: type1Session,
     },
+    // post day 1
+    {
+      PIN: 'RAM15',
+      trainers: [trainers[0], trainers[1]],
+      surveyType: 'post-day-1',
+      session: type1Session,
+    },
+    {
+      PIN: 'RAM16',
+      trainers: [trainers[0], trainers[1]],
+      surveyType: 'post-day-1',
+      session: type1Session,
+    },
+    // post day 2
+    {
+      PIN: 'RAM17',
+      trainers: [trainers[0], trainers[1]],
+      surveyType: 'post-day-2',
+      session: type2Session,
+    },
     // train-trainers session
     {
       PIN: 'PIV15',
