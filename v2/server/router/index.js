@@ -18,7 +18,10 @@ router.get(
   getParticipantBehavioralInsight
 );
 
-router.get('/behavioral-insight/session/:id', getSessionBehavioralInsight);
+router.get(
+  '/behavioral-insight/survey/:sessionId/:surveyType',
+  getSessionBehavioralInsight
+);
 
 router.use(usersRouter);
 

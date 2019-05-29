@@ -1,22 +1,22 @@
 const boom = require('boom');
 const getSurveyBehavioralInsight = require('./../../database/queries/behavioralInsight/survey');
-const { getSessionPINs } = require('./../../database/queries/sessions');
+const { getSurveyPINs } = require('../../database/queries/surveys');
 const surveyBehavioralFormulae = require('./../../helpers/surveyBehavioral');
 
 module.exports = async (req, res, next) => {
-  const { id } = req.params;
-  if (!id) {
+  const { sessionId, surveyType } = req.params;
+  if (!sessionId || !surveyType) {
     return next(boom.badRequest('no session id provided'));
   }
-  const results = await getSessionPINs(id);
+  const results = await getSurveyPINs(sessionId, surveyType);
 
   const PINs = results.reduce((prev, curr) => {
     prev.push(curr.PIN);
     return prev;
   }, []);
 
-  getSurveyBehavioralInsight(PINs).then(result => {
+  return getSurveyBehavioralInsight(PINs).then(result => {
     const calculatedFormulae = surveyBehavioralFormulae(result);
-    res.json({ calculatedFormulae });
+    res.json({ ...calculatedFormulae });
   });
 };
