@@ -1,10 +1,8 @@
 // gets feedback of all participants of one trainer
-// gets all responses for 1 trainer
-// gets all answers and questions for those responses
-// groups answers by question
-// counts duplicate answers related to question type
-// outputs an array of objects
-// [{questionText: [{answer1: {surveyType1: count, surveyType2: count}}, {answer2...}}]}, {questionText2...}...]
+// -> gets all responses for 1 trainer
+// -> gets all answers and questions for those responses
+// -> groups answers by question
+// -> counts duplicate answers related to survey type
 
 const mongoose = require('mongoose');
 const Response = require('../../models/Response');
@@ -31,7 +29,7 @@ module.exports.trainerFeedbackOverall = async trainerId => {
       },
     },
     { $unwind: '$answers' },
-    // // get all questions for response answers
+    // get all questions for response answers
     {
       $lookup: {
         from: 'questions',
@@ -65,12 +63,11 @@ module.exports.trainerFeedbackOverall = async trainerId => {
   // create array without question keys
   // [{surveyType, question, answer}...]
   groupedByQuestion = Object.entries(groupedByQuestion).map(e => e[1]);
-
   // group array by answer
   // [{answer1: [surveyType/question...]}, {answer2: [surveyType/question...]}..]
-  const listAnswers = groupedByQuestion.map(outerEl => {
-    // outerEl - array of answers related to 1 question
-    return outerEl.reduce((acc, cur) => {
+  const listAnswers = groupedByQuestion.map(answers => {
+    // answers - array of answers related to 1 question
+    return answers.reduce((acc, cur) => {
       acc[cur.answer] = acc[cur.answer] || [];
       acc[cur.answer].push(`${cur.surveyType}/${cur.questionText}`);
       return acc;
@@ -99,7 +96,7 @@ module.exports.trainerFeedbackOverall = async trainerId => {
         return acc;
       }, {});
 
-      // create second inner Obj { answerText: { surveyType: answerCount}}
+      // create Obj { answerText: { surveyType: answerCount}}
       const counterOutput = {
         answerText: answer[0],
         surveyTypes: Object.entries(surveyAnswerCounter),
@@ -108,9 +105,9 @@ module.exports.trainerFeedbackOverall = async trainerId => {
       return counterOutput;
     });
 
-    // create final array
+    // create final output
     const finalObj = { questionText: questionText[0], counter };
     return finalObj;
   });
-  return countAnswers.map(el => el);
+  return countAnswers;
 };

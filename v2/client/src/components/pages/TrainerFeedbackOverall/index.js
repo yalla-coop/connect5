@@ -7,6 +7,9 @@ import {
   Wrapper,
   Paragraph,
   ChartWrapper,
+  Description,
+  Container,
+  HeadlineDiv,
 } from './TrainerFeedbackOverall.style';
 import Header from '../../common/Header';
 
@@ -28,28 +31,33 @@ class TrainerFeedbackOverall extends Component {
       : fetchOverallTrainerFeedback(id);
   }
 
+  sum = arr => arr.reduce((a, b) => a + b);
+
   render() {
     const { feedbackData, loaded } = this.props;
     const chartsData = [];
     const items = Object.keys(feedbackData);
 
     items.map(text => {
-      const el = feedbackData[text];
+      const group = feedbackData[text];
 
-      el.counter.map(answer => {
-        const values1 = [];
-        const surveys1 = [];
+      group.counter.map((answer, i) => {
+        const values = [];
+        const labels = [];
         answer.surveyTypes.map(item => {
           const value = item[1];
-          const sType = item[0];
-          values1.push(value);
-          surveys1.push(sType);
+          const surveyType = item[0];
+          values.push(value);
+          labels.push(surveyType);
+          return null;
         });
+        values.unshift(this.sum(values));
+        labels.unshift('overall');
 
         const chartData = {
-          question: el.questionText,
+          question: group.questionText,
           answer: answer.answerText,
-          labels: surveys1,
+          labels,
           type: 'horizontalBar',
           datasets: [
             {
@@ -57,49 +65,78 @@ class TrainerFeedbackOverall extends Component {
                 '#3e95cd',
                 '#8e5ea2',
                 '#3cba9f',
-                '#e8c3b9',
-                '#c45850',
+                // '#e8c3b9',
+                // '#c45850',
               ],
-              data: values1,
+              data: values,
             },
           ],
         };
+
         chartsData.push(chartData);
+        return null;
       });
+      return null;
     });
 
     return (
       <Wrapper>
         <Header type="view" label="Trainer Feedback" />
-        <Paragraph>Did your trainer ask questions...</Paragraph>
         {/*  */}
         {loaded ? (
-          <div>
-            {feedbackData.map(group => {
-              return (
-                <div>
-                  <div>
-                    <h4>{group.questionText}</h4>
-                  </div>
-                  {chartsData.map((dataA, i) => {
-                    return (
-                      group.questionText === dataA.question && (
-                        <div>
-                          <ChartWrapper>
-                            <p>{dataA.answer}</p>
+          <Container>
+            <Paragraph>Did your trainer ask questions...</Paragraph>
+            {feedbackData.length === 0 ? (
+              <Description>no data collected yet :( </Description>
+            ) : (
+              feedbackData.map(group => {
+                return (
+                  <div key={group.questionText}>
+                    <HeadlineDiv>
+                      <Description>{group.questionText}</Description>
+                    </HeadlineDiv>
+                    {chartsData.map((dataA, i) => {
+                      return (
+                        group.questionText === dataA.question && (
+                          <ChartWrapper key={dataA[i]}>
                             <HorizontalBar
                               data={dataA}
-                              width={5}
+                              width={6}
                               height={1}
                               options={{
-                                legend: {
-                                  display: false,
+                                responsive: true,
+                                title: {
+                                  display: true,
+                                  text: `${dataA.answer}`,
+                                  position: 'left',
                                 },
-
+                                legend: {
+                                  display: true,
+                                  labels: {
+                                    generateLabels(chart) {
+                                      const { labels } = dataA;
+                                      const dataset = chart.data.datasets[0];
+                                      const legend = labels.map((label, i) => {
+                                        return {
+                                          datasetIndex: 0,
+                                          fillStyle:
+                                            dataset.backgroundColor &&
+                                            dataset.backgroundColor[i],
+                                          strokeStyle:
+                                            dataset.borderColor &&
+                                            dataset.borderColor[i],
+                                          lineWidth: dataset.borderWidth,
+                                          text: label,
+                                        };
+                                      });
+                                      return legend;
+                                    },
+                                  },
+                                },
                                 scales: {
                                   xAxes: [
                                     {
-                                      barPercentage: 0.5,
+                                      barPercentage: 0,
                                       barThickness: 3,
                                       maxBarThickness: 4,
                                       minBarLength: 2,
@@ -110,12 +147,13 @@ class TrainerFeedbackOverall extends Component {
                                   ],
                                   yAxes: [
                                     {
-                                      barThickness: 10,
+                                      barThickness: 5,
                                       gridLines: {
                                         offsetGridLines: true,
                                       },
                                       ticks: {
                                         beginAtZero: true,
+                                        display: false,
                                       },
                                     },
                                   ],
@@ -124,14 +162,14 @@ class TrainerFeedbackOverall extends Component {
                               }}
                             />
                           </ChartWrapper>
-                        </div>
-                      )
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
+                        )
+                      );
+                    })}
+                  </div>
+                );
+              })
+            )}
+          </Container>
         ) : (
           <Spin />
         )}
