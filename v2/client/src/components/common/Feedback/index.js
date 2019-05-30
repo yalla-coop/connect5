@@ -1,3 +1,5 @@
+// renders chart js graphs for trainer feedback
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HorizontalBar } from 'react-chartjs-2';

@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 const Response = require('../../models/Response');
 
 module.exports.trainerFeedback = async (trainerId, sessionId) => {
-  // sessionId = '5cee4930c0f049330c56c784'
   // decide if match should happen only on trainer id (feedback overall)
   // or also for session (trainer feedback for individual session)
   const match = () =>

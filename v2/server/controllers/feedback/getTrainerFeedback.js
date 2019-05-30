@@ -1,3 +1,7 @@
+// currently uses params as inputs (trainerId and sessionId) from url
+// if only trainerId provided => overall feedback,
+// if trainer and session id => individual session feedback
+
 const boom = require('boom');
 const {
   trainerFeedback,
