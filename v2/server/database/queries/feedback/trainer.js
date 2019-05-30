@@ -7,11 +7,25 @@
 const mongoose = require('mongoose');
 const Response = require('../../models/Response');
 
-module.exports.trainerFeedbackOverall = async trainerId => {
+module.exports.trainerFeedback = async (trainerId, sessionId) => {
+  // sessionId = '5cee4930c0f049330c56c784'
+  // decide if match should happen only on trainer id (feedback overall)
+  // or also for session (trainer feedback for individual session)
+  const match = () =>
+    sessionId
+      ? {
+          trainers: mongoose.Types.ObjectId(trainerId),
+          $and: [{ session: mongoose.Types.ObjectId(sessionId) }],
+        }
+      : {
+          trainers: mongoose.Types.ObjectId(trainerId),
+        };
+
   const trainerFeedbackArr = await Response.aggregate([
     {
-      $match: { trainers: mongoose.Types.ObjectId(trainerId) },
+      $match: match(),
     },
+
     // get all answers for responses
     {
       $lookup: {

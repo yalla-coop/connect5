@@ -18,7 +18,7 @@ router.get(
   getParticipantBehavioralInsight
 );
 
-router.get('/feedback/trainer/:id', getTrainerFeedback);
+router.get('/feedback/trainer/:trainerId/:sessionId?', getTrainerFeedback);
 
 router.use(usersRouter);
 
