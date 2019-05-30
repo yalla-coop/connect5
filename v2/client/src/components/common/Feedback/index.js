@@ -15,8 +15,7 @@ import { fetchOverallTrainerFeedback as fetchOverallTrainerFeedbackAction } from
 
 class TrainerFeedbackOverall extends Component {
   componentDidMount() {
-    const { fetchOverallTrainerFeedback } = this.props;
-    const id = window.location.href.split('/')[5];
+    const { fetchOverallTrainerFeedback, id } = this.props;
 
     fetchOverallTrainerFeedback(id);
   }
@@ -84,10 +83,10 @@ class TrainerFeedbackOverall extends Component {
                     <HeadlineDiv>
                       <Description>{group.questionText}</Description>
                     </HeadlineDiv>
-                    {chartsData.map((dataA, i) => {
+                    {chartsData.map(dataA => {
                       return (
                         group.questionText === dataA.question && (
-                          <ChartWrapper key={dataA[i]}>
+                          <ChartWrapper key={Math.random()}>
                             <HorizontalBar
                               data={dataA}
                               width={6}

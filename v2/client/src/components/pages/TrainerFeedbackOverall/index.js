@@ -1,20 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import Feedback from '../../common/Feedback';
 
-import Spin from '../../common/Spin';
-
-import {
-  Wrapper,
-  Paragraph,
-  ChartWrapper,
-  Description,
-  Container,
-  HeadlineDiv,
-} from './TrainerFeedbackOverall.style';
+import { Wrapper, Paragraph } from './TrainerFeedbackOverall.style';
 import Header from '../../common/Header';
+
+const id = window.location.href.split('/')[5];
 
 const TrainerFeedbackOverall = ({ isAuthenticated }) => {
   if (!isAuthenticated) {
@@ -25,7 +18,7 @@ const TrainerFeedbackOverall = ({ isAuthenticated }) => {
       <Header type="view" label="Trainer Feedback" />
       <Wrapper>
         <Paragraph>Did your trainer ask questions...</Paragraph>
-        <Feedback />
+        <Feedback id={id} />
       </Wrapper>
     </>
   );

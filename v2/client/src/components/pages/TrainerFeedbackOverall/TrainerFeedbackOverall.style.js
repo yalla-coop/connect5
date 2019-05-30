@@ -6,14 +6,6 @@ export const Wrapper = styled.div`
   padding-top: 50px;
 `;
 
-export const Container = styled.div`
-  width: 98%;
-`;
-
-export const HeadlineDiv = styled.div`
-  margin-left: 20px;
-`;
-
 export const Paragraph = styled.p`
   font-family: Roboto;
   font-style: italic;
@@ -22,17 +14,4 @@ export const Paragraph = styled.p`
   text-align: center;
   margin-bottom: 30px;
   color: #828282;
-`;
-export const ChartWrapper = styled.div`
-  margin-bottom: 50px;
-  padding: 20px 0;
-`;
-
-export const Description = styled.p`
-  font-family: Roboto;
-  font-size: 16px;
-  line-height: 19px;
-
-  color: #4f4f4f;
-  margin-bottom: 20px;
 `;
