@@ -20,7 +20,7 @@ import AddTrainer from './pages/AddTrainer';
 import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
-import TrainerFeedBackOverall from './pages/TrainerFeedbackOverall';
+import TrainerFeedBack from './pages/TrainerFeedback';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -59,11 +59,7 @@ class App extends Component {
 
             <Route exact path="/users/:id/results" component={UserResults} />
             <Route exact path={HOME_URL} component={Home} />
-            {/* <Route
-              exact
-              path={TRAINER_FEEDBACK_URL}
-              component={TrainerFeedBackOverall}
-            /> */}
+
             <PrivateRoute
               exact
               path="/add-trainer"
@@ -77,7 +73,7 @@ class App extends Component {
             <PrivateRoute
               exact
               path={TRAINER_FEEDBACK_URL}
-              Component={TrainerFeedBackOverall}
+              Component={TrainerFeedBack}
               isAuthenticated={isAuthenticated}
               loaded={loaded}
               allowedRoles={['admin', 'localLead', 'trainer']}

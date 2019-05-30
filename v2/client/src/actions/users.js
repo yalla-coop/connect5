@@ -32,9 +32,18 @@ export const fetchbehavioralInsight = (role, idOrPIN) => async dispatch => {
   }
 };
 
-export const fetchOverallTrainerFeedback = id => async dispatch => {
+export const fetchTrainerFeedback = (
+  trainerId,
+  sessionId
+) => async dispatch => {
   try {
-    const url = `/api/feedback/trainer/${id}`;
+    let url;
+    if (sessionId) {
+      url = `/api/feedback/trainer/${trainerId}/${sessionId}`;
+    } else {
+      url = `/api/feedback/trainer/${trainerId}`;
+    }
+
     const res = await axios.get(url);
 
     dispatch({

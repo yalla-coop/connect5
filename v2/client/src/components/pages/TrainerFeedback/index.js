@@ -4,10 +4,16 @@ import { Redirect } from 'react-router-dom';
 
 import Feedback from '../../common/Feedback';
 
-import { Wrapper, Paragraph } from './TrainerFeedbackOverall.style';
+import { Wrapper, Paragraph } from './TrainerFeedback.style';
 import Header from '../../common/Header';
 
-const id = window.location.href.split('/')[5];
+// this can be refactored later on
+const urlArr = window.location.href.split('/');
+const trainerId = urlArr[5];
+let sessionId;
+if (urlArr[6]) {
+  sessionId = [urlArr[6]];
+}
 
 const TrainerFeedbackOverall = ({ isAuthenticated }) => {
   if (!isAuthenticated) {
@@ -18,7 +24,7 @@ const TrainerFeedbackOverall = ({ isAuthenticated }) => {
       <Header type="view" label="Trainer Feedback" />
       <Wrapper>
         <Paragraph>Did your trainer ask questions...</Paragraph>
-        <Feedback id={id} />
+        <Feedback trainerId={trainerId} sessionId={sessionId} />
       </Wrapper>
     </>
   );

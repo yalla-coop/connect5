@@ -11,13 +11,12 @@ import {
   HeadlineDiv,
 } from './Feedback.style';
 
-import { fetchOverallTrainerFeedback as fetchOverallTrainerFeedbackAction } from '../../../actions/users';
+import { fetchTrainerFeedback as fetchTrainerFeedbackAction } from '../../../actions/users';
 
 class TrainerFeedbackOverall extends Component {
   componentDidMount() {
-    const { fetchOverallTrainerFeedback, id } = this.props;
-
-    fetchOverallTrainerFeedback(id);
+    const { fetchTrainerFeedback, trainerId, sessionId } = this.props;
+    fetchTrainerFeedback(trainerId, sessionId);
   }
 
   sum = arr => arr.reduce((a, b) => a + b);
@@ -175,5 +174,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchOverallTrainerFeedback: fetchOverallTrainerFeedbackAction }
+  { fetchTrainerFeedback: fetchTrainerFeedbackAction }
 )(TrainerFeedbackOverall);
