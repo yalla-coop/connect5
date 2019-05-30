@@ -24,7 +24,7 @@ describe('Test getMyTrainers query', () => {
     getMyTrainers(lead.id).then(result => {
       expect(result).toBeDefined();
       expect(result.length).toBe(3);
-      expect(result[0][0].name).toBe('alex');
+      expect(result[0][0].name).toBe('mark');
       done();
     });
   });
