@@ -19,10 +19,9 @@ class BehavioralInsight extends Component {
   render() {
     const { data, loaded } = this.props;
     const texts = Object.keys(data);
-    console.log(texts);
+
     const chartsData = [];
     texts.forEach(text => {
-      console.log(data[text].values);
       const chartData = {
         labels: data[text].labels,
         type: 'horizontalBar',
