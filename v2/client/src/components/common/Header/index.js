@@ -38,6 +38,8 @@ export const sectionHeader = css`
       bottom: -2px;
       left: 0;
       width: 50%;
+      @media (min-width: 768px) {
+        width: 25%;
     }
   }
 `;

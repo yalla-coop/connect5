@@ -24,8 +24,8 @@ class SurveyContent extends Component {
   };
 
   // Copy the link of the survey and fire pop up for success
-  onCopyClick = () => {
-    const copyText = document.getElementById('link');
+  onCopyClick = subId => {
+    const copyText = document.getElementById(`link${subId}`);
     let range;
     let selection;
     if (document.body.createTextRange) {
@@ -62,19 +62,26 @@ class SurveyContent extends Component {
 
   render() {
     const { onInfoClick, onCopyClick } = this;
+    const { type, surveyURL, subId } = this.props;
     return (
       <SurveyContentWrapper>
-        <SurveyLinkType>Survey 1 Link </SurveyLinkType>
+        <SurveyLinkType>
+          {type !== 'pre-survey' && 'Survey'} {type} Link{' '}
+        </SurveyLinkType>
+
         <SurveyLinkInfo onClick={onInfoClick}>
           <Icon type="info-circle" />
         </SurveyLinkInfo>
-        <SurveyLink to="https://ant.design/components/icons" id="link">
-          https://ant.design/components/icons
+
+        <SurveyLink to={surveyURL} id={`link${subId}`}>
+          {surveyURL}
         </SurveyLink>
-        <CopyLink onClick={onCopyClick}>
+
+        <CopyLink onClick={() => onCopyClick(subId)}>
           <Icon type="copy" />
           <IconName>Copy Link</IconName>
         </CopyLink>
+
         <MailLink>
           <Icon type="mail" />
           <IconName>Email Survey</IconName>

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { colors, shadows } from '../../../../theme';
+import { colors } from '../../../../theme';
 
 export const SessionSurveysWrapper = styled.div`
   display: flex;
@@ -17,13 +17,13 @@ export const SessionSurveyContainer = styled.div`
   margin-bottom: 2rem;
   border-radius: 5px;
   background: ${colors.white};
-  box-shadow: ${shadows.primary};
-  border: 1px solid ${colors.extralightPrimary};
+  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
 `;
 
 export const SurveyContentWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
+  padding: 1rem;
   &:not(:last-child) {
     border-bottom: 1px solid #eee;
   }
@@ -43,17 +43,20 @@ export const SurveyLinkType = styled.span`
 
 export const SurveyLinkInfo = styled.span`
   display: inline-block;
+  cursor: pointer;
 `;
 
 export const CopyLink = styled.span`
   display: inline-block;
   width: 45%;
   margin: 1rem 0 1rem 0.55rem;
+  cursor: pointer;
 `;
 
 export const MailLink = styled.span`
   display: inline-block;
   width: 50%;
+  cursor: pointer;
 `;
 
 export const IconName = styled.span`
@@ -76,7 +79,7 @@ export const SurveyLink = styled(Link)`
   }
 `;
 
-export const AttendeeBtn = styled(Link)`
+export const AttendeeBtn = styled.button`
 background-color: ${colors.lightPrimary};
 border-radius: 15px;
 border: 1px solid ${colors.lightPrimary};
@@ -84,6 +87,7 @@ width: 200px;
 display: block;
 text-align: center;
 margin: 0 auto;
+margin-top: 1rem;
 margin-bottom: 2rem;
 cursor: pointer;
 color: ${colors.white};
@@ -102,3 +106,11 @@ top:1px;
 `;
 
 export const ResultBtn = styled(AttendeeBtn)``;
+
+export const ModalButtonsDiv = styled.div`
+  display: flex;
+  margin-top: 2rem;
+  margin-left: 45%;
+  @media (min-width: 768px) {
+    margin-left: 55%;
+`;

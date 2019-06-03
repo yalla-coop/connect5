@@ -4,6 +4,8 @@ import { fetchSessionDetails } from '../../../actions/groupSessionsAction';
 import SessionTopDetails from './SessionTopDetails';
 import SessionActions from './SessionActions';
 import SessionSurveys from './SessionSurveys';
+import Spin from '../../common/Spin';
+import Header from '../../common/Header';
 import { SessionDetailsWrapper } from './SessionDetails.Style';
 
 class SessionDetails extends Component {
@@ -16,10 +18,11 @@ class SessionDetails extends Component {
   render() {
     const { sessionDetails } = this.props;
     if (!sessionDetails) {
-      return <div>loading</div>;
+      return Spin;
     }
     return (
       <SessionDetailsWrapper>
+        <Header type="section" label="Session-details" />
         <SessionTopDetails sessionDetails={sessionDetails} />
         <SessionActions sessionDetails={sessionDetails} />
         <SessionSurveys sessionDetails={sessionDetails} />

@@ -8,6 +8,10 @@ export const SessionActionsWrapper = styled.div`
   margin: 0 auto;
   padding: 1.5rem;
   margin: 0.5rem 0;
+  @media (min-width: 768px) {
+    width: 60%;
+    padding: 2rem;
+    margin: 0 auto;
 `;
 
 export const SessionAction = styled.div`
@@ -18,11 +22,13 @@ export const SessionAction = styled.div`
 
 export const SessionEdit = styled(Link)`
   text-decoration: none;
+  cursor: pointer;
 `;
 
 export const SessionDelete = styled.button`
   border: none;
   background: none;
+  cursor: pointer;
 `;
 
 export const IconName = styled.span`

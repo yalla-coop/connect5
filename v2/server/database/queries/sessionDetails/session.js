@@ -29,17 +29,6 @@ module.exports.editSessionQuery = (
   partnerTrainer2,
   emails
 ) => {
-  console.log(
-    id,
-    session,
-    startDate,
-    inviteesNumber,
-    region,
-    partnerTrainer1,
-    partnerTrainer2,
-    emails,
-    'jjjjjjjjjjjj'
-  );
   const trainers = [partnerTrainer1];
   if (partnerTrainer2) {
     trainers.push(partnerTrainer2);
@@ -51,5 +40,12 @@ module.exports.editSessionQuery = (
     region,
     trainers,
     participantsEmails: emails,
+  });
+};
+
+module.exports.updateEmailsQuery = (id, participantsEmails) => {
+  console.log(id, participantsEmails);
+  return Session.findByIdAndUpdate(id, {
+    participantsEmails,
   });
 };

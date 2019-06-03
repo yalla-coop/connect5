@@ -6,6 +6,7 @@ import {
   FETCH_SESSION_DETAILS,
   DELETE_SESSION_SUCCESS,
   EDIT_SESSION_SUCCESS,
+  UPDATE_EMAILS_SUCCESS,
 } from '../constants/actionTypes';
 import history from '../history';
 
@@ -76,6 +77,18 @@ export const sessionUpdateAction = (sessionData, id) => async dispatch => {
     .then(res =>
       dispatch({
         type: EDIT_SESSION_SUCCESS,
+        payload: res.data,
+      })
+    )
+    .catch(() => history.push('./404'));
+};
+
+export const updateEmails = (id, participantsEmails) => async dispatch => {
+  axios
+    .patch(`/api/emails-update/${id}`, participantsEmails)
+    .then(res =>
+      dispatch({
+        type: UPDATE_EMAILS_SUCCESS,
         payload: res.data,
       })
     )

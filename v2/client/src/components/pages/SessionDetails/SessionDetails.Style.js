@@ -15,18 +15,22 @@ export const SessionDetailsWrapper = styled.div`
 export const SessionTopDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 88%;
   margin: 0 auto;
-  margin-top: 5rem;
-  box-shadow: ${shadows.primary};
+  margin-top: 6rem;
+  padding: .5rem 0;
+  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
   background: ${colors.white};
-  border: 1px solid ${colors.extralightPrimary};
   border-radius: 5px;
+  @media (min-width: 768px) {
+    width: 93%;
+    padding: 1rem;
+    margin-top: 0
 `;
 
 export const Statistic = styled.div`
   display: flex;
-  padding: 1rem;
+  padding: 1rem 0;
   margin: 0 auto;
   margin-top: 0.5rem;
   border-radius: 7px;
@@ -37,10 +41,13 @@ export const Statistic = styled.div`
 export const StatisticItems = styled.div`
   min-width: 25%;
   margin: 0 auto;
+  padding: 0 0.5rem;
   &:not(:last-child) {
     border-right: ${borders.inputBox};
     padding: 0 0.5rem;
   }
+  @media (min-width: 768px) {
+    width: 33%
 `;
 export const StatisticName = styled.span`
   display: block;

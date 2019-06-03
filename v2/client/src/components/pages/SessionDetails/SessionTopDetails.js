@@ -15,7 +15,6 @@ class SessionTopDetails extends Component {
   render() {
     const { sessionDetails } = this.props;
     const { date, type, numberOfAttendees, trainers } = sessionDetails;
-    console.log(date, type, numberOfAttendees, trainers, 'jjjjjjjjjjjjjjjjjj');
     if (!sessionDetails) {
       return <div>loading</div>;
     }
@@ -36,10 +35,13 @@ class SessionTopDetails extends Component {
           </StatisticItems>
         </Statistic>
         <Trainers>
-          Trainers:
-          {trainers.map(trainer => (
-            <TrainersName to="/">{trainer.name}</TrainersName>
-          ))}
+          Trainer(s):
+          <TrainersName to="/">{trainers[0].name}</TrainersName>
+          {trainers[1] && (
+            <TrainersName to="/">
+              &<span style={{ marginLeft: '.8rem' }}>{trainers[1].name}</span>
+            </TrainersName>
+          )}
         </Trainers>
       </SessionTopDetailsWrapper>
     );

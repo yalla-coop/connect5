@@ -5,7 +5,6 @@ const {
 
 module.exports = async (req, res, next) => {
   const data = req.body;
-  console.log(data);
   const { id } = req.params;
   const {
     session,
@@ -30,7 +29,6 @@ module.exports = async (req, res, next) => {
       return res.json('success');
     })
     .catch(err => {
-      console.log(err, 'errorrrrrrrr');
       next(boom.badImplementation());
     });
 };
