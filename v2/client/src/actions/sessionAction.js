@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ADD_SESSION_SUCCESS } from '../constants/actionTypes';
+import history from '../history';
 // import { returnErrors } from './errorAction';
 
 export const createSessionAction = sessionData => dispatch => {
@@ -11,7 +12,5 @@ export const createSessionAction = sessionData => dispatch => {
         payload: res.data,
       })
     )
-    .catch(err => {
-      console.log(err);
-    });
+    .catch(() => history.push('./404'));
 };

@@ -44,7 +44,6 @@ module.exports.editSessionQuery = (
 };
 
 module.exports.updateEmailsQuery = (id, participantsEmails) => {
-  console.log(id, participantsEmails);
   return Session.findByIdAndUpdate(id, {
     participantsEmails,
   });
