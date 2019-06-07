@@ -31,7 +31,7 @@ describe('Tesing for getTrainerFeedback route', () => {
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, result) => {
-        expect(result.body).toBeDefined();
+        expect(result.body).toBe(0);
         expect(result.body[0].counter[0].surveyTypes.length).toBe(2);
         expect(result.body[0]).toBeDefined();
         done();

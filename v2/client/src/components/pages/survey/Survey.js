@@ -38,30 +38,30 @@ class Survey extends React.Component {
           surveyType,
         });
       })
-      // .then(() => {
-      //   swal
-      //     .fire({
-      //       title: 'Research Cooperation <br>(University of Manchester)',
-      //       text:
-      //         'Many thanks for agreeing to fill in this form. Your responses will be collated by University of Manchester to evaluate Connect5. University of Manchester will use anonymised data collected for research purposes. Individuals will never been identified by their responses. If you do not consent for your data to be used for research purposes, please tick.',
-      //       input: 'checkbox',
-      //       inputPlaceholder: '<strong>I don not agree</strong>',
-      //     })
-      //     .then(result => {
-      //       if (result.value) {
-      //         swal.fire({
-      //           type: 'error',
-      //           text:
-      //             'Thank you, your data will not be used for research purposes',
-      //         });
-      //         // do something here
-      //       } else if (result.value === 0) {
-      //         swal.fire({ type: 'success', text: 'Thank you!' });
-      //       } else {
-      //         console.log(`modal was dismissed by ${result.dismiss}`);
-      //       }
-      //     });
-      // })
+      .then(() => {
+        swal
+          .fire({
+            title: 'Research Cooperation <br>(University of Manchester)',
+            text:
+              'Many thanks for agreeing to fill in this form. Your responses will be collated by University of Manchester to evaluate Connect5. University of Manchester will use anonymised data collected for research purposes. Individuals will never been identified by their responses. If you do not consent for your data to be used for research purposes, please tick.',
+            input: 'checkbox',
+            inputPlaceholder: '<strong>I don not agree</strong>',
+          })
+          .then(result => {
+            if (result.value) {
+              swal.fire({
+                type: 'error',
+                text:
+                  'Thank you, your data will not be used for research purposes',
+              });
+              // do something here
+            } else if (result.value === 0) {
+              swal.fire({ type: 'success', text: 'Thank you!' });
+            } else {
+              console.log(`modal was dismissed by ${result.dismiss}`);
+            }
+          });
+      })
       .catch(err => console.error(err.stack));
   }
 

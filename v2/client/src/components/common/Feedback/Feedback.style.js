@@ -36,3 +36,12 @@ export const Description = styled.p`
   color: #4f4f4f;
   margin-bottom: 20px;
 `;
+
+export const Category = styled.p`
+  font-family: Roboto;
+  font-size: 13px;
+  line-height: 19px;
+  text-align: right;
+  color: #4f4f4f;
+  margin-bottom: 20px;
+`;

@@ -3,8 +3,16 @@
 import React, { Component } from 'react';
 
 import { HorizontalBar } from 'react-chartjs-2';
-import { ChartWrapper, Description, HeadlineDiv } from './Feedback.style';
+import {
+  ChartWrapper,
+  Description,
+  Category,
+  HeadlineDiv,
+} from './Feedback.style';
 import { sum } from '../../../helpers/createSum';
+
+const createCategory = str =>
+  str.includes('When I teach') ? 'train the trainer' : 'trainer feedback';
 
 class HorizontalBarComponent extends Component {
   render() {
@@ -61,6 +69,9 @@ class HorizontalBarComponent extends Component {
         return (
           <div key={group.questionText}>
             <HeadlineDiv>
+              <Category>
+                category: {createCategory(group.questionText)}
+              </Category>
               <Description>{group.questionText}</Description>
             </HeadlineDiv>
             {chartsData.map(dataA => {
