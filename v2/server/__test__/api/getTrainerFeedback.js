@@ -26,12 +26,11 @@ describe('Tesing for getTrainerFeedback route', () => {
     // const session = await Session.find({ type: 2, trainers: trainers[0] });
 
     request(app)
-      // .get(`/api/feedback/trainer/${trainers[0]._id}/${session[0]._id}`)
       .post(`/api/feedback/trainer/${trainers[0]._id}`)
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, result) => {
-        expect(result.body).toBe(0);
+        expect(result.body).toBeDefined();
         expect(result.body[0].counter[0].surveyTypes.length).toBe(2);
         expect(result.body[0]).toBeDefined();
         done();
