@@ -51,13 +51,13 @@ module.exports = async () => {
     // train-trainers session
     {
       PIN: 'PIV15',
-      trainers: [localLead],
+      trainers: [trainers[0], localLead],
       surveyType: surveyTypes[5],
       session: trainTrainersSession,
     },
     {
       PIN: 'SLU23',
-      trainers: [localLead],
+      trainers: [trainers[0], localLead],
       surveyType: surveyTypes[5],
       session: trainTrainersSession,
     },

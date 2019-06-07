@@ -53,7 +53,16 @@ module.exports.trainerFeedback = async (trainerId, sessionId) => {
     },
     { $unwind: '$questions' },
     {
-      $match: { 'questions.group': 'about your trainer' },
+      $match: {
+        $and: [
+          {
+            $or: [
+              { 'questions.group': 'about your trainer' },
+              { 'questions.group': 'about your usual way of teaching' },
+            ],
+          },
+        ],
+      },
     },
     {
       $project: {

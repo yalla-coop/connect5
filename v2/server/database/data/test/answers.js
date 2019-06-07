@@ -13,7 +13,7 @@ module.exports = async () => {
     surveyType: 'pre-train-trainers',
   });
   const preTrainTrainerQuestions = await Question.find({
-    surveyType: 'pre-train-the-trainer',
+    surveyType: 'pre-train-trainers',
   });
 
   const preDay1Question = await Question.find({ surveyType: 'pre-day-1' });
