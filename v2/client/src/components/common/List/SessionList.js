@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 import { Icon } from 'antd';
 
@@ -13,27 +14,9 @@ import {
   Date,
   Type,
   StyledLink,
-} from './List.style.js';
+} from './List.style';
 
 // NOTE: this component expects dataList to look something like this:
-
-// const dummySessionList = [
-//   {
-//     date: '15-10-2018',
-//     type: '2',
-//     id: '12334234234123',
-//   },
-//   {
-//     date: '15-10-2018',
-//     type: '2',
-//     id: '12334234234123',
-//   },
-//   {
-//     date: '15-10-2018',
-//     type: '2',
-//     id: '12334234234123',
-//   }
-// ];
 
 const SessionList = ({ dataList }) => {
   return (
@@ -46,8 +29,8 @@ const SessionList = ({ dataList }) => {
       <List>
         {dataList &&
           dataList.map(dataItem => (
-            <Row>
-              <Date>{dataItem.date}</Date>
+            <Row key={dataItem.id}>
+              <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
               <Type type={dataItem.type}>
                 <p>{dataItem.type}</p>
               </Type>

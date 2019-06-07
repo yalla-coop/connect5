@@ -39,18 +39,16 @@ class Dashboard extends Component {
     // const { userType, userName } = this.props;
     const userType = 'trainer';
 
-    this.setState({ userType });
+    // this.setState({ userType });
     const { fetchStatsData: fetchStatsDataActionCreator } = this.props;
     fetchStatsDataActionCreator(userType);
   }
 
   render() {
-    const { userName, stats } = this.props;
+    const { userName, stats, role } = this.props;
 
     const captalizesName =
       userName && userName[0].toUpperCase() + userName.substr(1);
-
-    const { userType } = this.state;
 
     return (
       <Wrapper>
@@ -66,14 +64,12 @@ class Dashboard extends Component {
                 Welcome back, <br />
                 {captalizesName}
               </Title>
-              <Role>Role: {userType}</Role>
+              <Role>Role: {role}</Role>
             </TopSection>
             <StatsWrapper>
               <StatItem
                 to={
-                  userType === 'trainer'
-                    ? TRAINER_SESSIONS_URL
-                    : GROUP_SESSIONS_URL
+                  role === 'trainer' ? TRAINER_SESSIONS_URL : GROUP_SESSIONS_URL
                 }
               >
                 <Label>Sessions</Label>
@@ -81,9 +77,7 @@ class Dashboard extends Component {
               </StatItem>
               <StatItem
                 to={
-                  userType === 'trainer'
-                    ? TRAINER_RESULTS_URL
-                    : GROUP_RESULTS_URL
+                  role === 'trainer' ? TRAINER_RESULTS_URL : GROUP_RESULTS_URL
                 }
               >
                 <Label>Participants</Label>
@@ -91,15 +85,13 @@ class Dashboard extends Component {
               </StatItem>
               <StatItem
                 to={
-                  userType === 'trainer'
-                    ? TRAINER_RESULTS_URL
-                    : GROUP_RESULTS_URL
+                  role === 'trainer' ? TRAINER_RESULTS_URL : GROUP_RESULTS_URL
                 }
               >
                 <Label>Responses</Label>
                 <StatNumber>{stats.responseCount}</StatNumber>
               </StatItem>
-              {userType === 'trainer' ? (
+              {role === 'trainer' ? (
                 <StatItem to={TRAINER_RESULTS_URL}>
                   <Label>Response Rate</Label>
                   <StatNumber>{stats.responseRate}%</StatNumber>
@@ -124,6 +116,7 @@ const mapStateToProps = state => {
   return {
     userName: state.auth.name,
     stats: state.stats,
+    role: state.auth.role,
   };
 };
 

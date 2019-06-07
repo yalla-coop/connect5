@@ -19,6 +19,7 @@ import UserResults from './pages/UserResults';
 import AddTrainer from './pages/AddTrainer';
 import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
+import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import TrainerFeedBack from './pages/TrainerFeedback';
 
@@ -34,6 +35,8 @@ import {
   LOGIN_URL,
   SIGN_UP_URL,
   TRAINERS_URL,
+  TRAINER_SESSIONS_URL,
+  GROUP_SESSIONS_URL,
   TRAINER_FEEDBACK_URL,
 } from '../constants/navigationRoutes';
 
@@ -159,6 +162,25 @@ class App extends Component {
               role={role}
             />
 
+            <PrivateRoute
+              exact
+              path={TRAINER_SESSIONS_URL}
+              component={ViewSessions}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['trainer', 'localLead', 'admin']}
+              role={role}
+            />
+
+            <PrivateRoute
+              exact
+              path={GROUP_SESSIONS_URL}
+              component={ViewSessions}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['localLead', 'admin']}
+              role={role}
+            />
             <Route
               path="/404err"
               render={() => (
