@@ -5,11 +5,11 @@ import Header from '../../common/Header';
 
 import Questions from './Questions';
 
-import { SurveyQs, SurveyHeader, SessionDetails, Form } from './Survey.style';
+import { Container, SurveyQs, SessionDetails, Form } from './Survey.style';
 
 // formState will be the object where we store survey responses
 // as the participant answers the questions
-export default class Survey extends React.Component {
+class Survey extends React.Component {
   state = {
     formState: {},
     surveyDetails: null,
@@ -38,30 +38,30 @@ export default class Survey extends React.Component {
           surveyType,
         });
       })
-      .then(() => {
-        swal
-          .fire({
-            title: 'Research Cooperation <br>(University of Manchester)',
-            text:
-              'Many thanks for agreeing to fill in this form. Your responses will be collated by University of Manchester to evaluate Connect5. University of Manchester will use anonymised data collected for research purposes. Individuals will never been identified by their responses. If you do not consent for your data to be used for research purposes, please tick.',
-            input: 'checkbox',
-            inputPlaceholder: '<strong>I don not agree</strong>',
-          })
-          .then(result => {
-            if (result.value) {
-              swal.fire({
-                type: 'error',
-                text:
-                  'Thank you, your data will not be used for research purposes',
-              });
-              // do something here
-            } else if (result.value === 0) {
-              swal.fire({ type: 'success', text: 'Thank you!' });
-            } else {
-              console.log(`modal was dismissed by ${result.dismiss}`);
-            }
-          });
-      })
+      // .then(() => {
+      //   swal
+      //     .fire({
+      //       title: 'Research Cooperation <br>(University of Manchester)',
+      //       text:
+      //         'Many thanks for agreeing to fill in this form. Your responses will be collated by University of Manchester to evaluate Connect5. University of Manchester will use anonymised data collected for research purposes. Individuals will never been identified by their responses. If you do not consent for your data to be used for research purposes, please tick.',
+      //       input: 'checkbox',
+      //       inputPlaceholder: '<strong>I don not agree</strong>',
+      //     })
+      //     .then(result => {
+      //       if (result.value) {
+      //         swal.fire({
+      //           type: 'error',
+      //           text:
+      //             'Thank you, your data will not be used for research purposes',
+      //         });
+      //         // do something here
+      //       } else if (result.value === 0) {
+      //         swal.fire({ type: 'success', text: 'Thank you!' });
+      //       } else {
+      //         console.log(`modal was dismissed by ${result.dismiss}`);
+      //       }
+      //     });
+      // })
       .catch(err => console.error(err.stack));
   }
 
@@ -144,41 +144,47 @@ export default class Survey extends React.Component {
       questionsForSurvey,
       surveyType,
     } = surveyDetails;
-    return (
-      <SurveyQs>
-        <Header type="home" />
-        <SurveyHeader />
 
-        <SessionDetails>
-          <h3>Session Details:</h3>
-          <p>
-            <span>Session Date: </span>
-            {sessionDate}
-          </p>
-          <p>
-            <span>Trainers: </span>
-            {this.renderTrainerNames(trainerNames)}
-          </p>
-          <p>
-            <span>Session Type: </span>
-            {surveyType}
-          </p>
-        </SessionDetails>
-        <main>
-          <Form onSubmit={this.handleSubmit}>
-            <Questions
-              questions={questionsForSurvey}
-              onChange={this.handleChange}
-              handleOther={this.handleOther}
-              handlePIN={this.handlePIN}
-              answers={formState}
-              selectCheckedItem={this.selectCheckedItem}
-              errors={errors}
-            />
-            <button type="submit">Submit Feedback</button>
-          </Form>
-        </main>
-      </SurveyQs>
+    return (
+      <Container>
+        <SurveyQs>
+          <Header type="home" />
+
+          <SessionDetails>
+            <h3>Connect 5 Evaluation</h3>
+            <ul>
+              <li>
+                <strong>Session Date: </strong>
+                {sessionDate}
+              </li>
+              <li>
+                <strong>Trainers: </strong>
+                {this.renderTrainerNames(trainerNames)}
+              </li>
+              <li>
+                <strong>Session Type: </strong>
+                {surveyType}
+              </li>
+            </ul>
+          </SessionDetails>
+          <main>
+            <Form onSubmit={this.handleSubmit}>
+              <Questions
+                questions={questionsForSurvey}
+                onChange={this.handleChange}
+                handleOther={this.handleOther}
+                handlePIN={this.handlePIN}
+                answers={formState}
+                selectCheckedItem={this.selectCheckedItem}
+                errors={errors}
+              />
+              <button type="submit">Submit Feedback</button>
+            </Form>
+          </main>
+        </SurveyQs>
+      </Container>
     );
   }
 }
+
+export default Survey;

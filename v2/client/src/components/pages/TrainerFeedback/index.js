@@ -1,22 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-
 import Feedback from '../../common/Feedback';
 
 import { Wrapper, Paragraph } from './TrainerFeedback.style';
 import Header from '../../common/Header';
 
-// this can be refactored later on
-const urlArr = window.location.href.split('/');
-const trainerId = urlArr[5];
-// session id hardcoded for now
-const sessionId = '5ceff6075012e8748ef607f6';
+// http://localhost:3000/trainer-results/feedback/5ceff6075012e8748ef607ec
+const TrainerFeedbackOverall = ({ isAuthenticated, match }) => {
+  // session id hardcoded for now
+  const sessionId = null;
+  const { trainerId } = match.params;
 
-const TrainerFeedbackOverall = ({ isAuthenticated }) => {
   if (!isAuthenticated) {
     return <Redirect to="/login" />;
   }
+
   return (
     <>
       <Header type="view" label="Trainer Feedback" />

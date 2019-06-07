@@ -37,7 +37,6 @@ export const fetchTrainerFeedback = (
   sessionId
 ) => async dispatch => {
   try {
-    console.log(sessionId);
     const url = `/api/feedback/trainer/${trainerId}`;
     const data = { sessionId };
 

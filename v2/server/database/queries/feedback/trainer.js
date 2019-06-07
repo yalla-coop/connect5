@@ -65,7 +65,7 @@ module.exports.trainerFeedback = async (trainerId, sessionId) => {
   ]);
 
   // group array by question text
-  // {questionTxt: [{surveyType, questionTxt, answer}]}
+  // {questionTxt: [{surveyType, questionTxt, answer}, ...], ...}
 
   let groupedByQuestion = trainerFeedbackArr.reduce((acc, cur) => {
     acc[cur.questionText] = acc[cur.questionText] || [];
@@ -73,7 +73,7 @@ module.exports.trainerFeedback = async (trainerId, sessionId) => {
     return acc;
   }, {});
 
-  // create array without question keys
+  // create question-grouped-array without keys
   // [{surveyType, question, answer}...]
   groupedByQuestion = Object.entries(groupedByQuestion).map(e => e[1]);
   // group array by answer
