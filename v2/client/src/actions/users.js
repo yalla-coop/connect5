@@ -3,6 +3,7 @@ import axios from 'axios';
 import history from '../history';
 
 import * as types from '../constants/actionTypes';
+import { returnErrors } from './errorAction';
 
 export const fetchUserResults = id => async dispatch => {
   try {
@@ -36,20 +37,25 @@ export const fetchTrainerFeedback = (
   sessionId
 ) => async dispatch => {
   try {
-    let url;
-    if (sessionId) {
-      url = `/api/feedback/trainer/${trainerId}/${sessionId}`;
-    } else {
-      url = `/api/feedback/trainer/${trainerId}`;
-    }
+    console.log(sessionId);
+    const url = `/api/feedback/trainer/${trainerId}`;
+    const data = { sessionId };
 
-    const res = await axios.get(url);
+    const res = await axios.post(url, data);
 
     dispatch({
       type: types.FETCH_OVERALL_TRAINER_FEEDBACK,
       payload: { data: res.data },
     });
-  } catch (error) {
+  } catch (err) {
+    dispatch(
+      returnErrors(
+        err.response.data,
+        err.response.status,
+        'FETCH_TRAINER_FEEDBACK_FAIL'
+      )
+    );
+
     history.push('/404err');
   }
 };

@@ -27,7 +27,7 @@ describe('Tesing for getTrainerFeedback route', () => {
 
     request(app)
       // .get(`/api/feedback/trainer/${trainers[0]._id}/${session[0]._id}`)
-      .get(`/api/feedback/trainer/${trainers[0]._id}`)
+      .post(`/api/feedback/trainer/${trainers[0]._id}`)
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, result) => {
@@ -41,8 +41,10 @@ describe('Tesing for getTrainerFeedback route', () => {
   test('test with valid trainer and session id', async done => {
     const trainers = await User.find({ role: 'trainer' });
     const sessions = await Session.find({ type: 2, trainers: trainers[0] });
+    const data = { sessionId: sessions[0]._id };
     request(app)
-      .get(`/api/feedback/trainer/${trainers[0]._id}/${sessions[0]._id}`)
+      .post(`/api/feedback/trainer/${trainers[0]._id}`)
+      .send(data)
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, result) => {
@@ -66,8 +68,11 @@ describe('Tesing for getTrainerFeedback route', () => {
 
   test('test with valid trainer id and invalid session id', async done => {
     const trainers = await User.find({ role: 'trainer' });
+    const data = { sessionId: 'anything' };
+
     request(app)
-      .get(`/api/feedback/trainer/${trainers[0]._id}/anything`)
+      .get(`/api/feedback/trainer/${trainers[0]._id}`)
+      .send(data)
       .expect('Content-Type', /json/)
       .expect(500)
       .end((err, result) => {

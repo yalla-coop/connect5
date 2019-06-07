@@ -8,7 +8,8 @@ const {
 } = require('./../../database/queries/feedback/trainer');
 
 module.exports = (req, res, next) => {
-  const { trainerId, sessionId } = req.params;
+  const { trainerId } = req.params;
+  const { sessionId } = req.body;
 
   if (!trainerId) {
     return next(boom.badRequest('no ID provided'));

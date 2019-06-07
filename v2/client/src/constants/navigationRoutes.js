@@ -10,8 +10,7 @@ export const SURVEY_URL = '/survey/:id';
 // trainer
 export const TRAINER_RESULTS_URL = '/trainer-results';
 export const TRAINER_SESSIONS_URL = '/trainer-sessions';
-export const TRAINER_FEEDBACK_URL =
-  '/trainer-results/feedback/:trainerId/:sessionId?';
+export const TRAINER_FEEDBACK_URL = '/trainer-results/feedback/:trainerId/';
 
 // local lead & admin
 export const GROUP_RESULTS_URL = '/group-results';

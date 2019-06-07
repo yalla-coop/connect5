@@ -10,10 +10,8 @@ import Header from '../../common/Header';
 // this can be refactored later on
 const urlArr = window.location.href.split('/');
 const trainerId = urlArr[5];
-let sessionId;
-if (urlArr[6]) {
-  sessionId = [urlArr[6]];
-}
+// session id hardcoded for now
+const sessionId = '5ceff6075012e8748ef607f6';
 
 const TrainerFeedbackOverall = ({ isAuthenticated }) => {
   if (!isAuthenticated) {
