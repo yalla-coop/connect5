@@ -1,9 +1,10 @@
 import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 import { colors, borders, shadows } from '../../../theme';
 
 export const Wrapper = styled.div`
   background-color: ${colors.white};
-  box-shadow: ${shadows.primary};
+  box-shadow: ${shadows.secondary};
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -14,13 +15,20 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 0.5rem;
+  background: ${colors.lightGray};
+  height: 3.5rem;
+  margin-left: 0.2rem;
+  border-radius: 5px;
 `;
 
 const sharedHeaderStyles = css`
   font-weight: 500;
   width: 100%;
   font-size: 1rem;
-  margin: 0;
+  margin: 1.2rem;
+  margin-left: 1.75rem;
+  @media (min-width: 768px) {
+    margin-left: 2rem;
 `;
 
 export const DateHeader = styled.h3`
@@ -51,8 +59,13 @@ export const Row = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  border-bottom: ${borders.inputBox};
   padding: 0.5rem 0;
+  margin-left: 0.55rem;
+  &:not(:last-child) {
+    border-bottom: ${borders.inputBox};
+  };
+  @media (min-width: 768px) {
+    margin-left: 1rem;
 `;
 
 const sharedItemStyles = css`
@@ -69,12 +82,13 @@ export const Type = styled.div`
   ${sharedItemStyles}
   display: flex;
   justify-content: center;
+  margin-left: 1rem;
 
   p {
     background-color: ${colors.lightGray};
-    width: 1.75rem;
-    height: 1.75rem;
-    padding: 0.25rem 0;
+    min-width: 2rem;
+    min-height: 1.8rem;
+    padding: 0.25rem 0.5rem;
     text-align: center;
     border-radius: 4px;
     margin: 0;
@@ -136,4 +150,11 @@ export const Right = styled.p`
 export const ModalContent = styled.div`
   margin-bottom: 1.5rem;
   width: 100%;
+`;
+
+export const StyledLink = styled(Link)`
+  margin-bottom: 1.5rem;
+  width: 100%;
+  text-align: center;
+  margin-top: 1.75rem;
 `;
