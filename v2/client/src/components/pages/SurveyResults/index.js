@@ -9,6 +9,7 @@ import { fetchUserResults } from '../../../actions/users';
 import BehavioralSurveyResults from '../../common/BehavioralInsight/Survey';
 import { TrainerResultsWrapper, ButtonWrapper } from './SurveyResults.style';
 import Header from '../../common/Header';
+import Toggle from '../../common/Toggle';
 
 const { Panel } = Collapse;
 
@@ -23,25 +24,53 @@ const panels = ({ sessionId, surveyType }) => ({
 });
 
 class SurveyResults extends Component {
+  state = {
+    toggle: 'right',
+  };
+
+  clickToggle = direction => {
+    this.setState({ toggle: direction });
+  };
+
   render() {
     const {
       match: { params },
     } = this.props;
+    const { toggle } = this.state;
 
     const panelsElements = panels(params);
     const { results } = this.props;
     return (
       <TrainerResultsWrapper>
         <Header label="results" type="section" />
+        <Toggle
+          selected={toggle}
+          leftText="Overall Results"
+          rightText="Individual Responses"
+          large
+          style={{ margin: '20px auto' }}
+          onClick={this.clickToggle}
+        />
         <Collapse
           accordion
+          bordered={false}
           expandIconPosition="right"
           expandIcon={({ isActive }) => (
             <Icon type="down" rotate={isActive ? 90 : 0} />
           )}
         >
           {Object.keys(panelsElements).map(panel => (
-            <Panel header={panelsElements[panel].text} key={panel}>
+            <Panel
+              header={panelsElements[panel].text}
+              key={panel}
+              style={{
+                background: '#f7f7f7',
+                borderRadius: 4,
+                border: 0,
+                overflow: 'hidden',
+                padding: 0,
+              }}
+            >
               {panelsElements[panel].render(results)}
             </Panel>
           ))}

@@ -67,10 +67,8 @@ export default class TrainerListPage extends Component {
       .catch(err => console.error(err));
   };
 
-  clickToggle = () => {
-    const { toggle } = this.state;
-    if (toggle === 'left') this.setState({ toggle: 'right' });
-    else this.setState({ toggle: 'left' });
+  clickToggle = direction => {
+    this.setState({ toggle: direction });
   };
 
   render() {

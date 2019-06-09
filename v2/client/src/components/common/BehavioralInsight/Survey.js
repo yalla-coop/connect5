@@ -7,6 +7,15 @@ import { connect } from 'react-redux';
 
 import { fetchbehavioralInsight as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
 
+import {
+  Wrapper,
+  ChartWrapper,
+  Description,
+  Title,
+  ContentWrapper,
+  WhiteWrapper,
+} from './BehavioralInsight.style';
+
 function drawBarValues() {
   // render the value of the chart above the bar
   const { ctx } = this.chart;
@@ -47,87 +56,108 @@ class BehavioralSurveyResults extends Component {
     const { data } = this.props;
 
     return (
-      <div>
-        {Object.entries(data).map(pairOfArray => (
-          <>
-            <h6>{pairOfArray[0]}</h6>
-            <HorizontalBar
-              data={{
-                layout: {
-                  padding: {
-                    top: 5,
-                    left: 15,
-                    right: 15,
-                    bottom: 15,
-                  },
-                },
-                responsive: true,
-                labels: ['0-20%', '21-40%', '41-60%', '61-80%', '81-100%'],
-                type: 'horizontalBar',
-                datasets: [
-                  {
-                    backgroundColor: [
-                      '#3e95cd',
-                      '#8e5ea2',
-                      '#3cba9f',
-                      '#e8c3b9',
-                      '#c45850',
-                    ],
-                    data: pairOfArray[1],
-                  },
-                ],
-              }}
-              options={{
-                animation: {
-                  onProgress: drawBarValues,
-                  onComplete: drawBarValues,
-                },
-                hover: { animationDuration: 0 },
+      <Wrapper>
+        <ContentWrapper>
+          <Title>
+            Behaviour is influenced by our perceptions of our capability,
+            opportunity and motivation for that behaviour
+          </Title>
+          {Object.keys(data) ? (
+            Object.entries(data).map(pairOfArray => (
+              <ChartWrapper>
+                <WhiteWrapper>
+                  <Description>{pairOfArray[0]}</Description>
+                  <HorizontalBar
+                    width={25}
+                    height={20}
+                    data={{
+                      layout: {
+                        padding: {
+                          top: 5,
+                          left: 15,
+                          right: 15,
+                          bottom: 15,
+                        },
+                      },
+                      responsive: true,
+                      labels: [
+                        '0-20%',
+                        '21-40%',
+                        '41-60%',
+                        '61-80%',
+                        '81-100%',
+                      ],
+                      type: 'horizontalBar',
+                      datasets: [
+                        {
+                          backgroundColor: [
+                            '#3e95cd',
+                            '#8e5ea2',
+                            '#3cba9f',
+                            '#e8c3b9',
+                            '#c45850',
+                          ],
+                          data: pairOfArray[1],
+                        },
+                      ],
+                    }}
+                    options={{
+                      responsive: 1,
+                      animation: {
+                        onProgress: drawBarValues,
+                        onComplete: drawBarValues,
+                      },
+                      hover: { animationDuration: 0 },
 
-                showAllTooltips: true,
-                legend: {
-                  display: false,
-                },
-
-                scales: {
-                  xAxes: [
-                    {
-                      gridLines: {
-                        offsetGridLines: true,
+                      showAllTooltips: true,
+                      legend: {
                         display: false,
                       },
 
-                      ticks: {
-                        beginAtZero: true,
-                        steps: 2,
-                        stepValue: 5,
-                        max: 100,
+                      scales: {
+                        xAxes: [
+                          {
+                            gridLines: {
+                              offsetGridLines: true,
+                              display: false,
+                            },
+
+                            ticks: {
+                              beginAtZero: true,
+                              steps: 2,
+                              stepValue: 5,
+                              max: 100,
+                            },
+                          },
+                        ],
+                        yAxes: [
+                          {
+                            barPercentage: 1,
+                            barThickness: 20,
+                            gridLines: {
+                              offsetGridLines: true,
+                              display: false,
+                            },
+                            ticks: {
+                              beginAtZero: true,
+                              steps: 2,
+                              stepValue: 5,
+                              max: 100,
+                            },
+                          },
+                        ],
                       },
-                    },
-                  ],
-                  yAxes: [
-                    {
-                      barPercentage: 1,
-                      barThickness: 20,
-                      gridLines: {
-                        offsetGridLines: true,
-                        display: false,
-                      },
-                      ticks: {
-                        beginAtZero: true,
-                        steps: 2,
-                        stepValue: 5,
-                        max: 100,
-                      },
-                    },
-                  ],
-                },
-                offsetGridLines: true,
-              }}
-            />
-          </>
-        ))}
-      </div>
+                      offsetGridLines: true,
+                    }}
+                  />
+                </WhiteWrapper>
+              </ChartWrapper>
+            ))
+          ) : (
+            <h1>No data</h1>
+          )}
+        </ContentWrapper>
+      </Wrapper>
     );
   }
 }
