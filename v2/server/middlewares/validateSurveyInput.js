@@ -8,18 +8,17 @@ module.exports = async data => {
   // query the Question model using data.surveyType to get a list of the question ids for that survey which are required
   const questions = await Question.find({
     surveyType: data.surveyType,
-    isRequired: true
+    isRequired: true,
   });
 
   // Postcode validation
 
   const postcodeQuestion = await Question.findOne({
     surveyType: data.surveyType,
-    text: 'Please enter the postcode where you are active'
+    text: 'Please enter the postcode where you are active',
   });
 
   const validPostcode = postcode => {
-    console.log('postcode', postcode);
     postcode = postcode.replace(/\s/g, '');
 
     const regex = /^(?:gir(?: *0aa)?|[a-pr-uwyz](?:[a-hk-y]?[0-9]+|[0-9][a-hjkstuw]|[a-hk-y][0-9][abehmnprv-y])(?: *[0-9][abd-hjlnp-uw-z]{2})?)$/gim;

@@ -6,6 +6,8 @@ import authReducer from './authReducer';
 import errorReducer from './errorReducer';
 import fetchedDataReducer from './fetchedDataReducer';
 import statsReducer from './statsReducer';
+import fetchedSessions from './fetchSessionReducer';
+import groupsReducer from './groups';
 
 export default combineReducers({
   auth: authReducer,
@@ -13,5 +15,7 @@ export default combineReducers({
   fetchedData: fetchedDataReducer,
   stats: statsReducer,
   results: userResults,
+  sessions: fetchedSessions,
+  groups: groupsReducer,
   behavioralInsight: behavioralInsightReducer,
 });

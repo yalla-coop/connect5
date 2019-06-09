@@ -57,6 +57,18 @@ html {
   font-size: 1rem;
 }
 
+/* remove the padding in collaps panels */
 .ant-collapse-content-box {
   padding: 0 !important
+}
+
+/* style for the Select component in AddTrainer view */
+.add-trainer__select .ant-select-selection {
+  white-space: nowrap;
+  height: 50px;
+  overflow: auto
+}
+
+.ant-select-selection .ant-select-selection__rendered{
+  line-height: 48px
 }
