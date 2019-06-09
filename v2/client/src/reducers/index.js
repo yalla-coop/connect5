@@ -8,6 +8,8 @@ import trainerReducer from './trainerReducer';
 import sessionReducer from './sessionReducer';
 import fetchedDataReducer from './fetchedDataReducer';
 import statsReducer from './statsReducer';
+import fetchedSessions from './fetchSessionReducer';
+import groupsReducer from './groups';
 
 export default combineReducers({
   auth: authReducer,
@@ -17,5 +19,7 @@ export default combineReducers({
   results: userResults,
   trainers: trainerReducer,
   session: sessionReducer,
+  sessions: fetchedSessions,
+  groups: groupsReducer,
   behavioralInsight: behavioralInsightReducer,
 });

@@ -18,8 +18,10 @@ import Dashboard from './pages/Dashboard';
 import Home from './pages/LandingPage';
 import SignUp from './pages/SignUp';
 import UserResults from './pages/UserResults';
+import AddTrainer from './pages/AddTrainer';
 import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
+import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
 
 // COMPONENTS
@@ -34,6 +36,8 @@ import {
   LOGIN_URL,
   SIGN_UP_URL,
   TRAINERS_URL,
+  TRAINER_SESSIONS_URL,
+  GROUP_SESSIONS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -58,6 +62,16 @@ class App extends Component {
 
             <Route exact path="/users/:id/results" component={UserResults} />
             <Route exact path={HOME_URL} component={Home} />
+
+            <PrivateRoute
+              exact
+              path="/add-trainer"
+              Component={AddTrainer}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+            />
 
             <PrivateRoute
               exact
@@ -138,6 +152,25 @@ class App extends Component {
               role={role}
             />
 
+            <PrivateRoute
+              exact
+              path={TRAINER_SESSIONS_URL}
+              component={ViewSessions}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['trainer', 'localLead', 'admin']}
+              role={role}
+            />
+
+            <PrivateRoute
+              exact
+              path={GROUP_SESSIONS_URL}
+              component={ViewSessions}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['localLead', 'admin']}
+              role={role}
+            />
             <Route
               path="/404err"
               render={() => (

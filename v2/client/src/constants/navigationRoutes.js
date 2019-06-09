@@ -18,6 +18,7 @@ export const GROUP_SESSIONS_URL = '/sessions';
 export const ADD_TRAINER_URL = '/add-trainer';
 
 // local lead
+export const LOCAL_LEAD_SESSIONS_URL = '/localLead-sessions';
 
 // admin
 export const DEMOGRAPHICS_URL = '/demographics';

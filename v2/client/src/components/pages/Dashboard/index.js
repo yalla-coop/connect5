@@ -39,7 +39,7 @@ class Dashboard extends Component {
     // const { userType, userName } = this.props;
     const userType = 'trainer';
 
-    this.setState({ userType });
+    // this.setState({ userType });
     const { fetchStatsData: fetchStatsDataActionCreator } = this.props;
     fetchStatsDataActionCreator(userType);
   }

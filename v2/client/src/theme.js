@@ -59,6 +59,7 @@ export const colors = {
 // shadows
 export const shadows = {
   primary: '0px 1px 4px rgba(0, 0, 0, 0.05)',
+  secondary: '0px 3px 6px rgba(0, 0, 0, 0.07)',
 };
 
 // borders
