@@ -5,8 +5,8 @@ const createNewSession = ({
   session,
   inviteesNumber,
   region,
-  partnerTrainer1,
-  partnerTrainer2,
+  trainers,
+
   emails,
 }) => {
   const newSession = new Session({
@@ -14,7 +14,7 @@ const createNewSession = ({
     type: session,
     numberOfAttendees: inviteesNumber,
     region,
-    trainers: [partnerTrainer1, partnerTrainer2],
+    trainers,
     participantsEmails: emails,
   });
   // Add new session
