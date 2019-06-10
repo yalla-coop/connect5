@@ -34,13 +34,18 @@ class UserResults extends Component {
     } = this.props;
     const { id } = params;
 
-    // if trainer/localLead has been selected from trainer list then use their id and role
+    // if trainer has been selected from trainer list and the logged in user is localLead then use the trainer's id and view them as a trainer
+    // else if selected from list use that trainer/local lead's role
+    // i.e. this would be for an admin viewing
     // otherwise use logged in user's id and role
     const { state } = history.location;
-    if (state && state.trainer) {
-      await this.props.fetchUserResults(state.trainer._id, state.trainer.role);
+    const { fetchUserResults } = this.props;
+    if (state && state.trainer && role === 'localLead') {
+      await fetchUserResults(state.trainer._id, 'trainer');
+    } else if (state && state.trainer) {
+      await fetchUserResults(state.trainer._id, state.trainer.role);
     } else {
-      await this.props.fetchUserResults(userId, role);
+      await fetchUserResults(userId, role);
     }
 
     // check if localLead is in trainer or lead view and assign the role accordingly
