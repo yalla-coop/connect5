@@ -1,5 +1,4 @@
 /* eslint-disable no-lonely-if */
-/* eslint-disable no-restricted-globals */
 /* eslint-disable dot-notation */
 const formulaeCalculator = require('./formulae');
 
@@ -13,7 +12,7 @@ const calculator = surveysArray => {
     formulae.forEach(item => {
       if (output[item.text]) {
         // push to the exist one
-        if (!isNaN(item.formulae)) {
+        if (!Number.isNaN(item.formulae)) {
           const { labels, values } = output[item.text];
           output[item.text] = {
             values: [...values, item.formulae],
@@ -22,7 +21,7 @@ const calculator = surveysArray => {
         }
       } else {
         // create new one
-        if (!isNaN(item.formulae)) {
+        if (!Number.isNaN(item.formulae)) {
           output[item.text] = {};
 
           output[item.text].datasets = {};
