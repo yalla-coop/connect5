@@ -250,7 +250,12 @@ class CreateSession extends Component {
               size="large"
               value={partnerTrainer1 || undefined}
               dropdownRender={menu => (
-                <div>
+                <div
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    return false;
+                  }}
+                >
                   {role === 'localLead' && (
                     <>
                       <div
@@ -259,7 +264,9 @@ class CreateSession extends Component {
                             pathname: '/add-trainer',
                             state: {
                               ...this.state,
-                              startDate: this.state.startDate.valueOf(),
+                              startDate:
+                                this.state.startDate &&
+                                this.state.startDate.valueOf(),
                             },
                           });
                         }}
@@ -303,14 +310,21 @@ class CreateSession extends Component {
                 style={{ width: '100%' }}
                 value={partnerTrainer2 || undefined}
                 dropdownRender={menu => (
-                  <div>
+                  <div
+                    onMouseDown={e => {
+                      e.preventDefault();
+                      return false;
+                    }}
+                  >
                     <div
                       onClick={() => {
                         this.props.history.push({
                           pathname: '/add-trainer',
                           state: {
                             ...this.state,
-                            startDate: this.state.startDate.valueOf(),
+                            startDate:
+                              this.state.startDate &&
+                              this.state.startDate.valueOf(),
                           },
                         });
                       }}
