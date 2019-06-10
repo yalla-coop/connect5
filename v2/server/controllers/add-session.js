@@ -12,22 +12,26 @@ const addSession = (req, res, next) => {
     emails,
   } = req.body;
 
+  const trainers = [partnerTrainer1];
+
   if (
     session &&
     startDate &&
     inviteesNumber &&
     region &&
     partnerTrainer1 &&
-    partnerTrainer2 &&
     emails
   ) {
+    if (partnerTrainer2) {
+      trainers.push(partnerTrainer2);
+    }
+
     return createNewsession({
       startDate,
       session,
       inviteesNumber,
       region,
-      partnerTrainer1,
-      partnerTrainer2,
+      trainers,
       emails,
     })
       .then(addedSession => {

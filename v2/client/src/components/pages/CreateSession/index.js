@@ -1,5 +1,6 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
-import { DatePicker, Select, Input } from 'antd';
+import { DatePicker, Select, Input, Checkbox } from 'antd';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
@@ -18,7 +19,7 @@ import {
 
 const { Option } = Select;
 const children = [];
-for (let i = 10; i < 36; i++) {
+for (let i = 10; i < 36; i += 1) {
   children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
 }
 
@@ -76,15 +77,20 @@ class CreateSession extends Component {
   };
 
   onEmailChange = value => {
+    let err = '';
+    const valuesToBeStored = [];
     // check for email validation
+    value.forEach(item => {
+      if (pattern.test(item)) {
+        valuesToBeStored.push(item);
+      } else {
+        err = '*please enter valid email';
+      }
+    });
 
-    if (!pattern.test(value)) {
-      this.setState({
-        err: '*please enter valid email',
-      });
-    }
     this.setState({
-      emails: value,
+      emails: valuesToBeStored,
+      err,
     });
   };
 
@@ -95,18 +101,15 @@ class CreateSession extends Component {
       session,
       region,
       partnerTrainer1,
-      partnerTrainer2,
       emails,
     } = this.state;
-    const { role } = this.props;
     const isError = !(
       !!startDate &&
       !!inviteesNumber &&
       !!session &&
       !!region &&
       !!emails &&
-      !!partnerTrainer1 &&
-      (role !== 'localLead' || partnerTrainer2)
+      !!partnerTrainer1
     );
 
     this.setState({
@@ -142,6 +145,7 @@ class CreateSession extends Component {
 
   render() {
     const { trainers, role, localLeads } = this.props;
+
     const { startDate, inviteesNumber, err } = this.state;
     const {
       onDateChange,
@@ -229,12 +233,11 @@ class CreateSession extends Component {
                     {name}
                   </Option>
                 ))}
-              {role === 'localLead' &&
-                localLeads.map(({ name, _id }) => (
-                  <Option key={_id} value={_id}>
-                    {name}
-                  </Option>
-                ))}
+              {localLeads.map(({ name, _id }) => (
+                <Option key={_id} value={_id}>
+                  {name}
+                </Option>
+              ))}
             </Select>
           </InputDiv>
           {role === 'localLead' && (
@@ -269,21 +272,13 @@ class CreateSession extends Component {
               size="large"
               placeholder="participants Emails"
               onChange={onEmailChange}
-              defaultValue={['example@gmail.com']}
               style={{ width: '100%', height: '100%' }}
+              value={this.state.emails}
             />
             <div>{err}</div>
           </InputDiv>
           <InputDiv>
-            <input
-              type="checkbox"
-              id="sendEmail"
-              name="sendEmail"
-              value="value"
-            />
-            <label htmlFor="sendEmail">
-              Send the survey to participants by email
-            </label>
+            <Checkbox>Send the survey to participants by email</Checkbox>
           </InputDiv>
 
           <SubmitBtn>
