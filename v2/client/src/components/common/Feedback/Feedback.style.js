@@ -24,24 +24,25 @@ export const Paragraph = styled.p`
   color: #828282;
 `;
 export const ChartWrapper = styled.div`
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   padding: 20px 0;
 `;
 
 export const Description = styled.p`
-  font-family: Roboto;
   font-size: 16px;
   line-height: 19px;
-
   color: #4f4f4f;
   margin-bottom: 20px;
 `;
 
 export const Category = styled.p`
-  font-family: Roboto;
   font-size: 13px;
+  font-style: italic;
   line-height: 19px;
   text-align: right;
   color: #4f4f4f;
   margin-bottom: 20px;
+`;
+export const Options = styled(Category)`
+  text-align: left;
 `;

@@ -7,6 +7,7 @@ import {
   ChartWrapper,
   Description,
   Category,
+  Options,
   HeadlineDiv,
 } from './Feedback.style';
 import { sum } from '../../../helpers/createSum';
@@ -73,6 +74,9 @@ class HorizontalBarComponent extends Component {
                 category: {createCategory(group.questionText)}
               </Category>
               <Description>{group.questionText}</Description>
+              <Options>
+                Answer options: Im not sure, not at all, a little, a lot
+              </Options>
             </HeadlineDiv>
             {chartsData.map(dataA => {
               // render charts
