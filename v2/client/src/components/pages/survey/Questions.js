@@ -2,7 +2,6 @@
 // and populate the Survey component
 
 import React from 'react';
-
 import { Alert } from 'antd';
 import {
   RadioField,
@@ -11,25 +10,41 @@ import {
   NumberSliderDiv,
   NumberOutput,
   QuestionCategory,
+  ErrorDiv,
 } from './Questions.style';
 
 // checks if errors are present (renders error msg after submit)
 const checkErrors = (errorArr, questionId, answers, errors) => {
   if (errorArr.includes(questionId) && !answers[questionId]) {
-    return <Alert message={`${errors[questionId]}`} type="error" />;
+    return (
+      <ErrorDiv>
+        {' '}
+        <Alert message={`${errors[questionId]}`} type="error" />
+      </ErrorDiv>
+    );
   }
   if (
     errorArr.includes(questionId) &&
     errors[questionId] === 'enter a valid UK postcode'
   ) {
-    return <Alert message={`${errors[questionId]}`} type="error" />;
+    return (
+      <ErrorDiv>
+        <Alert message={`${errors[questionId]}`} type="error" />
+      </ErrorDiv>
+    );
   }
   return null;
 };
 
 // checks and renders PIN validation msg
 const checkPINerror = errors =>
-  errors.PIN ? <Alert message={`${errors.PIN}`} type="error" /> : '';
+  errors.PIN ? (
+    <ErrorDiv>
+      <Alert message={`${errors.PIN}`} type="error" />
+    </ErrorDiv>
+  ) : (
+    ''
+  );
 
 // renders questions accordingly to their input type
 const renderQuestionInputType = (
@@ -113,10 +128,11 @@ const renderQuestionInputType = (
             type="range"
             onChange={onChange}
           />
-          <NumberOutput>
-            {answers[questionId] ? answers[questionId] : '5'}
-          </NumberOutput>
         </NumberSliderDiv>
+        <NumberOutput>
+          <strong>Current Rating: </strong>
+          {answers[questionId] ? answers[questionId] : '5'}
+        </NumberOutput>
       </TextField>
     );
   }

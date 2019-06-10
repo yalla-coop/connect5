@@ -17,6 +17,7 @@ const {
 } = require('../controllers/users/user');
 
 const { getDashboardStats } = require('../controllers/users/all');
+const fetchAllTrainers = require('../controllers/users/trainers');
 const addTrainerToGroup = require('../controllers/users/addTrainerToGroup');
 const getUserInfo = require('../controllers/users/getUserInfo');
 const getTrainerSessions = require('../controllers/users/trainer/getTrainerSessions');
@@ -39,14 +40,14 @@ router.post('/users/local-leads/group', authentication(), addTrainerToGroup);
 router.get('/local-leads', getLocalLeads);
 
 router.use('/users/:id/results', authentication(), getUserResults);
-// router.get('/trainer/info', getTrianerReachData);
-router.post('/all/dashboard', getDashboardStats);
 router.get('/users/my-trainers', authentication(), getListOfTrainers);
 router.get(
   '/users/admin/trainers-and-leads',
   authentication(),
   getAllTrainersAndLeads
 );
+router.get('/fetch-trainers', fetchAllTrainers);
+router.get('/users/admin/trainers-and-leads', getAllTrainersAndLeads);
 router.get('/users/trainer-sessions/:id', getTrainerSessions);
 router.get('/users/sessions/:id', authentication(), getLocalLeadsSessions);
 router.get('/users/sessions', getAllSessions);

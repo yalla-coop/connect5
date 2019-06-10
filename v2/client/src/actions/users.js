@@ -3,6 +3,7 @@ import axios from 'axios';
 import history from '../history';
 
 import * as types from '../constants/actionTypes';
+import { returnErrors } from './errorAction';
 
 export const fetchUserResults = (id, role) => async dispatch => {
   try {
@@ -12,7 +13,6 @@ export const fetchUserResults = (id, role) => async dispatch => {
       payload: res.data,
     });
   } catch (err) {
-    // console.error('errrrrrr', err.response.data.error);
     history.push('/404err');
   }
 };
@@ -28,6 +28,33 @@ export const fetchbehavioralInsight = (role, idOrPIN) => async dispatch => {
     });
   } catch (error) {
     // must check the error status code before
+    history.push('/404err');
+  }
+};
+
+export const fetchTrainerFeedback = (
+  trainerId,
+  sessionId
+) => async dispatch => {
+  try {
+    const url = `/api/feedback/trainer/${trainerId}`;
+    const data = { sessionId };
+
+    const res = await axios.post(url, data);
+
+    dispatch({
+      type: types.FETCH_OVERALL_TRAINER_FEEDBACK,
+      payload: { data: res.data },
+    });
+  } catch (err) {
+    dispatch(
+      returnErrors(
+        err.response.data,
+        err.response.status,
+        'FETCH_TRAINER_FEEDBACK_FAIL'
+      )
+    );
+
     history.push('/404err');
   }
 };

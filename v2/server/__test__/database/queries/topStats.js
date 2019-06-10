@@ -22,7 +22,7 @@ describe('Test topStats query', () => {
 
     getTopStats(admin.id, 'admin').then(result => {
       expect(result).toBeDefined();
-      expect(result.participantCount).toBe(4);
+      expect(result.participantCount).toBe(7);
       expect(result.trainerCount).toBe(19);
       done();
     });
@@ -56,7 +56,7 @@ describe('Test topStats query', () => {
     getTopStats(trainer.id, 'trainer').then(result => {
       expect(result).toBeDefined();
       expect(result.participantCount).toBe(45);
-      expect(result.responseRate).toBe(9);
+      expect(result.responseRate).toBe(20);
       done();
     });
   });
