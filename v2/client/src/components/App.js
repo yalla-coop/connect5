@@ -26,6 +26,7 @@ import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import TrainerFeedBack from './pages/TrainerFeedback';
+import DecideView from './pages/DecideView';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -44,6 +45,7 @@ import {
   TRAINER_SESSIONS_URL,
   GROUP_SESSIONS_URL,
   TRAINER_FEEDBACK_URL,
+  DECIDE_VIEW_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -133,7 +135,17 @@ class App extends Component {
               navbar
             />
 
-            <Route exact path="/login" component={Login} />
+            <PrivateRoute
+              exact
+              path={DECIDE_VIEW_URL}
+              Component={DecideView}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead']}
+              role={role}
+              navbar
+            />
+
             <Route exact path="/create-session" component={CreateSession} />
             <Route exact path={SURVEY_URL} component={Survey} />
             <Route
