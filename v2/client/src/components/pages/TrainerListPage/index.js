@@ -30,7 +30,7 @@ export default class TrainerListPage extends Component {
   };
 
   componentDidMount() {
-    const { role } = this.props
+    const { role } = this.props;
     if (role === 'admin') {
       this.adminFetchData();
     } else {
@@ -81,7 +81,7 @@ export default class TrainerListPage extends Component {
       loaded,
       toggle,
     } = this.state;
-    
+
     const { role } = this.props;
 
     if (!loaded) return <p>Loading...</p>;
@@ -109,7 +109,10 @@ export default class TrainerListPage extends Component {
             </Link>
           )}
         </HeaderSection>
-        <TrainerList dataList={toggle === 'left' ? trainers : localLeads} viewRole={role} />
+        <TrainerList
+          dataList={toggle === 'left' ? trainers : localLeads}
+          viewRole={role}
+        />
       </Wrapper>
     );
   }
