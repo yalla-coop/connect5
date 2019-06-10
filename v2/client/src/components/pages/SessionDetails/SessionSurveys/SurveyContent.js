@@ -66,7 +66,7 @@ class SurveyContent extends Component {
     return (
       <SurveyContentWrapper>
         <SurveyLinkType>
-          {type !== 'pre-survey' && 'Survey'} {type} Link{' '}
+          {type !== 'Pre-survey' && 'Survey'} {type} Link{' '}
         </SurveyLinkType>
 
         <SurveyLinkInfo onClick={onInfoClick}>

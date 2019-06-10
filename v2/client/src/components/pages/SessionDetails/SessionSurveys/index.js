@@ -32,6 +32,7 @@ class SessionSurveys extends Component {
 
     // whenever user click on save button call updateEmails action to update Emails List
     this.props.updateEmails(_id, participantsEmails);
+    this.toggleModal();
   };
 
   onEmailChange = value => {

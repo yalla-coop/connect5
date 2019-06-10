@@ -86,11 +86,12 @@ export const sessionUpdateAction = (sessionData, id) => async dispatch => {
 export const updateEmails = (id, participantsEmails) => async dispatch => {
   axios
     .patch(`/api/emails-update/${id}`, participantsEmails)
-    .then(res =>
-      dispatch({
+    .then(res => {
+      dispatch(fetchSessionDetails(id));
+      return dispatch({
         type: UPDATE_EMAILS_SUCCESS,
         payload: res.data,
-      })
-    )
+      });
+    })
     .catch(() => history.push('./404'));
 };

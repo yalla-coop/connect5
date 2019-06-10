@@ -48,25 +48,28 @@ export const StatisticItems = styled.div`
   @media (min-width: 768px) {
     width: 33%
 `;
+
 export const StatisticName = styled.span`
   display: block;
-  color: #8d8888;
+  color: ${colors.blackSecondary};
   text-align: center;
   margin: 0.8rem 0 0.95rem 0;
 `;
+
 export const StatisticValue = styled.span`
   display: block;
+  color: ${colors.black};
   text-align: center;
   padding-top: 0.3rem;
 `;
 
 export const Trainers = styled.p`
   padding: 0.75rem 0 0.5rem 1.7rem;
-  color: #8d8888;
+  color: ${colors.blackSecondary};
 `;
 
 export const TrainersName = styled(Link)`
   margin-left: 1rem;
-  color: #4f4f4f;
+  color: ${colors.black};
   text-decoration: none;
 `;

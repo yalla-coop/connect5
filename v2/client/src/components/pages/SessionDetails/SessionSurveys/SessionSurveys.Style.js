@@ -69,7 +69,7 @@ export const SurveyLink = styled(Link)`
   display: block;
   padding: 0.5rem;
   margin-left: 0.5rem;
-  color: #868686;
+  color: ${colors.blackSecondary};
   cursor: default;
   word-break: break-all;
   font-size: 14px;
