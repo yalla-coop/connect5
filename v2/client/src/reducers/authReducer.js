@@ -1,17 +1,24 @@
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  CHECK_UNIQUE_EMAIL,
+  CHECK_UNIQUE_EMAIL_UNIQUE,
+  CHECK_UNIQUE_EMAIL_UNUNIQUE,
   USER_AUTHENTICATED,
   USER_UNAUTHENTICATED,
+  RESET_UNIQUE_EMAIL,
+  CHECK_UNIQUE_EMAIL_ERROR,
 } from '../constants/actionTypes';
 
 const initialState = {
   isAuthenticated: null,
   isEmailUnique: null,
   loaded: false,
+  name: '',
+  email: '',
   role: null,
   _id: null,
+  checkedUserInfo: {},
+  error: null,
 };
 
 export default function(state = initialState, action) {
@@ -34,11 +41,29 @@ export default function(state = initialState, action) {
         loaded: true,
       };
 
-    case CHECK_UNIQUE_EMAIL:
+    case CHECK_UNIQUE_EMAIL_UNIQUE:
       return {
         ...state,
-        isEmailUnique: payload,
+        isEmailUnique: true,
+        checkedUserInfo: {},
         loaded: true,
+      };
+
+    case CHECK_UNIQUE_EMAIL_UNUNIQUE:
+      return {
+        ...state,
+        isEmailUnique: false,
+        checkedUserInfo: payload,
+        loaded: true,
+      };
+
+    case CHECK_UNIQUE_EMAIL_ERROR:
+      return {
+        ...state,
+        isEmailUnique: false,
+        checkedUserInfo: {},
+        loaded: true,
+        error: payload,
       };
 
     case USER_AUTHENTICATED:
@@ -54,6 +79,13 @@ export default function(state = initialState, action) {
         ...initialState,
         isAuthenticated: false,
         loaded: true,
+      };
+
+    case RESET_UNIQUE_EMAIL:
+      return {
+        ...state,
+        checkedUserInfo: {},
+        isEmailUnique: null,
       };
 
     default:

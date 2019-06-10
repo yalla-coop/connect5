@@ -15,7 +15,10 @@ const { Panel } = Collapse;
 
 const panels = {
   reach: { text: 'Reach', render: props => <Reach data={props} /> },
-  behavior: { text: 'Behavioural', render: () => null },
+  behavior: {
+    text: 'Behavioural',
+    render: () => null,
+  },
   feedback: { text: 'Trainer feedback', render: () => null },
 };
 

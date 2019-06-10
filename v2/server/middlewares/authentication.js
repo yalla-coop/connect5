@@ -29,5 +29,5 @@ module.exports = () => (req, res, next) => {
         next();
       })
       .catch(() => next(boom.badImplementation()));
-  }).catch(() => next(boom.badImplementation()));
+  });
 };

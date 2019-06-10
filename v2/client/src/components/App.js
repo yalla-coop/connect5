@@ -18,7 +18,11 @@ import Dashboard from './pages/Dashboard';
 import Home from './pages/LandingPage';
 import SignUp from './pages/SignUp';
 import UserResults from './pages/UserResults';
+import AddTrainer from './pages/AddTrainer';
+import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
+import ViewSessions from './pages/ViewSessions';
+import ParticipantBehavioral from './pages/ParticipantBehavioral';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -28,18 +32,21 @@ import Spin from './common/Spin';
 import {
   HOME_URL,
   DASHBOARD_URL,
+  SURVEY_URL,
   LOGIN_URL,
   SIGN_UP_URL,
   TRAINERS_URL,
   TRAINER_RESULTS_URL,
   GROUP_RESULTS_URL,
+  TRAINER_SESSIONS_URL,
+  GROUP_SESSIONS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
 
 const Wrapper = styled.div`
   min-height: 100vh;
-  background-color: ${colors.offWhite}
+  background-color: ${colors.offWhite};
 `;
 
 class App extends Component {
@@ -82,6 +89,16 @@ class App extends Component {
 
             <PrivateRoute
               exact
+              path="/add-trainer"
+              Component={AddTrainer}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+            />
+
+            <PrivateRoute
+              exact
               path={DASHBOARD_URL}
               Component={Dashboard}
               isAuthenticated={isAuthenticated}
@@ -102,7 +119,9 @@ class App extends Component {
               navbar
             />
 
-            {/* <Route exact path={TRAINERS_URL} component={TrainerListPage} /> */}
+            <Route exact path="/login" component={Login} />
+            <Route exact path={SURVEY_URL} component={Survey} />
+
             <Route
               exact
               path={LOGIN_URL}
@@ -137,7 +156,8 @@ class App extends Component {
               path="/participant-login"
               render={() => {
                 if (loaded) {
-                  return isAuthenticated || (loaded && role === 'user') ? (
+                  return isAuthenticated ||
+                    (loaded && role === 'participant') ? (
                     <Redirect to="/participant-dashboard" />
                   ) : (
                     <ParticipantLogin />
@@ -153,11 +173,40 @@ class App extends Component {
               Component={UserDashboard}
               loaded={loaded}
               isAuthenticated={isAuthenticated}
-              allowedRoles={['user']}
+              allowedRoles={['participant']}
+              role={role}
+            />
+
+            <PrivateRoute
+              exact
+              path="/participant/behavioral-insight"
+              Component={ParticipantBehavioral}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['participant']}
               role={role}
               navbar
             />
 
+            <PrivateRoute
+              exact
+              path={TRAINER_SESSIONS_URL}
+              component={ViewSessions}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['trainer', 'localLead', 'admin']}
+              role={role}
+            />
+
+            <PrivateRoute
+              exact
+              path={GROUP_SESSIONS_URL}
+              component={ViewSessions}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['localLead', 'admin']}
+              role={role}
+            />
             <Route
               path="/404err"
               render={() => (

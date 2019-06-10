@@ -37,6 +37,9 @@ class Dashboard extends Component {
     const { role, fetchStatsData: fetchStatsDataActionCreator } = this.props;
 
     fetchStatsDataActionCreator(role);
+    // this.setState({ userType });
+    // const { fetchStatsData: fetchStatsDataActionCreator } = this.props;
+    // fetchStatsDataActionCreator(userType);
   }
 
   render() {
@@ -115,6 +118,7 @@ const mapStateToProps = state => {
     userName: state.auth.name,
     stats: state.stats,
     userId: state.auth.id,
+    role: state.auth.role,
   };
 };
 

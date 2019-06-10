@@ -2,9 +2,12 @@ import axios from 'axios';
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  CHECK_UNIQUE_EMAIL,
+  CHECK_UNIQUE_EMAIL_UNIQUE,
+  CHECK_UNIQUE_EMAIL_UNUNIQUE,
   USER_AUTHENTICATED,
   USER_UNAUTHENTICATED,
+  ADD_TRAINER_TO_GROUP_SUCCESS,
+  CHECK_UNIQUE_EMAIL_ERROR,
 } from '../constants/actionTypes';
 import { returnErrors } from './errorAction';
 
@@ -57,13 +60,26 @@ export const checkUniqeEmail = email => async dispatch => {
   try {
     const res = await axios.get(`/api/users/?email=${email}`);
     const { data } = res;
-
-    dispatch({
-      type: CHECK_UNIQUE_EMAIL,
-      payload: data.isUnique,
-    });
+    if (data.isUnique) {
+      dispatch({
+        type: CHECK_UNIQUE_EMAIL_UNIQUE,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: CHECK_UNIQUE_EMAIL_UNUNIQUE,
+        payload: data,
+      });
+    }
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: ADD_TRAINER_TO_GROUP_SUCCESS,
+      payload: error.response.data.error,
+    });
+    dispatch({
+      type: CHECK_UNIQUE_EMAIL_ERROR,
+      payload: error.response.data.error,
+    });
   }
 };
 

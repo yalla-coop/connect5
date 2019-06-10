@@ -13,13 +13,146 @@ module.exports = async () => {
   const preTrainTrainerQuestions = await Question.find({
     surveyType: 'pre-train-the-trainer',
   });
+  const post2DayQuestions = await Question.find({
+    surveyType: 'post-day-2',
+    group: 'Behavioural Insights',
+  });
 
   const preDay1Question = await Question.find({ surveyType: 'pre-day-1' });
 
   const options = ['not at all', 'a little', 'a lot', "I'm not sure"];
 
   const answers = [
-    // DEMOGRAPHIC
+    // post2DayQuestions
+    {
+      question: post2DayQuestions[0],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[1],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[2],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[3],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[4],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[5],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[6],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[7],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[8],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[9],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[10],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[11],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[12],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[13],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[14],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[15],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[16],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[17],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[18],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[19],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+    {
+      question: post2DayQuestions[20],
+      PIN: 'HIO13',
+      response: firstResponseOnPreDay1,
+      answer: 1,
+    },
+
+    // preDay1Question answers
+    // DEMOGRAPHIC ---------------------------------------------------------------------------
     {
       question: preDay1Question[0],
       PIN: 'HIO13',
