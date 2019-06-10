@@ -38,5 +38,19 @@ module.exports = rawData => {
       }
     });
   });
+
+  // calculate the average for each survey
+  Object.entries(objectForm).forEach(item => {
+    const values = item[1];
+
+    const staging = {};
+    Object.entries(values).forEach(value => {
+      const avg =
+        value[1].reduce((accum, curr) => accum + curr, 0) / value[1].length;
+      staging[value[0]] = Math.round(avg * 100) / 100;
+      objectForm[item[0]] = staging;
+    });
+  });
+
   return objectForm;
 };

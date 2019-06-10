@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -10,14 +11,15 @@ import { fetchUserResults } from '../../../actions/users';
 
 import { TrainerResultsWrapper, ButtonWrapper } from './UserResults.style';
 import Header from '../../common/Header';
+import TrainerBehavioralInsight from '../../common/BehavioralInsight/Trainer';
 
 const { Panel } = Collapse;
 
 const panels = {
-  reach: { text: 'Reach', render: props => <Reach data={props} /> },
+  reach: { text: 'Reach', render: props => <Reach data={props.results} /> },
   behavior: {
     text: 'Behavioural',
-    render: () => null,
+    render: props => <TrainerBehavioralInsight trainerId={props.trainerId} />,
   },
   feedback: { text: 'Trainer feedback', render: () => null },
 };
@@ -36,6 +38,11 @@ class UserResults extends Component {
 
   render() {
     const { results } = this.props;
+    const {
+      match: { params },
+    } = this.props;
+    const { id } = params;
+
     return (
       <TrainerResultsWrapper>
         <Header label="results" type="section" />
@@ -48,7 +55,7 @@ class UserResults extends Component {
         >
           {Object.keys(panels).map(panel => (
             <Panel header={panels[panel].text} key={panel}>
-              {panels[panel].render(results)}
+              {panels[panel].render({ results, trainerId: id })}
             </Panel>
           ))}
         </Collapse>
