@@ -7,18 +7,27 @@
 const mongoose = require('mongoose');
 const Response = require('../../models/Response');
 
-module.exports.trainerFeedback = async (trainerId, sessionId) => {
+module.exports.trainerFeedback = async (trainerId, sessionId, surveyType) => {
   // decide if match should happen only on trainer id (feedback overall)
-  // or also for session (trainer feedback for individual session)
-  const match = () =>
-    sessionId
-      ? {
-          trainers: mongoose.Types.ObjectId(trainerId),
-          $and: [{ session: mongoose.Types.ObjectId(sessionId) }],
-        }
-      : {
-          trainers: mongoose.Types.ObjectId(trainerId),
-        };
+  // or also for session (trainer feedback for individual session), sessionId and surveyType (trainer feedback for individual survey)
+  const match = () => {
+    if (sessionId && surveyType) {
+      return {
+        trainers: mongoose.Types.ObjectId(trainerId),
+        $and: [{ session: mongoose.Types.ObjectId(sessionId) }, { surveyType }],
+      };
+    }
+    if (sessionId) {
+      return {
+        trainers: mongoose.Types.ObjectId(trainerId),
+        $and: [{ session: mongoose.Types.ObjectId(sessionId) }],
+      };
+    }
+
+    return {
+      trainers: mongoose.Types.ObjectId(trainerId),
+    };
+  };
 
   const trainerFeedbackArr = await Response.aggregate([
     {
