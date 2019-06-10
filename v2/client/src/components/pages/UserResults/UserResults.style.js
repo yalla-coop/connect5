@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import { colors } from '../../../theme';
-
 export const TrainerResultsWrapper = styled.div`
   max-width: 800px;
   margin: 0 auto;

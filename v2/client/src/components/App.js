@@ -205,21 +205,23 @@ class App extends Component {
             <PrivateRoute
               exact
               path={TRAINER_SESSIONS_URL}
-              component={ViewSessions}
+              Component={ViewSessions}
               loaded={loaded}
               isAuthenticated={isAuthenticated}
               allowedRoles={['trainer', 'localLead', 'admin']}
               role={role}
+              navbar
             />
 
             <PrivateRoute
               exact
               path={GROUP_SESSIONS_URL}
-              component={ViewSessions}
+              Component={ViewSessions}
               loaded={loaded}
               isAuthenticated={isAuthenticated}
               allowedRoles={['localLead', 'admin']}
               role={role}
+              navbar
             />
             <Route
               path="/404err"

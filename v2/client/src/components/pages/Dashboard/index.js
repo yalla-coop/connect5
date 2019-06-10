@@ -43,7 +43,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { userName, stats, userId } = this.props;
+    const { userName, stats } = this.props;
     // const { id } = auth;
 
     const captalizesName =
