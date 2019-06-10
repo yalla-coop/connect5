@@ -11,7 +11,7 @@ const storeSurvey = require('../controllers/survey/storeSurvey');
 const getSessionDetails = require('../controllers/sessionDetails/getSessionDetails');
 const deleteSession = require('../controllers/sessionDetails/deleteSession');
 const editSession = require('../controllers/sessionDetails/editSession');
-const updateEmails = require('../controllers/sessionDetails/updateEmails');
+const updateEmails = require('../controllers/sessionDetails/updateEmails.js');
 
 const router = express.Router();
 
