@@ -24,7 +24,7 @@ describe('Test Answer schema', () => {
   test('should Answer schema get data correctly', async done => {
     const answers = await Answer.find();
 
-    expect(answers).toHaveLength(118);
+    expect(answers).toHaveLength(211);
     done();
   });
 
