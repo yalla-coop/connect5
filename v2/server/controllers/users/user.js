@@ -24,6 +24,8 @@ const {
   getTrainerSuerveys,
 } = require('../../database/queries/users/trainerResults');
 
+const { getRegistrationDate } = require('../../database/queries/users');
+
 const getResponseRate = require('../../helpers/getResponseRate');
 
 // get the logged in user results
@@ -72,7 +74,10 @@ const getUserResults = async (req, res, next) => {
     // calc the responseRate and add it to the surveys object
     const newSurveys = getResponseRate(sessions, surveys);
 
-    const results = { sessions, newSurveys };
+    // get when the user registered an account
+    const registrationDate = await getRegistrationDate(id);
+
+    const results = { sessions, newSurveys, registrationDate };
     return res.json(results);
   } catch (err) {
     return next(boom.badImplementation('Internal server error'));

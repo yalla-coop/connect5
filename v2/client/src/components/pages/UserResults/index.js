@@ -25,7 +25,8 @@ import {
   TrainerResultsWrapper,
   ButtonWrapper,
   ContentWrapper,
-  ToggleWrapper,
+  TopSection,
+  Registration,
 } from './UserResults.style';
 
 const { Panel } = Collapse;
@@ -99,7 +100,6 @@ class UserResults extends Component {
     const { results, role, history, groupView, sessions } = this.props;
     const { state } = history.location;
     const { toggle } = this.state;
-    console.log(this.props);
 
     // if a user has been passed on then store as the user
     const user = state && state.trainer;
@@ -113,16 +113,23 @@ class UserResults extends Component {
             type="view"
           />
         )}
-        <Header label="results" type="section" nudge={topLevelView} />
+        <Header
+          label={toggle === 'left' ? 'results' : 'sessions'}
+          type="section"
+          nudge={topLevelView}
+        />
         {user && (
-          <ToggleWrapper>
+          <TopSection>
+            <Registration>
+              Data collected since registering on {results.registrationDate}
+            </Registration>
             <Toggle
               leftText="results"
               rightText="sessions"
               selected={toggle}
               onClick={this.clickToggle}
             />
-          </ToggleWrapper>
+          </TopSection>
         )}
         {toggle === 'left' && (
           <ContentWrapper>
