@@ -3,11 +3,13 @@ import React, { Component } from 'react';
 import { DatePicker, Select, Input, Checkbox } from 'antd';
 import moment from 'moment';
 import { connect } from 'react-redux';
+import { Modal } from 'antd';
 import Button from '../../common/Button';
 import { fetchAllTrainers } from '../../../actions/trainerAction';
 import { fetchLocalLeads } from '../../../actions/users';
 import { createSessionAction } from '../../../actions/sessionAction';
 import { sessions, regions, pattern } from './options';
+
 import {
   Form,
   CreateSessionWrapper,
