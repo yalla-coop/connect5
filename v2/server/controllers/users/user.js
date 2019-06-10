@@ -7,8 +7,6 @@ const User = require('../../database/models/User');
 const {
   getTrainerGroupSessions,
   getTrainerGroupSurveys,
-  getLocalLeadsSessions,
-  getTeamLeadSuerveys,
   getMyTrainers,
 } = require('../../database/queries/users/loaclLead');
 
