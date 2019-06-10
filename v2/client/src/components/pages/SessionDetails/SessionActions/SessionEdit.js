@@ -14,12 +14,13 @@ import {
 import { sessions, regions, pattern } from '../../CreateSession/options';
 import {
   Form,
-  CreateSessionWrapper,
   InputDiv,
   Heading,
   SubmitBtn,
   Error,
 } from '../../CreateSession/create-session.style';
+
+import { EditSessionWrapper } from './SessionActions.Style';
 
 const { Option } = Select;
 
@@ -187,7 +188,7 @@ class EditSession extends Component {
       onFormSubmit,
     } = this;
     return (
-      <CreateSessionWrapper>
+      <EditSessionWrapper>
         <Heading>Edit Session</Heading>
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
@@ -326,7 +327,7 @@ class EditSession extends Component {
           </SubmitBtn>
           {err && <Error>All inputs are required</Error>}
         </Form>
-      </CreateSessionWrapper>
+      </EditSessionWrapper>
     );
   }
 }

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { borders, shadows, colors } from '../../../theme';
+import { borders, colors } from '../../../theme';
 
 export const SessionDetailsWrapper = styled.div`
   display: flex;
@@ -31,7 +31,6 @@ export const SessionTopDetailsWrapper = styled.div`
 export const Statistic = styled.div`
   display: flex;
   padding: 1rem 0;
-  margin: 0 auto;
   margin-top: 0.5rem;
   border-radius: 7px;
   @media (min-width: 768px) {

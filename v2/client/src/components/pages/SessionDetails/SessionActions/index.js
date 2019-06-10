@@ -33,7 +33,7 @@ class SessionActions extends Component {
           history.push('/sessions');
         }
       })
-      .catch(err => {
+      .catch(() => {
         Swal.fire('Oops!', 'Something error in deleting this session');
       });
   };
