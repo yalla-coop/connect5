@@ -19,7 +19,7 @@ describe('Test getAllTrainers query', () => {
     getAllTrainers().then(result => {
       expect(result).toBeDefined();
       expect(result.length).toBe(10);
-      expect(result[0].name).toBe('alex');
+      expect(result[0].name).toBeDefined();
       done();
     });
   });

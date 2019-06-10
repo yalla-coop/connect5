@@ -25,6 +25,7 @@ import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import SessionDetails from './pages/SessionDetails';
 import EditSession from './pages/SessionDetails/SessionActions/SessionEdit';
+import TrainerFeedBack from './pages/TrainerFeedback';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -40,6 +41,7 @@ import {
   TRAINERS_URL,
   TRAINER_SESSIONS_URL,
   GROUP_SESSIONS_URL,
+  TRAINER_FEEDBACK_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -69,6 +71,16 @@ class App extends Component {
               exact
               path="/add-trainer"
               Component={AddTrainer}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+            />
+
+            <PrivateRoute
+              exact
+              path={TRAINER_FEEDBACK_URL}
+              Component={TrainerFeedBack}
               isAuthenticated={isAuthenticated}
               loaded={loaded}
               allowedRoles={['admin', 'localLead', 'trainer']}
