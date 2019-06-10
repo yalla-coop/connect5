@@ -6,6 +6,7 @@ const User = require('../../database/models/User');
 
 const {
   getTrainerGroupSessions,
+  getTrainerGroupSurveys,
   getLocalLeadsSessions,
   getTeamLeadSuerveys,
   getMyTrainers,
@@ -53,7 +54,7 @@ const getUserResults = async (req, res, next) => {
     switch (role) {
       case 'localLead':
         sessions = await getTrainerGroupSessions(id);
-        surveys = await getTeamLeadSuerveys(id);
+        surveys = await getTrainerGroupSurveys(id);
         break;
       case 'admin':
         sessions = await getAdminSessions(id);
@@ -66,7 +67,7 @@ const getUserResults = async (req, res, next) => {
         break;
     }
 
-    console.log('ses', sessions);
+    console.log('ses', surveys);
 
     // calc the responseRate and add it to the surveys object
     const newSurveys = getResponseRate(sessions, surveys);

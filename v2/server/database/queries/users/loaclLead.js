@@ -2,6 +2,121 @@ const mongoose = require('mongoose');
 
 const User = require('../../models/User');
 const Session = require('../../models/Session');
+const Response = require('../../models/Response');
+
+const getTrainerGroupSurveys = async leadId => {
+  const user = await User.findById(leadId);
+  const trainers = user.trainersGroup;
+
+  // get all responses that include at least one trainer in the group
+  const responses = await Promise.all(
+    trainers.map(async trainerID =>
+      Response.aggregate([
+        { $match: { trainers: mongoose.Types.ObjectId(trainerID) } },
+        {
+          $lookup: {
+            from: 'sessions',
+            localField: 'session',
+            foreignField: '_id',
+            as: 'session',
+          },
+        },
+        {
+          $unwind: '$session',
+        },
+        {
+          $project: {
+            _id: 1,
+            surveyType: 1,
+            'session.numberOfAttendees': 1,
+          },
+        },
+      ])
+    )
+  );
+
+  const cleanedResponses = responses.reduce((a, b) => a.concat(b), []);
+  const uniqueResponses = [];
+  const map = new Map();
+
+  if (cleanedResponses.length > 0) {
+    for (const item of cleanedResponses) {
+      if (!map.has(item._id.toString())) {
+        map.set(item._id.toString(), true);
+        uniqueResponses.push({
+          _id: item._id,
+          surveyType: item.surveyType,
+          participants: item.session.numberOfAttendees,
+        });
+      }
+    }
+  }
+
+  const result = {
+    'pre-day-1': {
+      _id: 'pre-day-1',
+      responses: 0,
+      participants: 0,
+      type: 'Pre-course',
+    },
+    'post-day-1': {
+      _id: 'post-day-1',
+      responses: 0,
+      participants: 0,
+      type: 'Post Session 1',
+    },
+    'post-day-2': {
+      _id: 'post-day-2',
+      responses: 0,
+      participants: 0,
+      type: 'Post Session 2',
+    },
+    'post-day-3': {
+      _id: 'post-day-3',
+      responses: 0,
+      participants: 0,
+      type: 'Post Session 3',
+    },
+    'post-special': {
+      _id: 'post-special',
+      responses: 0,
+      participants: 0,
+      type: 'Post 2-day Intensive',
+    },
+    'pre-train-trainers': {
+      _id: 'pre-train-trainers',
+      responses: 0,
+      participants: 0,
+      type: 'Pre train trainers',
+    },
+    'post-train-trainers': {
+      _id: 'post-train-trainers',
+      responses: 0,
+      participants: 0,
+      type: 'Post train trainers',
+    },
+    'follow-up-3-month': {
+      _id: 'follow-up-3-month',
+      responses: 0,
+      participants: 0,
+      type: '3 month follow-up',
+    },
+    'follow-up-6-month': {
+      _id: 'follow-up-6-month',
+      responses: 0,
+      participants: 0,
+      type: '6 month Follow-up',
+    },
+  };
+
+  uniqueResponses.map(response => {
+    result[response.surveyType]._id = response.surveyType;
+    result[response.surveyType].responses += 1;
+    result[response.surveyType].participants += response.participants;
+  });
+
+  return Object.values(result);
+};
 
 const getTrainerGroupSessions = async leadId => {
   const user = await User.findById(leadId);
@@ -339,4 +454,5 @@ module.exports = {
   getTeamLeadSuerveys,
   getMyTrainers,
   getTrainerGroupSessions,
+  getTrainerGroupSurveys,
 };

@@ -72,23 +72,48 @@ const getTopStats = async (userId, userType) => {
       )
     );
 
+    // put all the sessions into one array
+    const cleanedSessions = sessions.reduce((a, b) => a.concat(b), []);
+
     // get unique sessions as you might have two trainers in the group on the same session
-    const uniqueSessions =
-      sessions.length > 0
-        ? Array.from(new Set(sessions[0].map(object => object._id))).map(id => {
-            return {
-              _id: id,
-              numberOfAttendees: sessions[0].find(object => object._id === id)
-                .numberOfAttendees,
-            };
-          })
-        : [];
+    const uniqueSessions = [];
+    const map = new Map();
+
+    if (cleanedSessions.length > 0) {
+      for (const item of cleanedSessions) {
+        if (!map.has(item._id.toString())) {
+          map.set(item._id.toString(), true);
+          uniqueSessions.push({
+            _id: item._id,
+            numberOfAttendees: item.numberOfAttendees,
+            type: item.type,
+          });
+        }
+      }
+    }
+
+    const cleanedResponses = responses.reduce((a, b) => a.concat(b), []);
 
     // get the unique responses as you might have two trainers in the group on the same session that they are responding to
-    const uniqueResponses =
-      responses.length > 0
-        ? [...new Set(responses[0].map(response => response._id))]
-        : [];
+    const uniqueResponses = [];
+    const responseMap = new Map();
+
+    if (cleanedResponses.length > 0) {
+      for (const item of cleanedResponses) {
+        if (!responseMap.has(item._id.toString())) {
+          responseMap.set(item._id.toString(), true);
+          uniqueResponses.push({
+            _id: item._id,
+            surveyType: item.surveyType,
+          });
+        }
+      }
+    }
+
+    // const uniqueResponses =
+    //   responses.length > 0
+    //     ? [...new Set(responses[0].map(response => response._id))]
+    //     : [];
 
     const participantCount = uniqueSessions
       .map(session => session.numberOfAttendees)
