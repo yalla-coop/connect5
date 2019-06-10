@@ -20,14 +20,14 @@ exports.getTrianerReachData = async (req, res, next) => {
     surveys.forEach(survey => {
       if (survey._id === 'pre-day-1' || survey._id === 'post-day-1') {
         survey.participants = obj['1'];
-        survey.responseRate = ((survey.responses / obj['1']) * 100).toFixed(2);
+        survey.responseRate = Math.ceil((survey.responses / obj['1']) * 100);
       }
       if (survey._id === 'post-day-2') {
         survey.participants = obj['2'];
-        survey.responseRate = ((survey.responses / obj['2']) * 100).toFixed(2);
+        survey.responseRate = Math.ceil((survey.responses / obj['2']) * 100);
       } else if (survey._id === 'post-day-3') {
         survey.participants = obj['3'];
-        survey.responseRate = ((survey.responses / obj['3']) * 100).toFixed(2);
+        survey.responseRate = Math.ceil((survey.responses / obj['3']) * 100);
       }
     });
     const results = { sessions, surveys };

@@ -8,16 +8,17 @@ const app = require('../../app');
 const Session = require('../../database/models/Session');
 const Question = require('../../database/models/Question');
 
-beforeAll(async () => {
-  // build dummy data
-  await buildDB();
-});
-
-afterAll(async () => {
-  await mongoose.disconnect();
-});
-
 describe('Test /survey/submit/', () => {
+  beforeAll(async done => {
+    // build dummy data
+    await buildDB();
+    done();
+  });
+
+  afterAll(async () => {
+    await mongoose.disconnect();
+  });
+
   test('Test for answers to be submitted', async done => {
     const surveyType = 'pre-day-1';
     const singleSession = await Session.findOne({ type: '1' });

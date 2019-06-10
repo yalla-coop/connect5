@@ -10,9 +10,10 @@ const User = require('../../../database/models/User');
 const Session = require('../../../database/models/Session');
 
 describe('Test trainer feedback query', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(() => {

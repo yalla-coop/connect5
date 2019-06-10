@@ -15,14 +15,14 @@ describe('Test Session schema', () => {
     mongoose.disconnect();
   });
 
-  test('should Session schema be defined', async () => {
+  test('should Session schema be defined', () => {
     expect(Session).toBeDefined();
   });
 
   test('should Session schema get data correctly', async done => {
     const sessions = await Session.find();
 
-    expect(sessions).toHaveLength(6);
+    expect(sessions).toHaveLength(13);
     done();
   });
 

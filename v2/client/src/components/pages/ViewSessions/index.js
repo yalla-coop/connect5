@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+// COMMON COMPONENTS
 import SessionList from '../../common/List/SessionList';
+import Header from '../../common/Header';
+
+// ACTIONS
 import {
   fetchTrainerSessions,
   fetchLocalLeadSessions,
   fetchALLSessions,
 } from '../../../actions/groupSessionsAction';
+
+// STYLING
 import {
   ViewSessionsWrapper,
   TotalSessions,
@@ -44,6 +51,7 @@ class ViewSessions extends Component {
     }
     return (
       <ViewSessionsWrapper>
+        <Header label="sessions" type="section" />
         <TotalSessions>
           <Span>Total Sessions</Span>
           <SessionsCount>{sessionsNum}</SessionsCount>

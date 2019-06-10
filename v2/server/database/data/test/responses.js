@@ -23,6 +23,18 @@ module.exports = async () => {
       session: type1Session,
     },
     {
+      PIN: 'HIO13',
+      trainers: [trainers[0], trainers[1]],
+      surveyType: 'post-day-1',
+      session: type1Session,
+    },
+    {
+      PIN: 'HIO13',
+      trainers: [trainers[0], trainers[1]],
+      surveyType: 'post-day-2',
+      session: type2Session,
+    },
+    {
       PIN: 'RAM14',
       trainers: [trainers[0], trainers[1]],
       surveyType: 'pre-day-1',
