@@ -34,11 +34,12 @@ export const fetchbehavioralInsight = (role, idOrPIN) => async dispatch => {
 
 export const fetchTrainerFeedback = (
   trainerId,
-  sessionId
+  sessionId,
+  surveyType
 ) => async dispatch => {
   try {
     const url = `/api/feedback/trainer/${trainerId}`;
-    const data = { sessionId };
+    const data = { sessionId, surveyType };
 
     const res = await axios.post(url, data);
 

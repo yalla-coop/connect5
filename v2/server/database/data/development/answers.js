@@ -9,11 +9,20 @@ module.exports = async () => {
   const firstResponseDay1 = await Response.findOne({ PIN: 'RAM15' });
   const secondResponseDay1 = await Response.findOne({ PIN: 'RAM16' });
   const firstResponseDay2 = await Response.findOne({ PIN: 'RAM17' });
-  const trainTheTrainersResponses = await Response.find({
+  const preTrainTheTrainersResponses = await Response.find({
     surveyType: 'pre-train-trainers',
   });
+
+  const postTrainTheTrainersResponses = await Response.find({
+    surveyType: 'post-train-trainers',
+  });
+
   const preTrainTrainerQuestions = await Question.find({
     surveyType: 'pre-train-trainers',
+  });
+
+  const postTrainTrainerQuestions = await Question.find({
+    surveyType: 'post-train-trainers',
   });
 
   const preDay1Question = await Question.find({ surveyType: 'pre-day-1' });
@@ -1255,103 +1264,103 @@ module.exports = async () => {
     // first response
     {
       question: preTrainTrainerQuestions[0],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[0],
     },
     {
       question: preTrainTrainerQuestions[1],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[1],
     },
     {
       question: preTrainTrainerQuestions[2],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[2],
     },
     {
       question: preTrainTrainerQuestions[3],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[3],
     },
     {
       question: preTrainTrainerQuestions[4],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[3],
     },
     {
       question: preTrainTrainerQuestions[5],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[0],
     },
     {
       question: preTrainTrainerQuestions[6],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[1],
     },
     {
       question: preTrainTrainerQuestions[7],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[2],
     },
     {
       question: preTrainTrainerQuestions[8],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[3],
     },
     {
       question: preTrainTrainerQuestions[9],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[0],
     },
     {
       question: preTrainTrainerQuestions[10],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[1],
     },
     {
       question: preTrainTrainerQuestions[11],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[2],
     },
     {
       question: preTrainTrainerQuestions[12],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[3],
     },
     {
       question: preTrainTrainerQuestions[13],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[0],
     },
     {
       question: preTrainTrainerQuestions[14],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[1],
     },
     {
       question: preTrainTrainerQuestions[14],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[1],
     },
     {
       question: preTrainTrainerQuestions[15],
-      response: trainTheTrainersResponses[0],
+      response: preTrainTheTrainersResponses[0],
       PIN: 'PIV15',
       answer: options[2],
     },
@@ -1359,105 +1368,199 @@ module.exports = async () => {
     // second response
     {
       question: preTrainTrainerQuestions[0],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[1],
     },
     {
       question: preTrainTrainerQuestions[1],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[2],
     },
     {
       question: preTrainTrainerQuestions[2],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[3],
     },
     {
       question: preTrainTrainerQuestions[3],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[0],
     },
     {
       question: preTrainTrainerQuestions[4],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[1],
     },
     {
       question: preTrainTrainerQuestions[5],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[2],
     },
     {
       question: preTrainTrainerQuestions[6],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[3],
     },
     {
       question: preTrainTrainerQuestions[7],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[0],
     },
     {
       question: preTrainTrainerQuestions[8],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[1],
     },
     {
       question: preTrainTrainerQuestions[9],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[2],
     },
     {
       question: preTrainTrainerQuestions[10],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[3],
     },
     {
       question: preTrainTrainerQuestions[11],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[0],
     },
     {
       question: preTrainTrainerQuestions[12],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[1],
     },
     {
       question: preTrainTrainerQuestions[13],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[2],
     },
     {
       question: preTrainTrainerQuestions[14],
-      response: trainTheTrainersResponses[1],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[3],
     },
     {
-      question: preTrainTrainerQuestions[14],
-      response: trainTheTrainersResponses[1],
+      question: preTrainTrainerQuestions[15],
+      response: preTrainTheTrainersResponses[1],
       PIN: 'SLU23',
       answer: options[0],
     },
+
+    // post-train-trainers responses
+    // first response
     {
-      question: preTrainTrainerQuestions[15],
-      response: trainTheTrainersResponses[1],
-      PIN: 'SLU23',
+      question: postTrainTrainerQuestions[0],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
       answer: options[0],
+    },
+    {
+      question: postTrainTrainerQuestions[1],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[1],
+    },
+    {
+      question: postTrainTrainerQuestions[2],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[2],
+    },
+    {
+      question: postTrainTrainerQuestions[3],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[3],
+    },
+    {
+      question: postTrainTrainerQuestions[4],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[3],
+    },
+    {
+      question: postTrainTrainerQuestions[5],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[0],
+    },
+    {
+      question: postTrainTrainerQuestions[6],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[1],
+    },
+    {
+      question: postTrainTrainerQuestions[7],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[2],
+    },
+    {
+      question: postTrainTrainerQuestions[8],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[3],
+    },
+    {
+      question: postTrainTrainerQuestions[9],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[0],
+    },
+    {
+      question: postTrainTrainerQuestions[10],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[1],
+    },
+    {
+      question: postTrainTrainerQuestions[11],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[2],
+    },
+    {
+      question: postTrainTrainerQuestions[12],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[3],
+    },
+    {
+      question: postTrainTrainerQuestions[13],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[0],
+    },
+    {
+      question: postTrainTrainerQuestions[14],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[1],
+    },
+
+    {
+      question: postTrainTrainerQuestions[15],
+      response: postTrainTheTrainersResponses[0],
+      PIN: 'SLU24',
+      answer: options[2],
     },
   ];
   return Answer.create(answers);

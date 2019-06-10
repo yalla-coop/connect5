@@ -12,8 +12,13 @@ import { fetchTrainerFeedback as fetchTrainerFeedbackAction } from '../../../act
 
 class TrainerFeedbackOverall extends Component {
   componentDidMount() {
-    const { fetchTrainerFeedback, trainerId, sessionId } = this.props;
-    fetchTrainerFeedback(trainerId, sessionId);
+    const {
+      fetchTrainerFeedback,
+      trainerId,
+      sessionId,
+      surveyType,
+    } = this.props;
+    fetchTrainerFeedback(trainerId, sessionId, surveyType);
   }
 
   render() {

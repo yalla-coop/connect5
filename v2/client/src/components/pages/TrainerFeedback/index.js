@@ -10,6 +10,8 @@ import Header from '../../common/Header';
 const TrainerFeedbackOverall = ({ isAuthenticated, match }) => {
   // session id hardcoded for now
   const sessionId = null;
+  const surveyType = null;
+
   const { trainerId } = match.params;
 
   if (!isAuthenticated) {
@@ -21,7 +23,11 @@ const TrainerFeedbackOverall = ({ isAuthenticated, match }) => {
       <Header type="view" label="Trainer Feedback" />
       <Wrapper>
         <Paragraph>Did your trainer ask questions...</Paragraph>
-        <Feedback trainerId={trainerId} sessionId={sessionId} />
+        <Feedback
+          trainerId={trainerId}
+          sessionId={sessionId}
+          surveyType={surveyType}
+        />
       </Wrapper>
     </>
   );
