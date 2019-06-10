@@ -6,18 +6,14 @@ const buildDB = require('./../../database/data/test');
 const app = require('./../../app');
 
 describe('Tesing for addTrainerToGroup route', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(async () => {
     await mongoose.disconnect();
-  });
-
-  beforeEach(async () => {
-    // build dummy data
-    await buildDB();
   });
 
   test('test with adding new trainer', async done => {
@@ -73,7 +69,7 @@ describe('Tesing for addTrainerToGroup route', () => {
               `New has been added to ${localLead.name}'s group`
             );
 
-            done(err);
+            done(error);
           });
       });
   });
@@ -131,7 +127,7 @@ describe('Tesing for addTrainerToGroup route', () => {
               `${trainer.name} has been added to ${localLead.name}'s group`
             );
 
-            done(err);
+            done(error);
           });
       });
   });

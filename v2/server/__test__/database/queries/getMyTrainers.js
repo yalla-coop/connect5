@@ -7,9 +7,10 @@ const { getMyTrainers } = require('../../../database/queries/users/loaclLead');
 const User = require('../../../database/models/User');
 
 describe('Test getMyTrainers query', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(() => {

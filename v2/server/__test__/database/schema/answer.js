@@ -17,7 +17,7 @@ describe('Test Answer schema', () => {
     mongoose.disconnect();
   });
 
-  test('should Answer schema be defined', async () => {
+  test('should Answer schema be defined', () => {
     expect(Answer).toBeDefined();
   });
 

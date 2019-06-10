@@ -11,18 +11,17 @@ const storeAnswers = require('../../../database/queries/surveys/storeAnswers');
 // build db
 const buildDB = require('../../../database/data/test/index');
 
-beforeAll(async () => {
-  await buildDB();
-});
-afterAll(() => {
-  mongoose.disconnect();
-});
-
 describe('test survey queries', () => {
-  test('it successfully creates the collections', async () => {
-    expect(Question).toBeDefined();
+  beforeAll(async done => {
+    // build dummy data
+    await buildDB();
+    done();
   });
-  test('get survey questions for survey type', async () => {
+  afterAll(() => {
+    mongoose.disconnect();
+  });
+
+  test('get survey questions for survey type', async done => {
     const surveyType = 'pre-day-1';
     const singleSession = await Session.findOne({ type: '1' });
     const sessionId = singleSession._id;
@@ -33,17 +32,27 @@ describe('test survey queries', () => {
     expect(survey.sessionDate).toBeDefined();
     expect(survey.trainerNames).toBeDefined();
     expect(survey.trainerNames.length).toBe(2);
+    done();
   });
 
-  test('check getSurveyQs error handling', async () => {
+  test('check getSurveyQs error handling', () => {
     const surveyId = 1;
     const sessionId = '42343254353413413443545';
-    await surveyQs(surveyId, sessionId).catch(err => expect(err).toBeDefined());
+    surveyQs(surveyId, sessionId).catch(err => {
+      expect(err).toBeDefined();
+    });
   });
 });
 
 describe('Tests for storing responses and answers in database', () => {
-  test('storeResponse successfully stores answers and response in models', async () => {
+  beforeAll(async () => {
+    await buildDB();
+  });
+  afterAll(() => {
+    mongoose.disconnect();
+  });
+
+  test('storeResponse successfully stores answers and response in models', async done => {
     const surveyType = 'post-day-1';
     const singleSession = await Session.findOne({ type: '1' });
     const sessionId = singleSession._id;
@@ -57,7 +66,7 @@ describe('Tests for storing responses and answers in database', () => {
       '5cdc2e9546fec219392004ad': 'Other: test',
       '5cdc2e9546fec219392004ae': 'North East',
       '5cdc2e9546fec219392004b3': '2',
-      '5cdc2e9546fec219392004b4': '1'
+      '5cdc2e9546fec219392004b4': '1',
     };
 
     const storedAnswers = await storeAnswers(
@@ -69,5 +78,6 @@ describe('Tests for storing responses and answers in database', () => {
 
     expect(storedAnswers).toBeDefined();
     expect(storedAnswers[0].answer).toBe('Under 18');
+    done();
   });
 });

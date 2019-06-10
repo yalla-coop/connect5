@@ -7,9 +7,10 @@ const getTopStats = require('../../../database/queries/users/topStats');
 const User = require('../../../database/models/User');
 
 describe('Test topStats query', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(() => {

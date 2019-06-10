@@ -15,7 +15,7 @@ describe('Test User schema', () => {
     mongoose.disconnect();
   });
 
-  test('should User schema be defined', async () => {
+  test('should User schema be defined', () => {
     expect(User).toBeDefined();
   });
 
@@ -54,5 +54,6 @@ describe('Test User schema', () => {
     );
     expect(isCorrectPasswordCorrect).toBeTruthy();
     expect(isCorrectPasswordFalse).toBeFalsy();
+    done();
   });
 });

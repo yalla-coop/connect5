@@ -15,7 +15,7 @@ describe('Test Session schema', () => {
     mongoose.disconnect();
   });
 
-  test('should Session schema be defined', async () => {
+  test('should Session schema be defined', () => {
     expect(Session).toBeDefined();
   });
 

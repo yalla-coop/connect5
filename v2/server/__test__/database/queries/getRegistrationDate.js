@@ -6,9 +6,10 @@ const User = require('./../../../database/models/User');
 const { getRegistrationDate } = require('../../../database/queries/users');
 
 describe('Test getRegistrationDate query', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(() => {

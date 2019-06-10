@@ -5,9 +5,10 @@ const buildDB = require('../../database/data/test');
 const app = require('../../app');
 
 describe('Testing get trainerList API', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(() => {

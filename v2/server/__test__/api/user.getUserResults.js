@@ -7,9 +7,10 @@ const app = require('../../app');
 const User = require('../../database/models/User');
 
 describe('Testing dashboard stats API', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(() => {

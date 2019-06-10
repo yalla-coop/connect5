@@ -9,9 +9,10 @@ const {
 const User = require('../../../database/models/User');
 
 describe('Test getTraineGroupSurveys query', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(() => {
