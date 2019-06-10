@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
-import { DatePicker, Select, Input, Checkbox } from 'antd';
+import { DatePicker, Select, Input, Checkbox, Icon, Divider } from 'antd';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
@@ -18,24 +20,33 @@ import {
 } from './create-session.style';
 
 const { Option } = Select;
+
 const children = [];
 for (let i = 10; i < 36; i += 1) {
   children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
 }
 
+const initialState = {
+  session: '',
+  startDate: null,
+  inviteesNumber: '',
+  region: null,
+  partnerTrainer1: '',
+  partnerTrainer2: '',
+  emails: [],
+  err: false,
+};
+
 class CreateSession extends Component {
-  state = {
-    session: '',
-    startDate: null,
-    inviteesNumber: '',
-    region: null,
-    partnerTrainer1: '',
-    partnerTrainer2: '',
-    emails: [],
-    err: false,
-  };
+  state = initialState;
 
   componentDidMount() {
+    if (this.props.location.state) {
+      this.setState({
+        ...this.props.location.state,
+        startDate: moment(this.props.location.state.startDate),
+      });
+    }
     this.props.fetchAllTrainers();
     this.props.fetchLocalLeads();
   }
@@ -146,7 +157,15 @@ class CreateSession extends Component {
   render() {
     const { trainers, role, localLeads } = this.props;
 
-    const { startDate, inviteesNumber, err } = this.state;
+    const {
+      startDate,
+      inviteesNumber,
+      err,
+      session,
+      partnerTrainer1,
+      partnerTrainer2,
+      emails,
+    } = this.state;
     const {
       onDateChange,
       onInputChange,
@@ -180,6 +199,7 @@ class CreateSession extends Component {
               optionFilterProp="children"
               onChange={onSelectSessionChange}
               size="large"
+              value={session || undefined}
             >
               {sessions.map(({ value, label }) => (
                 <Option key={value} value={value}>
@@ -209,6 +229,7 @@ class CreateSession extends Component {
               optionFilterProp="children"
               onChange={onSelectRegionChange}
               size="large"
+              value={this.state.region ? this.state.region : undefined}
             >
               {regions.map(region => (
                 <Option key={region} value={region}>
@@ -226,6 +247,36 @@ class CreateSession extends Component {
               optionFilterProp="children"
               onChange={onSelectPartner1Change}
               size="large"
+              value={partnerTrainer1 || undefined}
+              dropdownRender={menu => (
+                <div>
+                  {role === 'localLead' && (
+                    <>
+                      <div
+                        onClick={() => {
+                          this.props.history.push({
+                            pathname: '/add-trainer',
+                            state: {
+                              ...this.state,
+                              startDate: this.state.startDate.valueOf(),
+                            },
+                          });
+                        }}
+                        style={{
+                          padding: '8px',
+                          cursor: 'pointer',
+                          textDecoration: 'none',
+                          display: 'block',
+                        }}
+                      >
+                        <Icon type="plus" /> Register New Trainer
+                      </div>
+                      <Divider style={{ margin: '4px 0' }} />{' '}
+                    </>
+                  )}
+                  {menu}
+                </div>
+              )}
             >
               {trainers &&
                 trainers.map(({ name, _id }) => (
@@ -243,12 +294,38 @@ class CreateSession extends Component {
           {role === 'localLead' && (
             <InputDiv>
               <Select
-                showSearch
-                style={{ width: '100%' }}
                 placeholder="Second Partner Trainer"
                 optionFilterProp="children"
                 onChange={onSelectPartner2Change}
                 size="large"
+                showSearch
+                style={{ width: '100%' }}
+                value={partnerTrainer2 || undefined}
+                dropdownRender={menu => (
+                  <div>
+                    <div
+                      onClick={() => {
+                        this.props.history.push({
+                          pathname: '/add-trainer',
+                          state: {
+                            ...this.state,
+                            startDate: this.state.startDate.valueOf(),
+                          },
+                        });
+                      }}
+                      style={{
+                        padding: '8px',
+                        cursor: 'pointer',
+                        textDecoration: 'none',
+                        display: 'block',
+                      }}
+                    >
+                      <Icon type="plus" /> Register New Trainer
+                    </div>
+                    <Divider style={{ margin: '4px 0' }} />
+                    {menu}
+                  </div>
+                )}
               >
                 {trainers &&
                   trainers.map(({ name, _id }) => (
@@ -273,7 +350,7 @@ class CreateSession extends Component {
               placeholder="participants Emails"
               onChange={onEmailChange}
               style={{ width: '100%', height: '100%' }}
-              value={this.state.emails}
+              value={emails}
             />
             <div>{err}</div>
           </InputDiv>
