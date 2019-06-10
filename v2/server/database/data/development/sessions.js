@@ -123,7 +123,7 @@ module.exports = async () => {
       type: 'train-trainers',
       numberOfAttendees: 5,
       region: 'North West',
-      trainers: [localLeads[0]],
+      trainers: [trainers[0], localLeads[0]],
       participantsEmails: [
         'nichole@gmail.com',
         'amal@gmail.com',
@@ -131,19 +131,19 @@ module.exports = async () => {
         'bakeza@gmail.com',
       ],
     },
-    {
-      date: '2019-04-16',
-      type: 'train-trainers',
-      numberOfAttendees: 9,
-      region: 'North West',
-      trainers: [localLeads[1]],
-      participantsEmails: [
-        'nichole@gmail.com',
-        'amal@gmail.com',
-        'nancy@gmail.com',
-        'bakeza@gmail.com',
-      ],
-    },
+    // {
+    //   date: '2019-04-16',
+    //   type: 'train-trainers',
+    //   numberOfAttendees: 9,
+    //   region: 'North West',
+    //   trainers: [localLeads[1]],
+    //   participantsEmails: [
+    //     'nichole@gmail.com',
+    //     'amal@gmail.com',
+    //     'nancy@gmail.com',
+    //     'bakeza@gmail.com',
+    //   ],
+    // },
     // special-2-days session => for normal users
     {
       date: '2019-05-20',

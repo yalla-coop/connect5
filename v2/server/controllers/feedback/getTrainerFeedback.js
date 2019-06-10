@@ -9,13 +9,12 @@ const {
 
 module.exports = (req, res, next) => {
   const { trainerId } = req.params;
-  const { sessionId } = req.body;
-
+  const { sessionId, surveyType } = req.body;
   if (!trainerId) {
     return next(boom.badRequest('no ID provided'));
   }
 
-  return trainerFeedback(trainerId, sessionId)
+  return trainerFeedback(trainerId, sessionId, surveyType)
     .then(result => res.json(result))
     .catch(err => next(boom.badImplementation('trainer feedback error')));
 };
