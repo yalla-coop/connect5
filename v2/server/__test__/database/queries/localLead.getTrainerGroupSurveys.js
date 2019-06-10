@@ -8,7 +8,7 @@ const {
 
 const User = require('../../../database/models/User');
 
-describe('Test getMyTrainers query', () => {
+describe('Test getTraineGroupSurveys query', () => {
   beforeAll(async () => {
     // build dummy data
     await buildDB();
@@ -25,22 +25,21 @@ describe('Test getMyTrainers query', () => {
 
     getTrainerGroupSurveys(lead.id).then(result => {
       expect(result).toBeDefined();
-      expect(result).toBe('hello');
-      expect(result[0].type).toBe('Session 1');
-      expect(result[0].sessions).toBe(3);
+      expect(result[0].type).toBe('Pre-course');
+      expect(result[0].responses).toBe(2);
       done();
     });
   });
 
-  // test('returns empty array if they dont have trainers', async done => {
-  //   // get a user who has no group of trainers stored
-  //   const lead = await User.findOne({ name: 'julie' });
+  test('returns object with everything at 0 if no trainers stored', async done => {
+    // get a user who has no group of trainers stored
+    const lead = await User.findOne({ name: 'julie' });
 
-  //   getTrainerGroupSurveys(lead.id).then(result => {
-  //     expect(result).toBeDefined();
-  //     expect(result[0].type).toBe('Session 1');
-  //     expect(result[0].sessions).toBe(0);
-  //     done();
-  //   });
-  // });
+    getTrainerGroupSurveys(lead.id).then(result => {
+      expect(result).toBeDefined();
+      expect(result[0].type).toBe('Pre-course');
+      expect(result[0].responses).toBe(0);
+      done();
+    });
+  });
 });

@@ -47,8 +47,6 @@ router.get(
   authentication(),
   getAllTrainersAndLeads
 );
-router.get('/users/my-trainers', getListOfTrainers);
-router.get('/users/admin/trainers-and-leads', getAllTrainersAndLeads);
 router.get('/users/trainer-sessions/:id', getTrainerSessions);
 router.get('/users/sessions/:id', authentication(), getLocalLeadsSessions);
 router.get('/users/sessions', getAllSessions);

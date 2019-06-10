@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const buildDB = require('../../database/data/test');
 const app = require('../../app');
 
+const User = require('../../database/models/User');
+
 describe('Testing dashboard stats API', () => {
   beforeAll(async () => {
     // build dummy data
@@ -36,7 +38,10 @@ describe('Testing dashboard stats API', () => {
       .expect(200)
       .end(async (error, result) => {
         const token = result.headers['set-cookie'][0].split(';')[0];
-        const resultData = { role: 'trainer' };
+
+        const trainer = await User.findOne({ role: 'trainer' });
+
+        const resultData = { id: trainer.id, role: 'trainer' };
 
         request(app)
           .post('/api/users/213123/results')
@@ -48,6 +53,7 @@ describe('Testing dashboard stats API', () => {
             expect(res.body).toBeDefined();
             expect(res.body.sessions).toBeDefined();
             expect(res.body.newSurveys).toBeDefined();
+            expect(res.body.registrationDate).toBeDefined();
             expect(res.body.sessions.length).toEqual(4);
             done(err);
           });

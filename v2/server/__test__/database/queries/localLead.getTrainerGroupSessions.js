@@ -8,7 +8,7 @@ const {
 
 const User = require('../../../database/models/User');
 
-describe('Test getMyTrainers query', () => {
+describe('Test getTrainerGroupSessions query', () => {
   beforeAll(async () => {
     // build dummy data
     await buildDB();
@@ -25,14 +25,13 @@ describe('Test getMyTrainers query', () => {
 
     getTrainerGroupSessions(lead.id).then(result => {
       expect(result).toBeDefined();
-      expect(result).toBe('hello');
       expect(result[0].type).toBe('Session 1');
       expect(result[0].sessions).toBe(3);
       done();
     });
   });
 
-  test('returns empty array if they dont have trainers', async done => {
+  test('returns object with 0 values if no trainers in group', async done => {
     // get a user who has no group of trainers stored
     const lead = await User.findOne({ name: 'julie' });
 

@@ -23,7 +23,7 @@ describe('Test getMyTrainers query', () => {
 
     getMyTrainers(lead.id).then(result => {
       expect(result).toBeDefined();
-      expect(result.length).toBe(3);
+      expect(result.length).toBe(4);
       expect(result[0][0].name).toBe('alex');
       done();
     });

@@ -34,8 +34,6 @@ const getUserResults = async (req, res, next) => {
 
   // const { id } = req.user;
   const { role, id } = req.body;
-  console.log('role', role);
-  console.log('id', id);
 
   const isValidId = mongoose.Types.ObjectId.isValid(id);
 
@@ -68,8 +66,6 @@ const getUserResults = async (req, res, next) => {
         surveys = await getTrainerSuerveys(id);
         break;
     }
-
-    console.log('ses', surveys);
 
     // calc the responseRate and add it to the surveys object
     const newSurveys = getResponseRate(sessions, surveys);

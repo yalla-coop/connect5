@@ -8,8 +8,6 @@ exports.getDashboardStats = async (req, res, next) => {
 
   // we need to send the type from the front in case user is localLead or admin but viewing the app in trainer view (i.e. for their own results)
 
-  console.log(user);
-
   const { userType } = req.body;
 
   try {

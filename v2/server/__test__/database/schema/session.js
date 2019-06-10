@@ -22,7 +22,7 @@ describe('Test Session schema', () => {
   test('should Session schema get data correctly', async done => {
     const sessions = await Session.find();
 
-    expect(sessions).toHaveLength(6);
+    expect(sessions).toHaveLength(13);
     done();
   });
 

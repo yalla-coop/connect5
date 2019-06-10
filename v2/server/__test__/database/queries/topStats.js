@@ -33,8 +33,8 @@ describe('Test topStats query', () => {
 
     getTopStats(localLead.id, 'localLead').then(result => {
       expect(result).toBeDefined();
-      expect(result.participantCount).toBe(45);
-      expect(result.trainerCount).toBe(3);
+      expect(result.participantCount).toBe(69);
+      expect(result.trainerCount).toBe(4);
       done();
     });
   });

@@ -441,8 +441,6 @@ const getMyTrainers = async leadId => {
       )
     );
 
-    console.log('hey;', trainers);
-
     return trainers;
   }
 
