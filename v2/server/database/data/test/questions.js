@@ -910,7 +910,6 @@ module.exports = () => {
     ...yourTrainer1('post-day-1'),
     ...yourTrainer2('post-day-1'),
   ];
-
   const postCourseDay2Questions = [
     ...behavioural2('post-day-2'),
     ...behavioural3('post-day-2'),
