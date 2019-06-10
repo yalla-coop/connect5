@@ -6,197 +6,76 @@ module.exports = async () => {
   const firstResponseOnPreDay1 = await Response.findOne({ PIN: 'HIO13' });
   const secondResponseOnPreDay1 = await Response.findOne({ PIN: 'RAM14' });
 
+  const firstResponseDay1 = await Response.findOne({ PIN: 'RAM15' });
+  const secondResponseDay1 = await Response.findOne({ PIN: 'RAM16' });
+  const firstResponseDay2 = await Response.findOne({ PIN: 'RAM17' });
   const trainTheTrainersResponses = await Response.find({
     surveyType: 'pre-train-trainers',
   });
-
   const preTrainTrainerQuestions = await Question.find({
-    surveyType: 'pre-train-the-trainer',
-  });
-  const post2DayQuestions = await Question.find({
-    surveyType: 'post-day-2',
-    group: 'Behavioural Insights',
+    surveyType: 'pre-train-trainers',
   });
 
   const preDay1Question = await Question.find({ surveyType: 'pre-day-1' });
+  const postDay1Question = await Question.find({ surveyType: 'post-day-1' });
+  const postDay2Question2 = await Question.find({ surveyType: 'post-day-2' });
 
   const options = ['not at all', 'a little', 'a lot', "I'm not sure"];
 
   const answers = [
-    // post2DayQuestions
-    {
-      question: post2DayQuestions[0],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[1],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[2],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[3],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[4],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[5],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[6],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[7],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[8],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[9],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[10],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[11],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[12],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[13],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[14],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[15],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[16],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[17],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[18],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[19],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-    {
-      question: post2DayQuestions[20],
-      PIN: 'HIO13',
-      response: firstResponseOnPreDay1,
-      answer: 1,
-    },
-
-    // preDay1Question answers
-    // DEMOGRAPHIC ---------------------------------------------------------------------------
+    // DEMOGRAPHIC
     {
       question: preDay1Question[0],
+
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: '18-24 years old',
     },
     {
       question: preDay1Question[1],
+
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: 'Male',
     },
     {
       question: preDay1Question[2],
+
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: 'White and Black Caribbean',
     },
     {
       question: preDay1Question[3],
+
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: 'North East',
     },
     {
       question: preDay1Question[4],
+
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: '00441',
     },
     {
       question: preDay1Question[5],
+
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: '2019-05-15',
     },
     {
       question: preDay1Question[6],
+
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: 'nurse',
     },
     {
       question: preDay1Question[7],
+
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer:
@@ -205,12 +84,14 @@ module.exports = async () => {
     // behavioural1
     {
       question: preDay1Question[8],
+
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: 10,
     },
     {
       question: preDay1Question[9],
+
       PIN: 'HIO13',
       response: firstResponseOnPreDay1,
       answer: 5,
@@ -670,6 +551,706 @@ module.exports = async () => {
       PIN: 'RAM14',
       answer: 6,
     },
+    // post session 1 no 1
+    // behavioural 2,3
+    {
+      question: postDay1Question[0],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[1],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[2],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[3],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[4],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[5],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[6],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[7],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[8],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[9],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[10],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[11],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[12],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: 7,
+    },
+    // your trainer 1
+    {
+      question: postDay1Question[13],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[0],
+    },
+    {
+      question: postDay1Question[14],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[1],
+    },
+    {
+      question: postDay1Question[15],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[3],
+    },
+    {
+      question: postDay1Question[16],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[17],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[18],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[1],
+    },
+    // your trainer 2
+    {
+      question: postDay1Question[19],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[20],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[21],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[22],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[1],
+    },
+    {
+      question: postDay1Question[23],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[0],
+    },
+    {
+      question: postDay1Question[24],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[25],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[1],
+    },
+    {
+      question: postDay1Question[26],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[0],
+    },
+    {
+      question: postDay1Question[27],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[28],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[1],
+    },
+    {
+      question: postDay1Question[29],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[0],
+    },
+    {
+      question: postDay1Question[28],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[29],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[1],
+    },
+    {
+      question: postDay1Question[28],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[29],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[0],
+    },
+    {
+      question: postDay1Question[28],
+      response: firstResponseDay1,
+      PIN: 'RAM15',
+      answer: options[2],
+    },
+
+    // post session 1 no 2
+    // behavioural 2,3
+    {
+      question: postDay1Question[0],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[1],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[2],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[3],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[4],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[5],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[6],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[7],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[8],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[9],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[10],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[11],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 6,
+    },
+    {
+      question: postDay1Question[12],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: 7,
+    },
+    // your trainer 1
+    {
+      question: postDay1Question[13],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[3],
+    },
+    {
+      question: postDay1Question[14],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[1],
+    },
+    {
+      question: postDay1Question[15],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[3],
+    },
+    {
+      question: postDay1Question[16],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[17],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[18],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[1],
+    },
+    // your trainer 2
+    {
+      question: postDay1Question[19],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[20],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[0],
+    },
+    {
+      question: postDay1Question[21],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[22],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[1],
+    },
+    {
+      question: postDay1Question[23],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[0],
+    },
+    {
+      question: postDay1Question[24],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[3],
+    },
+    {
+      question: postDay1Question[25],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[1],
+    },
+    {
+      question: postDay1Question[26],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[27],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[28],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[1],
+    },
+    {
+      question: postDay1Question[29],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[28],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[29],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[0],
+    },
+    {
+      question: postDay1Question[28],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[2],
+    },
+    {
+      question: postDay1Question[29],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[1],
+    },
+    {
+      question: postDay1Question[28],
+      response: secondResponseDay1,
+      PIN: 'RAM16',
+      answer: options[3],
+    },
+
+    // Post-day-2 survey
+    // behavioural 2,3
+    // {
+    //   question: postDay2Question2[0],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[1],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[2],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[3],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[4],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[5],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[6],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[7],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[8],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[9],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[10],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[11],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[12],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // // behavioural 4
+    // {
+    //   question: postDay2Question2[13],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[14],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[15],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[16],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[17],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[18],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[19],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    // {
+    //   question: postDay2Question2[20],
+    //   response: firstResponseDay2,
+    //   PIN: 'RAM17',
+    //   answer: 6,
+    // },
+    {
+      question: postDay2Question2[21],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: 7,
+    },
+    // your trainer 1
+    {
+      question: postDay2Question2[22],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[0],
+    },
+    {
+      question: postDay2Question2[23],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[1],
+    },
+    {
+      question: postDay2Question2[24],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[3],
+    },
+    {
+      question: postDay2Question2[25],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[26],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[27],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[1],
+    },
+    // your trainer 2
+    {
+      question: postDay2Question2[28],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[29],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[30],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[31],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[1],
+    },
+    {
+      question: postDay2Question2[32],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[0],
+    },
+    {
+      question: postDay2Question2[33],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[34],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[1],
+    },
+    {
+      question: postDay2Question2[35],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[36],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[37],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[38],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[39],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[40],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[41],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[42],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+    {
+      question: postDay2Question2[43],
+      response: firstResponseDay2,
+      PIN: 'RAM17',
+      answer: options[2],
+    },
+
     // pre-train-trainers responses
     // first response
     {

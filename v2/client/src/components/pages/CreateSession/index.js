@@ -10,6 +10,7 @@ import { fetchAllTrainers } from '../../../actions/trainerAction';
 import { fetchLocalLeads } from '../../../actions/users';
 import { createSessionAction } from '../../../actions/sessionAction';
 import { sessions, regions, pattern } from './options';
+
 import {
   Form,
   CreateSessionWrapper,

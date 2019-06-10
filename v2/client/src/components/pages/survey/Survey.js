@@ -5,17 +5,11 @@ import Header from '../../common/Header';
 
 import Questions from './Questions';
 
-import {
-  SurveyQs,
-  SurveyHeader,
-  SessionDetails,
-  Form,
-  Disclaimer,
-} from './Survey.style';
+import { Container, SurveyQs, SessionDetails, Form } from './Survey.style';
 
 // formState will be the object where we store survey responses
 // as the participant answers the questions
-export default class Survey extends React.Component {
+class Survey extends React.Component {
   state = {
     formState: {},
     surveyDetails: null,
@@ -45,10 +39,28 @@ export default class Survey extends React.Component {
         });
       })
       .then(() => {
-        swal.fire({
-          text:
-            'Many thanks for agreeing to fill in this form. Your feedback will be kept anonymous and will only take you a couple of minutes to complete. Your feedback helps us evaluate and improve the program.',
-        });
+        swal
+          .fire({
+            title: 'Research Cooperation <br>(University of Manchester)',
+            text:
+              'Many thanks for agreeing to fill in this form. Your responses will be collated by University of Manchester to evaluate Connect5. University of Manchester will use anonymised data collected for research purposes. Individuals will never been identified by their responses. If you do not consent for your data to be used for research purposes, please tick.',
+            input: 'checkbox',
+            inputPlaceholder: '<strong>I don not agree</strong>',
+          })
+          .then(result => {
+            if (result.value) {
+              swal.fire({
+                type: 'error',
+                text:
+                  'Thank you, your data will not be used for research purposes',
+              });
+              // do something here
+            } else if (result.value === 0) {
+              swal.fire({ type: 'success', text: 'Thank you!' });
+            } else {
+              console.log(`modal was dismissed by ${result.dismiss}`);
+            }
+          });
       })
       .catch(err => console.error(err.stack));
   }
@@ -132,77 +144,47 @@ export default class Survey extends React.Component {
       questionsForSurvey,
       surveyType,
     } = surveyDetails;
-    return (
-      <SurveyQs>
-        <Header type="home" />
-        <SurveyHeader />
 
-        <SessionDetails>
-          <h3>Session Details:</h3>
-          <p>
-            <span>Session Date: </span>
-            {sessionDate}
-          </p>
-          <p>
-            <span>Trainers: </span>
-            {this.renderTrainerNames(trainerNames)}
-          </p>
-          <p>
-            <span>Session Type: </span>
-            {surveyType}
-          </p>
-        </SessionDetails>
-        <main>
-          <Disclaimer>
-            <h3>Privacy notice</h3>
-            <p>
-              Connect 5 will use your information to evaluate the outcomes of
-              our mental health promotion project at national and regional
-              level. The quantitative results of this survey will be presented
-              in an aggregated manner and all comments will be anonymous.
-            </p>
-            <p>
-              Our legal basis for processing your information is to fulfill our
-              legitimate interests as a developer of public health projects and
-              manage the programs we offer. Managing development projects
-              includes administering records, providing and organising
-              activities; arranging training; events; webinars; conferences;
-              special interest groups; awards; CPD; education; research;
-              monitoring for equal opportunity purposes; advising you of our
-              services; maintaining our own accounts and records.
-            </p>
-            <p>
-              We will retain your personal information for the duration of your
-              association with RSPH. When your association with us expires we
-              will continue to retain some of your information in order to be
-              able to prove your association if needed. We will delete the
-              information which is no longer required for six years after your
-              association expires. We will send you relevant information about
-              the services we provide to our members.
-            </p>
-            <p>
-              We may share some of your personal information with our
-              commissioners such as Health Education England or the organisation
-              that has commissioned the Connect 5 training you received. We will
-              not share your personal information with any other organisation
-              without your prior consent, unless we are required to do so by
-              law.
-            </p>
-          </Disclaimer>
-          <Form onSubmit={this.handleSubmit}>
-            <Questions
-              questions={questionsForSurvey}
-              onChange={this.handleChange}
-              handleOther={this.handleOther}
-              handlePIN={this.handlePIN}
-              answers={formState}
-              selectCheckedItem={this.selectCheckedItem}
-              errors={errors}
-            />
-            <button type="submit">Submit Feedback</button>
-          </Form>
-        </main>
-      </SurveyQs>
+    return (
+      <Container>
+        <SurveyQs>
+          <Header type="home" />
+
+          <SessionDetails>
+            <h3>Connect 5 Evaluation</h3>
+            <ul>
+              <li>
+                <strong>Session Date: </strong>
+                {sessionDate}
+              </li>
+              <li>
+                <strong>Trainers: </strong>
+                {this.renderTrainerNames(trainerNames)}
+              </li>
+              <li>
+                <strong>Session Type: </strong>
+                {surveyType}
+              </li>
+            </ul>
+          </SessionDetails>
+          <main>
+            <Form onSubmit={this.handleSubmit}>
+              <Questions
+                questions={questionsForSurvey}
+                onChange={this.handleChange}
+                handleOther={this.handleOther}
+                handlePIN={this.handlePIN}
+                answers={formState}
+                selectCheckedItem={this.selectCheckedItem}
+                errors={errors}
+              />
+              <button type="submit">Submit Feedback</button>
+            </Form>
+          </main>
+        </SurveyQs>
+      </Container>
     );
   }
 }
+
+export default Survey;
