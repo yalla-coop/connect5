@@ -9,6 +9,8 @@ import styled from 'styled-components';
 import { checkAuth } from '../actions/authAction';
 
 // PAGES
+// import Login from './pages/auth/login';
+import CreateSession from './pages/CreateSession';
 import Login from './pages/Login/Login';
 import ParticipantLogin from './pages/Login/LoginParticipant';
 import UserDashboard from './pages/userDashboard';
@@ -95,8 +97,8 @@ class App extends Component {
 
             <Route exact path={TRAINERS_URL} component={TrainerListPage} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/create-session" component={CreateSession} />
             <Route exact path={SURVEY_URL} component={Survey} />
-
             <Route
               exact
               path={LOGIN_URL}
