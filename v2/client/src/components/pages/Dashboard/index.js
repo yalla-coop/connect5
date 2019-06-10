@@ -29,26 +29,27 @@ import {
 } from '../../../constants/navigationRoutes';
 
 class Dashboard extends Component {
-  state = {
-    userType: null,
-  };
-
   componentDidMount() {
-    // once we have log in sorted userType and name will come from props
+    // once we have log in sorted role and name will come from props
     // it can then be removed from state
-    // const { userType, userName } = this.props;
-    const userType = 'trainer';
+    // const { role, userName } = this.props;
+    // const role = 'trainer';
+    const { role, fetchStatsData: fetchStatsDataActionCreator } = this.props;
 
+    fetchStatsDataActionCreator(role);
     // this.setState({ userType });
-    const { fetchStatsData: fetchStatsDataActionCreator } = this.props;
-    fetchStatsDataActionCreator(userType);
+    // const { fetchStatsData: fetchStatsDataActionCreator } = this.props;
+    // fetchStatsDataActionCreator(userType);
   }
 
   render() {
-    const { userName, stats, role } = this.props;
+    const { userName, stats } = this.props;
+    // const { id } = auth;
 
     const captalizesName =
       userName && userName[0].toUpperCase() + userName.substr(1);
+
+    const { role } = this.props;
 
     return (
       <Wrapper>
@@ -116,6 +117,7 @@ const mapStateToProps = state => {
   return {
     userName: state.auth.name,
     stats: state.stats,
+    userId: state.auth.id,
     role: state.auth.role,
   };
 };

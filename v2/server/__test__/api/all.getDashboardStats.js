@@ -5,9 +5,10 @@ const buildDB = require('../../database/data/test');
 const app = require('../../app');
 
 describe('Testing dashboard stats API', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(() => {
@@ -47,8 +48,8 @@ describe('Testing dashboard stats API', () => {
             expect(1).toBe(1);
             expect(res.body).toBeDefined();
             expect(res.body.stats).toBeDefined();
-            expect(res.body.stats.participantCount).toBe(23);
-            expect(res.body.stats.responseRate).toBe(9);
+            expect(res.body.stats.participantCount).toBe(45);
+            expect(res.body.stats.responseRate).toBe(20);
             expect(res.body.userType).toBe(dashboardData.userType);
             done(err);
           });

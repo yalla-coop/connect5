@@ -38,7 +38,7 @@ export const Title = styled.p`
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
-
+  padding: 10px 40px;
   color: #4f4f4f;
 
   @media ${breakpoints.mobileXL} {

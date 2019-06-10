@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colorCodes, borders } from '../../../theme';
+import { colors, borders } from '../../../theme';
 
 const CommonStyles = styled.div`
   margin-bottom: 3rem;
@@ -65,18 +65,19 @@ const RadioField = styled(CommonStyles)`
         width: 25px;
 
         :hover ~ .checkmark {
-          background-color: ${colorCodes.extralightPrimary};
+          background-color: ${colors.extralightPrimary};
         }
 
         :checked ~ .checkmark {
-          border: 8px solid ${colorCodes.primary};
+          border: 3px solid ${colors.primary};
         }
       }
 
       .checkmark {
+        border: 0.5px solid ${colors.transGray};
         height: 25px;
         width: 25px;
-        background-color: ${colorCodes.lightGray};
+        background-color: ${colors.transGray};
         border-radius: 50%;
         display: block;
       }
@@ -88,7 +89,7 @@ const TextField = styled(CommonStyles)`
   margin-top: 1rem;
   input {
     border-radius: 1rem;
-    border: 1px solid ${colorCodes.gray};
+    border: 1px solid ${colors.gray};
     width: 90%;
   }
   h3 {
@@ -97,7 +98,7 @@ const TextField = styled(CommonStyles)`
 
   textarea {
     border-radius: 1rem;
-    border: 1px solid ${colorCodes.gray};
+    border: 1px solid ${colors.gray};
     width: 100%;
     padding: 8px;
   }
@@ -107,12 +108,11 @@ const NumberSliderDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 `;
 
 const Slider = styled.input`
   -webkit-appearance: none;
-
+  width: 100%;
   height: 25px;
   border: ${borders.inputBox};
 
@@ -122,27 +122,28 @@ const Slider = styled.input`
     height: 20px;
     border-radius: 10px;
     cursor: ew-resize;
-    background: ${colorCodes.primary};
+    background: ${colors.primary};
   }
 `;
 
 const NumberOutput = styled.output`
   margin-top: 10px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 300;
-  background: white;
-  border-radius: 0.8em;
+
   -moz-border-radius: 0.8em;
   -webkit-border-radius: 0.8em;
-  color: ${colorCodes.black};
-  display: inline-block;
+  color: ${colors.black};
   line-height: 1.6em;
-  text-align: center;
   width: 1.6em;
 `;
 
 const QuestionCategory = styled.i`
   font-size: 1rem;
+`;
+
+export const ErrorDiv = styled.div`
+  margin-bottom: 20px;
 `;
 
 export {

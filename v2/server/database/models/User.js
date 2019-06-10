@@ -5,52 +5,57 @@ const { regions } = require('./../DBConstants');
 
 const { Schema, model } = mongoose;
 
-const userSchema = new Schema({
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true,
-    lowercase: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  //  the trainer's local lead
-  localLead: {
-    type: Schema.Types.ObjectId,
-    ref: 'users',
-  },
-  // group of trainers that user is co-ordinating
-  // list of trainers ID
-  trainersGroup: [
-    {
+const userSchema = new Schema(
+  {
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+      trim: true,
+      lowercase: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    //  the trainer's local lead
+    localLead: {
       type: Schema.Types.ObjectId,
       ref: 'users',
     },
-  ],
-  region: {
-    type: String,
-    enum: regions.map(region => region.toLocaleLowerCase()),
-    lowercase: true,
+    // group of trainers that user is co-ordinating
+    // list of trainers ID
+    trainersGroup: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+      },
+    ],
+    region: {
+      type: String,
+      enum: regions.map(region => region.toLocaleLowerCase()),
+      lowercase: true,
+    },
+    role: {
+      type: String,
+      enum: ['admin', 'localLead', 'trainer'],
+      required: true,
+    },
+    // name - to be showed in the dashboard
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    organization: {
+      type: String,
+      trim: true,
+    },
   },
-  role: {
-    type: String,
-    enum: ['admin', 'localLead', 'trainer'],
-    required: true,
-  },
-  // name - to be showed in the dashboard
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  organization: {
-    type: String,
-    trim: true,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.pre('save', async function hashPasswrod() {
   if (this.isNew || this.isModified('password')) {

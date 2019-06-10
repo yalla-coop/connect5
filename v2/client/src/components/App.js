@@ -8,7 +8,11 @@ import styled from 'styled-components';
 
 import { checkAuth } from '../actions/authAction';
 
+import { colors } from '../theme';
+
 // PAGES
+// import Login from './pages/auth/login';
+import CreateSession from './pages/CreateSession';
 import Login from './pages/Login/Login';
 import ParticipantLogin from './pages/Login/LoginParticipant';
 import UserDashboard from './pages/userDashboard';
@@ -22,6 +26,7 @@ import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import SurveyResults from './pages/SurveyResults';
+import TrainerFeedBack from './pages/TrainerFeedback';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -35,14 +40,18 @@ import {
   LOGIN_URL,
   SIGN_UP_URL,
   TRAINERS_URL,
+  TRAINER_RESULTS_URL,
+  GROUP_RESULTS_URL,
   TRAINER_SESSIONS_URL,
   GROUP_SESSIONS_URL,
+  TRAINER_FEEDBACK_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
 
 const Wrapper = styled.div`
   min-height: 100vh;
+  background-color: ${colors.offWhite};
 `;
 
 class App extends Component {
@@ -63,8 +72,29 @@ class App extends Component {
               component={SurveyResults}
             />
             <Route exact path="/" component={Home} />
+            <PrivateRoute
+              exact
+              path={TRAINER_RESULTS_URL}
+              Component={UserResults}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['trainer', 'admin', 'localLead']}
+              role={role}
+              navbar
+            />
 
-            <Route exact path="/users/:id/results" component={UserResults} />
+            <PrivateRoute
+              exact
+              path={GROUP_RESULTS_URL}
+              Component={UserResults}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['trainer', 'admin', 'localLead']}
+              role={role}
+              groupView
+              navbar
+            />
+
             <Route exact path={HOME_URL} component={Home} />
 
             <PrivateRoute
@@ -79,18 +109,39 @@ class App extends Component {
 
             <PrivateRoute
               exact
-              path={DASHBOARD_URL}
-              Component={Dashboard}
+              path={TRAINER_FEEDBACK_URL}
+              Component={TrainerFeedBack}
               isAuthenticated={isAuthenticated}
               loaded={loaded}
               allowedRoles={['admin', 'localLead', 'trainer']}
               role={role}
             />
 
-            <Route exact path={TRAINERS_URL} component={TrainerListPage} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path={SURVEY_URL} component={Survey} />
+            <PrivateRoute
+              exact
+              path={DASHBOARD_URL}
+              Component={Dashboard}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
 
+            <PrivateRoute
+              exact
+              path={TRAINERS_URL}
+              Component={TrainerListPage}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead']}
+              role={role}
+              navbar
+            />
+
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/create-session" component={CreateSession} />
+            <Route exact path={SURVEY_URL} component={Survey} />
             <Route
               exact
               path={LOGIN_URL}
@@ -154,26 +205,29 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               allowedRoles={['participant']}
               role={role}
+              navbar
             />
 
             <PrivateRoute
               exact
               path={TRAINER_SESSIONS_URL}
-              component={ViewSessions}
+              Component={ViewSessions}
               loaded={loaded}
               isAuthenticated={isAuthenticated}
               allowedRoles={['trainer', 'localLead', 'admin']}
               role={role}
+              navbar
             />
 
             <PrivateRoute
               exact
               path={GROUP_SESSIONS_URL}
-              component={ViewSessions}
+              Component={ViewSessions}
               loaded={loaded}
               isAuthenticated={isAuthenticated}
               allowedRoles={['localLead', 'admin']}
               role={role}
+              navbar
             />
             <Route
               path="/404err"

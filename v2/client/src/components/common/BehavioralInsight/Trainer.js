@@ -60,7 +60,7 @@ class BehavioralTrainerResults extends Component {
             Behaviour is influenced by our perceptions of our capability,
             opportunity and motivation for that behaviour
           </Title>
-          {Object.keys(data) ? (
+          {Object.keys(data).length ? (
             Object.entries(data).map(pairOfArray => (
               <ChartWrapper key={pairOfArray[0]}>
                 <WhiteWrapper>
@@ -146,7 +146,7 @@ class BehavioralTrainerResults extends Component {
               </ChartWrapper>
             ))
           ) : (
-            <h1>No data</h1>
+            <h4 style={{ textAlign: 'center' }}>No data collected yet</h4>
           )}
         </ContentWrapper>
       </Wrapper>

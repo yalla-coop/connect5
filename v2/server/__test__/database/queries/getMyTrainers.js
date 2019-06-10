@@ -7,9 +7,10 @@ const { getMyTrainers } = require('../../../database/queries/users/loaclLead');
 const User = require('../../../database/models/User');
 
 describe('Test getMyTrainers query', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(() => {
@@ -23,7 +24,7 @@ describe('Test getMyTrainers query', () => {
 
     getMyTrainers(lead.id).then(result => {
       expect(result).toBeDefined();
-      expect(result.length).toBe(3);
+      expect(result.length).toBe(4);
       expect(result[0][0].name).toBe('alex');
       done();
     });

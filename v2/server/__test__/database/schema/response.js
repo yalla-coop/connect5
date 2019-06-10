@@ -16,14 +16,14 @@ describe('Test Response schema', () => {
     mongoose.disconnect();
   });
 
-  test('should Response schema be defined', async () => {
+  test('should Response schema be defined', () => {
     expect(Response).toBeDefined();
   });
 
   test('should Response schema get data correctly', async done => {
     const responses = await Response.find();
 
-    expect(responses).toHaveLength(4);
+    expect(responses).toHaveLength(9);
     done();
   });
 

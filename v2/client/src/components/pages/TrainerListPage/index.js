@@ -27,12 +27,11 @@ export default class TrainerListPage extends Component {
     localLeads: null,
     loaded: false,
     toggle: 'left',
-    userType: 'admin',
   };
 
   componentDidMount() {
-    const { userType } = this.state;
-    if (userType === 'admin') {
+    const { role } = this.props;
+    if (role === 'admin') {
       this.adminFetchData();
     } else {
       this.localLeadFetchData();
@@ -79,9 +78,9 @@ export default class TrainerListPage extends Component {
       localLeads,
       loaded,
       toggle,
-      userType,
     } = this.state;
-    // NOTE: userType is temp and will change once we have log in set up
+
+    const { role } = this.props;
 
     if (!loaded) return <p>Loading...</p>;
     return (
@@ -94,7 +93,7 @@ export default class TrainerListPage extends Component {
           <HeaderNumber>
             {toggle === 'left' ? trainerCount : localLeadCount}
           </HeaderNumber>
-          {userType === 'admin' && (
+          {role === 'admin' && (
             <Toggle
               leftText="trainers"
               rightText="local leads"
@@ -102,13 +101,16 @@ export default class TrainerListPage extends Component {
               onClick={this.clickToggle}
             />
           )}
-          {userType === 'localLead' && (
+          {role === 'localLead' && (
             <Link to={ADD_TRAINER_URL}>
               <Button label="Add Trainer" type="outline" width="146px" />
             </Link>
           )}
         </HeaderSection>
-        <TrainerList dataList={toggle === 'left' ? trainers : localLeads} />
+        <TrainerList
+          dataList={toggle === 'left' ? trainers : localLeads}
+          viewRole={role}
+        />
       </Wrapper>
     );
   }
