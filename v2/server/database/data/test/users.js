@@ -181,15 +181,15 @@ module.exports = async () => {
   const trainers = await User.find({ role: 'trainer' });
 
   await User.findByIdAndUpdate(storedLocalLeads[0].id, {
-    trainersGroup: [trainers[0], trainers[1], trainers[2]],
+    trainersGroup: [trainers[0], trainers[1], trainers[2], storedLocalLeads[0]],
   });
 
   await User.findByIdAndUpdate(storedLocalLeads[1].id, {
-    trainersGroup: [trainers[3], trainers[4], trainers[5]],
+    trainersGroup: [trainers[3], trainers[4], trainers[5], storedLocalLeads[1]],
   });
 
   await User.findByIdAndUpdate(storedLocalLeads[2].id, {
-    trainersGroup: [trainers[6], trainers[7], trainers[8]],
+    trainersGroup: [trainers[6], trainers[7], trainers[8], storedLocalLeads[2]],
   });
 
   return 'completed';

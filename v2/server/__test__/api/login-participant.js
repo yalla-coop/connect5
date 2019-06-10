@@ -5,33 +5,28 @@ const buildDB = require('./../../database/data/test');
 const app = require('./../../app');
 
 describe('Tesing for login participant route', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(async () => {
     await mongoose.disconnect();
   });
 
-  beforeEach(async () => {
-    // build dummy data
-    await buildDB();
-  });
-
   test('test with correct pin', done => {
-    const PIN = 'HIO13';
+    const data = { PIN: 'HIO13' };
 
     request(app)
       .post('/api/participant-login')
-      .send(PIN)
-      .expect('Content-Type', /json/)
+      .send(data)
+      // .expect('Content-Type', /json/)
       .expect(200)
-      .end((err, res) => {
+      .end(async (err, res) => {
         expect(res).toBeDefined();
         expect(res.body).toBeDefined();
-
-        done();
+        done(err);
       });
   });
 
@@ -43,7 +38,7 @@ describe('Tesing for login participant route', () => {
       .send(PIN)
       .expect('Content-Type', /json/)
       .expect(401)
-      .end((err, res) => {
+      .end(async (err, res) => {
         expect(res.body.error).toMatch('login failed, PIN is not exist');
         done(err);
       });

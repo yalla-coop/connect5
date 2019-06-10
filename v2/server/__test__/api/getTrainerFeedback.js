@@ -7,18 +7,14 @@ const buildDB = require('./../../database/data/test');
 const app = require('./../../app');
 
 describe('Tesing for getTrainerFeedback route', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
-  afterAll(async () => {
-    await mongoose.disconnect();
-  });
-
-  beforeEach(async () => {
-    // build dummy data
-    await buildDB();
+  afterAll(() => {
+    mongoose.disconnect();
   });
 
   test('test with valid trainer id', async done => {
@@ -35,6 +31,7 @@ describe('Tesing for getTrainerFeedback route', () => {
         expect(result.body[0]).toBeDefined();
         done();
       });
+    done();
   });
 
   test('test with valid trainer and session id', async done => {
@@ -52,6 +49,7 @@ describe('Tesing for getTrainerFeedback route', () => {
         expect(result.body[0]).toBeDefined();
         done();
       });
+    done();
   });
 
   test('test with invalid trainer id', async done => {

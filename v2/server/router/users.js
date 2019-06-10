@@ -39,11 +39,14 @@ router.post('/trainers', signUpTrainer);
 router.post('/users/local-leads/group', authentication(), addTrainerToGroup);
 router.get('/local-leads', getLocalLeads);
 
-router.get('/users/:id/results', getUserResults);
-// router.get('/trainer/info', getTrianerReachData);
-router.post('/all/dashboard', getDashboardStats);
+router.use('/users/:id/results', authentication(), getUserResults);
+router.get('/users/my-trainers', authentication(), getListOfTrainers);
+router.get(
+  '/users/admin/trainers-and-leads',
+  authentication(),
+  getAllTrainersAndLeads
+);
 router.get('/fetch-trainers', fetchAllTrainers);
-router.get('/users/my-trainers', getListOfTrainers);
 router.get('/users/admin/trainers-and-leads', getAllTrainersAndLeads);
 router.get('/users/trainer-sessions/:id', getTrainerSessions);
 router.get('/users/sessions/:id', authentication(), getLocalLeadsSessions);

@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 const User = require('../../database/models/User');
 
 const {
-  getLocalLeadsSessions,
-  getTeamLeadSuerveys,
+  getTrainerGroupSessions,
+  getTrainerGroupSurveys,
   getMyTrainers,
 } = require('../../database/queries/users/loaclLead');
 
@@ -22,11 +22,16 @@ const {
   getTrainerSuerveys,
 } = require('../../database/queries/users/trainerResults');
 
+const { getRegistrationDate } = require('../../database/queries/users');
+
 const getResponseRate = require('../../helpers/getResponseRate');
 
 // get the logged in user results
 const getUserResults = async (req, res, next) => {
-  const { id } = req.params;
+  // const { id } = req.params;
+
+  // const { id } = req.user;
+  const { role, id } = req.body;
 
   const isValidId = mongoose.Types.ObjectId.isValid(id);
 
@@ -39,15 +44,15 @@ const getUserResults = async (req, res, next) => {
     if (!user) {
       return next(boom.notFound('User not found'));
     }
-    const { role } = user;
+    // const { role } = user;
 
     let sessions;
     let surveys;
 
     switch (role) {
       case 'localLead':
-        sessions = await getLocalLeadsSessions(id);
-        surveys = await getTeamLeadSuerveys(id);
+        sessions = await getTrainerGroupSessions(id);
+        surveys = await getTrainerGroupSurveys(id);
         break;
       case 'admin':
         sessions = await getAdminSessions(id);
@@ -63,7 +68,10 @@ const getUserResults = async (req, res, next) => {
     // calc the responseRate and add it to the surveys object
     const newSurveys = getResponseRate(sessions, surveys);
 
-    const results = { sessions, newSurveys };
+    // get when the user registered an account
+    const registrationDate = await getRegistrationDate(id);
+
+    const results = { sessions, newSurveys, registrationDate };
     return res.json(results);
   } catch (err) {
     return next(boom.badImplementation('Internal server error'));
@@ -72,7 +80,9 @@ const getUserResults = async (req, res, next) => {
 
 const getListOfTrainers = async (req, res, next) => {
   // this is temp until log in is in place
-  const user = await User.findOne({ name: 'nisha' });
+  // const user = await User.findOne({ name: 'nisha' });
+
+  const { user } = req;
 
   try {
     const trainers = await getMyTrainers(user.id);
@@ -87,6 +97,10 @@ const getListOfTrainers = async (req, res, next) => {
 
 const getAllTrainersAndLeads = async (req, res, next) => {
   // NEED TO MAKE SURE WE PUT THIS THROUGH AUTH SO ONLY ADMIN CAN ACCESS
+  const { user } = req;
+
+  if (user.role !== 'admin')
+    return next(boom.unauthorized('Do not have admin rights'));
 
   try {
     const trainers = await getAllTrainers();
