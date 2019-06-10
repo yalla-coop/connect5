@@ -1,4 +1,8 @@
-import { GET_ERRORS, CLEAR_ERRORS } from '../constants/actionTypes';
+import {
+  GET_ERRORS,
+  CLEAR_ERRORS,
+  ADD_SESSION_FAIL,
+} from '../constants/actionTypes';
 
 const initialState = {
   msg: {},
@@ -10,6 +14,7 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case GET_ERRORS:
+    case ADD_SESSION_FAIL:
       return {
         msg: payload.msg,
         status: payload.status,

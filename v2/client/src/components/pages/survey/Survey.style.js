@@ -1,40 +1,36 @@
 import styled from 'styled-components';
 import { colorCodes, borders } from '../../../theme';
 
+export const Container = styled.div`
+  max-width: 900px;
+  margin: 0 auto;
+  padding-top: 50px;
+`;
+
 const SurveyQs = styled.div`
   main {
     padding: 0 8px;
-    background: ${colorCodes.offWhite};
-  }
-`;
-
-const SurveyHeader = styled.header`
-  height: 56px;
-  display: flex;
-  padding: 0 8px;
-
-  justify-content: space-between;
-
-  h1 {
-    font-size: 2rem;
-    font-weight: 300;
+    // background: ${colorCodes.offWhite};
   }
 `;
 
 const SessionDetails = styled.div`
-  background: ${colorCodes.lightGray};
-  border-bottom: ${borders.button};
   span {
-    font-weight: 600;
+    font-weight: 300;
   }
   h3 {
     font-size: 2rem;
     font-weight: 300;
   }
+  ul {
+    text-align: right;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
   margin: 1rem 0;
 `;
-
-const Intro = styled.div``;
 
 const Disclaimer = styled.div`
   p {
@@ -64,4 +60,4 @@ const Form = styled.form`
   }
 `;
 
-export { SurveyQs, SurveyHeader, SessionDetails, Form, Intro, Disclaimer };
+export { SurveyQs, SessionDetails, Form, Disclaimer };

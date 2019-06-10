@@ -9,6 +9,8 @@ import styled from 'styled-components';
 import { checkAuth } from '../actions/authAction';
 
 // PAGES
+// import Login from './pages/auth/login';
+import CreateSession from './pages/CreateSession';
 import Login from './pages/Login/Login';
 import ParticipantLogin from './pages/Login/LoginParticipant';
 import UserDashboard from './pages/userDashboard';
@@ -22,6 +24,7 @@ import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import SurveyResults from './pages/SurveyResults';
+import TrainerFeedBack from './pages/TrainerFeedback';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -37,6 +40,7 @@ import {
   TRAINERS_URL,
   TRAINER_SESSIONS_URL,
   GROUP_SESSIONS_URL,
+  TRAINER_FEEDBACK_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -79,6 +83,16 @@ class App extends Component {
 
             <PrivateRoute
               exact
+              path={TRAINER_FEEDBACK_URL}
+              Component={TrainerFeedBack}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+            />
+
+            <PrivateRoute
+              exact
               path={DASHBOARD_URL}
               Component={Dashboard}
               isAuthenticated={isAuthenticated}
@@ -89,8 +103,8 @@ class App extends Component {
 
             <Route exact path={TRAINERS_URL} component={TrainerListPage} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/create-session" component={CreateSession} />
             <Route exact path={SURVEY_URL} component={Survey} />
-
             <Route
               exact
               path={LOGIN_URL}
