@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+
+import { Modal } from 'antd';
+
 // ROUTES
 import { ADD_TRAINER_URL } from '../../../constants/navigationRoutes';
 
@@ -19,7 +23,9 @@ import {
   HeaderNumber,
 } from './TrainerListPage.style';
 
-export default class TrainerListPage extends Component {
+const { confirm } = Modal;
+
+class TrainerListPage extends Component {
   state = {
     trainerCount: 0,
     localLeadCount: 0,
@@ -48,7 +54,12 @@ export default class TrainerListPage extends Component {
           loaded: true,
         });
       })
-      .catch(err => console.error(err));
+      .catch(err =>
+        Modal.error({
+          title: 'Error',
+          content: err.response.data.error,
+        })
+      );
   };
 
   adminFetchData = () => {
@@ -63,13 +74,46 @@ export default class TrainerListPage extends Component {
           loaded: true,
         });
       })
-      .catch(err => console.error(err));
+      .catch(err =>
+        Modal.error({
+          title: 'Error',
+          content: err.response.data.error,
+        })
+      );
   };
 
   clickToggle = () => {
     const { toggle } = this.state;
     if (toggle === 'left') this.setState({ toggle: 'right' });
     else this.setState({ toggle: 'left' });
+  };
+
+  deleteUser = async trainerId => {
+    const { userId: localLeadId } = this.props;
+    try {
+      await axios.delete(`/api/local-lead/${localLeadId}/trainer`, {
+        data: { trainerId },
+      });
+      this.localLeadFetchData();
+    } catch (err) {
+      Modal.error({
+        title: 'Error',
+        content: err.response.data.error,
+      });
+    }
+  };
+
+  showDeleteConfirm = trainerId => {
+    confirm({
+      title: 'Are you sure delete this trainer?',
+      content: 'Delete trainer',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: () => {
+        this.deleteUser(trainerId);
+      },
+    });
   };
 
   render() {
@@ -109,11 +153,20 @@ export default class TrainerListPage extends Component {
             </Link>
           )}
         </HeaderSection>
-        <TrainerList
-          dataList={toggle === 'left' ? trainers : localLeads}
-          viewRole={role}
-        />
+        <div style={{ maxWidth: '650px', margin: '0 auto', width: '100%' }}>
+          <TrainerList
+            dataList={toggle === 'left' ? trainers : localLeads}
+            viewRole={role}
+            deleteUser={this.showDeleteConfirm}
+          />
+        </div>
       </Wrapper>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return { userId: state.auth.id };
+};
+
+export default connect(mapStateToProps)(TrainerListPage);
