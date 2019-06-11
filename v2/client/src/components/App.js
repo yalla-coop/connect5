@@ -7,6 +7,7 @@ import { Router, Route, Switch, Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { checkAuth } from '../actions/authAction';
+import { updateViewLevel } from '../actions/viewLevelAction';
 
 import { colors } from '../theme';
 
@@ -27,6 +28,7 @@ import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import SurveyResults from './pages/SurveyResults';
 import TrainerFeedBack from './pages/TrainerFeedback';
+import DecideView from './pages/DecideView';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -45,6 +47,7 @@ import {
   TRAINER_SESSIONS_URL,
   GROUP_SESSIONS_URL,
   TRAINER_FEEDBACK_URL,
+  DECIDE_VIEW_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -55,9 +58,20 @@ const Wrapper = styled.div`
 `;
 
 class App extends Component {
+
   componentDidMount() {
     const { checkAuth: checkAuthActionCreator } = this.props;
     checkAuthActionCreator();
+  }
+
+  componentDidUpdate() {
+    const {
+      updateViewLevel: updateViewLevelActionCreator,
+      role,
+      viewLevel,
+    } = this.props;
+
+    if (role && !viewLevel) updateViewLevelActionCreator(role);
   }
 
   render() {
@@ -139,7 +153,17 @@ class App extends Component {
               navbar
             />
 
-            <Route exact path="/login" component={Login} />
+            <PrivateRoute
+              exact
+              path={DECIDE_VIEW_URL}
+              Component={DecideView}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead']}
+              role={role}
+              navbar
+            />
+
             <Route exact path="/create-session" component={CreateSession} />
             <Route exact path={SURVEY_URL} component={Survey} />
             <Route
@@ -148,7 +172,7 @@ class App extends Component {
               render={() => {
                 if (loaded) {
                   return isAuthenticated ? (
-                    <Redirect to={DASHBOARD_URL} />
+                    <Redirect to={role === "trainer" ? DASHBOARD_URL : DECIDE_VIEW_URL} />
                   ) : (
                     <Login />
                   );
@@ -248,9 +272,10 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   role: state.auth.role,
   loaded: state.auth.loaded,
+  viewLevel: state.viewLevel.viewLevel,
 });
 
 export default connect(
   mapStateToProps,
-  { checkAuth }
+  { checkAuth, updateViewLevel }
 )(App);
