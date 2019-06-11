@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors, borders } from '../../../theme';
 
 export const Wrapper = styled.div`
   max-width: 900px;
@@ -9,20 +10,18 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   width: 98%;
 `;
-
+export const ButtonDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: -20px;
+  padding-bottom: 30px;
+  border-bottom: ${borders.inputBox};
+`;
 export const HeadlineDiv = styled.div`
   margin-left: 20px;
+  padding-top: 20px;
 `;
 
-export const Paragraph = styled.p`
-  font-family: Roboto;
-  font-style: italic;
-  font-size: 30px;
-  line-height: 37px;
-  text-align: center;
-  margin-bottom: 30px;
-  color: #828282;
-`;
 export const ChartWrapper = styled.div`
   margin-bottom: 10px;
   padding: 20px 0;
@@ -30,8 +29,9 @@ export const ChartWrapper = styled.div`
 
 export const Description = styled.p`
   font-size: 16px;
-  line-height: 19px;
-  color: #4f4f4f;
+
+  font-weight: 300;
+  color: ${colors.black};
   margin-bottom: 20px;
 `;
 
@@ -40,8 +40,9 @@ export const Category = styled.p`
   font-style: italic;
   line-height: 19px;
   text-align: right;
-  color: #4f4f4f;
+  color: ${colors.black};
   margin-bottom: 20px;
+  opacity: 0.7;
 `;
 export const Options = styled(Category)`
   text-align: left;

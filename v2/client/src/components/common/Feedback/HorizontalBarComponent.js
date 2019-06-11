@@ -66,17 +66,19 @@ class HorizontalBarComponent extends Component {
 
     return (
       // render questions
-      feedbackData.map(group => {
+      feedbackData.map((group, i) => {
         return (
           <div key={group.questionText}>
             <HeadlineDiv>
-              <Category>
-                category: {createCategory(group.questionText)}
-              </Category>
-              <Description>{group.questionText}</Description>
+              <Category>Your Trainer Feedback - {i + 1}</Category>
+              <Options>category: {createCategory(group.questionText)}</Options>
               <Options>
                 Answer options: Im not sure, not at all, a little, a lot
               </Options>
+              {group.questionText.includes('…') && (
+                <Description>Did your trainer ask questions ...</Description>
+              )}
+              <Description>{group.questionText}</Description>
             </HeadlineDiv>
             {chartsData.map(dataA => {
               // render charts
