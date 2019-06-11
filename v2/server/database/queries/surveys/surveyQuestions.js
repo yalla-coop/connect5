@@ -19,8 +19,6 @@ const surveyQs = async (surveyType, sessionId) => {
     },
   ]);
 
-  console.log(questionsForSurvey);
-
   // get the session details
   const sessionDetails = await Session.findById(sessionId);
 

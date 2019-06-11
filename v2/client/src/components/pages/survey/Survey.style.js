@@ -73,16 +73,10 @@ const ProgressWrapper = styled.div`
   color: ${colors.white};
 `;
 
-const CompletionRate = styled.p`
-  font-weight: 300;
-  font-size: 1.5rem;
-`;
-
 export {
   SurveyQs,
   SessionDetails,
   Form,
   Disclaimer,
   ProgressWrapper,
-  CompletionRate,
 };

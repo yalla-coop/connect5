@@ -9,7 +9,6 @@ import {
   Slider,
   NumberSliderDiv,
   NumberOutput,
-  QuestionCategory,
   ErrorDiv,
   QuestionWrapper,
   SectionCategory,

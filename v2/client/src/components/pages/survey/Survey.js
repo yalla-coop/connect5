@@ -14,8 +14,7 @@ import {
   SurveyQs,
   SessionDetails,
   Form,
-  ProgressWrapper,
-  CompletionRate
+  ProgressWrapper
 } from './Survey.style';
 
 // formState will be the object where we store survey responses
@@ -38,6 +37,8 @@ class Survey extends React.Component {
     const { location } = this.props;
     const survey = `${location.pathname}`;
     const surveyParts = survey.split('/')[2];
+
+    window.scrollTo(0, 0);
 
     axios
       .get(`/api/survey/${surveyParts}`)
