@@ -14,3 +14,25 @@ module.exports.getLocalLeadSessionsQuery = id => {
 module.exports.getAdminSessionsQuery = () => {
   return Session.find({});
 };
+
+// remove trainer from a localLead group
+module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
+  return User.bulkWrite([
+    {
+      updateOne: {
+        filter: { _id: localLeadId },
+        update: {
+          $pullAll: { trainersGroup: [mongoose.Types.ObjectId(trainerId)] },
+        },
+      },
+    },
+    {
+      updateOne: {
+        filter: { _id: trainerId },
+        update: {
+          $unset: { localLead: '' },
+        },
+      },
+    },
+  ]);
+};
