@@ -12,6 +12,7 @@ import { Container, SurveyQs, SessionDetails, Form } from './Survey.style';
 class Survey extends React.Component {
   state = {
     formState: {},
+    disagreedToResearch: false,
     surveyDetails: null,
     loading: true,
     sessionId: null,
@@ -42,18 +43,21 @@ class Survey extends React.Component {
         swal
           .fire({
             title: 'Research Cooperation <br>(University of Manchester)',
+            type: 'info',
             text:
               'Many thanks for agreeing to fill in this form. Your responses will be collated by University of Manchester to evaluate Connect5. University of Manchester will use anonymised data collected for research purposes. Individuals will never been identified by their responses. If you do not consent for your data to be used for research purposes, please tick.',
             input: 'checkbox',
-            inputPlaceholder: '<strong>I don not agree</strong>',
+            inputPlaceholder: '<strong>I do not agree</strong>',
           })
           .then(result => {
             if (result.value) {
-              swal.fire({
-                type: 'error',
-                text:
-                  'Thank you, your data will not be used for research purposes',
-              });
+              swal
+                .fire({
+                  type: 'error',
+                  text:
+                    'Thank you, your data will not be used for research purposes',
+                })
+                .then(() => this.setState({ disagreedToResearch: true }));
               // do something here
             } else if (result.value === 0) {
               swal.fire({ type: 'success', text: 'Thank you!' });
@@ -103,9 +107,21 @@ class Survey extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     const { history } = this.props;
-    const { formState, sessionId, surveyType, PIN } = this.state;
+    const {
+      formState,
+      sessionId,
+      surveyType,
+      PIN,
+      disagreedToResearch,
+    } = this.state;
 
-    const formSubmission = { PIN, sessionId, surveyType, formState };
+    const formSubmission = {
+      PIN,
+      sessionId,
+      surveyType,
+      formState,
+      disagreedToResearch,
+    };
     // check if PIN was entered before API call
     if (PIN) {
       return axios
@@ -119,10 +135,16 @@ class Survey extends React.Component {
           this.setState({
             errors: err.response.data,
           });
-          swal.fire('Please answer all required questions');
+          swal.fire({
+            title: 'Please answer all required questions',
+            type: 'error',
+          });
         });
     }
-    return swal.fire('Please enter your PIN');
+    return swal.fire({
+      title: 'Please enter your PIN',
+      type: 'error',
+    });
   };
 
   // function to create a list of names from an array...
@@ -144,7 +166,8 @@ class Survey extends React.Component {
       questionsForSurvey,
       surveyType,
     } = surveyDetails;
-
+    console.log(formState);
+    console.log(Object.keys(errors).length);
     return (
       <Container>
         <SurveyQs>
