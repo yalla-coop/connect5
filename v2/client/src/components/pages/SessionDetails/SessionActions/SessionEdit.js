@@ -156,7 +156,7 @@ class EditSession extends Component {
     if (msg === 'success') {
       Swal.fire({
         title: 'success',
-        text: 'session has been successfully delete',
+        text: 'session has been successfully edited',
         type: 'success',
         confirmButtonText: 'Ok',
       });

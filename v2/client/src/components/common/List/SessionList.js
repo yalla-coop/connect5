@@ -19,7 +19,6 @@ import {
 // NOTE: this component expects dataList to look something like this:
 
 const SessionList = ({ dataList }) => {
-  console.log(dataList);
   return (
     <Wrapper>
       <Header>
