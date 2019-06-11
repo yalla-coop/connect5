@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -13,7 +15,8 @@ import Toggle from '../../common/Toggle';
 import SessionList from '../../common/List/SessionList';
 import Feedback from '../../common/Feedback';
 // ACTIONS
-import { fetchUserResults } from '../../../actions/users';
+import { fetchUserResults as fetchUserResultsAction } from '../../../actions/users';
+
 import {
   fetchTrainerSessions,
   fetchLocalLeadSessions,
@@ -29,22 +32,21 @@ import {
   Registration,
 } from './UserResults.style';
 
+import TrainerBehavioralInsight from '../../common/BehavioralInsight/Trainer';
+
 const { Panel } = Collapse;
 
-const panels = input => ({
-  reach: {
-    text: 'Reach',
-    render: props => <Reach data={props} />,
-  },
+const panels = {
+  reach: { text: 'Reach', render: props => <Reach data={props.results} /> },
   behavior: {
     text: 'Behavioural',
-    render: () => null,
+    render: props => <TrainerBehavioralInsight trainerId={props.trainerId} />,
   },
   feedback: {
     text: 'Trainer feedback',
-    render: () => <Feedback trainerId={input.userId} />,
+    render: props => <Feedback trainerId={props.trainerId} />,
   },
-});
+};
 
 class UserResults extends Component {
   state = {
@@ -54,7 +56,7 @@ class UserResults extends Component {
 
   async componentDidMount() {
     // show results based on the logged in user id and role
-    const { role, userId, history } = this.props;
+    const { userId, history, viewLevel } = this.props;
 
     // if trainer has been selected from trainer list and the logged in user is localLead then use the trainer's id and view them as a trainer
     // else if selected from list use that trainer/local lead's role
@@ -62,14 +64,17 @@ class UserResults extends Component {
     // otherwise use logged in user's id and role
     const { state } = history.location;
     const { fetchUserResults } = this.props;
-    if (state && state.trainer && role === 'localLead') {
+    if (state && state.trainer && viewLevel === 'localLead') {
       await fetchUserResults(state.trainer._id, 'trainer');
       await this.fetchSessionsData('trainer', state.trainer._id);
+      this.setState({ selectedUserId: state.trainer._id });
     } else if (state && state.trainer) {
       await fetchUserResults(state.trainer._id, state.trainer.role);
       await this.fetchSessionsData(state.trainer.role, state.trainer._id);
+      this.setState({ selectedUserId: state.trainer._id });
     } else {
-      await fetchUserResults(userId, role);
+      await fetchUserResults(userId, viewLevel);
+      this.setState({ selectedUserId: userId });
     }
 
     // check if localLead is in trainer or lead view and assign the role accordingly
@@ -100,8 +105,8 @@ class UserResults extends Component {
     console.log(this.props);
     const { results, role, history, groupView, sessions } = this.props;
     const { state } = history.location;
-    const { toggle } = this.state;
-    const panelsElements = panels(this.props);
+    const { toggle, selectedUserId } = this.state;
+
     // if a user has been passed on then store as the user
     const user = state && state.trainer;
 
@@ -141,9 +146,9 @@ class UserResults extends Component {
                 <Icon type="down" rotate={isActive ? 90 : 0} />
               )}
             >
-              {Object.keys(panelsElements).map(panel => (
-                <Panel header={panelsElements[panel].text} key={panel}>
-                  {panelsElements[panel].render(results)}
+              {Object.keys(panels).map(panel => (
+                <Panel header={panels[panel].text} key={panel}>
+                  {panels[panel].render({ results, trainerId: selectedUserId })}
                 </Panel>
               ))}
             </Collapse>
@@ -169,12 +174,13 @@ const mapStateToProps = state => ({
   userId: state.auth.id,
   sessions: state.sessions.sessions,
   sessionsNum: state.sessions.sessionsCount,
+  viewLevel: state.viewLevel.viewLevel,
 });
 
 export default connect(
   mapStateToProps,
   {
-    fetchUserResults,
+    fetchUserResults: fetchUserResultsAction,
     fetchTrainerSessions,
     fetchLocalLeadSessions,
     fetchALLSessions,

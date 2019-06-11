@@ -10,6 +10,7 @@ import { Wrapper, Description, Container, ButtonDiv } from './Feedback.style';
 import HorizontalBarComponent from './HorizontalBarComponent';
 
 import { fetchTrainerFeedback as fetchTrainerFeedbackAction } from '../../../actions/users';
+import { WhiteWrapper } from '../BehavioralInsight/BehavioralInsight.style';
 
 class TrainerFeedbackOverall extends Component {
   state = { visible: false };
@@ -71,7 +72,9 @@ class TrainerFeedbackOverall extends Component {
             {feedbackData.length === 0 ? (
               <Description>no data collected yet :( </Description>
             ) : (
-              <HorizontalBarComponent feedbackData={feedbackData} />
+              <WhiteWrapper>
+                <HorizontalBarComponent feedbackData={feedbackData} />
+              </WhiteWrapper>
             )}
           </Container>
         ) : (

@@ -5,15 +5,15 @@ import { connect } from 'react-redux';
 
 import Spin from '../Spin';
 
-import { fetchbehavioralInsight as fetchbehavioralInsightAction } from '../../../actions/users';
+import { fetchbehavioralInsight as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
 
 import { Wrapper, ChartWrapper, Description } from './BehavioralInsight.style';
 
 class BehavioralInsight extends Component {
   componentDidMount() {
     const { fetchbehavioralInsight, userRole, idOrPIN } = this.props;
-
-    fetchbehavioralInsight(userRole, idOrPIN);
+    const url = `/api/behavioral-insight/${userRole}/${idOrPIN}`;
+    fetchbehavioralInsight(url, userRole);
   }
 
   render() {

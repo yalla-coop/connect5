@@ -2,18 +2,23 @@ import styled from 'styled-components';
 import { colors, borders } from '../../../theme';
 
 export const Wrapper = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
-  padding-top: 50px;
+  background: #f7f8f9;
 `;
 
 export const Container = styled.div`
-  width: 98%;
+  margin: 0 auto;
 `;
+
+export const WhiteWrapper = styled.div`
+  margin: 0 auto;
+  max-width: 600px;
+  background: #fff;
+  padding: 10px;
+`;
+
 export const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: -20px;
   padding-bottom: 30px;
   border-bottom: ${borders.inputBox};
 `;
@@ -23,7 +28,7 @@ export const HeadlineDiv = styled.div`
 `;
 
 export const ChartWrapper = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding: 20px 0;
 `;
 
