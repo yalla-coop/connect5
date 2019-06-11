@@ -27,7 +27,7 @@ import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import SurveyResults from './pages/SurveyResults';
-import TrainerFeedBack from './pages/TrainerFeedback';
+
 import DecideView from './pages/DecideView';
 
 // COMPONENTS
@@ -46,7 +46,6 @@ import {
   GROUP_RESULTS_URL,
   TRAINER_SESSIONS_URL,
   GROUP_SESSIONS_URL,
-  TRAINER_FEEDBACK_URL,
   DECIDE_VIEW_URL,
 } from '../constants/navigationRoutes';
 
@@ -58,7 +57,6 @@ const Wrapper = styled.div`
 `;
 
 class App extends Component {
-
   componentDidMount() {
     const { checkAuth: checkAuthActionCreator } = this.props;
     checkAuthActionCreator();
@@ -123,16 +121,6 @@ class App extends Component {
 
             <PrivateRoute
               exact
-              path={TRAINER_FEEDBACK_URL}
-              Component={TrainerFeedBack}
-              isAuthenticated={isAuthenticated}
-              loaded={loaded}
-              allowedRoles={['admin', 'localLead', 'trainer']}
-              role={role}
-            />
-
-            <PrivateRoute
-              exact
               path={DASHBOARD_URL}
               Component={Dashboard}
               isAuthenticated={isAuthenticated}
@@ -172,7 +160,9 @@ class App extends Component {
               render={() => {
                 if (loaded) {
                   return isAuthenticated ? (
-                    <Redirect to={role === "trainer" ? DASHBOARD_URL : DECIDE_VIEW_URL} />
+                    <Redirect
+                      to={role === 'trainer' ? DASHBOARD_URL : DECIDE_VIEW_URL}
+                    />
                   ) : (
                     <Login />
                   );

@@ -6,7 +6,7 @@ const usersRouter = require('./users');
 const getParticipantBehavioralInsight = require('./../controllers/behavioralInsight/getParticipantBehavioralInsight');
 const getSessionBehavioralInsight = require('./../controllers/behavioralInsight/getSessionBehavioralInsight');
 const getTrainerBehavioralInsight = require('./../controllers/behavioralInsight/getTrainerBehavioralInsight');
-const getTrainerFeedback = require('./../controllers/feedback/getTrainerFeedback');
+const getFeedback = require('../controllers/feedback/getFeedback');
 
 const surveyQs = require('../controllers/survey/getSurveyQs');
 const storeSurvey = require('../controllers/survey/storeSurvey');
@@ -29,7 +29,7 @@ router.get(
 );
 router.get('/behavioral-insight/trainer/:id', getTrainerBehavioralInsight);
 
-router.post('/feedback/trainer/:trainerId/', getTrainerFeedback);
+router.post('/feedback/', getFeedback);
 
 router.use(usersRouter);
 
