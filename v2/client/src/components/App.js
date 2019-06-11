@@ -26,6 +26,7 @@ import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
+import SurveyResults from './pages/SurveyResults';
 import TrainerFeedBack from './pages/TrainerFeedback';
 import DecideView from './pages/DecideView';
 
@@ -79,6 +80,11 @@ class App extends Component {
       <Wrapper>
         <Router history={history}>
           <Switch>
+            <Route
+              exact
+              path="/survey/:sessionId/:surveyType/results"
+              component={SurveyResults}
+            />
             <Route exact path="/" component={Home} />
             <PrivateRoute
               exact
