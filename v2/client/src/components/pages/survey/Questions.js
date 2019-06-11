@@ -12,6 +12,8 @@ import {
   QuestionCategory,
   ErrorDiv,
 } from './Questions.style';
+// please leave this inside for antd to style right
+import 'antd/dist/antd.css';
 
 // checks if errors are present (renders error msg after submit)
 const checkErrors = (errorArr, questionId, answers, errors) => {
@@ -63,7 +65,9 @@ const renderQuestionInputType = (
 ) => {
   if (inputType === 'text') {
     return (
-      <TextField>
+      <TextField
+        unanswered={errorArray.includes(questionId) && !answers[questionId]}
+      >
         <header>
           {subGroup && <h3>{subGroup}</h3>}
           <h4 id={index}>{questionText}</h4>
@@ -76,7 +80,9 @@ const renderQuestionInputType = (
   }
   if (inputType === 'date') {
     return (
-      <TextField>
+      <TextField
+        unanswered={errorArray.includes(questionId) && !answers[questionId]}
+      >
         <header>
           {subGroup && <p>{subGroup}</p>}
           <h4 id={index}>{questionText}</h4>
@@ -89,7 +95,9 @@ const renderQuestionInputType = (
   }
   if (inputType === 'numberPositive') {
     return (
-      <TextField>
+      <TextField
+        unanswered={errorArray.includes(questionId) && !answers[questionId]}
+      >
         <header>
           {subGroup && <p>{subGroup}</p>}
           <h4 id={index}>{questionText}</h4>
@@ -109,7 +117,9 @@ const renderQuestionInputType = (
   }
   if (inputType === 'numberZeroTen') {
     return (
-      <TextField>
+      <TextField
+        unanswered={errorArray.includes(questionId) && !answers[questionId]}
+      >
         <header>
           {subGroup && <p>{subGroup}</p>}
           <h4 id={index}>{questionText}</h4>
@@ -127,6 +137,7 @@ const renderQuestionInputType = (
             max="10"
             type="range"
             onChange={onChange}
+            unanswered={errorArray.includes(questionId) && !answers[questionId]}
           />
         </NumberSliderDiv>
         <NumberOutput>
@@ -138,7 +149,9 @@ const renderQuestionInputType = (
   }
   if (inputType === 'radio') {
     return (
-      <RadioField>
+      <RadioField
+        unanswered={errorArray.includes(questionId) && !answers[questionId]}
+      >
         <header>
           {subGroup && <p>{subGroup}</p>}
           <h4 id={index}>{questionText}</h4>
@@ -172,7 +185,11 @@ const renderQuestionInputType = (
         <div className="other-div">
           {/* Load "Other" div */}
           {answers[questionId] && answers[questionId].includes('Other') ? (
-            <TextField>
+            <TextField
+              unanswered={
+                errorArray.includes(questionId) && !answers[questionId]
+              }
+            >
               <p>Please specify:</p>
               <input
                 id="other"
