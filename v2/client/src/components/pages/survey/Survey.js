@@ -3,9 +3,20 @@ import axios from 'axios';
 import swal from 'sweetalert2';
 import Header from '../../common/Header';
 
+import { Progress } from 'antd';
+
 import Questions from './Questions';
 
-import { Container, SurveyQs, SessionDetails, Form } from './Survey.style';
+import { colors } from '../../../theme';
+
+import {
+  Container,
+  SurveyQs,
+  SessionDetails,
+  Form,
+  ProgressWrapper,
+  CompletionRate
+} from './Survey.style';
 
 // formState will be the object where we store survey responses
 // as the participant answers the questions
@@ -18,6 +29,7 @@ class Survey extends React.Component {
     sessionId: null,
     PIN: null,
     errors: {},
+    completionRate: 0,
   };
 
   componentWillMount() {
@@ -76,6 +88,20 @@ class Survey extends React.Component {
     this.setState({ formState });
   };
 
+  // function to track progress on survey
+  trackAnswers = () => {
+    const { surveyDetails, formState } = this.state;
+
+    if (formState && surveyDetails) {
+      const numberOfQs = surveyDetails.questionsForSurvey.length;
+      const numberOfAs = Object.values(formState).length;
+      const rate = Math.ceil((numberOfAs / numberOfQs) * 100);
+      this.setState({ completionRate: rate });
+    } else {
+      this.setState({ completionRate: 0 });
+    }
+  };
+
   // // check for any changes to the survey inputs and add them to the formstate
   handleChange = e => {
     const question = e.target.name;
@@ -86,6 +112,7 @@ class Survey extends React.Component {
     this.setState(() => ({
       formState,
     }));
+    this.trackAnswers();
   };
 
   // handles case when user selects 'other'
@@ -154,7 +181,13 @@ class Survey extends React.Component {
     );
 
   render() {
-    const { loading, surveyDetails, formState, errors } = this.state;
+    const {
+      loading,
+      surveyDetails,
+      formState,
+      errors,
+      completionRate,
+    } = this.state;
 
     if (loading) {
       return <h3>Loading...</h3>;
@@ -164,10 +197,7 @@ class Survey extends React.Component {
       sessionDate,
       trainerNames,
       questionsForSurvey,
-      surveyType,
     } = surveyDetails;
-    console.log(formState);
-    console.log(Object.keys(errors).length);
     return (
       <Container>
         <SurveyQs>
@@ -184,10 +214,6 @@ class Survey extends React.Component {
                 <strong>Trainers: </strong>
                 {this.renderTrainerNames(trainerNames)}
               </li>
-              <li>
-                <strong>Session Type: </strong>
-                {surveyType}
-              </li>
             </ul>
           </SessionDetails>
           <main>
@@ -200,11 +226,13 @@ class Survey extends React.Component {
                 answers={formState}
                 selectCheckedItem={this.selectCheckedItem}
                 errors={errors}
+                trackAnswers={this.trackAnswers}
               />
               <button type="submit">Submit Feedback</button>
             </Form>
           </main>
         </SurveyQs>
+        <ProgressWrapper><Progress type="circle" percent={completionRate} width={80} strokeColor={`${colors.green}`}/></ProgressWrapper>
       </Container>
     );
   }

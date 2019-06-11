@@ -19,6 +19,7 @@ const questionSchema = new Schema({
   subGroup: {
     text: String,
     order: Number,
+    name: String,
   },
   surveyType: {
     type: String,

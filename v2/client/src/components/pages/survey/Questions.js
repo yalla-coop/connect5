@@ -11,6 +11,9 @@ import {
   NumberOutput,
   QuestionCategory,
   ErrorDiv,
+  QuestionWrapper,
+  SectionCategory,
+  SubGroup,
 } from './Questions.style';
 // please leave this inside for antd to style right
 import 'antd/dist/antd.css';
@@ -69,7 +72,7 @@ const renderQuestionInputType = (
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
       >
         <header>
-          {subGroup && <h3>{subGroup}</h3>}
+          {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers, errors)}
@@ -84,7 +87,7 @@ const renderQuestionInputType = (
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
       >
         <header>
-          {subGroup && <p>{subGroup}</p>}
+          {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers, errors)}
@@ -99,7 +102,7 @@ const renderQuestionInputType = (
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
       >
         <header>
-          {subGroup && <p>{subGroup}</p>}
+          {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">Please specify number</p>
           <p className="helpertext">{helperText}</p>
@@ -121,7 +124,7 @@ const renderQuestionInputType = (
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
       >
         <header>
-          {subGroup && <p>{subGroup}</p>}
+          {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">
             Please choose: 0 (strongly disagree) to 10 (strongly agree)
@@ -153,7 +156,7 @@ const renderQuestionInputType = (
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
       >
         <header>
-          {subGroup && <p>{subGroup}</p>}
+          {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers, errors)}
@@ -220,42 +223,98 @@ const questionsRender = (
   onChange,
   handleOther,
   errors
-) =>
-  arrayOfQuestions.map((el, index) => {
-    // map through all the questions
-    // el is one question
-    const {
-      _id: questionId,
-      text: questionText,
-      group,
-      helperText,
-      options,
-    } = el;
-    const inputType = el.questionType.desc;
-    return (
-      <div key={questionId}>
-        {' '}
-        {/* renders headlines */}
-        <QuestionCategory>
-          Question {index + 1} - {group}
-        </QuestionCategory>
-        {renderQuestionInputType(
-          inputType,
-          errorArray,
-          questionId,
-          answers,
-          index,
-          questionText,
-          helperText,
-          onChange,
-          options,
-          handleOther,
-          renderSubGroupText(el),
-          errors
-        )}
-      </div>
-    );
-  });
+) => {
+  const demographicQs = arrayOfQuestions.filter(
+    question => question.group === 'demographic'
+  );
+
+  const behaviourQs = arrayOfQuestions.filter(
+    question => question.group === 'Behavioural Insights'
+  );
+
+  const trainerQs = arrayOfQuestions.filter(
+    question => question.group === 'about your trainer'
+  );
+
+  const teachingQs = arrayOfQuestions.filter(
+    question => question.group === 'about your usual way of teaching'
+  );
+
+  return [demographicQs, behaviourQs, trainerQs, teachingQs]
+    .filter(section => section.length > 0)
+    .map((section, index) => (
+      // map through each section
+      <QuestionWrapper key={index}>
+        <SectionCategory>{section[0] && section[0].group}</SectionCategory>
+        {section &&
+          section.map((el, ind) => {
+            // map through all the questions
+            // el is one question
+            const {
+              _id: questionId,
+              text: questionText,
+              helperText,
+              options,
+            } = el;
+            const inputType = el.questionType.desc;
+            return (
+              <div key={questionId}>
+                {renderQuestionInputType(
+                  inputType,
+                  errorArray,
+                  questionId,
+                  answers,
+                  index,
+                  questionText,
+                  helperText,
+                  onChange,
+                  options,
+                  handleOther,
+                  renderSubGroupText(el),
+                  errors
+                )}
+              </div>
+            );
+          })}
+      </QuestionWrapper>
+    ));
+
+  // arrayOfQuestions.map((el, index) => {
+  //   // map through all the questions
+  //   // el is one question
+  //   const {
+  //     _id: questionId,
+  //     text: questionText,
+  //     group,
+  //     helperText,
+  //     options,
+  //   } = el;
+  //   const inputType = el.questionType.desc;
+  //   return (
+  //     <QuestionWrapper key={questionId}>
+  //       {' '}
+  //       {/* renders headlines */}
+  //       <QuestionCategory>
+  //         Question {index + 1} - {group}
+  //       </QuestionCategory>
+  //       {renderQuestionInputType(
+  //         inputType,
+  //         errorArray,
+  //         questionId,
+  //         answers,
+  //         index,
+  //         questionText,
+  //         helperText,
+  //         onChange,
+  //         options,
+  //         handleOther,
+  //         renderSubGroupText(el),
+  //         errors
+  //       )}
+  //     </QuestionWrapper>
+  //   );
+  // });
+};
 
 export default class Questions extends React.Component {
   render() {
@@ -266,37 +325,41 @@ export default class Questions extends React.Component {
       handlePIN,
       answers,
       errors,
+      trackAnswers
     } = this.props;
 
     const errorArray = Object.keys(errors);
 
     return (
       <React.Fragment>
-        <TextField>
-          <header>
-            <h3>Please enter your PIN</h3>
-            <p>
-              {` We want to create a PIN code so that we can link your responses to
+        <QuestionWrapper>
+          <SectionCategory>Please enter your PIN</SectionCategory>
+          <TextField>
+            <header>
+              <p>
+                {` We want to create a PIN code so that we can link your responses to
               this survey with your responses to other Connect 5 surveys, whilst
               you remain entirely anonymous. In order to do that, `}
-              <strong>
-                {` please type in the third letter of your first name, the first
+                <strong>
+                  {` please type in the third letter of your first name, the first
                 two letters of your mother's first name and the date you were
                 born `}
-              </strong>
-              (e.g., you would type 01 if you were born on the 01st of July)
-            </p>
-          </header>
-          {checkPINerror(errors)}
-          <input
-            id="PIN"
-            name="PIN"
-            type="text"
-            maxLength="5"
-            minLength="5"
-            onChange={handlePIN}
-          />
-        </TextField>
+                </strong>
+                (e.g., you would type 01 if you were born on the 1st July)
+              </p>
+            </header>
+            {checkPINerror(errors)}
+            <input
+              id="PIN"
+              name="PIN"
+              type="text"
+              maxLength="5"
+              minLength="5"
+              onChange={handlePIN}
+              onBlur={trackAnswers}
+            />
+          </TextField>
+        </QuestionWrapper>
         {questionsRender(
           questions,
           answers,

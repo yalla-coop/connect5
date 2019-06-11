@@ -1,20 +1,21 @@
 import styled from 'styled-components';
-import { colorCodes, borders } from '../../../theme';
+import { colors, colorCodes, borders } from '../../../theme';
 
 export const Container = styled.div`
   max-width: 900px;
   margin: 0 auto;
-  padding-top: 50px;
+  padding: 3rem 0;
 `;
 
 const SurveyQs = styled.div`
   main {
-    padding: 0 8px;
-    // background: ${colorCodes.offWhite};
+    background: ${colorCodes.offWhite};
   }
 `;
 
 const SessionDetails = styled.div`
+  padding: 0 0.5rem;
+
   span {
     font-weight: 300;
   }
@@ -23,10 +24,13 @@ const SessionDetails = styled.div`
     font-weight: 300;
   }
   ul {
-    text-align: right;
+    text-align: left;
     list-style-type: none;
     margin: 0;
     padding: 0;
+  }
+  li {
+    text-transform: capitalize;
   }
 
   margin: 1rem 0;
@@ -42,6 +46,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   padding-bottom: 24px;
+  width: 100%;
 
   button {
     border: ${borders.button};
@@ -60,4 +65,24 @@ const Form = styled.form`
   }
 `;
 
-export { SurveyQs, SessionDetails, Form, Disclaimer };
+const ProgressWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
+  color: ${colors.white};
+`;
+
+const CompletionRate = styled.p`
+  font-weight: 300;
+  font-size: 1.5rem;
+`;
+
+export {
+  SurveyQs,
+  SessionDetails,
+  Form,
+  Disclaimer,
+  ProgressWrapper,
+  CompletionRate,
+};
