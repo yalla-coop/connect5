@@ -105,6 +105,12 @@ class AddTrainer extends Component {
   };
 
   handleSuccessOk = () => {
+    if (this.props.location.state) {
+      this.props.history.push({
+        pathname: '/create-session',
+        state: this.props.location.state,
+      });
+    }
     const {
       form,
       resetUniqueEmail: resetUniqueEmailAction,
