@@ -13,15 +13,13 @@ import Toggle from '../../common/Toggle';
 
 const { Panel } = Collapse;
 
-const panels = ({ sessionId, surveyType }) => ({
-  behavior: {
-    text: 'Behavioural Analysis',
-    render: () => (
-      <BehavioralSurveyResults sessionId={sessionId} surveyType={surveyType} />
-    ),
-  },
-  feedback: { text: 'Trainer feedback', render: () => null },
-});
+const behavioralSurveys = [
+  'pre-day-1',
+  'post-day-1',
+  'post-day-2',
+  'post-day-3',
+  'post-special',
+];
 
 class SurveyResults extends Component {
   state = {
@@ -38,8 +36,6 @@ class SurveyResults extends Component {
     } = this.props;
     const { toggle } = this.state;
 
-    const panelsElements = panels(params);
-    const { results } = this.props;
     return (
       <TrainerResultsWrapper>
         <Header label="results" type="section" />
@@ -59,11 +55,12 @@ class SurveyResults extends Component {
             expandIcon={({ isActive }) => (
               <Icon type="down" rotate={isActive ? 90 : 0} />
             )}
+            defaultActiveKey={['1']}
           >
-            {Object.keys(panelsElements).map(panel => (
+            {behavioralSurveys.includes(params.surveyType) ? (
               <Panel
-                header={panelsElements[panel].text}
-                key={panel}
+                key={behavioralSurveys.includes(params.surveyType) ? '1' : '0'}
+                header="Behavioural Analysis"
                 style={{
                   background: '#f7f7f7',
                   borderRadius: 4,
@@ -71,9 +68,24 @@ class SurveyResults extends Component {
                   padding: 0,
                 }}
               >
-                {panelsElements[panel].render(results)}
+                <BehavioralSurveyResults
+                  sessionId={params.sessionId}
+                  surveyType={params.surveyType}
+                />
               </Panel>
-            ))}
+            ) : null}
+            <Panel
+              header="Trainer feedback"
+              key={behavioralSurveys.includes(params.surveyType) ? '0' : '1'}
+              style={{
+                background: '#f7f7f7',
+                borderRadius: 4,
+                overflow: 'hidden',
+                padding: 0,
+              }}
+            >
+              {null}
+            </Panel>
           </Collapse>
         </div>
         <ButtonWrapper>

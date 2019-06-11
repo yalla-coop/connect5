@@ -2,6 +2,7 @@
 /* eslint-disable func-names */
 import React, { Component } from 'react';
 import { Chart, HorizontalBar } from 'react-chartjs-2';
+import { Alert, Spin } from 'antd';
 
 import { connect } from 'react-redux';
 
@@ -53,108 +54,120 @@ class BehavioralSurveyResults extends Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, loaded } = this.props;
 
     return (
       <Wrapper>
         <ContentWrapper>
-          <Title>
-            Behaviour is influenced by our perceptions of our capability,
-            opportunity and motivation for that behaviour
-          </Title>
-          {Object.keys(data) ? (
-            Object.entries(data).map(pairOfArray => (
-              <ChartWrapper>
-                <WhiteWrapper>
-                  <Description>{pairOfArray[0]}</Description>
-                  <HorizontalBar
-                    width={25}
-                    height={20}
-                    data={{
-                      layout: {
-                        padding: {
-                          top: 5,
-                          left: 15,
-                          right: 15,
-                          bottom: 15,
-                        },
-                      },
-                      responsive: true,
-                      labels: [
-                        '0-20%',
-                        '21-40%',
-                        '41-60%',
-                        '61-80%',
-                        '81-100%',
-                      ],
-                      type: 'horizontalBar',
-                      datasets: [
-                        {
-                          backgroundColor: [
-                            '#3e95cd',
-                            '#8e5ea2',
-                            '#3cba9f',
-                            '#e8c3b9',
-                            '#c45850',
+          {loaded ? (
+            <>
+              <Title>
+                Behaviour is influenced by our perceptions of our capability,
+                opportunity and motivation for that behaviour
+              </Title>
+              {Object.keys(data).length ? (
+                Object.entries(data).map(pairOfArray => (
+                  <ChartWrapper>
+                    <WhiteWrapper>
+                      <Description>{pairOfArray[0]}</Description>
+                      <HorizontalBar
+                        width={25}
+                        height={20}
+                        data={{
+                          layout: {
+                            padding: {
+                              top: 5,
+                              left: 15,
+                              right: 15,
+                              bottom: 15,
+                            },
+                          },
+                          responsive: true,
+                          labels: [
+                            '0-20%',
+                            '21-40%',
+                            '41-60%',
+                            '61-80%',
+                            '81-100%',
                           ],
-                          data: pairOfArray[1],
-                        },
-                      ],
-                    }}
-                    options={{
-                      responsive: 1,
-                      animation: {
-                        onProgress: drawBarValues,
-                        onComplete: drawBarValues,
-                      },
-                      hover: { animationDuration: 0 },
-
-                      showAllTooltips: true,
-                      legend: {
-                        display: false,
-                      },
-
-                      scales: {
-                        xAxes: [
-                          {
-                            gridLines: {
-                              offsetGridLines: true,
-                              display: false,
+                          type: 'horizontalBar',
+                          datasets: [
+                            {
+                              backgroundColor: [
+                                '#3e95cd',
+                                '#8e5ea2',
+                                '#3cba9f',
+                                '#e8c3b9',
+                                '#c45850',
+                              ],
+                              data: pairOfArray[1],
                             },
-
-                            ticks: {
-                              beginAtZero: true,
-                              steps: 2,
-                              stepValue: 5,
-                              max: 100,
-                            },
+                          ],
+                        }}
+                        options={{
+                          responsive: 1,
+                          animation: {
+                            onProgress: drawBarValues,
+                            onComplete: drawBarValues,
                           },
-                        ],
-                        yAxes: [
-                          {
-                            barPercentage: 1,
-                            barThickness: 20,
-                            gridLines: {
-                              offsetGridLines: true,
-                              display: false,
-                            },
-                            ticks: {
-                              beginAtZero: true,
-                              steps: 2,
-                              stepValue: 5,
-                              max: 100,
-                            },
+                          hover: { animationDuration: 0 },
+
+                          showAllTooltips: true,
+                          legend: {
+                            display: false,
                           },
-                        ],
-                      },
-                      offsetGridLines: true,
-                    }}
+
+                          scales: {
+                            xAxes: [
+                              {
+                                gridLines: {
+                                  offsetGridLines: true,
+                                  display: false,
+                                },
+
+                                ticks: {
+                                  beginAtZero: true,
+                                  steps: 2,
+                                  stepValue: 5,
+                                  max: 100,
+                                },
+                              },
+                            ],
+                            yAxes: [
+                              {
+                                barPercentage: 1,
+                                barThickness: 20,
+                                gridLines: {
+                                  offsetGridLines: true,
+                                  display: false,
+                                },
+                                ticks: {
+                                  beginAtZero: true,
+                                  steps: 2,
+                                  stepValue: 5,
+                                  max: 100,
+                                },
+                              },
+                            ],
+                          },
+                          offsetGridLines: true,
+                        }}
+                      />
+                    </WhiteWrapper>
+                  </ChartWrapper>
+                ))
+              ) : (
+                <div style={{ margin: '10px auto', maxWidth: '270px' }}>
+                  <Alert
+                    message="No responses collected yet"
+                    type="warning"
+                    showIcon
                   />
-                </WhiteWrapper>
-              </ChartWrapper>
-            ))
+                </div>
+              )}
+            </>
           ) : (
-            <h1>No data</h1>
+            <Spin style={{ width: '100%', padding: '40px' }} />
           )}
         </ContentWrapper>
       </Wrapper>
