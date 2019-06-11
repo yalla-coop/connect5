@@ -159,7 +159,6 @@ class CreateSession extends Component {
     const { trainers, role, localLeads } = this.props;
 
     const {
-      startDate,
       inviteesNumber,
       err,
       session,
@@ -188,7 +187,6 @@ class CreateSession extends Component {
               defaultValue={moment('2019-01-01', 'YYYY-MM-DD')}
               size="large"
               style={{ width: '100%' }}
-              value={startDate}
             />
           </InputDiv>
 
