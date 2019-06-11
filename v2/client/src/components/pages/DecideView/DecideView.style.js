@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { colors } from '../../../theme';
+
 export const Wrapper = styled.div`
   padding: 80px 1rem;
   display: flex;
@@ -31,4 +33,16 @@ export const Question = styled.p`
 
 export const ButtonWrapper = styled.div`
   margin-bottom: 2rem;
+`;
+
+export const LogOut = styled.div`
+  font-weight: 300;
+  font-size: 14px;
+  color: ${colors.profileFontColor};
+  padding: 0.5rem 0;
+  cursor: pointer;
+
+  :hover {
+    color: ${colors.red};
+  }
 `;
