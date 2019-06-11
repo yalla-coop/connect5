@@ -51,30 +51,32 @@ class SurveyResults extends Component {
           style={{ margin: '20px auto' }}
           onClick={this.clickToggle}
         />
-        <Collapse
-          accordion
-          bordered={false}
-          expandIconPosition="right"
-          expandIcon={({ isActive }) => (
-            <Icon type="down" rotate={isActive ? 90 : 0} />
-          )}
-        >
-          {Object.keys(panelsElements).map(panel => (
-            <Panel
-              header={panelsElements[panel].text}
-              key={panel}
-              style={{
-                background: '#f7f7f7',
-                borderRadius: 4,
-                border: 0,
-                overflow: 'hidden',
-                padding: 0,
-              }}
-            >
-              {panelsElements[panel].render(results)}
-            </Panel>
-          ))}
-        </Collapse>
+        <div className="survey-results__collaps">
+          <Collapse
+            accordion
+            bordered={false}
+            expandIconPosition="right"
+            expandIcon={({ isActive }) => (
+              <Icon type="down" rotate={isActive ? 90 : 0} />
+            )}
+          >
+            {Object.keys(panelsElements).map(panel => (
+              <Panel
+                header={panelsElements[panel].text}
+                key={panel}
+                style={{
+                  background: '#f7f7f7',
+                  borderRadius: 4,
+                  border: 0,
+                  overflow: 'hidden',
+                  padding: 0,
+                }}
+              >
+                {panelsElements[panel].render(results)}
+              </Panel>
+            ))}
+          </Collapse>
+        </div>
         <ButtonWrapper>
           <Button icon="download" size="large">
             Export to CSV
