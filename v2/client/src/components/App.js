@@ -7,6 +7,7 @@ import { Router, Route, Switch, Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { checkAuth } from '../actions/authAction';
+import { updateViewLevel } from '../actions/viewLevelAction';
 
 import { colors } from '../theme';
 
@@ -56,9 +57,20 @@ const Wrapper = styled.div`
 `;
 
 class App extends Component {
+
   componentDidMount() {
-    const { checkAuth: checkAuthActionCreator } = this.props;
+    const { checkAuth: checkAuthActionCreator, viewLevel } = this.props;
     checkAuthActionCreator();
+  }
+
+  componentDidUpdate() {
+    const {
+      updateViewLevel: updateViewLevelActionCreator,
+      role,
+      viewLevel,
+    } = this.props;
+
+    if (role && !viewLevel) updateViewLevelActionCreator(role);
   }
 
   render() {
@@ -254,9 +266,10 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   role: state.auth.role,
   loaded: state.auth.loaded,
+  viewLevel: state.viewLevel.viewLevel,
 });
 
 export default connect(
   mapStateToProps,
-  { checkAuth }
+  { checkAuth, updateViewLevel }
 )(App);

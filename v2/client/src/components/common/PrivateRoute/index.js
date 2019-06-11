@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import SpinWrapper from '../Spin';
 import history from '../../../history';
@@ -17,6 +18,7 @@ const PrivateRoute = ({
   allowedRoles,
   role,
   navbar,
+  viewLevel,
   ...rest
 }) => {
   const authorized = authorization(role, allowedRoles);
@@ -32,7 +34,7 @@ const PrivateRoute = ({
             authorized ? (
               <>
                 <Component {...LinkProps} {...rest} role={role} />
-                {navbar && <Navbar userType={role} />}
+                {navbar && <Navbar userType={viewLevel} />}
               </>
             ) : (
               history.goBack() && null
@@ -48,4 +50,12 @@ const PrivateRoute = ({
   return <SpinWrapper />;
 };
 
-export default PrivateRoute;
+
+
+const mapStateToProps = state => ({
+  viewLevel: state.viewLevel.viewLevel,
+});
+
+export default connect(
+  mapStateToProps,
+)(PrivateRoute);

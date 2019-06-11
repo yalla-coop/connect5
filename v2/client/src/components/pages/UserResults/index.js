@@ -48,7 +48,7 @@ class UserResults extends Component {
 
   async componentDidMount() {
     // show results based on the logged in user id and role
-    const { role, userId, history } = this.props;
+    const { role, userId, history, viewLevel } = this.props;
 
     // if trainer has been selected from trainer list and the logged in user is localLead then use the trainer's id and view them as a trainer
     // else if selected from list use that trainer/local lead's role
@@ -56,14 +56,14 @@ class UserResults extends Component {
     // otherwise use logged in user's id and role
     const { state } = history.location;
     const { fetchUserResults } = this.props;
-    if (state && state.trainer && role === 'localLead') {
+    if (state && state.trainer && viewLevel === 'localLead') {
       await fetchUserResults(state.trainer._id, 'trainer');
       await this.fetchSessionsData('trainer', state.trainer._id);
     } else if (state && state.trainer) {
       await fetchUserResults(state.trainer._id, state.trainer.role);
       await this.fetchSessionsData(state.trainer.role, state.trainer._id);
     } else {
-      await fetchUserResults(userId, role);
+      await fetchUserResults(userId, viewLevel);
     }
 
     // check if localLead is in trainer or lead view and assign the role accordingly
@@ -162,6 +162,7 @@ const mapStateToProps = state => ({
   userId: state.auth.id,
   sessions: state.sessions.sessions,
   sessionsNum: state.sessions.sessionsCount,
+  viewLevel: state.viewLevel.viewLevel,
 });
 
 export default connect(
