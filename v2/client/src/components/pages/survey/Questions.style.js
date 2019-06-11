@@ -29,8 +29,13 @@ const RadioField = styled(CommonStyles)`
       justify-self: center;
     }
   }
-  h3 {
+  h4 {
     font-size: 1.5rem;
+    ${({ unanswered }) => unanswered && ` color: ${colors.errorRed}`}
+  }
+
+  p {
+    ${({ unanswered }) => unanswered && ` color: ${colors.errorRed}`}
   }
 
   .answers {
@@ -92,8 +97,13 @@ const TextField = styled(CommonStyles)`
     border: 1px solid ${colors.gray};
     width: 90%;
   }
-  h3 {
+  h4 {
     font-size: 1.5rem;
+    ${({ unanswered }) => unanswered && ` color: ${colors.errorRed}`}
+  }
+
+  p {
+    ${({ unanswered }) => unanswered && ` color: ${colors.errorRed}`}
   }
 
   textarea {
@@ -123,6 +133,7 @@ const Slider = styled.input`
     border-radius: 10px;
     cursor: ew-resize;
     background: ${colors.primary};
+    ${({ unanswered }) => unanswered && 'background: red;'}
   }
 `;
 

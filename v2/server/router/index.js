@@ -4,6 +4,8 @@ const addSessionController = require('./../controllers/add-session');
 const ParticipantLoginController = require('./../controllers/participant-login');
 const usersRouter = require('./users');
 const getParticipantBehavioralInsight = require('./../controllers/behavioralInsight/getParticipantBehavioralInsight');
+const getSessionBehavioralInsight = require('./../controllers/behavioralInsight/getSessionBehavioralInsight');
+const getTrainerBehavioralInsight = require('./../controllers/behavioralInsight/getTrainerBehavioralInsight');
 const getTrainerFeedback = require('./../controllers/feedback/getTrainerFeedback');
 
 const surveyQs = require('../controllers/survey/getSurveyQs');
@@ -29,6 +31,12 @@ router.get('/session-details/:id', getSessionDetails);
 router.delete('/session-delete/:id', deleteSession);
 router.patch('/session-edit/:id', editSession);
 router.patch('/emails-update/:id', updateEmails);
+router.get(
+  '/behavioral-insight/survey/:sessionId/:surveyType',
+  getSessionBehavioralInsight
+);
+router.get('/behavioral-insight/trainer/:id', getTrainerBehavioralInsight);
+
 router.post('/feedback/trainer/:trainerId/', getTrainerFeedback);
 
 router.use(usersRouter);

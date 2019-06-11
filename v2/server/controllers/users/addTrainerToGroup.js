@@ -10,8 +10,8 @@ const { getUserByEmail, update } = require('./../../database/queries/users');
 
 module.exports = async (req, res, next) => {
   const { name, email, newUser, localLead, region, localLeadName } = req.body;
-  const { user } = req;
 
+  const { user } = req;
   if (user.role !== 'localLead') {
     return next(boom.unauthorized());
   }
