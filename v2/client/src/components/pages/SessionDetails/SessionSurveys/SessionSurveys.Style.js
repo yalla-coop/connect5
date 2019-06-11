@@ -35,15 +35,23 @@ export const Buttons = styled.div`
   padding-top; 2rem
 `;
 
-export const SurveyLinkType = styled.span`
+export const SurveyLinkType = styled(Link)`
   display: inline-block;
   padding: 1rem;
   color: #000;
+  text-decoration: none;
 `;
 
 export const SurveyLinkInfo = styled.span`
   display: inline-block;
   cursor: pointer;
+`;
+
+export const ViewResultIcon = styled.span`
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 0.3rem;
+  color: ${colors.black};
 `;
 
 export const CopyLink = styled.span`
@@ -80,32 +88,54 @@ export const SurveyLink = styled(Link)`
 `;
 
 export const AttendeeBtn = styled.button`
-background-color: ${colors.lightPrimary};
-border-radius: 15px;
-border: 1px solid ${colors.lightPrimary};
-width: 200px;
-display: block;
-text-align: center;
-margin: 0 auto;
-margin-top: 1rem;
-margin-bottom: 2rem;
-cursor: pointer;
-color: ${colors.white};
-font-size: 1rem;
-padding: 14px 15px;
-text-decoration: none;
-text-shadow: 0px 1px 0px #2f6627;
-&:hover {
-background-color: ${colors.white};
-color: ${colors.lightPrimary};
-border: 1px solid ${colors.lightPrimary}
-}
-&:active {
-position:relative;
-top:1px;
+  background-color: ${colors.lightPrimary};
+  border-radius: 15px;
+  border: 1px solid ${colors.lightPrimary};
+  width: 200px;
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  color: ${colors.white};
+  font-size: 1rem;
+  padding: 14px 15px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #2f6627;
+  &:hover {
+  background-color: ${colors.white};
+  color: ${colors.lightPrimary};
+  border: 1px solid ${colors.lightPrimary}
+  }
+  &:active {
+  position:relative;
+  top:1px;
 `;
 
-export const ResultBtn = styled(AttendeeBtn)``;
+export const SurveyResult = styled(Link)`
+  display: block;
+  width: 130px;
+  text-decoration: none;
+  padding: 9px 10px;
+  font-size: 0.89rem;
+  border-radius: 9px;
+  color: ${colors.white};
+  background: ${colors.lightPrimary};
+  margin: 0 auto;
+  margin-top: .8rem;
+  margin-bottom: .8rem;
+  font-weight: 600;
+  border: 1px solid ${colors.lightPrimary};
+  &:hover {
+  background-color: ${colors.white};
+  color: ${colors.lightPrimary};
+  border: 1px solid ${colors.lightPrimary}
+  }
+  &:active {
+  position:relative;
+  top:1px;
+`;
 
 export const ModalButtonsDiv = styled.div`
   display: flex;

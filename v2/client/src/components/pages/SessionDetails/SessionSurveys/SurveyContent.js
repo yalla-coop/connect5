@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Swal from 'sweetalert2';
 import { Icon } from 'antd';
+import SurveyResultLink from './SurveyResultLink';
 import {
   SurveyContentWrapper,
   SurveyLinkType,
   SurveyLinkInfo,
+  ViewResultIcon,
   SurveyLink,
   CopyLink,
   MailLink,
@@ -62,11 +64,14 @@ class SurveyContent extends Component {
 
   render() {
     const { onInfoClick, onCopyClick } = this;
-    const { type, surveyURL, subId } = this.props;
+    const { type, surveyURL, subId, id } = this.props;
     return (
       <SurveyContentWrapper>
-        <SurveyLinkType>
+        <SurveyLinkType to={`/survey/${id}/${type}/results`}>
           {type !== 'Pre-survey' && 'Survey'} {type} Link{' '}
+          <ViewResultIcon>
+            <Icon type="arrow-right" />
+          </ViewResultIcon>
         </SurveyLinkType>
 
         <SurveyLinkInfo onClick={onInfoClick}>
@@ -86,6 +91,8 @@ class SurveyContent extends Component {
           <Icon type="mail" />
           <IconName>Email Survey</IconName>
         </MailLink>
+
+        <SurveyResultLink type={type} id={id} />
       </SurveyContentWrapper>
     );
   }

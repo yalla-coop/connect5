@@ -9,7 +9,6 @@ export const SessionDetailsWrapper = styled.div`
   margin: 0 auto;
   @media (min-width: 768px) {
     width: 50%;
-    margin-top: 8rem
 `;
 
 export const SessionTopDetailsWrapper = styled.div`
@@ -18,19 +17,20 @@ export const SessionTopDetailsWrapper = styled.div`
   width: 88%;
   margin: 0 auto;
   margin-top: 6rem;
-  padding: .5rem 0;
+  padding: .5rem;
+  padding-left: 0;
   box-shadow: rgb(204, 204, 204) 0px 0px 6px;
   background: ${colors.white};
   border-radius: 5px;
   @media (min-width: 768px) {
     width: 93%;
     padding: 1rem;
-    margin-top: 0
+    margin-top: 7rem
 `;
 
 export const Statistic = styled.div`
   display: flex;
-  padding: 1rem 0;
+  padding: .55rem .3rem;
   margin-top: 0.5rem;
   border-radius: 7px;
   @media (min-width: 768px) {
@@ -41,6 +41,9 @@ export const StatisticItems = styled.div`
   min-width: 25%;
   margin: 0 auto;
   padding: 0 0.5rem;
+  :nth-child(1) {
+  padding-right: 0.3rem;
+}
   &:not(:last-child) {
     border-right: ${borders.inputBox};
     padding: 0 0.5rem;
@@ -54,13 +57,21 @@ export const StatisticName = styled.span`
   color: ${colors.blackSecondary};
   text-align: center;
   margin: 0.8rem 0 0.95rem 0;
+  font-size: 0.9rem;
+  @media (min-width: 768px) {
+    font-size: 1rem;
 `;
 
 export const StatisticValue = styled.span`
   display: block;
   color: ${colors.black};
   text-align: center;
-  padding-top: 0.3rem;
+  padding: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  @media (min-width: 768px) {
+    font-size: 1rem;
+    padding: 0.9rem 0;
 `;
 
 export const Trainers = styled.p`

@@ -13,7 +13,6 @@ export const createSessionAction = sessionData => dispatch => {
         payload: res.data,
       })
     )
-    .catch(() => history.push('./404'));
     .then(() =>
       Modal.success({
         title: 'Done!',

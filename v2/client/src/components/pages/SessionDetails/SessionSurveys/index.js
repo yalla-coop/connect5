@@ -10,7 +10,6 @@ import {
   SessionSurveyContainer,
   Buttons,
   AttendeeBtn,
-  ResultBtn,
   ModalButtonsDiv,
 } from './SessionSurveys.Style';
 
@@ -94,18 +93,28 @@ class SessionSurveys extends Component {
                 subId="1"
                 type="Pre-survey"
                 surveyURL={preSurveyUrl}
+                id={_id}
               />
-              <SurveyContent subId="2" type={type} surveyURL={surveyURL} />
+              <SurveyContent
+                subId="2"
+                type={type}
+                surveyURL={surveyURL}
+                id={_id}
+              />
             </>
           ) : (
-            <SurveyContent subId="3" type={type} surveyURL={surveyURL} />
+            <SurveyContent
+              subId="3"
+              type={type}
+              surveyURL={surveyURL}
+              id={_id}
+            />
           )}
         </SessionSurveyContainer>
         <Buttons>
           <AttendeeBtn onClick={() => toggleModal(participantsEmails)}>
             View Attendees List
           </AttendeeBtn>
-          <ResultBtn to="/">View Survey Results</ResultBtn>
         </Buttons>
         <Modal
           isOpen={modalOpen}

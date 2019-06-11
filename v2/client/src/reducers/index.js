@@ -18,15 +18,9 @@ export default combineReducers({
   fetchedData: fetchedDataReducer,
   stats: statsReducer,
   results: userResults,
-<<<<<<< HEAD
   sessions: fetchedSessions,
   trainers: trainerReducer,
   session: sessionReducer,
-=======
-  trainers: trainerReducer,
-  session: sessionReducer,
-  sessions: fetchedSessions,
->>>>>>> dc171db9bee4648255d8a915147f1c1974190648
   groups: groupsReducer,
   behavioralInsight: behavioralInsightReducer,
   trainerFeedback: trainerFeedbackReducer,
