@@ -67,7 +67,6 @@ class SurveyResults extends Component {
                 style={{
                   background: '#f7f7f7',
                   borderRadius: 4,
-                  border: 0,
                   overflow: 'hidden',
                   padding: 0,
                 }}

@@ -62,9 +62,12 @@ html {
   padding: 0 !important
 }
 
-.survey-results__collaps .ant-collapse-borderless > .ant-collapse-item, .survey-results__collaps .ant-collapse-header {
-  border-bottom: 1px solid #d9d9d9 !important;
+.survey-results__collaps .ant-collapse-borderless > .ant-collapse-item,
+.survey-results__collaps .ant-collapse-item .ant-collapse-item-active {
+  border: 1px solid #d9d9d9 !important;
 }
+
+
 
 ant-collapse-header
 /* style for the Select component in AddTrainer view */
