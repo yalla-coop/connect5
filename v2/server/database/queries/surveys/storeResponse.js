@@ -2,7 +2,7 @@
 const Response = require('../../models/Response');
 const Session = require('../../models/Session');
 
-const storeResponse = async (PIN, sessionId, surveyType) => {
+const storeResponse = async (PIN, sessionId, surveyType, agreedToResearch) => {
   const sessionInfo = await Session.findById(sessionId);
 
   const response = new Response({
@@ -10,6 +10,7 @@ const storeResponse = async (PIN, sessionId, surveyType) => {
     session: sessionId,
     trainers: sessionInfo.trainers,
     surveyType,
+    agreedToResearch,
   });
 
   await response.save();

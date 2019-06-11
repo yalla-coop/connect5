@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import BehavioralInsight from '../../common/BehavioralInsight';
+import ParticipantBehavioralInsight from '../../common/BehavioralInsight/Participant';
 import { Wrapper, Paragraph } from './ParticipantBehavioral.style';
 import Header from '../../common/Header';
 
@@ -17,7 +17,7 @@ const ParticipantBehavioral = ({ isAuthenticated, pin, role }) => {
           Behaviour is influenced by our perceptions of our capability,
           opportunity and motivation for that behaviour
         </Paragraph>
-        <BehavioralInsight userRole={role} idOrPIN={pin} />;
+        <ParticipantBehavioralInsight userRole={role} idOrPIN={pin} />;
       </Wrapper>
     </>
   );

@@ -126,6 +126,8 @@ const getTopStats = async (userId, userType) => {
       participantCount,
     };
   } else {
+    console.log('hello');
+
     // this defaults to it being the trainer
     const sessions = await getTrainerSessionCount(userId);
     const responses = await getTrainerResponseCount(userId);

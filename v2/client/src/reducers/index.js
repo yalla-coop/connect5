@@ -11,6 +11,7 @@ import fetchedDataReducer from './fetchedDataReducer';
 import statsReducer from './statsReducer';
 import fetchedSessions from './fetchSessionReducer';
 import groupsReducer from './groups';
+import viewReducer from './viewReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -24,4 +25,5 @@ export default combineReducers({
   groups: groupsReducer,
   behavioralInsight: behavioralInsightReducer,
   trainerFeedback: trainerFeedbackReducer,
+  viewLevel: viewReducer,
 });

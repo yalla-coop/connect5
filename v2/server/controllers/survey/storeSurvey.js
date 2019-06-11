@@ -8,7 +8,18 @@ const storeAnswers = require('../../database/queries/surveys/storeAnswers');
 module.exports = async (req, res, next) => {
   const { errors, isValid } = await validateSurveyInput(req.body);
 
-  const { PIN, sessionId, surveyType, formState } = req.body;
+  const {
+    PIN,
+    sessionId,
+    surveyType,
+    formState,
+    disagreedToResearch,
+  } = req.body;
+  let agreedToResearch = true;
+
+  if (disagreedToResearch) {
+    agreedToResearch = false;
+  }
 
   if (!isValid) {
     return res.status(400).json(errors);
@@ -17,7 +28,7 @@ module.exports = async (req, res, next) => {
   // storeResponse adds the response to the Response model
   // and returns the unique Response ID
   // storeAnswers adds all answers to the Answer model
-  return storeResponse(PIN, sessionId, surveyType)
+  return storeResponse(PIN, sessionId, surveyType, agreedToResearch)
     .then(response => storeAnswers(response._id, formState, sessionId, PIN))
     .then(result => res.status(200).json(result))
     .catch(err => next(boom.badImplementation()));

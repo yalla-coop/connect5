@@ -19,6 +19,8 @@ const initialState = {
   _id: null,
   checkedUserInfo: {},
   error: null,
+  userLevel: null,
+  viewLevel: null,
 };
 
 export default function(state = initialState, action) {
@@ -30,6 +32,7 @@ export default function(state = initialState, action) {
         ...payload,
         isAuthenticated: true,
         loaded: true,
+        userLevel: payload.role,
       };
 
     case LOGIN_FAIL:
@@ -72,6 +75,7 @@ export default function(state = initialState, action) {
         ...payload,
         isAuthenticated: true,
         loaded: true,
+        userLevel: payload.role,
       };
 
     case USER_UNAUTHENTICATED:
