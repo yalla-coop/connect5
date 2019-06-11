@@ -8,6 +8,7 @@ const getTrainerFeedback = require('./../controllers/feedback/getTrainerFeedback
 
 const surveyQs = require('../controllers/survey/getSurveyQs');
 const storeSurvey = require('../controllers/survey/storeSurvey');
+const getSurveyResponses = require('../controllers/survey/getSurveyResponses');
 
 const router = express.Router();
 
@@ -26,6 +27,9 @@ router.post('/feedback/trainer/:trainerId/', getTrainerFeedback);
 router.use(usersRouter);
 
 router.get('/survey/:id', surveyQs);
+
+router.get('/session/:sessionId/:surveyType/responses', getSurveyResponses);
+
 router.post('/survey/submit', storeSurvey);
 
 module.exports = router;
