@@ -144,7 +144,7 @@ const renderQuestionInputType = (
           />
         </NumberSliderDiv>
         <NumberOutput>
-          <strong>Current Rating: </strong>
+          Current Rating:{' '}
           {answers[questionId] ? answers[questionId] : '5'}
         </NumberOutput>
       </TextField>
@@ -278,42 +278,6 @@ const questionsRender = (
           })}
       </QuestionWrapper>
     ));
-
-  // arrayOfQuestions.map((el, index) => {
-  //   // map through all the questions
-  //   // el is one question
-  //   const {
-  //     _id: questionId,
-  //     text: questionText,
-  //     group,
-  //     helperText,
-  //     options,
-  //   } = el;
-  //   const inputType = el.questionType.desc;
-  //   return (
-  //     <QuestionWrapper key={questionId}>
-  //       {' '}
-  //       {/* renders headlines */}
-  //       <QuestionCategory>
-  //         Question {index + 1} - {group}
-  //       </QuestionCategory>
-  //       {renderQuestionInputType(
-  //         inputType,
-  //         errorArray,
-  //         questionId,
-  //         answers,
-  //         index,
-  //         questionText,
-  //         helperText,
-  //         onChange,
-  //         options,
-  //         handleOther,
-  //         renderSubGroupText(el),
-  //         errors
-  //       )}
-  //     </QuestionWrapper>
-  //   );
-  // });
 };
 
 export default class Questions extends React.Component {
@@ -325,7 +289,7 @@ export default class Questions extends React.Component {
       handlePIN,
       answers,
       errors,
-      trackAnswers
+      trackAnswers,
     } = this.props;
 
     const errorArray = Object.keys(errors);

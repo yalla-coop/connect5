@@ -90,12 +90,14 @@ class Survey extends React.Component {
 
   // function to track progress on survey
   trackAnswers = () => {
-    const { surveyDetails, formState } = this.state;
+    const { surveyDetails, formState, PIN } = this.state;
 
     if (formState && surveyDetails) {
-      const numberOfQs = surveyDetails.questionsForSurvey.length;
+      // add one to total list to include the pin
+      const numberOfQs = surveyDetails.questionsForSurvey.length + 1;
       const numberOfAs = Object.values(formState).length;
-      const rate = Math.ceil((numberOfAs / numberOfQs) * 100);
+      const pinAnswered = PIN ? 1 : 0;
+      const rate = Math.ceil(((numberOfAs + pinAnswered) / numberOfQs) * 100);
       this.setState({ completionRate: rate });
     } else {
       this.setState({ completionRate: 0 });
@@ -127,7 +129,10 @@ class Survey extends React.Component {
   };
 
   // handles user input for PIN field
-  handlePIN = e => this.setState({ PIN: e.target.value });
+  handlePIN = e => {
+    this.setState({ PIN: e.target.value });
+    this.trackAnswers();
+  };
 
   // // when participant submits form
   // // this puts the required info into an object and sends to server

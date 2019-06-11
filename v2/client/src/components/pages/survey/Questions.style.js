@@ -8,6 +8,7 @@ const CommonStyles = styled.div`
   h4 {
     margin-bottom: 0;
     font-weight: 400;
+    color: ${colors.black};
   }
 
   header {
@@ -67,8 +68,10 @@ const RadioField = styled(CommonStyles)`
       label {
         cursor: pointer;
         display: flex;
-        align-items: center;
+        /* align-items: center; */
         position: relative;
+        width: 100%;
+        text-transform: capitalize;
       }
 
       p {
@@ -156,12 +159,12 @@ const NumberOutput = styled.output`
   margin-top: 10px;
   font-size: 1rem;
   font-weight: 300;
+  color: ${colors.primary};
 
   -moz-border-radius: 0.8em;
   -webkit-border-radius: 0.8em;
-  color: ${colors.black};
+  /* color: ${colors.black}; */
   line-height: 1.6em;
-  width: 1.6em;
 `;
 
 const QuestionCategory = styled.i`
