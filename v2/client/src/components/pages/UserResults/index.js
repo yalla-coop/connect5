@@ -11,7 +11,7 @@ import Reach from '../../common/Reach';
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 import SessionList from '../../common/List/SessionList';
-
+import Feedback from '../../common/Feedback';
 // ACTIONS
 import { fetchUserResults } from '../../../actions/users';
 import {
@@ -31,14 +31,20 @@ import {
 
 const { Panel } = Collapse;
 
-const panels = {
-  reach: { text: 'Reach', render: props => <Reach data={props} /> },
+const panels = input => ({
+  reach: {
+    text: 'Reach',
+    render: props => <Reach data={props} />,
+  },
   behavior: {
     text: 'Behavioural',
     render: () => null,
   },
-  feedback: { text: 'Trainer feedback', render: () => null },
-};
+  feedback: {
+    text: 'Trainer feedback',
+    render: () => <Feedback trainerId={input.userId} />,
+  },
+});
 
 class UserResults extends Component {
   state = {
@@ -91,10 +97,11 @@ class UserResults extends Component {
   };
 
   render() {
+    console.log(this.props);
     const { results, role, history, groupView, sessions } = this.props;
     const { state } = history.location;
     const { toggle } = this.state;
-
+    const panelsElements = panels(this.props);
     // if a user has been passed on then store as the user
     const user = state && state.trainer;
 
@@ -134,9 +141,9 @@ class UserResults extends Component {
                 <Icon type="down" rotate={isActive ? 90 : 0} />
               )}
             >
-              {Object.keys(panels).map(panel => (
-                <Panel header={panels[panel].text} key={panel}>
-                  {panels[panel].render(results)}
+              {Object.keys(panelsElements).map(panel => (
+                <Panel header={panelsElements[panel].text} key={panel}>
+                  {panelsElements[panel].render(results)}
                 </Panel>
               ))}
             </Collapse>
