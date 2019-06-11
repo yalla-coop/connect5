@@ -78,7 +78,12 @@ class SurveyContent extends Component {
           <Icon type="info-circle" />
         </SurveyLinkInfo>
 
-        <SurveyLink to={surveyURL} id={`link${subId}`}>
+        <SurveyLink
+          href={surveyURL}
+          target="_blank"
+          rel="noopener noreferrer"
+          id={`link${subId}`}
+        >
           {surveyURL}
         </SurveyLink>
 

@@ -72,7 +72,7 @@ export const IconName = styled.span`
   margin-left: 0.5rem;
 `;
 
-export const SurveyLink = styled(Link)`
+export const SurveyLink = styled.a`
   text-decoration: none;
   display: block;
   padding: 0.5rem;
@@ -104,37 +104,38 @@ export const AttendeeBtn = styled.button`
   text-decoration: none;
   text-shadow: 0px 1px 0px #2f6627;
   &:hover {
-  background-color: ${colors.white};
-  color: ${colors.lightPrimary};
-  border: 1px solid ${colors.lightPrimary}
+    background-color: ${colors.white};
+    color: ${colors.lightPrimary};
+    border: 1px solid ${colors.lightPrimary};
   }
   &:active {
-  position:relative;
-  top:1px;
+    position: relative;
+    top: 1px;
+  }
 `;
 
 export const SurveyResult = styled(Link)`
   display: block;
   width: 130px;
   text-decoration: none;
+  text-align: center;
   padding: 9px 10px;
   font-size: 0.89rem;
   border-radius: 9px;
   color: ${colors.white};
   background: ${colors.lightPrimary};
-  margin: 0 auto;
-  margin-top: .8rem;
-  margin-bottom: .8rem;
+  margin: 0.8rem auto;
   font-weight: 600;
   border: 1px solid ${colors.lightPrimary};
   &:hover {
-  background-color: ${colors.white};
-  color: ${colors.lightPrimary};
-  border: 1px solid ${colors.lightPrimary}
+    background-color: ${colors.white};
+    color: ${colors.lightPrimary};
+    border: 1px solid ${colors.lightPrimary};
   }
   &:active {
-  position:relative;
-  top:1px;
+    position: relative;
+    top: 1px;
+  }
 `;
 
 export const ModalButtonsDiv = styled.div`
@@ -143,4 +144,5 @@ export const ModalButtonsDiv = styled.div`
   margin-left: 45%;
   @media (min-width: 768px) {
     margin-left: 55%;
+  }
 `;

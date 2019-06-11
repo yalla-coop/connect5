@@ -160,7 +160,7 @@ class EditSession extends Component {
         type: 'success',
         confirmButtonText: 'Ok',
       });
-      history.push('/sessions');
+      history.push(`/session-details/${id}`);
     }
   };
 

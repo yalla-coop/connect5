@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Select, Button } from 'antd';
@@ -15,6 +16,14 @@ import {
 
 const { Option } = Select;
 
+const surveyType = {
+  1: ['pre-day-1', 'post-day-1'],
+  2: ['post-day-2'],
+  3: ['post-day-3'],
+  'special-2-days': ['post-special'],
+  'train-trainers': ['pre-train-trainers', 'post-train-trainers'],
+};
+
 class SessionSurveys extends Component {
   state = {
     modalOpen: false,
@@ -28,9 +37,10 @@ class SessionSurveys extends Component {
 
   saveEmails = _id => {
     const { participantsEmails } = this.state;
+    const { updateEmails } = this.props;
 
     // whenever user click on save button call updateEmails action to update Emails List
-    this.props.updateEmails(_id, participantsEmails);
+    updateEmails(_id, participantsEmails);
     this.toggleModal();
   };
 
@@ -45,8 +55,10 @@ class SessionSurveys extends Component {
     const { sessionDetails } = this.props;
     const { type, _id, participantsEmails } = sessionDetails;
     const { toggleModal, onEmailChange, saveEmails } = this;
-    const surveyURL = `${window.location.host}/survey/${type}${_id}`;
-    const preSurveyUrl = `${window.location.host}/survey/0${_id}`;
+    const links = surveyType[type].map(item => {
+      return `${window.location.host}/survey/${item}&${_id}`;
+    });
+
     const modalContent = participantsEmails && (
       <>
         <Select
@@ -92,13 +104,13 @@ class SessionSurveys extends Component {
               <SurveyContent
                 subId="1"
                 type="Pre-survey"
-                surveyURL={preSurveyUrl}
+                surveyURL={links[0]}
                 id={_id}
               />
               <SurveyContent
                 subId="2"
                 type={type}
-                surveyURL={surveyURL}
+                surveyURL={links[1]}
                 id={_id}
               />
             </>
@@ -106,7 +118,7 @@ class SessionSurveys extends Component {
             <SurveyContent
               subId="3"
               type={type}
-              surveyURL={surveyURL}
+              surveyURL={links[0]}
               id={_id}
             />
           )}
