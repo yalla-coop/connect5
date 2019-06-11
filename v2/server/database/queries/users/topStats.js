@@ -23,7 +23,9 @@ const getTopStats = async (userId, userType) => {
   if (userType === 'admin') {
     const sessionCount = await Session.find();
     const responseCount = await Response.find();
-    const trainerCount = await User.find();
+    const trainerCount = await User.find({
+      $or: [{ role: 'localLead' }, { role: 'trainer' }],
+    });
     const participantCount = await Response.aggregate([
       {
         $group: {
@@ -39,36 +41,87 @@ const getTopStats = async (userId, userType) => {
       participantCount: participantCount.length,
     };
   } else if (userType === 'localLead') {
-    // get all the trainers who have them as a local lead
-    // const trainers = await User.find({
-    //   localLead: mongoose.Types.ObjectId(userId),
-    // });
-
     const trainers = user.trainersGroup;
 
-    let sessionCount = 0;
-    let participantCount = 0;
-    let responseCount = 0;
-
-    // loop through each trainer and get their session and participant count
-    // add it to the overall session and participant count
-    await Promise.all(
-      trainers.map(async trainerID => {
-        const session = await getTrainerSessionCount(trainerID);
-        const responses = await getTrainerResponseCount(trainerID);
-        if (typeof session[0] === 'object') {
-          sessionCount += session[0].sessions;
-          participantCount += session[0].participants;
-        }
-        if (typeof responses[0] === 'object') {
-          responseCount += responses[0].responses;
-        }
-      })
+    // get all the sessions that include at least one trainer in the group
+    const sessions = await Promise.all(
+      trainers.map(async trainerId =>
+        Session.aggregate([
+          { $match: { trainers: mongoose.Types.ObjectId(trainerId) } },
+          {
+            $project: {
+              _id: 1,
+              numberOfAttendees: 1,
+            },
+          },
+        ])
+      )
     );
 
+    // get all the responses that include at least one trainer in the group
+    const responses = await Promise.all(
+      trainers.map(async trainerId =>
+        Response.aggregate([
+          { $match: { trainers: mongoose.Types.ObjectId(trainerId) } },
+          {
+            $project: {
+              _id: 1,
+            },
+          },
+        ])
+      )
+    );
+
+    // put all the sessions into one array
+    const cleanedSessions = sessions.reduce((a, b) => a.concat(b), []);
+
+    // get unique sessions as you might have two trainers in the group on the same session
+    const uniqueSessions = [];
+    const map = new Map();
+
+    if (cleanedSessions.length > 0) {
+      for (const item of cleanedSessions) {
+        if (!map.has(item._id.toString())) {
+          map.set(item._id.toString(), true);
+          uniqueSessions.push({
+            _id: item._id,
+            numberOfAttendees: item.numberOfAttendees,
+            type: item.type,
+          });
+        }
+      }
+    }
+
+    const cleanedResponses = responses.reduce((a, b) => a.concat(b), []);
+
+    // get the unique responses as you might have two trainers in the group on the same session that they are responding to
+    const uniqueResponses = [];
+    const responseMap = new Map();
+
+    if (cleanedResponses.length > 0) {
+      for (const item of cleanedResponses) {
+        if (!responseMap.has(item._id.toString())) {
+          responseMap.set(item._id.toString(), true);
+          uniqueResponses.push({
+            _id: item._id,
+            surveyType: item.surveyType,
+          });
+        }
+      }
+    }
+
+    // const uniqueResponses =
+    //   responses.length > 0
+    //     ? [...new Set(responses[0].map(response => response._id))]
+    //     : [];
+
+    const participantCount = uniqueSessions
+      .map(session => session.numberOfAttendees)
+      .reduce((a, b) => a + b, 0);
+
     stats = {
-      sessionCount,
-      responseCount,
+      sessionCount: uniqueSessions.length,
+      responseCount: uniqueResponses.length,
       trainerCount: trainers.length,
       participantCount,
     };

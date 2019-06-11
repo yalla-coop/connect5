@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const buildDB = require('../../database/data/test');
 const app = require('../../app');
 
+const User = require('../../database/models/User');
+
 describe('Testing dashboard stats API', () => {
   beforeAll(async done => {
     // build dummy data
@@ -37,20 +39,23 @@ describe('Testing dashboard stats API', () => {
       .expect(200)
       .end(async (error, result) => {
         const token = result.headers['set-cookie'][0].split(';')[0];
-        const dashboardData = { userType: 'trainer' };
+
+        const trainer = await User.findOne({ role: 'trainer' });
+
+        const resultData = { id: trainer.id, role: 'trainer' };
 
         request(app)
-          .post('/api/all/dashboard')
+          .post('/api/users/213123/results')
           .set('Cookie', [token])
-          .send(dashboardData)
+          .send(resultData)
           .expect(200)
           .end(async (err, res) => {
             expect(1).toBe(1);
             expect(res.body).toBeDefined();
-            expect(res.body.stats).toBeDefined();
-            expect(res.body.stats.participantCount).toBe(45);
-            expect(res.body.stats.responseRate).toBe(20);
-            expect(res.body.userType).toBe(dashboardData.userType);
+            expect(res.body.sessions).toBeDefined();
+            expect(res.body.newSurveys).toBeDefined();
+            expect(res.body.registrationDate).toBeDefined();
+            expect(res.body.sessions.length).toEqual(4);
             done(err);
           });
       });

@@ -6,33 +6,42 @@ const getResponseRate = (sessions, surveys) => {
 
   return surveys.map(survey => {
     switch (survey._id) {
-      case 'pre-day-1':
+      case 'pre-day-1': {
+        const responseRate = ((survey.responses / obj['1']) * 100).toFixed(1);
+        return { ...survey, responseRate: `${responseRate}%` };
+      }
       case 'post-day-1': {
-        const responseRate = ((survey.responses / obj['1']) * 100).toFixed(2);
-        return { ...survey, responseRate };
+        const responseRate = ((survey.responses / obj['1']) * 100).toFixed(1);
+        return { ...survey, responseRate: `${responseRate}%` };
       }
       case 'post-day-2': {
-        const responseRate = ((survey.responses / obj['2']) * 100).toFixed(2);
-        return { ...survey, responseRate };
+        const responseRate = ((survey.responses / obj['2']) * 100).toFixed(1);
+        return { ...survey, responseRate: `${responseRate}%` };
       }
       case 'post-day-3': {
-        const responseRate = ((survey.responses / obj['3']) * 100).toFixed(2);
-        return { ...survey, responseRate };
+        const responseRate = ((survey.responses / obj['3']) * 100).toFixed(1);
+        return { ...survey, responseRate: `${responseRate}%` };
       }
       case 'post-special': {
         const responseRate = (
           (survey.responses / obj['special-2-days']) *
           100
-        ).toFixed(2);
-        return { ...survey, responseRate };
+        ).toFixed(1);
+        return { ...survey, responseRate: `${responseRate}%` };
       }
-      case 'pre-train-trainers':
+      case 'pre-train-trainers': {
+        const responseRate = (
+          (survey.responses / obj['train-trainers']) *
+          100
+        ).toFixed(1);
+        return { ...survey, responseRate: `${responseRate}%` };
+      }
       case 'post-train-trainers': {
         const responseRate = (
           (survey.responses / obj['train-trainers']) *
           100
-        ).toFixed(2);
-        return { ...survey, responseRate };
+        ).toFixed(1);
+        return { ...survey, responseRate: `${responseRate}%` };
       }
 
       default: {

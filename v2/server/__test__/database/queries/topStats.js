@@ -7,9 +7,10 @@ const getTopStats = require('../../../database/queries/users/topStats');
 const User = require('../../../database/models/User');
 
 describe('Test topStats query', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(() => {
@@ -23,7 +24,7 @@ describe('Test topStats query', () => {
     getTopStats(admin.id, 'admin').then(result => {
       expect(result).toBeDefined();
       expect(result.participantCount).toBe(7);
-      expect(result.trainerCount).toBe(20);
+      expect(result.trainerCount).toBe(19);
       done();
     });
   });
@@ -33,8 +34,19 @@ describe('Test topStats query', () => {
 
     getTopStats(localLead.id, 'localLead').then(result => {
       expect(result).toBeDefined();
-      expect(result.participantCount).toBeDefined();
-      expect(result.trainerCount).toBe(3);
+      expect(result.participantCount).toBe(69);
+      expect(result.trainerCount).toBe(4);
+      done();
+    });
+  });
+
+  test('localLead stats if they dont have trainers', async done => {
+    const localLead = await User.findOne({ name: 'julie' });
+
+    getTopStats(localLead.id, 'localLead').then(result => {
+      expect(result).toBeDefined();
+      expect(result.participantCount).toBe(0);
+      expect(result.trainerCount).toBe(0);
       done();
     });
   });
@@ -44,8 +56,8 @@ describe('Test topStats query', () => {
 
     getTopStats(trainer.id, 'trainer').then(result => {
       expect(result).toBeDefined();
-      expect(result.participantCount).toBe(23);
-      expect(result.responseRate).toBe(31);
+      expect(result.participantCount).toBe(45);
+      expect(result.responseRate).toBe(20);
       done();
     });
   });

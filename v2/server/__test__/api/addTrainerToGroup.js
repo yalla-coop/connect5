@@ -6,18 +6,14 @@ const buildDB = require('./../../database/data/test');
 const app = require('./../../app');
 
 describe('Tesing for addTrainerToGroup route', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(async () => {
     await mongoose.disconnect();
-  });
-
-  beforeEach(async () => {
-    // build dummy data
-    await buildDB();
   });
 
   test('test with adding new trainer', async done => {
@@ -65,15 +61,15 @@ describe('Tesing for addTrainerToGroup route', () => {
             expect(createdTrainer.localLead).toEqual(localLead._id);
 
             // local lead group must hove new additional trainer
-            expect(localLead.trainersGroup).toHaveLength(3);
-            expect(updatedLocalLead.trainersGroup).toHaveLength(4);
+            expect(localLead.trainersGroup).toHaveLength(4);
+            expect(updatedLocalLead.trainersGroup).toHaveLength(5);
 
             // success message
             expect(response.body.success).toBe(
               `New has been added to ${localLead.name}'s group`
             );
 
-            done(err);
+            done(error);
           });
       });
   });
@@ -131,7 +127,7 @@ describe('Tesing for addTrainerToGroup route', () => {
               `${trainer.name} has been added to ${localLead.name}'s group`
             );
 
-            done(err);
+            done(error);
           });
       });
   });

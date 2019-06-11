@@ -16,6 +16,7 @@ const initialState = {
   name: '',
   email: '',
   role: null,
+  _id: null,
   checkedUserInfo: {},
   error: null,
 };

@@ -1,219 +1,186 @@
 const mongoose = require('mongoose');
 
 const User = require('../../models/User');
+const Session = require('../../models/Session');
+const Response = require('../../models/Response');
 
-const getLocalLeadsSessions = leadId => {
-  return User.aggregate([
-    {
-      $match: {
-        $or: [
-          { _id: mongoose.Types.ObjectId(leadId) },
-          { localLead: mongoose.Types.ObjectId(leadId) },
-        ],
-      },
-    },
-    {
-      $lookup: {
-        from: 'sessions',
-        localField: '_id',
-        foreignField: 'trainers',
-        as: 'sessions',
-      },
-    },
-    {
-      $match: { sessions: { $exists: true, $ne: [] } },
-    },
-    {
-      $unwind: '$sessions',
-    },
-    {
-      $group: { _id: null, sessions: { $addToSet: '$sessions' } },
-    },
-    {
-      $unwind: '$sessions',
-    },
-    {
-      $replaceRoot: { newRoot: '$sessions' },
-    },
-    {
-      $group: {
-        _id: '$type',
-        sessions: { $sum: 1 },
-        participants: { $sum: '$numberOfAttendees' },
-        key: { $first: '$_id' },
-        type: {
-          $first: {
-            $switch: {
-              branches: [
-                { case: { $eq: ['$type', '1'] }, then: 'Session 1' },
-                { case: { $eq: ['$type', '2'] }, then: 'Session 2' },
-                { case: { $eq: ['$type', '3'] }, then: 'Session 3' },
-                {
-                  case: { $eq: ['$type', 'special-2-days'] },
-                  then: '2-day Intensive',
-                },
-                {
-                  case: { $eq: ['$type', 'train-trainers'] },
-                  then: 'Train trainers',
-                },
-              ],
-              default: 'No match',
-            },
+const getTrainerGroupSurveys = async leadId => {
+  const user = await User.findById(leadId);
+  const trainers = user.trainersGroup;
+
+  // get all responses that include at least one trainer in the group
+  const responses = await Promise.all(
+    trainers.map(async trainerID =>
+      Response.aggregate([
+        { $match: { trainers: mongoose.Types.ObjectId(trainerID) } },
+        {
+          $lookup: {
+            from: 'sessions',
+            localField: 'session',
+            foreignField: '_id',
+            as: 'session',
           },
         },
-      },
+        {
+          $unwind: '$session',
+        },
+        {
+          $project: {
+            _id: 1,
+            surveyType: 1,
+            'session.numberOfAttendees': 1,
+          },
+        },
+      ])
+    )
+  );
+
+  const cleanedResponses = responses.reduce((a, b) => a.concat(b), []);
+  const uniqueResponses = [];
+  const map = new Map();
+
+  if (cleanedResponses.length > 0) {
+    for (const item of cleanedResponses) {
+      if (!map.has(item._id.toString())) {
+        map.set(item._id.toString(), true);
+        uniqueResponses.push({
+          _id: item._id,
+          surveyType: item.surveyType,
+          participants: item.session.numberOfAttendees,
+        });
+      }
+    }
+  }
+
+  const result = {
+    'pre-day-1': {
+      _id: 'pre-day-1',
+      responses: 0,
+      participants: 0,
+      type: 'Pre-course',
     },
-    {
-      $sort: { _id: 1 },
+    'post-day-1': {
+      _id: 'post-day-1',
+      responses: 0,
+      participants: 0,
+      type: 'Post Session 1',
     },
-  ]);
+    'post-day-2': {
+      _id: 'post-day-2',
+      responses: 0,
+      participants: 0,
+      type: 'Post Session 2',
+    },
+    'post-day-3': {
+      _id: 'post-day-3',
+      responses: 0,
+      participants: 0,
+      type: 'Post Session 3',
+    },
+    'post-special': {
+      _id: 'post-special',
+      responses: 0,
+      participants: 0,
+      type: 'Post 2-day Intensive',
+    },
+    'pre-train-trainers': {
+      _id: 'pre-train-trainers',
+      responses: 0,
+      participants: 0,
+      type: 'Pre train trainers',
+    },
+    'post-train-trainers': {
+      _id: 'post-train-trainers',
+      responses: 0,
+      participants: 0,
+      type: 'Post train trainers',
+    },
+    'follow-up-3-month': {
+      _id: 'follow-up-3-month',
+      responses: 0,
+      participants: 0,
+      type: '3 month follow-up',
+    },
+    'follow-up-6-month': {
+      _id: 'follow-up-6-month',
+      responses: 0,
+      participants: 0,
+      type: '6 month Follow-up',
+    },
+  };
+
+  uniqueResponses.map(response => {
+    result[response.surveyType]._id = response.surveyType;
+    result[response.surveyType].responses += 1;
+    result[response.surveyType].participants += response.participants;
+  });
+
+  return Object.values(result);
 };
 
-// Trainer responses number grouped by survery type
+const getTrainerGroupSessions = async leadId => {
+  const user = await User.findById(leadId);
+  const trainers = user.trainersGroup;
 
-const getTeamLeadSuerveys = teamLeadId => {
-  return User.aggregate([
-    {
-      $match: {
-        $or: [
-          { _id: mongoose.Types.ObjectId(teamLeadId) },
-          { localLead: mongoose.Types.ObjectId(teamLeadId) },
-        ],
-      },
-    },
-    {
-      $lookup: {
-        from: 'responses',
-        localField: '_id',
-        foreignField: 'trainers',
-        as: 'responses',
-      },
-    },
-    {
-      $match: { responses: { $exists: true, $ne: [] } },
-    },
-    {
-      $unwind: '$responses',
-    },
-    {
-      $group: { _id: null, resp: { $addToSet: '$responses' } },
-    },
-    {
-      $unwind: '$resp',
-    },
-    {
-      $replaceRoot: { newRoot: '$resp' },
-    },
-    {
-      $lookup: {
-        from: 'sessions',
-        localField: 'session',
-        foreignField: '_id',
-        as: 'session',
-      },
-    },
-    {
-      $group: {
-        _id: '$surveyType',
-        key: { $first: '$_id' },
-        responses: { $sum: 1 },
-        participants: { $first: { $sum: '$session.numberOfAttendees' } },
-        type: {
-          $first: {
-            $switch: {
-              branches: [
-                {
-                  case: { $eq: ['$surveyType', 'pre-day-1'] },
-                  then: 'Pre-course',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-day-1'] },
-                  then: 'Post Session 1',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-day-2'] },
-                  then: 'Post Session 2',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-day-3'] },
-                  then: 'Post Session 3',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-special'] },
-                  then: 'Post 2-day Intensive',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'pre-train-trainers'] },
-                  then: 'Pre train trainers',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-train-trainers'] },
-                  then: 'Post train trainers',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'follow-up-3-month'] },
-                  then: '3 month follow-up',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'follow-up-6-month'] },
-                  then: '6 month Follow-up',
-                },
-              ],
-              default: 'No match',
-            },
+  // get all the sessions that include at least one trainer in the group
+  const sessions = await Promise.all(
+    trainers.map(async trainerId =>
+      Session.aggregate([
+        { $match: { trainers: mongoose.Types.ObjectId(trainerId) } },
+        {
+          $project: {
+            _id: 1,
+            numberOfAttendees: 1,
+            type: 1,
           },
         },
-        order: {
-          $first: {
-            $switch: {
-              branches: [
-                {
-                  case: { $eq: ['$surveyType', 'pre-day-1'] },
-                  then: 1,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-day-1'] },
-                  then: 2,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-day-2'] },
-                  then: 3,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-day-3'] },
-                  then: 4,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'pre-train-trainers'] },
-                  then: 5,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-train-trainers'] },
-                  then: 6,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-special'] },
-                  then: 7,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'follow-up-3-month'] },
-                  then: 8,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'follow-up-6-month'] },
-                  then: 9,
-                },
-              ],
-              default: 'No match',
-            },
-          },
-        },
-      },
+      ])
+    )
+  );
+
+  const cleanedSessions = sessions.reduce((a, b) => a.concat(b), []);
+
+  const uniqueSessions = [];
+  const map = new Map();
+
+  if (cleanedSessions.length > 0) {
+    for (const item of cleanedSessions) {
+      if (!map.has(item._id.toString())) {
+        map.set(item._id.toString(), true);
+        uniqueSessions.push({
+          _id: item._id,
+          numberOfAttendees: item.numberOfAttendees,
+          type: item.type,
+        });
+      }
+    }
+  }
+
+  const result = {
+    '1': { _id: '1', sessions: 0, participants: 0, type: 'Session 1' },
+    '2': { _id: '2', sessions: 0, participants: 0, type: 'Session 2' },
+    '3': { _id: '3', sessions: 0, participants: 0, type: 'Session 3' },
+    'special-2-days': {
+      _id: 'special-2-days',
+      sessions: 0,
+      participants: 0,
+      type: '2-day intensive',
     },
-    {
-      $sort: { order: 1 },
+    'train-trainers': {
+      _id: 'train-trainers',
+      sessions: 0,
+      participants: 0,
+      type: 'Train trainers',
     },
-  ]);
+  };
+
+  uniqueSessions.map(session => {
+    result[session.type]._id = session.type;
+    result[session.type].sessions += 1;
+    result[session.type].participants += session.numberOfAttendees;
+  });
+
+  return Object.values(result);
 };
 
 const getMyTrainers = async leadId => {
@@ -238,7 +205,7 @@ const getMyTrainers = async leadId => {
             },
           },
           {
-            $unwind: '$localLead',
+            $unwind: { path: '$localLead', preserveNullAndEmptyArrays: true },
           },
           {
             $addFields: {
@@ -266,4 +233,8 @@ const getMyTrainers = async leadId => {
   return [];
 };
 
-module.exports = { getLocalLeadsSessions, getTeamLeadSuerveys, getMyTrainers };
+module.exports = {
+  getMyTrainers,
+  getTrainerGroupSessions,
+  getTrainerGroupSurveys,
+};

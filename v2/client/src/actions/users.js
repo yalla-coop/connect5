@@ -5,9 +5,9 @@ import history from '../history';
 import * as types from '../constants/actionTypes';
 import { returnErrors } from './errorAction';
 
-export const fetchUserResults = id => async dispatch => {
+export const fetchUserResults = (id, role) => async dispatch => {
   try {
-    const res = await axios.get(`/api/users/${id}/results`);
+    const res = await axios.post(`/api/users/${id}/results`, { id, role });
     dispatch({
       type: types.FETCH_USER_RESULTS_SUCCESS,
       payload: res.data,
@@ -34,11 +34,12 @@ export const fetchbehavioralInsight = (role, idOrPIN) => async dispatch => {
 
 export const fetchTrainerFeedback = (
   trainerId,
-  sessionId
+  sessionId,
+  surveyType
 ) => async dispatch => {
   try {
     const url = `/api/feedback/trainer/${trainerId}`;
-    const data = { sessionId };
+    const data = { sessionId, surveyType };
 
     const res = await axios.post(url, data);
 

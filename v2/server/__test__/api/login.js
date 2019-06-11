@@ -5,18 +5,14 @@ const buildDB = require('./../../database/data/test');
 const app = require('./../../app');
 
 describe('Tesing for login route', () => {
-  beforeAll(async () => {
+  beforeAll(async done => {
     // build dummy data
     await buildDB();
+    done();
   });
 
   afterAll(async () => {
     await mongoose.disconnect();
-  });
-
-  beforeEach(async () => {
-    // build dummy data
-    await buildDB();
   });
 
   test('test with correct email and password', done => {

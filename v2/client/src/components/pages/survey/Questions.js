@@ -2,7 +2,6 @@
 // and populate the Survey component
 
 import React from 'react';
-import 'antd/dist/antd.css';
 import { Alert } from 'antd';
 import {
   RadioField,
