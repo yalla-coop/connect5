@@ -13,11 +13,9 @@ import {
   TopSection,
   Title,
   ContentWrapper,
-  Question
+  Question,
+  ButtonWrapper
 } from './DecideView.style';
-
-// ROUTES
-import { DASHBOARD_URL } from '../../../constants/navigationRoutes';
 
 import history from '../../../history';
 
@@ -53,6 +51,7 @@ class DecideView extends Component {
         <ContentWrapper>
           <Question>What would you like to do today?</Question>
           {role === 'admin' && (
+            <ButtonWrapper>
             <Button
               label="view as admin"
               type="light"
@@ -60,8 +59,10 @@ class DecideView extends Component {
               height="48px"
               onClick={() => this.setViewLevel('admin')}
             />
+            </ButtonWrapper>
           )}
           {role === 'localLead' && (
+            <ButtonWrapper>
             <Button
               label="view as local lead"
               type="light"
@@ -69,7 +70,9 @@ class DecideView extends Component {
               height="48px"
               onClick={() => this.setViewLevel('localLead')}
             />
+            </ButtonWrapper>
           )}
+          <ButtonWrapper>
           <Button
             label="view as trainer"
             type="light"
@@ -77,6 +80,7 @@ class DecideView extends Component {
             height="48px"
             onClick={() => this.setViewLevel('trainer')}
           />
+          </ButtonWrapper>
         </ContentWrapper>
       </Wrapper>
     );

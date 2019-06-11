@@ -49,7 +49,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { userName, stats, viewLevel, role } = this.props;
+    const { userName, stats, viewLevel } = this.props;
     // const { id } = auth;
 
     const captalizesName =

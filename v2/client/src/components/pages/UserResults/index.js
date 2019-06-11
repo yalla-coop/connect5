@@ -48,7 +48,7 @@ class UserResults extends Component {
 
   async componentDidMount() {
     // show results based on the logged in user id and role
-    const { role, userId, history, viewLevel } = this.props;
+    const { userId, history, viewLevel } = this.props;
 
     // if trainer has been selected from trainer list and the logged in user is localLead then use the trainer's id and view them as a trainer
     // else if selected from list use that trainer/local lead's role

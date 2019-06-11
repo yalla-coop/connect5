@@ -59,7 +59,7 @@ const Wrapper = styled.div`
 class App extends Component {
 
   componentDidMount() {
-    const { checkAuth: checkAuthActionCreator, viewLevel } = this.props;
+    const { checkAuth: checkAuthActionCreator } = this.props;
     checkAuthActionCreator();
   }
 
@@ -166,7 +166,7 @@ class App extends Component {
               render={() => {
                 if (loaded) {
                   return isAuthenticated ? (
-                    <Redirect to={DASHBOARD_URL} />
+                    <Redirect to={role === "trainer" ? DASHBOARD_URL : DECIDE_VIEW_URL} />
                   ) : (
                     <Login />
                   );

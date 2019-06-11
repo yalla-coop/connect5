@@ -24,12 +24,12 @@ import {
 class ViewSessions extends Component {
   componentDidMount() {
     this.props.fetchALLSessions();
-    const { role, id, viewLevel } = this.props;
+    const { id, viewLevel } = this.props;
     this.fetchSessionsData(viewLevel, id);
   }
 
   componentDidUpdate(prevProps) {
-    const { role, id, viewLevel } = this.props;
+    const { id, viewLevel } = this.props;
     if (id !== prevProps.id || viewLevel !== prevProps.viewLevel) {
       this.fetchSessionsData(viewLevel, id);
     }

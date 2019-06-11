@@ -18,6 +18,7 @@ import {
   USER_INSIGHTS,
   USER_PROGRESS,
   USER_DASHBOARD,
+  DECIDE_VIEW_URL
 } from '../../../constants/navigationRoutes';
 
 import USER_TYPES from '../../../constants/userTypes';
@@ -55,15 +56,15 @@ const MenuIcon = styled.i`
   font-size: 25px;
 `;
 
-const Navbar = ({ userType }) => {
+const Navbar = ({ viewLevel, role }) => {
   // RENDERING IS BASED ON KNOWING THE TYPE OF USER
 
   return (
     <Wrapper>
       {/* TRAINER */}
-      {userType === USER_TYPES.trainer && (
+      {viewLevel === USER_TYPES.trainer && (
         <>
-          <MenuItem to={DASHBOARD_URL}>
+          <MenuItem to={role === "trainer" ? DASHBOARD_URL : DECIDE_VIEW_URL}>
             <MenuIcon className="fas fa-home" />
             Home
           </MenuItem>
@@ -82,9 +83,9 @@ const Navbar = ({ userType }) => {
         </>
       )}
       {/* ADMIN */}
-      {userType === USER_TYPES.admin && (
+      {viewLevel === USER_TYPES.admin && (
         <>
-          <MenuItem to={DASHBOARD_URL}>
+          <MenuItem to={DECIDE_VIEW_URL}>
             <MenuIcon className="fas fa-home" />
             Home
           </MenuItem>
@@ -107,9 +108,9 @@ const Navbar = ({ userType }) => {
         </>
       )}
       {/* LOCAL LEAD */}
-      {userType === USER_TYPES.localLead && (
+      {viewLevel === USER_TYPES.localLead && (
         <>
-          <MenuItem to={DASHBOARD_URL}>
+          <MenuItem to={DECIDE_VIEW_URL}>
             <MenuIcon className="fas fa-home" />
             Home
           </MenuItem>
@@ -128,7 +129,7 @@ const Navbar = ({ userType }) => {
         </>
       )}
       {/* USER */}
-      {userType === USER_TYPES.user && (
+      {viewLevel === USER_TYPES.user && (
         <>
           <MenuItem to={USER_DASHBOARD}>
             <MenuIcon className="fas fa-home" />

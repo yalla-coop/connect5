@@ -34,7 +34,7 @@ const PrivateRoute = ({
             authorized ? (
               <>
                 <Component {...LinkProps} {...rest} role={role} />
-                {navbar && <Navbar userType={viewLevel} />}
+                {navbar && <Navbar viewLevel={viewLevel} role={role} />}
               </>
             ) : (
               history.goBack() && null

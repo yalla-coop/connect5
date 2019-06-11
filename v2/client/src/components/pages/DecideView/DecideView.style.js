@@ -30,6 +30,6 @@ export const Question = styled.p`
   margin-bottom: 2rem;
 `;
 
-export const StyledLink = styled(Link)`
+export const ButtonWrapper = styled.div`
   margin-bottom: 2rem;
 `;
