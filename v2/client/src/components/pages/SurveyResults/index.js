@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import Collapse from 'antd/lib/collapse';
 import Button from 'antd/lib/button';
@@ -7,7 +8,20 @@ import Icon from 'antd/lib/icon';
 
 import { fetchUserResults } from '../../../actions/users';
 import BehavioralSurveyResults from '../../common/BehavioralInsight/Survey';
-import { TrainerResultsWrapper, ButtonWrapper } from './SurveyResults.style';
+import {
+  TrainerResultsWrapper,
+  ButtonWrapper,
+  StatsDiv,
+  Paragraph,
+  Bold,
+  IndividualWrapper,
+  Error,
+  IndividualQuestion,
+  NavigationWrapper,
+  Arrow,
+  QuestionSpan,
+  Answer,
+} from './SurveyResults.style';
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 
@@ -23,19 +37,58 @@ const behavioralSurveys = [
 
 class SurveyResults extends Component {
   state = {
-    toggle: 'right',
+    toggle: 'left',
+    responses: [],
+    attendeesNumber: null,
+    responsesNumber: null,
+    activeIndex: 0,
   };
+
+  componentDidMount() {
+    const {
+      match: { params },
+    } = this.props;
+
+    axios
+      .get(`/api/session/${params.sessionId}/${params.surveyType}/responses`)
+      .then(({ data }) => {
+        const { responses, attendeesNumber, responsesNumber } = data;
+        this.setState({ responses, attendeesNumber, responsesNumber });
+      });
+  }
 
   clickToggle = direction => {
     this.setState({ toggle: direction });
+  };
+
+  handleNextPrev = e => {
+    const { activeIndex, responses } = this.state;
+    const inc = Number(e.target.id);
+    let newIndex = 0;
+    if (activeIndex + inc >= responses.length) {
+      newIndex = 0;
+    } else if (activeIndex + inc < 0) {
+      newIndex = responses.length - 1;
+    } else {
+      newIndex = activeIndex + inc;
+    }
+    this.setState({ activeIndex: newIndex });
   };
 
   render() {
     const {
       match: { params },
     } = this.props;
-    const { toggle } = this.state;
+    const {
+      toggle,
+      responses,
+      attendeesNumber,
+      responsesNumber,
+      activeIndex,
+    } = this.state;
 
+    const responseNumber = activeIndex + 1;
+    const activeresponse = responses && responses[activeIndex];
     return (
       <TrainerResultsWrapper>
         <Header label="results" type="section" />
@@ -47,52 +100,112 @@ class SurveyResults extends Component {
           style={{ margin: '20px auto' }}
           onClick={this.clickToggle}
         />
-        <div className="survey-results__collaps">
-          <Collapse
-            accordion
-            bordered={false}
-            expandIconPosition="right"
-            expandIcon={({ isActive }) => (
-              <Icon type="down" rotate={isActive ? 90 : 0} />
-            )}
-            defaultActiveKey={['1']}
-          >
-            {behavioralSurveys.includes(params.surveyType) ? (
-              <Panel
-                key={behavioralSurveys.includes(params.surveyType) ? '1' : '0'}
-                header="Behavioural Analysis"
-                style={{
-                  background: '#f7f7f7',
-                  borderRadius: 4,
-                  overflow: 'hidden',
-                  padding: 0,
-                }}
+        {toggle === 'left' ? (
+          <>
+            <StatsDiv>
+              <Paragraph first>
+                <Bold>Number of Replies: {responsesNumber}</Bold> (out of{' '}
+                {attendeesNumber})
+              </Paragraph>
+              <Paragraph>
+                <Bold>
+                  Completion Rate:{' '}
+                  {Math.round((responsesNumber / attendeesNumber) * 100)}%
+                </Bold>
+              </Paragraph>
+            </StatsDiv>
+            <div className="survey-results__collaps">
+              <Collapse
+                accordion
+                bordered={false}
+                expandIconPosition="right"
+                expandIcon={({ isActive }) => (
+                  <Icon type="down" rotate={isActive ? 90 : 0} />
+                )}
+                defaultActiveKey={['1']}
               >
-                <BehavioralSurveyResults
-                  sessionId={params.sessionId}
-                  surveyType={params.surveyType}
-                />
-              </Panel>
-            ) : null}
-            <Panel
-              header="Trainer feedback"
-              key={behavioralSurveys.includes(params.surveyType) ? '0' : '1'}
-              style={{
-                background: '#f7f7f7',
-                borderRadius: 4,
-                overflow: 'hidden',
-                padding: 0,
-              }}
-            >
-              {null}
-            </Panel>
-          </Collapse>
-        </div>
-        <ButtonWrapper>
-          <Button icon="download" size="large">
-            Export to CSV
-          </Button>
-        </ButtonWrapper>
+                {behavioralSurveys.includes(params.surveyType) ? (
+                  <Panel
+                    key={
+                      behavioralSurveys.includes(params.surveyType) ? '1' : '0'
+                    }
+                    header="Behavioural Analysis"
+                    style={{
+                      background: '#f7f7f7',
+                      borderRadius: 4,
+                      overflow: 'hidden',
+                      padding: 0,
+                    }}
+                  >
+                    <BehavioralSurveyResults
+                      sessionId={params.sessionId}
+                      surveyType={params.surveyType}
+                    />
+                  </Panel>
+                ) : null}
+                <Panel
+                  header="Trainer feedback"
+                  key={
+                    behavioralSurveys.includes(params.surveyType) ? '0' : '1'
+                  }
+                  style={{
+                    background: '#f7f7f7',
+                    borderRadius: 4,
+                    overflow: 'hidden',
+                    padding: 0,
+                  }}
+                >
+                  {null}
+                </Panel>
+              </Collapse>
+            </div>
+            <ButtonWrapper>
+              <Button icon="download" size="large">
+                Export to CSV
+              </Button>
+            </ButtonWrapper>
+          </>
+        ) : (
+          <IndividualWrapper>
+            {responsesNumber === 0 ? (
+              <Error>This session has no responses yet :(</Error>
+            ) : (
+              <div style={{ paddingTop: '5px' }}>
+                <NavigationWrapper>
+                  <Arrow
+                    direction="right"
+                    id="-1"
+                    onClick={this.handleNextPrev}
+                  />
+
+                  <i>
+                    {responseNumber} OF {responsesNumber}
+                  </i>
+
+                  <Arrow
+                    direction="left"
+                    id="+1"
+                    onClick={this.handleNextPrev}
+                  />
+                </NavigationWrapper>
+                <Paragraph first align="center">
+                  <Bold>Participant {activeresponse.PIN} - view profile</Bold>
+                </Paragraph>
+
+                {activeresponse.data.map(question => (
+                  <IndividualQuestion key={question.questionText}>
+                    <QuestionSpan>Q.</QuestionSpan>
+                    {question.questionText}
+                    <Answer>
+                      <QuestionSpan>A.</QuestionSpan>
+                      {question.answer}
+                    </Answer>
+                  </IndividualQuestion>
+                ))}
+              </div>
+            )}
+          </IndividualWrapper>
+        )}
       </TrainerResultsWrapper>
     );
   }

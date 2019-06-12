@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
       res.json({
         responses,
         attendeesNumber: attendeesNumber.numberOfAttendees,
-        responsesNumber: responses.length + 1,
+        responsesNumber: responses.length,
       });
     })
     .catch(err => next(boom.badImplementation()));
