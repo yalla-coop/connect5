@@ -32,6 +32,7 @@ export const colorCodes = {
   // positive, negative and confirm/cancel
   red: '#E97DA0',
   green: '#9FCE67',
+  errorRed: '#f5222d',
 
   // general
   white: '#FFFFFF',
@@ -40,6 +41,7 @@ export const colorCodes = {
   lightGray: '#EFEFF4',
   mediumGray: '#E1E1E2',
   black: '#4F4F4F',
+  blackSecondary: '#8e8e8e',
 
   // transparent
   transGray: 'rgba(212, 212, 216, 0.3)',
@@ -64,6 +66,7 @@ export const shadows = {
 
 // borders
 export const borders = {
+  error: `1px solid ${colors.red}`,
   inputBox: `1px solid ${colors.lightGray}`,
   button: `1px solid ${colors.gray}`,
   header: `1px solid ${colors.offWhite}`,

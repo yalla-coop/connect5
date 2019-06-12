@@ -32,14 +32,9 @@ const SessionList = ({ dataList }) => {
             <Row key={dataItem.id}>
               <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
               <Type type={dataItem.type}>
-                <p>{dataItem.type}</p>
+                <p>{dataItem.type.replace(/-/g, ' ')}</p>
               </Type>
-              <StyledLink
-                to={{
-                  pathname: '/session-details',
-                  state: { sessionId: dataItem.id },
-                }}
-              >
+              <StyledLink to={`/session-details/${dataItem._id}`}>
                 <Icon type="right" />
               </StyledLink>
             </Row>

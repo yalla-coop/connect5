@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Modal } from 'antd';
 import { ADD_SESSION_SUCCESS } from '../constants/actionTypes';
-// import { returnErrors } from './errorAction';
 import history from '../history';
+// import { returnErrors } from './errorAction';
 
 export const createSessionAction = sessionData => dispatch => {
   axios

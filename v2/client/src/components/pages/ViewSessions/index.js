@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -24,20 +25,20 @@ import {
 class ViewSessions extends Component {
   componentDidMount() {
     this.props.fetchALLSessions();
-    const { role, id } = this.props;
-    this.fetchSessionsData(role, id);
+    const { id, viewLevel } = this.props;
+    this.fetchSessionsData(viewLevel, id);
   }
 
   componentDidUpdate(prevProps) {
-    const { role, id } = this.props;
-    if (id !== prevProps.id || role !== prevProps.role) {
-      this.fetchSessionsData(role, id);
+    const { id, viewLevel } = this.props;
+    if (id !== prevProps.id || viewLevel !== prevProps.viewLevel) {
+      this.fetchSessionsData(viewLevel, id);
     }
   }
 
-  fetchSessionsData = (role, id) => {
+  fetchSessionsData = (viewLevel, id) => {
     this.props.fetchALLSessions();
-    if (role === 'trainer') {
+    if (viewLevel === 'trainer') {
       this.props.fetchTrainerSessions(id);
     } else {
       this.props.fetchLocalLeadSessions(id);
@@ -69,6 +70,7 @@ const mapStateToProps = state => {
     role: state.auth.role,
     sessions: state.sessions.sessions,
     sessionsNum: state.sessions.sessionsCount,
+    viewLevel: state.viewLevel.viewLevel,
   };
 };
 

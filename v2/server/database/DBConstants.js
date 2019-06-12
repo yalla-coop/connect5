@@ -26,6 +26,7 @@ module.exports.surveyTypes = [
   'post-day-1',
   'post-day-2',
   'post-day-3',
+  'pre-special',
   'post-special',
   'pre-train-trainers',
   'post-train-trainers',
@@ -49,15 +50,17 @@ questionConstants.subGroupText = {
     'Thinking about having a conversation with a person in which you develop a shared understanding of their mental health and wellbeing needs, please indicate your agreement with the following statements:',
   BEHAVIOURAL_5:
     'Thinking about using an appropriate conversational methods to empower a person to make a change that addresses their mental health and wellbeing needs, please indicate your level of agreement with the following statements:',
-  ABOUT__YOUR_TRAINER_1: 'Did your trainer ask questions...',
+  ABOUT_YOUR_TRAINER_1: 'Did your trainer ask questions...',
   ABOUT_YOUR_TRAINER_2: 'Did your trainer...',
 };
 
 questionConstants.subGroupID = {
+  BEHAVIOURAL_1: `${questionConstants.groups.BEHAVIOURAL}-1`,
+  BEHAVIOURAL_2: `${questionConstants.groups.BEHAVIOURAL}-2`,
   BEHAVIOURAL_3: `${questionConstants.groups.BEHAVIOURAL}-3`,
   BEHAVIOURAL_4: `${questionConstants.groups.BEHAVIOURAL}-4`,
   BEHAVIOURAL_5: `${questionConstants.groups.BEHAVIOURAL}-5`,
-  ABOUT__YOUR_TRAINER_1: `${questionConstants.groups.ABOUT_YOUR_TRAINER}-1`,
+  ABOUT_YOUR_TRAINER_1: `${questionConstants.groups.ABOUT_YOUR_TRAINER}-1`,
   ABOUT_YOUR_TRAINER_2: `${questionConstants.groups.ABOUT_YOUR_TRAINER}-2`,
 };
 

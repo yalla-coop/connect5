@@ -15,6 +15,8 @@ import 'antd/lib/select/style/index.css';
 import 'antd/lib/form/style/index.css';
 import 'antd/lib/modal/style/index.css';
 import 'antd/lib/checkbox/style/index.css';
+import 'antd/lib/alert/style/index.css';
+import 'antd/lib/spin/style/index.css';
 import 'antd/lib/divider/style/index.css';
 
 import './index.css';

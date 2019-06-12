@@ -6,17 +6,19 @@ export const SIGN_UP_URL = '/signup';
 export const DASHBOARD_URL = '/dashboard';
 export const ADD_SESSION_URL = '/add-session';
 export const SURVEY_URL = '/survey/:id';
+export const SESSION_DETAILS_URL = '/session-details/:id';
 
 // trainer
 export const TRAINER_RESULTS_URL = '/trainer-results';
 export const TRAINER_SESSIONS_URL = '/trainer-sessions';
-export const TRAINER_FEEDBACK_URL = '/trainer-results/feedback/:trainerId/';
+export const TRAINER_FEEDBACK_URL = '/feedback';
 
 // local lead & admin
 export const GROUP_RESULTS_URL = '/group-results';
 export const TRAINERS_URL = '/trainers';
 export const GROUP_SESSIONS_URL = '/sessions';
 export const ADD_TRAINER_URL = '/add-trainer';
+export const DECIDE_VIEW_URL = '/welcome-back';
 
 // local lead
 export const LOCAL_LEAD_SESSIONS_URL = '/localLead-sessions';

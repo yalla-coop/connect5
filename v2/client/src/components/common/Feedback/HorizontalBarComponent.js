@@ -66,17 +66,18 @@ class HorizontalBarComponent extends Component {
 
     return (
       // render questions
-      feedbackData.map(group => {
+      feedbackData.map((group, i) => {
         return (
           <div key={group.questionText}>
             <HeadlineDiv>
-              <Category>
-                category: {createCategory(group.questionText)}
-              </Category>
+              <Options>category: {createCategory(group.questionText)}</Options>
+              {group.questionText.includes('…') && (
+                <Description>Did your trainer ask questions ...</Description>
+              )}
               <Description>{group.questionText}</Description>
-              <Options>
+              <Category>
                 Answer options: Im not sure, not at all, a little, a lot
-              </Options>
+              </Category>
             </HeadlineDiv>
             {chartsData.map(dataA => {
               // render charts
@@ -85,10 +86,14 @@ class HorizontalBarComponent extends Component {
                   <ChartWrapper key={Math.random()}>
                     <HorizontalBar
                       data={dataA}
-                      width={6}
-                      height={1}
+                      width={10}
+                      height={3}
                       options={{
-                        responsive: true,
+                        responsive: 1,
+
+                        hover: { animationDuration: 0 },
+
+                        showAllTooltips: true,
                         title: {
                           display: true,
                           text: `${dataA.answer}`,
@@ -120,10 +125,10 @@ class HorizontalBarComponent extends Component {
                         scales: {
                           xAxes: [
                             {
-                              barPercentage: 0,
-                              barThickness: 3,
-                              maxBarThickness: 4,
-                              minBarLength: 2,
+                              gridLines: {
+                                offsetGridLines: true,
+                                display: false,
+                              },
                               ticks: {
                                 beginAtZero: true,
                               },
@@ -134,6 +139,7 @@ class HorizontalBarComponent extends Component {
                               barThickness: 5,
                               gridLines: {
                                 offsetGridLines: true,
+                                display: false,
                               },
                               ticks: {
                                 beginAtZero: true,

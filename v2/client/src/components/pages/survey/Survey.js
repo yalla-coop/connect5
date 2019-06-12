@@ -3,20 +3,32 @@ import axios from 'axios';
 import swal from 'sweetalert2';
 import Header from '../../common/Header';
 
+import { Progress } from 'antd';
+
 import Questions from './Questions';
 
-import { Container, SurveyQs, SessionDetails, Form } from './Survey.style';
+import { colors } from '../../../theme';
+
+import {
+  Container,
+  SurveyQs,
+  SessionDetails,
+  Form,
+  ProgressWrapper
+} from './Survey.style';
 
 // formState will be the object where we store survey responses
 // as the participant answers the questions
 class Survey extends React.Component {
   state = {
     formState: {},
+    disagreedToResearch: false,
     surveyDetails: null,
     loading: true,
     sessionId: null,
     PIN: null,
     errors: {},
+    completionRate: 0,
   };
 
   componentWillMount() {
@@ -25,6 +37,8 @@ class Survey extends React.Component {
     const { location } = this.props;
     const survey = `${location.pathname}`;
     const surveyParts = survey.split('/')[2];
+
+    window.scrollTo(0, 0);
 
     axios
       .get(`/api/survey/${surveyParts}`)
@@ -42,18 +56,21 @@ class Survey extends React.Component {
         swal
           .fire({
             title: 'Research Cooperation <br>(University of Manchester)',
+            type: 'info',
             text:
               'Many thanks for agreeing to fill in this form. Your responses will be collated by University of Manchester to evaluate Connect5. University of Manchester will use anonymised data collected for research purposes. Individuals will never been identified by their responses. If you do not consent for your data to be used for research purposes, please tick.',
             input: 'checkbox',
-            inputPlaceholder: '<strong>I don not agree</strong>',
+            inputPlaceholder: '<strong>I do not agree</strong>',
           })
           .then(result => {
             if (result.value) {
-              swal.fire({
-                type: 'error',
-                text:
-                  'Thank you, your data will not be used for research purposes',
-              });
+              swal
+                .fire({
+                  type: 'error',
+                  text:
+                    'Thank you, your data will not be used for research purposes',
+                })
+                .then(() => this.setState({ disagreedToResearch: true }));
               // do something here
             } else if (result.value === 0) {
               swal.fire({ type: 'success', text: 'Thank you!' });
@@ -72,6 +89,22 @@ class Survey extends React.Component {
     this.setState({ formState });
   };
 
+  // function to track progress on survey
+  trackAnswers = () => {
+    const { surveyDetails, formState, PIN } = this.state;
+
+    if (formState && surveyDetails) {
+      // add one to total list to include the pin
+      const numberOfQs = surveyDetails.questionsForSurvey.length + 1;
+      const numberOfAs = Object.values(formState).length;
+      const pinAnswered = PIN ? 1 : 0;
+      const rate = Math.ceil(((numberOfAs + pinAnswered) / numberOfQs) * 100);
+      this.setState({ completionRate: rate });
+    } else {
+      this.setState({ completionRate: 0 });
+    }
+  };
+
   // // check for any changes to the survey inputs and add them to the formstate
   handleChange = e => {
     const question = e.target.name;
@@ -82,6 +115,7 @@ class Survey extends React.Component {
     this.setState(() => ({
       formState,
     }));
+    this.trackAnswers();
   };
 
   // handles case when user selects 'other'
@@ -96,16 +130,31 @@ class Survey extends React.Component {
   };
 
   // handles user input for PIN field
-  handlePIN = e => this.setState({ PIN: e.target.value });
+  handlePIN = e => {
+    this.setState({ PIN: e.target.value });
+    this.trackAnswers();
+  };
 
   // // when participant submits form
   // // this puts the required info into an object and sends to server
   handleSubmit = e => {
     e.preventDefault();
     const { history } = this.props;
-    const { formState, sessionId, surveyType, PIN } = this.state;
+    const {
+      formState,
+      sessionId,
+      surveyType,
+      PIN,
+      disagreedToResearch,
+    } = this.state;
 
-    const formSubmission = { PIN, sessionId, surveyType, formState };
+    const formSubmission = {
+      PIN,
+      sessionId,
+      surveyType,
+      formState,
+      disagreedToResearch,
+    };
     // check if PIN was entered before API call
     if (PIN) {
       return axios
@@ -119,10 +168,16 @@ class Survey extends React.Component {
           this.setState({
             errors: err.response.data,
           });
-          swal.fire('Please answer all required questions');
+          swal.fire({
+            title: 'Please answer all required questions',
+            type: 'error',
+          });
         });
     }
-    return swal.fire('Please enter your PIN');
+    return swal.fire({
+      title: 'Please enter your PIN',
+      type: 'error',
+    });
   };
 
   // function to create a list of names from an array...
@@ -132,7 +187,13 @@ class Survey extends React.Component {
     );
 
   render() {
-    const { loading, surveyDetails, formState, errors } = this.state;
+    const {
+      loading,
+      surveyDetails,
+      formState,
+      errors,
+      completionRate,
+    } = this.state;
 
     if (loading) {
       return <h3>Loading...</h3>;
@@ -142,9 +203,7 @@ class Survey extends React.Component {
       sessionDate,
       trainerNames,
       questionsForSurvey,
-      surveyType,
     } = surveyDetails;
-
     return (
       <Container>
         <SurveyQs>
@@ -161,10 +220,6 @@ class Survey extends React.Component {
                 <strong>Trainers: </strong>
                 {this.renderTrainerNames(trainerNames)}
               </li>
-              <li>
-                <strong>Session Type: </strong>
-                {surveyType}
-              </li>
             </ul>
           </SessionDetails>
           <main>
@@ -177,11 +232,13 @@ class Survey extends React.Component {
                 answers={formState}
                 selectCheckedItem={this.selectCheckedItem}
                 errors={errors}
+                trackAnswers={this.trackAnswers}
               />
               <button type="submit">Submit Feedback</button>
             </Form>
           </main>
         </SurveyQs>
+        <ProgressWrapper><Progress type="circle" percent={completionRate} width={80} strokeColor={`${colors.green}`}/></ProgressWrapper>
       </Container>
     );
   }

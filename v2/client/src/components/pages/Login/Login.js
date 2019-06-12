@@ -15,6 +15,12 @@ import { loginUser } from '../../../actions/authAction';
 import { clearErrors } from '../../../actions/errorAction';
 import history from '../../../history';
 
+// ROUTES
+import {
+  DASHBOARD_URL,
+  DECIDE_VIEW_URL,
+} from '../../../constants/navigationRoutes';
+
 class Login extends Component {
   state = {
     fields: {},
@@ -23,7 +29,7 @@ class Login extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { error, isAuthenticated } = this.props;
+    const { error, isAuthenticated, role } = this.props;
     if (error !== prevProps.error) {
       // Check for login error
       this.updateLogin(error);
@@ -31,7 +37,7 @@ class Login extends Component {
 
     // If authenticated,
     if (isAuthenticated) {
-      history.push('/dashboard');
+      role === "trainer " ? history.push(DASHBOARD_URL) : history.push(DECIDE_VIEW_URL);
     }
   }
 
@@ -167,6 +173,7 @@ class Login extends Component {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
+  role: state.auth.role,
 });
 
 export default connect(

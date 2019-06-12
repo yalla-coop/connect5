@@ -25,6 +25,10 @@ const responseSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'sessions',
   },
+  agreedToResearch: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const Response = model('responses', responseSchema);

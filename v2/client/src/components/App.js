@@ -7,6 +7,7 @@ import { Router, Route, Switch, Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { checkAuth } from '../actions/authAction';
+import { updateViewLevel } from '../actions/viewLevelAction';
 
 import { colors } from '../theme';
 
@@ -25,7 +26,11 @@ import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
-import TrainerFeedBack from './pages/TrainerFeedback';
+import SessionDetails from './pages/SessionDetails';
+import EditSession from './pages/SessionDetails/SessionActions/SessionEdit';
+import SurveyResults from './pages/SurveyResults';
+
+import DecideView from './pages/DecideView';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -43,7 +48,8 @@ import {
   GROUP_RESULTS_URL,
   TRAINER_SESSIONS_URL,
   GROUP_SESSIONS_URL,
-  TRAINER_FEEDBACK_URL,
+  DECIDE_VIEW_URL,
+  SESSION_DETAILS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -59,12 +65,27 @@ class App extends Component {
     checkAuthActionCreator();
   }
 
+  componentDidUpdate() {
+    const {
+      updateViewLevel: updateViewLevelActionCreator,
+      role,
+      viewLevel,
+    } = this.props;
+
+    if (role && !viewLevel) updateViewLevelActionCreator(role);
+  }
+
   render() {
     const { isAuthenticated, loaded, role } = this.props;
     return (
       <Wrapper>
         <Router history={history}>
           <Switch>
+            <Route
+              exact
+              path="/survey/:sessionId/:surveyType/results"
+              component={SurveyResults}
+            />
             <Route exact path="/" component={Home} />
             <PrivateRoute
               exact
@@ -103,16 +124,6 @@ class App extends Component {
 
             <PrivateRoute
               exact
-              path={TRAINER_FEEDBACK_URL}
-              Component={TrainerFeedBack}
-              isAuthenticated={isAuthenticated}
-              loaded={loaded}
-              allowedRoles={['admin', 'localLead', 'trainer']}
-              role={role}
-            />
-
-            <PrivateRoute
-              exact
               path={DASHBOARD_URL}
               Component={Dashboard}
               isAuthenticated={isAuthenticated}
@@ -133,16 +144,42 @@ class App extends Component {
               navbar
             />
 
-            <Route exact path="/login" component={Login} />
+            <PrivateRoute
+              exact
+              path={SESSION_DETAILS_URL}
+              Component={SessionDetails}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
+
+            <PrivateRoute
+              exact
+              path={DECIDE_VIEW_URL}
+              Component={DecideView}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead']}
+              role={role}
+              navbar
+            />
+
             <Route exact path="/create-session" component={CreateSession} />
             <Route exact path={SURVEY_URL} component={Survey} />
+
+            <Route exact path="/session-edit/:id" component={EditSession} />
+
             <Route
               exact
               path={LOGIN_URL}
               render={() => {
                 if (loaded) {
                   return isAuthenticated ? (
-                    <Redirect to={DASHBOARD_URL} />
+                    <Redirect
+                      to={role === 'trainer' ? DASHBOARD_URL : DECIDE_VIEW_URL}
+                    />
                   ) : (
                     <Login />
                   );
@@ -242,9 +279,10 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   role: state.auth.role,
   loaded: state.auth.loaded,
+  viewLevel: state.viewLevel.viewLevel,
 });
 
 export default connect(
   mapStateToProps,
-  { checkAuth }
+  { checkAuth, updateViewLevel }
 )(App);
