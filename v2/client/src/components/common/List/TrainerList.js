@@ -1,7 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Icon } from 'antd';
+import { Button as AntButton } from 'antd';
 
 // COMMON COMPONENTS
 import Modal from '../modal';
@@ -57,7 +58,7 @@ export default class TrainerList extends Component {
   };
 
   render() {
-    const { dataList, viewRole } = this.props;
+    const { dataList, viewRole, deleteUser } = this.props;
     const { modalOpen, selectedTrainer } = this.state;
 
     const modalContent = selectedTrainer && (
@@ -108,15 +109,26 @@ export default class TrainerList extends Component {
       <Wrapper>
         <Header>
           <NameHeader>Name</NameHeader>
-          <DetailsHeader>Info</DetailsHeader>
+          <DetailsHeader>Action</DetailsHeader>
         </Header>
         <List>
           {dataList &&
-            dataList.map((dataItem, index) => (
-              <Row key={index}>
+            dataList.map(dataItem => (
+              <Row key={dataItem._id}>
                 <Name>{dataItem.name}</Name>
                 <ArrowWrapper onClick={() => this.toggleModal(dataItem)}>
-                  <Icon type="right" />
+                  <AntButton type="primary" ghost>
+                    View
+                  </AntButton>
+                </ArrowWrapper>
+                <ArrowWrapper>
+                  <AntButton
+                    type="danger"
+                    ghost
+                    onClick={() => deleteUser(dataItem._id)}
+                  >
+                    Delete
+                  </AntButton>
                 </ArrowWrapper>
               </Row>
             ))}
@@ -131,5 +143,3 @@ export default class TrainerList extends Component {
     );
   }
 }
-
-// export default TrainerList;

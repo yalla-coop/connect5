@@ -26,6 +26,8 @@ import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
+import SessionDetails from './pages/SessionDetails';
+import EditSession from './pages/SessionDetails/SessionActions/SessionEdit';
 import SurveyResults from './pages/SurveyResults';
 
 import DecideView from './pages/DecideView';
@@ -47,6 +49,7 @@ import {
   TRAINER_SESSIONS_URL,
   GROUP_SESSIONS_URL,
   DECIDE_VIEW_URL,
+  SESSION_DETAILS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -143,6 +146,17 @@ class App extends Component {
 
             <PrivateRoute
               exact
+              path={SESSION_DETAILS_URL}
+              Component={SessionDetails}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
+
+            <PrivateRoute
+              exact
               path={DECIDE_VIEW_URL}
               Component={DecideView}
               isAuthenticated={isAuthenticated}
@@ -154,6 +168,9 @@ class App extends Component {
 
             <Route exact path="/create-session" component={CreateSession} />
             <Route exact path={SURVEY_URL} component={Survey} />
+
+            <Route exact path="/session-edit/:id" component={EditSession} />
+
             <Route
               exact
               path={LOGIN_URL}

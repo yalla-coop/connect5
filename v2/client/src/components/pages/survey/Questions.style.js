@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
-import { colors, borders } from '../../../theme';
+import { colors, borders, shadows } from '../../../theme';
 
 const CommonStyles = styled.div`
   margin-bottom: 3rem;
 
   h4 {
     margin-bottom: 0;
+    font-weight: 400;
+    color: ${colors.black};
   }
 
   header {
@@ -16,8 +18,21 @@ const CommonStyles = styled.div`
   }
   .helpertext {
     opacity: 0.8;
-    size: 1rem;
+    font-size: 1rem;
+    font-style: italic;
   }
+`;
+
+const SubGroup = styled.p`
+  font-size: 1.125;
+  font-weight: 500;
+`;
+
+const QuestionWrapper = styled.div`
+  background-color: ${colors.white};
+  margin: 1rem 0;
+  padding: 1rem 0.5rem;
+  box-shadow: ${shadows.primary};
 `;
 
 const RadioField = styled(CommonStyles)`
@@ -30,7 +45,7 @@ const RadioField = styled(CommonStyles)`
     }
   }
   h4 {
-    font-size: 1.5rem;
+    font-size: 1rem;
     ${({ unanswered }) => unanswered && ` color: ${colors.errorRed}`}
   }
 
@@ -53,8 +68,10 @@ const RadioField = styled(CommonStyles)`
       label {
         cursor: pointer;
         display: flex;
-        align-items: center;
+        /* align-items: center; */
         position: relative;
+        width: 100%;
+        text-transform: capitalize;
       }
 
       p {
@@ -91,14 +108,15 @@ const RadioField = styled(CommonStyles)`
 `;
 
 const TextField = styled(CommonStyles)`
-  margin-top: 1rem;
+  padding-top: 1rem;
   input {
     border-radius: 1rem;
     border: 1px solid ${colors.gray};
-    width: 90%;
+    width: 100%;
+    padding: 0.5rem 1rem;
   }
   h4 {
-    font-size: 1.5rem;
+    font-size: 1rem;
     ${({ unanswered }) => unanswered && ` color: ${colors.errorRed}`}
   }
 
@@ -141,16 +159,25 @@ const NumberOutput = styled.output`
   margin-top: 10px;
   font-size: 1rem;
   font-weight: 300;
+  color: ${colors.primary};
 
   -moz-border-radius: 0.8em;
   -webkit-border-radius: 0.8em;
-  color: ${colors.black};
+  /* color: ${colors.black}; */
   line-height: 1.6em;
-  width: 1.6em;
 `;
 
 const QuestionCategory = styled.i`
   font-size: 1rem;
+  color: ${colors.primary};
+`;
+
+const SectionCategory = styled.h4`
+  font-size: 1.5rem;
+  font-weight: 300;
+  text-transform: capitalize;
+  margin-bottom: 0.5rem;
+  color: ${colors.primary};
 `;
 
 export const ErrorDiv = styled.div`
@@ -164,4 +191,7 @@ export {
   TextField,
   NumberOutput,
   NumberSliderDiv,
+  QuestionWrapper,
+  SectionCategory,
+  SubGroup,
 };

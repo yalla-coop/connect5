@@ -19,6 +19,7 @@ const behavioralSurveys = [
   'post-day-1',
   'post-day-2',
   'post-day-3',
+  'pre-special',
   'post-special',
 ];
 

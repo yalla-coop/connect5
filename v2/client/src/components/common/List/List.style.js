@@ -29,6 +29,7 @@ const sharedHeaderStyles = css`
   margin-left: 1.75rem;
   @media (min-width: 768px) {
     margin-left: 2rem;
+  }
 `;
 
 export const DateHeader = styled.h3`
@@ -63,9 +64,10 @@ export const Row = styled.div`
   margin-left: 0.55rem;
   &:not(:last-child) {
     border-bottom: ${borders.inputBox};
-  };
+  }
   @media (min-width: 768px) {
     margin-left: 1rem;
+  }
 `;
 
 const sharedItemStyles = css`
@@ -92,6 +94,7 @@ export const Type = styled.div`
     text-align: center;
     border-radius: 4px;
     margin: 0;
+    text-transform: capitalize;
   }
 `;
 
@@ -103,6 +106,7 @@ export const Name = styled.p`
 
 export const ArrowWrapper = styled.div`
   ${sharedItemStyles}
+  width: 50%;
   text-align: center;
   color: ${colors.gray};
   transition: all ease 0.2s;
@@ -132,7 +136,7 @@ export const ModalRow = styled.div`
   justify-content: space-between;
   width: 100%;
   padding: 0.5rem 0;
-  flex-wrap;
+  /* flex-wrap; */
 
   p {
     text-transform: capitalize;
