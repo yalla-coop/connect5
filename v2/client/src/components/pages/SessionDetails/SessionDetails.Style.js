@@ -69,6 +69,7 @@ export const StatisticValue = styled.span`
   padding: 0.3rem;
   font-size: 0.9rem;
   font-weight: 600;
+  text-transform: capitalize;
   @media (min-width: 768px) {
     font-size: 1rem;
     padding: 0.9rem 0;
@@ -83,4 +84,5 @@ export const TrainersName = styled(Link)`
   margin-left: 1rem;
   color: ${colors.black};
   text-decoration: none;
+  text-transform: capitalize;
 `;

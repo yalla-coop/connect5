@@ -158,7 +158,7 @@ class App extends Component {
             <PrivateRoute
               exact
               path={SESSION_DETAILS_URL}
-              component={SessionDetails}
+              Component={SessionDetails}
               isAuthenticated={isAuthenticated}
               loaded={loaded}
               allowedRoles={['admin', 'localLead', 'trainer']}

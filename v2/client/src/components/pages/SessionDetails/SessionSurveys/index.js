@@ -105,7 +105,7 @@ class SessionSurveys extends Component {
             <>
               <SurveyContent
                 subId="1"
-                type="Pre-survey"
+                type="Pre-session"
                 surveyURL={links[0]}
                 id={_id}
               />

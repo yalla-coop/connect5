@@ -68,10 +68,10 @@ class SurveyContent extends Component {
     return (
       <SurveyContentWrapper>
         <SurveyLinkType to={`/survey/${id}/${type}/results`}>
-          {type !== 'Pre-survey' && 'Survey'} {type} Link{' '}
-          <ViewResultIcon>
+          {type === 'Pre-session' ? 'Pre-Session' : 'Post-Session'} Survey Link
+          {/* <ViewResultIcon>
             <Icon type="arrow-right" />
-          </ViewResultIcon>
+          </ViewResultIcon> */}
         </SurveyLinkType>
 
         <SurveyLinkInfo onClick={onInfoClick}>

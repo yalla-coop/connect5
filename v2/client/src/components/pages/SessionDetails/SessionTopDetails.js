@@ -18,16 +18,17 @@ class SessionTopDetails extends Component {
     if (!sessionDetails) {
       return <div>loading</div>;
     }
+    console.log('SESS', type.replace(/-/g, ' '));
     return (
       <SessionTopDetailsWrapper>
         <Statistic>
           <StatisticItems>
             <StatisticName>Date</StatisticName>
-            <StatisticValue>{moment(date).format('DD/MM/YYYY')}</StatisticValue>
+            <StatisticValue>{moment(date).format('DD/MM/YY')}</StatisticValue>
           </StatisticItems>
           <StatisticItems>
             <StatisticName>Type</StatisticName>
-            <StatisticValue>{type}</StatisticValue>
+            <StatisticValue>{type.replace(/-/g, ' ')}</StatisticValue>
           </StatisticItems>
           <StatisticItems>
             <StatisticName>Attendees</StatisticName>
