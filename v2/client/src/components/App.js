@@ -29,6 +29,7 @@ import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import SurveyResults from './pages/SurveyResults';
 import TrainerFeedBack from './pages/TrainerFeedback';
 import DecideView from './pages/DecideView';
+import ThankYouPage from './pages/ThankYouPage';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -58,7 +59,6 @@ const Wrapper = styled.div`
 `;
 
 class App extends Component {
-
   componentDidMount() {
     const { checkAuth: checkAuthActionCreator } = this.props;
     checkAuthActionCreator();
@@ -86,6 +86,7 @@ class App extends Component {
               component={SurveyResults}
             />
             <Route exact path="/" component={Home} />
+            <Route exact path="/thank-you" component={ThankYouPage} />
             <PrivateRoute
               exact
               path={TRAINER_RESULTS_URL}
@@ -172,7 +173,9 @@ class App extends Component {
               render={() => {
                 if (loaded) {
                   return isAuthenticated ? (
-                    <Redirect to={role === "trainer" ? DASHBOARD_URL : DECIDE_VIEW_URL} />
+                    <Redirect
+                      to={role === 'trainer' ? DASHBOARD_URL : DECIDE_VIEW_URL}
+                    />
                   ) : (
                     <Login />
                   );
