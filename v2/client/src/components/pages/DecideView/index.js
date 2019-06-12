@@ -7,6 +7,9 @@ import { updateViewLevel } from '../../../actions/viewLevelAction';
 import Header from '../../common/Header';
 import Button from '../../common/Button';
 
+// HELPERS
+import logout from '../../../helpers/logout';
+
 // STYLING
 import {
   Wrapper,
@@ -14,7 +17,8 @@ import {
   Title,
   ContentWrapper,
   Question,
-  ButtonWrapper
+  ButtonWrapper,
+  LogOut,
 } from './DecideView.style';
 
 import history from '../../../history';
@@ -52,36 +56,37 @@ class DecideView extends Component {
           <Question>What would you like to do today?</Question>
           {role === 'admin' && (
             <ButtonWrapper>
-            <Button
-              label="view as admin"
-              type="light"
-              width="250px"
-              height="48px"
-              onClick={() => this.setViewLevel('admin')}
-            />
+              <Button
+                label="view as admin"
+                type="light"
+                width="250px"
+                height="48px"
+                onClick={() => this.setViewLevel('admin')}
+              />
             </ButtonWrapper>
           )}
           {role === 'localLead' && (
             <ButtonWrapper>
-            <Button
-              label="view as local lead"
-              type="light"
-              width="250px"
-              height="48px"
-              onClick={() => this.setViewLevel('localLead')}
-            />
+              <Button
+                label="view as local lead"
+                type="light"
+                width="250px"
+                height="48px"
+                onClick={() => this.setViewLevel('localLead')}
+              />
             </ButtonWrapper>
           )}
           <ButtonWrapper>
-          <Button
-            label="view as trainer"
-            type="light"
-            width="250px"
-            height="48px"
-            onClick={() => this.setViewLevel('trainer')}
-          />
+            <Button
+              label="view as trainer"
+              type="light"
+              width="250px"
+              height="48px"
+              onClick={() => this.setViewLevel('trainer')}
+            />
           </ButtonWrapper>
         </ContentWrapper>
+        <LogOut onClick={() => logout()}>Log out</LogOut>
       </Wrapper>
     );
   }
