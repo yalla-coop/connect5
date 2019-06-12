@@ -30,6 +30,7 @@ export const sectionHeader = css`
     font-size: 1.5rem;
     font-weight: 400;
     position: relative;
+    color: ${colors.offWhite};
 
     &::after {
       content: ' ';

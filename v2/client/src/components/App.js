@@ -50,6 +50,7 @@ import {
   GROUP_SESSIONS_URL,
   TRAINER_FEEDBACK_URL,
   DECIDE_VIEW_URL,
+  SESSION_DETAILS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -156,6 +157,17 @@ class App extends Component {
 
             <PrivateRoute
               exact
+              path={SESSION_DETAILS_URL}
+              component={SessionDetails}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
+
+            <PrivateRoute
+              exact
               path={DECIDE_VIEW_URL}
               Component={DecideView}
               isAuthenticated={isAuthenticated}
@@ -167,11 +179,7 @@ class App extends Component {
 
             <Route exact path="/create-session" component={CreateSession} />
             <Route exact path={SURVEY_URL} component={Survey} />
-            <Route
-              exact
-              path="/session-details/:id"
-              component={SessionDetails}
-            />
+
             <Route exact path="/session-edit/:id" component={EditSession} />
 
             <Route
