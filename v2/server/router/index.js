@@ -7,6 +7,7 @@ const getParticipantBehavioralInsight = require('./../controllers/behavioralInsi
 const getSessionBehavioralInsight = require('./../controllers/behavioralInsight/getSessionBehavioralInsight');
 const getTrainerBehavioralInsight = require('./../controllers/behavioralInsight/getTrainerBehavioralInsight');
 const getTrainerFeedback = require('./../controllers/feedback/getTrainerFeedback');
+const logoutController = require('../controllers/logout');
 
 const surveyQs = require('../controllers/survey/getSurveyQs');
 const storeSurvey = require('../controllers/survey/storeSurvey');
@@ -19,7 +20,7 @@ const router = express.Router();
 
 router.post('/participant-login', ParticipantLoginController);
 router.post('/login', loginController);
-router.post('/login', loginController);
+router.get('/logout', logoutController);
 router.post('/add-session', addSessionController);
 
 router.get(

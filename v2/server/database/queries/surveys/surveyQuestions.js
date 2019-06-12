@@ -10,7 +10,14 @@ const User = require('../../models/User');
 
 const surveyQs = async (surveyType, sessionId) => {
   // get the survey questions as an array of objects
-  const questionsForSurvey = await Question.find({ surveyType });
+  const questionsForSurvey = await Question.aggregate([
+    {
+      $match: { surveyType },
+    },
+    {
+      $sort: { 'subGroup.name': 1, 'subGroup.order': -1 },
+    },
+  ]);
 
   // get the session details
   const sessionDetails = await Session.findById(sessionId);
