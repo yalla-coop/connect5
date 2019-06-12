@@ -5,7 +5,7 @@ const User = require('./../../models/User');
 const { sessionTypes, surveyTypes } = require('./../../DBConstants');
 
 module.exports = async () => {
-  const type1Session = await Session.findOne({ type: sessionTypes[0] });
+  const type1Session = await Session.find({ type: sessionTypes[0] });
   const type2Session = await Session.findOne({ type: sessionTypes[1] });
   const trainTrainersSession = await Session.findOne({
     type: sessionTypes[4],
@@ -20,26 +20,26 @@ module.exports = async () => {
       PIN: 'HIO13',
       trainers: [trainers[0], trainers[1]],
       surveyType: 'pre-day-1',
-      session: type1Session,
+      session: type1Session[0],
     },
     {
       PIN: 'RAM14',
       trainers: [trainers[0], trainers[1]],
       surveyType: 'pre-day-1',
-      session: type1Session,
+      session: type1Session[0],
     },
     // post day 1
     {
       PIN: 'RAM15',
       trainers: [trainers[0], trainers[1]],
       surveyType: 'post-day-1',
-      session: type1Session,
+      session: type1Session[0],
     },
     {
       PIN: 'RAM16',
       trainers: [trainers[0], trainers[1]],
       surveyType: 'post-day-1',
-      session: type1Session,
+      session: type1Session[0],
     },
     // post day 2
     {

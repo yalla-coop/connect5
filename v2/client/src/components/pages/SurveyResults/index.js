@@ -7,6 +7,7 @@ import Icon from 'antd/lib/icon';
 
 import { fetchUserResults } from '../../../actions/users';
 import BehavioralSurveyResults from '../../common/BehavioralInsight/Survey';
+import TrainerFeedback from '../../common/Feedback';
 import { TrainerResultsWrapper, ButtonWrapper } from './SurveyResults.style';
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
@@ -85,7 +86,10 @@ class SurveyResults extends Component {
                 padding: 0,
               }}
             >
-              {null}
+              <TrainerFeedback
+                sessionId={params.sessionId}
+                surveyType={params.surveyType}
+              />
             </Panel>
           </Collapse>
         </div>
