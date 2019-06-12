@@ -11,6 +11,10 @@ const logoutController = require('../controllers/logout');
 
 const surveyQs = require('../controllers/survey/getSurveyQs');
 const storeSurvey = require('../controllers/survey/storeSurvey');
+const getSessionDetails = require('../controllers/sessionDetails/getSessionDetails');
+const deleteSession = require('../controllers/sessionDetails/deleteSession');
+const editSession = require('../controllers/sessionDetails/editSession');
+const updateEmails = require('../controllers/sessionDetails/updateEmails.js');
 
 const router = express.Router();
 
@@ -24,6 +28,10 @@ router.get(
   getParticipantBehavioralInsight
 );
 
+router.get('/session-details/:id', getSessionDetails);
+router.delete('/session-delete/:id', deleteSession);
+router.patch('/session-edit/:id', editSession);
+router.patch('/emails-update/:id', updateEmails);
 router.get(
   '/behavioral-insight/survey/:sessionId/:surveyType',
   getSessionBehavioralInsight

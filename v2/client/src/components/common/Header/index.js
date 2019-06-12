@@ -30,6 +30,7 @@ export const sectionHeader = css`
     font-size: 1.5rem;
     font-weight: 400;
     position: relative;
+    color: ${colors.offWhite};
 
     &::after {
       content: ' ';
@@ -38,6 +39,8 @@ export const sectionHeader = css`
       bottom: -2px;
       left: 0;
       width: 50%;
+      @media (min-width: 768px) {
+        width: 25%;
     }
   }
 `;
