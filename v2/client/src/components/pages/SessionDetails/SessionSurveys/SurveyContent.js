@@ -6,7 +6,6 @@ import {
   SurveyContentWrapper,
   SurveyLinkType,
   SurveyLinkInfo,
-  ViewResultIcon,
   SurveyLink,
   CopyLink,
   MailLink,
@@ -69,9 +68,6 @@ class SurveyContent extends Component {
       <SurveyContentWrapper>
         <SurveyLinkType to={`/survey/${id}/${type}/results`}>
           {type === 'Pre-session' ? 'Pre-Session' : 'Post-Session'} Survey Link
-          {/* <ViewResultIcon>
-            <Icon type="arrow-right" />
-          </ViewResultIcon> */}
         </SurveyLinkType>
 
         <SurveyLinkInfo onClick={onInfoClick}>
