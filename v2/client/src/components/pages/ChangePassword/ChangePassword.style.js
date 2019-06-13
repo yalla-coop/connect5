@@ -25,3 +25,15 @@ export const InputDiv = styled.div`
     background: ${colors.ligthGray};
   }
 `;
+
+export const Error = styled.div`
+  width: 100%;
+  color: red;
+  margin-left: 1rem;
+  font-size: .9rem;
+
+  @media (min-width: 768px) {
+    margin-left: 1rem;
+  }
+  }
+`;

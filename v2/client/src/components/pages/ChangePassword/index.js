@@ -7,6 +7,7 @@ import {
   Heading,
   H3,
   InputDiv,
+  Error,
 } from './ChangePassword.style';
 // import history from '../../../history';
 
@@ -15,6 +16,53 @@ class ChangePassword extends Component {
     fields: {},
     errors: {},
     msg: null,
+  };
+
+  // Check inputs validation then if not valide show error msg
+
+  validateForm = () => {
+    const { fields } = this.state;
+    const errors = {};
+    const strongRegex = new RegExp(
+      '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+    );
+    let formIsValid = true;
+
+    if (!fields.oldPassword) {
+      formIsValid = false;
+      errors.oldPasswordError = '*Please enter your old password.';
+    }
+
+    if (!fields.newPassword) {
+      formIsValid = false;
+      errors.newPasswordError = '*Please enter your new password.';
+    }
+
+    if (!fields.reNewPassword) {
+      formIsValid = false;
+      errors.reNewPasswordError = '*Please confirm your new password.';
+    }
+
+    if (fields.newPassword < 6) {
+      formIsValid = false;
+      errors.newPasswordError = '*New password is too short.';
+    }
+
+    if (strongRegex.test(fields.newPassword)) {
+      formIsValid = false;
+      errors.newPasswordError = '*Please enter storg password.';
+    }
+
+    if (fields.newPassword && fields.reNewPassword) {
+      if (fields.newPassword !== fields.reNewPassword) {
+        formIsValid = false;
+        errors.reNewPasswordError = '*Password is not match.';
+      }
+    }
+    this.setState({
+      errors,
+    });
+    return formIsValid;
   };
 
   onInputChange = e => {
@@ -26,8 +74,22 @@ class ChangePassword extends Component {
     console.log(this.state);
   };
 
+  onFormSubmit = e => {
+    const { fields } = this.state;
+    e.preventDefault();
+    const isValide = this.validateForm();
+    if (isValide) {
+      const { oldPassword } = fields;
+
+      // call action creator then give it email and password
+    }
+  };
+
   render() {
     const { onInputChange, onFormSubmit } = this;
+    const { fields, errors } = this.state;
+    const { oldPassword, newPassword, reNewPassword } = fields;
+    const { oldPasswordError, newPasswordError, reNewPasswordError } = errors;
     return (
       <ChangePasswordForm onSubmit={onFormSubmit}>
         <Heading>
@@ -38,30 +100,36 @@ class ChangePassword extends Component {
           <Input.Password
             placeholder="current password"
             size="large"
-            name="current password"
+            name="oldPassword"
             type="text"
             onChange={onInputChange}
+            value={oldPassword}
           />
+          <Error>{oldPasswordError}</Error>
         </InputDiv>
 
         <InputDiv>
           <Input.Password
             placeholder="new password"
             size="large"
-            name="new password"
+            name="newPassword"
             type="text"
             onChange={onInputChange}
+            value={newPassword}
           />
+          <Error>{newPasswordError}</Error>
         </InputDiv>
 
         <InputDiv>
           <Input.Password
             placeholder="confirm new password"
             size="large"
-            name="confirm new password"
+            name="reNewPassword"
             type="text"
             onChange={onInputChange}
+            value={reNewPassword}
           />
+          <Error>{reNewPasswordError}</Error>
         </InputDiv>
 
         <InputDiv>
