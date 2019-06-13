@@ -25,6 +25,7 @@ const getLocalLeadsSessions = require('../controllers/users/getLocalLeadSessions
 const getAllSessions = require('../controllers/users/getAllSessions');
 
 const removeTrainerToGroup = require('../controllers/users/removeTrainerToGroup');
+const getLocalLeadGroup = require('../controllers/users/getLocalLeadGroup');
 
 // check eamil route if the route doen't contain email query
 // then it will skip with next()
@@ -48,6 +49,8 @@ router.get(
   authentication(),
   getAllTrainersAndLeads
 );
+
+router.get('/local-lead/:id/group', getLocalLeadGroup);
 
 router.delete(
   '/local-lead/:id/trainer',

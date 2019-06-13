@@ -19,7 +19,7 @@ export const SessionTopDetailsWrapper = styled.div`
   width: 88%;
   margin: 0 auto;
   margin-top: 6rem;
-  padding: .5rem;
+  padding: 0.5rem;
   padding-left: 0;
   box-shadow: rgb(204, 204, 204) 0px 0px 6px;
   background: ${colors.white};
@@ -33,11 +33,11 @@ export const SessionTopDetailsWrapper = styled.div`
 
 export const Statistic = styled.div`
   display: flex;
-  padding: .55rem .3rem;
+  padding: 0.55rem 0.3rem;
   margin-top: 0.5rem;
   border-radius: 7px;
   @media (min-width: 768px) {
-    width: 100%
+    width: 100%;
   }
 `;
 
@@ -46,14 +46,14 @@ export const StatisticItems = styled.div`
   margin: 0 auto;
   padding: 0 0.5rem;
   :nth-child(1) {
-  padding-right: 0.3rem;
-}
+    padding-right: 0.3rem;
+  }
   &:not(:last-child) {
     border-right: ${borders.inputBox};
     padding: 0 0.5rem;
   }
   @media (min-width: 768px) {
-    width: 33%
+    width: 33%;
   }
 `;
 
@@ -90,6 +90,7 @@ export const Trainers = styled.p`
 export const TrainersName = styled(Link)`
   margin-left: 1rem;
   color: ${colors.black};
+  font-weight: 400;
   text-decoration: none;
   text-transform: capitalize;
 `;

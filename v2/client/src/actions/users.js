@@ -74,6 +74,18 @@ export const fetchLocalLeads = () => async dispatch => {
   }
 };
 
+export const fetchLocalLeadTrainersGroup = id => async dispatch => {
+  try {
+    const { data } = await axios.get(`/api/local-lead/${id}/group`);
+    dispatch({
+      type: types.FETCH_LOCAL_LEAD_TRAINERS_GROUP,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const fetchStatsData = userType => async dispatch => {
   try {
     const res = await axios.post('/api/all/dashboard', { userType });
