@@ -24,6 +24,7 @@ const ThankYouPage = () => {
             textTransform: 'none',
             fontWeight: '400',
           }}
+          disabled
         />
       </StyledLink>
     </ThankYouWrapper>
