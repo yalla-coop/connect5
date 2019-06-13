@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
+import { changePasswordActionCreator } from '../../../actions/changePasswordAction';
 import {
   ChangePasswordForm,
   Heading,
@@ -76,12 +77,23 @@ class ChangePassword extends Component {
 
   onFormSubmit = e => {
     const { fields } = this.state;
+    const { oldPassword, newPassword, reNewPassword } = fields;
+    const {
+      userId,
+      changePasswordActionCreator: changePasswordAction,
+    } = this.props;
     e.preventDefault();
     const isValide = this.validateForm();
     if (isValide) {
-      const { oldPassword } = fields;
+      const changePasswordData = {
+        oldPassword,
+        newPassword,
+        reNewPassword,
+        userId,
+      };
 
       // call action creator then give it email and password
+      changePasswordAction(changePasswordData);
     }
   };
 
@@ -148,8 +160,12 @@ class ChangePassword extends Component {
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
+  userId: state.auth.id,
   error: state.error,
   role: state.auth.role,
 });
 
-export default connect(mapStateToProps)(ChangePassword);
+export default connect(
+  mapStateToProps,
+  { changePasswordActionCreator }
+)(ChangePassword);
