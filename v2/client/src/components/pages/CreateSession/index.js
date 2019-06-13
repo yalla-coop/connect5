@@ -42,14 +42,30 @@ class CreateSession extends Component {
   state = initialState;
 
   componentDidMount() {
+    const { id } = this.props;
     if (this.props.location.state) {
       this.setState({
         ...this.props.location.state,
         startDate: moment(this.props.location.state.startDate),
       });
     }
-    this.props.fetchAllTrainers();
-    this.props.fetchLocalLeads();
+
+    // this.props.fetchLocalLeadTrainersGroup(id);
+    // this.props.fetchAllTrainers();
+    // this.props.fetchLocalLeads();
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log('updated', this.props, prevProps.currentUser);
+    if (this.props.currentUser !== prevProps.currentUser) {
+      const { id, role } = this.props.currentUser;
+      if (role && role === 'localLead') {
+        this.props.fetchLocalLeadTrainersGroup(id);
+      } else {
+        this.props.fetchAllTrainers();
+        this.props.fetchLocalLeads();
+      }
+    }
   }
 
   onDateChange = defaultValue => {
@@ -395,5 +411,9 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchAllTrainers, createSessionAction, fetchLocalLeads }
+  {
+    fetchAllTrainers,
+    createSessionAction,
+    fetchLocalLeads,
+  }
 )(CreateSession);

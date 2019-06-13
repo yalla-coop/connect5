@@ -55,7 +55,7 @@ class ViewSessions extends Component {
         <Header label="sessions" type="section" />
         <TotalSessions>
           <Span>Total Sessions</Span>
-          <SessionsCount>{sessionsNum}</SessionsCount>
+          <SessionsCount>{sessions && sessions.length}</SessionsCount>
           <LinkBtn to="/create-session">Add New Session</LinkBtn>
         </TotalSessions>
         <SessionList dataList={sessions} />
