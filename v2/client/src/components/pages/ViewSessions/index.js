@@ -46,8 +46,8 @@ class ViewSessions extends Component {
   };
 
   render() {
-    const { sessions, sessionsNum } = this.props;
-    if (!sessions || !sessionsNum) {
+    const { sessions } = this.props;
+    if (!sessions) {
       return <div>loading</div>;
     }
     return (
