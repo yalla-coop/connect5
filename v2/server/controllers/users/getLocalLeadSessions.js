@@ -13,9 +13,18 @@ module.exports = async (req, res, next) => {
   // const { role } = req.user;
   const { id } = req.params;
 
-  const data = await getLocalLeadSessions(id);
-  const { sessions } = data[0];
-  console.log('data', data[0].sessions);
+  const data = await getLocalLeadSessions(id).catch(err => console.log(err));
+
+  let sessions;
+
+  if (data.length === 0) {
+    sessions = [];
+  } else {
+    sessions = data[0].sessions;
+  }
+
+  // const { sessions } = data[0];
+  // console.log('data', data[0].sessions);
   return res.json(sessions);
   // const promise =
   //   role === 'localLead'
