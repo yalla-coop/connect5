@@ -48,7 +48,7 @@ class ChangePassword extends Component {
       errors.newPasswordError = '*New password is too short.';
     }
 
-    if (strongRegex.test(fields.newPassword)) {
+    if (!strongRegex.test(fields.newPassword)) {
       formIsValid = false;
       errors.newPasswordError = '*Please enter storg password.';
     }
