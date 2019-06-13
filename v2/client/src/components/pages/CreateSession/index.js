@@ -45,7 +45,7 @@ class CreateSession extends Component {
   state = initialState;
 
   componentDidMount() {
-    const { id } = this.props;
+    const { id, role } = this.props;
     if (this.props.location.state) {
       this.setState({
         ...this.props.location.state,
@@ -53,9 +53,12 @@ class CreateSession extends Component {
       });
     }
 
-    this.props.fetchLocalLeadTrainersGroup(id);
-    this.props.fetchAllTrainers();
-    this.props.fetchLocalLeads();
+    if (role === 'localLead') {
+      this.props.fetchLocalLeadTrainersGroup(id);
+    } else {
+      this.props.fetchAllTrainers();
+      this.props.fetchLocalLeads();
+    }
   }
 
   componentDidUpdate(prevProps) {
