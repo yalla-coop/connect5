@@ -34,7 +34,7 @@ module.exports = PINs => {
       $project: {
         PIN: '$answers.PIN',
         code: 1,
-        answer: { $toInt: '$answers.answer' },
+        answer: '$answers.answer',
       },
     },
     {
