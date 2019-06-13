@@ -256,6 +256,17 @@ class App extends Component {
               role={role}
               navbar
             />
+
+            <PrivateRoute
+              exact
+              path="/thank-you"
+              Component={ThankYouPage}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['participant']}
+              role={role}
+              navbar
+            />
             <Route
               path="/404err"
               render={() => (
