@@ -955,6 +955,15 @@ module.exports = () => {
     ...behavioural5('pre-day-1'),
   ];
 
+  const preSpecial2DaysQuestions = [
+    ...demographics('pre-special'),
+    ...behavioural1('pre-special'),
+    ...behavioural2('pre-special'),
+    ...behavioural3('pre-special'),
+    ...behavioural4('pre-special'),
+    ...behavioural5('pre-special'),
+  ];
+
   const postCourseDay1Questions = [
     ...behavioural2('post-day-1'),
     ...behavioural3('post-day-1'),
@@ -1018,5 +1027,6 @@ module.exports = () => {
     ...postTrainTheTrainerQuestions,
     ...followUp3MonthsQuestions,
     ...followUp6MonthsQuestions,
+    ...preSpecial2DaysQuestions,
   ]);
 };

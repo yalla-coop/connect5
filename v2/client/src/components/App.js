@@ -26,8 +26,10 @@ import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
+import SessionDetails from './pages/SessionDetails';
+import EditSession from './pages/SessionDetails/SessionActions/SessionEdit';
 import SurveyResults from './pages/SurveyResults';
-import TrainerFeedBack from './pages/TrainerFeedback';
+
 import DecideView from './pages/DecideView';
 
 // COMPONENTS
@@ -46,8 +48,8 @@ import {
   GROUP_RESULTS_URL,
   TRAINER_SESSIONS_URL,
   GROUP_SESSIONS_URL,
-  TRAINER_FEEDBACK_URL,
   DECIDE_VIEW_URL,
+  SESSION_DETAILS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -58,7 +60,6 @@ const Wrapper = styled.div`
 `;
 
 class App extends Component {
-
   componentDidMount() {
     const { checkAuth: checkAuthActionCreator } = this.props;
     checkAuthActionCreator();
@@ -123,16 +124,6 @@ class App extends Component {
 
             <PrivateRoute
               exact
-              path={TRAINER_FEEDBACK_URL}
-              Component={TrainerFeedBack}
-              isAuthenticated={isAuthenticated}
-              loaded={loaded}
-              allowedRoles={['admin', 'localLead', 'trainer']}
-              role={role}
-            />
-
-            <PrivateRoute
-              exact
               path={DASHBOARD_URL}
               Component={Dashboard}
               isAuthenticated={isAuthenticated}
@@ -155,6 +146,17 @@ class App extends Component {
 
             <PrivateRoute
               exact
+              path={SESSION_DETAILS_URL}
+              Component={SessionDetails}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
+
+            <PrivateRoute
+              exact
               path={DECIDE_VIEW_URL}
               Component={DecideView}
               isAuthenticated={isAuthenticated}
@@ -166,13 +168,18 @@ class App extends Component {
 
             <Route exact path="/create-session" component={CreateSession} />
             <Route exact path={SURVEY_URL} component={Survey} />
+
+            <Route exact path="/session-edit/:id" component={EditSession} />
+
             <Route
               exact
               path={LOGIN_URL}
               render={() => {
                 if (loaded) {
                   return isAuthenticated ? (
-                    <Redirect to={role === "trainer" ? DASHBOARD_URL : DECIDE_VIEW_URL} />
+                    <Redirect
+                      to={role === 'trainer' ? DASHBOARD_URL : DECIDE_VIEW_URL}
+                    />
                   ) : (
                     <Login />
                   );

@@ -38,8 +38,8 @@ export const fetchTrainerFeedback = (
   surveyType
 ) => async dispatch => {
   try {
-    const url = `/api/feedback/trainer/${trainerId}`;
-    const data = { sessionId, surveyType };
+    const url = `/api/feedback/`;
+    const data = { trainerId, sessionId, surveyType };
 
     const res = await axios.post(url, data);
 

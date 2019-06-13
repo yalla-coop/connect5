@@ -25,7 +25,8 @@ const closeButtonStyles = css`
   padding: 3px 8px;
   cursor: pointer;
   border-radius: 50%;
-  background-color: #a9a9a9;
+  background-color: ${colors.lightGray};
+  color: ${colors.black};
   border: none;
   width: 30px;
   height: 30px;
