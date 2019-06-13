@@ -67,7 +67,7 @@ class SurveyContent extends Component {
     return (
       <SurveyContentWrapper>
         <SurveyLinkType to={`/survey/${id}/${type}/results`}>
-          {type === 'Pre-session' ? 'Pre-Session' : 'Post-Session'} Survey Link
+          {type.includes('pre') ? 'Pre-Session' : 'Post-Session'} Survey Link
         </SurveyLinkType>
 
         <SurveyLinkInfo onClick={onInfoClick}>

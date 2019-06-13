@@ -81,10 +81,15 @@ class App extends Component {
       <Wrapper>
         <Router history={history}>
           <Switch>
-            <Route
+            <PrivateRoute
               exact
               path="/survey/:sessionId/:surveyType/results"
-              component={SurveyResults}
+              Component={SurveyResults}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['trainer', 'admin', 'localLead']}
+              role={role}
+              navbar
             />
             <Route exact path="/" component={Home} />
             <PrivateRoute
