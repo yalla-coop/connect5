@@ -7,7 +7,10 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
 import { fetchAllTrainers } from '../../../actions/trainerAction';
-import { fetchLocalLeads } from '../../../actions/users';
+import {
+  fetchLocalLeads,
+  fetchLocalLeadTrainersGroup,
+} from '../../../actions/users';
 import { createSessionAction } from '../../../actions/sessionAction';
 import { sessions, regions, pattern } from './options';
 
@@ -50,23 +53,26 @@ class CreateSession extends Component {
       });
     }
 
-    // this.props.fetchLocalLeadTrainersGroup(id);
-    // this.props.fetchAllTrainers();
-    // this.props.fetchLocalLeads();
+    this.props.fetchLocalLeadTrainersGroup(id);
+    this.props.fetchAllTrainers();
+    this.props.fetchLocalLeads();
   }
 
   componentDidUpdate(prevProps) {
-    console.log('updated', this.props, prevProps.currentUser);
-    if (this.props.currentUser !== prevProps.currentUser) {
-      const { id, role } = this.props.currentUser;
-      if (role && role === 'localLead') {
-        this.props.fetchLocalLeadTrainersGroup(id);
-      } else {
-        this.props.fetchAllTrainers();
-        this.props.fetchLocalLeads();
-      }
+    if (this.props.id !== prevProps.id) {
+      this.fetchLocalLeadsAndTrainers();
     }
   }
+
+  fetchLocalLeadsAndTrainers = () => {
+    const { id, role } = this.props.currentUser;
+    if (role && role === 'localLead') {
+      this.props.fetchLocalLeadTrainersGroup(id);
+    } else {
+      this.props.fetchAllTrainers();
+      this.props.fetchLocalLeads();
+    }
+  };
 
   onDateChange = defaultValue => {
     this.setState({
@@ -122,6 +128,33 @@ class CreateSession extends Component {
     });
   };
 
+  renderTrainersList = () => {
+    const { leadsAndTrainers, role, localLeadTrainersGroup } = this.props;
+    if (role && role === 'localLead') {
+      if (localLeadTrainersGroup) {
+        return localLeadTrainersGroup.map(({ name, _id }) => {
+          return (
+            <Option
+              key={_id}
+              value={_id}
+              style={{ textTransform: 'capitalize' }}
+            >
+              {name}
+            </Option>
+          );
+        });
+      }
+    } else if (leadsAndTrainers) {
+      return leadsAndTrainers.map(({ name, _id }) => (
+        <Option key={_id} value={_id} style={{ textTransform: 'capitalize' }}>
+          {name}
+        </Option>
+      ));
+    } else {
+      return null;
+    }
+  };
+
   checkError = () => {
     const {
       startDate,
@@ -172,7 +205,7 @@ class CreateSession extends Component {
   };
 
   render() {
-    const { trainers, role, localLeads } = this.props;
+    const { role } = this.props;
 
     const {
       inviteesNumber,
@@ -192,6 +225,7 @@ class CreateSession extends Component {
       onEmailChange,
       onFormSubmit,
     } = this;
+
     return (
       <CreateSessionWrapper>
         <Heading>Create New Session</Heading>
@@ -300,17 +334,7 @@ class CreateSession extends Component {
                 </div>
               )}
             >
-              {trainers &&
-                trainers.map(({ name, _id }) => (
-                  <Option key={_id} value={_id}>
-                    {name}
-                  </Option>
-                ))}
-              {localLeads.map(({ name, _id }) => (
-                <Option key={_id} value={_id}>
-                  {name}
-                </Option>
-              ))}
+              {this.renderTrainersList()}
             </Select>
           </InputDiv>
           {role === 'localLead' && (
@@ -356,18 +380,7 @@ class CreateSession extends Component {
                   </div>
                 )}
               >
-                {trainers &&
-                  trainers.map(({ name, _id }) => (
-                    <Option key={_id} value={_id}>
-                      {name}
-                    </Option>
-                  ))}
-                {role === 'localLead' &&
-                  localLeads.map(({ name, _id }) => (
-                    <Option key={_id} value={_id}>
-                      {name}
-                    </Option>
-                  ))}
+                {this.renderTrainersList()}
               </Select>
             </InputDiv>
           )}
@@ -403,11 +416,18 @@ class CreateSession extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  trainers: state.trainers.trainers,
-  role: state.auth.role,
-  localLeads: state.fetchedData.localLeadsList,
-});
+const mapStateToProps = state => {
+  const { trainers } = state.trainers;
+  const localLeads = state.fetchedData.localLeadsList;
+
+  const leadsAndTrainers = [...localLeads, ...trainers];
+  return {
+    role: state.auth.role,
+    currentUser: state.auth,
+    localLeadTrainersGroup: state.fetchedData.localLeadGroup,
+    leadsAndTrainers,
+  };
+};
 
 export default connect(
   mapStateToProps,
@@ -415,5 +435,6 @@ export default connect(
     fetchAllTrainers,
     createSessionAction,
     fetchLocalLeads,
+    fetchLocalLeadTrainersGroup,
   }
 )(CreateSession);

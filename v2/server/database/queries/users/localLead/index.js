@@ -36,3 +36,22 @@ module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
     },
   ]);
 };
+
+// get localLead group
+
+module.exports.getLocalLeadTrainersGroup = id => {
+  return User.aggregate([
+    {
+      $match: { _id: mongoose.Types.ObjectId(id) },
+    },
+
+    {
+      $lookup: {
+        from: 'users',
+        foreignField: '_id',
+        localField: 'trainersGroup',
+        as: 'group',
+      },
+    },
+  ]);
+};

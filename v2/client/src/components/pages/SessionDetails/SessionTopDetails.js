@@ -18,7 +18,7 @@ class SessionTopDetails extends Component {
     if (!sessionDetails) {
       return <div>loading</div>;
     }
-    console.log('SESS', type.replace(/-/g, ' '));
+
     return (
       <SessionTopDetailsWrapper>
         <Statistic>
