@@ -6,7 +6,7 @@ import { Alert, Spin } from 'antd';
 
 import { connect } from 'react-redux';
 
-import { fetchbehavioralInsight as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
+import { fetchSurveyBehavioral as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
 
 import {
   Wrapper,
@@ -176,8 +176,8 @@ class BehavioralSurveyResults extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.behavioralInsight.data,
-  loaded: state.behavioralInsight.loaded,
+  data: state.behavioralInsight.survey.data,
+  loaded: state.behavioralInsight.survey.loaded,
 });
 
 export default connect(
