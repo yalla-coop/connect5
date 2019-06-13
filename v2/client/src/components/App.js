@@ -171,7 +171,11 @@ class App extends Component {
               navbar
             />
 
-            <Route exact path="/create-session" component={CreateSession} />
+            <Route
+              exact
+              path="/create-session"
+              render={props => <CreateSession id={this.props.id} {...props} />}
+            />
             <Route exact path={SURVEY_URL} component={Survey} />
 
             <Route exact path="/session-edit/:id" component={EditSession} />
@@ -281,6 +285,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
+  id: state.auth.id,
   isAuthenticated: state.auth.isAuthenticated,
   role: state.auth.role,
   loaded: state.auth.loaded,

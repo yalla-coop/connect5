@@ -45,17 +45,24 @@ class CreateSession extends Component {
   state = initialState;
 
   componentDidMount() {
+    const { id, role } = this.props;
     if (this.props.location.state) {
       this.setState({
         ...this.props.location.state,
         startDate: moment(this.props.location.state.startDate),
       });
     }
-    this.fetchLocalLeadsAndTrainers();
+
+    if (role === 'localLead') {
+      this.props.fetchLocalLeadTrainersGroup(id);
+    } else {
+      this.props.fetchAllTrainers();
+      this.props.fetchLocalLeads();
+    }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.currentUser !== prevProps.currentUser) {
+    if (this.props.id !== prevProps.id) {
       this.fetchLocalLeadsAndTrainers();
     }
   }

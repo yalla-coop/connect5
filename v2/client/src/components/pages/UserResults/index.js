@@ -102,7 +102,6 @@ class UserResults extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { results, role, history, groupView, sessions } = this.props;
     const { state } = history.location;
     const { toggle, selectedUserId } = this.state;

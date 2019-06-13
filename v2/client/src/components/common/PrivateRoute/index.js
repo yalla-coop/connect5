@@ -24,7 +24,6 @@ const PrivateRoute = ({
   const authorized = authorization(role, allowedRoles);
 
   if (loaded) {
-    console.log(viewLevel, role);
     return (
       <Route
         path={path}
