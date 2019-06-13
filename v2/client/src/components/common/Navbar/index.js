@@ -18,7 +18,7 @@ import {
   USER_INSIGHTS,
   USER_PROGRESS,
   USER_DASHBOARD,
-  DECIDE_VIEW_URL
+  DECIDE_VIEW_URL,
 } from '../../../constants/navigationRoutes';
 
 import USER_TYPES from '../../../constants/userTypes';
@@ -64,7 +64,7 @@ const Navbar = ({ viewLevel, role }) => {
       {/* TRAINER */}
       {viewLevel === USER_TYPES.trainer && (
         <>
-          <MenuItem to={role === "trainer" ? DASHBOARD_URL : DECIDE_VIEW_URL}>
+          <MenuItem to={role === 'trainer' ? DASHBOARD_URL : DECIDE_VIEW_URL}>
             <MenuIcon className="fas fa-home" />
             Home
           </MenuItem>

@@ -7,29 +7,27 @@
 const mongoose = require('mongoose');
 const Response = require('../../models/Response');
 
-module.exports.trainerFeedback = async (trainerId, sessionId, surveyType) => {
-  // decide if match should happen only on trainer id (feedback overall)
-  // or also for session (trainer feedback for individual session), sessionId and surveyType (trainer feedback for individual survey)
+module.exports.feedback = async (trainerId, sessionId, surveyType) => {
   const match = () => {
+    // feedback for individ. survey
     if (sessionId && surveyType) {
       return {
-        trainers: mongoose.Types.ObjectId(trainerId),
         $and: [{ session: mongoose.Types.ObjectId(sessionId) }, { surveyType }],
       };
     }
+    // feedback for indiv. session
     if (sessionId) {
       return {
-        trainers: mongoose.Types.ObjectId(trainerId),
-        $and: [{ session: mongoose.Types.ObjectId(sessionId) }],
+        session: mongoose.Types.ObjectId(sessionId),
       };
     }
-
+    // feedback for indiv. trainer
     return {
       trainers: mongoose.Types.ObjectId(trainerId),
     };
   };
 
-  const trainerFeedbackArr = await Response.aggregate([
+  const feedbackArray = await Response.aggregate([
     {
       $match: match(),
     },
@@ -85,7 +83,7 @@ module.exports.trainerFeedback = async (trainerId, sessionId, surveyType) => {
   // group array by question text
   // {questionTxt: [{surveyType, questionTxt, answer}, ...], ...}
 
-  let groupedByQuestion = trainerFeedbackArr.reduce((acc, cur) => {
+  let groupedByQuestion = feedbackArray.reduce((acc, cur) => {
     acc[cur.questionText] = acc[cur.questionText] || [];
     acc[cur.questionText].push(cur);
     return acc;

@@ -2,11 +2,14 @@ import {
   FETCH_TRAINERS_SESSIONS,
   FETCH_LOCAL_LEAD_SESSIONS,
   FETCH_ALL_SESSIONS,
+  FETCH_SESSION_DETAILS,
 } from '../constants/actionTypes';
 
 const initState = {
   sessions: [],
   sessionsCount: '',
+  sessionDetails: {},
+  loaded: false,
 };
 
 const fetchedSessions = (state = initState, action) => {
@@ -17,6 +20,8 @@ const fetchedSessions = (state = initState, action) => {
       return { ...state, sessions: payload };
     case FETCH_ALL_SESSIONS:
       return { ...state, sessionsCount: payload };
+    case FETCH_SESSION_DETAILS:
+      return { ...state, sessionDetails: payload, loaded: true };
     default:
       return state;
   }

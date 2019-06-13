@@ -22,6 +22,7 @@ import {
   QuestionSpan,
   Answer,
 } from './SurveyResults.style';
+import TrainerFeedback from '../../common/Feedback';
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 
@@ -32,6 +33,7 @@ const behavioralSurveys = [
   'post-day-1',
   'post-day-2',
   'post-day-3',
+  'pre-special',
   'post-special',
 ];
 
@@ -155,7 +157,10 @@ class SurveyResults extends Component {
                     padding: 0,
                   }}
                 >
-                  {null}
+                  <TrainerFeedback
+                    sessionId={params.sessionId}
+                    surveyType={params.surveyType}
+                  />
                 </Panel>
               </Collapse>
             </div>

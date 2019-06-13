@@ -41,6 +41,7 @@ export const colorCodes = {
   lightGray: '#EFEFF4',
   mediumGray: '#E1E1E2',
   black: '#4F4F4F',
+  blackSecondary: '#8e8e8e',
 
   // transparent
   transGray: 'rgba(212, 212, 216, 0.3)',

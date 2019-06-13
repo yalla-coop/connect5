@@ -5,6 +5,7 @@ import Spin from 'antd/lib/spin';
 
 import { fetchStatsData } from '../../../actions/users';
 
+// STYLING
 import {
   Wrapper,
   TopSection,
@@ -16,10 +17,16 @@ import {
   StatNumber,
   StyledLink,
   SpinWrapper,
+  LogOut,
 } from './Dashboard.style';
 
+//  COMMON COMPONENTS
 import Header from '../../common/Header';
 
+// HELPERS
+import logout from '../../../helpers/logout';
+
+// ROUTES
 import {
   TRAINER_RESULTS_URL,
   TRAINER_SESSIONS_URL,
@@ -115,7 +122,7 @@ class Dashboard extends Component {
               )}
             </StatsWrapper>
             <StyledLink to="/change-password">Change Password</StyledLink>
-            <StyledLink to="/logout">Log out</StyledLink>
+            <LogOut onClick={() => logout()}>Log out</LogOut>
           </>
         )}
       </Wrapper>

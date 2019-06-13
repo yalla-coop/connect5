@@ -3,18 +3,12 @@
 // if trainer and session id => individual session feedback
 
 const boom = require('boom');
-const {
-  trainerFeedback,
-} = require('./../../database/queries/feedback/trainer');
+const { feedback } = require('../../database/queries/feedback/feedback');
 
 module.exports = (req, res, next) => {
-  const { trainerId } = req.params;
-  const { sessionId, surveyType } = req.body;
-  if (!trainerId) {
-    return next(boom.badRequest('no ID provided'));
-  }
+  const { trainerId, sessionId, surveyType } = req.body;
 
-  return trainerFeedback(trainerId, sessionId, surveyType)
+  return feedback(trainerId, sessionId, surveyType)
     .then(result => res.json(result))
     .catch(err => next(boom.badImplementation('trainer feedback error')));
 };

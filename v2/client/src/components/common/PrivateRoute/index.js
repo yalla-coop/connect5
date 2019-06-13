@@ -24,6 +24,7 @@ const PrivateRoute = ({
   const authorized = authorization(role, allowedRoles);
 
   if (loaded) {
+    console.log(viewLevel, role);
     return (
       <Route
         path={path}
@@ -50,12 +51,8 @@ const PrivateRoute = ({
   return <SpinWrapper />;
 };
 
-
-
 const mapStateToProps = state => ({
   viewLevel: state.viewLevel.viewLevel,
 });
 
-export default connect(
-  mapStateToProps,
-)(PrivateRoute);
+export default connect(mapStateToProps)(PrivateRoute);

@@ -74,6 +74,18 @@ export const StyledLink = styled(Link)`
   }
 `;
 
+export const LogOut = styled.div`
+  font-weight: 300;
+  font-size: 14px;
+  color: ${colors.profileFontColor};
+  padding: 0.5rem 0;
+  cursor: pointer;
+
+  :hover {
+    color: ${colors.red};
+  }
+`;
+
 export const SpinWrapper = styled.div`
   height: 100vh;
   width: 100vw;

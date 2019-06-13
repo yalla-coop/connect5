@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  padding-bottom: 2rem;
+  margin-bottom: 5.5rem;
 `;
 
 export const Header = styled.div`
@@ -94,6 +94,7 @@ export const Type = styled.div`
     text-align: center;
     border-radius: 4px;
     margin: 0;
+    text-transform: capitalize;
   }
 `;
 
