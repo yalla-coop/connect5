@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Modal } from 'antd';
 import { ADD_SESSION_SUCCESS } from '../constants/actionTypes';
-// import { returnErrors } from './errorAction';
 import history from '../history';
+import store from '../store';
 
 export const createSessionAction = sessionData => dispatch => {
   axios
@@ -13,13 +13,16 @@ export const createSessionAction = sessionData => dispatch => {
         payload: res.data,
       })
     )
-    .then(() =>
+    .then(() => {
+      const { role } = store.getState().auth;
+
       Modal.success({
         title: 'Done!',
         content: 'Session created',
-        onOk: history.push('/sessions'),
-      })
-    )
+        onOk: () =>
+          history.push(role === 'trainer' ? 'trainer-sessions' : '/sessions'),
+      });
+    })
     .catch(err =>
       Modal.error({
         title: 'Error',

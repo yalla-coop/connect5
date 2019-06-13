@@ -38,8 +38,8 @@ export const fetchTrainerFeedback = (
   surveyType
 ) => async dispatch => {
   try {
-    const url = `/api/feedback/trainer/${trainerId}`;
-    const data = { sessionId, surveyType };
+    const url = `/api/feedback/`;
+    const data = { trainerId, sessionId, surveyType };
 
     const res = await axios.post(url, data);
 
@@ -67,6 +67,18 @@ export const fetchLocalLeads = () => async dispatch => {
 
     dispatch({
       type: types.FETCH_LOCAL_LEADS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchLocalLeadTrainersGroup = id => async dispatch => {
+  try {
+    const { data } = await axios.get(`/api/local-lead/${id}/group`);
+    dispatch({
+      type: types.FETCH_LOCAL_LEAD_TRAINERS_GROUP,
       payload: data,
     });
   } catch (error) {

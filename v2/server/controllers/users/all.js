@@ -10,8 +10,6 @@ exports.getDashboardStats = async (req, res, next) => {
 
   const { userType } = req.body;
 
-  console.log("controller", userType)
-
   try {
     const stats = await getTopStats(user.id, userType);
     return res.json({ stats, userType, userId: user.id });

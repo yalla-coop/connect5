@@ -46,8 +46,8 @@ class ViewSessions extends Component {
   };
 
   render() {
-    const { sessions, sessionsNum } = this.props;
-    if (!sessions || !sessionsNum) {
+    const { sessions } = this.props;
+    if (!sessions) {
       return <div>loading</div>;
     }
     return (
@@ -55,7 +55,7 @@ class ViewSessions extends Component {
         <Header label="sessions" type="section" />
         <TotalSessions>
           <Span>Total Sessions</Span>
-          <SessionsCount>{sessionsNum}</SessionsCount>
+          <SessionsCount>{sessions && sessions.length}</SessionsCount>
           <LinkBtn to="/create-session">Add New Session</LinkBtn>
         </TotalSessions>
         <SessionList dataList={sessions} />

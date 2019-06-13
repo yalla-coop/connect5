@@ -50,12 +50,8 @@ const PrivateRoute = ({
   return <SpinWrapper />;
 };
 
-
-
 const mapStateToProps = state => ({
   viewLevel: state.viewLevel.viewLevel,
 });
 
-export default connect(
-  mapStateToProps,
-)(PrivateRoute);
+export default connect(mapStateToProps)(PrivateRoute);

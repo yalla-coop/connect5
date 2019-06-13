@@ -7,7 +7,7 @@ import {
   USER_AUTHENTICATED,
   USER_UNAUTHENTICATED,
   ADD_TRAINER_TO_GROUP_SUCCESS,
-  CHECK_UNIQUE_EMAIL_ERROR
+  CHECK_UNIQUE_EMAIL_ERROR,
 } from '../constants/actionTypes';
 import { returnErrors } from './errorAction';
 
@@ -88,8 +88,6 @@ export const checkAuth = () => async dispatch => {
   try {
     const res = await axios.get(`/api/users/auth`);
     const { data } = res;
-
-    // console.log('HEY', viewLevel);
 
     // if(viewLevel) data.role = viewLevel
 
