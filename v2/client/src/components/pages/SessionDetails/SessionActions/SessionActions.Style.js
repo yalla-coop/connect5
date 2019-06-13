@@ -38,6 +38,9 @@ export const IconName = styled.span`
   display: inline-block;
   padding-left: 0.35rem;
   font-size: 14px;
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 export const EditSessionWrapper = styled.div`

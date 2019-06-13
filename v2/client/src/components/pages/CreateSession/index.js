@@ -51,19 +51,24 @@ class CreateSession extends Component {
         startDate: moment(this.props.location.state.startDate),
       });
     }
+    this.fetchLocalLeadsAndTrainers();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.currentUser !== prevProps.currentUser) {
-      const { id, role } = this.props.currentUser;
-      if (role && role === 'localLead') {
-        this.props.fetchLocalLeadTrainersGroup(id);
-      } else {
-        this.props.fetchAllTrainers();
-        this.props.fetchLocalLeads();
-      }
+      this.fetchLocalLeadsAndTrainers();
     }
   }
+
+  fetchLocalLeadsAndTrainers = () => {
+    const { id, role } = this.props.currentUser;
+    if (role && role === 'localLead') {
+      this.props.fetchLocalLeadTrainersGroup(id);
+    } else {
+      this.props.fetchAllTrainers();
+      this.props.fetchLocalLeads();
+    }
+  };
 
   onDateChange = defaultValue => {
     this.setState({
