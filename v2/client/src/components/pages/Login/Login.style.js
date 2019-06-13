@@ -13,9 +13,7 @@ export const H3 = styled.h3`
   text-align: center;
 `;
 
-export const LoginForm = styled.form`
-  margin-top: 6rem;
-`;
+export const LoginForm = styled.form``;
 
 export const InputDiv = styled.div`
   width: 80%;

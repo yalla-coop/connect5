@@ -46,8 +46,8 @@ export const IconName = styled.span`
 export const EditSessionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 25px;
-  margin: 20px auto;
+  padding: 45px 0;
+  margin: 0 auto;
   max-width: 600px;
-  margin-bottom: 80px;
+  padding-bottom: 80px;
 `;

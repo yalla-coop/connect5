@@ -67,7 +67,7 @@ class BehavioralSurveyResults extends Component {
               </Title>
               {Object.keys(data).length ? (
                 Object.entries(data).map(pairOfArray => (
-                  <ChartWrapper>
+                  <ChartWrapper key={pairOfArray[0]}>
                     <WhiteWrapper>
                       <Description>{pairOfArray[0]}</Description>
                       <HorizontalBar

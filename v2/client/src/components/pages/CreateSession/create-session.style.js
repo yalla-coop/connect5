@@ -4,8 +4,8 @@ import { colors } from '../../../theme';
 export const CreateSessionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 25px;
-  margin: 20px auto;
+  padding: 40px 0;
+  margin: 0 auto;
   max-width: 600px;
   margin-bottom: 80px;
 `;
@@ -39,9 +39,11 @@ export const InputDiv = styled.div`
   border: 1px solid ${colors.lightGray};
   &:not(:last-child) {
     margin-bottom: 1.2rem;
-  };
+  }
+
   @media (min-width: 768px) {
     width: 90%;
+  }
 `;
 
 export const SubmitBtn = styled.div`

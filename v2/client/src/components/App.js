@@ -173,14 +173,29 @@ class App extends Component {
               navbar
             />
 
-            <Route
+            <PrivateRoute
               exact
               path="/create-session"
-              render={props => <CreateSession id={this.props.id} {...props} />}
+              Component={CreateSession}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
             />
+
             <Route exact path={SURVEY_URL} component={Survey} />
 
-            <Route exact path="/session-edit/:id" component={EditSession} />
+            <PrivateRoute
+              exact
+              path="/session-edit/:id"
+              Component={EditSession}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
 
             <Route
               exact
@@ -272,16 +287,6 @@ class App extends Component {
               navbar
             />
 
-            <PrivateRoute
-              exact
-              path="/thank-you"
-              Component={ThankYouPage}
-              loaded={loaded}
-              isAuthenticated={isAuthenticated}
-              allowedRoles={['participant']}
-              role={role}
-              navbar
-            />
             <Route
               path="/404err"
               render={() => (

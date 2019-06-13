@@ -425,6 +425,7 @@ const mapStateToProps = state => {
 
   const leadsAndTrainers = [...localLeads, ...trainers];
   return {
+    id: state.auth.id,
     role: state.auth.role,
     currentUser: state.auth,
     localLeadTrainersGroup: state.fetchedData.localLeadGroup,
