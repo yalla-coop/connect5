@@ -19,7 +19,7 @@ export const fetchTrainerSessions = id => async dispatch => {
         payload: res.data,
       })
     )
-    .catch(() => history.push('./404'));
+    .catch(() => history.push('/404err'));
 };
 
 export const fetchLocalLeadSessions = id => async dispatch => {
@@ -31,7 +31,9 @@ export const fetchLocalLeadSessions = id => async dispatch => {
         payload: res.data,
       })
     )
-    .catch(() => history.push('./404'));
+    .catch(() => {
+      history.push('/404err');
+    });
 };
 
 export const fetchALLSessions = () => async dispatch => {
@@ -43,7 +45,7 @@ export const fetchALLSessions = () => async dispatch => {
         payload: res.data,
       })
     )
-    .catch(() => history.push('./404'));
+    .catch(() => history.push('/404err'));
 };
 
 export const fetchSessionDetails = id => async dispatch => {
@@ -55,7 +57,7 @@ export const fetchSessionDetails = id => async dispatch => {
         payload: res.data,
       })
     )
-    .catch(() => history.push('./404'));
+    .catch(() => history.push('/404err'));
 };
 
 export const deleteSessionAction = id => async dispatch => {
@@ -67,7 +69,7 @@ export const deleteSessionAction = id => async dispatch => {
         payload: res.data,
       })
     )
-    .catch(() => history.push('./404'));
+    .catch(() => history.push('/404err'));
 };
 
 export const sessionUpdateAction = (sessionData, id) => async dispatch => {
@@ -80,7 +82,7 @@ export const sessionUpdateAction = (sessionData, id) => async dispatch => {
         payload: res.data,
       })
     )
-    .catch(() => history.push('./404'));
+    .catch(() => history.push('/404err'));
 };
 
 export const updateEmails = (id, participantsEmails) => async dispatch => {
@@ -93,5 +95,5 @@ export const updateEmails = (id, participantsEmails) => async dispatch => {
         payload: res.data,
       });
     })
-    .catch(() => history.push('./404'));
+    .catch(() => history.push('/404err'));
 };
