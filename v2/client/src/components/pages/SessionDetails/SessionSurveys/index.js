@@ -99,12 +99,12 @@ class SessionSurveys extends Component {
     return (
       <SessionSurveysWrapper>
         <SessionSurveyContainer>
-          {surveyType[type].map(survey => {
+          {surveyType[type].map((survey, index) => {
             return (
               <SurveyContent
                 subId="1"
                 type={survey}
-                surveyURL={links[0]}
+                surveyURL={links[index]}
                 id={_id}
               />
             );
