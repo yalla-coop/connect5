@@ -99,31 +99,16 @@ class SessionSurveys extends Component {
     return (
       <SessionSurveysWrapper>
         <SessionSurveyContainer>
-          {type === '1' ||
-          type === 'train-trainers' ||
-          type === 'special-2-days' ? (
-            <>
+          {surveyType[type].map(survey => {
+            return (
               <SurveyContent
                 subId="1"
-                type="Pre-session"
+                type={survey}
                 surveyURL={links[0]}
                 id={_id}
               />
-              <SurveyContent
-                subId="2"
-                type={type}
-                surveyURL={links[1]}
-                id={_id}
-              />
-            </>
-          ) : (
-            <SurveyContent
-              subId="3"
-              type={type}
-              surveyURL={links[0]}
-              id={_id}
-            />
-          )}
+            );
+          })}
         </SessionSurveyContainer>
         <Buttons>
           <AttendeeBtn onClick={() => toggleModal(participantsEmails)}>

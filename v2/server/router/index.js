@@ -11,6 +11,7 @@ const logoutController = require('../controllers/logout');
 
 const surveyQs = require('../controllers/survey/getSurveyQs');
 const storeSurvey = require('../controllers/survey/storeSurvey');
+const getSurveyResponses = require('../controllers/survey/getSurveyResponses');
 const getSessionDetails = require('../controllers/sessionDetails/getSessionDetails');
 const deleteSession = require('../controllers/sessionDetails/deleteSession');
 const editSession = require('../controllers/sessionDetails/editSession');
@@ -43,6 +44,9 @@ router.post('/feedback/', getFeedback);
 router.use(usersRouter);
 
 router.get('/survey/:id', surveyQs);
+
+router.get('/session/:sessionId/:surveyType/responses', getSurveyResponses);
+
 router.post('/survey/submit', storeSurvey);
 
 module.exports = router;
