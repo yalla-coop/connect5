@@ -31,7 +31,7 @@ function drawBarValues() {
   this.data.datasets.forEach(function(dataset) {
     for (let i = 0; i < dataset.data.length; i += 1) {
       if (
-        !dataset.hidden === true ||
+        (dataset && !dataset.hidden === true) ||
         dataset._meta[Object.keys(dataset._meta)[0]].hidden !== false
       ) {
         const model =
