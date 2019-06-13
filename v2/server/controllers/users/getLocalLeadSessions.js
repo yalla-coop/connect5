@@ -9,10 +9,13 @@ module.exports = async (req, res, next) => {
 
   try {
     const data = await getLocalLeadSessions(id);
-    const { sessions } = data[0];
+    let sessions;
 
-    if (!sessions) {
-      return next(boom.notFound('No sessions founded'));
+    if (data.length === 0) {
+      sessions = [];
+    } else {
+      // eslint-disable-next-line prefer-destructuring
+      sessions = data[0].sessions;
     }
     return res.json(sessions);
   } catch (err) {
