@@ -10,7 +10,7 @@ import Button from '../../common/Button';
 const ThankYouPage = () => {
   return (
     <ThankYouWrapper>
-      <ThankYouMsg>Thank you for filling the survey</ThankYouMsg>
+      <ThankYouMsg>Thank you for filling in the survey</ThankYouMsg>
       <Paragraph>
         you can now log in using your PIN and view your behavioural insight
         results
@@ -27,7 +27,6 @@ const ThankYouPage = () => {
             textTransform: 'none',
             fontWeight: '400',
           }}
-          disabled
         />
       </StyledLink>
     </ThankYouWrapper>
