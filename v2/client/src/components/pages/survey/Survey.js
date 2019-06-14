@@ -148,7 +148,7 @@ class Survey extends React.Component {
     } = this.state;
 
     const formSubmission = {
-      PIN,
+      PIN: PIN.toUpperCase(),
       sessionId,
       surveyType,
       formState,
