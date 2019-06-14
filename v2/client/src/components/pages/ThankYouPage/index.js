@@ -10,15 +10,15 @@ import Button from '../../common/Button';
 const ThankYouPage = () => {
   return (
     <ThankYouWrapper>
-      <ThankYouMsg>Thank you for filling in the survey</ThankYouMsg>
+      <ThankYouMsg>Thank you for filling the survey</ThankYouMsg>
       <Paragraph>
-        you can now log in using your PIN and view your behavioural insight
-        results
+        you can get your certificate by clicking here (this feature is comming
+        soon)
       </Paragraph>
-      <StyledLink to="/participant-login">
+      <StyledLink to="/">
         <Button
           type="primary"
-          label="View Results"
+          label="Claim my certificate"
           width="200px"
           height="50px"
           style={{
@@ -27,6 +27,7 @@ const ThankYouPage = () => {
             textTransform: 'none',
             fontWeight: '400',
           }}
+          disabled
         />
       </StyledLink>
     </ThankYouWrapper>
