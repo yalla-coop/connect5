@@ -7,7 +7,7 @@ import history from '../history';
 
 export const changePasswordActionCreator = data => async dispatch => {
   axios
-    .get(`/api/users/change-password`, data)
+    .post('/api/users/change-password', data)
     .then(res =>
       dispatch({
         type: CHANGE_PASSWORD_SUCCESS,

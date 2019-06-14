@@ -24,9 +24,9 @@ class ChangePassword extends Component {
   validateForm = () => {
     const { fields } = this.state;
     const errors = {};
-    const strongRegex = new RegExp(
-      '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
-    );
+    // const strongRegex = new RegExp(
+    //   '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+    // );
     let formIsValid = true;
 
     if (!fields.oldPassword) {
@@ -49,10 +49,10 @@ class ChangePassword extends Component {
       errors.newPasswordError = '*New password is too short.';
     }
 
-    if (!strongRegex.test(fields.newPassword)) {
-      formIsValid = false;
-      errors.newPasswordError = '*Please enter storg password.';
-    }
+    // if (!strongRegex.test(fields.newPassword)) {
+    //   formIsValid = false;
+    //   errors.newPasswordError = '*Please enter storg password.';
+    // }
 
     if (fields.newPassword && fields.reNewPassword) {
       if (fields.newPassword !== fields.reNewPassword) {

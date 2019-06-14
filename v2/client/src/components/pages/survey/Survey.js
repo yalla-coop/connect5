@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import swal from 'sweetalert2';
-import Header from '../../common/Header';
-
 import { Progress } from 'antd';
+import Header from '../../common/Header';
 
 import Questions from './Questions';
 
@@ -14,7 +13,7 @@ import {
   SurveyQs,
   SessionDetails,
   Form,
-  ProgressWrapper
+  ProgressWrapper,
 } from './Survey.style';
 
 // formState will be the object where we store survey responses
@@ -148,8 +147,10 @@ class Survey extends React.Component {
       disagreedToResearch,
     } = this.state;
 
+    const pin = PIN.toUpperCase();
+
     const formSubmission = {
-      PIN,
+      pin,
       sessionId,
       surveyType,
       formState,
@@ -199,11 +200,7 @@ class Survey extends React.Component {
       return <h3>Loading...</h3>;
     }
 
-    const {
-      sessionDate,
-      trainerNames,
-      questionsForSurvey,
-    } = surveyDetails;
+    const { sessionDate, trainerNames, questionsForSurvey } = surveyDetails;
     return (
       <Container>
         <SurveyQs>
@@ -238,7 +235,14 @@ class Survey extends React.Component {
             </Form>
           </main>
         </SurveyQs>
-        <ProgressWrapper><Progress type="circle" percent={completionRate} width={80} strokeColor={`${colors.green}`}/></ProgressWrapper>
+        <ProgressWrapper>
+          <Progress
+            type="circle"
+            percent={completionRate}
+            width={80}
+            strokeColor={`${colors.green}`}
+          />
+        </ProgressWrapper>
       </Container>
     );
   }
