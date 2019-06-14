@@ -34,10 +34,14 @@ export const ChartWrapper = styled.div`
 
 export const Description = styled.p`
   font-size: 16px;
-
   font-weight: 300;
   color: ${colors.black};
   margin-bottom: 20px;
+`;
+export const QuestionHeadline = styled.h3`
+  font-size: 16px;
+  font-weight: 600;
+  color: ${colors.black};
 `;
 
 export const Category = styled.p`
