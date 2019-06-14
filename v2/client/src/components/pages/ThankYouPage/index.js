@@ -11,11 +11,14 @@ const ThankYouPage = () => {
   return (
     <ThankYouWrapper>
       <ThankYouMsg>Thank you for filling the survey</ThankYouMsg>
-      <Paragraph>you can get your certificate by clicking here</Paragraph>
-      <StyledLink to="/">
+      <Paragraph>
+        you can now log in using your PIN and view your behavioural insight
+        results
+      </Paragraph>
+      <StyledLink to="/participant-login">
         <Button
           type="primary"
-          label="Claim my certificate"
+          label="View Results."
           width="200px"
           height="50px"
           style={{
