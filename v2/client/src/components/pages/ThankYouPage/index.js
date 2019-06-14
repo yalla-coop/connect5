@@ -18,7 +18,7 @@ const ThankYouPage = () => {
       <StyledLink to="/participant-login">
         <Button
           type="primary"
-          label="View Results."
+          label="View Results"
           width="200px"
           height="50px"
           style={{
