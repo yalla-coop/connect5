@@ -37,7 +37,9 @@ class Login extends Component {
 
     // If authenticated,
     if (isAuthenticated) {
-      role === "trainer " ? history.push(DASHBOARD_URL) : history.push(DECIDE_VIEW_URL);
+      role === 'trainer'
+        ? history.push(DASHBOARD_URL)
+        : history.push(DECIDE_VIEW_URL);
     }
   }
 
@@ -114,7 +116,7 @@ class Login extends Component {
     const { emailError, passwordError } = errors;
     const { onInputChange, onFormSubmit } = this;
     return (
-      <>
+      <div style={{ paddingTop: '6rem' }}>
         <LoginForm onSubmit={onFormSubmit}>
           <LoginHeading>
             <H3>Login</H3>
@@ -165,7 +167,7 @@ class Login extends Component {
             <AnotherLink to="/participant-login"> Login here!</AnotherLink>
           </p>
         </NoAccount>
-      </>
+      </div>
     );
   }
 }

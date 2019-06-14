@@ -105,10 +105,11 @@ class AddTrainer extends Component {
   };
 
   handleSuccessOk = () => {
-    if (this.props.location.state) {
-      this.props.history.push({
+    const { location, history } = this.props;
+    if (location.state) {
+      history.push({
         pathname: '/create-session',
-        state: this.props.location.state,
+        state: location.state,
       });
     }
     const {
@@ -132,7 +133,7 @@ class AddTrainer extends Component {
 
     return (
       <Wrapper>
-        <ContentWrapper>
+        <ContentWrapper className="add-trainer">
           <Modal
             visible={isEmailUnique === false}
             onOk={this.handleOk}
