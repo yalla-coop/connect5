@@ -64,6 +64,13 @@ class SurveyContent extends Component {
   render() {
     const { onInfoClick, onCopyClick } = this;
     const { type, surveyURL, subId, id } = this.props;
+
+    let url = `https://${surveyURL}`;
+
+    if (process.env.NODE_ENV === 'development') {
+      url = `http://${surveyURL}`;
+    }
+
     return (
       <SurveyContentWrapper>
         <SurveyLinkType to={`/survey/${id}/${type}/results`}>
@@ -75,12 +82,12 @@ class SurveyContent extends Component {
         </SurveyLinkInfo>
 
         <SurveyLink
-          href={surveyURL}
+          href={url}
           target="_blank"
           rel="noopener noreferrer"
           id={`link${subId}`}
         >
-          {surveyURL}
+          {url}
         </SurveyLink>
 
         <CopyLink onClick={() => onCopyClick(subId)}>
