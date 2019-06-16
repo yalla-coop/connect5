@@ -13,18 +13,29 @@ export const Wrapper = styled.div`
 export const TopSection = styled.div`
   margin-bottom: 2rem;
   width: 100%;
+  @media (min-width: 678px) {
+    width: 65%;
+    margin: 0 atuo;
+    text-algin: center;
+  }
 `;
 
 export const Title = styled.h2`
   font-size: 1.5rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
+  @media (min-width: 678px) {
+    text-align: center;
+  }
 `;
 
 export const Role = styled.p`
   font-size: 14px;
   font-weight: 300;
   text-transform: capitalize;
+  @media (min-width: 678px) {
+    text-align: center;
+  }
 `;
 
 export const StatsWrapper = styled.div`
@@ -35,6 +46,10 @@ export const StatsWrapper = styled.div`
   width: 100%;
   box-shadow: ${shadows.primary};
   margin-bottom: 1rem;
+  @media (min-width: 678px) {
+    width: 65%;
+    margin: 0 auto;
+  }
 `;
 
 export const StatItem = styled(Link)`

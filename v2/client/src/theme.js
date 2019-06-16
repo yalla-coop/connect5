@@ -62,6 +62,7 @@ export const colors = {
 export const shadows = {
   primary: '0px 1px 4px rgba(0, 0, 0, 0.05)',
   secondary: '0px 3px 6px rgba(0, 0, 0, 0.07)',
+  form: 'rgb(204, 204, 204) 0px 0px 5px',
 };
 
 // borders

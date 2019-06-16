@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { colors } from '../../../theme';
+import { colors, shadows } from '../../../theme';
 
 export const LoginWrapper = styled.div`
   margin: 0 auto;
   width: 90%;
   padding: 2.5rem 0 1.8rem 0;
   border-radius: 12px;
-  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
+  box-shadow: ${shadows.form};
   @media (min-width: 768px) {
     padding: 4rem 0;
     width: 30%;

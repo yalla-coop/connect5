@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { colors } from '../../../../theme';
+import { colors, shadows } from '../../../../theme';
 
 export const SessionSurveysWrapper = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ export const SessionSurveyContainer = styled.div`
   margin-bottom: 2rem;
   border-radius: 5px;
   background: ${colors.white};
-  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
+  box-shadow: ${shadows.form};
 `;
 
 export const SurveyContentWrapper = styled.div`

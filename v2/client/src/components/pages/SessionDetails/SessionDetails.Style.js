@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { borders, colors } from '../../../theme';
+import { borders, colors, shadows } from '../../../theme';
 
 export const SessionDetailsWrapper = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ export const SessionTopDetailsWrapper = styled.div`
   margin-top: 6rem;
   padding: 0.5rem;
   padding-left: 0;
-  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
+  box-shadow: ${shadows.form};
   background: ${colors.white};
   border-radius: 5px;
   @media (min-width: 768px) {

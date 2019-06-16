@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Form as AntForm, Input as AntInput, Select as AntSelect } from 'antd';
-import { colors } from '../../../theme';
+import { colors, shadows } from '../../../theme';
 
 const { Item: AntItem } = AntForm;
 
@@ -19,7 +19,7 @@ export const Form = styled(AntForm)`
   margin: 0 auto;
   text-align: center;
   padding: 5rem 0;
-  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
+  box-shadow: ${shadows.form};
   & > div {
     margin: 0 auto;
   }

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Form as AntForm, Input as AntInput, Select as AntSelect } from 'antd';
 
-import { colors } from '../../../theme';
+import { colors, shadows } from '../../../theme';
 
 const { Item: AntItem } = AntForm;
 
@@ -34,14 +34,10 @@ export const Form = styled(AntForm)`
   margin: 0 auto;
   text-align: center;
   padding: 7rem 0;
-  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
-  & > div {
-    margin: 0 auto;
-    padding-bottom: 0.3rem;
-  }
+  box-shadow: ${shadows.form};
 
   & > div:first-child {
-    padding-top: 2.2rem;
+    padding-top: 1.5rem;
   }
 `;
 

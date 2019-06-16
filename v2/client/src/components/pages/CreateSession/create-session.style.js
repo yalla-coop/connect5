@@ -29,7 +29,7 @@ export const Form = styled.form`
   margin: 1rem auto;
   padding: 30px 10px;
   border-radius: 10px;
-  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
+  box-shadow: ${shadows.form};
   @media (min-width: 678px) {
     width: 65%;
   }
