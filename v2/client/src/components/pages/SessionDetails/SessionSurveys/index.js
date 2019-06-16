@@ -20,7 +20,7 @@ const surveyType = {
   1: ['pre-day-1', 'post-day-1'],
   2: ['post-day-2'],
   3: ['post-day-3'],
-  'special-2-days': ['post-special'],
+  'special-2-days': ['pre-special', 'post-special'],
   'train-trainers': ['pre-train-trainers', 'post-train-trainers'],
 };
 
@@ -99,29 +99,16 @@ class SessionSurveys extends Component {
     return (
       <SessionSurveysWrapper>
         <SessionSurveyContainer>
-          {type === '1' || type === 'train-trainers' ? (
-            <>
+          {surveyType[type].map((survey, index) => {
+            return (
               <SurveyContent
                 subId="1"
-                type="Pre-survey"
-                surveyURL={links[0]}
+                type={survey}
+                surveyURL={links[index]}
                 id={_id}
               />
-              <SurveyContent
-                subId="2"
-                type={type}
-                surveyURL={links[1]}
-                id={_id}
-              />
-            </>
-          ) : (
-            <SurveyContent
-              subId="3"
-              type={type}
-              surveyURL={links[0]}
-              id={_id}
-            />
-          )}
+            );
+          })}
         </SessionSurveyContainer>
         <Buttons>
           <AttendeeBtn onClick={() => toggleModal(participantsEmails)}>

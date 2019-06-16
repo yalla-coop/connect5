@@ -18,6 +18,7 @@ import {
   Item,
   Bold,
   Paragraph,
+  H3,
 } from './AddTrainer.style';
 
 const { Option } = Select;
@@ -105,10 +106,11 @@ class AddTrainer extends Component {
   };
 
   handleSuccessOk = () => {
-    if (this.props.location.state) {
-      this.props.history.push({
+    const { location, history } = this.props;
+    if (location.state) {
+      history.push({
         pathname: '/create-session',
-        state: this.props.location.state,
+        state: location.state,
       });
     }
     const {
@@ -132,7 +134,8 @@ class AddTrainer extends Component {
 
     return (
       <Wrapper>
-        <ContentWrapper>
+        <H3>Add New Trainer</H3>
+        <ContentWrapper className="add-trainer">
           <Modal
             visible={isEmailUnique === false}
             onOk={this.handleOk}

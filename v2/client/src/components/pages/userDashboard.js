@@ -68,7 +68,7 @@ const UserDashboard = ({ PIN }) => {
       <H3>Welcome back</H3>
       <Content>
         <Span>my pin:</Span>
-        <Pin>{PIN.toUpperCase()}</Pin>
+        <Pin>{PIN}</Pin>
       </Content>
       <LinkBtn to="/participant/behavioral-insight">Insights</LinkBtn>
       <LinkBtn to="/participant/progress" style={{ color: '#fff' }} disabled>

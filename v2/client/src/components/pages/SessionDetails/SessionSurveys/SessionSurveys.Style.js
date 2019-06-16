@@ -40,6 +40,7 @@ export const SurveyLinkType = styled(Link)`
   padding: 1rem;
   color: #000;
   text-decoration: none;
+  text-transform: capitalize;
 `;
 
 export const SurveyLinkInfo = styled.span`

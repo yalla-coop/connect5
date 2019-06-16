@@ -4,11 +4,12 @@ import { colors, shadows } from '../../../theme';
 export const CreateSessionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 25px;
-  max-width: 600px;
-  margin-bottom: 80px;
+  padding: 45px 0;
   margin: 0 auto;
+  max-width: 600px;
+  padding-bottom: 80px;
 `;
+
 export const Heading = styled.h1`
   font-family: Roboto;
   font-style: normal;
@@ -17,7 +18,7 @@ export const Heading = styled.h1`
   line-height: 29px;
   text-align: center;
   color: ${colors.profileFontColor};
-  padding: 1rem 0 0.5rem 0;
+  padding: 0.5rem 0;
 `;
 
 export const Form = styled.form`
@@ -28,7 +29,7 @@ export const Form = styled.form`
   margin: 1rem auto;
   padding: 30px 10px;
   border-radius: 10px;
-  box-shadow: ${shadows.secondary};
+  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
   @media (min-width: 678px) {
     width: 65%;
   }
@@ -40,9 +41,11 @@ export const InputDiv = styled.div`
   border: 1px solid ${colors.lightGray};
   &:not(:last-child) {
     margin-bottom: 1.2rem;
-  };
+  }
+
   @media (min-width: 768px) {
     width: 90%;
+  }
 `;
 
 export const SubmitBtn = styled.div`

@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  padding-bottom: 2rem;
+  margin-bottom: 5.5rem;
 `;
 
 export const Header = styled.div`
@@ -60,7 +60,7 @@ export const Row = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 1rem 0;
   margin-left: 0.55rem;
   &:not(:last-child) {
     border-bottom: ${borders.inputBox};
@@ -94,6 +94,7 @@ export const Type = styled.div`
     text-align: center;
     border-radius: 4px;
     margin: 0;
+    text-transform: capitalize;
   }
 `;
 

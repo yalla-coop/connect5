@@ -10,15 +10,23 @@ module.exports = async (req, res, next) => {
   if (!id) {
     return next(boom.badRequest('no trainer id provided'));
   }
-  const results = await getPINsRespondedToTrainerSessions(id);
+  try {
+    const results = await getPINsRespondedToTrainerSessions(id);
 
-  const PINs = results.reduce((prev, curr) => {
-    prev.push(curr.PIN);
-    return prev;
-  }, []);
+    const PINs = results.reduce((prev, curr) => {
+      prev.push(curr.PIN);
+      return prev;
+    }, []);
 
-  return getTrainerBehavioral(PINs).then(result => {
-    const calculatedFormulae = trainerBehavioralFormulae(result);
-    res.json({ ...calculatedFormulae });
-  });
+    return getTrainerBehavioral(PINs)
+      .then(result => {
+        const calculatedFormulae = trainerBehavioralFormulae(result);
+        res.json({ ...calculatedFormulae });
+      })
+      .catch(err => {
+        return next(boom.badImplementation('error in getting the data'));
+      });
+  } catch (error) {
+    return next(boom.badImplementation());
+  }
 };

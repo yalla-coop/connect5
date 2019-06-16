@@ -29,8 +29,9 @@ import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import SessionDetails from './pages/SessionDetails';
 import EditSession from './pages/SessionDetails/SessionActions/SessionEdit';
 import SurveyResults from './pages/SurveyResults';
-import TrainerFeedBack from './pages/TrainerFeedback';
+
 import DecideView from './pages/DecideView';
+import ThankYouPage from './pages/ThankYouPage';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -48,8 +49,8 @@ import {
   GROUP_RESULTS_URL,
   TRAINER_SESSIONS_URL,
   GROUP_SESSIONS_URL,
-  TRAINER_FEEDBACK_URL,
   DECIDE_VIEW_URL,
+  SESSION_DETAILS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -81,12 +82,18 @@ class App extends Component {
       <Wrapper>
         <Router history={history}>
           <Switch>
-            <Route
+            <PrivateRoute
               exact
               path="/survey/:sessionId/:surveyType/results"
-              component={SurveyResults}
+              Component={SurveyResults}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['trainer', 'admin', 'localLead']}
+              role={role}
+              navbar
             />
             <Route exact path="/" component={Home} />
+            <Route exact path="/thank-you" component={ThankYouPage} />
             <PrivateRoute
               exact
               path={TRAINER_RESULTS_URL}
@@ -124,16 +131,6 @@ class App extends Component {
 
             <PrivateRoute
               exact
-              path={TRAINER_FEEDBACK_URL}
-              Component={TrainerFeedBack}
-              isAuthenticated={isAuthenticated}
-              loaded={loaded}
-              allowedRoles={['admin', 'localLead', 'trainer']}
-              role={role}
-            />
-
-            <PrivateRoute
-              exact
               path={DASHBOARD_URL}
               Component={Dashboard}
               isAuthenticated={isAuthenticated}
@@ -156,6 +153,17 @@ class App extends Component {
 
             <PrivateRoute
               exact
+              path={SESSION_DETAILS_URL}
+              Component={SessionDetails}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
+
+            <PrivateRoute
+              exact
               path={DECIDE_VIEW_URL}
               Component={DecideView}
               isAuthenticated={isAuthenticated}
@@ -165,14 +173,29 @@ class App extends Component {
               navbar
             />
 
-            <Route exact path="/create-session" component={CreateSession} />
-            <Route exact path={SURVEY_URL} component={Survey} />
-            <Route
+            <PrivateRoute
               exact
-              path="/session-details/:id"
-              component={SessionDetails}
+              path="/create-session"
+              Component={CreateSession}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
             />
-            <Route exact path="/session-edit/:id" component={EditSession} />
+
+            <Route exact path={SURVEY_URL} component={Survey} />
+
+            <PrivateRoute
+              exact
+              path="/session-edit/:id"
+              Component={EditSession}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
 
             <Route
               exact
@@ -263,6 +286,7 @@ class App extends Component {
               role={role}
               navbar
             />
+
             <Route
               path="/404err"
               render={() => (
@@ -279,6 +303,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
+  id: state.auth.id,
   isAuthenticated: state.auth.isAuthenticated,
   role: state.auth.role,
   loaded: state.auth.loaded,

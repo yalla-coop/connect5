@@ -17,29 +17,14 @@ export const fetchUserResults = (id, role) => async dispatch => {
   }
 };
 
-export const fetchbehavioralInsight = (role, idOrPIN) => async dispatch => {
-  try {
-    const url = `/api/behavioral-insight/${role}/${idOrPIN}`;
-    const res = await axios.get(url);
-
-    dispatch({
-      type: types.FETCH_BEHAVIORAL_INSIGHT,
-      payload: { data: res.data, role },
-    });
-  } catch (error) {
-    // must check the error status code before
-    history.push('/404err');
-  }
-};
-
 export const fetchTrainerFeedback = (
   trainerId,
   sessionId,
   surveyType
 ) => async dispatch => {
   try {
-    const url = `/api/feedback/trainer/${trainerId}`;
-    const data = { sessionId, surveyType };
+    const url = `/api/feedback/`;
+    const data = { trainerId, sessionId, surveyType };
 
     const res = await axios.post(url, data);
 
@@ -67,6 +52,18 @@ export const fetchLocalLeads = () => async dispatch => {
 
     dispatch({
       type: types.FETCH_LOCAL_LEADS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchLocalLeadTrainersGroup = id => async dispatch => {
+  try {
+    const { data } = await axios.get(`/api/local-lead/${id}/group`);
+    dispatch({
+      type: types.FETCH_LOCAL_LEAD_TRAINERS_GROUP,
       payload: data,
     });
   } catch (error) {

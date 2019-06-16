@@ -13,7 +13,7 @@ import Reach from '../../common/Reach';
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 import SessionList from '../../common/List/SessionList';
-
+import Feedback from '../../common/Feedback';
 // ACTIONS
 import { fetchUserResults as fetchUserResultsAction } from '../../../actions/users';
 
@@ -42,7 +42,10 @@ const panels = {
     text: 'Behavioural',
     render: props => <TrainerBehavioralInsight trainerId={props.trainerId} />,
   },
-  feedback: { text: 'Trainer feedback', render: () => null },
+  feedback: {
+    text: 'Trainer feedback',
+    render: props => <Feedback trainerId={props.trainerId} />,
+  },
 };
 
 class UserResults extends Component {

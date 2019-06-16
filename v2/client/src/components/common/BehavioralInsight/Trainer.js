@@ -6,7 +6,7 @@ import { Alert, Spin } from 'antd';
 
 import { connect } from 'react-redux';
 
-import { fetchbehavioralInsight as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
+import { fetchTrainerBehavioral as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
 
 import {
   Wrapper,
@@ -31,7 +31,7 @@ function drawBarValues() {
   this.data.datasets.forEach(function(dataset) {
     for (let i = 0; i < dataset.data.length; i += 1) {
       if (
-        !dataset.hidden === true ||
+        (dataset && !dataset.hidden === true) ||
         dataset._meta[Object.keys(dataset._meta)[0]].hidden !== false
       ) {
         const model =
@@ -169,8 +169,8 @@ class BehavioralTrainerResults extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.behavioralInsight.data,
-  loaded: state.behavioralInsight.loaded,
+  data: state.behavioralInsight.trainer.data,
+  loaded: state.behavioralInsight.trainer.loaded,
 });
 
 export default connect(

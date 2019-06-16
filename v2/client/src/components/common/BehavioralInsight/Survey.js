@@ -6,7 +6,7 @@ import { Alert, Spin } from 'antd';
 
 import { connect } from 'react-redux';
 
-import { fetchbehavioralInsight as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
+import { fetchSurveyBehavioral as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
 
 import {
   Wrapper,
@@ -31,7 +31,7 @@ function drawBarValues() {
   this.data.datasets.forEach(function(dataset) {
     for (let i = 0; i < dataset.data.length; i += 1) {
       if (
-        !dataset.hidden === true ||
+        (dataset && !dataset.hidden === true) ||
         dataset._meta[Object.keys(dataset._meta)[0]].hidden !== false
       ) {
         const model =
@@ -67,7 +67,7 @@ class BehavioralSurveyResults extends Component {
               </Title>
               {Object.keys(data).length ? (
                 Object.entries(data).map(pairOfArray => (
-                  <ChartWrapper>
+                  <ChartWrapper key={pairOfArray[0]}>
                     <WhiteWrapper>
                       <Description>{pairOfArray[0]}</Description>
                       <HorizontalBar
@@ -176,8 +176,8 @@ class BehavioralSurveyResults extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.behavioralInsight.data,
-  loaded: state.behavioralInsight.loaded,
+  data: state.behavioralInsight.survey.data,
+  loaded: state.behavioralInsight.survey.loaded,
 });
 
 export default connect(

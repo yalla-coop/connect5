@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Spin from '../Spin';
 
-import { fetchbehavioralInsight as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
+import { fetchParticipantBehavioral as fetchbehavioralAction } from '../../../actions/behavioralInsight';
 
 import { Wrapper, ChartWrapper, Description } from './BehavioralInsight.style';
 
@@ -97,11 +97,11 @@ class BehavioralInsight extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.behavioralInsight.data,
-  loaded: state.behavioralInsight.loaded,
+  data: state.behavioralInsight.participant.data,
+  loaded: state.behavioralInsight.participant.loaded,
 });
 
 export default connect(
   mapStateToProps,
-  { fetchbehavioralInsight: fetchbehavioralInsightAction }
+  { fetchbehavioralInsight: fetchbehavioralAction }
 )(BehavioralInsight);

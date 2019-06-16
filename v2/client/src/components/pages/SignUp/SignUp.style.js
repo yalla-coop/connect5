@@ -37,7 +37,7 @@ export const Form = styled(AntForm)`
   box-shadow: rgb(204, 204, 204) 0px 0px 6px;
   & > div {
     margin: 0 auto;
-    padding: 0.9rem 0;
+    padding-bottom: 0.3rem;
   }
 
   & > div:first-child {
@@ -61,12 +61,11 @@ export const Select = styled(AntSelect)`
 export const Item = styled(AntItem)`
   width: 90%;
   margin: 0 auto;
-  margin-bottom: 20px;
   text-align: center;
 `;
 
 export const Redirecting = styled.p`
-  padding: 1.5rem 0;
+  padding: 1rem 0;
 `;
 
 export const StyledLink = styled(Link)`

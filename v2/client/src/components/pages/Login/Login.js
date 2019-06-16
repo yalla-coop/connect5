@@ -40,7 +40,7 @@ class Login extends Component {
 
     // If authenticated,
     if (isAuthenticated) {
-      role === 'trainer '
+      role === 'trainer'
         ? history.push(DASHBOARD_URL)
         : history.push(DECIDE_VIEW_URL);
     }
