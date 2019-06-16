@@ -2,28 +2,41 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { colors } from '../../../theme';
 
+export const LoginWrapper = styled.div`
+  margin: 0 auto;
+  width: 90%;
+  padding: 2.5rem 0 1.8rem 0;
+  border-radius: 12px;
+  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
+  @media (min-width: 768px) {
+    padding: 4rem 0;
+    width: 30%;
+  }
+`;
+
 export const LoginHeading = styled.div`
   margin: 0 auto;
   width: 80%;
-  padding: 1.5rem;
+  padding-top: 6rem;
+  padding-bottom: 1rem;
   text-align: center;
 `;
 
 export const H3 = styled.h3`
   text-align: center;
+  font-weight: 400;
+  line-height: 29px;
+  text-align: center;
+  color: ${colors.profileFontColor};
 `;
 
-export const LoginForm = styled.form`
-  margin-top: 6rem;
-`;
+export const LoginForm = styled.form``;
 
 export const InputDiv = styled.div`
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   margin-bottom: 2rem;
-
   @media (min-width: 768px) {
-    width: 30%;
     background: ${colors.ligthGray};
   }
 `;
@@ -35,7 +48,7 @@ export const LoginFail = styled.div`
   font-size: 1rem;
 
   @media (min-width: 768px) {
-    width: 30%;
+    width: 80%;
     margin-left: 1rem;
   }
 `;
@@ -48,24 +61,35 @@ export const NoAccount = styled(InputDiv)`
   }
 
   @media (min-width: 768px) {
-    width: 30%;
+    width: 80%;
     text-align: center;
   }
 `;
 
 export const AnotherLink = styled(Link)`
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: ${colors.black};
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2c3192;
+`;
+
+export const Paragraph = styled.p`
+  margin-left: 1.5rem;
+  @media (min-width: 768px) {
+    margin-left: 0.2rem;
+  }
 `;
 
 export const Content = styled.p`
-  text-align: center;
   margin: 0 auto;
-
+  width: 80%;
+  padding-bottom: 2rem;
+  text-align: center;
   @media (min-width: 768px) {
-    width: 50%;
     text-align: center;
-    margin: 2rem auto;
+    margin: 0 auto;
   }
+`;
+
+export const Space = styled.div`
+  height: 4.3rem;
 `;

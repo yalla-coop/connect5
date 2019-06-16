@@ -4,13 +4,15 @@ import { Input } from 'antd';
 import Button from '../../common/Button';
 import history from '../../../history';
 import {
-  LoginHeading,
+  LoginWrapper,
   InputDiv,
   LoginForm,
   LoginFail,
   NoAccount,
   Content,
   AnotherLink,
+  Paragraph,
+  Space,
 } from './Login.style';
 import { loginParticipant } from '../../../actions/authAction';
 
@@ -77,47 +79,48 @@ class ParticipantLogin extends Component {
     const { onFormSubmit, onInputChange } = this;
     return (
       <>
-        <LoginForm onSubmit={onFormSubmit}>
-          <LoginHeading>
+        <Space />
+        <LoginWrapper>
+          <LoginForm onSubmit={onFormSubmit}>
             <Content>
               {`To access your results, please enter your unique pin. This is the
               third letter of your first name, the first two letters of your
               mother's first name and the date you were born (e.g., you would
               type 18 if you were born on the 18th of July)`}
             </Content>
-          </LoginHeading>
+            <InputDiv>
+              <Input
+                placeholder="Enter your PIN"
+                name="PIN"
+                type="text"
+                value={PIN}
+                onChange={onInputChange}
+                size="large"
+                pattern="^[a-z]{3}[0-9]{1,2}$"
+                required
+              />
+              <LoginFail>{error}</LoginFail>
+            </InputDiv>
+            <InputDiv>
+              <Button
+                onClick={onFormSubmit}
+                type="primary"
+                label="LOGIN"
+                height="40px"
+                width="100%"
+              />
+            </InputDiv>
+          </LoginForm>
           <InputDiv>
-            <Input
-              placeholder="Enter your PIN"
-              name="PIN"
-              type="text"
-              value={PIN}
-              onChange={onInputChange}
-              size="large"
-              pattern="^[a-z]{3}[0-9]{1,2}$"
-              required
-            />
-            <LoginFail>{error}</LoginFail>
+            <LoginFail>{msg}</LoginFail>
           </InputDiv>
-          <InputDiv>
-            <Button
-              onClick={onFormSubmit}
-              type="primary"
-              label="LOGIN"
-              height="40px"
-              width="100%"
-            />
-          </InputDiv>
-        </LoginForm>
-        <InputDiv>
-          <LoginFail>{msg}</LoginFail>
-        </InputDiv>
-        <NoAccount>
-          <p>
-            Not a participant?{' '}
-            <AnotherLink to="/login"> Login here!</AnotherLink>
-          </p>
-        </NoAccount>
+          <NoAccount>
+            <Paragraph>
+              Not a participant?{' '}
+              <AnotherLink to="/login"> LOGIN HERE!</AnotherLink>
+            </Paragraph>
+          </NoAccount>
+        </LoginWrapper>
       </>
     );
   }

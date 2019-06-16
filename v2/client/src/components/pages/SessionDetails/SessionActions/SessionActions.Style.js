@@ -41,7 +41,7 @@ export const EditSessionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 25px;
-  margin: 20px auto;
   max-width: 600px;
   margin-bottom: 80px;
+  margin: 0 auto;
 `;

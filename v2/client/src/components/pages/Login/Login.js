@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
+import Header from '../../common/Header';
 import {
+  LoginWrapper,
   LoginHeading,
   H3,
   InputDiv,
@@ -10,6 +12,7 @@ import {
   LoginFail,
   NoAccount,
   AnotherLink,
+  Paragraph,
 } from './Login.style';
 import { loginUser } from '../../../actions/authAction';
 import { clearErrors } from '../../../actions/errorAction';
@@ -37,7 +40,9 @@ class Login extends Component {
 
     // If authenticated,
     if (isAuthenticated) {
-      role === "trainer " ? history.push(DASHBOARD_URL) : history.push(DECIDE_VIEW_URL);
+      role === 'trainer '
+        ? history.push(DASHBOARD_URL)
+        : history.push(DECIDE_VIEW_URL);
     }
   }
 
@@ -115,56 +120,59 @@ class Login extends Component {
     const { onInputChange, onFormSubmit } = this;
     return (
       <>
-        <LoginForm onSubmit={onFormSubmit}>
-          <LoginHeading>
-            <H3>Login</H3>
-          </LoginHeading>
-          <InputDiv>
-            <Input
-              placeholder="Enter your email"
-              name="email"
-              type="text"
-              value={email}
-              onChange={onInputChange}
-              size="large"
-            />
+        <Header type="home" />
+        <LoginHeading>
+          <H3>Login</H3>
+        </LoginHeading>
+        <LoginWrapper>
+          <LoginForm onSubmit={onFormSubmit}>
+            <InputDiv>
+              <Input
+                placeholder="Enter your email"
+                name="email"
+                type="text"
+                value={email}
+                onChange={onInputChange}
+                size="large"
+              />
 
-            <LoginFail>{emailError}</LoginFail>
-          </InputDiv>
-          <InputDiv>
-            <Input.Password
-              placeholder="input password"
-              size="large"
-              name="password"
-              type="text"
-              value={password}
-              onChange={onInputChange}
-            />
-            <LoginFail>{passwordError}</LoginFail>
-          </InputDiv>
-          <InputDiv>
-            <Button
-              onClick={onFormSubmit}
-              type="primary"
-              label="LOGIN"
-              height="40px"
-              width="100%"
-            />
-          </InputDiv>
+              <LoginFail>{emailError}</LoginFail>
+            </InputDiv>
+            <InputDiv>
+              <Input.Password
+                placeholder="input password"
+                size="large"
+                name="password"
+                type="text"
+                value={password}
+                onChange={onInputChange}
+              />
+              <LoginFail>{passwordError}</LoginFail>
+            </InputDiv>
+            <InputDiv>
+              <Button
+                onClick={onFormSubmit}
+                type="primary"
+                label="LOGIN"
+                height="40px"
+                width="100%"
+              />
+            </InputDiv>
 
-          <LoginFail>{msg}</LoginFail>
-        </LoginForm>
+            <LoginFail>{msg}</LoginFail>
+          </LoginForm>
 
-        <NoAccount>
-          <p>
-            {"Don't have an account? "}
-            <AnotherLink to="/signup"> Sign Up!</AnotherLink>
-          </p>
-          <p>
-            Course participant?
-            <AnotherLink to="/participant-login"> Login here!</AnotherLink>
-          </p>
-        </NoAccount>
+          <NoAccount>
+            <Paragraph>
+              {"Don't have an account? "}
+              <AnotherLink to="/signup"> SIGN UP!</AnotherLink>
+            </Paragraph>
+            <Paragraph>
+              Course participant?
+              <AnotherLink to="/participant-login"> LOGIN HERE!</AnotherLink>
+            </Paragraph>
+          </NoAccount>
+        </LoginWrapper>
       </>
     );
   }

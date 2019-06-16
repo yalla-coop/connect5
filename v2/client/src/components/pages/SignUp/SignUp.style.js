@@ -21,21 +21,33 @@ export const Title = styled.h1`
   font-size: 25px;
   line-height: 29px;
   text-align: center;
+  margin-bottom: 1.5rem;
   color: ${colors.profileFontColor};
+  @media (min-width: 768px) {
+  }
 `;
 
 export const Form = styled(AntForm)`
-  background: ${colors.lightGray};
   border: 1px solid ${colors.transLightGray};
   box-sizing: border-box;
   border-radius: 12px;
   margin: 0 auto;
   text-align: center;
-  padding: 20px 0;
+  padding: 7rem 0;
+  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
+  & > div {
+    margin: 0 auto;
+    padding: 0.9rem 0;
+  }
+
+  & > div:first-child {
+    padding-top: 2.2rem;
+  }
 `;
 
 export const Input = styled(AntInput)`
   width: 90%;
+  margin: 0 auto;
 `;
 
 export const Password = styled(Input.Password)`
@@ -53,9 +65,12 @@ export const Item = styled(AntItem)`
   text-align: center;
 `;
 
-export const Redirecting = styled.p``;
+export const Redirecting = styled.p`
+  padding: 1.5rem 0;
+`;
 
 export const StyledLink = styled(Link)`
   font-weight: 900;
   color: ${colors.links};
+  padding: 2rem 0;
 `;

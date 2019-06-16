@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import { colors } from '../../../theme';
+import { colors, shadows } from '../../../theme';
 
 export const CreateSessionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 25px;
-  margin: 20px auto;
   max-width: 600px;
   margin-bottom: 80px;
+  margin: 0 auto;
 `;
 export const Heading = styled.h1`
   font-family: Roboto;
@@ -17,7 +17,7 @@ export const Heading = styled.h1`
   line-height: 29px;
   text-align: center;
   color: ${colors.profileFontColor};
-  margin-bottom: 1rem;
+  padding: 1rem 0 0.5rem 0;
 `;
 
 export const Form = styled.form`
@@ -26,8 +26,9 @@ export const Form = styled.form`
   flex-direction: column;
   width: 90%;
   margin: 1rem auto;
-  padding: 20px 10px;
+  padding: 30px 10px;
   border-radius: 10px;
+  box-shadow: ${shadows.secondary};
   @media (min-width: 678px) {
     width: 65%;
   }

@@ -7,13 +7,12 @@ import { colors } from '../../theme';
 const DashboardWrapper = styled.div`
   width: 90%;
   margin: 0 auto;
-  margin-top: 9rem;
 `;
 
 const H3 = styled.h3`
   text-align: center;
   margin: 0 auto;
-  padding-top: 3rem;
+  padding-top: 3.5rem;
 `;
 
 const Content = styled.p`
@@ -69,10 +68,12 @@ const UserDashboard = ({ PIN }) => {
       <H3>Welcome back</H3>
       <Content>
         <Span>my pin:</Span>
-        <Pin>{PIN}</Pin>
+        <Pin>{PIN.toUpperCase()}</Pin>
       </Content>
       <LinkBtn to="/participant/behavioral-insight">Insights</LinkBtn>
-      <LinkBtn to="/participant/progress">Progress</LinkBtn>
+      <LinkBtn to="/participant/progress" style={{ color: '#fff' }} disabled>
+        Progress
+      </LinkBtn>
     </DashboardWrapper>
   );
 };
