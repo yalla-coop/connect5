@@ -71,7 +71,7 @@ const UserDashboard = ({ PIN }) => {
         <Pin>{PIN}</Pin>
       </Content>
       <LinkBtn to="/participant/behavioral-insight">Insights</LinkBtn>
-      <LinkBtn to="/participant/progress" style={{ color: '#fff' }} disabled>
+      <LinkBtn to="/participant/progress" disabled>
         Progress
       </LinkBtn>
     </DashboardWrapper>
