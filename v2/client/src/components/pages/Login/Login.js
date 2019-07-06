@@ -13,6 +13,7 @@ import {
   NoAccount,
   AnotherLink,
   Paragraph,
+  LoginContainer,
 } from './Login.style';
 import { loginUser } from '../../../actions/authAction';
 import { clearErrors } from '../../../actions/errorAction';
@@ -120,59 +121,61 @@ class Login extends Component {
     const { onInputChange, onFormSubmit } = this;
     return (
       <>
-        <Header type="home" />
-        <LoginHeading>
-          <H3>Login</H3>
-        </LoginHeading>
-        <LoginWrapper>
-          <LoginForm onSubmit={onFormSubmit}>
-            <InputDiv>
-              <Input
-                placeholder="Enter your email"
-                name="email"
-                type="text"
-                value={email}
-                onChange={onInputChange}
-                size="large"
-              />
+        <LoginContainer>
+          <Header type="home" />
+          <LoginWrapper>
+            <LoginHeading>
+              <H3>Login to your account</H3>
+            </LoginHeading>
+            <LoginForm onSubmit={onFormSubmit}>
+              <InputDiv>
+                <Input
+                  placeholder="Enter your email"
+                  name="email"
+                  type="text"
+                  value={email}
+                  onChange={onInputChange}
+                  size="large"
+                />
 
-              <LoginFail>{emailError}</LoginFail>
-            </InputDiv>
-            <InputDiv>
-              <Input.Password
-                placeholder="input password"
-                size="large"
-                name="password"
-                type="text"
-                value={password}
-                onChange={onInputChange}
-              />
-              <LoginFail>{passwordError}</LoginFail>
-            </InputDiv>
-            <InputDiv>
-              <Button
-                onClick={onFormSubmit}
-                type="primary"
-                label="LOGIN"
-                height="40px"
-                width="100%"
-              />
-            </InputDiv>
+                <LoginFail>{emailError}</LoginFail>
+              </InputDiv>
+              <InputDiv>
+                <Input.Password
+                  placeholder="input password"
+                  size="large"
+                  name="password"
+                  type="text"
+                  value={password}
+                  onChange={onInputChange}
+                />
+                <LoginFail>{passwordError}</LoginFail>
+              </InputDiv>
+              <InputDiv>
+                <Button
+                  onClick={onFormSubmit}
+                  type="primary"
+                  label="LOGIN"
+                  height="40px"
+                  width="100%"
+                />
+              </InputDiv>
 
-            <LoginFail>{msg}</LoginFail>
-          </LoginForm>
+              <LoginFail>{msg}</LoginFail>
+            </LoginForm>
 
-          <NoAccount>
-            <Paragraph>
-              {"Don't have an account? "}
-              <AnotherLink to="/signup"> SIGN UP!</AnotherLink>
-            </Paragraph>
-            <Paragraph>
-              Course participant?
-              <AnotherLink to="/participant-login"> LOGIN HERE!</AnotherLink>
-            </Paragraph>
-          </NoAccount>
-        </LoginWrapper>
+            <NoAccount>
+              <Paragraph>
+                {"Don't have an account? "}
+                <AnotherLink to="/signup"> SIGN UP!</AnotherLink>
+              </Paragraph>
+              <Paragraph>
+                Course participant?
+                <AnotherLink to="/participant-login"> LOGIN HERE!</AnotherLink>
+              </Paragraph>
+            </NoAccount>
+          </LoginWrapper>
+        </LoginContainer>
       </>
     );
   }

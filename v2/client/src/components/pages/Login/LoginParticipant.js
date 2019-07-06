@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { Input } from 'antd';
 import Button from '../../common/Button';
 import history from '../../../history';
+import Header from '../../common/Header';
 import {
-  LoginWrapper,
+  LoginPinWrapper,
   InputDiv,
   LoginForm,
   LoginFail,
@@ -79,8 +80,9 @@ class ParticipantLogin extends Component {
     const { onFormSubmit, onInputChange } = this;
     return (
       <>
+        <Header type="home" />
         <Space />
-        <LoginWrapper>
+        <LoginPinWrapper>
           <LoginForm onSubmit={onFormSubmit}>
             <Content>
               {`To access your results, please enter your unique pin. This is the
@@ -120,7 +122,7 @@ class ParticipantLogin extends Component {
               <AnotherLink to="/login"> LOGIN HERE!</AnotherLink>
             </Paragraph>
           </NoAccount>
-        </LoginWrapper>
+        </LoginPinWrapper>
       </>
     );
   }
