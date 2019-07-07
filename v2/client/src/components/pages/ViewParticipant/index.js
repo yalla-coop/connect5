@@ -3,17 +3,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // // COMMON COMPONENTS
-// import SessionList from '../../common/List/SessionList';
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 import ParticipantBehavioralInsight from '../../common/BehavioralInsight/Participant';
 
 // ACTIONS
-// import {
-//   fetchTrainerSessions,
-//   fetchLocalLeadSessions,
-//   fetchALLSessions,
-// } from '../../../actions/groupSessionsAction';
+import { fetchParticipantFeedBack } from '../../../actions/trainerAction';
 
 // STYLING
 import { PageWrapper, ContentWrapper } from './ViewParticipant.style';
@@ -22,6 +17,11 @@ class ViewParticipant extends Component {
   state = {
     toggle: 'left',
   };
+
+  componentDidMount() {
+    const { match } = this.props;
+    this.props.fetchParticipantFeedBack(match.params.PIN);
+  }
 
   clickToggle = direction => {
     this.setState({ toggle: direction });
@@ -75,6 +75,6 @@ const mapStateToProps = state => {
 };
 
 export default connect(
-  mapStateToProps
-  // { fetchTrainerSessions, fetchLocalLeadSessions, fetchALLSessions }
+  mapStateToProps,
+  { fetchParticipantFeedBack }
 )(ViewParticipant);

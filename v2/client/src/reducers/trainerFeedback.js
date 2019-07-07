@@ -1,8 +1,17 @@
-import { FETCH_OVERALL_TRAINER_FEEDBACK } from '../constants/actionTypes';
+import {
+  FETCH_OVERALL_TRAINER_FEEDBACK,
+  PARTICIPANT_FEEDBACK_SUCCESS,
+} from '../constants/actionTypes';
 
 const initialState = {
-  data: {},
-  loaded: false,
+  participant: {
+    data: {},
+    loaded: false,
+  },
+  trainer: {
+    data: {},
+    loaded: false,
+  },
 };
 
 export default function(state = initialState, action) {
@@ -12,8 +21,21 @@ export default function(state = initialState, action) {
     case FETCH_OVERALL_TRAINER_FEEDBACK: {
       const { data } = payload;
       return {
-        data,
-        loaded: true,
+        ...state,
+        trainer: {
+          data,
+          loaded: true,
+        },
+      };
+    }
+    case PARTICIPANT_FEEDBACK_SUCCESS: {
+      const { data } = payload;
+      return {
+        ...state,
+        participant: {
+          data,
+          loaded: true,
+        },
       };
     }
     default:
