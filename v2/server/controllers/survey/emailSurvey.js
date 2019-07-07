@@ -1,6 +1,6 @@
 const boom = require('boom');
 
-const sendSurvey = require('../../helpers/emails.js/sendSurvey');
+const sendSurvey = require('../../helpers/emails/sendSurvey');
 
 module.exports = async (req, res, next) => {
   const { surveyURL, participantsList, survetType } = req.body;

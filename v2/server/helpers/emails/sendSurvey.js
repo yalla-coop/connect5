@@ -18,7 +18,7 @@ const sendSurvey = ({ surveyURL, participantsList, survetType }) => {
       <p>Click the below link to fill, please</p>
       
       <div style="text-align: center;">
-        <a href="${surveyURL}" style="display: inline-block; padding: 0.5rem 1rem; background: #8c6bfc; color: white; font-size: 20px; font-weight: 900; border-radius: 10px; box-shadow: 0px 5px 11px 1px #9e9e9e7d; text-decoration: none;">Fill the survey</a>
+        <a href="${surveyURL}" style="display: inline-block; padding: 0.5rem 1rem; background-color: #2C3192; color: white; font-size: 20px; font-weight: 900; border-radius: 10px; box-shadow: 0px 5px 11px 1px #9e9e9e7d; text-decoration: none;">Fill the survey</a>
       </div>  
       <p>or copy the link below into your browser to fill the survey</p>
 
@@ -45,7 +45,7 @@ const sendSurvey = ({ surveyURL, participantsList, survetType }) => {
 
   return mailer({
     from,
-    participantsList,
+    to: participantsList,
     subject,
     html,
     user,
@@ -54,4 +54,4 @@ const sendSurvey = ({ surveyURL, participantsList, survetType }) => {
   });
 };
 
-export default sendSurvey;
+module.exports = sendSurvey;
