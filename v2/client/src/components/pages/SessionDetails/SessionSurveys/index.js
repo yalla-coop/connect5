@@ -53,10 +53,10 @@ class SessionSurveys extends Component {
   render() {
     const { modalOpen } = this.state;
     const { sessionDetails } = this.props;
-    const { type, _id, participantsEmails } = sessionDetails;
+    const { type, _id, shortId, participantsEmails } = sessionDetails;
     const { toggleModal, onEmailChange, saveEmails } = this;
     const links = surveyType[type].map(item => {
-      return `${window.location.host}/survey/${item}&${_id}`;
+      return `${window.location.host}/survey/${item}&${shortId}`;
     });
 
     const modalContent = participantsEmails && (
