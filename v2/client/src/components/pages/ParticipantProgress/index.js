@@ -10,7 +10,7 @@ import SessionList from './SessionsList';
 import { fetchParticipentSessions } from '../../../actions/groupSessionsAction';
 
 // STYLING
-import { ViewSessionsWrapper, Span } from '../ViewSessions/ViewSessions.Style';
+import { Wrapper, Span } from './ParticipantProgress.style';
 
 class ParticipantProgress extends Component {
   componentDidMount() {
@@ -24,11 +24,11 @@ class ParticipantProgress extends Component {
       return <div>loading</div>;
     }
     return (
-      <ViewSessionsWrapper>
+      <Wrapper>
         <Header label="My progress" type="section" />
         <Span>Completed Sessions</Span>
         <SessionList dataList={sessions} />
-      </ViewSessionsWrapper>
+      </Wrapper>
     );
   }
 }
