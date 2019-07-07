@@ -16,10 +16,12 @@ const getSessionDetails = require('../controllers/sessionDetails/getSessionDetai
 const deleteSession = require('../controllers/sessionDetails/deleteSession');
 const editSession = require('../controllers/sessionDetails/editSession');
 const updateEmails = require('../controllers/sessionDetails/updateEmails.js');
+const getParticipantSessions = require('../controllers/users/getParticipantSessions');
 
 const router = express.Router();
 
 router.post('/participant-login', ParticipantLoginController);
+router.get('/participant/:id/progress', getParticipantSessions);
 router.post('/login', loginController);
 router.get('/logout', logoutController);
 router.post('/add-session', addSessionController);

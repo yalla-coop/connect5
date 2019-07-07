@@ -29,6 +29,7 @@ import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import SessionDetails from './pages/SessionDetails';
 import EditSession from './pages/SessionDetails/SessionActions/SessionEdit';
 import SurveyResults from './pages/SurveyResults';
+import ParticipantProgress from './pages/ParticipantProgress';
 
 import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
@@ -258,6 +259,17 @@ class App extends Component {
               exact
               path="/participant/behavioral-insight"
               Component={ParticipantBehavioral}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['participant']}
+              role={role}
+              navbar
+            />
+
+            <PrivateRoute
+              exact
+              path="/participant/progress"
+              Component={ParticipantProgress}
               loaded={loaded}
               isAuthenticated={isAuthenticated}
               allowedRoles={['participant']}
