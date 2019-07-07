@@ -24,9 +24,10 @@ describe('test survey queries', () => {
   test('get survey questions for survey type', async done => {
     const surveyType = 'pre-day-1';
     const singleSession = await Session.findOne({ type: '1' });
-    const sessionId = singleSession._id;
+    // const sessionId = singleSession._id;
+    const { shortId } = singleSession;
 
-    const survey = await surveyQs(surveyType, sessionId);
+    const survey = await surveyQs(surveyType, shortId);
     expect(survey).toBeDefined();
     expect(survey.questionsForSurvey[1]).toBeDefined();
     expect(survey.sessionDate).toBeDefined();

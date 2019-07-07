@@ -21,10 +21,10 @@ describe('test get survey questions route', () => {
   test('test for get survey questions route', async done => {
     const surveyType = 'pre-day-1';
     const singleSession = await Session.findOne({ type: '1' });
-    const sessionId = singleSession._id;
-
+    // const sessionId = singleSession._id;
+    const { shortId } = singleSession;
     request(app)
-      .get(`/api/survey/${surveyType}&${sessionId}`)
+      .get(`/api/survey/${surveyType}&${shortId}`)
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, res) => {
