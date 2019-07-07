@@ -17,7 +17,7 @@ class BehavioralInsight extends Component {
   }
 
   render() {
-    const { data, loaded } = this.props;
+    const { data, loaded, backgroundColor } = this.props;
     const texts = Object.keys(data);
 
     const chartsData = [];
@@ -43,7 +43,7 @@ class BehavioralInsight extends Component {
     });
 
     return (
-      <Wrapper>
+      <Wrapper backgroundColor={backgroundColor}>
         {loaded ? (
           chartsData.map((dataA, index) => (
             <div key={texts[index]}>
