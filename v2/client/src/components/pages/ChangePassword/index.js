@@ -19,6 +19,22 @@ class ChangePassword extends Component {
     msg: null,
   };
 
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+    if (error !== prevProps.error) {
+      // Check for new error
+      this.checkError(error);
+    }
+  }
+
+  checkError = error => {
+    if (error.id === 'CHANGE_PASSWORD_FAIL') {
+      this.setState({ msg: error.msg.error });
+    } else {
+      this.setState({ msg: null });
+    }
+  };
+
   // Check inputs validation then if not valide show error msg
 
   validateForm = () => {
@@ -72,7 +88,6 @@ class ChangePassword extends Component {
     this.setState({
       fields,
     });
-    console.log(this.state);
   };
 
   onFormSubmit = e => {
@@ -99,7 +114,7 @@ class ChangePassword extends Component {
 
   render() {
     const { onInputChange, onFormSubmit } = this;
-    const { fields, errors } = this.state;
+    const { fields, errors, msg } = this.state;
     const { oldPassword, newPassword, reNewPassword } = fields;
     const { oldPasswordError, newPasswordError, reNewPasswordError } = errors;
     return (
@@ -153,6 +168,7 @@ class ChangePassword extends Component {
             width="100%"
           />
         </InputDiv>
+        <Error>{msg}</Error>
       </ChangePasswordForm>
     );
   }

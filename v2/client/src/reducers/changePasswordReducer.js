@@ -1,6 +1,6 @@
 import {
   CHANGE_PASSWORD_SUCCESS,
-  // CHANGE_PASSWORD_FAIL,
+  CHANGE_PASSWORD_FAIL,
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -12,13 +12,13 @@ export default function(state = initialState, action) {
   switch (type) {
     case CHANGE_PASSWORD_SUCCESS:
       return {
-        msg: 'success',
+        msg: 'password reset successfully',
         payload,
       };
-    // case CHANGE_PASSWORD_FAIL:
-    //   return {
-    //     msg: 'fail',
-    //   };
+    case CHANGE_PASSWORD_FAIL:
+      return {
+        msg: 'password reset failed',
+      };
     default:
       return state;
   }
