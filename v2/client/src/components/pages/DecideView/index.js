@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { updateViewLevel } from '../../../actions/viewLevelAction';
+import { logout } from '../../../actions/authAction';
 
 // COMMON COMPONENTS
 import Header from '../../common/Header';
 import Button from '../../common/Button';
-
-// HELPERS
-import logout from '../../../helpers/logout';
 
 // STYLING
 import {
@@ -38,7 +36,7 @@ class DecideView extends Component {
   };
 
   render() {
-    const { userName, role } = this.props;
+    const { userName, role, logout: logoutAction } = this.props;
     // const { id } = auth;
 
     const capitalizesName =
@@ -86,7 +84,7 @@ class DecideView extends Component {
             />
           </ButtonWrapper>
         </ContentWrapper>
-        <LogOut onClick={() => logout()}>Log out</LogOut>
+        <LogOut onClick={logoutAction}>Log out</LogOut>
       </Wrapper>
     );
   }
@@ -102,5 +100,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { updateViewLevel }
+  { updateViewLevel, logout }
 )(DecideView);

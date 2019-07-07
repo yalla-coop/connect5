@@ -1,4 +1,6 @@
 import axios from 'axios';
+
+import history from '../history';
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -8,6 +10,7 @@ import {
   USER_UNAUTHENTICATED,
   ADD_TRAINER_TO_GROUP_SUCCESS,
   CHECK_UNIQUE_EMAIL_ERROR,
+  LOGOUT,
 } from '../constants/actionTypes';
 import { returnErrors } from './errorAction';
 
@@ -128,4 +131,18 @@ export const loginParticipant = PIN => dispatch => {
         type: LOGIN_FAIL,
       });
     });
+};
+
+export const logout = () => async dispatch => {
+  try {
+    await axios.get('/api/logout');
+    history.push('/');
+    dispatch({
+      type: LOGOUT,
+    });
+  } catch (error) {
+    console.log('err', error);
+  }
+  // .then(() => (window.location = '/'))
+  // .catch(err => console.error(err));
 };
