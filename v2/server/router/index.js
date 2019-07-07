@@ -16,6 +16,7 @@ const getSessionDetails = require('../controllers/sessionDetails/getSessionDetai
 const deleteSession = require('../controllers/sessionDetails/deleteSession');
 const editSession = require('../controllers/sessionDetails/editSession');
 const updateEmails = require('../controllers/sessionDetails/updateEmails.js');
+const feedbackFromParticipant = require('./../controllers/feedback/feedbackFromParticipant');
 
 const router = express.Router();
 
@@ -40,6 +41,8 @@ router.get(
 router.get('/behavioral-insight/trainer/:id', getTrainerBehavioralInsight);
 
 router.post('/feedback/', getFeedback);
+
+router.get('/feedback/participant/:PIN', feedbackFromParticipant);
 
 router.use(usersRouter);
 
