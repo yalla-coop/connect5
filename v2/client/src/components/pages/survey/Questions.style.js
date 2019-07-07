@@ -109,10 +109,11 @@ const RadioField = styled(CommonStyles)`
 
 const TextField = styled(CommonStyles)`
   padding-top: 1rem;
-  input {
+  input,
+  .ant-calendar-picker {
     border-radius: 1rem;
     border: 1px solid ${colors.gray};
-    width: 100%;
+    width: 100% !important;
     padding: 0.5rem 1rem;
   }
   h4 {
