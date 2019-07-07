@@ -28,6 +28,7 @@ describe('test get survey questions route', () => {
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, res) => {
+        console.log(res.body.questionsForSurvey, '--------------');
         expect(res.body).toBeDefined();
         expect(res.body.questionsForSurvey).toBeDefined();
         done(err);
