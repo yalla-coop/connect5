@@ -2,6 +2,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Alert } from 'antd';
 
 // // COMMON COMPONENTS
 import Header from '../../common/Header';
@@ -77,23 +78,33 @@ class ViewParticipant extends Component {
                   ))}
                 </Session>
               ))}
-              <div style={{ backgroundColor: '#fff', marginTop: '1rem' }}>
-                {feedback.map(question => (
-                  <IndividualQuestion key={question._id.code}>
-                    <SessionSpan>Q.</SessionSpan>
-                    {question._id.text}
-                    <AnswersWrapper style={{ paddingLeft: '11px' }}>
-                      {question.answers.map((answer, index) => (
-                        // eslint-disable-next-line react/no-array-index-key
-                        <Answer key={answer.id + index}>
-                          <SessionSpan>{answer.surveyType}: </SessionSpan>
-                          {answer.answer}
-                        </Answer>
-                      ))}
-                    </AnswersWrapper>
-                  </IndividualQuestion>
-                ))}
-              </div>
+              {feedback.length ? (
+                <div style={{ backgroundColor: '#fff', marginTop: '1rem' }}>
+                  {feedback.map(question => (
+                    <IndividualQuestion key={question._id.code}>
+                      <SessionSpan>Q.</SessionSpan>
+                      {question._id.text}
+                      <AnswersWrapper style={{ paddingLeft: '11px' }}>
+                        {question.answers.map((answer, index) => (
+                          // eslint-disable-next-line react/no-array-index-key
+                          <Answer key={answer.id + index}>
+                            <SessionSpan>{answer.surveyType}: </SessionSpan>
+                            {answer.answer}
+                          </Answer>
+                        ))}
+                      </AnswersWrapper>
+                    </IndividualQuestion>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ marginTop: '1rem' }}>
+                  <Alert
+                    message="No behavioural insight data collected yet!"
+                    type="warning"
+                    showIcon
+                  />
+                </div>
+              )}
             </ContentWrapper>
           )}
         </>
