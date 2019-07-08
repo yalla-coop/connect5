@@ -92,8 +92,6 @@ export const checkAuth = () => async dispatch => {
     const res = await axios.get(`/api/users/auth`);
     const { data } = res;
 
-    // if(viewLevel) data.role = viewLevel
-
     dispatch({
       type: USER_AUTHENTICATED,
       payload: data,
@@ -143,6 +141,4 @@ export const logout = () => async dispatch => {
   } catch (error) {
     console.log('err', error);
   }
-  // .then(() => (window.location = '/'))
-  // .catch(err => console.error(err));
 };
