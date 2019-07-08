@@ -15,21 +15,15 @@ export const changePasswordActionCreator = data => async dispatch => {
         type: CHANGE_PASSWORD_SUCCESS,
         payload: res.data,
       })
-        .then(() =>
-          Modal.success({
-            title: 'Done!',
-            content: 'Password Changed',
-            onOk: history.push('/dashboard'),
-          })
-        )
-        .catch(err =>
-          Modal.error({
-            title: 'Error',
-            content: err,
-            onOk: history.push('/change-password'),
-          })
-        )
     )
+    .then(() =>
+      Modal.success({
+        title: 'Done!',
+        content: 'Password Changed',
+        onOk: history.push('/dashboard'),
+      })
+    )
+
     .catch(err => {
       dispatch(
         returnErrors(

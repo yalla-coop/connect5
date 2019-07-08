@@ -3,11 +3,14 @@ const { compare, hash } = require('bcryptjs');
 const {
   getUserById,
   updateUserPasswordById,
-} = require('./../../database/queries/users');
+} = require('./../../database/queries/user');
+
+console.log(updateUserPasswordById, 'sssssssssssssss');
 
 module.exports = (req, res, next) => {
   const { oldPassword, newPassword } = req.body;
   const { id } = req.user;
+  const updateData = {};
 
   getUserById(id)
     .then(user => {
@@ -22,9 +25,12 @@ module.exports = (req, res, next) => {
           return next(boom.unauthorized('Incorrect password'));
         }
         const hashedPassword = hash(newPassword, 8);
-        updateUserPasswordById(user.id, hashedPassword);
+        updateData.password = hashedPassword;
       }
+      updateUserPasswordById(user.id, updateData.password);
       return res.json(user);
     })
-    .catch(err => next(boom.badImplementation()));
+    .catch(err => {
+      next(boom.badImplementation());
+    });
 };
