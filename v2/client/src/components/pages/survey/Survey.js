@@ -147,14 +147,8 @@ class Survey extends React.Component {
       disagreedToResearch,
     } = this.state;
 
-    const pin = PIN.toUpperCase();
-
     const formSubmission = {
-<<<<<<< HEAD
-      pin,
-=======
       PIN: PIN.toUpperCase(),
->>>>>>> d08a264b74610fd1b62644d565e6f0d37536ffee
       sessionId,
       surveyType,
       formState,
