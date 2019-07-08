@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const shortid = require('shortid');
 
 const { sessionTypes } = require('./../DBConstants');
 
@@ -16,7 +15,6 @@ const sessionSchema = new Schema({
   },
   shortId: {
     type: String,
-    // default: shortid.generate(),
   },
   numberOfAttendees: Number,
   region: {
