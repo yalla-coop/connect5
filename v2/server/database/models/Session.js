@@ -13,7 +13,9 @@ const sessionSchema = new Schema({
     type: String,
     enum: sessionTypes,
   },
-
+  shortId: {
+    type: String,
+  },
   numberOfAttendees: Number,
   region: {
     type: String,
