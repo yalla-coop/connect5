@@ -124,10 +124,14 @@ class SignUp extends Component {
     return (
       <>
         <Header type="home" />
-        <Wrapper>
+        <Wrapper className="sign-up">
           <ContentWrapper>
             <Title>Create a new Connect 5 Trainer Account</Title>
-            <Form onSubmit={this.handleSubmit} className="login-form">
+            <Form
+              onSubmit={this.handleSubmit}
+              className="login-form"
+              style={{ padding: '20px 0' }}
+            >
               <Item hasFeedback>
                 {getFieldDecorator('name', {
                   rules: [
@@ -221,7 +225,7 @@ class SignUp extends Component {
                 )}
               </Item>
 
-              <Item>
+              <Item style={{ margin: '0 auto 20' }}>
                 {getFieldDecorator('localLead', {
                   rules: [
                     {
@@ -241,7 +245,7 @@ class SignUp extends Component {
                 )}
               </Item>
 
-              <Item>
+              <Item style={{ margin: '0 auto 20' }}>
                 {getFieldDecorator('region', {
                   rules: [
                     {
@@ -260,7 +264,7 @@ class SignUp extends Component {
                 )}
               </Item>
 
-              <Item>
+              <Item style={{ margin: '0 auto 20' }}>
                 <Button
                   type="primary"
                   htmlType="submit"

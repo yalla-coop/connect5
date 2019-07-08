@@ -77,6 +77,11 @@ ant-collapse-header
   overflow: auto
 }
 
-.ant-select-selection .ant-select-selection__rendered{
+.add-trainer .ant-select-selection .ant-select-selection__rendered{
   line-height: 48px
+}
+
+.sign-up .ant-form-item {
+  margin: 0 auto;
+  margin-bottom: 24px;
 }

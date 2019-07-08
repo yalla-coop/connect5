@@ -45,25 +45,37 @@ class CreateSession extends Component {
   state = initialState;
 
   componentDidMount() {
+    const { id, role } = this.props;
     if (this.props.location.state) {
       this.setState({
         ...this.props.location.state,
         startDate: moment(this.props.location.state.startDate),
       });
     }
+
+    if (role === 'localLead') {
+      this.props.fetchLocalLeadTrainersGroup(id);
+    } else {
+      this.props.fetchAllTrainers();
+      this.props.fetchLocalLeads();
+    }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.currentUser !== prevProps.currentUser) {
-      const { id, role } = this.props.currentUser;
-      if (role && role === 'localLead') {
-        this.props.fetchLocalLeadTrainersGroup(id);
-      } else {
-        this.props.fetchAllTrainers();
-        this.props.fetchLocalLeads();
-      }
+    if (this.props.id !== prevProps.id) {
+      this.fetchLocalLeadsAndTrainers();
     }
   }
+
+  fetchLocalLeadsAndTrainers = () => {
+    const { id, role } = this.props.currentUser;
+    if (role && role === 'localLead') {
+      this.props.fetchLocalLeadTrainersGroup(id);
+    } else {
+      this.props.fetchAllTrainers();
+      this.props.fetchLocalLeads();
+    }
+  };
 
   onDateChange = defaultValue => {
     this.setState({
@@ -413,6 +425,7 @@ const mapStateToProps = state => {
 
   const leadsAndTrainers = [...localLeads, ...trainers];
   return {
+    id: state.auth.id,
     role: state.auth.role,
     currentUser: state.auth,
     localLeadTrainersGroup: state.fetchedData.localLeadGroup,

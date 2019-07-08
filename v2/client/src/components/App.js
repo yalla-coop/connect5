@@ -32,6 +32,7 @@ import SurveyResults from './pages/SurveyResults';
 import ChangePassword from './pages/ChangePassword';
 
 import DecideView from './pages/DecideView';
+import ThankYouPage from './pages/ThankYouPage';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -82,12 +83,18 @@ class App extends Component {
       <Wrapper>
         <Router history={history}>
           <Switch>
-            <Route
+            <PrivateRoute
               exact
               path="/survey/:sessionId/:surveyType/results"
-              component={SurveyResults}
+              Component={SurveyResults}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['trainer', 'admin', 'localLead']}
+              role={role}
+              navbar
             />
             <Route exact path="/" component={Home} />
+            <Route exact path="/thank-you" component={ThankYouPage} />
             <PrivateRoute
               exact
               path={TRAINER_RESULTS_URL}
@@ -178,10 +185,29 @@ class App extends Component {
               navbar
             />
 
-            <Route exact path="/create-session" component={CreateSession} />
+            <PrivateRoute
+              exact
+              path="/create-session"
+              Component={CreateSession}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
+
             <Route exact path={SURVEY_URL} component={Survey} />
 
-            <Route exact path="/session-edit/:id" component={EditSession} />
+            <PrivateRoute
+              exact
+              path="/session-edit/:id"
+              Component={EditSession}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
 
             <Route
               exact
@@ -272,6 +298,7 @@ class App extends Component {
               role={role}
               navbar
             />
+
             <Route
               path="/404err"
               render={() => (
@@ -288,6 +315,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
+  id: state.auth.id,
   isAuthenticated: state.auth.isAuthenticated,
   role: state.auth.role,
   loaded: state.auth.loaded,

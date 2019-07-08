@@ -9,6 +9,7 @@ import {
   Category,
   Options,
   HeadlineDiv,
+  QuestionHeadline,
 } from './Feedback.style';
 import { sum } from '../../../helpers/createSum';
 
@@ -74,7 +75,7 @@ class HorizontalBarComponent extends Component {
               {group.questionText.includes('…') && (
                 <Description>Did your trainer ask questions ...</Description>
               )}
-              <Description>{group.questionText}</Description>
+              <QuestionHeadline>{group.questionText}</QuestionHeadline>
               <Category>
                 Answer options: Im not sure, not at all, a little, a lot
               </Category>
@@ -90,9 +91,7 @@ class HorizontalBarComponent extends Component {
                       height={3}
                       options={{
                         responsive: 1,
-
                         hover: { animationDuration: 0 },
-
                         showAllTooltips: true,
                         title: {
                           display: true,
@@ -131,6 +130,7 @@ class HorizontalBarComponent extends Component {
                               },
                               ticks: {
                                 beginAtZero: true,
+                                precision: 0,
                               },
                             },
                           ],
@@ -143,7 +143,6 @@ class HorizontalBarComponent extends Component {
                               },
                               ticks: {
                                 beginAtZero: true,
-                                display: false,
                               },
                             },
                           ],

@@ -51,7 +51,7 @@ module.exports = PIN => {
     {
       $group: {
         _id: { code: '$code', surveyType: '$surveyType' },
-        avg: { $avg: { $toInt: '$answer' } },
+        avg: { $first: '$answer' },
       },
     },
     {

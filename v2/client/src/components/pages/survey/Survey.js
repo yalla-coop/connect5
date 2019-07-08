@@ -150,7 +150,11 @@ class Survey extends React.Component {
     const pin = PIN.toUpperCase();
 
     const formSubmission = {
+<<<<<<< HEAD
       pin,
+=======
+      PIN: PIN.toUpperCase(),
+>>>>>>> d08a264b74610fd1b62644d565e6f0d37536ffee
       sessionId,
       surveyType,
       formState,
@@ -163,7 +167,7 @@ class Survey extends React.Component {
         .then(() =>
           swal
             .fire('Done!', 'Thanks for submitting your feedback!', 'success')
-            .then(() => history.push('/'))
+            .then(() => history.push('/thank-you'))
         )
         .catch(err => {
           this.setState({

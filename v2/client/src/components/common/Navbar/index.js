@@ -129,7 +129,7 @@ const Navbar = ({ viewLevel, role }) => {
         </>
       )}
       {/* USER */}
-      {viewLevel === USER_TYPES.user && (
+      {viewLevel === USER_TYPES.participant && (
         <>
           <MenuItem to={USER_DASHBOARD}>
             <MenuIcon className="fas fa-home" />
