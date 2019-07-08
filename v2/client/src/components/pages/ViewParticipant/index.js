@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -11,7 +12,15 @@ import ParticipantBehavioralInsight from '../../common/BehavioralInsight/Partici
 import { fetchParticipantFeedBack } from '../../../actions/trainerAction';
 
 // STYLING
-import { PageWrapper, ContentWrapper } from './ViewParticipant.style';
+import {
+  PageWrapper,
+  ContentWrapper,
+  IndividualQuestion,
+  SessionSpan,
+  Answer,
+  Session,
+  AnswersWrapper,
+} from './ViewParticipant.style';
 
 class ViewParticipant extends Component {
   state = {
@@ -29,8 +38,8 @@ class ViewParticipant extends Component {
 
   render() {
     const { toggle } = this.state;
-
-    const { match } = this.props;
+    const { match, data } = this.props;
+    const { feedback, sessions } = data;
     return (
       <PageWrapper>
         <Header label={`Viewing ${match.params.PIN}`} type="view" />
@@ -42,9 +51,9 @@ class ViewParticipant extends Component {
           style={{ margin: '20px auto' }}
           onClick={this.clickToggle}
         />
-        <ContentWrapper>
+        <>
           {toggle === 'left' ? (
-            <>
+            <ContentWrapper>
               <p>
                 Behaviour is influenced by our perceptions of our capability,
                 opportunity and motivation for that behaviour
@@ -54,11 +63,39 @@ class ViewParticipant extends Component {
                 userRole="participant"
                 idOrPIN={match.params.PIN}
               />
-            </>
+            </ContentWrapper>
           ) : (
-            <></>
+            <ContentWrapper>
+              {sessions.map(session => (
+                <Session>
+                  {session.surveyType}:{' '}
+                  {session.trainers.map((trainer, index) => (
+                    <sapn className="trainer">
+                      {index > 0 && ' & '}
+                      {trainer.name}
+                    </sapn>
+                  ))}
+                </Session>
+              ))}
+              <div style={{ backgroundColor: '#fff', marginTop: '1rem' }}>
+                {feedback.map(question => (
+                  <IndividualQuestion key={question._id.code}>
+                    <SessionSpan>Q.</SessionSpan>
+                    {question._id.text}
+                    <AnswersWrapper style={{ paddingLeft: '11px' }}>
+                      {question.answers.map(answer => (
+                        <Answer>
+                          <SessionSpan>{answer.surveyType}: </SessionSpan>
+                          {answer.answer}
+                        </Answer>
+                      ))}
+                    </AnswersWrapper>
+                  </IndividualQuestion>
+                ))}
+              </div>
+            </ContentWrapper>
           )}
-        </ContentWrapper>
+        </>
       </PageWrapper>
     );
   }
@@ -66,11 +103,7 @@ class ViewParticipant extends Component {
 
 const mapStateToProps = state => {
   return {
-    id: state.auth.id,
-    role: state.auth.role,
-    sessions: state.sessions.sessions,
-    sessionsNum: state.sessions.sessionsCount,
-    viewLevel: state.viewLevel.viewLevel,
+    data: state.trainerFeedback.participant.data,
   };
 };
 

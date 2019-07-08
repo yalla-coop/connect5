@@ -1,12 +1,17 @@
 const boom = require('boom');
 const fromParticipant = require('../../database/queries/feedback/fromParticipant');
+const getParticipantSessions = require('./../../database/queries/users/participantSessionQuery');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   const { PIN } = req.params;
+  try {
+    const [feedback, sessions] = await Promise.all([
+      fromParticipant(PIN),
+      getParticipantSessions(PIN),
+    ]);
 
-  fromParticipant(PIN)
-    .then(result => {
-      res.json(result);
-    })
-    .catch(err => next(boom.badImplementation()));
+    res.json({ feedback, sessions });
+  } catch (error) {
+    next(boom.badImplementation());
+  }
 };

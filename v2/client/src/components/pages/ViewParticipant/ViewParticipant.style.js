@@ -14,89 +14,47 @@ export const ContentWrapper = styled.div`
   padding-top: 50px;
 `;
 
-// export const ButtonWrapper = styled.div`
-//   text-align: center;
-//   margin-top: 3rem;
-// `;
+export const IndividualQuestion = styled.div`
+  font-family: Roboto;
+  padding: 20px 11px 10px;
+  text-align: left;
+  font-weight: 700;
+  margin-bottom: 0;
+  line-height: 26px;
+  border-bottom: 1px solid #66666666;
+  font-size: 18px;
+`;
 
-// export const StatsDiv = styled.div`
-//   background: #fff;
-//   border-radius: 5px;
-//   background: #fff;
-//   border-radius: 5px;
-//   box-shadow: 0px 0px 12px 1px #00000011;
-//   padding: 10px 10px;
-//   margin-bottom: 20px;
-// `;
+export const SessionSpan = styled.span`
+  font-family: Roboto;
+  font-weight: bold;
+  font-size: 16px;
 
-// export const Paragraph = styled.p`
-//   font-family: Roboto;
-//   font-size: 15px;
-//   color: #000000;
-//   margin: 10px auto;
-//   margin-bottom: ${({ first }) => (first ? '20px' : '10px')};
-//   text-align: ${({ align }) => align || 'left'};
-// `;
+  color: #000000;
+`;
 
-// export const Bold = styled.span`
-//   font-weight: 900;
-// `;
+export const Answer = styled.p`
+  font-family: Roboto;
+  padding: 5px 0;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0;
+`;
 
-// export const Answer = styled.p`
-//   font-family: Roboto;
-//   padding: 10px 0;
-//   font-size: 18px;
-//   font-weight: 400;
-// `;
+export const Session = styled.p`
+  font-family: Roboto;
+  font-weight: 300;
+  font-size: 16px;
+  color: #4f4f4f;
+  margin: 0;
+  line-height: 27px;
+  margin-left: 11px;
 
-// export const IndividualWrapper = styled.div`
-//   margin-top: 25px;
-//   background-color: #eff3f4;
-// `;
+  .trainer {
+    font-weight: 900;
+  }
+`;
 
-// export const NavigationWrapper = styled.div`
-//   display: flex;
-//   justify-content: space-around;
-//   align-items: center;
-//   width: 36%;
-//   margin: 20px auto 0;
-//   text-align: center;
-// `;
-
-// export const IndividualQuestion = styled.div`
-//   font-family: Roboto;
-//   padding: 20px 11px 10px;
-//   text-align: justify;
-//   font-weight: 700;
-//   margin-bottom: 0;
-//   line-height: 26px;
-//   border-bottom: 1px solid #66666666;
-//   font-size: 18px;
-// `;
-
-// export const QuestionSpan = styled.span`
-//   font-weight: 900;
-//   font-size: 21px;
-//   margin-right: 8px;
-//   margin-bottom: 15px;
-// `;
-
-// export const Error = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100%;
-//   margin-top: 50px;
-//   font-size: 28px;
-// `;
-
-// export const Arrow = styled.div`
-//   display: inline-block;
-//   width: 20px;
-//   height: 20px;
-//   border-top: 15px solid transparent;
-//   border-bottom: 15px solid transparent;
-//   border-radius: 5px;
-//   cursor: pointer;
-//   border-${props => props.direction}: 20px solid #C4C4C4;
-// `;
+export const AnswersWrapper = styled.div`
+  padding-left: 11px;
+`;

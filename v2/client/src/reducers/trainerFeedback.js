@@ -29,11 +29,10 @@ export default function(state = initialState, action) {
       };
     }
     case PARTICIPANT_FEEDBACK_SUCCESS: {
-      const { data } = payload;
       return {
         ...state,
         participant: {
-          data,
+          data: payload,
           loaded: true,
         },
       };
