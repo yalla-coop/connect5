@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Select, Button, Modal as AntdModal } from 'antd';
+import { Select, Button, Modal as AntdModal, message } from 'antd';
 import SurveyContent from './SurveyContent';
 import Modal from '../../../common/modal';
 import {
@@ -32,6 +32,13 @@ class SessionSurveys extends Component {
     modalOpen: false,
     participantsEmails: null,
   };
+
+  componentDidUpdate(prevProps) {
+    const { emailSuccess } = this.props;
+    if (emailSuccess && emailSuccess !== prevProps.emailSuccess) {
+      message.success('Done, Emails sent successfully!');
+    }
+  }
 
   toggleModal = participantsEmails => {
     const { modalOpen } = this.state;
@@ -153,7 +160,11 @@ class SessionSurveys extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  emailSuccess: state.groups.emailSuccess,
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { updateEmails, sendEmails }
 )(SessionSurveys);
