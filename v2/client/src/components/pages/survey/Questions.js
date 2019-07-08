@@ -2,7 +2,7 @@
 // and populate the Survey component
 
 import React from 'react';
-import { Alert } from 'antd';
+import { Alert, DatePicker } from 'antd';
 import {
   RadioField,
   TextField,
@@ -63,7 +63,8 @@ const renderQuestionInputType = (
   options,
   handleOther,
   subGroup,
-  errors
+  errors,
+  handleAntdDatePicker
 ) => {
   if (inputType === 'text') {
     return (
@@ -91,7 +92,11 @@ const renderQuestionInputType = (
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
-        <input id={index} name={questionId} type="date" onChange={onChange} />
+        <DatePicker
+          id={index}
+          name={questionId}
+          onChange={value => handleAntdDatePicker(questionId, value)}
+        />
       </TextField>
     );
   }
@@ -143,8 +148,7 @@ const renderQuestionInputType = (
           />
         </NumberSliderDiv>
         <NumberOutput>
-          Current Rating:{' '}
-          {answers[questionId] ? answers[questionId] : '5'}
+          Current Rating: {answers[questionId] ? answers[questionId] : '5'}
         </NumberOutput>
       </TextField>
     );
@@ -221,7 +225,8 @@ const questionsRender = (
   errorArray,
   onChange,
   handleOther,
-  errors
+  errors,
+  handleAntdDatePicker
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group === 'demographic'
@@ -270,7 +275,8 @@ const questionsRender = (
                   options,
                   handleOther,
                   renderSubGroupText(el),
-                  errors
+                  errors,
+                  handleAntdDatePicker
                 )}
               </div>
             );
@@ -289,6 +295,7 @@ export default class Questions extends React.Component {
       answers,
       errors,
       trackAnswers,
+      handleAntdDatePicker,
     } = this.props;
 
     const errorArray = Object.keys(errors);
@@ -329,7 +336,8 @@ export default class Questions extends React.Component {
           errorArray,
           onChange,
           handleOther,
-          errors
+          errors,
+          handleAntdDatePicker
         )}
       </React.Fragment>
     );
