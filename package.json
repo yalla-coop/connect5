@@ -51,6 +51,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "serve-favicon": "^2.5.0",
+    "shortid": "^2.2.14",
     "supertest": "^4.0.2"
   },
   "devDependencies": {

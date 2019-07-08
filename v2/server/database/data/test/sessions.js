@@ -1,3 +1,4 @@
+const shortid = require('shortid');
 const User = require('./../../models/User');
 const Session = require('./../../models/Session');
 
@@ -10,6 +11,7 @@ module.exports = async () => {
     {
       date: '2019-05-14',
       type: '1',
+      shortId: shortid.generate(),
       numberOfAttendees: 10,
       region: 'North East',
       trainers: [trainers[0], trainers[1]],
@@ -24,6 +26,7 @@ module.exports = async () => {
     {
       date: '2019-03-14',
       type: '1',
+      shortId: shortid.generate(),
       numberOfAttendees: 11,
       region: 'North East',
       trainers: [trainers[3], trainers[4]],
@@ -38,6 +41,7 @@ module.exports = async () => {
     {
       date: '2018-05-14',
       type: 'special-2-days',
+      shortId: shortid.generate(),
       numberOfAttendees: 10,
       region: 'North East',
       trainers: [trainers[0], trainers[2]],
@@ -52,6 +56,7 @@ module.exports = async () => {
     {
       date: '2019-2-14',
       type: '1',
+      shortId: shortid.generate(),
       numberOfAttendees: 5,
       region: 'North East',
       trainers: [trainers[0]],
@@ -66,6 +71,7 @@ module.exports = async () => {
     {
       date: '2019-1-14',
       type: '1',
+      shortId: shortid.generate(),
       numberOfAttendees: 7,
       region: 'North East',
       trainers: [trainers[0], trainers[2]],
@@ -80,6 +86,7 @@ module.exports = async () => {
     {
       date: '2019-05-15',
       type: '2',
+      shortId: shortid.generate(),
       numberOfAttendees: 8,
       region: 'North East',
       trainers: [trainers[0]],
@@ -93,6 +100,7 @@ module.exports = async () => {
     {
       date: '2018-07-15',
       type: '2',
+      shortId: shortid.generate(),
       numberOfAttendees: 33,
       region: 'North East',
       trainers: [trainers[5]],
@@ -106,6 +114,7 @@ module.exports = async () => {
     {
       date: '2019-05-17',
       type: '3',
+      shortId: shortid.generate(),
       numberOfAttendees: 12,
       region: 'North East',
       trainers: [trainers[1]],
@@ -121,6 +130,7 @@ module.exports = async () => {
     {
       date: '2019-05-16',
       type: 'train-trainers',
+      shortId: shortid.generate(),
       numberOfAttendees: 5,
       region: 'North West',
       trainers: [localLeads[0]],
@@ -134,6 +144,7 @@ module.exports = async () => {
     {
       date: '2019-04-16',
       type: 'train-trainers',
+      shortId: shortid.generate(),
       numberOfAttendees: 9,
       region: 'North West',
       trainers: [localLeads[1]],
@@ -148,6 +159,7 @@ module.exports = async () => {
     {
       date: '2019-05-20',
       type: 'special-2-days',
+      shortId: shortid.generate(),
       numberOfAttendees: 7,
       region: 'North West',
       trainers: [localLeads[0]],
@@ -161,6 +173,7 @@ module.exports = async () => {
     {
       date: '2019-01-20',
       type: 'special-2-days',
+      shortId: shortid.generate(),
       numberOfAttendees: 40,
       region: 'North West',
       trainers: [localLeads[1]],
@@ -176,6 +189,7 @@ module.exports = async () => {
     {
       date: '2019-05-16',
       type: '3',
+      shortId: shortid.generate(),
       numberOfAttendees: 5,
       region: 'North West',
       trainers: [localLeads[0], trainers[0]],

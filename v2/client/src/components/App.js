@@ -5,6 +5,7 @@ import { Router, Route, Switch, Link, Redirect } from 'react-router-dom';
 // PLEASE DO NOT PUT ANTD STYLING SHEET HERE AS OVERRIDES EXISTING STYLES
 // import 'antd/dist/antd.css';
 import styled from 'styled-components';
+import moment from 'moment';
 
 import { checkAuth } from '../actions/authAction';
 import { updateViewLevel } from '../actions/viewLevelAction';
@@ -54,6 +55,12 @@ import {
 } from '../constants/navigationRoutes';
 
 import history from '../history';
+
+moment.updateLocale('en', {
+  week: {
+    dow: 1,
+  },
+});
 
 const Wrapper = styled.div`
   min-height: 100vh;
