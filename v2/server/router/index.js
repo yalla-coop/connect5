@@ -18,12 +18,14 @@ const editSession = require('../controllers/sessionDetails/editSession');
 const updateEmails = require('../controllers/sessionDetails/updateEmails.js');
 const sendSurveyByEmail = require('../controllers/survey/emailSurvey');
 
+const authentication = require('./../middlewares/authentication');
+
 const router = express.Router();
 
 router.post('/participant-login', ParticipantLoginController);
 router.post('/login', loginController);
 router.get('/logout', logoutController);
-router.post('/add-session', addSessionController);
+router.post('/add-session', authentication(), addSessionController);
 
 router.get(
   '/behavioral-insight/participant/:PIN',

@@ -38,6 +38,7 @@ const initialState = {
   partnerTrainer1: '',
   partnerTrainer2: '',
   emails: [],
+  sendByEmail: false,
   err: false,
 };
 
@@ -75,6 +76,10 @@ class CreateSession extends Component {
       this.props.fetchAllTrainers();
       this.props.fetchLocalLeads();
     }
+  };
+
+  onChangeCheckbox = e => {
+    this.setState({ sendByEmail: e.target.checked });
   };
 
   onDateChange = defaultValue => {
@@ -132,30 +137,33 @@ class CreateSession extends Component {
   };
 
   renderTrainersList = () => {
-    const { leadsAndTrainers, role, localLeadTrainersGroup } = this.props;
+    const { leadsAndTrainers, role, localLeadTrainersGroup, id } = this.props;
     if (role && role === 'localLead') {
       if (localLeadTrainersGroup) {
-        return localLeadTrainersGroup.map(({ name, _id }) => {
-          return (
-            <Option
-              key={_id}
-              value={_id}
-              style={{ textTransform: 'capitalize' }}
-            >
-              {name}
-            </Option>
-          );
-        });
+        return localLeadTrainersGroup
+          .filter(({ _id }) => _id !== id)
+          .map(({ name, _id }) => {
+            return (
+              <Option
+                key={_id}
+                value={_id}
+                style={{ textTransform: 'capitalize' }}
+              >
+                {name}
+              </Option>
+            );
+          });
       }
     } else if (leadsAndTrainers) {
-      return leadsAndTrainers.map(({ name, _id }) => (
-        <Option key={_id} value={_id} style={{ textTransform: 'capitalize' }}>
-          {name}
-        </Option>
-      ));
-    } else {
-      return null;
+      return leadsAndTrainers
+        .filter(({ _id }) => _id !== id)
+        .map(({ name, _id }) => (
+          <Option key={_id} value={_id} style={{ textTransform: 'capitalize' }}>
+            {name}
+          </Option>
+        ));
     }
+    return null;
   };
 
   checkError = () => {
@@ -192,6 +200,7 @@ class CreateSession extends Component {
       partnerTrainer1,
       partnerTrainer2,
       emails,
+      sendByEmail,
     } = this.state;
     const sessionData = {
       session,
@@ -201,6 +210,7 @@ class CreateSession extends Component {
       partnerTrainer1,
       partnerTrainer2,
       emails,
+      sendByEmail,
     };
 
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
@@ -237,7 +247,6 @@ class CreateSession extends Component {
             <DatePicker
               onChange={onDateChange}
               name="startDate"
-              defaultValue={moment('2019-01-01', 'YYYY-MM-DD')}
               size="large"
               style={{ width: '100%' }}
             />
@@ -400,7 +409,9 @@ class CreateSession extends Component {
             <div>{err}</div>
           </InputDiv>
           <InputDiv>
-            <Checkbox>Send the survey to participants by email</Checkbox>
+            <Checkbox onChange={this.onChangeCheckbox}>
+              Send the survey to participants by email
+            </Checkbox>
           </InputDiv>
 
           <SubmitBtn>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Spin from 'antd/lib/spin';
 
 import { fetchStatsData } from '../../../actions/users';
+import { logout } from '../../../actions/authAction';
 
 // STYLING
 import {
@@ -22,9 +23,6 @@ import {
 
 //  COMMON COMPONENTS
 import Header from '../../common/Header';
-
-// HELPERS
-import logout from '../../../helpers/logout';
 
 // ROUTES
 import {
@@ -56,7 +54,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { userName, stats, viewLevel } = this.props;
+    const { userName, stats, viewLevel, logout: logoutAction } = this.props;
     // const { id } = auth;
 
     const captalizesName =
@@ -122,7 +120,7 @@ class Dashboard extends Component {
               )}
             </StatsWrapper>
             <StyledLink to="/change-password">Change Password</StyledLink>
-            <LogOut onClick={() => logout()}>Log out</LogOut>
+            <LogOut onClick={logoutAction}>Log out</LogOut>
           </>
         )}
       </Wrapper>
@@ -142,5 +140,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchStatsData }
+  { fetchStatsData, logout }
 )(Dashboard);

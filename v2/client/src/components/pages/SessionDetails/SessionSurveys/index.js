@@ -1,7 +1,8 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Select, Button, Modal as AntdModal, message } from 'antd';
+import { Select, Button, Modal as AntdModal } from 'antd';
+
 import SurveyContent from './SurveyContent';
 import Modal from '../../../common/modal';
 import {
@@ -33,13 +34,6 @@ class SessionSurveys extends Component {
     participantsEmails: null,
   };
 
-  componentDidUpdate(prevProps) {
-    const { emailSuccess } = this.props;
-    if (emailSuccess && emailSuccess !== prevProps.emailSuccess) {
-      message.success('Done, Emails sent successfully!');
-    }
-  }
-
   toggleModal = participantsEmails => {
     const { modalOpen } = this.state;
     this.setState({ modalOpen: !modalOpen, participantsEmails });
@@ -60,7 +54,7 @@ class SessionSurveys extends Component {
     });
   };
 
-  handleEmailing = (surveyURL, survetType) => {
+  handleEmailing = (surveyURL, surveyType) => {
     const { sessionDetails } = this.props;
     const { sendEmails } = this.props;
 
@@ -77,7 +71,7 @@ class SessionSurveys extends Component {
         sendEmails({
           surveyURL,
           participantsList: participantsEmails,
-          survetType,
+          surveyType,
         });
       },
     });
