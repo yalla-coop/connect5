@@ -1,3 +1,4 @@
+const shortid = require('shortid');
 const Session = require('./../models/Session');
 
 const createNewSession = ({
@@ -12,6 +13,7 @@ const createNewSession = ({
   const newSession = new Session({
     date: startDate,
     type: session,
+    shortId: shortid.generate(),
     numberOfAttendees: inviteesNumber,
     region,
     trainers,

@@ -67,13 +67,13 @@ class ViewParticipant extends Component {
           ) : (
             <ContentWrapper>
               {sessions.map(session => (
-                <Session>
+                <Session key={session._id.type}>
                   {session.surveyType}:{' '}
                   {session.trainers.map((trainer, index) => (
-                    <sapn className="trainer">
+                    <span className="trainer" key={trainer._id}>
                       {index > 0 && ' & '}
                       {trainer.name}
-                    </sapn>
+                    </span>
                   ))}
                 </Session>
               ))}
@@ -83,8 +83,9 @@ class ViewParticipant extends Component {
                     <SessionSpan>Q.</SessionSpan>
                     {question._id.text}
                     <AnswersWrapper style={{ paddingLeft: '11px' }}>
-                      {question.answers.map(answer => (
-                        <Answer>
+                      {question.answers.map((answer, index) => (
+                        // eslint-disable-next-line react/no-array-index-key
+                        <Answer key={answer.id + index}>
                           <SessionSpan>{answer.surveyType}: </SessionSpan>
                           {answer.answer}
                         </Answer>

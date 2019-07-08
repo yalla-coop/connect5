@@ -42,7 +42,9 @@ const feedBackFromParticipant = PIN =>
           code: '$code',
           text: '$text',
         },
-        answers: { $push: { answer: '$answer', surveyType: '$surveyType' } },
+        answers: {
+          $push: { answer: '$answer', surveyType: '$surveyType', id: '$_id' },
+        },
       },
     },
   ]);
