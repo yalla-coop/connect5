@@ -117,6 +117,18 @@ class Survey extends React.Component {
     this.trackAnswers();
   };
 
+  handleAntdDatePicker = (question, value) => {
+    // const question = e.target.name;
+    const { formState } = this.state;
+    // if any other type we assign the value to answer and put it in the state
+    // const answer = e.target.value;
+    formState[question] = value;
+    this.setState(() => ({
+      formState,
+    }));
+    this.trackAnswers();
+  };
+
   // handles case when user selects 'other'
   handleOther = e => {
     const question = e.target.name;
@@ -228,6 +240,7 @@ class Survey extends React.Component {
                 selectCheckedItem={this.selectCheckedItem}
                 errors={errors}
                 trackAnswers={this.trackAnswers}
+                handleAntdDatePicker={this.handleAntdDatePicker}
               />
               <button type="submit">Submit Feedback</button>
             </Form>
