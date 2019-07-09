@@ -5,8 +5,6 @@ const {
   updateUserPasswordById,
 } = require('./../../database/queries/user');
 
-console.log(updateUserPasswordById, 'sssssssssssssss');
-
 module.exports = (req, res, next) => {
   const { oldPassword, newPassword } = req.body;
   const { id } = req.user;
@@ -18,17 +16,22 @@ module.exports = (req, res, next) => {
         // user is not found
         return next(boom.unauthorized('No user is found'));
       }
-      if ((oldPassword, newPassword)) {
+      if (oldPassword && newPassword) {
         // hash password
-        const matched = compare(oldPassword, user.password);
-        if (!matched) {
-          return next(boom.unauthorized('Incorrect password'));
-        }
-        const hashedPassword = hash(newPassword, 8);
-        updateData.password = hashedPassword;
+        compare(oldPassword, user.password).then(matched => {
+          if (!matched) {
+            return next(boom.unauthorized('Incorrect password'));
+          }
+
+          hash(newPassword, 8).then(x => {
+            updateData.password = x;
+
+            updateUserPasswordById(user.id, x).then(x => {
+              return res.json(user);
+            });
+          });
+        });
       }
-      updateUserPasswordById(user.id, updateData.password);
-      return res.json(user);
     })
     .catch(err => {
       next(boom.badImplementation());
