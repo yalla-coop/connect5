@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { message } from 'antd';
+
 import {
   FETCH_ALL_SESSIONS,
   FETCH_TRAINERS_SESSIONS,
@@ -103,19 +105,23 @@ export const updateEmails = (id, participantsEmails) => async dispatch => {
 export const sendEmails = ({
   surveyURL,
   participantsList,
-  survetType,
+  surveyType,
 }) => async dispatch => {
   axios
     .post('/api/survey/email', {
       surveyURL,
       participantsList,
-      survetType,
+      surveyType,
     })
     .then(res => {
+      message.success('Done, Emails sent successfully!');
       return dispatch({
         type: SEND_SURVEY_EMAIL_SUCCESS,
         payload: res.data,
       });
     })
-    .catch(() => history.push('/404err'));
+    .catch(() => {
+      message.error('Error! something went wronge');
+      history.push('/404err');
+    });
 };
