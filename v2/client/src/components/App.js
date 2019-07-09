@@ -30,6 +30,7 @@ import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import SessionDetails from './pages/SessionDetails';
 import EditSession from './pages/SessionDetails/SessionActions/SessionEdit';
 import SurveyResults from './pages/SurveyResults';
+import ChangePassword from './pages/ChangePassword';
 import ParticipantProgress from './pages/ParticipantProgress';
 
 import DecideView from './pages/DecideView';
@@ -141,6 +142,17 @@ class App extends Component {
               exact
               path={DASHBOARD_URL}
               Component={Dashboard}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
+
+            <PrivateRoute
+              exact
+              path="/change-password"
+              Component={ChangePassword}
               isAuthenticated={isAuthenticated}
               loaded={loaded}
               allowedRoles={['admin', 'localLead', 'trainer']}
