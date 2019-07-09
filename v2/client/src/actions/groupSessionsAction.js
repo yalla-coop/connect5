@@ -7,7 +7,9 @@ import {
   DELETE_SESSION_SUCCESS,
   EDIT_SESSION_SUCCESS,
   UPDATE_EMAILS_SUCCESS,
+  SEND_SURVEY_EMAIL_SUCCESS,
 } from '../constants/actionTypes';
+
 import history from '../history';
 
 export const fetchTrainerSessions = id => async dispatch => {
@@ -92,6 +94,26 @@ export const updateEmails = (id, participantsEmails) => async dispatch => {
       dispatch(fetchSessionDetails(id));
       return dispatch({
         type: UPDATE_EMAILS_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch(() => history.push('/404err'));
+};
+
+export const sendEmails = ({
+  surveyURL,
+  participantsList,
+  survetType,
+}) => async dispatch => {
+  axios
+    .post('/api/survey/email', {
+      surveyURL,
+      participantsList,
+      survetType,
+    })
+    .then(res => {
+      return dispatch({
+        type: SEND_SURVEY_EMAIL_SUCCESS,
         payload: res.data,
       });
     })

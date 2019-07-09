@@ -16,6 +16,7 @@ const getSessionDetails = require('../controllers/sessionDetails/getSessionDetai
 const deleteSession = require('../controllers/sessionDetails/deleteSession');
 const editSession = require('../controllers/sessionDetails/editSession');
 const updateEmails = require('../controllers/sessionDetails/updateEmails.js');
+const sendSurveyByEmail = require('../controllers/survey/emailSurvey');
 
 const router = express.Router();
 
@@ -48,5 +49,7 @@ router.get('/survey/:id', surveyQs);
 router.get('/session/:sessionId/:surveyType/responses', getSurveyResponses);
 
 router.post('/survey/submit', storeSurvey);
+
+router.post('/survey/email', sendSurveyByEmail);
 
 module.exports = router;
