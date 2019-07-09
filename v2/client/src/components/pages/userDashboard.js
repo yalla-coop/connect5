@@ -72,9 +72,7 @@ const UserDashboard = ({ PIN }) => {
         <Pin>{PIN}</Pin>
       </Content>
       <LinkBtn to="/participant/behavioral-insight">Insights</LinkBtn>
-      <LinkBtn to="/participant/progress" disabled>
-        Progress
-      </LinkBtn>
+      <LinkBtn to="/participant/progress">Progress</LinkBtn>
     </DashboardWrapper>
   );
 };
