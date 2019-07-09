@@ -1,6 +1,8 @@
 const boom = require('boom');
+const shortid = require('shortid');
 
 const { createNewTrainer } = require('./../../database/queries/users/trainer');
+const sendNewTrainerLoginDetails = require('../../helpers/emails/sendNewTrainerLoginDetails');
 
 const {
   addTrainertoGroup,
@@ -20,14 +22,17 @@ module.exports = async (req, res, next) => {
     let trainer = await getUserByEmail(email);
 
     if (newUser && !trainer) {
+      const randomPassword = shortid.generate();
       trainer = await createNewTrainer({
         name,
         email,
-        password: '123456',
+        password: randomPassword,
         region,
         localLead,
         role: 'trainer',
       });
+
+      sendNewTrainerLoginDetails(name, email, randomPassword);
     }
 
     if (!trainer) {
