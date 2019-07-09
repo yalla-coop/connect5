@@ -66,6 +66,16 @@ questionConstants.subGroupID = {
 
 questionConstants.regions = [...regions, 'Other (please specify)'];
 
+questionConstants.ages = [
+  'Under 18',
+  '18-24 years old',
+  '25-34 years old',
+  '35-44 years old',
+  '45-54 years old',
+  '55-64',
+  'Over 64',
+];
+
 questionConstants.questionTypes = {
   positiveNumber: {
     desc: 'numberPositive',
