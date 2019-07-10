@@ -19,13 +19,14 @@ const ParticipantSchema = new Schema(
     gender: {
       type: String,
       enum: ['male', 'female'],
+      lowercase: true,
     },
-    ethinc: String,
-    region: String,
-    postcode: String,
+    ethinc: { type: String, lowercase: true },
+    region: { type: String, lowercase: true },
+    postcode: { type: String, lowercase: true },
     Session1Date: Date,
-    occupation: String,
-    workforce: String,
+    occupation: { type: String, lowercase: true },
+    workforce: { type: String, lowercase: true },
   },
   { timestamps: true }
 );

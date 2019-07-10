@@ -56,9 +56,9 @@ module.exports = async (req, res, next) => {
       PIN,
       participantId: storedParticipantDetails._id,
     });
-    const result = await storeAnswers(storableAnswers);
+    await storeAnswers(storableAnswers);
 
-    return res.status(200).json(result);
+    return res.status(200).json({});
   } catch (error) {
     return next(boom.badImplementation());
   }
