@@ -86,8 +86,8 @@ class TrainerFeedbackOverall extends Component {
 }
 
 const mapStateToProps = state => ({
-  feedbackData: state.trainerFeedback.data,
-  loaded: state.trainerFeedback.loaded,
+  feedbackData: state.trainerFeedback.trainer.data,
+  loaded: state.trainerFeedback.trainer.loaded,
   isAuthenticated: state.auth.isAuthenticated,
   role: state.auth.role,
 });

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { HorizontalBar } from 'react-chartjs-2';
 import { connect } from 'react-redux';
+import { Alert } from 'antd';
 
 import Spin from '../Spin';
 
@@ -17,9 +18,17 @@ class BehavioralInsight extends Component {
   }
 
   render() {
-    const { data, loaded } = this.props;
+    const { data, loaded, backgroundColor } = this.props;
     const texts = Object.keys(data);
-
+    if (loaded && Object.keys(data).length === 0) {
+      return (
+        <Alert
+          message="No behavioural insight data collected yet!"
+          type="warning"
+          showIcon
+        />
+      );
+    }
     const chartsData = [];
     texts.forEach(text => {
       const chartData = {
@@ -38,12 +47,11 @@ class BehavioralInsight extends Component {
           },
         ],
       };
-
       chartsData.push(chartData);
     });
 
     return (
-      <Wrapper>
+      <Wrapper backgroundColor={backgroundColor}>
         {loaded ? (
           chartsData.map((dataA, index) => (
             <div key={texts[index]}>
