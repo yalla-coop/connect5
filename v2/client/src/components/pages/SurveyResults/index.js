@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import Collapse from 'antd/lib/collapse';
 import Button from 'antd/lib/button';
@@ -194,7 +195,12 @@ class SurveyResults extends Component {
                   />
                 </NavigationWrapper>
                 <Paragraph first align="center">
-                  <Bold>Participant {activeresponse.PIN} - view profile</Bold>
+                  <Bold>
+                    Participant {activeresponse.PIN} -{' '}
+                    <Link to={`/participant/${activeresponse.PIN}`}>
+                      view profile
+                    </Link>
+                  </Bold>
                 </Paragraph>
 
                 {activeresponse.data.map(question => (
