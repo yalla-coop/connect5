@@ -117,8 +117,6 @@ describe('Test /survey/submit/', () => {
         expect(participantAfter).toBeDefined();
         expect(participantAfter.age).toBe('Under 18');
         expect(participantAfter.gender).toBe('male');
-        expect(participantAfter.region).toBe('london');
-        expect(participantAfter.ethinc).toBe('irish');
         expect(res.body).toBeDefined();
         done(err);
       });
