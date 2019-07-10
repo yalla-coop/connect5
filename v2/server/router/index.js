@@ -16,6 +16,11 @@ const getSessionDetails = require('../controllers/sessionDetails/getSessionDetai
 const deleteSession = require('../controllers/sessionDetails/deleteSession');
 const editSession = require('../controllers/sessionDetails/editSession');
 const updateEmails = require('../controllers/sessionDetails/updateEmails.js');
+
+const sendSurveyByEmail = require('../controllers/survey/emailSurvey');
+
+const authentication = require('./../middlewares/authentication');
+
 const feedbackFromParticipant = require('./../controllers/feedback/feedbackFromParticipant');
 const getParticipantSessions = require('../controllers/users/getParticipantSessions');
 
@@ -25,7 +30,7 @@ router.post('/participant-login', ParticipantLoginController);
 router.get('/participant/:id/progress', getParticipantSessions);
 router.post('/login', loginController);
 router.get('/logout', logoutController);
-router.post('/add-session', addSessionController);
+router.post('/add-session', authentication(), addSessionController);
 
 router.get(
   '/behavioral-insight/participant/:PIN',
@@ -53,5 +58,7 @@ router.get('/survey/:id', surveyQs);
 router.get('/session/:sessionId/:surveyType/responses', getSurveyResponses);
 
 router.post('/survey/submit', storeSurvey);
+
+router.post('/survey/email', sendSurveyByEmail);
 
 module.exports = router;
