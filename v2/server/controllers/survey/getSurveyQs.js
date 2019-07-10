@@ -15,5 +15,5 @@ module.exports = (req, res, next) => {
     .then(surveyDetails => {
       res.status(200).json(surveyDetails);
     })
-    .catch(err => next(boom.badImplementation()));
+    .catch(next(boom.badImplementation()));
 };

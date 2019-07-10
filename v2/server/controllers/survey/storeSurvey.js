@@ -3,33 +3,63 @@ const boom = require('boom');
 const validateSurveyInput = require('../../middlewares/validateSurveyInput');
 
 const storeResponse = require('../../database/queries/surveys/storeResponse');
-const storeAnswers = require('../../database/queries/surveys/storeAnswers');
+const { storeAnswers } = require('../../database/queries/surveys');
+const { updateParticipant } = require('./../../database/queries/users');
+const getStorableAnswers = require('./../../helpers/getAnswersFromForm');
+const getParticipantDetails = require('./../../helpers/getParticipantDetails');
 
 module.exports = async (req, res, next) => {
-  const { errors, isValid } = await validateSurveyInput(req.body);
+  try {
+    const { errors, isValid } = await validateSurveyInput(req.body);
 
-  const {
-    PIN,
-    sessionId,
-    surveyType,
-    formState,
-    disagreedToResearch,
-  } = req.body;
-  let agreedToResearch = true;
+    const {
+      PIN,
+      sessionId,
+      surveyType,
+      formState,
+      disagreedToResearch,
+    } = req.body;
 
-  if (disagreedToResearch) {
-    agreedToResearch = false;
+    let agreedToResearch = true;
+
+    if (disagreedToResearch) {
+      agreedToResearch = false;
+    }
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    // get the participant details from the answers
+    const ParticipantDetailsFromSurvey = await getParticipantDetails(formState);
+
+    // update participant data or create new participant if the PIN is new
+    const storedParticipantDetails = await updateParticipant({
+      PIN,
+      ...ParticipantDetailsFromSurvey,
+    });
+
+    // storeResponse adds the response to the Response model
+    // and returns the unique Response ID
+    // storeAnswers adds all answers to the Answer model
+    const response = await storeResponse(
+      PIN,
+      sessionId,
+      surveyType,
+      agreedToResearch
+    );
+
+    const storableAnswers = getStorableAnswers({
+      responseId: response._id,
+      answers: formState,
+      sessionId,
+      PIN,
+      participantId: storedParticipantDetails._id,
+    });
+    const result = await storeAnswers(storableAnswers);
+
+    return res.status(200).json(result);
+  } catch (error) {
+    return next(boom.badImplementation());
   }
-
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-
-  // storeResponse adds the response to the Response model
-  // and returns the unique Response ID
-  // storeAnswers adds all answers to the Answer model
-  return storeResponse(PIN, sessionId, surveyType, agreedToResearch)
-    .then(response => storeAnswers(response._id, formState, sessionId, PIN))
-    .then(result => res.status(200).json(result))
-    .catch(err => next(boom.badImplementation()));
 };

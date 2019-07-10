@@ -10,6 +10,7 @@ const ParticipantSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      uppercase: true,
     },
     age: {
       type: String,
