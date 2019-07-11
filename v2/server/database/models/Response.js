@@ -8,8 +8,8 @@ const responseSchema = new Schema({
   PIN: {
     type: String,
     required: true,
+    uppercase: true,
   },
-
   //  list of trainers who led the session max 2
   trainers: [
     {
@@ -28,6 +28,11 @@ const responseSchema = new Schema({
   agreedToResearch: {
     type: Boolean,
     default: true,
+  },
+
+  participant: {
+    type: Schema.Types.ObjectId,
+    ref: 'participants',
   },
 });
 

@@ -10,6 +10,7 @@ import {
   EDIT_SESSION_SUCCESS,
   UPDATE_EMAILS_SUCCESS,
   SEND_SURVEY_EMAIL_SUCCESS,
+  FETCH_PRTICIPENT_SESSIONS_SUCCESS,
 } from '../constants/actionTypes';
 
 import history from '../history';
@@ -124,4 +125,16 @@ export const sendEmails = ({
       message.error('Error! something went wronge');
       history.push('/404err');
     });
+};
+
+export const fetchParticipentSessions = pin => async dispatch => {
+  try {
+    const res = await axios.get(`/api/participant/${pin}/progress`);
+    return dispatch({
+      type: FETCH_PRTICIPENT_SESSIONS_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    console.log('error', error);
+  }
 };

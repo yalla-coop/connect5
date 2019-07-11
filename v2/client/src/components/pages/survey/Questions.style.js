@@ -162,6 +162,7 @@ const NumberOutput = styled.output`
   font-weight: 300;
   color: ${colors.primary};
 
+  border-radius: 0.8em;
   -moz-border-radius: 0.8em;
   -webkit-border-radius: 0.8em;
   /* color: ${colors.black}; */

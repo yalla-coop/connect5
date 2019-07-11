@@ -12,6 +12,7 @@ export const SESSION_DETAILS_URL = '/session-details/:id';
 export const TRAINER_RESULTS_URL = '/trainer-results';
 export const TRAINER_SESSIONS_URL = '/trainer-sessions';
 export const TRAINER_FEEDBACK_URL = '/feedback';
+export const TRAINER_VIEW_PARTICIPANT = '/participant/:PIN';
 
 // local lead & admin
 export const GROUP_RESULTS_URL = '/group-results';

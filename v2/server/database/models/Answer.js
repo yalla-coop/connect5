@@ -6,6 +6,7 @@ const answerSchema = new Schema({
   PIN: {
     type: String,
     required: true,
+    uppercase: true,
   },
   question: {
     type: Schema.Types.ObjectId,
@@ -18,6 +19,10 @@ const answerSchema = new Schema({
   answer: {
     type: String,
     required: true,
+  },
+  participant: {
+    type: Schema.Types.ObjectId,
+    ref: 'participants',
   },
 });
 
