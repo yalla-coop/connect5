@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
   try {
     const data = await getParticipantsDemogrphics(id);
 
-    return res.json(data);
+    return res.json(data[0]);
   } catch (err) {
     return next(boom.badImplementation());
   }
