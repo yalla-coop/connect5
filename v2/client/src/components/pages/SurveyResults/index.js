@@ -26,6 +26,7 @@ import {
 import TrainerFeedback from '../../common/Feedback';
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
+import ExportButton from '../../common/ExportButton';
 
 const { Panel } = Collapse;
 
@@ -165,11 +166,13 @@ class SurveyResults extends Component {
                 </Panel>
               </Collapse>
             </div>
-            <ButtonWrapper>
+            {/* <ButtonWrapper>
               <Button icon="download" size="large">
                 Export to CSV
               </Button>
-            </ButtonWrapper>
+            </ButtonWrapper> */}
+            <ExportButton />
+            {console.log("you're here")}
           </>
         ) : (
           <IndividualWrapper>

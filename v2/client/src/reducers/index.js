@@ -13,6 +13,7 @@ import fetchedSessions from './fetchSessionReducer';
 import groupsReducer from './groups';
 import viewReducer from './viewReducer';
 import changePasswordReducer from './changePasswordReducer';
+import exportDataReducer from './exportDataReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -28,4 +29,5 @@ export default combineReducers({
   trainerFeedback: trainerFeedbackReducer,
   viewLevel: viewReducer,
   changePassword: changePasswordReducer,
+  exportData: exportDataReducer,
 });

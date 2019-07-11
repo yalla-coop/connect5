@@ -33,6 +33,7 @@ import {
 } from './UserResults.style';
 
 import TrainerBehavioralInsight from '../../common/BehavioralInsight/Trainer';
+import ExportButton from '../../common/ExportButton';
 
 const { Panel } = Collapse;
 
@@ -158,11 +159,12 @@ class UserResults extends Component {
             <SessionList dataList={sessions} />
           </ContentWrapper>
         )}
-        <ButtonWrapper>
+        {/* <ButtonWrapper>
           <Button icon="download" size="large">
             Export to CSV
           </Button>
-        </ButtonWrapper>
+        </ButtonWrapper> */}
+        <ExportButton />
       </TrainerResultsWrapper>
     );
   }
