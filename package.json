@@ -4,6 +4,9 @@
   "private": true,
   "jest": {
     "testRegex": "./v2/server/__test__/*",
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ],
     "coverageDirectory": "./coverage/",
     "collectCoverageFrom": [
       "**/*.js",
