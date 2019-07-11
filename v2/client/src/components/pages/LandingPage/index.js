@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   Wrapper,
   LogoContainer,
@@ -8,9 +7,13 @@ import {
   Headline,
   Paragraph,
   ButtonContainer,
+  ButtonLink,
+  ButtonDiv,
 } from './LandingPage.style';
 
 import Connect5Logo from '../../../assets/connect-5-white.png';
+
+import Button from '../../common/Button';
 
 export default function LandingPage() {
   return (
@@ -22,13 +25,40 @@ export default function LandingPage() {
       <DescriptionContainer>
         <Headline>Welcome to the Connect5</Headline>
         <Paragraph>
-          Please login using your trainer details or your participant PIN
+          Welcome to the App of the mental health training programme Connect 5
         </Paragraph>
       </DescriptionContainer>
       <ButtonContainer>
-        <button>1</button>
-        <button>1</button>
-        <button>1</button>
+        <ButtonLink to="/">
+          <ButtonDiv>
+            <Button
+              label="I'm a Trainer or Local Lead"
+              width="100%"
+              height="100%"
+              type="primary"
+            />
+          </ButtonDiv>
+        </ButtonLink>
+        <ButtonLink to="/">
+          <ButtonDiv>
+            <Button
+              label="I'm a Course Participant"
+              width="100%"
+              height="100%"
+              type="primary"
+            />
+          </ButtonDiv>
+        </ButtonLink>
+        <ButtonLink to="/">
+          <ButtonDiv>
+            <Button
+              label="I want to find out more"
+              width="100%"
+              height="100%"
+              type="primary"
+            />
+          </ButtonDiv>
+        </ButtonLink>
       </ButtonContainer>
     </Wrapper>
   );

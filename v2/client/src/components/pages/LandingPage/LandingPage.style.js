@@ -1,21 +1,19 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { colors, shadows } from '../../../theme';
+import { colors, breakpointsMax } from '../../../theme';
 
 export const Wrapper = styled.div`
-  padding: 80px 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
 export const LogoContainer = styled.div`
-  border: 1px solid;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 110px;
+  height: 20vh;
   width: 100%;
   background: ${colors.primary};
 `;
@@ -26,13 +24,11 @@ export const Logo = styled.img`
 `;
 
 export const DescriptionContainer = styled.div`
-  border: 1px solid;
   padding-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
 `;
 
 export const Headline = styled.h1`
@@ -49,11 +45,32 @@ export const ButtonContainer = styled.div`
   background: ${colors.lightGray};
   display: flex;
   flex-direction: column;
-  width: 90%;
-  margin: 1rem auto;
-  padding: 20px 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 10px 20px;
   border-radius: 10px;
+
   @media (min-width: 678px) {
     width: 65%;
+  }
+`;
+
+export const ButtonLink = styled(Link)``;
+
+export const ButtonDiv = styled.div`
+  width: 300px;
+
+  @media ${breakpointsMax.mobileS} {
+    width: 150px;
+  }
+
+  button {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-top: 10px;
+
+    @media ${breakpointsMax.mobileS} {
+      font-size: 1rem;
+    }
   }
 `;
