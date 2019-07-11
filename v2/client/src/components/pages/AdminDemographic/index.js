@@ -14,6 +14,7 @@ import {
   BoldNumber,
   ChartWrapper,
   Legend,
+  DoughnutChartWrapper,
 } from './AdminDemographic.style';
 
 class AdminDemographic extends Component {
@@ -54,9 +55,9 @@ class AdminDemographic extends Component {
               <BarChart rawData={PDemographics.age} total={total} />
             </ChartWrapper>
             <Legend>Gender: </Legend>
-            <ChartWrapper>
+            <DoughnutChartWrapper>
               <DoughnutChart rawData={PDemographics.gender} total={total} />
-            </ChartWrapper>
+            </DoughnutChartWrapper>
             <Legend>Ethnics: </Legend>
             <ChartWrapper>
               <BarChart rawData={PDemographics.ethnic} total={total} />

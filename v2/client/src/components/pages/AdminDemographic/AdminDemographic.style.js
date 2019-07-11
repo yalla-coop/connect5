@@ -31,13 +31,27 @@ export const ChartWrapper = styled.div`
   margin: 0 auto;
 `;
 
+export const DoughnutChartWrapper = styled.div`
+  height: 300px;
+  max-width: 250px;
+  margin: 0 auto;
+  @media (min-width: 768px) {
+    height: 400px;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 2rem auto;
+  }
+`;
+
 export const Legend = styled.p`
   font-family: Roboto;
   font-size: 22px;
   text-align: center;
   color: #828282;
-  margin-top: 2rem;
-  margin-bottom: 0;
+  margin-top: 4rem;
+  @media (min-width: 768px) {
+    margin-top: 6rem;
+  }
 `;
 
 export const AdminSessionsWrapper = styled.div`

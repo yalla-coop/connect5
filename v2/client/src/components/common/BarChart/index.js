@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export const ContentWrapper = styled.div`
   max-width: 25rem;
   margin: 0 auto;
-  padding: 2rem 15px;
+  // padding: 2rem 15px;
 `;
 
 const BarChart = ({ data, width, height, maxNumber }) => {

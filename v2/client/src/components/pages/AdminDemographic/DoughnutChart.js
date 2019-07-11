@@ -50,7 +50,7 @@ const DoughnutChart = ({ rawData, total }) => {
               },
               barPercentage: 1.0,
               categoryPercentage: 0.4,
-              display: true,
+              display: false,
               offset: true,
             },
           ],
