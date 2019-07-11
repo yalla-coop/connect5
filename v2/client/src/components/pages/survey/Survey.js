@@ -28,6 +28,7 @@ class Survey extends React.Component {
     PIN: null,
     errors: {},
     completionRate: 0,
+    surveyParts: '',
   };
 
   componentWillMount() {
@@ -36,7 +37,6 @@ class Survey extends React.Component {
     const { location } = this.props;
     const survey = `${location.pathname}`;
     const surveyParts = survey.split('/')[2];
-
     window.scrollTo(0, 0);
 
     axios
@@ -49,6 +49,7 @@ class Survey extends React.Component {
           loading: false,
           sessionId,
           surveyType,
+          surveyParts,
         });
       })
       .then(() => {
@@ -90,6 +91,27 @@ class Survey extends React.Component {
     });
   };
 
+  checkPINResponsesOnSurvey = event => {
+    const PIN = event.target.value;
+    const { surveyParts, errors } = this.state;
+
+    if (PIN.length === 5) {
+      axios.get(`/api/survey/${surveyParts}/${PIN}`).then(({ data }) => {
+        const { exist } = data;
+        if (exist) {
+          this.setState({
+            errors: { ...errors, PIN: 'The PIN you use has submit the survey' },
+          });
+        } else {
+          this.setState({
+            errors: { ...errors, PIN: '' },
+          });
+          this.trackAnswers();
+        }
+      });
+    }
+  };
+
   // function to track progress on survey
   trackAnswers = () => {
     const { surveyDetails, formState, PIN } = this.state;
@@ -98,7 +120,7 @@ class Survey extends React.Component {
       // add one to total list to include the pin
       const numberOfQs = surveyDetails.questionsForSurvey.length + 1;
       const numberOfAs = Object.values(formState).length;
-      const pinAnswered = PIN ? 1 : 0;
+      const pinAnswered = PIN.length === 5 ? 1 : 0;
       const rate = Math.ceil(((numberOfAs + pinAnswered) / numberOfQs) * 100);
       this.setState({ completionRate: rate });
     } else {
@@ -155,8 +177,12 @@ class Survey extends React.Component {
 
   // handles user input for PIN field
   handlePIN = e => {
-    this.setState({ PIN: e.target.value }, () => {
-      this.trackAnswers();
+    const PIN = e.target.value;
+
+    this.setState({ PIN }, () => {
+      if (PIN.length === 5) {
+        this.trackAnswers();
+      }
     });
   };
 
@@ -253,8 +279,8 @@ class Survey extends React.Component {
                 answers={formState}
                 selectCheckedItem={this.selectCheckedItem}
                 errors={errors}
-                trackAnswers={this.trackAnswers}
                 handleAntdDatePicker={this.handleAntdDatePicker}
+                onPINBlur={this.checkPINResponsesOnSurvey}
               />
               <button type="submit">Submit Feedback</button>
             </Form>

@@ -10,3 +10,6 @@ module.exports.getAttendeesNumber = (sessionId, surveyType) => {
 };
 
 module.exports.storeAnswers = answers => Answer.create(answers);
+
+module.exports.PINResponsesOnSurvey = ({ PIN, surveyType }) =>
+  Response.findOne({ PIN, surveyType }).populate('session');
