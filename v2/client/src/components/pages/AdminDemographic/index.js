@@ -6,6 +6,7 @@ import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 import BarChart from './BarChart';
 import DoughnutChart from './DoughnutChart';
+import Chart from './AdminSessions';
 
 import {
   Wrapper,
@@ -36,6 +37,7 @@ class AdminDemographic extends Component {
     return (
       <Wrapper>
         <Header label="results" type="section" />
+        <Chart />
         <Toggle
           selected={toggle}
           leftText="Participants"
