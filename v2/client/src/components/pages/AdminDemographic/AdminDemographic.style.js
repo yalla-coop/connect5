@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Title = styled.p`
+  text-align: center;
   font-family: Roboto;
   margin-bottom: 0;
   margin-top: 2rem;
@@ -18,10 +19,10 @@ export const Title = styled.p`
 `;
 
 export const BoldNumber = styled.p`
-  font-family: Roboto;
-  font-weight: 300;
-  font-size: 22px;
-  color: #000000;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 1.5rem 0 3rem 0;
 `;
 
 export const ChartWrapper = styled.div`
@@ -37,4 +38,31 @@ export const Legend = styled.p`
   color: #828282;
   margin-top: 2rem;
   margin-bottom: 0;
+`;
+
+export const AdminSessionsWrapper = styled.div`
+  max-width: 25rem;
+  margin: 0 auto;
+  padding-bottom: 5rem;
+`;
+
+export const TopInfo = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+`;
+
+export const TotalSessions = styled.p`
+  text-align: center;
+  font-weight: 300;
+  font-size: 22px;
+  color: #a9a9a9;
+  margin-top: 2rem;
+`;
+
+export const SessionsNum = styled.p`
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 1.5rem 0 3rem 0;
 `;
