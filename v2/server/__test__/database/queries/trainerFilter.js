@@ -2,7 +2,12 @@ const mongoose = require('mongoose');
 
 const buildTestData = require('../../../database/data/test');
 
-const { exportData } = require('../../../database/queries/feedback/exportData');
+const {
+  trainerFilter,
+  exportData,
+} = require('../../../database/queries/feedback/exportData');
+
+const User = require('./../../../database/models/User');
 
 describe('Test exportData query', () => {
   beforeAll(() => {
@@ -16,13 +21,18 @@ describe('Test exportData query', () => {
   });
 
   test('gets trainer feedback overall', () => {
-    // const trainer = await User.find({ role: 'admin' });
     return exportData('admin').then(result => {
       expect(result).toBeDefined();
       expect(result[0]['Survey Type']).toBeDefined();
-      expect(result[0]['Session Date']).toBeDefined();
-      expect(result[0]['Session Region']).toBeDefined();
-      expect(result[0]['Trainer 1 Name']).toBeDefined();
+      expect(result[0]['Trainer 1 ID']).toBeDefined();
+
+      // set up the trainer we're searching for in responses
+      const trainerID = result[0]['Trainer 1 ID'];
+
+      const filteredResponses = trainerFilter(result, [trainerID]);
+
+      expect(filteredResponses[0]).toBeDefined();
+      expect(filteredResponses[0]['Trainer 1 ID']).toBe(trainerID);
     });
   }, 30000);
 });

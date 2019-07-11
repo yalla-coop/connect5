@@ -4,10 +4,8 @@
 
 const Answer = require('../../models/Answer');
 
-module.exports = role => {
+module.exports.exportData = user => {
   // send across the role to decide level of data
-
-  // set up conditional filtering objects based on role
 
   // if (role === 'admin') {
   return Answer.aggregate([
@@ -84,8 +82,10 @@ module.exports = role => {
         'Session Region': '$session.region',
         'Agreed to Research': '$responseDetails.agreedToResearch',
         'Survey Type': '$responseDetails.surveyType',
+        'Trainer 1 ID': { $arrayElemAt: ['$trainers._id', 0] },
         'Trainer 1 Name': { $arrayElemAt: ['$trainers.name', 0] },
         'Trainer 1 Email': { $arrayElemAt: ['$trainers.email', 0] },
+        'Trainer 2 ID': { $arrayElemAt: ['$trainers._id', 1] },
         'Trainer 2 Name': { $arrayElemAt: ['$trainers.name', 1] },
         'Trainer 2 Email': { $arrayElemAt: ['$trainers.email', 1] },
         'answers._id': 1,
@@ -97,4 +97,17 @@ module.exports = role => {
     },
   ]);
   // }
+};
+
+module.exports.trainerFilter = (responses, trainerIDs) => {
+  // expects array of responses from the export data func above and an array of trainer ID(s)
+
+  // filters to only return responses that involve those trainers
+  const filteredResponses = responses.filter(
+    response =>
+      trainerIDs.includes(response['Trainer 1 ID']) ||
+      trainerIDs.includes(response['Trainer 2 ID'])
+  );
+
+  return filteredResponses;
 };
