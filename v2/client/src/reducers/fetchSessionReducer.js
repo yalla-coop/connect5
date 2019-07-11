@@ -3,6 +3,7 @@ import {
   FETCH_LOCAL_LEAD_SESSIONS,
   FETCH_ALL_SESSIONS,
   FETCH_SESSION_DETAILS,
+  FETCH_SESSIONS_PER_REGIONS,
 } from '../constants/actionTypes';
 
 const initState = {
@@ -15,9 +16,10 @@ const initState = {
 const fetchedSessions = (state = initState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case FETCH_SESSIONS_PER_REGIONS:
     case FETCH_TRAINERS_SESSIONS:
     case FETCH_LOCAL_LEAD_SESSIONS:
-      return { ...state, sessions: payload };
+      return { ...state, sessions: payload, loaded: true };
     case FETCH_ALL_SESSIONS:
       return { ...state, sessionsCount: payload };
     case FETCH_SESSION_DETAILS:

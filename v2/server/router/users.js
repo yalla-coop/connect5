@@ -26,6 +26,7 @@ const getAllSessions = require('../controllers/users/getAllSessions');
 
 const removeTrainerToGroup = require('../controllers/users/removeTrainerToGroup');
 const getLocalLeadGroup = require('../controllers/users/getLocalLeadGroup');
+const getSessionsPerRegions = require('../controllers/users/getAllSessions');
 
 // check eamil route if the route doen't contain email query
 // then it will skip with next()
@@ -62,5 +63,6 @@ router.get('/users/admin/trainers-and-leads', getAllTrainersAndLeads);
 router.get('/users/trainer-sessions/:id', getTrainerSessions);
 router.get('/users/sessions/:id', authentication(), getLocalLeadsSessions);
 router.get('/users/sessions', getAllSessions);
+router.get('/users/admin/all-sessions-per-region', getSessionsPerRegions);
 
 module.exports = router;
