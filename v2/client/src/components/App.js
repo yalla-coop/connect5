@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import { Router, Route, Switch, Link, Redirect } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 // PLEASE DO NOT PUT ANTD STYLING SHEET HERE AS OVERRIDES EXISTING STYLES
 // import 'antd/dist/antd.css';
 import styled from 'styled-components';
@@ -36,6 +36,11 @@ import ParticipantProgress from './pages/ParticipantProgress';
 
 import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
+
+// Error Pages
+import NotFound from './pages/ErrorPages/404';
+import ServerError from './pages/ErrorPages/500';
+import Unauthorized from './pages/ErrorPages/403';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -331,14 +336,11 @@ class App extends Component {
               navbar
             />
 
-            <Route
-              path="/404err"
-              render={() => (
-                <h1>
-                  404 go home<Link to={HOME_URL}>home</Link>
-                </h1>
-              )}
-            />
+            <Route path="/404err" render={() => <NotFound />} />
+            <Route path="/500err" render={() => <ServerError />} />
+            <Route path="/unauthorized" render={() => <Unauthorized />} />
+
+            <Route render={() => <NotFound />} />
           </Switch>
         </Router>
       </Wrapper>
