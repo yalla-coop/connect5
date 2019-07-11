@@ -25,7 +25,7 @@ const getLocalLeadsSessions = require('../controllers/users/getLocalLeadSessions
 const getAllSessions = require('../controllers/users/getAllSessions');
 const removeTrainerToGroup = require('../controllers/users/removeTrainerToGroup');
 const getLocalLeadGroup = require('../controllers/users/getLocalLeadGroup');
-const getSessionsPerRegions = require('../controllers/users/getAllSessions');
+const getSessionsPerRegions = require('../controllers/users/SessionsPerRegions');
 const changePassword = require('../controllers/users/changePassword');
 const getParticipantsDemogrphics = require('../controllers/users/getParticipantsDemogrphics');
 
