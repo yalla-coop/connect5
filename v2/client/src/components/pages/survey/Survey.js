@@ -100,10 +100,12 @@ class Survey extends React.Component {
         const { exist } = data;
         if (exist) {
           this.setState({
+            PINExist: true,
             errors: { ...errors, PIN: 'The PIN you use has submit the survey' },
           });
         } else {
           this.setState({
+            PINExist: false,
             errors: { ...errors, PIN: '' },
           });
           this.trackAnswers();
@@ -197,6 +199,7 @@ class Survey extends React.Component {
       surveyType,
       PIN,
       disagreedToResearch,
+      PINExist,
     } = this.state;
 
     const formSubmission = {
@@ -206,6 +209,13 @@ class Survey extends React.Component {
       formState,
       disagreedToResearch,
     };
+    if (PINExist) {
+      return swal.fire({
+        title: 'This PIN has already submited the survey before',
+        type: 'error',
+      });
+    }
+
     // check if PIN was entered before API call
     if (PIN) {
       return axios
