@@ -32,6 +32,7 @@ import EditSession from './pages/SessionDetails/SessionActions/SessionEdit';
 import SurveyResults from './pages/SurveyResults';
 import ChangePassword from './pages/ChangePassword';
 import ParticipantProgress from './pages/ParticipantProgress';
+import Certificate from './pages/Certificate';
 
 import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
@@ -295,6 +296,8 @@ class App extends Component {
               role={role}
               navbar
             />
+
+            <Route path="/certificate/:sessionId" component={Certificate} />
 
             <PrivateRoute
               exact

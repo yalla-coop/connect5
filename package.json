@@ -43,6 +43,7 @@
     "dotenv": "^8.0.0",
     "env2": "^2.2.2",
     "express": "~4.16.0",
+    "hummus": "^1.0.104",
     "jsonwebtoken": "^8.4.0",
     "moment": "^2.24.0",
     "mongoose": "^5.3.12",
