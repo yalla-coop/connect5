@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchSessionsPerRegions } from '../../../actions/allSessionsAction';
 import BarChart from '../../common/BarChart';
+import { fetchSessionsPerRegions } from '../../../actions/allSessionsAction';
+import { fetchALLSessions } from '../../../actions/groupSessionsAction';
+import {
+  AdminSessionsWrapper,
+  TopInfo,
+  TotalSessions,
+  SessionsNum,
+  Legend,
+} from './AdminDemographic.style';
 
-class Chart extends Component {
+class AdminSessions extends Component {
   state = {
     chartData: {},
     maxNumber: '',
@@ -11,10 +19,12 @@ class Chart extends Component {
 
   componentDidMount() {
     const {
-      fetchSessionsPerRegions: sessionsPerRegionsAction,
+      fetchSessionsPerRegions: sessionsPerRegionsActionCreator,
+      fetchALLSessions: fetchALLSessionsActionCreator,
       data,
     } = this.props;
-    sessionsPerRegionsAction();
+    sessionsPerRegionsActionCreator();
+    fetchALLSessionsActionCreator();
     if (data && data) {
       this.getChartData(data);
     }
@@ -54,23 +64,31 @@ class Chart extends Component {
 
   render() {
     const { chartData, maxNumber } = this.state;
+    const { sessionsNum } = this.props;
     return (
-      <BarChart
-        data={chartData}
-        width={320}
-        height={251}
-        maxNumber={maxNumber}
-      />
+      <AdminSessionsWrapper>
+        <TopInfo>
+          <TotalSessions>Total Sessions</TotalSessions>
+          <SessionsNum>{sessionsNum}</SessionsNum>
+        </TopInfo>
+        <Legend>Regions</Legend>
+        <BarChart
+          data={chartData}
+          width={320}
+          height={251}
+          maxNumber={maxNumber}
+        />
+      </AdminSessionsWrapper>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  data: state.sessions.sessions,
-  loaded: state.sessions.loaded,
+  data: state.adminSessions.sessions,
+  sessionsNum: state.sessions.sessionsCount,
 });
 
 export default connect(
   mapStateToProps,
-  { fetchSessionsPerRegions }
-)(Chart);
+  { fetchSessionsPerRegions, fetchALLSessions }
+)(AdminSessions);
