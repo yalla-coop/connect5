@@ -34,9 +34,13 @@ module.exports = (req, res, next) => {
         };
 
         // create token for 25 day
-        const token = jwt.sign({ id: user._id }, process.env.SECRET, {
-          expiresIn: tokenMaxAge.string,
-        });
+        const token = jwt.sign(
+          { id: user._id, role: user.role },
+          process.env.SECRET,
+          {
+            expiresIn: tokenMaxAge.string,
+          }
+        );
         res.cookie('token', token, {
           maxAge: tokenMaxAge.number,
           httpOnly: true,
