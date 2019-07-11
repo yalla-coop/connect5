@@ -17,7 +17,7 @@ describe('Test exportData query', () => {
 
   test('gets trainer feedback overall', () => {
     // const trainer = await User.find({ role: 'admin' });
-    return exportData('admin').then(result => {
+    return exportData().then(result => {
       expect(result).toBeDefined();
       expect(result[0]['Survey Type']).toBeDefined();
       expect(result[0]['Session Date']).toBeDefined();

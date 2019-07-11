@@ -21,7 +21,7 @@ describe('Test exportData query', () => {
   });
 
   test('gets trainer feedback overall', () => {
-    return exportData('admin').then(result => {
+    return exportData().then(result => {
       expect(result).toBeDefined();
       expect(result[0]['Survey Type']).toBeDefined();
       expect(result[0]['Trainer 1 ID']).toBeDefined();

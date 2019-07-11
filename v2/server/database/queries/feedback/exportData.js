@@ -4,10 +4,7 @@
 
 const Answer = require('../../models/Answer');
 
-module.exports.exportData = user => {
-  // send across the role to decide level of data
-
-  // if (role === 'admin') {
+module.exports.exportData = () => {
   return Answer.aggregate([
     {
       $lookup: {
@@ -15,6 +12,16 @@ module.exports.exportData = user => {
         localField: 'question',
         foreignField: '_id',
         as: 'question',
+      },
+    },
+    {
+      $unwind: '$question',
+    },
+    {
+      $sort: {
+        'question.group': 1,
+        'question.subGroup.name': 1,
+        'question.subGroup.order': -1,
       },
     },
     {
@@ -96,7 +103,6 @@ module.exports.exportData = user => {
       },
     },
   ]);
-  // }
 };
 
 module.exports.trainerFilter = (responses, trainerIDs) => {
