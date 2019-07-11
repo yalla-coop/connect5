@@ -2,19 +2,19 @@ const mongoose = require('mongoose');
 
 // load models
 const Session = require('../../../database/models/Session');
+const Participant = require('../../../database/models/Participant');
+
 // load query
 const surveyQs = require('../../../database/queries/surveys/surveyQuestions');
 const storeResponse = require('../../../database/queries/surveys/storeResponse');
-const storeAnswers = require('../../../database/queries/surveys/storeAnswers');
+const getAnswersFromForm = require('../../../helpers/getAnswersFromForm');
 
 // build db
 const buildDB = require('../../../database/data/test/index');
 
-describe('test survey queries', () => {
-  beforeAll(async done => {
-    // build dummy data
+describe('Tests for storing responses and answers in database', () => {
+  beforeAll(async () => {
     await buildDB();
-    done();
   });
   afterAll(() => {
     mongoose.disconnect();
@@ -41,42 +41,41 @@ describe('test survey queries', () => {
       expect(err).toBeDefined();
     });
   });
-});
-
-describe('Tests for storing responses and answers in database', () => {
-  beforeAll(async () => {
-    await buildDB();
-  });
-  afterAll(() => {
-    mongoose.disconnect();
-  });
 
   test('storeResponse successfully stores answers and response in models', async done => {
-    const surveyType = 'post-day-1';
-    const singleSession = await Session.findOne({ type: '1' });
-    const sessionId = singleSession._id;
-    const PIN = 'TES22';
-    const response = await storeResponse(PIN, sessionId, surveyType);
-    expect(response.session).toBe(sessionId);
+    try {
+      const surveyType = 'post-day-1';
+      const singleSession = await Session.findOne({ type: '1' });
+      const sessionId = singleSession._id;
+      const PIN = 'TES22';
+      const response = await storeResponse(PIN, sessionId, surveyType);
+      expect(response.session).toBe(sessionId);
 
-    const dummyAnswers = {
-      '5cdc2e9546fec219392004ab': 'Under 18',
-      '5cdc2e9546fec219392004ac': 'Female',
-      '5cdc2e9546fec219392004ad': 'Other: test',
-      '5cdc2e9546fec219392004ae': 'North East',
-      '5cdc2e9546fec219392004b3': '2',
-      '5cdc2e9546fec219392004b4': '1',
-    };
+      const dummyAnswers = {
+        '5cdc2e9546fec219392004ab': { answer: 'Under 18' },
+        '5cdc2e9546fec219392004ac': { answer: 'Female' },
+        '5cdc2e9546fec219392004ad': { answer: 'Other: test' },
+        '5cdc2e9546fec219392004ae': { answer: 'North East' },
+        '5cdc2e9546fec219392004b3': { answer: '2' },
+        '5cdc2e9546fec219392004b4': { answer: '1' },
+      };
 
-    const storedAnswers = await storeAnswers(
-      response._id,
-      dummyAnswers,
-      sessionId,
-      PIN
-    );
+      const participant = await Participant.findOne();
 
-    expect(storedAnswers).toBeDefined();
-    expect(storedAnswers[0].answer).toBe('Under 18');
-    done();
+      const storedAnswers = getAnswersFromForm({
+        responseId: response._id,
+        answers: dummyAnswers,
+        sessionId,
+        PIN,
+        participantId: participant._id,
+      });
+
+      expect(storedAnswers).toBeDefined();
+      expect(storedAnswers[0].answer).toBe('Under 18');
+      expect(1).toBe(1);
+      done();
+    } catch (error) {
+      done(error);
+    }
   });
 });

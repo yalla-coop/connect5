@@ -21,7 +21,6 @@ const surveyQs = async (surveyType, shortId) => {
 
   // get the session details
   const sessionDetails = await Session.findOne({ shortId });
-
   // get the trainer details as an array of ids
   const { trainers, _id: sessionId } = sessionDetails;
 

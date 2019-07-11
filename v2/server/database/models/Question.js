@@ -38,6 +38,8 @@ const questionSchema = new Schema({
   // question can contain multi helper text
   helperText: [String],
   options: [Schema.Types.Mixed],
+  // "gender" "age" "region" ....
+  participantField: String,
 });
 
 const Questions = model('questions', questionSchema);

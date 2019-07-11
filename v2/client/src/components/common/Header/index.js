@@ -56,6 +56,7 @@ export const viewHeader = css`
   h1 {
     font-size: 1rem;
     font-weight: 300;
+    color: ${colors.offWhite};
   }
 `;
 

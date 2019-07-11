@@ -85,7 +85,9 @@ class Survey extends React.Component {
   selectCheckedItem = (value, questionId) => {
     const { formState } = this.state;
     formState[questionId] = value;
-    this.setState({ formState });
+    this.setState({ formState }, () => {
+      this.trackAnswers();
+    });
   };
 
   // function to track progress on survey
@@ -106,44 +108,56 @@ class Survey extends React.Component {
 
   // // check for any changes to the survey inputs and add them to the formstate
   handleChange = e => {
+    const { group, field } = e.target.dataset;
+
     const question = e.target.name;
     const { formState } = this.state;
     // if any other type we assign the value to answer and put it in the state
-    const answer = e.target.value;
-    formState[question] = answer;
-    this.setState(() => ({
-      formState,
-    }));
-    this.trackAnswers();
+    const answer = { answer: e.target.value, question };
+    if (group === 'demographic') {
+      answer.participantField = field;
+    }
+
+    this.setState({ formState: { ...formState, [question]: answer } }, () => {
+      this.trackAnswers();
+    });
   };
 
-  handleAntdDatePicker = (question, value) => {
+  handleAntdDatePicker = (question, value, group, field) => {
     // const question = e.target.name;
     const { formState } = this.state;
     // if any other type we assign the value to answer and put it in the state
     // const answer = e.target.value;
-    formState[question] = value;
-    this.setState(() => ({
-      formState,
-    }));
-    this.trackAnswers();
+    const answer = { answer: value, question };
+    if (group === 'demographic') {
+      answer.participantField = field;
+    }
+
+    this.setState({ formState: { ...formState, [question]: answer } }, () => {
+      this.trackAnswers();
+    });
   };
 
   // handles case when user selects 'other'
   handleOther = e => {
     const question = e.target.name;
     const { formState } = this.state;
-    const answer = `Other: ${e.target.value}`;
-    formState[question] = answer;
-    this.setState(() => ({
-      formState,
-    }));
+    const { group, field } = e.target.dataset;
+
+    const answer = { answer: `Other: ${e.target.value}`, question };
+    if (group === 'demographic') {
+      answer.participantField = field;
+    }
+    this.setState({ formState: { ...formState, [question]: answer } }, () => {
+      this.trackAnswers();
+    });
   };
 
   // handles user input for PIN field
   handlePIN = e => {
-    this.setState({ PIN: e.target.value });
-    this.trackAnswers();
+    this.setState({ PIN: e.target.value }, () => {
+      this.trackAnswers();
+    });
   };
 
   // // when participant submits form
@@ -160,7 +174,7 @@ class Survey extends React.Component {
     } = this.state;
 
     const formSubmission = {
-      PIN: PIN.toUpperCase(),
+      PIN: PIN && PIN.toUpperCase(),
       sessionId,
       surveyType,
       formState,

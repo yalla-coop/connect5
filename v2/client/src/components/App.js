@@ -30,6 +30,7 @@ import ParticipantBehavioral from './pages/ParticipantBehavioral';
 import SessionDetails from './pages/SessionDetails';
 import EditSession from './pages/SessionDetails/SessionActions/SessionEdit';
 import SurveyResults from './pages/SurveyResults';
+import ViewParticipant from './pages/ViewParticipant';
 import ChangePassword from './pages/ChangePassword';
 import ParticipantProgress from './pages/ParticipantProgress';
 import Certificate from './pages/Certificate';
@@ -55,6 +56,7 @@ import {
   GROUP_SESSIONS_URL,
   DECIDE_VIEW_URL,
   SESSION_DETAILS_URL,
+  TRAINER_VIEW_PARTICIPANT,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -317,6 +319,17 @@ class App extends Component {
               loaded={loaded}
               isAuthenticated={isAuthenticated}
               allowedRoles={['localLead', 'admin']}
+              role={role}
+              navbar
+            />
+
+            <PrivateRoute
+              exact
+              path={TRAINER_VIEW_PARTICIPANT}
+              Component={ViewParticipant}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['trainer', 'localLead', 'admin']}
               role={role}
               navbar
             />

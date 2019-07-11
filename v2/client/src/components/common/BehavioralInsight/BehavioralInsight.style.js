@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { breakpoints } from '../../../theme';
 
 export const Wrapper = styled.div`
-  background: #f7f8f9;
+  background: ${({ backgroundColor }) => backgroundColor || '#f7f8f9'};
 `;
 
 export const ContentWrapper = styled.div`
