@@ -101,7 +101,10 @@ class Survey extends React.Component {
         if (exist) {
           this.setState({
             PINExist: true,
-            errors: { ...errors, PIN: 'The PIN you use has submit the survey' },
+            errors: {
+              ...errors,
+              PIN: "The PIN you've entered has already submitted this survey",
+            },
           });
         } else {
           this.setState({
