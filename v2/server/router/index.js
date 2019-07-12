@@ -23,6 +23,7 @@ const authentication = require('./../middlewares/authentication');
 
 const feedbackFromParticipant = require('./../controllers/feedback/feedbackFromParticipant');
 const getParticipantSessions = require('../controllers/users/getParticipantSessions');
+const checkPINResponsesOnSurvey = require('../controllers/survey/checkPINResponsesOnSurvey');
 
 const router = express.Router();
 
@@ -54,6 +55,7 @@ router.get('/feedback/participant/:PIN', feedbackFromParticipant);
 router.use(usersRouter);
 
 router.get('/survey/:id', surveyQs);
+router.get('/survey/:surveyType&:shortId/:PIN', checkPINResponsesOnSurvey);
 
 router.get('/session/:sessionId/:surveyType/responses', getSurveyResponses);
 
