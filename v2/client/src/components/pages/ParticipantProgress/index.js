@@ -14,8 +14,8 @@ import { Wrapper, Span } from './ParticipantProgress.style';
 
 class ParticipantProgress extends Component {
   componentDidMount() {
-    const { pin } = this.props;
-    this.props.fetchParticipentSessions(pin);
+    const { PIN } = this.props;
+    this.props.fetchParticipentSessions(PIN);
   }
 
   render() {
@@ -37,7 +37,7 @@ const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     loaded: state.auth.loaded,
-    pin: state.auth.pin,
+    PIN: state.auth.PIN,
     role: state.auth.role,
     sessions: state.sessions.sessions,
   };
