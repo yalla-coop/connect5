@@ -135,6 +135,7 @@ export const fetchParticipentSessions = pin => async dispatch => {
       payload: res.data,
     });
   } catch (error) {
-    console.log('error', error);
+    message.error('Error! something went wronge');
+    return history.push('/404err');
   }
 };
