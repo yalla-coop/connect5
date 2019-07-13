@@ -30,3 +30,15 @@ export const ButtonsWrapper = styled.div`
   margin: 0 auto;
   margin-top: 50px;
 `;
+
+export const ErrorMessage = styled.div`
+  width: 80%;
+  color: red;
+  margin-left: 3rem;
+  font-size: 1rem;
+
+  @media (min-width: 768px) {
+    width: 30%;
+    margin-left: 1rem;
+  }
+`;

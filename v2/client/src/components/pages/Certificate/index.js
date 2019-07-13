@@ -86,7 +86,7 @@ class Certificate extends Component {
           exact
           render={props => (
             <Wrapper>
-              <Paragraph onClick={this.handleClick}>
+              <Paragraph>
                 You can get your certificate by clicking here
               </Paragraph>
               <ButtonsWrapper>

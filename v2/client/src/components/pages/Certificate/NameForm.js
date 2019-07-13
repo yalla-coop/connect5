@@ -2,12 +2,48 @@ import React, { Component } from 'react';
 import { Input, Button } from 'antd';
 import * as Yup from 'yup';
 
-import { Wrapper, Content } from './Certificate.style';
+import { Wrapper, Content, ErrorMessage } from './Certificate.style';
+
+const name = Yup.string().required();
+
+const email = Yup.string()
+  .email()
+  .required();
+
+const nameSchema = Yup.object({
+  name,
+});
+
+const nameEmailSchema = Yup.object({
+  name,
+  email,
+});
 
 export default class NameForm extends Component {
   state = {
     name: '',
     email: '',
+    errors: {
+      name: '',
+      email: '',
+    },
+  };
+
+  validate = async () => {
+    const { sendEmail } = this.props;
+    const options = {
+      abortEarly: false,
+      stripUnknown: true,
+    };
+
+    // try {
+    if (sendEmail) {
+      return nameEmailSchema.validate(this.state, options);
+    }
+    return nameSchema.validate(this.state, options);
+    // } catch (err) {
+    // console.log('err', err);
+    // }
   };
 
   handleChange = e => {
@@ -21,17 +57,29 @@ export default class NameForm extends Component {
     e.preventDefault();
     const { sendEmail, getNameEmail, history, match } = this.props;
     const { name, email } = this.state;
-    // validate the email and name
-    if (sendEmail) {
-      getNameEmail(name, email);
-    } else {
-      getNameEmail(name);
-    }
-    history.push(`/certificate/${match.params.sessionId}/claim`);
+
+    this.validate()
+      .then(res => {
+        console.log('ree', res);
+        history.push(`/certificate/${match.params.sessionId}/claim`);
+      })
+      .catch(error => {
+        const errors = {};
+        error.inner.forEach(err => {
+          errors[err.path] = err.message;
+        });
+
+        console.log('errors', errors);
+        this.setState({
+          errors,
+        });
+      });
   };
 
   render() {
     const { sendEmail } = this.props;
+    const { errors } = this.state;
+
     return (
       <Wrapper>
         <form onSubmit={this.handleSubmit}>
@@ -41,14 +89,19 @@ export default class NameForm extends Component {
               placeholder="Enter your name"
               onChange={this.handleChange}
             />
-            <br />
-            <br />
+            <ErrorMessage>{errors.name}</ErrorMessage>
+
             {sendEmail && (
-              <Input
-                name="email"
-                placeholder="Enter your email"
-                onChange={this.handleChange}
-              />
+              <>
+                <br />
+                <br />
+                <Input
+                  name="email"
+                  placeholder="Enter your email"
+                  onChange={this.handleChange}
+                />
+                <ErrorMessage>{errors.email}</ErrorMessage>
+              </>
             )}
             <br />
             <br />
