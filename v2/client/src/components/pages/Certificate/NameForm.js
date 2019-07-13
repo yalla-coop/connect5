@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
-import { Input, Button } from 'antd';
+import { Input } from 'antd';
 import * as Yup from 'yup';
 
-import { Wrapper, Content, ErrorMessage } from './Certificate.style';
+import Button from '../../common/Button';
 
-const name = Yup.string().required();
+import {
+  Wrapper,
+  Content,
+  ErrorMessage,
+  InputDiv,
+  LoginForm,
+} from './Certificate.style';
+
+const name = Yup.string()
+  .min(3)
+  .required();
 
 const email = Yup.string()
   .email()
@@ -30,20 +40,17 @@ export default class NameForm extends Component {
   };
 
   validate = async () => {
-    const { sendEmail } = this.props;
+    const { location } = this.props;
+    const { sendEmail } = location.state;
     const options = {
       abortEarly: false,
       stripUnknown: true,
     };
 
-    // try {
     if (sendEmail) {
       return nameEmailSchema.validate(this.state, options);
     }
     return nameSchema.validate(this.state, options);
-    // } catch (err) {
-    // console.log('err', err);
-    // }
   };
 
   handleChange = e => {
@@ -55,12 +62,11 @@ export default class NameForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { sendEmail, getNameEmail, history, match } = this.props;
+    const { location, getNameEmail, history, match } = this.props;
     const { name, email } = this.state;
-
     this.validate()
       .then(res => {
-        console.log('ree', res);
+        getNameEmail(res.name, res.email, location.state.sendEmail);
         history.push(`/certificate/${match.params.sessionId}/claim`);
       })
       .catch(error => {
@@ -68,8 +74,6 @@ export default class NameForm extends Component {
         error.inner.forEach(err => {
           errors[err.path] = err.message;
         });
-
-        console.log('errors', errors);
         this.setState({
           errors,
         });
@@ -77,39 +81,49 @@ export default class NameForm extends Component {
   };
 
   render() {
-    const { sendEmail } = this.props;
-    const { errors } = this.state;
+    const { location } = this.props;
+    const { sendEmail } = location && location.state && location.state;
+    const { errors, name, email } = this.state;
 
     return (
       <Wrapper>
-        <form onSubmit={this.handleSubmit}>
+        <LoginForm onSubmit={this.handleSubmit}>
           <Content>
             <Input
               name="name"
               placeholder="Enter your name"
               onChange={this.handleChange}
+              value={name}
             />
             <ErrorMessage>{errors.name}</ErrorMessage>
 
             {sendEmail && (
               <>
                 <br />
-                <br />
                 <Input
                   name="email"
                   placeholder="Enter your email"
                   onChange={this.handleChange}
+                  value={email}
                 />
                 <ErrorMessage>{errors.email}</ErrorMessage>
               </>
             )}
             <br />
-            <br />
-            <Button htmlType="submit" type="primary" size="large" block>
+            {/* <Button htmlType="submit" type="primary" size="large" block>
               Submit
-            </Button>
+            </Button> */}
+
+            <InputDiv>
+              <Button
+                type="primary"
+                label="Submit"
+                height="40px"
+                width="100%"
+              />
+            </InputDiv>
           </Content>
-        </form>
+        </LoginForm>
       </Wrapper>
     );
   }

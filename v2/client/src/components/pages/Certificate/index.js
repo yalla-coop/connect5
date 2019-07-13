@@ -13,23 +13,16 @@ import { Wrapper, Paragraph, ButtonsWrapper } from './Certificate.style';
 
 class Certificate extends Component {
   state = {
-    name: 'John Rees',
+    name: '',
     email: '',
-    sendEmail: false,
     isLoading: false,
+    sendEmail: false,
   };
 
   handleClick = () => {
-    const { name, email } = this.state;
+    const { name, email, sendEmail } = this.state;
     const fileName = `${name}-${Date.now()}.pdf`;
-    const {
-      sessionType,
-      date,
-      trainers,
-      sendEmail,
-      history,
-      match,
-    } = this.props;
+    const { sessionType, date, trainers, history, match } = this.props;
     const data = {
       name,
       email,
@@ -42,27 +35,30 @@ class Certificate extends Component {
       isLoading: true,
     });
     axios
-      .post('/api/certificate', data, {
+      .post(`/api/certificate/${match.params.sessionId}`, data, {
         headers: this.headers,
         responseType: 'blob',
       })
       .then(res => {
         const content = res.headers['content-type'];
         download(res.data, fileName, content);
+        this.setState({
+          isLoading: false,
+        });
         history.push(`/certificate/${match.params.sessionId}/success`);
       })
       .catch(err => {
-        console.log('er', err);
         this.setState({
           isLoading: false,
         });
       });
   };
 
-  getNameEmail = (name, email) => {
+  getNameEmail = (name, email, sendEmail) => {
     this.setState({
       name,
       email,
+      sendEmail,
     });
   };
 
@@ -90,14 +86,24 @@ class Certificate extends Component {
                 You can get your certificate by clicking here
               </Paragraph>
               <ButtonsWrapper>
-                <Link to={`${props.match.url}/download-only`}>
+                <Link
+                  to={{
+                    pathname: `${props.match.url}/download-only`,
+                    state: { sendEmail: false },
+                  }}
+                >
                   <Button type="primary" size="large" block>
                     Download only
                   </Button>
                 </Link>
                 <br />
                 <br />
-                <Link to={`${props.match.url}/download-email`}>
+                <Link
+                  to={{
+                    pathname: `${props.match.url}/download-email`,
+                    state: { sendEmail: true },
+                  }}
+                >
                   <Button type="primary" size="large" block>
                     Download and send to my email
                   </Button>
@@ -110,23 +116,30 @@ class Certificate extends Component {
           exact
           path={`${match.path}/download-only`}
           render={props => (
-            <NameForm {...props} getNameEmail={this.getNameEmail} />
+            <NameForm
+              {...props}
+              getNameEmail={this.getNameEmail}
+              {...this.state}
+            />
           )}
         />
         <Route
           exact
           path={`${match.path}/download-email`}
           render={props => (
-            <NameForm {...props} sendEmail getNameEmail={this.getNameEmail} />
+            <NameForm
+              {...props}
+              sendEmail
+              getNameEmail={this.getNameEmail}
+              {...this.state}
+            />
           )}
         />
 
         <Route
           exact
           path={`${match.path}/success`}
-          render={props => (
-            <SucessMsg {...props} sendEmail={this.state.sendEmail} />
-          )}
+          render={props => <SucessMsg {...props} />}
         />
       </Switch>
     );

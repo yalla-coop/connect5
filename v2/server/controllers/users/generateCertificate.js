@@ -4,12 +4,21 @@ const boom = require('boom');
 const moment = require('moment');
 const createCertificate = require('../../helpers/generatePdf');
 const { getUserNameById } = require('../../database/queries/user');
+const sendCertificate = require('../../helpers/emails/sendCertificate');
+const {
+  getSessionById,
+} = require('../../database/queries/sessionDetails/session');
 
 const generateCertificate = async (req, res, next) => {
   try {
-    const { name, sessionType, date, trainers, sendEmail } = req.body;
+    const { name, email, sendEmail } = req.body;
+    const { sessionId } = req.params;
 
-    if (!name || !sessionType || !date || !trainers) {
+    // get session data
+    const session = await getSessionById(sessionId);
+
+    const { type: sessionType, date, trainers } = session;
+    if (!name || !sessionType || !sessionType || !trainers) {
       return next(boom.badData());
     }
 
@@ -28,15 +37,17 @@ const generateCertificate = async (req, res, next) => {
       })
       .join(' & ');
 
-    // if (sendEmail) {
-    //   // send email
-    // }
     const fileName = createCertificate(
       sessionTypeEdit,
       name,
       formatedDate,
       trainersNames
     );
+
+    if (sendEmail) {
+      // send email
+      await sendCertificate({ email, fileName });
+    }
 
     res.sendFile(
       path.join(__dirname, '..', '..', 'tempCertificate', fileName),
@@ -56,6 +67,7 @@ const generateCertificate = async (req, res, next) => {
       }
     );
   } catch (err) {
+    console.log('err', err);
     next(boom.badImplementation());
   }
 };

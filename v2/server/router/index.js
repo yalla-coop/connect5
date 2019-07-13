@@ -30,7 +30,7 @@ const router = express.Router();
 
 router.post('/participant-login', ParticipantLoginController);
 router.get('/participant/:id/progress', getParticipantSessions);
-router.post('/certificate', generateCertificate);
+router.post('/certificate/:sessionId', generateCertificate);
 router.post('/login', loginController);
 router.get('/logout', logoutController);
 router.post('/add-session', authentication(), addSessionController);
