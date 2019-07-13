@@ -22,6 +22,7 @@ const initialState = {
   error: null,
   userLevel: null,
   viewLevel: null,
+  PIN: null,
 };
 
 export default function(state = initialState, action) {

@@ -34,7 +34,7 @@ import ViewParticipant from './pages/ViewParticipant';
 import ChangePassword from './pages/ChangePassword';
 import ParticipantProgress from './pages/ParticipantProgress';
 import Certificate from './pages/Certificate';
-
+import AdminDemographic from './pages/AdminDemographic';
 import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
 
@@ -116,7 +116,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path={GROUP_RESULTS_URL}
@@ -128,9 +127,7 @@ class App extends Component {
               groupView
               navbar
             />
-
             <Route exact path={HOME_URL} component={Home} />
-
             <PrivateRoute
               exact
               path="/add-trainer"
@@ -140,7 +137,6 @@ class App extends Component {
               allowedRoles={['admin', 'localLead', 'trainer']}
               role={role}
             />
-
             <PrivateRoute
               exact
               path={DASHBOARD_URL}
@@ -151,7 +147,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path="/change-password"
@@ -162,7 +157,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path={TRAINERS_URL}
@@ -173,7 +167,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path={SESSION_DETAILS_URL}
@@ -184,7 +177,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path={DECIDE_VIEW_URL}
@@ -195,7 +187,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path="/create-session"
@@ -206,9 +197,7 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <Route exact path={SURVEY_URL} component={Survey} />
-
             <PrivateRoute
               exact
               path="/session-edit/:id"
@@ -216,6 +205,15 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               loaded={loaded}
               allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
+            <PrivateRoute
+              path="/demographics"
+              Component={AdminDemographic}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin']}
               role={role}
               navbar
             />
@@ -250,7 +248,6 @@ class App extends Component {
                 return <Spin />;
               }}
             />
-
             <Route
               exact
               path="/participant-login"
@@ -266,7 +263,6 @@ class App extends Component {
                 return <Spin />;
               }}
             />
-
             <PrivateRoute
               exact
               path="/participant-dashboard"
@@ -276,7 +272,6 @@ class App extends Component {
               allowedRoles={['participant']}
               role={role}
             />
-
             <PrivateRoute
               exact
               path="/participant/behavioral-insight"
@@ -287,7 +282,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path="/participant/progress"
@@ -298,9 +292,12 @@ class App extends Component {
               role={role}
               navbar
             />
+<<<<<<< HEAD
 
             <Route path="/certificate/:sessionId" component={Certificate} />
 
+=======
+>>>>>>> e781fa4bed77863b783ddd1f3a6ffabcbcc79b65
             <PrivateRoute
               exact
               path={TRAINER_SESSIONS_URL}
@@ -311,7 +308,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path={GROUP_SESSIONS_URL}
@@ -322,7 +318,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path={TRAINER_VIEW_PARTICIPANT}
@@ -333,7 +328,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <Route
               path="/404err"
               render={() => (
