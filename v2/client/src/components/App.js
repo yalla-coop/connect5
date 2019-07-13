@@ -292,12 +292,9 @@ class App extends Component {
               role={role}
               navbar
             />
-<<<<<<< HEAD
 
             <Route path="/certificate/:sessionId" component={Certificate} />
 
-=======
->>>>>>> e781fa4bed77863b783ddd1f3a6ffabcbcc79b65
             <PrivateRoute
               exact
               path={TRAINER_SESSIONS_URL}
