@@ -63,7 +63,6 @@ export default class NameForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { location, getNameEmail, history, match } = this.props;
-    const { name, email } = this.state;
     this.validate()
       .then(res => {
         getNameEmail(res.name, res.email, location.state.sendEmail);
