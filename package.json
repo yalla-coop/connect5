@@ -31,7 +31,9 @@
     "coverage": "codecov",
     "build:data:dev": "NODE_ENV=dev node v2/server/database/data/development/index.js",
     "build:data:prd": "node v2/server/database/data/production/index.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "cypress": "node_modules/.bin/cypress open",
+    "cypress:headless": "node_modules/.bin/cypress run"
   },
   "dependencies": {
     "@hapi/joi": "^15.0.3",
@@ -56,6 +58,7 @@
   },
   "devDependencies": {
     "babel-eslint": "10.0.1",
+    "cypress": "^3.4.0",
     "eslint": "5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
