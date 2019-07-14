@@ -1,8 +1,9 @@
 // / <reference types="Cypress" />
+const url = 'localhost:3000';
 
 context('login page', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000/login');
+    cy.visit(`http://${url}/login`);
   });
 
   it('enter users credentials and login successfully', () => {
