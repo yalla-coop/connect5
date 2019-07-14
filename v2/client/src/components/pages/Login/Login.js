@@ -129,6 +129,7 @@ class Login extends Component {
               value={email}
               onChange={onInputChange}
               size="large"
+              data-testid="username"
             />
 
             <LoginFail>{emailError}</LoginFail>
@@ -141,6 +142,7 @@ class Login extends Component {
               type="text"
               value={password}
               onChange={onInputChange}
+              data-testid="password"
             />
             <LoginFail>{passwordError}</LoginFail>
           </InputDiv>
@@ -151,6 +153,7 @@ class Login extends Component {
               label="LOGIN"
               height="40px"
               width="100%"
+              data-testid="submit"
             />
           </InputDiv>
 

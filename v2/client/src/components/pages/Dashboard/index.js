@@ -61,7 +61,7 @@ class Dashboard extends Component {
       userName && userName[0].toUpperCase() + userName.substr(1);
 
     return (
-      <Wrapper>
+      <Wrapper data-testid="dashboard">
         <Header type="home" />
         {!stats.loaded ? (
           <SpinWrapper>
