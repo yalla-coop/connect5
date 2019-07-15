@@ -1,10 +1,14 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Select, Button } from 'antd';
+import { Select, Button, Modal as AntdModal } from 'antd';
+
 import SurveyContent from './SurveyContent';
 import Modal from '../../../common/modal';
-import { updateEmails } from '../../../../actions/groupSessionsAction';
+import {
+  updateEmails,
+  sendEmails,
+} from '../../../../actions/groupSessionsAction';
 import { ModalStyle } from '../../../common/List/List.style';
 import {
   SessionSurveysWrapper,
@@ -50,13 +54,36 @@ class SessionSurveys extends Component {
     });
   };
 
+  handleEmailing = (surveyURL, surveyType) => {
+    const { sessionDetails } = this.props;
+    const { sendEmails } = this.props;
+
+    const { participantsEmails } = sessionDetails;
+    AntdModal.info({
+      title:
+        'Do you want to send the survey link to all participants by emails?',
+      content: (
+        <div>
+          <p>click on {'Ok'} to send the survey link to all the participants</p>
+        </div>
+      ),
+      onOk() {
+        sendEmails({
+          surveyURL,
+          participantsList: participantsEmails,
+          surveyType,
+        });
+      },
+    });
+  };
+
   render() {
     const { modalOpen } = this.state;
     const { sessionDetails } = this.props;
-    const { type, _id, participantsEmails } = sessionDetails;
+    const { type, _id, shortId, participantsEmails } = sessionDetails;
     const { toggleModal, onEmailChange, saveEmails } = this;
     const links = surveyType[type].map(item => {
-      return `${window.location.host}/survey/${item}&${_id}`;
+      return `${window.location.host}/survey/${item}&${shortId}`;
     });
 
     const modalContent = participantsEmails && (
@@ -106,6 +133,7 @@ class SessionSurveys extends Component {
                 type={survey}
                 surveyURL={links[index]}
                 id={_id}
+                handleEmailing={this.handleEmailing}
               />
             );
           })}
@@ -126,7 +154,11 @@ class SessionSurveys extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  emailSuccess: state.groups.emailSuccess,
+});
+
 export default connect(
-  null,
-  { updateEmails }
+  mapStateToProps,
+  { updateEmails, sendEmails }
 )(SessionSurveys);

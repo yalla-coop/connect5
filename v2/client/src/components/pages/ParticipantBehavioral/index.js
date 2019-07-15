@@ -5,8 +5,8 @@ import ParticipantBehavioralInsight from '../../common/BehavioralInsight/Partici
 import { Wrapper, Paragraph } from './ParticipantBehavioral.style';
 import Header from '../../common/Header';
 
-const ParticipantBehavioral = ({ isAuthenticated, pin, role }) => {
-  if (!isAuthenticated || role !== 'participant' || !pin) {
+const ParticipantBehavioral = ({ isAuthenticated, PIN, role }) => {
+  if (!isAuthenticated || role !== 'participant' || !PIN) {
     return <Redirect to="/login" />;
   }
   return (
@@ -17,7 +17,7 @@ const ParticipantBehavioral = ({ isAuthenticated, pin, role }) => {
           Behaviour is influenced by our perceptions of our capability,
           opportunity and motivation for that behaviour
         </Paragraph>
-        <ParticipantBehavioralInsight userRole={role} idOrPIN={pin} />;
+        <ParticipantBehavioralInsight userRole={role} idOrPIN={PIN} />;
       </Wrapper>
     </>
   );
@@ -26,7 +26,7 @@ const ParticipantBehavioral = ({ isAuthenticated, pin, role }) => {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   loaded: state.auth.loaded,
-  pin: state.auth.pin,
+  PIN: state.auth.PIN,
   role: state.auth.role,
 });
 

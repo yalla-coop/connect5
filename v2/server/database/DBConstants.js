@@ -66,6 +66,33 @@ questionConstants.subGroupID = {
 
 questionConstants.regions = [...regions, 'Other (please specify)'];
 
+questionConstants.ages = [
+  'Under 18',
+  '18-24 years old',
+  '25-34 years old',
+  '35-44 years old',
+  '45-54 years old',
+  '55-64',
+  'Over 64',
+];
+
+questionConstants.ethnics = [
+  'English/Welsh/Scottish/Northern Irish/British',
+  'Irish',
+  'Gypsy or Irish Traveller',
+  'White and Black Caribbean',
+  'White and Black African',
+  'White and Asian',
+  'Indian',
+  'Pakistani',
+  'Bangladeshi',
+  'Chinese',
+  'African',
+  'Caribbean',
+  'Arab',
+  'Other (please specify)',
+];
+
 questionConstants.questionTypes = {
   positiveNumber: {
     desc: 'numberPositive',

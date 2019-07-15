@@ -2,7 +2,7 @@
 // and populate the Survey component
 
 import React from 'react';
-import { Alert } from 'antd';
+import { Alert, DatePicker } from 'antd';
 import {
   RadioField,
   TextField,
@@ -63,7 +63,10 @@ const renderQuestionInputType = (
   options,
   handleOther,
   subGroup,
-  errors
+  errors,
+  handleAntdDatePicker,
+  group,
+  participantField
 ) => {
   if (inputType === 'text') {
     return (
@@ -76,7 +79,14 @@ const renderQuestionInputType = (
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
-        <input id={index} name={questionId} type="text" onChange={onChange} />
+        <input
+          id={index}
+          name={questionId}
+          type="text"
+          onChange={onChange}
+          data-group={group}
+          data-field={participantField}
+        />
       </TextField>
     );
   }
@@ -91,7 +101,13 @@ const renderQuestionInputType = (
           <p className="helpertext">{helperText}</p>
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
-        <input id={index} name={questionId} type="date" onChange={onChange} />
+        <DatePicker
+          id={index}
+          name={questionId}
+          onChange={value =>
+            handleAntdDatePicker(questionId, value, group, participantField)
+          }
+        />
       </TextField>
     );
   }
@@ -113,6 +129,8 @@ const renderQuestionInputType = (
           type="number"
           min="0"
           onChange={onChange}
+          data-group={group}
+          data-field={participantField}
         />
       </TextField>
     );
@@ -140,11 +158,13 @@ const renderQuestionInputType = (
             type="range"
             onChange={onChange}
             unanswered={errorArray.includes(questionId) && !answers[questionId]}
+            data-group={group}
+            data-field={participantField}
           />
         </NumberSliderDiv>
         <NumberOutput>
           Current Rating:{' '}
-          {answers[questionId] ? answers[questionId] : '5'}
+          {answers[questionId] ? answers[questionId].answer : '5'}
         </NumberOutput>
       </TextField>
     );
@@ -163,7 +183,6 @@ const renderQuestionInputType = (
         <div className="answers">
           {options.map(e => {
             const value = e;
-
             const uniqueId = e + questionId;
             return (
               <div key={`${value}parent`}>
@@ -175,6 +194,8 @@ const renderQuestionInputType = (
                       name={questionId}
                       type="radio"
                       onChange={onChange}
+                      data-group={group}
+                      data-field={participantField}
                     />
                     <span className="checkmark" />
                     <p>{value}</p>
@@ -186,7 +207,9 @@ const renderQuestionInputType = (
         </div>
         <div className="other-div">
           {/* Load "Other" div */}
-          {answers[questionId] && answers[questionId].includes('Other') ? (
+          {answers[questionId] &&
+          answers[questionId].answer &&
+          answers[questionId].answer.includes('Other') ? (
             <TextField
               unanswered={
                 errorArray.includes(questionId) && !answers[questionId]
@@ -198,6 +221,8 @@ const renderQuestionInputType = (
                 name={questionId}
                 type="text"
                 onChange={handleOther}
+                data-group={group}
+                data-field={participantField}
               />
             </TextField>
           ) : (
@@ -221,7 +246,8 @@ const questionsRender = (
   errorArray,
   onChange,
   handleOther,
-  errors
+  errors,
+  handleAntdDatePicker
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group === 'demographic'
@@ -243,10 +269,10 @@ const questionsRender = (
     .filter(section => section.length > 0)
     .map((section, index) => (
       // map through each section
-      <QuestionWrapper key={index}>
+      <QuestionWrapper key={section[0].group}>
         <SectionCategory>{section[0] && section[0].group}</SectionCategory>
         {section &&
-          section.map((el, ind) => {
+          section.map(el => {
             // map through all the questions
             // el is one question
             const {
@@ -254,6 +280,8 @@ const questionsRender = (
               text: questionText,
               helperText,
               options,
+              group,
+              participantField,
             } = el;
             const inputType = el.questionType.desc;
             return (
@@ -270,7 +298,10 @@ const questionsRender = (
                   options,
                   handleOther,
                   renderSubGroupText(el),
-                  errors
+                  errors,
+                  handleAntdDatePicker,
+                  group,
+                  participantField
                 )}
               </div>
             );
@@ -288,7 +319,8 @@ export default class Questions extends React.Component {
       handlePIN,
       answers,
       errors,
-      trackAnswers,
+      handleAntdDatePicker,
+      onPINBlur,
     } = this.props;
 
     const errorArray = Object.keys(errors);
@@ -319,7 +351,7 @@ export default class Questions extends React.Component {
               maxLength="5"
               minLength="5"
               onChange={handlePIN}
-              onBlur={trackAnswers}
+              onBlur={onPINBlur}
             />
           </TextField>
         </QuestionWrapper>
@@ -329,7 +361,8 @@ export default class Questions extends React.Component {
           errorArray,
           onChange,
           handleOther,
-          errors
+          errors,
+          handleAntdDatePicker
         )}
       </React.Fragment>
     );

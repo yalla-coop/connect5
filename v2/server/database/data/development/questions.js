@@ -7,18 +7,11 @@ const demographics = surveyType => [
   // demographics
   {
     text: 'What is your age?',
-    options: [
-      'Under 18',
-      '18-24 years old',
-      '25-34 years old',
-      '35-44 years old',
-      '45-54 years old',
-      '55-64',
-      'Over 64',
-    ],
+    options: questionConstants.ages,
     questionType: questionConstants.questionTypes.radio,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'age',
   },
   {
     text: 'Gender',
@@ -27,6 +20,7 @@ const demographics = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'gender',
   },
   {
     text:
@@ -34,25 +28,11 @@ const demographics = surveyType => [
     helperText: [
       'Choose one option that best describes your ethnic group or background',
     ],
-    options: [
-      'English/Welsh/Scottish/Northern Irish/British',
-      'Irish',
-      'Gypsy or Irish Traveller',
-      'White and Black Caribbean',
-      'White and Black African',
-      'White and Asian',
-      'Indian',
-      'Pakistani',
-      'Bangladeshi',
-      'Chinese',
-      'African',
-      'Caribbean',
-      'Arab',
-      'Other (please specify)',
-    ],
+    options: questionConstants.ethnics,
     questionType: questionConstants.questionTypes.radio,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'ethnic',
   },
   {
     text: 'Please select your region:',
@@ -60,6 +40,7 @@ const demographics = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'region',
   },
   {
     text: 'Please enter the postcode where you are active',
@@ -68,18 +49,21 @@ const demographics = surveyType => [
     questionType: questionConstants.questionTypes.text,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'postcode',
   },
   {
     text: 'Please enter the first date of your Connect 5 training session 1',
     questionType: questionConstants.questionTypes.date,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'Session1Date',
   },
   {
     text: 'Please enter your job title',
     questionType: questionConstants.questionTypes.text,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'occupation',
   },
   {
     text: 'Please select your workforce',
@@ -98,6 +82,7 @@ const demographics = surveyType => [
     ],
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'workforce',
   },
 ];
 

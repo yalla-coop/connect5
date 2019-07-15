@@ -7,6 +7,7 @@ import {
   USER_UNAUTHENTICATED,
   RESET_UNIQUE_EMAIL,
   CHECK_UNIQUE_EMAIL_ERROR,
+  LOGOUT,
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
   error: null,
   userLevel: null,
   viewLevel: null,
+  PIN: null,
 };
 
 export default function(state = initialState, action) {
@@ -36,6 +38,7 @@ export default function(state = initialState, action) {
       };
 
     case LOGIN_FAIL:
+    case LOGOUT:
       return {
         ...state,
         token: null,

@@ -8,7 +8,7 @@ const Question = require('../../models/Question');
 const Session = require('../../models/Session');
 const User = require('../../models/User');
 
-const surveyQs = async (surveyType, sessionId) => {
+const surveyQs = async (surveyType, shortId) => {
   // get the survey questions as an array of objects
   const questionsForSurvey = await Question.aggregate([
     {
@@ -20,10 +20,9 @@ const surveyQs = async (surveyType, sessionId) => {
   ]);
 
   // get the session details
-  const sessionDetails = await Session.findById(sessionId);
-
+  const sessionDetails = await Session.findOne({ shortId });
   // get the trainer details as an array of ids
-  const { trainers } = sessionDetails;
+  const { trainers, _id: sessionId } = sessionDetails;
 
   // get users
   const users = await User.find();
