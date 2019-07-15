@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import BarChart from '../../common/BarChart';
 
 const BarComponent = ({ rawData, total }) => {
   const othersValue =
@@ -17,48 +17,24 @@ const BarComponent = ({ rawData, total }) => {
     data.push(othersValue);
   }
 
-  const maxNumber = Math.max(...rawData.map(item => item.sum));
+  const maxNumber = Math.max(...rawData.map(item => item.sum), othersValue);
   const barData = rawData && {
     labels,
     datasets: [
       {
         label: 'My First dataset',
-        backgroundColor: 'rgba(255,99,132,0.2)',
-        borderColor: 'rgba(255,99,132,1)',
+        backgroundColor: '#9ADBF9',
+        borderColor: '#9ADBF9',
         borderWidth: 1,
-        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-        hoverBorderColor: 'rgba(255,99,132,1)',
+        hoverBackgroundColor: '#36BEFC',
+        hoverBorderColor: '#36BEFC',
         data,
       },
     ],
   };
 
   return (
-    <Bar
-      data={barData}
-      width={100}
-      height={50}
-      options={{
-        maintainAspectRatio: false,
-        legend: { display: false },
-        offset: true,
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-                suggestedMin: 50,
-                suggestedMax: Math.ceil(maxNumber + 0.2 * maxNumber),
-              },
-              barPercentage: 1.0,
-              categoryPercentage: 0.4,
-              display: true,
-              offset: true,
-            },
-          ],
-        },
-      }}
-    />
+    <BarChart data={barData} width={320} height={251} maxNumber={maxNumber} />
   );
 };
 
