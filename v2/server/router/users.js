@@ -27,6 +27,7 @@ const removeTrainerToGroup = require('../controllers/users/removeTrainerToGroup'
 const getLocalLeadGroup = require('../controllers/users/getLocalLeadGroup');
 const changePassword = require('../controllers/users/changePassword');
 const getParticipantsDemogrphics = require('../controllers/users/getParticipantsDemogrphics');
+const getSessionsPerRegions = require('../controllers/users/SessionsPerRegions');
 
 // check eamil route if the route doen't contain email query
 // then it will skip with next()
@@ -70,5 +71,6 @@ router.get(
   authentication(),
   getParticipantsDemogrphics
 );
+router.get('/users/admin/all-sessions-per-region', getSessionsPerRegions);
 
 module.exports = router;
