@@ -42,8 +42,9 @@ module.exports = async (req, res, next) => {
     await addTrainertoGroup(localLead, trainer._id);
 
     await update(trainer._id, { localLead });
-    await sendNewTrainerLoginDetails(name, email, randomPassword);
-
+    if (process.env.NODE_ENV === 'production') {
+      await sendNewTrainerLoginDetails(name, email, randomPassword);
+    }
     return res.json({
       success: `${
         trainer.name
