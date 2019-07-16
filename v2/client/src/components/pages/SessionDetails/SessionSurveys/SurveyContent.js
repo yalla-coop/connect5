@@ -63,7 +63,7 @@ class SurveyContent extends Component {
 
   render() {
     const { onInfoClick, onCopyClick } = this;
-    const { type, surveyURL, subId, id } = this.props;
+    const { type, surveyURL, subId, id, handleEmailing } = this.props;
 
     let url = `https://${surveyURL}`;
 
@@ -97,7 +97,9 @@ class SurveyContent extends Component {
 
         <MailLink>
           <Icon type="mail" />
-          <IconName>Email Survey</IconName>
+          <IconName onClick={() => handleEmailing(url, type)}>
+            Email Survey
+          </IconName>
         </MailLink>
 
         <SurveyResultLink type={type} id={id} />

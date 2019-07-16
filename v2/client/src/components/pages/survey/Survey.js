@@ -28,6 +28,7 @@ class Survey extends React.Component {
     PIN: null,
     errors: {},
     completionRate: 0,
+    surveyParts: '',
   };
 
   componentWillMount() {
@@ -36,7 +37,6 @@ class Survey extends React.Component {
     const { location } = this.props;
     const survey = `${location.pathname}`;
     const surveyParts = survey.split('/')[2];
-
     window.scrollTo(0, 0);
 
     axios
@@ -49,6 +49,7 @@ class Survey extends React.Component {
           loading: false,
           sessionId,
           surveyType,
+          surveyParts,
         });
       })
       .then(() => {
@@ -85,7 +86,35 @@ class Survey extends React.Component {
   selectCheckedItem = (value, questionId) => {
     const { formState } = this.state;
     formState[questionId] = value;
-    this.setState({ formState });
+    this.setState({ formState }, () => {
+      this.trackAnswers();
+    });
+  };
+
+  checkPINResponsesOnSurvey = event => {
+    const PIN = event.target.value;
+    const { surveyParts, errors } = this.state;
+
+    if (PIN.length === 5) {
+      axios.get(`/api/survey/${surveyParts}/${PIN}`).then(({ data }) => {
+        const { exist } = data;
+        if (exist) {
+          this.setState({
+            PINExist: true,
+            errors: {
+              ...errors,
+              PIN: "The PIN you've entered has already submitted this survey",
+            },
+          });
+        } else {
+          this.setState({
+            PINExist: false,
+            errors: { ...errors, PIN: '' },
+          });
+          this.trackAnswers();
+        }
+      });
+    }
   };
 
   // function to track progress on survey
@@ -96,7 +125,7 @@ class Survey extends React.Component {
       // add one to total list to include the pin
       const numberOfQs = surveyDetails.questionsForSurvey.length + 1;
       const numberOfAs = Object.values(formState).length;
-      const pinAnswered = PIN ? 1 : 0;
+      const pinAnswered = PIN.length === 5 ? 1 : 0;
       const rate = Math.ceil(((numberOfAs + pinAnswered) / numberOfQs) * 100);
       this.setState({ completionRate: rate });
     } else {
@@ -106,44 +135,60 @@ class Survey extends React.Component {
 
   // // check for any changes to the survey inputs and add them to the formstate
   handleChange = e => {
+    const { group, field } = e.target.dataset;
+
     const question = e.target.name;
     const { formState } = this.state;
     // if any other type we assign the value to answer and put it in the state
-    const answer = e.target.value;
-    formState[question] = answer;
-    this.setState(() => ({
-      formState,
-    }));
-    this.trackAnswers();
+    const answer = { answer: e.target.value, question };
+    if (group === 'demographic') {
+      answer.participantField = field;
+    }
+
+    this.setState({ formState: { ...formState, [question]: answer } }, () => {
+      this.trackAnswers();
+    });
   };
 
-  handleAntdDatePicker = (question, value) => {
+  handleAntdDatePicker = (question, value, group, field) => {
     // const question = e.target.name;
     const { formState } = this.state;
     // if any other type we assign the value to answer and put it in the state
     // const answer = e.target.value;
-    formState[question] = value;
-    this.setState(() => ({
-      formState,
-    }));
-    this.trackAnswers();
+    const answer = { answer: value, question };
+    if (group === 'demographic') {
+      answer.participantField = field;
+    }
+
+    this.setState({ formState: { ...formState, [question]: answer } }, () => {
+      this.trackAnswers();
+    });
   };
 
   // handles case when user selects 'other'
   handleOther = e => {
     const question = e.target.name;
     const { formState } = this.state;
-    const answer = `Other: ${e.target.value}`;
-    formState[question] = answer;
-    this.setState(() => ({
-      formState,
-    }));
+    const { group, field } = e.target.dataset;
+
+    const answer = { answer: `Other: ${e.target.value}`, question };
+    if (group === 'demographic') {
+      answer.participantField = field;
+    }
+    this.setState({ formState: { ...formState, [question]: answer } }, () => {
+      this.trackAnswers();
+    });
   };
 
   // handles user input for PIN field
   handlePIN = e => {
-    this.setState({ PIN: e.target.value });
-    this.trackAnswers();
+    const PIN = e.target.value;
+
+    this.setState({ PIN }, () => {
+      if (PIN.length === 5) {
+        this.trackAnswers();
+      }
+    });
   };
 
   // // when participant submits form
@@ -157,15 +202,23 @@ class Survey extends React.Component {
       surveyType,
       PIN,
       disagreedToResearch,
+      PINExist,
     } = this.state;
 
     const formSubmission = {
-      PIN: PIN.toUpperCase(),
+      PIN: PIN && PIN.toUpperCase(),
       sessionId,
       surveyType,
       formState,
       disagreedToResearch,
     };
+    if (PINExist) {
+      return swal.fire({
+        title: 'This PIN has already submited the survey before',
+        type: 'error',
+      });
+    }
+
     // check if PIN was entered before API call
     if (PIN) {
       return axios
@@ -239,8 +292,8 @@ class Survey extends React.Component {
                 answers={formState}
                 selectCheckedItem={this.selectCheckedItem}
                 errors={errors}
-                trackAnswers={this.trackAnswers}
                 handleAntdDatePicker={this.handleAntdDatePicker}
+                onPINBlur={this.checkPINResponsesOnSurvey}
               />
               <button type="submit">Submit Feedback</button>
             </Form>

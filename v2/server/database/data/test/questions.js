@@ -7,18 +7,11 @@ const demographics = surveyType => [
   // demographics
   {
     text: 'What is your age?',
-    options: [
-      'Under 18',
-      '18-24 years old',
-      '25-34 years old',
-      '35-44 years old',
-      '45-54 years old',
-      '55-64',
-      'Over 64',
-    ],
+    options: questionConstants.ages,
     questionType: questionConstants.questionTypes.radio,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'age',
   },
   {
     text: 'Gender',
@@ -27,58 +20,34 @@ const demographics = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'gender',
   },
   {
-    text: 'Ethnicity from office of national statistics',
+    text:
+      'What is your ethnic group? (please choose the best option that describes you ethnic group or background)',
     helperText: [
-      'What is your ethnic group?',
       'Choose one option that best describes your ethnic group or background',
     ],
     options: [
-      {
-        text: 'White',
-        options: [
-          'English/Welsh/Scottish/Northern Irish/British',
-          'Irish',
-          'Gypsy or Irish Traveller',
-          'Any other White background, please describe',
-        ],
-      },
-      {
-        text: 'Mixed/Multiple ethnic groups',
-        options: [
-          'White and Black Caribbean',
-          'White and Black African',
-          'White and Asian',
-          'Any other Mixed/Multiple ethnic background, please describe',
-        ],
-      },
-      {
-        text: 'Asian/Asian British',
-        options: [
-          'Indian',
-          'Pakistani',
-          'Bangladeshi',
-          'Chinese',
-          'Any other Asian background, please describe',
-        ],
-      },
-      {
-        text: 'Black/ African/Caribbean/Black British',
-        options: [
-          'African',
-          'Caribbean',
-          '16. Any other Black/African/Caribbean background, please describe',
-        ],
-      },
-      {
-        text: 'Other ethnic group',
-        options: ['Arab', 'Any other ethnic group, please describe'],
-      },
+      'English/Welsh/Scottish/Northern Irish/British',
+      'Irish',
+      'Gypsy or Irish Traveller',
+      'White and Black Caribbean',
+      'White and Black African',
+      'White and Asian',
+      'Indian',
+      'Pakistani',
+      'Bangladeshi',
+      'Chinese',
+      'African',
+      'Caribbean',
+      'Arab',
+      'Other (please specify)',
     ],
-    questionType: questionConstants.questionTypes.radioGroup,
+    questionType: questionConstants.questionTypes.radio,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'ethnic',
   },
   {
     text: 'Please select your region:',
@@ -86,6 +55,7 @@ const demographics = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'region',
   },
   {
     text: 'Please enter the postcode where you are active',
@@ -94,18 +64,21 @@ const demographics = surveyType => [
     questionType: questionConstants.questionTypes.text,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'postcode',
   },
   {
     text: 'Please enter the first date of your Connect 5 training session 1',
     questionType: questionConstants.questionTypes.date,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'Session1Date',
   },
   {
     text: 'Please enter your job title',
     questionType: questionConstants.questionTypes.text,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'occupation',
   },
   {
     text: 'Please select your workforce',
@@ -124,6 +97,7 @@ const demographics = surveyType => [
     ],
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
+    participantField: 'workforce',
   },
 ];
 

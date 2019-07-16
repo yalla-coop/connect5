@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { message } from 'antd';
+
 import {
   FETCH_ALL_SESSIONS,
   FETCH_TRAINERS_SESSIONS,
@@ -7,8 +9,10 @@ import {
   DELETE_SESSION_SUCCESS,
   EDIT_SESSION_SUCCESS,
   UPDATE_EMAILS_SUCCESS,
+  SEND_SURVEY_EMAIL_SUCCESS,
   FETCH_PRTICIPENT_SESSIONS_SUCCESS,
 } from '../constants/actionTypes';
+
 import history from '../history';
 
 export const fetchTrainerSessions = id => async dispatch => {
@@ -99,6 +103,30 @@ export const updateEmails = (id, participantsEmails) => async dispatch => {
     .catch(() => history.push('/404err'));
 };
 
+export const sendEmails = ({
+  surveyURL,
+  participantsList,
+  surveyType,
+}) => async dispatch => {
+  axios
+    .post('/api/survey/email', {
+      surveyURL,
+      participantsList,
+      surveyType,
+    })
+    .then(res => {
+      message.success('Done, Emails sent successfully!');
+      return dispatch({
+        type: SEND_SURVEY_EMAIL_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch(() => {
+      message.error('Error! something went wronge');
+      history.push('/404err');
+    });
+};
+
 export const fetchParticipentSessions = pin => async dispatch => {
   try {
     const res = await axios.get(`/api/participant/${pin}/progress`);
@@ -107,6 +135,7 @@ export const fetchParticipentSessions = pin => async dispatch => {
       payload: res.data,
     });
   } catch (error) {
-    console.log('error', error);
+    message.error('Error! something went wronge');
+    return history.push('/404err');
   }
 };
