@@ -33,6 +33,7 @@ import SurveyResults from './pages/SurveyResults';
 
 import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
+import ForgetPassword from './pages/ForgetPassword';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -52,6 +53,7 @@ import {
   GROUP_SESSIONS_URL,
   DECIDE_VIEW_URL,
   SESSION_DETAILS_URL,
+  FORGET_PASSWORD,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -105,6 +107,17 @@ class App extends Component {
               exact
               path={TRAINER_RESULTS_URL}
               Component={UserResults}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['trainer', 'admin', 'localLead']}
+              role={role}
+              navbar
+            />
+
+            <PrivateRoute
+              exact
+              path={FORGET_PASSWORD}
+              Component={ForgetPassword}
               isAuthenticated={isAuthenticated}
               loaded={loaded}
               allowedRoles={['trainer', 'admin', 'localLead']}

@@ -19,6 +19,8 @@ import history from '../../../history';
 import {
   DASHBOARD_URL,
   DECIDE_VIEW_URL,
+  FORGET_PASSWORD,
+  SIGN_UP_URL,
 } from '../../../constants/navigationRoutes';
 
 class Login extends Component {
@@ -158,10 +160,12 @@ class Login extends Component {
         </LoginForm>
 
         <NoAccount>
-          <p>
-            {"Don't have an account? "}
-            <AnotherLink to="/signup"> Sign Up!</AnotherLink>
-          </p>
+          <span style={{ display: 'inline-block', padding: '1rem 2rem' }}>
+            <AnotherLink to={FORGET_PASSWORD}> Forget password?</AnotherLink>
+          </span>
+          <span>
+            <AnotherLink to={SIGN_UP_URL}> Create an account</AnotherLink>
+          </span>
           <p>
             Course participant?
             <AnotherLink to="/participant-login"> Login here!</AnotherLink>
