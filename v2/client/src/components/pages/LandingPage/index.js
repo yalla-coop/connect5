@@ -11,6 +11,12 @@ import {
   ButtonDiv,
 } from './LandingPage.style';
 
+// ROUTES
+import {
+  LOGIN_URL,
+  PARTICIPANT_LOGIN,
+} from '../../../constants/navigationRoutes';
+
 import Connect5Logo from '../../../assets/connect-5-white.png';
 
 import Button from '../../common/Button';
@@ -29,7 +35,7 @@ export default function LandingPage() {
         </Paragraph>
       </DescriptionContainer>
       <ButtonContainer>
-        <ButtonLink to="/">
+        <ButtonLink to={`${LOGIN_URL}`}>
           <ButtonDiv>
             <Button
               label="I'm a Trainer or Local Lead"
@@ -39,7 +45,7 @@ export default function LandingPage() {
             />
           </ButtonDiv>
         </ButtonLink>
-        <ButtonLink to="/">
+        <ButtonLink to={`${PARTICIPANT_LOGIN}`}>
           <ButtonDiv>
             <Button
               label="I'm a Course Participant"
