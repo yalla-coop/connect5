@@ -8,9 +8,9 @@ const sendNewTrainerLoginDetails = (username, userEmail, password) => {
     </div>
     <div style="text-align: left;">
       <p style="font-weight: 700;">Hi, <span style="font-weight: 900;  text-transform: capitalize;"> ${username}</span></p>
-      <p>You have been added as trainer to connect 5</p>
+      <p>You have been added as trainer to the Connect 5 App</p>
       <p>Here is your password, ${password}</p>
-      <p>You can reset your password </p>
+      <p>You can now log in using this email address and your password. Once logged in you can change your password.</p>
        <p style="margin-bottom: 0;">Thanks,</p>
       <p style="margin-bottom: 0;">Connect 5</p>
     </div>
