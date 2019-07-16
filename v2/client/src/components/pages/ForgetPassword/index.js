@@ -3,12 +3,15 @@ import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
 import {
-  LoginHeading,
+  Heading,
   H3,
   InputDiv,
-  LoginForm,
-  LoginFail,
+  ForgetPasswordForm,
+  ErrorMsg,
+  Hint,
 } from './ForgetPassword.style';
+
+import { checkUserByEmail } from '../../../actions/users';
 // import history from '../../../history';
 
 class ForgetPassword extends Component {
@@ -19,48 +22,49 @@ class ForgetPassword extends Component {
   };
 
   // Check inputs validation then if not valide show error msg
-  //
-  // validateForm = () => {
-  //   const { email } = this.state;
-  //   const errors = {};
-  //   let formIsValid = true;
-  //   if (!email) {
-  //     formIsValid = false;
-  //     errors.emailError = '*Please enter your email';
-  //   }
-  //
-  //   if (typeof email !== 'undefined') {
-  //     // regular expression for email validation
-  //     const pattern = new RegExp(
-  //       /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
-  //     );
-  //     if (!pattern.test(email)) {
-  //       formIsValid = false;
-  //       errors.emailError = '*Please enter valid email.';
-  //     }
-  //   }
-  //
-  //   this.setState({
-  //     errors,
-  //   });
-  //   return formIsValid;
-  // };
-  //
-  // onFormSubmit = e => {
-  //   // const { email } = this.state;
-  //   e.preventDefault();
-  //   const isValide = this.validateForm();
-  //   if (isValide) {
-  //     // call action creator then give it email and password
-  //   }
-  // };
-  //
-  // onInputChange = e => {
-  //   this.setState({
-  //     email: e.target.value,
-  //   });
-  //   console.log(this.state, 'sssssssssssssss');
-  // };
+
+  validateForm = () => {
+    const { email } = this.state;
+    const errors = {};
+    let formIsValid = true;
+    if (!email) {
+      formIsValid = false;
+      errors.emailError = '*Please enter your email';
+    }
+
+    if (typeof email !== 'undefined') {
+      // regular expression for email validation
+      const pattern = new RegExp(
+        /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+      );
+      if (!pattern.test(email)) {
+        formIsValid = false;
+        errors.emailError = '*Please enter valid email.';
+      }
+    }
+
+    this.setState({
+      errors,
+    });
+    return formIsValid;
+  };
+
+  onFormSubmit = e => {
+    const { email } = this.state;
+    const { checkUserByEmail: checkUserByEmailActionCreator } = this.props;
+    e.preventDefault();
+    const isValide = this.validateForm();
+    if (isValide) {
+      // call action creator then give it email
+      checkUserByEmailActionCreator(email);
+    }
+  };
+
+  onInputChange = e => {
+    this.setState({
+      email: e.target.value,
+    });
+  };
 
   render() {
     const { email, errors, msg } = this.state;
@@ -68,10 +72,15 @@ class ForgetPassword extends Component {
     const { onInputChange, onFormSubmit } = this;
     return (
       <div style={{ paddingTop: '6rem' }}>
-        <LoginForm onSubmit={onFormSubmit}>
-          <LoginHeading>
-            <H3>Forget Your Password</H3>
-          </LoginHeading>
+        <ForgetPasswordForm onSubmit={onFormSubmit}>
+          <Heading>
+            <H3>Forget Your Password!</H3>
+            <Hint>
+              Please enter your email adress and we'll send you instructions on
+              how to reset your password
+            </Hint>
+          </Heading>
+
           <InputDiv>
             <Input
               placeholder="Enter your email"
@@ -82,30 +91,34 @@ class ForgetPassword extends Component {
               size="large"
             />
 
-            <LoginFail>{emailError}</LoginFail>
+            <ErrorMsg>{emailError}</ErrorMsg>
           </InputDiv>
 
           <InputDiv>
             <Button
               onClick={onFormSubmit}
               type="primary"
-              label="LOGIN"
+              label="Get New Password"
               height="40px"
               width="100%"
             />
           </InputDiv>
 
-          <LoginFail>{msg}</LoginFail>
-        </LoginForm>
+          <ErrorMsg>{msg}</ErrorMsg>
+        </ForgetPasswordForm>
       </div>
     );
   }
 }
 
-// const mapStateToProps = state => ({
-//   isAuthenticated: state.auth.isAuthenticated,
-//   error: state.error,
-//   role: state.auth.role,
-// });
+const mapStateToProps = state => {
+  return {
+    isEmailUnique: state.auth.isEmailUnique,
+    checkedUserInfo: state.auth.checkedUserInfo,
+  };
+};
 
-export default connect(null)(ForgetPassword);
+export default connect(
+  mapStateToProps,
+  { checkUserByEmail }
+)(ForgetPassword);
