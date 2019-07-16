@@ -27,10 +27,12 @@ const removeTrainerToGroup = require('../controllers/users/removeTrainerToGroup'
 const getLocalLeadGroup = require('../controllers/users/getLocalLeadGroup');
 const changePassword = require('../controllers/users/changePassword');
 const getParticipantsDemogrphics = require('../controllers/users/getParticipantsDemogrphics');
+const forgetPassword = require('../controllers/users/forgetPassword');
 
 // check eamil route if the route doen't contain email query
 // then it will skip with next()
 router.get('/users', checkUniqueEmail);
+router.get('/users/forget-password', forgetPassword);
 
 // check for user credentials and send user info
 router.get('/users/auth', authentication(), getUserInfo);

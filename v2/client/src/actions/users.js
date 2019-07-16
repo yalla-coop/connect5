@@ -100,3 +100,19 @@ export const addTrainerToGroup = trianerInfo => async dispatch => {
     });
   }
 };
+
+export const checkUserByEmail = email => async dispatch => {
+  try {
+    const res = await axios.get(`/api/users/forget-password/?email=${email}`);
+
+    dispatch({
+      type: types.CHECK_USER_BY_EMAIL_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.CHECK_USER_BY_EMAIL_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
