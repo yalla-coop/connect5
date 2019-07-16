@@ -23,11 +23,11 @@ const DoughnutChart = ({ rawData, total }) => {
     datasets: [
       {
         label: 'My First dataset',
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-        borderColor: 'rgba(255,99,132,1)',
+        backgroundColor: ['#f5b8c6', '#9ADBF9'],
+
         borderWidth: 1,
-        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-        hoverBorderColor: 'rgba(255,99,132,1)',
+        hoverBackgroundColor: ['#f19baf', '#36BEFC'],
+
         data,
       },
     ],
@@ -50,7 +50,7 @@ const DoughnutChart = ({ rawData, total }) => {
               },
               barPercentage: 1.0,
               categoryPercentage: 0.4,
-              display: true,
+              display: false,
               offset: true,
             },
           ],
