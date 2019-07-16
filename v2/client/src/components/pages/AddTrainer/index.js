@@ -1,8 +1,9 @@
 /* eslint-disable react/no-did-update-set-state */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import { Modal } from 'antd';
+import history from '../../../history';
+
 import { fetchLocalLeads, addTrainerToGroup } from '../../../actions/users';
 import { checkUniqeEmail } from '../../../actions/authAction';
 import { resetgroup, resetUniqueEmail } from '../../../actions/reset';
@@ -91,7 +92,7 @@ class AddTrainer extends Component {
           newUser: !allowAddUsedEmail,
           localLead: values.localLead.key,
           localLeadName: values.localLead.label,
-        });
+        }).then(() => history.push('/dashboard'));
       }
     });
   };
