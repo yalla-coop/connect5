@@ -76,6 +76,23 @@ questionConstants.ages = [
   'Over 64',
 ];
 
+questionConstants.ethnics = [
+  'English/Welsh/Scottish/Northern Irish/British',
+  'Irish',
+  'Gypsy or Irish Traveller',
+  'White and Black Caribbean',
+  'White and Black African',
+  'White and Asian',
+  'Indian',
+  'Pakistani',
+  'Bangladeshi',
+  'Chinese',
+  'African',
+  'Caribbean',
+  'Arab',
+  'Other (please specify)',
+];
+
 questionConstants.questionTypes = {
   positiveNumber: {
     desc: 'numberPositive',

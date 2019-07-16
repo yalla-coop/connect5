@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import moment from 'moment';
 
@@ -26,14 +27,12 @@ const SessionList = ({ dataList }) => {
         {dataList &&
           dataList.length &&
           dataList.map(({ sessions: dataItem }) => (
-            <Row key={dataItem.id}>
+            <Row key={dataItem._id}>
               <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
               <Type type={dataItem.type}>
                 <p>{dataItem.type.replace(/-/g, ' ')}</p>
               </Type>
-              <StyledLink to={`/certificate/${dataItem._id}`} disable>
-                view
-              </StyledLink>
+              <StyledLink to={`/certificate/${dataItem._id}`}>view</StyledLink>
             </Row>
           ))}
       </List>

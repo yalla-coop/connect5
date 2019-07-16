@@ -43,7 +43,7 @@ describe('Test /survey/submit/', () => {
     };
     formState[questions[2]._id] = {
       answer: 'Irish',
-      participantField: 'ethinc',
+      participantField: 'ethnic',
     };
     formState[questions[3]._id] = {
       answer: 'London',

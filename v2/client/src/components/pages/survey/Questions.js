@@ -319,8 +319,8 @@ export default class Questions extends React.Component {
       handlePIN,
       answers,
       errors,
-      trackAnswers,
       handleAntdDatePicker,
+      onPINBlur,
     } = this.props;
 
     const errorArray = Object.keys(errors);
@@ -351,7 +351,7 @@ export default class Questions extends React.Component {
               maxLength="5"
               minLength="5"
               onChange={handlePIN}
-              onBlur={trackAnswers}
+              onBlur={onPINBlur}
             />
           </TextField>
         </QuestionWrapper>

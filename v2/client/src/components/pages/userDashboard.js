@@ -68,7 +68,7 @@ const UserDashboard = ({ PIN }) => {
     <DashboardWrapper>
       <H3>Welcome back</H3>
       <Content>
-        <Span>my pin:</Span>
+        <Span>my PIN:</Span>
         <Pin>{PIN}</Pin>
       </Content>
       <LinkBtn to="/participant/behavioral-insight">Insights</LinkBtn>
@@ -78,7 +78,7 @@ const UserDashboard = ({ PIN }) => {
 };
 
 const mapStateToProps = state => ({
-  PIN: state.auth.pin,
+  PIN: state.auth.PIN,
 });
 
 export default connect(mapStateToProps)(UserDashboard);

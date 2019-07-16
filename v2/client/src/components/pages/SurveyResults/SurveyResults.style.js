@@ -7,10 +7,6 @@ export const TrainerResultsWrapper = styled.div`
   padding-bottom: 80px;
 `;
 
-export const ContentWrapper = styled.div`
-  padding: 0 1rem;
-`;
-
 export const Header = styled.div`
   background: #c4c4c4;
   padding: 2rem 0;
