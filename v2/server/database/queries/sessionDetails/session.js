@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Session = require('./../../models/Session');
 
+module.exports.getSessionById = id => Session.findById(id);
+
 module.exports.getSessionDetails = id => {
   return Session.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(id) } },

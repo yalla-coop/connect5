@@ -14,9 +14,11 @@ if (process.env.NODE_ENV === 'test') {
 // mongodb://localhost:27017/connect5db
 // create DB connection
 const dbConnection = () =>
-  mongoose.connect(mongoURI, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-  });
+  mongoose.disconnect().then(() =>
+    mongoose.connect(mongoURI, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+    })
+  );
 
 module.exports = dbConnection;
