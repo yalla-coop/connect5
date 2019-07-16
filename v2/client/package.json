@@ -6,6 +6,7 @@
     "antd": "^3.18.1",
     "axios": "^0.18.0",
     "chart.js": "^2.8.0",
+    "downloadjs": "^1.4.7",
     "history": "^4.9.0",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
@@ -21,7 +22,8 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.2.0",
-    "sweetalert2": "^8.10.7"
+    "sweetalert2": "^8.10.7",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",

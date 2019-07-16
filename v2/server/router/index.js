@@ -23,12 +23,14 @@ const authentication = require('./../middlewares/authentication');
 
 const feedbackFromParticipant = require('./../controllers/feedback/feedbackFromParticipant');
 const getParticipantSessions = require('../controllers/users/getParticipantSessions');
+const generateCertificate = require('../controllers/users/generateCertificate');
 const checkPINResponsesOnSurvey = require('../controllers/survey/checkPINResponsesOnSurvey');
 
 const router = express.Router();
 
 router.post('/participant-login', ParticipantLoginController);
 router.get('/participant/:id/progress', getParticipantSessions);
+router.post('/certificate/:sessionId', generateCertificate);
 router.post('/login', loginController);
 router.get('/logout', logoutController);
 router.post('/add-session', authentication(), addSessionController);
