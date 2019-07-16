@@ -54,7 +54,7 @@ module.exports = async data => {
   if (
     postcodeQuestion &&
     answers.includes(postcodeQuestion._id.toString()) &&
-    !validPostcode(data.formState[postcodeQuestion._id.toString()])
+    !validPostcode(data.formState[postcodeQuestion._id.toString()].answer)
   ) {
     errors[postcodeQuestion._id.toString()] = 'enter a valid UK postcode';
   }

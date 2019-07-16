@@ -6,6 +6,7 @@ const sessions = require('./sessions');
 const responses = require('./responses');
 const questions = require('./questions');
 const answers = require('./answers');
+const participant = require('./participant');
 
 const buildTestData = () =>
   new Promise((resolve, reject) => {
@@ -18,6 +19,7 @@ const buildTestData = () =>
         await questions();
         await responses();
         await answers();
+        await participant();
       })
       .then(resolve)
       .catch(reject);

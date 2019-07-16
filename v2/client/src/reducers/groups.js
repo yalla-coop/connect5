@@ -5,6 +5,7 @@ const initState = {
   success: null,
   error: null,
   data: null,
+  emailSuccess: false,
 };
 
 export default (state = initState, action) => {
@@ -15,6 +16,9 @@ export default (state = initState, action) => {
 
     case types.ADD_TRAINER_TO_GROUP_FAIL:
       return { loaded: true, error: payload, success: false };
+
+    case types.SEND_SURVEY_EMAIL_SUCCESS:
+      return { ...state, emailSuccess: true };
 
     case types.RESET_GROUPS_STATE:
       return initState;
