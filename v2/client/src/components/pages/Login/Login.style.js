@@ -32,18 +32,11 @@ export const LoginPinWrapper = styled(LoginWrapper)`
 `;
 
 export const LoginHeading = styled.div`
-  opacity: 0;
-  animation: header-animation 1s 2s ease forwards;
   background: ${colors.primary};
   max-width: 25rem;
   width: 100;
   margin-bottom: 3rem;
   box-shadow: ${shadows.form};
-  @keyframes header-animation {
-    100% {
-      opacity: 1;
-    }
-  }
 `;
 
 export const H3 = styled.h3`
@@ -62,12 +55,6 @@ export const InputDiv = styled.div`
   margin: 0 auto;
   margin-bottom: 2rem;
   opacity: 0;
-  animation: input-animation 1s 3s ease forwards;
-  @keyframes input-animation {
-    100% {
-      opacity: 1;
-    }
-  }
   @media (min-width: 768px) {
     background: ${colors.ligthGray};
     width: 85%;
@@ -87,14 +74,6 @@ export const NoAccount = styled(InputDiv)`
   &:not(:last-child) {
     margin-top: 6rem;
   }
-  opacity: 0;
-  animation: input-animation 1s 4s ease forwards;
-  @keyframes input-animation {
-    100% {
-      opacity: 1;
-    }
-  }
-
   @media (min-width: 768px) {
     width: 80%;
     text-align: center;

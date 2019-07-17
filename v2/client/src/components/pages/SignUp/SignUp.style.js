@@ -23,15 +23,6 @@ export const Title = styled.h1`
   text-align: center;
   margin-bottom: 1.5rem;
   color: ${colors.profileFontColor};
-  opacity: 0;
-  animation: input-animation 1s 1s ease forwards;
-  @keyframes input-animation {
-    100% {
-      opacity: 1;
-    }
-  }
-  @media (min-width: 768px) {
-  }
 `;
 
 export const Form = styled(AntForm)`
@@ -43,14 +34,6 @@ export const Form = styled(AntForm)`
   padding: 7rem 0;
   box-shadow: ${shadows.form};
   background: #ebebeb;
-  opacity: 0;
-  animation: input-animation 1s 2s ease forwards;
-  @keyframes input-animation {
-    100% {
-      opacity: 1;
-    }
-  }
-
   & > div:first-child {
     padding-top: 1.5rem;
   }

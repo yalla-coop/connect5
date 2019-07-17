@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import { Router, Route, Switch, Link, Redirect } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 // PLEASE DO NOT PUT ANTD STYLING SHEET HERE AS OVERRIDES EXISTING STYLES
 // import 'antd/dist/antd.css';
 import styled from 'styled-components';
@@ -33,10 +33,15 @@ import SurveyResults from './pages/SurveyResults';
 import ViewParticipant from './pages/ViewParticipant';
 import ChangePassword from './pages/ChangePassword';
 import ParticipantProgress from './pages/ParticipantProgress';
+import Certificate from './pages/Certificate';
 import AdminDemographic from './pages/AdminDemographic';
-
 import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
+
+// Error Pages
+import NotFound from './pages/ErrorPages/404';
+import ServerError from './pages/ErrorPages/500';
+import Unauthorized from './pages/ErrorPages/403';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -292,6 +297,9 @@ class App extends Component {
               role={role}
               navbar
             />
+
+            <Route path="/certificate/:sessionId" component={Certificate} />
+
             <PrivateRoute
               exact
               path={TRAINER_SESSIONS_URL}
@@ -322,14 +330,12 @@ class App extends Component {
               role={role}
               navbar
             />
-            <Route
-              path="/404err"
-              render={() => (
-                <h1>
-                  404 go home<Link to={HOME_URL}>home</Link>
-                </h1>
-              )}
-            />
+
+            <Route path="/404err" render={() => <NotFound />} />
+            <Route path="/500err" render={() => <ServerError />} />
+            <Route path="/unauthorized" render={() => <Unauthorized />} />
+
+            <Route render={() => <NotFound />} />
           </Switch>
         </Router>
       </Wrapper>
