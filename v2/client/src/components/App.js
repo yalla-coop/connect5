@@ -38,6 +38,7 @@ import AdminDemographic from './pages/AdminDemographic';
 import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
 import ForgetPassword from './pages/ForgetPassword';
+import ResetPassword from './pages/ForgetPassword/ResetPassword';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -108,6 +109,7 @@ class App extends Component {
             />
             <Route exact path="/" component={Home} />
             <Route exact path="/thank-you" component={ThankYouPage} />
+            <Route exact path="/reset-password" component={ResetPassword} />
             <PrivateRoute
               exact
               path={TRAINER_RESULTS_URL}

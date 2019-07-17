@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Modal } from 'antd';
 
 import history from '../history';
 
@@ -110,9 +111,25 @@ export const checkUserByEmail = email => async dispatch => {
       payload: res.data,
     });
   } catch (error) {
-    dispatch({
-      type: types.CHECK_USER_BY_EMAIL_FAIL,
-      payload: error.response.data.error,
-    });
+    console.log(error);
   }
+};
+
+export const resetPassword = resetPasswordData => async dispatch => {
+  axios
+    .post(`/api/users/reset-password`, resetPasswordData)
+    .then(res =>
+      dispatch({
+        type: types.RESET_PASSWORD_SUCCESS,
+        payload: res.data,
+      })
+    )
+    .then(() =>
+      Modal.success({
+        title: 'Done!',
+        content: 'Password Changed',
+        onOk: history.push('/dashboard'),
+      })
+    )
+    .catch(err => console.log(err));
 };
