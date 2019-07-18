@@ -16,6 +16,8 @@ import {
   ProgressWrapper,
 } from './Survey.style';
 
+import ConfirmSurvey from './ConfirmSurvey';
+
 // formState will be the object where we store survey responses
 // as the participant answers the questions
 class Survey extends React.Component {
@@ -29,6 +31,7 @@ class Survey extends React.Component {
     errors: {},
     completionRate: 0,
     surveyParts: '',
+    section: 'confirmSurvey',
   };
 
   componentWillMount() {
@@ -52,35 +55,50 @@ class Survey extends React.Component {
           surveyParts,
         });
       })
-      .then(() => {
-        swal
-          .fire({
-            title: 'Research Cooperation <br>(University of Manchester)',
-            type: 'info',
-            text:
-              'Many thanks for agreeing to fill in this form. Your responses will be collated by University of Manchester to evaluate Connect5. University of Manchester will use anonymised data collected for research purposes. Individuals will never been identified by their responses. If you do not consent for your data to be used for research purposes, please tick.',
-            input: 'checkbox',
-            inputPlaceholder: '<strong>I do not agree</strong>',
-          })
-          .then(result => {
-            if (result.value) {
-              swal
-                .fire({
-                  type: 'error',
-                  text:
-                    'Thank you, your data will not be used for research purposes',
-                })
-                .then(() => this.setState({ disagreedToResearch: true }));
-              // do something here
-            } else if (result.value === 0) {
-              swal.fire({ type: 'success', text: 'Thank you!' });
-            } else {
-              console.log(`modal was dismissed by ${result.dismiss}`);
-            }
-          });
-      })
+      // .then(() => {
+      //   swal
+      //     .fire({
+      //       title: 'Research Cooperation <br>(University of Manchester)',
+      //       type: 'info',
+      //       text:
+      //         'Many thanks for agreeing to fill in this form. Your responses will be collated by University of Manchester to evaluate Connect5. University of Manchester will use anonymised data collected for research purposes. Individuals will never been identified by their responses. If you do not consent for your data to be used for research purposes, please tick.',
+      //       input: 'checkbox',
+      //       inputPlaceholder: '<strong>I do not agree</strong>',
+      //     })
+      //     .then(result => {
+      //       if (result.value) {
+      //         swal
+      //           .fire({
+      //             type: 'error',
+      //             text:
+      //               'Thank you, your data will not be used for research purposes',
+      //           })
+      //           .then(() => this.setState({ disagreedToResearch: true }));
+      //         // do something here
+      //       } else if (result.value === 0) {
+      //         swal.fire({ type: 'success', text: 'Thank you!' });
+      //       } else {
+      //         console.log(`modal was dismissed by ${result.dismiss}`);
+      //       }
+      //     });
+      // })
       .catch(err => console.error(err.stack));
   }
+
+  sectionChange = direction => {
+    const { section } = this.state;
+    let newSection;
+
+    if (direction === 'forward') {
+      switch (section) {
+        case 'confirmSurvey':
+          newSection = 'enterPIN';
+          break;
+        default:
+          newSection = section;
+      }
+    }
+  };
 
   // function that will check if the div for the answer has been selected and if so add that answer to the formstate
   selectCheckedItem = (value, questionId) => {
@@ -244,12 +262,6 @@ class Survey extends React.Component {
     });
   };
 
-  // function to create a list of names from an array...
-  renderTrainerNames = array =>
-    array.map((e, i) =>
-      array.length > 1 && array.length - 1 === i ? `and ${e}` : `${e} `
-    );
-
   render() {
     const {
       loading,
@@ -257,6 +269,7 @@ class Survey extends React.Component {
       formState,
       errors,
       completionRate,
+      section,
     } = this.state;
 
     if (loading) {
@@ -265,10 +278,12 @@ class Survey extends React.Component {
 
     const { sessionDate, trainerNames, questionsForSurvey } = surveyDetails;
     return (
-      <Container>
-        <SurveyQs>
+      <div>
+        {section === 'confirmSurvey' && (
+          <ConfirmSurvey surveyDetails={surveyDetails} />
+        )}
+        {/* <SurveyQs>
           <Header type="home" />
-
           <SessionDetails>
             <h3>Connect 5 Evaluation</h3>
             <ul>
@@ -306,8 +321,8 @@ class Survey extends React.Component {
             width={80}
             strokeColor={`${colors.green}`}
           />
-        </ProgressWrapper>
-      </Container>
+        </ProgressWrapper> */}
+      </div>
     );
   }
 }

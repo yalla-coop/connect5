@@ -4,7 +4,12 @@ import { colors, colorCodes, borders } from '../../../theme';
 export const Container = styled.div`
   max-width: 900px;
   margin: 0 auto;
+  height: 100vh;
   padding: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: ${colors.backgroundWashOut};
 `;
 
 const SurveyQs = styled.div`
@@ -13,27 +18,17 @@ const SurveyQs = styled.div`
   }
 `;
 
-const SessionDetails = styled.div`
-  padding: 0 0.5rem;
+export const SectionHeadline = styled.h1`
+  font-weight: 400;
+  font-size: 2rem;
+  padding-top: 1rem;
+  color: ${colors.black};
+`;
 
-  span {
-    font-weight: 300;
-  }
-  h3 {
-    font-size: 2rem;
-    font-weight: 300;
-  }
-  ul {
-    text-align: left;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  li {
-    text-transform: capitalize;
-  }
-
-  margin: 1rem 0;
+export const SectionSubHeadline = styled.h2`
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: ${colors.blackSecondary};
 `;
 
 const Disclaimer = styled.div`
@@ -73,10 +68,4 @@ const ProgressWrapper = styled.div`
   color: ${colors.white};
 `;
 
-export {
-  SurveyQs,
-  SessionDetails,
-  Form,
-  Disclaimer,
-  ProgressWrapper,
-};
+export { SurveyQs, Form, Disclaimer, ProgressWrapper };
