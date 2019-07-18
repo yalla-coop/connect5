@@ -24,7 +24,7 @@ export const Logo = styled.img`
 `;
 
 export const DescriptionContainer = styled.div`
-  padding-top: 10px;
+  padding-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,6 +43,7 @@ export const Paragraph = styled.p`
   font-size: 1rem;
   font-weight: 300;
   text-align: center;
+  padding: 1.3rem 0 0.7rem 0;
 `;
 
 export const ButtonContainer = styled.div`
