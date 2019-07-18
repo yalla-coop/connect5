@@ -15,6 +15,7 @@ const {
   getListOfTrainers,
   getAllTrainersAndLeads,
 } = require('../controllers/users/user');
+const getSessionsPerRegions = require('../controllers/users/SessionsPerRegions');
 
 const { getDashboardStats } = require('../controllers/users/all');
 const fetchAllTrainers = require('../controllers/users/trainers');
@@ -65,6 +66,7 @@ router.get('/users/admin/trainers-and-leads', getAllTrainersAndLeads);
 router.get('/users/trainer-sessions/:id', getTrainerSessions);
 router.get('/users/sessions/:id', authentication(), getLocalLeadsSessions);
 router.get('/users/sessions', getAllSessions);
+router.get('/users/admin/all-sessions-per-region', getSessionsPerRegions);
 router.get(
   '/users/admin/demographics/participant',
   authentication(),

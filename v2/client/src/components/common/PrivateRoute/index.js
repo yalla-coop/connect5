@@ -37,7 +37,7 @@ const PrivateRoute = ({
                 {navbar && <Navbar viewLevel={viewLevel} role={role} />}
               </>
             ) : (
-              history.goBack() && null
+              history.push('/unauthorized') && null
             )
           ) : (
             <Redirect to="/login" />

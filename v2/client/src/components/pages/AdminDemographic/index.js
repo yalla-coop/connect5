@@ -6,6 +6,7 @@ import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 import BarChart from './BarChart';
 import DoughnutChart from './DoughnutChart';
+import AdminSessions from './AdminSessions';
 
 import {
   Wrapper,
@@ -13,6 +14,7 @@ import {
   BoldNumber,
   ChartWrapper,
   Legend,
+  DoughnutChartWrapper,
 } from './AdminDemographic.style';
 
 class AdminDemographic extends Component {
@@ -53,9 +55,9 @@ class AdminDemographic extends Component {
               <BarChart rawData={PDemographics.age} total={total} />
             </ChartWrapper>
             <Legend>Gender: </Legend>
-            <ChartWrapper>
+            <DoughnutChartWrapper>
               <DoughnutChart rawData={PDemographics.gender} total={total} />
-            </ChartWrapper>
+            </DoughnutChartWrapper>
             <Legend>Ethnics: </Legend>
             <ChartWrapper>
               <BarChart rawData={PDemographics.ethnic} total={total} />
@@ -70,7 +72,9 @@ class AdminDemographic extends Component {
             </ChartWrapper>
           </>
         ) : (
-          <></>
+          <>
+            <AdminSessions />
+          </>
         )}
       </Wrapper>
     );
