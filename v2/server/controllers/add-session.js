@@ -15,17 +15,12 @@ const addSession = async (req, res, next) => {
     sendByEmail,
   } = req.body;
 
-  const trainers = [partnerTrainer1];
+  const trainers = [];
   try {
-    if (
-      session &&
-      startDate &&
-      inviteesNumber &&
-      region &&
-      partnerTrainer1 &&
-      emails
-    ) {
-      if (partnerTrainer2) {
+    if (session && startDate && inviteesNumber && region && emails) {
+      if (partnerTrainer1) {
+        trainers.push(partnerTrainer2);
+      } else if (partnerTrainer2) {
         trainers.push(partnerTrainer2);
       } else {
         trainers.push(user._id);
