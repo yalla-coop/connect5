@@ -1,6 +1,7 @@
 export const HOME_URL = '/';
 export const LOGIN_URL = '/login';
 export const SIGN_UP_URL = '/signup';
+export const PARTICIPANT_LOGIN = '/participant-login';
 
 // ALL
 export const DASHBOARD_URL = '/dashboard';
