@@ -41,6 +41,7 @@ export const LoginFail = styled.div`
 export const NoAccount = styled(InputDiv)`
   color: ${colors.black};
   margin-bottom: 0;
+  margin-right: 0.3rem;
   &:not(:last-child) {
     margin-top: 6rem;
   }
@@ -52,11 +53,22 @@ export const NoAccount = styled(InputDiv)`
 `;
 
 export const AnotherLink = styled(Link)`
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: bold;
   color: ${colors.black};
 `;
 
+export const Paragraph = styled.p`
+  font-size: 0.9rem;
+  font-weight: 500;
+`;
+
+export const ForgetPasswordLink = styled(Link)`
+  display: block;
+  font-size: 0.9rem;
+  text-align: right;
+  margin-top: 0.6rem;
+`;
 export const Content = styled.p`
   text-align: center;
   margin: 0 auto;

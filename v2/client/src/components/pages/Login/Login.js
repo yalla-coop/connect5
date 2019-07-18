@@ -10,6 +10,8 @@ import {
   LoginFail,
   NoAccount,
   AnotherLink,
+  Paragraph,
+  ForgetPasswordLink,
 } from './Login.style';
 import { loginUser } from '../../../actions/authAction';
 import { clearErrors } from '../../../actions/errorAction';
@@ -145,6 +147,11 @@ class Login extends Component {
               onChange={onInputChange}
             />
             <LoginFail>{passwordError}</LoginFail>
+
+            <ForgetPasswordLink to={FORGET_PASSWORD}>
+              {' '}
+              Forget password?
+            </ForgetPasswordLink>
           </InputDiv>
           <InputDiv>
             <Button
@@ -160,16 +167,14 @@ class Login extends Component {
         </LoginForm>
 
         <NoAccount>
-          <span style={{ display: 'inline-block', padding: '1rem 2rem' }}>
-            <AnotherLink to={FORGET_PASSWORD}> Forget password?</AnotherLink>
-          </span>
-          <span>
-            <AnotherLink to={SIGN_UP_URL}> Create an account</AnotherLink>
-          </span>
-          <p>
+          <Paragraph>
+            Don't have an account?
+            <AnotherLink to={SIGN_UP_URL}> Sign Up!</AnotherLink>
+          </Paragraph>
+          <Paragraph>
             Course participant?
             <AnotherLink to="/participant-login"> Login here!</AnotherLink>
-          </p>
+          </Paragraph>
         </NoAccount>
       </div>
     );
