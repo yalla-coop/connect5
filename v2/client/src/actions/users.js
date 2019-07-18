@@ -117,7 +117,7 @@ export const checkUserByEmail = email => async dispatch => {
 
 export const resetPassword = resetPasswordData => async dispatch => {
   axios
-    .post(`/api/users/reset-password`, resetPasswordData)
+    .post('/api/users/reset-password', resetPasswordData)
     .then(res =>
       dispatch({
         type: types.RESET_PASSWORD_SUCCESS,
@@ -127,9 +127,20 @@ export const resetPassword = resetPasswordData => async dispatch => {
     .then(() =>
       Modal.success({
         title: 'Done!',
-        content: 'Password Changed',
+        content: 'Password reset successfully',
         onOk: history.push('/dashboard'),
       })
     )
-    .catch(err => console.log(err));
+    .catch(err => {
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          'RESET_PASSWORD_FAIL'
+        )
+      );
+      dispatch({
+        type: types.RESET_PASSWORD_FAIL,
+      });
+    });
 };

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^3.18.1",
+    "antd": "^3.20.3",
     "axios": "^0.18.0",
     "chart.js": "^2.8.0",
     "downloadjs": "^1.4.7",
