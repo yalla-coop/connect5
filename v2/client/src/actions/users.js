@@ -128,7 +128,7 @@ export const resetPassword = resetPasswordData => async dispatch => {
       Modal.success({
         title: 'Done!',
         content: 'Password reset successfully',
-        onOk: history.push('/dashboard'),
+        onOk: history.push('/login'),
       })
     )
     .catch(err => {
