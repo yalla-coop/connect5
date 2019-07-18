@@ -49,6 +49,7 @@ export const NoAccount = styled(InputDiv)`
   @media (min-width: 768px) {
     width: 30%;
     text-align: center;
+    margin: 0 auto;
   }
 `;
 

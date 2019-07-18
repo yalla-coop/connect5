@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
+import Header from '../../common/Header';
 import {
   Heading,
   H3,
@@ -71,42 +72,45 @@ class ForgetPassword extends Component {
     const { emailError } = errors;
     const { onInputChange, onFormSubmit } = this;
     return (
-      <div style={{ paddingTop: '6rem' }}>
-        <ForgetPasswordForm onSubmit={onFormSubmit}>
-          <Heading>
-            <H3>Forget Your Password!</H3>
-            <Hint>
-              Please enter your email adress and we'll send you instructions on
-              how to reset your password
-            </Hint>
-          </Heading>
+      <>
+        <Header type="home" />
+        <div style={{ paddingTop: '6rem' }}>
+          <ForgetPasswordForm onSubmit={onFormSubmit}>
+            <Heading>
+              <H3>Forget Your Password!</H3>
+              <Hint>
+                Please enter your email adress and we'll send you instructions
+                on how to reset your password
+              </Hint>
+            </Heading>
 
-          <InputDiv>
-            <Input
-              placeholder="Enter your email"
-              name="email"
-              type="text"
-              value={email}
-              onChange={onInputChange}
-              size="large"
-            />
+            <InputDiv>
+              <Input
+                placeholder="Enter your email"
+                name="email"
+                type="text"
+                value={email}
+                onChange={onInputChange}
+                size="large"
+              />
 
-            <ErrorMsg>{emailError}</ErrorMsg>
-          </InputDiv>
+              <ErrorMsg>{emailError}</ErrorMsg>
+            </InputDiv>
 
-          <InputDiv>
-            <Button
-              onClick={onFormSubmit}
-              type="primary"
-              label="Get New Password"
-              height="40px"
-              width="100%"
-            />
-          </InputDiv>
+            <InputDiv>
+              <Button
+                onClick={onFormSubmit}
+                type="primary"
+                label="Get New Password"
+                height="40px"
+                width="100%"
+              />
+            </InputDiv>
 
-          <ErrorMsg>{msg}</ErrorMsg>
-        </ForgetPasswordForm>
-      </div>
+            <ErrorMsg>{msg}</ErrorMsg>
+          </ForgetPasswordForm>
+        </div>
+      </>
     );
   }
 }

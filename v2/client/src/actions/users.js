@@ -103,16 +103,25 @@ export const addTrainerToGroup = trianerInfo => async dispatch => {
 };
 
 export const checkUserByEmail = email => async dispatch => {
-  try {
-    const res = await axios.get(`/api/users/forget-password/?email=${email}`);
-
-    dispatch({
-      type: types.CHECK_USER_BY_EMAIL_SUCCESS,
-      payload: res.data,
+  axios
+    .get(`/api/users/forget-password/?email=${email}`)
+    .then(res =>
+      dispatch({
+        type: types.CHECK_USER_BY_EMAIL_SUCCESS,
+        payload: res.data,
+      })
+    )
+    .then(() =>
+      Modal.success({
+        title: 'Password reset email sent!',
+        content:
+          'We just sent a message to the email you provided with a link to reset your password. Please check your inbox and follow the instructions in the email.',
+        onOk: history.push('/login'),
+      })
+    )
+    .catch(() => {
+      history.push('/404err');
     });
-  } catch (error) {
-    console.log(error);
-  }
 };
 
 export const resetPassword = resetPasswordData => async dispatch => {

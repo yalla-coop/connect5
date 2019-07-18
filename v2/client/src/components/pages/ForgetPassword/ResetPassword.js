@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
+import Header from '../../common/Header';
 import { resetPassword } from '../../../actions/users';
 import {
   ForgetPasswordForm,
@@ -102,48 +103,51 @@ class ResetPassword extends Component {
     const { newPassword, reNewPassword } = fields;
     const { newPasswordError, reNewPasswordError } = errors;
     return (
-      <div style={{ paddingTop: '6rem' }}>
-        <ForgetPasswordForm onSubmit={onFormSubmit}>
-          <Heading>
-            <H3>Reset your password</H3>
-          </Heading>
+      <>
+        <Header type="home" />
+        <div style={{ paddingTop: '6rem' }}>
+          <ForgetPasswordForm onSubmit={onFormSubmit}>
+            <Heading>
+              <H3>Reset your password</H3>
+            </Heading>
 
-          <InputDiv>
-            <Input.Password
-              placeholder="new password"
-              size="large"
-              name="newPassword"
-              type="text"
-              onChange={onInputChange}
-              value={newPassword}
-            />
-            <ErrorMsg>{newPasswordError}</ErrorMsg>
-          </InputDiv>
+            <InputDiv>
+              <Input.Password
+                placeholder="new password"
+                size="large"
+                name="newPassword"
+                type="text"
+                onChange={onInputChange}
+                value={newPassword}
+              />
+              <ErrorMsg>{newPasswordError}</ErrorMsg>
+            </InputDiv>
 
-          <InputDiv>
-            <Input.Password
-              placeholder="confirm new password"
-              size="large"
-              name="reNewPassword"
-              type="text"
-              onChange={onInputChange}
-              value={reNewPassword}
-            />
-            <ErrorMsg>{reNewPasswordError}</ErrorMsg>
-          </InputDiv>
+            <InputDiv>
+              <Input.Password
+                placeholder="confirm new password"
+                size="large"
+                name="reNewPassword"
+                type="text"
+                onChange={onInputChange}
+                value={reNewPassword}
+              />
+              <ErrorMsg>{reNewPasswordError}</ErrorMsg>
+            </InputDiv>
 
-          <InputDiv>
-            <Button
-              onClick={onFormSubmit}
-              type="primary"
-              label="Submit"
-              height="40px"
-              width="100%"
-            />
-          </InputDiv>
-          <ErrorMsg>{msg}</ErrorMsg>
-        </ForgetPasswordForm>
-      </div>
+            <InputDiv>
+              <Button
+                onClick={onFormSubmit}
+                type="primary"
+                label="Submit"
+                height="40px"
+                width="100%"
+              />
+            </InputDiv>
+            <ErrorMsg>{msg}</ErrorMsg>
+          </ForgetPasswordForm>
+        </div>
+      </>
     );
   }
 }
