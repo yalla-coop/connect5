@@ -28,7 +28,7 @@ module.exports.updateUserById = (userId, data) =>
     { new: true }
   );
 
-module.exports.updateUserByToken = token =>
+module.exports.findUserByToken = token =>
   User.findOne({
     'resetToken.value': token,
     'resetToken.expiresIn': { $gt: Date.now() },

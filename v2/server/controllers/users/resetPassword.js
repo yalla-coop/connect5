@@ -7,7 +7,6 @@ const {
 
 module.exports = (req, res, next) => {
   const { token, newPassword } = req.body;
-
   // check if the token is valid
   findUserByToken(token)
     .then(async user => {

@@ -114,7 +114,11 @@ class App extends Component {
             />
             <Route exact path="/" component={Home} />
             <Route exact path="/thank-you" component={ThankYouPage} />
-            <Route exact path="/reset-password" component={ResetPassword} />
+            <Route
+              exact
+              path="/reset-password/:token"
+              component={ResetPassword}
+            />
             <PrivateRoute
               exact
               path={TRAINER_RESULTS_URL}

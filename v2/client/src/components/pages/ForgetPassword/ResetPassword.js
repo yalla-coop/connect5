@@ -10,13 +10,29 @@ import {
   InputDiv,
   ErrorMsg,
 } from './ForgetPassword.style';
-import history from '../../../history';
+// import history from '../../../history';
 
 class ResetPassword extends Component {
   state = {
     fields: {},
     errors: {},
     msg: null,
+  };
+
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+    if (error !== prevProps.error) {
+      // Check for login error
+      this.checkError(error);
+    }
+  }
+
+  checkError = error => {
+    if (error.id === 'RESET_PASSWORD_FAIL') {
+      this.setState({ msg: error.msg.error });
+    } else {
+      this.setState({ msg: null });
+    }
   };
 
   // Check inputs validation then if not valide show error msg
@@ -63,8 +79,7 @@ class ResetPassword extends Component {
   };
 
   onFormSubmit = e => {
-    const { token } = history.match.params;
-    console.log(token);
+    const { token } = this.props.match.params;
     const { fields } = this.state;
     const { newPassword } = fields;
     const { resetPassword: resetPasswordActionCreator } = this.props;
@@ -73,6 +88,7 @@ class ResetPassword extends Component {
     if (isValide) {
       const resetPasswordData = {
         newPassword,
+        token,
       };
 
       // call action creator then give it email and password
@@ -132,7 +148,9 @@ class ResetPassword extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  error: state.error,
+});
 
 export default connect(
   mapStateToProps,
