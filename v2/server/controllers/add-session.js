@@ -19,7 +19,7 @@ const addSession = async (req, res, next) => {
   try {
     if (session && startDate && inviteesNumber && region && emails) {
       if (partnerTrainer1) {
-        trainers.push(partnerTrainer2);
+        trainers.push(partnerTrainer1);
       } else if (partnerTrainer2) {
         trainers.push(partnerTrainer2);
       } else {
@@ -47,9 +47,7 @@ const addSession = async (req, res, next) => {
         const links = surveyType[session].map(item => {
           return {
             surveyType: item,
-            surveyURL: `${process.env.DOMAIN}/survey/${item}&${
-              addedSession.shortId
-            }`,
+            surveyURL: `${process.env.DOMAIN}/survey/${item}&${addedSession.shortId}`,
           };
         });
 
