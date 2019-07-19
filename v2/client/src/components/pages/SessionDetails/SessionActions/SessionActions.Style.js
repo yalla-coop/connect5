@@ -1,20 +1,11 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-// import { colors } from '../../../../theme';
+import { colors } from '../../../../theme';
 
 export const SessionActionsWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
-  /* width: 100%;
-  margin: 0 auto;
-  padding: 1.5rem 1rem;
-  margin: 0.5rem 0;
-  @media (min-width: 768px) {
-    width: 60%;
-    padding: 2rem;
-    margin: 0 auto;
-  } */
 `;
 
 export const SessionAction = styled.div`
@@ -22,8 +13,6 @@ export const SessionAction = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin: 0 auto; */
-  /* margin-left: 0.5rem; */
 `;
 
 export const SessionEdit = styled(Link)`
@@ -59,4 +48,27 @@ export const EditSessionWrapper = styled.div`
 
 export const InputLabel = styled.label`
   width: 50%;
+`;
+
+export const BackLink = styled.button`
+  border: none;
+  background: none;
+  color: ${colors.lightPrimary};
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+
+  :focus,
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
+export const BackContainer = styled.div`
+  width: 90%;
+  padding: 0 20px;
+  align-self: center;
+  @media (min-width: 678px) {
+    width: 65%;
+  }
 `;

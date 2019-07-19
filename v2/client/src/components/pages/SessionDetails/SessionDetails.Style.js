@@ -68,11 +68,6 @@ export const StatisticValue = styled.span`
   }
 `;
 
-export const Trainers = styled.p`
-  padding: 0.75rem 0 0.5rem 1.7rem;
-  color: ${colors.blackSecondary};
-`;
-
 export const TrainersName = styled(Link)`
   color: ${colors.black};
   font-weight: 400;

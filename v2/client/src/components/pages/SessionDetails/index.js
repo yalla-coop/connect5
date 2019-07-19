@@ -67,9 +67,7 @@ class SessionDetails extends Component {
             <p>Hello</p>
           </Panel>
         </Collapse>
-        {/* <SessionTopDetails sessionDetails={sessionDetails} />
-        <SessionActions sessionDetails={sessionDetails} />
-        <SessionSurveys sessionDetails={sessionDetails} /> */}
+        <SessionSurveys sessionDetails={sessionDetails} />
       </SessionDetailsWrapper>
     );
   }

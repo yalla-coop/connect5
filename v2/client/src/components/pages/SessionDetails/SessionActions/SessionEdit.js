@@ -15,12 +15,13 @@ import { sessions, regions, pattern } from '../../CreateSession/options';
 import {
   Form,
   InputDiv,
-  Heading,
   SubmitBtn,
   Error,
 } from '../../CreateSession/create-session.style';
 
-import { EditSessionWrapper, InputLabel } from './SessionActions.Style';
+import { EditSessionWrapper, InputLabel, BackLink, BackContainer } from './SessionActions.Style';
+
+import Header from '../../../common/Header';
 
 const { Option } = Select;
 
@@ -220,7 +221,10 @@ class EditSession extends Component {
     } = this;
     return (
       <EditSessionWrapper>
-        <Heading>Edit Session</Heading>
+        <Header type="view" label="Edit Session" />
+        <BackContainer>
+          <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
+        </BackContainer>
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
             {date && startDate && (
@@ -385,7 +389,7 @@ class EditSession extends Component {
             <Button
               onClick={onFormSubmit}
               type="primary"
-              label="Submit"
+              label="Update"
               height="40px"
               width="100%"
             />

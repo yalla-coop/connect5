@@ -4,7 +4,6 @@ import moment from 'moment';
 import {
   SessionTopDetailsWrapper,
   Statistic,
-  Trainers,
   StatisticItems,
   StatisticName,
   StatisticValue,
