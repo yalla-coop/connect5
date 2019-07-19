@@ -17,12 +17,14 @@ export const SessionDetailsWrapper = styled.div`
 export const SessionTopDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding-bottom: 1rem;
 `;
 
 export const Statistic = styled.div`
   display: flex;
+  justify-content: space-evenly;
   padding: 0.55rem 0.3rem;
-  margin-top: 0.5rem;
+  margin: 0.5rem 0;
   border-radius: 7px;
   @media (min-width: 768px) {
     width: 100%;
@@ -30,18 +32,14 @@ export const Statistic = styled.div`
 `;
 
 export const StatisticItems = styled.div`
-  min-width: 25%;
-  margin: 0 auto;
-  padding: 0 0.5rem;
-  :nth-child(1) {
-    padding-right: 0.3rem;
-  }
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   &:not(:last-child) {
     border-right: ${borders.inputBox};
-    padding: 0 0.5rem;
-  }
-  @media (min-width: 768px) {
-    width: 33%;
+    /* padding: 0 0.5rem; */
   }
 `;
 
@@ -76,7 +74,6 @@ export const Trainers = styled.p`
 `;
 
 export const TrainersName = styled(Link)`
-  margin-left: 1rem;
   color: ${colors.black};
   font-weight: 400;
   text-decoration: none;
@@ -85,7 +82,21 @@ export const TrainersName = styled(Link)`
 
 // NEW COMPONENTS
 
-export const SectionHeader = styled.div`
-  width: 100%;
+export const SubDetails = styled.div`
+  padding: 0.75rem 0 0.5rem 1.7rem;
+  color: ${colors.blackSecondary};
   display: flex;
+`;
+
+export const SubDetailsTitle = styled.p`
+  width: 25%;
+  margin: 0;
+`;
+
+export const SubDetailsContent = styled.p`
+  margin-left: 1rem;
+  color: ${colors.black};
+  font-weight: 400;
+  text-decoration: none;
+  margin: 0;
 `;
