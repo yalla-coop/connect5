@@ -34,8 +34,6 @@ class Survey extends React.Component {
   };
 
   componentWillMount() {
-    // grab the unique url at the end which gives us survey type and session id
-    // syntax of url: surveyType&sessionId
     const { location } = this.props;
     const survey = `${location.pathname}`;
     const surveyParts = survey.split('/')[2];

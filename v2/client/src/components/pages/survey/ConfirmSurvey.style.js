@@ -1,4 +1,4 @@
-import styled from './node_modules/styled-components';
+import styled from 'styled-components';
 import { colors, colorCodes, borders } from '../../../theme';
 
 export const SectionHeadline = styled.h1`
@@ -25,6 +25,7 @@ export const Paragraph = styled.p`
   ${({ strong }) => (strong ? 'font-weight: bold;' : '')}
   color: ${colors.blackSecondary};
 `;
+
 export const SessionDetails = styled.div`
   width: 100%;
   display: flex;
@@ -57,4 +58,9 @@ export const ButtonDiv = styled.div`
     color: ${colors.white};
     background-color: ${colors.primary};
   }
+`;
+
+export const SpinWrapper = styled.div`
+  height: 100vh;
+  width: 100vw;
 `;
