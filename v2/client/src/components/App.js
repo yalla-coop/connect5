@@ -23,7 +23,7 @@ import Home from './pages/LandingPage';
 import SignUp from './pages/SignUp';
 import UserResults from './pages/UserResults';
 import AddTrainer from './pages/AddTrainer';
-import ConfirmSurvey from './pages/Survey/ConfirmSurvey';
+import Survey from './pages/Survey/index';
 import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
@@ -202,7 +202,7 @@ class App extends Component {
               role={role}
               navbar
             />
-            <Route exact path={SURVEY_URL} component={ConfirmSurvey} />
+            <Route exact path={SURVEY_URL} component={Survey} />
             <PrivateRoute
               exact
               path="/session-edit/:id"

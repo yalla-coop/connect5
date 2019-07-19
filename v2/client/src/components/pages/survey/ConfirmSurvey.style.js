@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { colors, colorCodes, borders } from '../../../theme';
 
 export const SectionHeadline = styled.h1`
@@ -28,6 +29,11 @@ export const Paragraph = styled.p`
 
 export const SessionDetails = styled.div`
   width: 100%;
+  height: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,3 +70,5 @@ export const SpinWrapper = styled.div`
   height: 100vh;
   width: 100vw;
 `;
+
+export const ButtonLink = styled(Link)``;
