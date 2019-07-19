@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 //  ANTD COMPONENTS
 import Collapse from 'antd/lib/collapse';
-import Button from 'antd/lib/button';
 import Icon from 'antd/lib/icon';
 
 //  COMMON COMPOENTS
@@ -26,7 +25,6 @@ import {
 // STYLING
 import {
   TrainerResultsWrapper,
-  ButtonWrapper,
   ContentWrapper,
   TopSection,
   Registration,
@@ -116,7 +114,7 @@ class UserResults extends Component {
   render() {
     const { results, role, history, groupView, sessions } = this.props;
     const { state } = history.location;
-    const { toggle, selectedUserId, selectedUserRole } = this.state;
+    const { toggle, selectedUserId } = this.state;
 
     // if a user has been passed on then store as the user
     const user = state && state.trainer;

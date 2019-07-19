@@ -4,14 +4,12 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import Collapse from 'antd/lib/collapse';
-import Button from 'antd/lib/button';
 import Icon from 'antd/lib/icon';
 
 import { fetchUserResults } from '../../../actions/users';
 import BehavioralSurveyResults from '../../common/BehavioralInsight/Survey';
 import {
   TrainerResultsWrapper,
-  ButtonWrapper,
   StatsDiv,
   Paragraph,
   Bold,

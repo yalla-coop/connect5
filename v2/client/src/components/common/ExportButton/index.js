@@ -29,18 +29,22 @@ class ExportButton extends Component {
     }
 
     if (viewLevel === 'localLead') {
+      // if locallead but wanting to export results for specific trainer
       if (selectedUser && selectedUser.role === 'trainer') {
         this.setState({ filter: true, trainerIDs: [selectedUser._id] });
       } else {
+        // get all the trainer ids for that local lead
         this.getTrainerIDs(userId);
       }
     }
 
     if (viewLevel === 'admin') {
+      // if admin and looking at the results for a local lead
       if (selectedUser && selectedUser.role === 'localLead') {
         // get list of that localLeads trainers
         this.getTrainerIDs(selectedUser._id);
       } else if (selectedUser && selectedUser.role === 'trainer') {
+        // get the results for that specific trainer
         this.setState({ filter: true, trainerIDs: [selectedUser._id] });
       }
     }
@@ -61,45 +65,13 @@ class ExportButton extends Component {
       .catch(err => console.log(err));
   };
 
-  // fetchData = async () => {
-  //   const { exportData } = this.props;
-  //   await exportData(false);
-
-  // };
-
   fetchExportData = () => {
     // get the view level from the component
-    const { viewLevel, selectedUserId, userId } = this.props;
     const { filter, trainerIDs } = this.state;
 
     const searchData = { filter, trainerIDs };
 
     this.setState({ dataToExport: [] });
-
-    // admin viewing all
-    // view level = admin
-    // selectedUserId === userId
-
-    // admin viewing local lead's group results
-    // view level = admin
-    // selectedUserId !== userId
-    // selectedUserRole === localLead
-
-    // admin viewing individual trainer results
-    // view level = admin
-    // selectedUserId !== userId
-    // selectedUserRole === trainer
-
-    // local lead viewing group results
-    // view level = localLead
-    // selectedUserId === userId
-
-    // local lead viewing individual trainer results
-    // view level = localLead
-    // selectedUserId !== userId
-
-    // trainer viewing individual results
-    // view level = trainer
 
     axios
       .post('/api/export-csv', { searchData })
