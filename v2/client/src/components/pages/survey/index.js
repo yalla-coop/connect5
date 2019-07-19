@@ -10,6 +10,7 @@ import {
   SurveyWrapper,
   SkipButtonsDiv,
 } from './Survey.style';
+
 import Button from '../../common/Button';
 
 // Action
@@ -22,11 +23,24 @@ import ConfirmSurvey from './ConfirmSurvey';
 import EnterPIN from './EnterPIN';
 import Demographics from './Demographics';
 
+// PIN validation
+const validLetters = string => {
+  const regex = /[a-z]{1,3}/gim;
+  return regex.test(string);
+};
+
+const validNumbers = string => {
+  const regex = /^[0-9]{1,2}$/gim;
+  return regex.test(string);
+};
+
 class Survey extends Component {
   state = {
     section: 'confirmSurvey',
     PIN: '',
     surveyParts: '',
+    PINerror: '',
+    PINSection: false,
   };
 
   componentDidMount() {
@@ -69,27 +83,31 @@ class Survey extends Component {
     this.setState({ section: newSection });
   };
 
-  renderSkipButtons = section => (
-    <SkipButtonsDiv>
-      <Button
-        label="Back"
-        width="100px"
-        height="50px"
-        type="primary"
-        onClick={() => this.sectionChange('back')}
-      />
-      <Button
-        label="Next"
-        width="100px"
-        height="50px"
-        type="primary"
-        onClick={() => {
-          this.sectionChange('forward');
-          this.customSubmit(section);
-        }}
-      />
-    </SkipButtonsDiv>
-  );
+  renderSkipButtons = section => {
+    const { PINSection } = this.state;
+    return (
+      <SkipButtonsDiv>
+        <Button
+          label="Back"
+          width="100px"
+          height="50px"
+          type="primary"
+          onClick={() => this.sectionChange('back')}
+        />
+        <Button
+          label="Next"
+          width="100px"
+          height="50px"
+          type="primary"
+          disabled={!PINSection}
+          onClick={() => {
+            this.sectionChange('forward');
+            this.customSubmit(section);
+          }}
+        />
+      </SkipButtonsDiv>
+    );
+  };
 
   // PIN
   // handles user input for PIN field
@@ -103,18 +121,37 @@ class Survey extends Component {
     // });
   };
 
-  checkPINResponsesOnSurvey = () => {
+  checkPINonBlur = () => {
     const { checkPINResponses: checkPINResponsesAction } = this.props;
     const { surveyParts, PIN } = this.state;
+
+    if (PIN.length < 5) {
+      this.setState({
+        PINerror: 'PIN must contain 5 characters',
+        PINSection: false,
+      });
+    }
     if (PIN.length === 5) {
-      // check if PIN alrady submitted survey
+      // check if PIN is in right format
+      if (
+        !(
+          validLetters(PIN.substring(0, 3)) && validNumbers(PIN.substring(3, 5))
+        )
+      ) {
+        this.setState({
+          PINerror: 'PIN must be in the right format',
+          PINSection: false,
+        });
+      } else {
+        this.setState({ PINerror: '', PINSection: true });
+      }
+
+      // check if PIN alrady submitted this exact survey
       checkPINResponsesAction(surveyParts, PIN);
     }
   };
 
   submitPIN = () => {
-    const { surveyParts } = this.state;
-
     const { PINExist } = this.props;
     if (PINExist) {
       // check if PIN alrady submitted survey
@@ -139,7 +176,7 @@ class Survey extends Component {
   };
 
   render() {
-    const { section, PIN, surveyParts } = this.state;
+    const { section, PINerror } = this.state;
     const { surveyData } = this.props;
 
     const loadingError = Object.keys(surveyData.msg).length > 0;
@@ -173,8 +210,9 @@ class Survey extends Component {
                 {section === 'enterPIN' && (
                   <EnterPIN
                     handlePIN={this.handlePIN}
-                    onPINBlur={this.checkPINResponsesOnSurvey}
+                    onPINBlur={this.checkPINonBlur}
                     renderSkipButtons={this.renderSkipButtons('enterPIN')}
+                    PINerror={PINerror}
                   />
                 )}
                 {section === 'surveyStart' && (

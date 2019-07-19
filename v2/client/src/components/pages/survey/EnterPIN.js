@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-
-import { TextField, QuestionWrapper, SectionCategory } from './Questions.style';
+import { Spin, Alert, Modal } from 'antd';
+import {
+  TextField,
+  QuestionWrapper,
+  SectionCategory,
+  ErrorDiv,
+} from './Questions.style';
 
 export default class EnterPIN extends Component {
   render() {
-    const { renderSkipButtons, handlePIN, onPINBlur } = this.props;
+    const { renderSkipButtons, handlePIN, onPINBlur, PINerror } = this.props;
     return (
       <QuestionWrapper>
         <SectionCategory>Please enter your PIN</SectionCategory>
@@ -32,6 +37,11 @@ export default class EnterPIN extends Component {
             onChange={handlePIN}
             onBlur={onPINBlur}
           />
+          {PINerror.length > 0 && (
+            <ErrorDiv>
+              <Alert message={PINerror} type="error" />
+            </ErrorDiv>
+          )}
         </TextField>
         {renderSkipButtons}
       </QuestionWrapper>
