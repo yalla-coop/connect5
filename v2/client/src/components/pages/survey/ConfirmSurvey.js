@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
 
 // Styles
-
-import { Container } from './Survey.style';
 import Button from '../../common/Button';
+
 import {
+  ButtonDiv,
+  SessionDetails,
   SectionHeadline,
   SectionSubHeadline,
   PromptHeadline,
   Paragraph,
-  SessionDetails,
   DetailsDiv,
-  ButtonDiv,
-  SpinWrapper,
-} from './ConfirmSurvey.style';
+} from './Survey.style';
 
 export default class ConfirmSurvey extends Component {
   // function to create a list of names from an array...
@@ -25,15 +23,11 @@ export default class ConfirmSurvey extends Component {
     );
 
   render() {
-    // const { section } = this.state;
     const { sessionDate, trainerNames, surveyType, sectionChange } = this.props;
-
-    console.log(this.props);
 
     return (
       <div>
         <SectionHeadline>Connect 5 Evaluation</SectionHeadline>
-
         <SessionDetails>
           <SectionSubHeadline>Survey Details</SectionSubHeadline>
           <DetailsDiv>
@@ -58,6 +52,7 @@ export default class ConfirmSurvey extends Component {
             type="primary"
             onClick={() => sectionChange('forward')}
           />
+          {/* need to decide what to do in case user presses no */}
           <Button label="No" width="100px" height="50px" type="primary" />
         </ButtonDiv>
       </div>

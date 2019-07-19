@@ -29,6 +29,7 @@ const SubGroup = styled.p`
 `;
 
 const QuestionWrapper = styled.div`
+  width: 90%;
   background-color: ${colors.white};
   margin: 1rem 0;
   padding: 1rem 0.5rem;

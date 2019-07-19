@@ -3,25 +3,20 @@ import { connect } from 'react-redux';
 // Styles
 import { Spin, Alert } from 'antd';
 import Header from '../../common/Header';
-import { Container } from './Survey.style';
-import Button from '../../common/Button';
 import {
-  SectionHeadline,
-  SectionSubHeadline,
-  PromptHeadline,
-  Paragraph,
-  SessionDetails,
-  DetailsDiv,
-  ButtonDiv,
+  Container,
   SpinWrapper,
-  ButtonLink,
-} from './ConfirmSurvey.style';
+  SurveyWrapper,
+  SkipButtonsDiv,
+} from './Survey.style';
+import Button from '../../common/Button';
 
 // Action
 import { fetchSurveyData } from '../../../actions/surveyAction';
 
 import ConfirmSurvey from './ConfirmSurvey';
 import EnterPIN from './EnterPIN';
+import Demographics from './Demographics';
 
 class Survey extends Component {
   state = {
@@ -48,6 +43,17 @@ class Survey extends Component {
         case 'confirmSurvey':
           newSection = 'enterPIN';
           break;
+        case 'enterPIN':
+          newSection = 'surveyStart';
+          break;
+        default:
+          newSection = section;
+      }
+    } else {
+      switch (section) {
+        case 'surveyStart':
+          newSection = 'enterPIN';
+          break;
         default:
           newSection = section;
       }
@@ -55,13 +61,24 @@ class Survey extends Component {
     this.setState({ section: newSection });
   };
 
-  // function to create a list of names from an array...
-  renderTrainerNames = array =>
-    array.map((e, i) =>
-      array.length > 1 && array.length - 1 === i
-        ? `and ${e.toUpperCase()}`
-        : `${e.toUpperCase()} `
-    );
+  renderSkipButtons = () => (
+    <SkipButtonsDiv>
+      <Button
+        label="Back"
+        width="100px"
+        height="50px"
+        type="primary"
+        onClick={() => this.sectionChange('back')}
+      />
+      <Button
+        label="Next"
+        width="100px"
+        height="50px"
+        type="primary"
+        onClick={() => this.sectionChange('forward')}
+      />
+    </SkipButtonsDiv>
+  );
 
   render() {
     const { section } = this.state;
@@ -84,7 +101,7 @@ class Survey extends Component {
               <Alert message={surveyData.msg} type="warning" showIcon />
             )}
             {surveyDetails && surveyDetails !== null && (
-              <div>
+              <SurveyWrapper>
                 {section === 'confirmSurvey' && (
                   <ConfirmSurvey
                     sessionDate={surveyData.surveyData.sessionDate}
@@ -93,8 +110,13 @@ class Survey extends Component {
                     sectionChange={this.sectionChange}
                   />
                 )}
-                {section === 'enterPIN' && <EnterPIN />}
-              </div>
+                {section === 'enterPIN' && (
+                  <EnterPIN renderSkipButtons={this.renderSkipButtons()} />
+                )}
+                {section === 'surveyStart' && (
+                  <Demographics renderSkipButtons={this.renderSkipButtons()} />
+                )}
+              </SurveyWrapper>
             )}
           </Container>
         )}
