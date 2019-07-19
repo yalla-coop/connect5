@@ -26,7 +26,8 @@ describe('Testing export data for CSV', () => {
       .expect(200)
       .end(async (error, result) => {
         const token = result.headers['set-cookie'][0].split(';')[0];
-        const csvRequest = { filter: false };
+        const searchData = { filter: false };
+        const csvRequest = { searchData };
 
         request(app)
           .post('/api/export-csv')

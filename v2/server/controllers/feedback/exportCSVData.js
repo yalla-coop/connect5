@@ -7,12 +7,16 @@ const {
   trainerFilter,
 } = require('../../database/queries/feedback/exportData');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   const { searchData } = req.body;
   const { filter, trainerIDs } = searchData;
 
+  // const testResponses = await exportData()
+  // console.log("test", testResponses)
+
   return exportData()
     .then(responses => {
+      console.log('responses', responses);
       // tidy responses to get all answers within the object
       const cleanedResponses = responses.map(response => {
         const newResponseObj = response;
@@ -40,13 +44,14 @@ module.exports = (req, res, next) => {
       });
 
       if (filter) {
+        console.log('reached');
         const filteredResponses = trainerFilter(cleanedResponses, trainerIDs);
         if (filteredResponses.length === 0) {
           filteredResponses.push({ Data: 'No Responses Found' });
         }
         return res.json(filteredResponses);
       }
-
+      console.log(cleanedResponses);
       return res.json(cleanedResponses);
     })
     .catch(err => next(boom.badImplementation('CSV data error')));

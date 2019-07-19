@@ -29,7 +29,7 @@ describe('Test exportData query', () => {
       // set up the trainer we're searching for in responses
       const trainerID = result[0]['Trainer 1 ID'];
 
-      const filteredResponses = trainerFilter(result, [trainerID]);
+      const filteredResponses = trainerFilter(result, [String(trainerID)]);
 
       expect(filteredResponses[0]).toBeDefined();
       expect(filteredResponses[0]['Trainer 1 ID']).toBe(trainerID);

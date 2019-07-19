@@ -4,8 +4,8 @@
 
 const Answer = require('../../models/Answer');
 
-module.exports.exportData = () => {
-  return Answer.aggregate([
+module.exports.exportData = () =>
+  Answer.aggregate([
     {
       $lookup: {
         from: 'questions',
@@ -103,7 +103,6 @@ module.exports.exportData = () => {
       },
     },
   ]);
-};
 
 module.exports.trainerFilter = (responses, trainerIDs) => {
   // expects array of responses from the export data func above and an array of trainer ID(s)
