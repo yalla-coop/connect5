@@ -109,11 +109,12 @@ module.exports.trainerFilter = (responses, trainerIDs) => {
   // expects array of responses from the export data func above and an array of trainer ID(s)
 
   // filters to only return responses that involve those trainers
-  const filteredResponses = responses.filter(
-    response =>
-      trainerIDs.includes(response['Trainer 1 ID']) ||
-      trainerIDs.includes(response['Trainer 2 ID'])
-  );
+  const filteredResponses = responses.filter(response => {
+    return (
+      trainerIDs.includes(String(response['Trainer 1 ID'])) ||
+      trainerIDs.includes(String(response['Trainer 2 ID']))
+    );
+  });
 
   return filteredResponses;
 };

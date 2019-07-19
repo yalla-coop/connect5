@@ -8,9 +8,11 @@ const {
 } = require('../../database/queries/feedback/exportData');
 
 module.exports = (req, res, next) => {
-  const { filter, trainerIDs } = req.body;
+  const { searchData } = req.body;
+  const { filter, trainerIDs } = searchData;
 
-  //
+  console.log('filter', filter);
+  console.log('trainerID', trainerIDs);
 
   return exportData()
     .then(responses => {
@@ -42,11 +44,13 @@ module.exports = (req, res, next) => {
 
       if (filter) {
         const filteredResponses = trainerFilter(cleanedResponses, trainerIDs);
-
-        res.json(filteredResponses);
+        if (filteredResponses.length === 0) {
+          filteredResponses.push({ Data: 'No Responses Found' });
+        }
+        return res.json(filteredResponses);
       }
 
-      res.json(cleanedResponses);
+      return res.json(cleanedResponses);
     })
     .catch(err => next(boom.badImplementation('CSV data error')));
 };

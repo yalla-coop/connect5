@@ -52,6 +52,7 @@ const panels = {
 class UserResults extends Component {
   state = {
     selectedUserId: null,
+    selectedUserRole: null,
     toggle: 'left',
   };
 
@@ -64,18 +65,28 @@ class UserResults extends Component {
     // i.e. this would be for an admin viewing
     // otherwise use logged in user's id and role
     const { state } = history.location;
+
+    console.log('STATE', state);
     const { fetchUserResults } = this.props;
     if (state && state.trainer && viewLevel === 'localLead') {
       await fetchUserResults(state.trainer._id, 'trainer');
       await this.fetchSessionsData('trainer', state.trainer._id);
-      this.setState({ selectedUserId: state.trainer._id });
+      this.setState({
+        selectedUserId: state.trainer._id,
+        selectedUserRole: state.trainer.role,
+      });
     } else if (state && state.trainer) {
       await fetchUserResults(state.trainer._id, state.trainer.role);
       await this.fetchSessionsData(state.trainer.role, state.trainer._id);
-      this.setState({ selectedUserId: state.trainer._id });
+      this.setState({
+        selectedUserId: state.trainer._id,
+        selectedUserRole: state.trainer.role,
+      });
     } else {
       await fetchUserResults(userId, viewLevel);
-      this.setState({ selectedUserId: userId });
+      this.setState({
+        selectedUserId: userId,
+      });
     }
 
     // check if localLead is in trainer or lead view and assign the role accordingly
@@ -105,7 +116,7 @@ class UserResults extends Component {
   render() {
     const { results, role, history, groupView, sessions } = this.props;
     const { state } = history.location;
-    const { toggle, selectedUserId } = this.state;
+    const { toggle, selectedUserId, selectedUserRole } = this.state;
 
     // if a user has been passed on then store as the user
     const user = state && state.trainer;
@@ -164,7 +175,7 @@ class UserResults extends Component {
             Export to CSV
           </Button>
         </ButtonWrapper> */}
-        <ExportButton />
+        <ExportButton filter selectedUser={user} />
       </TrainerResultsWrapper>
     );
   }

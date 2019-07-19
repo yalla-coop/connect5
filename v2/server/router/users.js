@@ -13,6 +13,7 @@ const checkUniqueEmail = require('./../controllers/users/checkUniqueEmail');
 const {
   getUserResults,
   getListOfTrainers,
+  getLocalLeadsTrainerList,
   getAllTrainersAndLeads,
 } = require('../controllers/users/user');
 
@@ -46,6 +47,11 @@ router.get('/local-leads', getLocalLeads);
 
 router.use('/users/:id/results', authentication(), getUserResults);
 router.get('/users/my-trainers', authentication(), getListOfTrainers);
+router.post(
+  '/users/locallead-trainers',
+  authentication(),
+  getLocalLeadsTrainerList
+);
 router.get(
   '/users/admin/trainers-and-leads',
   authentication(),
