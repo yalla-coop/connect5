@@ -1,23 +1,10 @@
 import React, { Component } from 'react';
 
-// Styles
-import Button from '../../common/Button';
-
-import {
-  ButtonDiv,
-  SessionDetails,
-  SectionHeadline,
-  SectionSubHeadline,
-  PromptHeadline,
-  Paragraph,
-  DetailsDiv,
-} from './Survey.style';
-
 import { TextField, QuestionWrapper, SectionCategory } from './Questions.style';
 
 export default class EnterPIN extends Component {
   render() {
-    const { renderSkipButtons } = this.props;
+    const { renderSkipButtons, handlePIN, onPINBlur } = this.props;
     return (
       <QuestionWrapper>
         <SectionCategory>Please enter your PIN</SectionCategory>
@@ -42,8 +29,8 @@ export default class EnterPIN extends Component {
             type="text"
             maxLength="5"
             minLength="5"
-            // onChange={handlePIN}
-            // onBlur={onPINBlur}
+            onChange={handlePIN}
+            onBlur={onPINBlur}
           />
         </TextField>
         {renderSkipButtons}

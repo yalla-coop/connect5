@@ -10,6 +10,7 @@ module.exports = (req, res, next) => {
   PINResponsesOnSurvey({ PIN, surveyType })
     .then(response => {
       const exist = !!(response && response.session.shortId === shortId);
+
       res.json({ exist });
     })
     .catch(err => {

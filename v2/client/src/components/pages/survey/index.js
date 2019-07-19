@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+
 import { connect } from 'react-redux';
 // Styles
-import { Spin, Alert } from 'antd';
+import { Spin, Alert, Modal } from 'antd';
 import Header from '../../common/Header';
 import {
   Container,
@@ -12,7 +13,10 @@ import {
 import Button from '../../common/Button';
 
 // Action
-import { fetchSurveyData } from '../../../actions/surveyAction';
+import {
+  fetchSurveyData,
+  checkPINResponses,
+} from '../../../actions/surveyAction';
 
 import ConfirmSurvey from './ConfirmSurvey';
 import EnterPIN from './EnterPIN';
@@ -21,17 +25,21 @@ import Demographics from './Demographics';
 class Survey extends Component {
   state = {
     section: 'confirmSurvey',
+    PIN: '',
+    surveyParts: '',
   };
 
   componentDidMount() {
     // grab the unique url at the end which gives us survey type and session id
     // syntax of url: surveyType&sessionId
     const { location, fetchSurveyData: fetchSurveyDataAction } = this.props;
+    // const { surveyParts } = this.state;
     const survey = `${location.pathname}`;
     const surveyParts = survey.split('/')[2];
-    window.scrollTo(0, 0);
 
     fetchSurveyDataAction(surveyParts);
+    window.scrollTo(0, 0);
+    this.setState({ surveyParts });
   }
 
   sectionChange = direction => {
@@ -61,7 +69,7 @@ class Survey extends Component {
     this.setState({ section: newSection });
   };
 
-  renderSkipButtons = () => (
+  renderSkipButtons = section => (
     <SkipButtonsDiv>
       <Button
         label="Back"
@@ -75,19 +83,71 @@ class Survey extends Component {
         width="100px"
         height="50px"
         type="primary"
-        onClick={() => this.sectionChange('forward')}
+        onClick={() => {
+          this.sectionChange('forward');
+          this.customSubmit(section);
+        }}
       />
     </SkipButtonsDiv>
   );
 
+  // PIN
+  // handles user input for PIN field
+  handlePIN = e => {
+    const PIN = e.target.value;
+    this.setState({ PIN });
+    // this.setState({ PIN }, () => {
+    //   if (PIN.length === 5) {
+    //     this.trackAnswers();
+    //   }
+    // });
+  };
+
+  checkPINResponsesOnSurvey = () => {
+    const { checkPINResponses: checkPINResponsesAction } = this.props;
+    const { surveyParts, PIN } = this.state;
+    if (PIN.length === 5) {
+      // check if PIN alrady submitted survey
+      checkPINResponsesAction(surveyParts, PIN);
+    }
+  };
+
+  submitPIN = () => {
+    const { surveyParts } = this.state;
+
+    const { PINExist } = this.props;
+    if (PINExist) {
+      // check if PIN alrady submitted survey
+      Modal.error({
+        title: 'Error!',
+        content: "The PIN you've entered has already submitted this survey.",
+        onOk: this.sectionChange('back'),
+      });
+    }
+  };
+
+  // takes section as an input and referes to submitType
+  customSubmit = section => {
+    const { PIN, surveyParts } = this.state;
+    switch (section) {
+      case 'enterPIN':
+        this.submitPIN(PIN, surveyParts);
+        break;
+      default:
+        return null;
+    }
+  };
+
   render() {
-    const { section } = this.state;
+    const { section, PIN, surveyParts } = this.state;
     const { surveyData } = this.props;
 
     const loadingError = Object.keys(surveyData.msg).length > 0;
 
     const { surveyData: surveyDetails } = surveyData;
-    console.log(section);
+    // console.log('section', section);
+    // console.log('PIN', PIN);
+
     return (
       <div>
         {!surveyData.loaded ? (
@@ -111,7 +171,11 @@ class Survey extends Component {
                   />
                 )}
                 {section === 'enterPIN' && (
-                  <EnterPIN renderSkipButtons={this.renderSkipButtons()} />
+                  <EnterPIN
+                    handlePIN={this.handlePIN}
+                    onPINBlur={this.checkPINResponsesOnSurvey}
+                    renderSkipButtons={this.renderSkipButtons('enterPIN')}
+                  />
                 )}
                 {section === 'surveyStart' && (
                   <Demographics renderSkipButtons={this.renderSkipButtons()} />
@@ -128,10 +192,11 @@ class Survey extends Component {
 const mapStateToProps = state => {
   return {
     surveyData: state.survey,
+    PINExist: state.survey.PINExist,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchSurveyData }
+  { fetchSurveyData, checkPINResponses }
 )(Survey);
