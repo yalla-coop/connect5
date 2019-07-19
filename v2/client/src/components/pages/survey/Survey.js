@@ -1,6 +1,5 @@
 import React from 'react';
-import axios from 'axios';
-import swal from 'sweetalert2';
+
 import { Progress } from 'antd';
 import Header from '../../common/Header';
 
