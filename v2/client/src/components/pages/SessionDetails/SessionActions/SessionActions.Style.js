@@ -56,3 +56,7 @@ export const EditSessionWrapper = styled.div`
   max-width: 600px;
   padding-bottom: 80px;
 `;
+
+export const InputLabel = styled.label`
+  width: 50%;
+`;
