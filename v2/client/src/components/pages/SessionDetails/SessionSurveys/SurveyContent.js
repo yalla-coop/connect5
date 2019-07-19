@@ -10,6 +10,7 @@ import {
   CopyLink,
   MailLink,
   IconName,
+  ActionsDiv
 } from './SessionSurveys.Style';
 
 class SurveyContent extends Component {
@@ -90,10 +91,7 @@ class SurveyContent extends Component {
           {url}
         </SurveyLink>
 
-        <CopyLink onClick={() => onCopyClick(subId)}>
-          <Icon type="copy" />
-          <IconName>Copy Link</IconName>
-        </CopyLink>
+        <ActionsDiv>
 
         <MailLink>
           <Icon type="mail" />
@@ -101,6 +99,13 @@ class SurveyContent extends Component {
             Email Survey
           </IconName>
         </MailLink>
+
+
+        <CopyLink onClick={() => onCopyClick(subId)}>
+          <Icon type="copy" />
+          <IconName>Copy Link</IconName>
+        </CopyLink>
+        </ActionsDiv>
 
         <SurveyResultLink type={type} id={id} />
       </SurveyContentWrapper>

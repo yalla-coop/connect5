@@ -7,7 +7,7 @@ export const SessionSurveysWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 1.5rem 0;
   padding-top: 0;
 `;
 
@@ -15,9 +15,6 @@ export const SessionSurveyContainer = styled.div`
   width: 100%;
   margin: 0 auto;
   margin-bottom: 2rem;
-  border-radius: 5px;
-  background: ${colors.white};
-  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
 `;
 
 export const SurveyContentWrapper = styled.div`
@@ -32,7 +29,6 @@ export const SurveyContentWrapper = styled.div`
 export const Buttons = styled.div`
   width: 90%;
   margin: 0 auto;
-  padding-top; 2rem
 `;
 
 export const SurveyLinkType = styled(Link)`
@@ -55,15 +51,25 @@ export const ViewResultIcon = styled.span`
   color: ${colors.black};
 `;
 
+export const ActionsDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+`;
+
 export const CopyLink = styled.span`
-  display: inline-block;
-  width: 45%;
-  margin: 1rem 0 1rem 0.55rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
   cursor: pointer;
 `;
 
 export const MailLink = styled.span`
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 50%;
   cursor: pointer;
 `;
