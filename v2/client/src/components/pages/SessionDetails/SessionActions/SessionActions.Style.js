@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 
 export const SessionActionsWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 100%;
+  justify-content: center;
+  margin-bottom: 1rem;
+  /* width: 100%;
   margin: 0 auto;
   padding: 1.5rem 1rem;
   margin: 0.5rem 0;
@@ -13,12 +14,15 @@ export const SessionActionsWrapper = styled.div`
     width: 60%;
     padding: 2rem;
     margin: 0 auto;
-  }
+  } */
 `;
 
 export const SessionAction = styled.div`
   width: 50%;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin: 0 auto; */
   /* margin-left: 0.5rem; */
 `;
 
@@ -31,6 +35,7 @@ export const SessionDelete = styled.button`
   border: none;
   background: none;
   cursor: pointer;
+  padding-right: 1rem;
 `;
 
 export const IconName = styled.span`

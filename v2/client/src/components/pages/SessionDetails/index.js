@@ -54,7 +54,8 @@ class SessionDetails extends Component {
           onChange={this.callback}
         >
           <Panel header="Event Details" key="1">
-            <p>Hello</p>
+            <SessionTopDetails sessionDetails={sessionDetails} />
+            <SessionActions sessionDetails={sessionDetails} />
           </Panel>
           <Panel header="Invite & Promote" key="2">
             <p>Hello</p>

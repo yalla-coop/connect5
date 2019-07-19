@@ -17,19 +17,6 @@ export const SessionDetailsWrapper = styled.div`
 export const SessionTopDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 88%;
-  margin: 0 auto;
-  margin-top: 6rem;
-  padding: 0.5rem;
-  padding-left: 0;
-  box-shadow: rgb(204, 204, 204) 0px 0px 6px;
-  background: ${colors.white};
-  border-radius: 5px;
-  @media (min-width: 768px) {
-    width: 93%;
-    padding: 1rem;
-    margin-top: 7rem;
-  }
 `;
 
 export const Statistic = styled.div`
