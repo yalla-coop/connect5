@@ -11,6 +11,7 @@ export const SessionDetailsWrapper = styled.div`
     width: 50%;
   }
   padding-bottom: 5rem;
+  padding-top: 5rem;
 `;
 
 export const SessionTopDetailsWrapper = styled.div`
@@ -93,4 +94,11 @@ export const TrainersName = styled(Link)`
   font-weight: 400;
   text-decoration: none;
   text-transform: capitalize;
+`;
+
+// NEW COMPONENTS
+
+export const SectionHeader = styled.div`
+  width: 100%;
+  display: flex;
 `;
