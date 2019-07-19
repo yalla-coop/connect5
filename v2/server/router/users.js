@@ -16,6 +16,7 @@ const {
   getLocalLeadsTrainerList,
   getAllTrainersAndLeads,
 } = require('../controllers/users/user');
+const getSessionsPerRegions = require('../controllers/users/SessionsPerRegions');
 
 const { getDashboardStats } = require('../controllers/users/all');
 const fetchAllTrainers = require('../controllers/users/trainers');
@@ -24,10 +25,11 @@ const getUserInfo = require('../controllers/users/getUserInfo');
 const getTrainerSessions = require('../controllers/users/trainer/getTrainerSessions');
 const getLocalLeadsSessions = require('../controllers/users/getLocalLeadSessions');
 const getAllSessions = require('../controllers/users/getAllSessions');
-
 const removeTrainerToGroup = require('../controllers/users/removeTrainerToGroup');
 const getLocalLeadGroup = require('../controllers/users/getLocalLeadGroup');
 const changePassword = require('../controllers/users/changePassword');
+const getParticipantsDemogrphics = require('../controllers/users/getParticipantsDemogrphics');
+
 // check eamil route if the route doen't contain email query
 // then it will skip with next()
 router.get('/users', checkUniqueEmail);
@@ -70,5 +72,11 @@ router.get('/users/admin/trainers-and-leads', getAllTrainersAndLeads);
 router.get('/users/trainer-sessions/:id', getTrainerSessions);
 router.get('/users/sessions/:id', authentication(), getLocalLeadsSessions);
 router.get('/users/sessions', getAllSessions);
+router.get('/users/admin/all-sessions-per-region', getSessionsPerRegions);
+router.get(
+  '/users/admin/demographics/participant',
+  authentication(),
+  getParticipantsDemogrphics
+);
 
 module.exports = router;

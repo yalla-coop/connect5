@@ -18,3 +18,5 @@ module.exports.updateParticipant = data =>
     new: true,
     upsert: true,
   });
+
+module.exports.getParticipantById = id => Participant.findById(id);

@@ -11,9 +11,6 @@ module.exports = (req, res, next) => {
   const { searchData } = req.body;
   const { filter, trainerIDs } = searchData;
 
-  console.log('filter', filter);
-  console.log('trainerID', trainerIDs);
-
   return exportData()
     .then(responses => {
       // tidy responses to get all answers within the object

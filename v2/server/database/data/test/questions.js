@@ -47,7 +47,7 @@ const demographics = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
-    participantField: 'ethinc',
+    participantField: 'ethnic',
   },
   {
     text: 'Please select your region:',

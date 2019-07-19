@@ -14,6 +14,8 @@ import groupsReducer from './groups';
 import viewReducer from './viewReducer';
 import changePasswordReducer from './changePasswordReducer';
 import exportDataReducer from './exportDataReducer';
+import demographicsReducer from './demographics';
+import adminSessionsReducer from './adminSessionsReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -30,4 +32,6 @@ export default combineReducers({
   viewLevel: viewReducer,
   changePassword: changePasswordReducer,
   exportData: exportDataReducer,
+  demographics: demographicsReducer,
+  adminSessions: adminSessionsReducer,
 });
