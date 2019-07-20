@@ -46,6 +46,7 @@ class Survey extends Component {
     errors: {},
     formState: {},
     PINSectionCompleted: false,
+    demoSectionCompleted: false,
     section: 'confirmSurvey',
     completionRate: 0,
   };
@@ -70,7 +71,7 @@ class Survey extends Component {
           newSection = 'enterPIN';
           break;
         case 'enterPIN':
-          newSection = 'demographics';
+          newSection = 'demographic';
           break;
         default:
           newSection = section;
@@ -80,7 +81,7 @@ class Survey extends Component {
         case 'enterPIN':
           newSection = 'confirmSurvey';
           break;
-        case 'demographics':
+        case 'demographic':
           newSection = 'enterPIN';
           break;
 
@@ -147,7 +148,7 @@ class Survey extends Component {
     if (PIN.length < 5) {
       this.setState({
         PINerror: 'PIN must contain 5 characters',
-        PINSection: false,
+        PINSectionCompleted: false,
       });
     }
     if (PIN.length === 5) {
@@ -159,10 +160,10 @@ class Survey extends Component {
       ) {
         this.setState({
           PINerror: 'PIN must be in the right format',
-          PINSection: false,
+          PINSectionCompleted: false,
         });
       } else {
-        this.setState({ PINerror: '', PINSection: true });
+        this.setState({ PINerror: '', PINSectionCompleted: true });
       }
 
       // check if PIN alrady submitted this exact survey
@@ -309,13 +310,42 @@ class Survey extends Component {
     });
   };
 
+  checkPageFormState = (questions, answers) => {
+    console.log(questions);
+    if (
+      questions !== null &&
+      answers !== 0 &&
+      questions.length > 0 &&
+      answers.length > 0
+    ) {
+      return questions.length === answers.length;
+    }
+    return false;
+  };
+
   render() {
-    const { section, PINerror, PINSection, formState, errors } = this.state;
+    const {
+      section,
+      PINerror,
+      formState,
+      errors,
+      PINSectionCompleted,
+      demoSectionCompleted,
+    } = this.state;
     const { surveyData } = this.props;
 
     const loadingError = Object.keys(surveyData.msg).length > 0;
 
     const { surveyData: surveyDetails } = surveyData;
+
+    const answers = Object.keys(formState);
+    // console.log(answers.length);
+    const demoQuestions =
+      surveyDetails &&
+      surveyDetails.questionsForSurvey.filter(
+        question => question.group === 'demographic'
+      );
+    console.log(this.checkPageFormState(demoQuestions, answers));
 
     return (
       <div>
@@ -331,27 +361,27 @@ class Survey extends Component {
             )}
             {surveyDetails && surveyDetails !== null && (
               <SurveyWrapper>
-                {section === 'confirmSurvey' && (
+                {/* {section === 'confirmSurvey' && (
                   <ConfirmSurvey
                     sessionDate={surveyData.surveyData.sessionDate}
                     trainerNames={surveyData.surveyData.trainerNames}
                     surveyType={surveyData.surveyData.surveyType}
                     sectionChange={this.sectionChange}
                   />
-                )}
-                {section === 'enterPIN' && (
+                )} */}
+                {/* {section === 'enterPIN' && (
                   <EnterPIN
                     handlePIN={this.handlePIN}
                     onPINBlur={this.checkPINonBlur}
                     renderSkipButtons={this.renderSkipButtons(
                       'enterPIN',
-                      !PINSection
+                      !PINSectionCompleted
                     )}
                     PINerror={PINerror}
                   />
-                )}
+                )} */}
 
-                {section === 'demographics' && (
+                {/* {section === 'demographic' && (
                   <SurveyQs
                     questions={surveyData.surveyData.questionsForSurvey.filter(
                       question => question.group === 'demographic'
@@ -362,9 +392,26 @@ class Survey extends Component {
                     selectCheckedItem={this.selectCheckedItem}
                     errors={errors}
                     handleAntdDatePicker={this.handleAntdDatePicker}
-                    renderSkipButtons={this.renderSkipButtons()}
+                    renderSkipButtons={this.renderSkipButtons(
+                      'demographic',
+                      !demoSectionCompleted
+                    )}
                   />
-                )}
+                )} */}
+
+                <SurveyQs
+                  questions={demoQuestions}
+                  onChange={this.handleChange}
+                  handleOther={this.handleOther}
+                  answers={formState}
+                  selectCheckedItem={this.selectCheckedItem}
+                  errors={errors}
+                  handleAntdDatePicker={this.handleAntdDatePicker}
+                  renderSkipButtons={this.renderSkipButtons(
+                    'demographic',
+                    !this.checkPageFormState(demoQuestions, answers)
+                  )}
+                />
               </SurveyWrapper>
             )}
           </Container>

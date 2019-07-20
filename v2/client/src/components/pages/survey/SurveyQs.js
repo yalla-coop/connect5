@@ -306,7 +306,7 @@ export default class Questions extends React.Component {
       onChange,
       questions,
       handleOther,
-
+      renderSkipButtons,
       answers,
       errors,
       handleAntdDatePicker,
@@ -316,15 +316,18 @@ export default class Questions extends React.Component {
 
     return (
       <React.Fragment>
-        {questionsRender(
-          questions,
-          answers,
-          errorArray,
-          onChange,
-          handleOther,
-          errors,
-          handleAntdDatePicker
-        )}
+        <QuestionWrapper>
+          {questionsRender(
+            questions,
+            answers,
+            errorArray,
+            onChange,
+            handleOther,
+            errors,
+            handleAntdDatePicker
+          )}
+          {renderSkipButtons}
+        </QuestionWrapper>
       </React.Fragment>
     );
   }
