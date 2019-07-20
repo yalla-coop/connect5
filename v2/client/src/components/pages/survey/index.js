@@ -62,7 +62,6 @@ class Survey extends Component {
 
   // enables user to change direction of sections
   sectionChange = (direction, uniqueGroups) => {
-    console.log(uniqueGroups);
     let newSection;
     const { section } = this.state;
 
@@ -77,25 +76,28 @@ class Survey extends Component {
           newSection = uniqueGroups[0];
           break;
         // survey questions start
+        // demographic is always 0
         // pre day 1, pre special
         case 'demographic':
           newSection = 'Behavioural Insights';
           break;
         // post day 1, post day 2
+        // behav can be 0 or 1
         case 'Behavioural Insights':
           if (uniqueGroups[1] === 'about your trainer') {
             newSection = 'about your trainer';
             // post day 3, post-special
           } else {
-            newSection = 'final section';
+            newSection = 'finalSection';
           }
+          break;
+        case 'about your trainer':
+          newSection = 'finalSection';
           break;
         // train the trainers (pre and post)
         case 'about your usual way of teaching':
-          newSection = 'final section';
-
+          newSection = 'finalSection';
           break;
-
         default:
           newSection = section;
       }
@@ -108,9 +110,18 @@ class Survey extends Component {
           newSection = 'enterPIN';
           break;
         case 'Behavioural Insights':
-          newSection = 'demographic';
+          if (uniqueGroups[0] === 'Behavioural Insights') {
+            newSection = 'enterPIN';
+          } else {
+            newSection = 'demographic';
+          }
           break;
-
+        case 'about your trainer':
+          newSection = 'Behavioural Insights';
+          break;
+        case 'about your usual way of teaching':
+          newSection = 'enterPIN';
+          break;
         default:
           newSection = section;
       }
@@ -362,13 +373,16 @@ class Survey extends Component {
     const loadingError = Object.keys(surveyData.msg).length > 0;
 
     const { surveyData: surveyDetails } = surveyData;
-
     const answers = Object.keys(formState);
+
+    // let answerCount = Object.keys(formState).length;
+
+    console.log(formState);
 
     const uniqueGroups = surveyDetails && [
       ...new Set(surveyDetails.questionsForSurvey.map(e => e.group)),
     ];
-    console.log(section);
+
     return (
       <div>
         {!surveyData.loaded ? (
@@ -410,9 +424,12 @@ class Survey extends Component {
                       question => question.group === group
                     );
 
-                  console.log(questions);
-                  return (
-                    section === group && (
+                  if (section === group) {
+                    const answered = questions
+                      .map(q => q._id)
+                      .filter(q => !answers.includes(q));
+                    console.log(answered);
+                    return (
                       <SurveyQs
                         questions={questions}
                         onChange={this.handleChange}
@@ -423,13 +440,14 @@ class Survey extends Component {
                         handleAntdDatePicker={this.handleAntdDatePicker}
                         renderSkipButtons={this.renderSkipButtons(
                           group,
-                          !this.checkPageFormState(questions, answers),
+                          !(answered.length === 0),
                           uniqueGroups
                         )}
                       />
-                    )
-                  );
+                    );
+                  }
                 })}
+                {section === 'finalSection' && <div>final</div>}
               </SurveyWrapper>
             )}
           </Container>
