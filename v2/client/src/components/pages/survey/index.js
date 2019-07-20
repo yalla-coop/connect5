@@ -61,18 +61,41 @@ class Survey extends Component {
   }
 
   // enables user to change direction of sections
-  sectionChange = direction => {
-    const { section } = this.state;
+  sectionChange = (direction, uniqueGroups) => {
+    console.log(uniqueGroups);
     let newSection;
+    const { section } = this.state;
 
     if (direction === 'forward') {
       switch (section) {
+        // first section
         case 'confirmSurvey':
           newSection = 'enterPIN';
           break;
+        // second section
         case 'enterPIN':
-          newSection = 'demographic';
+          newSection = uniqueGroups[0];
           break;
+        // survey questions start
+        // pre day 1, pre special
+        case 'demographic':
+          newSection = 'Behavioural Insights';
+          break;
+        // post day 1, post day 2
+        case 'Behavioural Insights':
+          if (uniqueGroups[1] === 'about your trainer') {
+            newSection = 'about your trainer';
+            // post day 3, post-special
+          } else {
+            newSection = 'final section';
+          }
+          break;
+        // train the trainers (pre and post)
+        case 'about your usual way of teaching':
+          newSection = 'final section';
+
+          break;
+
         default:
           newSection = section;
       }
@@ -84,6 +107,9 @@ class Survey extends Component {
         case 'demographic':
           newSection = 'enterPIN';
           break;
+        case 'Behavioural Insights':
+          newSection = 'demographic';
+          break;
 
         default:
           newSection = section;
@@ -93,14 +119,14 @@ class Survey extends Component {
   };
 
   // renders back and next button and calls custom actions
-  renderSkipButtons = (section, disabled) => (
+  renderSkipButtons = (section, disabled, uniqueGroups) => (
     <SkipButtonsDiv>
       <Button
         label="Back"
         width="100px"
         height="50px"
         type="primary"
-        onClick={() => this.sectionChange('back')}
+        onClick={() => this.sectionChange('back', uniqueGroups)}
       />
       <Button
         label="Next"
@@ -109,7 +135,8 @@ class Survey extends Component {
         type="primary"
         disabled={disabled}
         onClick={() => {
-          this.sectionChange('forward');
+          this.sectionChange('forward', uniqueGroups);
+          // this would be either PIN Submit or Final Submit
           this.customSubmit(section);
         }}
       />
@@ -311,7 +338,6 @@ class Survey extends Component {
   };
 
   checkPageFormState = (questions, answers) => {
-    console.log(questions);
     if (
       questions !== null &&
       answers !== 0 &&
@@ -325,12 +351,11 @@ class Survey extends Component {
 
   render() {
     const {
-      section,
-      PINerror,
       formState,
       errors,
+      section,
+      PINerror,
       PINSectionCompleted,
-      demoSectionCompleted,
     } = this.state;
     const { surveyData } = this.props;
 
@@ -339,14 +364,11 @@ class Survey extends Component {
     const { surveyData: surveyDetails } = surveyData;
 
     const answers = Object.keys(formState);
-    // console.log(answers.length);
-    const demoQuestions =
-      surveyDetails &&
-      surveyDetails.questionsForSurvey.filter(
-        question => question.group === 'demographic'
-      );
-    console.log(this.checkPageFormState(demoQuestions, answers));
 
+    const uniqueGroups = surveyDetails && [
+      ...new Set(surveyDetails.questionsForSurvey.map(e => e.group)),
+    ];
+    console.log(section);
     return (
       <div>
         {!surveyData.loaded ? (
@@ -361,57 +383,53 @@ class Survey extends Component {
             )}
             {surveyDetails && surveyDetails !== null && (
               <SurveyWrapper>
-                {/* {section === 'confirmSurvey' && (
+                {section === 'confirmSurvey' && (
                   <ConfirmSurvey
                     sessionDate={surveyData.surveyData.sessionDate}
                     trainerNames={surveyData.surveyData.trainerNames}
                     surveyType={surveyData.surveyData.surveyType}
                     sectionChange={this.sectionChange}
                   />
-                )} */}
-                {/* {section === 'enterPIN' && (
+                )}
+                {section === 'enterPIN' && (
                   <EnterPIN
                     handlePIN={this.handlePIN}
                     onPINBlur={this.checkPINonBlur}
                     renderSkipButtons={this.renderSkipButtons(
                       'enterPIN',
-                      !PINSectionCompleted
+                      !PINSectionCompleted,
+                      uniqueGroups
                     )}
                     PINerror={PINerror}
                   />
-                )} */}
+                )}
+                {uniqueGroups.map(group => {
+                  const questions =
+                    surveyDetails &&
+                    surveyDetails.questionsForSurvey.filter(
+                      question => question.group === group
+                    );
 
-                {/* {section === 'demographic' && (
-                  <SurveyQs
-                    questions={surveyData.surveyData.questionsForSurvey.filter(
-                      question => question.group === 'demographic'
-                    )}
-                    onChange={this.handleChange}
-                    handleOther={this.handleOther}
-                    answers={formState}
-                    selectCheckedItem={this.selectCheckedItem}
-                    errors={errors}
-                    handleAntdDatePicker={this.handleAntdDatePicker}
-                    renderSkipButtons={this.renderSkipButtons(
-                      'demographic',
-                      !demoSectionCompleted
-                    )}
-                  />
-                )} */}
-
-                <SurveyQs
-                  questions={demoQuestions}
-                  onChange={this.handleChange}
-                  handleOther={this.handleOther}
-                  answers={formState}
-                  selectCheckedItem={this.selectCheckedItem}
-                  errors={errors}
-                  handleAntdDatePicker={this.handleAntdDatePicker}
-                  renderSkipButtons={this.renderSkipButtons(
-                    'demographic',
-                    !this.checkPageFormState(demoQuestions, answers)
-                  )}
-                />
+                  console.log(questions);
+                  return (
+                    section === group && (
+                      <SurveyQs
+                        questions={questions}
+                        onChange={this.handleChange}
+                        handleOther={this.handleOther}
+                        answers={formState}
+                        selectCheckedItem={this.selectCheckedItem}
+                        errors={errors}
+                        handleAntdDatePicker={this.handleAntdDatePicker}
+                        renderSkipButtons={this.renderSkipButtons(
+                          group,
+                          !this.checkPageFormState(questions, answers),
+                          uniqueGroups
+                        )}
+                      />
+                    )
+                  );
+                })}
               </SurveyWrapper>
             )}
           </Container>
