@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import swal from 'sweetalert2';
+import axios from 'axios';
 
 import { connect } from 'react-redux';
 // Styles
 import { Spin, Alert, Modal } from 'antd';
+
 import Header from '../../common/Header';
 import {
   Container,
@@ -21,7 +24,7 @@ import {
 
 import ConfirmSurvey from './ConfirmSurvey';
 import EnterPIN from './EnterPIN';
-import Demographics from './Demographics';
+import SurveyQs from './SurveyQs';
 
 // PIN validation
 const validLetters = string => {
@@ -36,26 +39,27 @@ const validNumbers = string => {
 
 class Survey extends Component {
   state = {
-    section: 'confirmSurvey',
-    PIN: '',
     surveyParts: '',
+    PIN: '',
+    disagreedToResearch: false,
     PINerror: '',
-    PINSection: false,
+    errors: {},
+    formState: {},
+    PINSectionCompleted: false,
+    section: 'confirmSurvey',
+    completionRate: 0,
   };
 
   componentDidMount() {
-    // grab the unique url at the end which gives us survey type and session id
-    // syntax of url: surveyType&sessionId
     const { location, fetchSurveyData: fetchSurveyDataAction } = this.props;
-    // const { surveyParts } = this.state;
     const survey = `${location.pathname}`;
     const surveyParts = survey.split('/')[2];
-
     fetchSurveyDataAction(surveyParts);
-    window.scrollTo(0, 0);
     this.setState({ surveyParts });
+    window.scrollTo(0, 0);
   }
 
+  // enables user to change direction of sections
   sectionChange = direction => {
     const { section } = this.state;
     let newSection;
@@ -66,16 +70,20 @@ class Survey extends Component {
           newSection = 'enterPIN';
           break;
         case 'enterPIN':
-          newSection = 'surveyStart';
+          newSection = 'demographics';
           break;
         default:
           newSection = section;
       }
     } else {
       switch (section) {
-        case 'surveyStart':
+        case 'enterPIN':
+          newSection = 'confirmSurvey';
+          break;
+        case 'demographics':
           newSection = 'enterPIN';
           break;
+
         default:
           newSection = section;
       }
@@ -83,33 +91,44 @@ class Survey extends Component {
     this.setState({ section: newSection });
   };
 
-  renderSkipButtons = section => {
-    const { PINSection } = this.state;
-    return (
-      <SkipButtonsDiv>
-        <Button
-          label="Back"
-          width="100px"
-          height="50px"
-          type="primary"
-          onClick={() => this.sectionChange('back')}
-        />
-        <Button
-          label="Next"
-          width="100px"
-          height="50px"
-          type="primary"
-          disabled={!PINSection}
-          onClick={() => {
-            this.sectionChange('forward');
-            this.customSubmit(section);
-          }}
-        />
-      </SkipButtonsDiv>
-    );
+  // renders back and next button and calls custom actions
+  renderSkipButtons = (section, disabled) => (
+    <SkipButtonsDiv>
+      <Button
+        label="Back"
+        width="100px"
+        height="50px"
+        type="primary"
+        onClick={() => this.sectionChange('back')}
+      />
+      <Button
+        label="Next"
+        width="100px"
+        height="50px"
+        type="primary"
+        disabled={disabled}
+        onClick={() => {
+          this.sectionChange('forward');
+          this.customSubmit(section);
+        }}
+      />
+    </SkipButtonsDiv>
+  );
+
+  // takes section as an input and referes to submitType
+  customSubmit = section => {
+    const { PIN, surveyParts } = this.state;
+    switch (section) {
+      case 'enterPIN':
+        this.submitPIN(PIN, surveyParts);
+        break;
+      default:
+        return null;
+    }
+    return null;
   };
 
-  // PIN
+  // PIN FUNCTIONS
   // handles user input for PIN field
   handlePIN = e => {
     const PIN = e.target.value;
@@ -148,6 +167,7 @@ class Survey extends Component {
 
       // check if PIN alrady submitted this exact survey
       checkPINResponsesAction(surveyParts, PIN);
+      this.trackAnswers();
     }
   };
 
@@ -161,29 +181,141 @@ class Survey extends Component {
         onOk: this.sectionChange('back'),
       });
     }
+    // check demographic table
   };
 
-  // takes section as an input and referes to submitType
-  customSubmit = section => {
-    const { PIN, surveyParts } = this.state;
-    switch (section) {
-      case 'enterPIN':
-        this.submitPIN(PIN, surveyParts);
-        break;
-      default:
-        return null;
+  // SURVEY FUNCTIONS
+
+  // function that will check if the div for the answer has been selected and if so add that answer to the formstate
+  selectCheckedItem = (value, questionId) => {
+    const { formState } = this.state;
+    formState[questionId] = value;
+    this.setState({ formState }, () => {
+      this.trackAnswers();
+    });
+  };
+
+  // function to track progress on survey
+  trackAnswers = () => {
+    const { formState, PIN } = this.state;
+    const { surveyData } = this.props;
+    const { surveyData: surveyDetails } = surveyData;
+
+    if (formState && surveyDetails) {
+      // add one to total list to include the pin
+      const numberOfQs = surveyDetails.questionsForSurvey.length + 1;
+      const numberOfAs = Object.values(formState).length;
+      const pinAnswered = PIN.length === 5 ? 1 : 0;
+      const rate = Math.ceil(((numberOfAs + pinAnswered) / numberOfQs) * 100);
+      this.setState({ completionRate: rate });
+    } else {
+      this.setState({ completionRate: 0 });
     }
   };
 
+  // // check for any changes to the survey inputs and add them to the formstate
+  handleChange = e => {
+    const { group, field } = e.target.dataset;
+
+    const question = e.target.name;
+    const { formState } = this.state;
+    // if any other type we assign the value to answer and put it in the state
+    const answer = { answer: e.target.value, question };
+    if (group === 'demographic') {
+      answer.participantField = field;
+    }
+
+    this.setState({ formState: { ...formState, [question]: answer } }, () => {
+      this.trackAnswers();
+    });
+  };
+
+  handleAntdDatePicker = (question, value, group, field) => {
+    // const question = e.target.name;
+    const { formState } = this.state;
+    // if any other type we assign the value to answer and put it in the state
+    // const answer = e.target.value;
+    const answer = { answer: value, question };
+    if (group === 'demographic') {
+      answer.participantField = field;
+    }
+
+    this.setState({ formState: { ...formState, [question]: answer } }, () => {
+      this.trackAnswers();
+    });
+  };
+
+  // handles case when user selects 'other'
+  handleOther = e => {
+    const question = e.target.name;
+    const { formState } = this.state;
+    const { group, field } = e.target.dataset;
+
+    const answer = { answer: `Other: ${e.target.value}`, question };
+    if (group === 'demographic') {
+      answer.participantField = field;
+    }
+    this.setState({ formState: { ...formState, [question]: answer } }, () => {
+      this.trackAnswers();
+    });
+  };
+
+  // when participant submits form
+  // this puts the required info into an object and sends to server
+  handleSubmit = e => {
+    e.preventDefault();
+    const { history, surveyData } = this.props;
+    const { surveyType } = surveyData.surveyData;
+    const { sessionId } = surveyData.surveyData;
+
+    const { formState, PIN, disagreedToResearch, PINExist } = this.state;
+
+    const formSubmission = {
+      PIN: PIN && PIN.toUpperCase(),
+      sessionId,
+      surveyType,
+      formState,
+      disagreedToResearch,
+    };
+    if (PINExist) {
+      return swal.fire({
+        title: 'This PIN has already submited the survey before',
+        type: 'error',
+      });
+    }
+
+    // check if PIN was entered before API call
+    if (PIN) {
+      return axios
+        .post(`/api/survey/submit/`, formSubmission)
+        .then(() =>
+          swal
+            .fire('Done!', 'Thanks for submitting your feedback!', 'success')
+            .then(() => history.push('/thank-you'))
+        )
+        .catch(err => {
+          this.setState({
+            errors: err.response.data,
+          });
+          swal.fire({
+            title: 'Please answer all required questions',
+            type: 'error',
+          });
+        });
+    }
+    return swal.fire({
+      title: 'Please enter your PIN',
+      type: 'error',
+    });
+  };
+
   render() {
-    const { section, PINerror } = this.state;
+    const { section, PINerror, PINSection, formState, errors } = this.state;
     const { surveyData } = this.props;
 
     const loadingError = Object.keys(surveyData.msg).length > 0;
 
     const { surveyData: surveyDetails } = surveyData;
-    // console.log('section', section);
-    // console.log('PIN', PIN);
 
     return (
       <div>
@@ -211,12 +343,27 @@ class Survey extends Component {
                   <EnterPIN
                     handlePIN={this.handlePIN}
                     onPINBlur={this.checkPINonBlur}
-                    renderSkipButtons={this.renderSkipButtons('enterPIN')}
+                    renderSkipButtons={this.renderSkipButtons(
+                      'enterPIN',
+                      !PINSection
+                    )}
                     PINerror={PINerror}
                   />
                 )}
-                {section === 'surveyStart' && (
-                  <Demographics renderSkipButtons={this.renderSkipButtons()} />
+
+                {section === 'demographics' && (
+                  <SurveyQs
+                    questions={surveyData.surveyData.questionsForSurvey.filter(
+                      question => question.group === 'demographic'
+                    )}
+                    onChange={this.handleChange}
+                    handleOther={this.handleOther}
+                    answers={formState}
+                    selectCheckedItem={this.selectCheckedItem}
+                    errors={errors}
+                    handleAntdDatePicker={this.handleAntdDatePicker}
+                    renderSkipButtons={this.renderSkipButtons()}
+                  />
                 )}
               </SurveyWrapper>
             )}

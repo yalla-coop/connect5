@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Spin, Alert, Modal } from 'antd';
+import { Alert } from 'antd';
 import {
   TextField,
   QuestionWrapper,
