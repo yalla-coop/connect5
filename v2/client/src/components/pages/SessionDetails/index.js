@@ -17,6 +17,7 @@ import { SessionDetailsWrapper } from './SessionDetails.Style';
 import SessionTopDetails from './SessionTopDetails';
 import SessionActions from './SessionActions';
 import SessionSurveys from './SessionSurveys';
+import InviteAndPromote from './Invite&Promote';
 
 const { Panel } = Collapse;
 
@@ -58,7 +59,7 @@ class SessionDetails extends Component {
             <SessionActions sessionDetails={sessionDetails} />
           </Panel>
           <Panel header="Invite & Promote" key="2">
-            <p>Hello</p>
+            <InviteAndPromote />
           </Panel>
           <Panel header="Manage Attendees" key="3">
             <p>Hello</p>
