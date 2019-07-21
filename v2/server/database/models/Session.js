@@ -21,6 +21,15 @@ const sessionSchema = new Schema({
     type: String,
     lowercase: true,
   },
+  address: {
+    type: String,
+  },
+  startTime: {
+    type: String,
+  },
+  endTime: {
+    type: String,
+  },
   // array of trainers must be 2 max
   trainers: [
     {
