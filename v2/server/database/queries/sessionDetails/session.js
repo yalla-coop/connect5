@@ -57,28 +57,19 @@ module.exports.editSessionQuery = async (
     if (!emails.includes(emailObject.email)) {
       session.participantsEmails[index].remove();
     } else {
+      // skip
       const changedIndex = changedEmails.indexOf(emailObject.email);
       changedEmails.splice(changedIndex, 1);
     }
   });
 
+  // add the new emails
   session.participantsEmails = [
     ...session.participantsEmails,
     ...changedEmails.map(item => ({ email: item, status: 'new' })),
   ];
 
   return session.save();
-  // session.type = sessionType;
-  // session.date = startDate;
-  // session.numberOfAttendees = inviteesNumber;
-  // session.region = region;
-  // session.trainers = trainers;
-  // type: session,
-  //   date: startDate,
-  //   numberOfAttendees: inviteesNumber,
-  //   region,
-  //   trainers,
-  //   participantsEmails: emails,
 };
 
 module.exports.updateEmailsQuery = async (id, participantsEmails) => {
@@ -90,15 +81,24 @@ module.exports.updateEmailsQuery = async (id, participantsEmails) => {
     if (!participantsEmails.includes(emailObject.email)) {
       session.participantsEmails[index].remove();
     } else {
+      // skip
       const changedIndex = changedEmails.indexOf(emailObject.email);
       changedEmails.splice(changedIndex, 1);
     }
   });
 
+  // add the new emails
   session.participantsEmails = [
     ...session.participantsEmails,
     ...changedEmails.map(item => ({ email: item, status: 'new' })),
   ];
 
   return session.save();
+};
+
+module.exports.updateEmailStatus = async ({ sessionId, email, status }) => {
+  return Session.updateOne(
+    { _id: sessionId, 'participantsEmails.email': email },
+    { $set: { 'participantsEmails.$.status': status } }
+  );
 };

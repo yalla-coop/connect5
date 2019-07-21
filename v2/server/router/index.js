@@ -26,6 +26,7 @@ const feedbackFromParticipant = require('./../controllers/feedback/feedbackFromP
 const getParticipantSessions = require('../controllers/users/getParticipantSessions');
 const generateCertificate = require('../controllers/users/generateCertificate');
 const checkPINResponsesOnSurvey = require('../controllers/survey/checkPINResponsesOnSurvey');
+const confirmEmailRegistration = require('../controllers/sessionDetails/confirmEmailRegistration');
 
 const router = express.Router();
 
@@ -43,6 +44,8 @@ router.get(
 
 // Route = "/session?shortId=:shortId"
 router.get('/sessions', getSessionByShortId);
+
+router.patch('/sessions/:sessionId/confirm-email', confirmEmailRegistration);
 router.get('/session-details/:id', getSessionDetails);
 router.delete('/session-delete/:id', deleteSession);
 router.patch('/session-edit/:id', editSession);

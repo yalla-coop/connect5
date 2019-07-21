@@ -15,6 +15,7 @@ import viewReducer from './viewReducer';
 import changePasswordReducer from './changePasswordReducer';
 import demographicsReducer from './demographics';
 import adminSessionsReducer from './adminSessionsReducer';
+import confirmRegistration from './confirmRegistration';
 
 export default combineReducers({
   auth: authReducer,
@@ -32,4 +33,5 @@ export default combineReducers({
   changePassword: changePasswordReducer,
   demographics: demographicsReducer,
   adminSessions: adminSessionsReducer,
+  confirmRegistration,
 });
