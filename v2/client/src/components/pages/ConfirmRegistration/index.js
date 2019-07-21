@@ -1,6 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { getSessionDetails } from '../../../actions/sessionAction';
 
@@ -15,6 +16,7 @@ import {
   BoldSpan,
   Input,
   Button,
+  CapitalizedSpan,
 } from './ConfirmRegistration.style';
 
 class ConfirmRegistration extends Component {
@@ -27,6 +29,8 @@ class ConfirmRegistration extends Component {
   }
 
   render() {
+    const { trainers, address, date } = this.props;
+    const trainersNames = trainers.map(trainer => trainer.name).join(' & ');
     return (
       <Wrapper>
         <ContentWrapper>
@@ -34,13 +38,15 @@ class ConfirmRegistration extends Component {
           <Title>Connect 5 Invitation</Title>
           <WhiteDiv>
             <Details>
-              <BoldSpan>Date of Session:</BoldSpan> 16-05-2019
+              <BoldSpan>Date of Session:</BoldSpan>{' '}
+              {date ? moment(date).format('DD-MM-YYYY') : 'N/A'}
             </Details>
             <Details>
-              <BoldSpan>Trainers:</BoldSpan> Nisha & Alex
+              <BoldSpan>Trainers:</BoldSpan>{' '}
+              <CapitalizedSpan>{trainersNames || 'N/A'}</CapitalizedSpan>
             </Details>
             <Details>
-              <BoldSpan>Location:</BoldSpan> 1 Test Way, London, E4 T66
+              <BoldSpan>Location:</BoldSpan> {address || 'N/A'}
             </Details>
             <Details center>
               <BoldSpan>
@@ -66,7 +72,7 @@ const mapStateToProps = ({ session }) => {
   return {
     trainers: session.trainers,
     sessionId: session._id,
-    location: session.location,
+    address: session.address,
     date: session.date,
   };
 };

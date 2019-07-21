@@ -3,9 +3,16 @@ const Session = require('./../../models/Session');
 
 module.exports.getSessionById = id => Session.findById(id);
 
-module.exports.getSessionDetails = id => {
+module.exports.getSessionDetails = ({ id, shortId }) => {
+  let match;
+  if (id) {
+    match = { $match: { _id: mongoose.Types.ObjectId(id) } };
+  } else if (shortId) {
+    match = { $match: { shortId } };
+  }
+
   return Session.aggregate([
-    { $match: { _id: mongoose.Types.ObjectId(id) } },
+    match,
     {
       $lookup: {
         from: 'users',

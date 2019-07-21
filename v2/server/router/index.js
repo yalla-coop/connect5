@@ -13,6 +13,7 @@ const surveyQs = require('../controllers/survey/getSurveyQs');
 const storeSurvey = require('../controllers/survey/storeSurvey');
 const getSurveyResponses = require('../controllers/survey/getSurveyResponses');
 const getSessionDetails = require('../controllers/sessionDetails/getSessionDetails');
+const getSessionByShortId = require('../controllers/sessionDetails/getSessionByShortId');
 const deleteSession = require('../controllers/sessionDetails/deleteSession');
 const editSession = require('../controllers/sessionDetails/editSession');
 const updateEmails = require('../controllers/sessionDetails/updateEmails.js');
@@ -40,6 +41,8 @@ router.get(
   getParticipantBehavioralInsight
 );
 
+// Route = "/session?shortId=:shortId"
+router.get('/sessions', getSessionByShortId);
 router.get('/session-details/:id', getSessionDetails);
 router.delete('/session-delete/:id', deleteSession);
 router.patch('/session-edit/:id', editSession);

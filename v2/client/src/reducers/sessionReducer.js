@@ -9,7 +9,7 @@ const initState = {
   msg: '',
   trainers: [],
   date: null,
-  location: null,
+  address: null,
   _id: null,
 };
 

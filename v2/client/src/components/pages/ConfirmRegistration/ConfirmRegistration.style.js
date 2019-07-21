@@ -55,3 +55,7 @@ export const Details = styled.p`
 export const BoldSpan = styled.span`
   font-weight: 500;
 `;
+
+export const CapitalizedSpan = styled.span`
+  text-transform: capitalize;
+`;
