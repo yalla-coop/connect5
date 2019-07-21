@@ -13,6 +13,7 @@ import {
   QuestionWrapper,
   SectionCategory,
   SubGroup,
+  Warning,
 } from './Questions.style';
 // please leave this inside for antd to style right
 import 'antd/dist/antd.css';
@@ -60,13 +61,15 @@ const renderQuestionInputType = (
 ) => {
   if (inputType === 'text') {
     return (
-      <TextField
-        unanswered={errorArray.includes(questionId) && !answers[questionId]}
-      >
+      <TextField>
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
+          {!answers[questionId] && (
+            <Warning>* this question must be answered</Warning>
+          )}
+
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <input
@@ -76,6 +79,7 @@ const renderQuestionInputType = (
           onChange={onChange}
           data-group={group}
           data-field={participantField}
+          value={answers[questionId] && answers[questionId].answer}
         />
       </TextField>
     );
@@ -89,6 +93,9 @@ const renderQuestionInputType = (
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
+          {!answers[questionId] && (
+            <Warning>* this question must be answered</Warning>
+          )}
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <DatePicker
@@ -97,6 +104,7 @@ const renderQuestionInputType = (
           onChange={value =>
             handleAntdDatePicker(questionId, value, group, participantField)
           }
+          value={answers[questionId] && answers[questionId].answer}
         />
       </TextField>
     );
@@ -111,6 +119,9 @@ const renderQuestionInputType = (
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">Please specify number</p>
           <p className="helpertext">{helperText}</p>
+          {!answers[questionId] && (
+            <Warning>* this question must be answered</Warning>
+          )}
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <input
@@ -121,6 +132,7 @@ const renderQuestionInputType = (
           onChange={onChange}
           data-group={group}
           data-field={participantField}
+          value={answers[questionId] && answers[questionId].answer}
         />
       </TextField>
     );
@@ -137,6 +149,9 @@ const renderQuestionInputType = (
             Please choose: 0 (strongly disagree) to 10 (strongly agree)
           </p>
           <p className="helpertext">{helperText}</p>
+          {!answers[questionId] && (
+            <Warning>* this question must be answered</Warning>
+          )}
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <NumberSliderDiv>
@@ -168,12 +183,14 @@ const renderQuestionInputType = (
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
+          {!answers[questionId] && (
+            <Warning>* this question must be answered</Warning>
+          )}
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <div className="answers">
           {options.map(e => {
             const value = e;
-            console.log(value);
             const uniqueId = e + questionId;
             return (
               <div key={`${value}parent`}>

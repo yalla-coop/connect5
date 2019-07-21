@@ -119,7 +119,7 @@ const TextField = styled(CommonStyles)`
   }
   h4 {
     font-size: 1rem;
-    ${({ unanswered }) => unanswered && ` color: ${colors.errorRed}`}
+    // ${({ unanswered }) => unanswered && ` color: ${colors.errorRed}`}
   }
 
   p {
@@ -132,6 +132,12 @@ const TextField = styled(CommonStyles)`
     width: 100%;
     padding: 8px;
   }
+`;
+
+export const Warning = styled.p`
+  color: ${colors.errorRed};
+  font-size: 14px;
+  opacity: 0.6;
 `;
 
 const NumberSliderDiv = styled.div`
