@@ -7,7 +7,6 @@ const createNewSession = ({
   inviteesNumber,
   region,
   trainers,
-
   emails,
 }) => {
   const newSession = new Session({
@@ -17,7 +16,7 @@ const createNewSession = ({
     numberOfAttendees: inviteesNumber,
     region,
     trainers,
-    participantsEmails: emails,
+    participantsEmails: emails.map(email => ({ email, confirmed: false })),
   });
   // Add new session
   return newSession.save();

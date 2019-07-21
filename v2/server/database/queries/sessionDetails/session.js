@@ -21,9 +21,9 @@ module.exports.deleteSession = id => {
   return Session.findByIdAndDelete(id);
 };
 
-module.exports.editSessionQuery = (
+module.exports.editSessionQuery = async (
   id,
-  session,
+  sessionType,
   startDate,
   inviteesNumber,
   region,
@@ -35,18 +35,63 @@ module.exports.editSessionQuery = (
   if (partnerTrainer2) {
     trainers.push(partnerTrainer2);
   }
-  return Session.findByIdAndUpdate(id, {
-    type: session,
+  const session = await Session.findByIdAndUpdate(id, {
+    type: sessionType,
     date: startDate,
     numberOfAttendees: inviteesNumber,
     region,
     trainers,
-    participantsEmails: emails,
   });
+
+  const changedEmails = [...emails];
+
+  session.participantsEmails.forEach((emailObject, index) => {
+    // delete
+    if (!emails.includes(emailObject.email)) {
+      session.participantsEmails[index].remove();
+    } else {
+      const changedIndex = changedEmails.indexOf(emailObject.email);
+      changedEmails.splice(changedIndex, 1);
+    }
+  });
+
+  session.participantsEmails = [
+    ...session.participantsEmails,
+    ...changedEmails.map(item => ({ email: item, confirmed: false })),
+  ];
+
+  return session.save();
+  // session.type = sessionType;
+  // session.date = startDate;
+  // session.numberOfAttendees = inviteesNumber;
+  // session.region = region;
+  // session.trainers = trainers;
+  // type: session,
+  //   date: startDate,
+  //   numberOfAttendees: inviteesNumber,
+  //   region,
+  //   trainers,
+  //   participantsEmails: emails,
 };
 
-module.exports.updateEmailsQuery = (id, participantsEmails) => {
-  return Session.findByIdAndUpdate(id, {
-    participantsEmails,
+module.exports.updateEmailsQuery = async (id, participantsEmails) => {
+  const session = await Session.findById(id);
+  const changedEmails = [...participantsEmails];
+
+  session.participantsEmails.forEach((emailObject, index) => {
+    // delete
+    if (!participantsEmails.includes(emailObject.email)) {
+      session.participantsEmails[index].remove();
+    } else {
+      const changedIndex = changedEmails.indexOf(emailObject.email);
+      changedEmails.splice(changedIndex, 1);
+    }
   });
+
+  session.participantsEmails = [
+    ...session.participantsEmails,
+    ...changedEmails.map(item => ({ email: item, confirmed: false })),
+  ];
+
+  return session.save();
 };

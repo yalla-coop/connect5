@@ -16,11 +16,11 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[0], trainers[1]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'abd@gmail.com',
-        'marwa@gmail.com',
-        'joe@gmail.com',
-        'simon@gmail.com',
+        { email: 'ramy@gmail.com', confirmed: false },
+        { email: 'abd@gmail.com', confirmed: false },
+        { email: 'marwa@gmail.com', confirmed: false },
+        { email: 'joe@gmail.com', confirmed: false },
+        { email: 'simon@gmail.com', confirmed: false },
       ],
     },
     {
@@ -31,11 +31,11 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[3], trainers[4]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'abd@gmail.com',
-        'marwa@gmail.com',
-        'joe@gmail.com',
-        'simon@gmail.com',
+        { email: 'ramy@gmail.com', confirmed: false },
+        { email: 'abd@gmail.com', confirmed: false },
+        { email: 'marwa@gmail.com', confirmed: false },
+        { email: 'joe@gmail.com', confirmed: false },
+        { email: 'simon@gmail.com', confirmed: false },
       ],
     },
     {
@@ -46,11 +46,11 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[0], trainers[2]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'abd@gmail.com',
-        'marwa@gmail.com',
-        'joe@gmail.com',
-        'simon@gmail.com',
+        { email: 'ramy@gmail.com', confirmed: false },
+        { email: 'abd@gmail.com', confirmed: false },
+        { email: 'marwa@gmail.com', confirmed: false },
+        { email: 'joe@gmail.com', confirmed: false },
+        { email: 'simon@gmail.com', confirmed: false },
       ],
     },
     {
@@ -61,11 +61,11 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[0]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'abd@gmail.com',
-        'marwa@gmail.com',
-        'joe@gmail.com',
-        'simon@gmail.com',
+        { email: 'ramy@gmail.com', confirmed: false },
+        { email: 'abd@gmail.com', confirmed: false },
+        { email: 'marwa@gmail.com', confirmed: false },
+        { email: 'joe@gmail.com', confirmed: false },
+        { email: 'simon@gmail.com', confirmed: false },
       ],
     },
     {
@@ -76,11 +76,11 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[0], trainers[2]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'abd@gmail.com',
-        'marwa@gmail.com',
-        'joe@gmail.com',
-        'simon@gmail.com',
+        { email: 'ramy@gmail.com', confirmed: false },
+        { email: 'abd@gmail.com', confirmed: false },
+        { email: 'marwa@gmail.com', confirmed: false },
+        { email: 'joe@gmail.com', confirmed: false },
+        { email: 'simon@gmail.com', confirmed: false },
       ],
     },
     {
@@ -91,10 +91,10 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[0]],
       participantsEmails: [
-        'alex@gmail.com',
-        'nancy@gmail.com',
-        'mark@gmail.com',
-        'john@gmail.com',
+        { email: 'alex@gmail.com', confirmed: false },
+        { email: 'nancy@gmail.com', confirmed: false },
+        { email: 'mark@gmail.com', confirmed: false },
+        { email: 'john@gmail.com', confirmed: false },
       ],
     },
     {
@@ -105,10 +105,10 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[5]],
       participantsEmails: [
-        'alex@gmail.com',
-        'nancy@gmail.com',
-        'mark@gmail.com',
-        'john@gmail.com',
+        { email: 'alex@gmail.com', confirmed: false },
+        { email: 'nancy@gmail.com', confirmed: false },
+        { email: 'mark@gmail.com', confirmed: false },
+        { email: 'john@gmail.com', confirmed: false },
       ],
     },
     {
@@ -119,10 +119,10 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[1]],
       participantsEmails: [
-        'sozan@gmail.com',
-        'amal@gmail.com',
-        'mai@gmail.com',
-        'bakeza@gmail.com',
+        { email: 'sozan@gmail.com', confirmed: false },
+        { email: 'amal@gmail.com', confirmed: false },
+        { email: 'mai@gmail.com', confirmed: false },
+        { email: 'bakeza@gmail.com', confirmed: false },
       ],
     },
     // local lead only session
@@ -135,10 +135,10 @@ module.exports = async () => {
       region: 'North West',
       trainers: [trainers[0], localLeads[0]],
       participantsEmails: [
-        'nichole@gmail.com',
-        'amal@gmail.com',
-        'nancy@gmail.com',
-        'bakeza@gmail.com',
+        { email: 'nichole@gmail.com', confirmed: false },
+        { email: 'amal@gmail.com', confirmed: false },
+        { email: 'nancy@gmail.com', confirmed: false },
+        { email: 'bakeza@gmail.com', confirmed: false },
       ],
     },
     // {
@@ -163,10 +163,10 @@ module.exports = async () => {
       region: 'North West',
       trainers: [localLeads[0]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'hosam@gmail.com',
-        'sa3d@gmail.com',
-        'saleem@gmail.com',
+        { email: 'ramy@gmail.com', confirmed: false },
+        { email: 'hosam@gmail.com', confirmed: false },
+        { email: 'sa3d@gmail.com', confirmed: false },
+        { email: 'saleem@gmail.com', confirmed: false },
       ],
     },
     {
@@ -177,10 +177,10 @@ module.exports = async () => {
       region: 'North West',
       trainers: [localLeads[1]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'hosam@gmail.com',
-        'sa3d@gmail.com',
-        'saleem@gmail.com',
+        { email: 'ramy@gmail.com', confirmed: false },
+        { email: 'hosam@gmail.com', confirmed: false },
+        { email: 'sa3d@gmail.com', confirmed: false },
+        { email: 'saleem@gmail.com', confirmed: false },
       ],
     },
 
@@ -192,7 +192,10 @@ module.exports = async () => {
       numberOfAttendees: 5,
       region: 'North West',
       trainers: [localLeads[0], trainers[0]],
-      participantsEmails: ['samer@gmail.com', 'nael@gmail.com'],
+      participantsEmails: [
+        { email: 'samer@gmail.com', confirmed: false },
+        { email: 'nael@gmail.com', confirmed: false },
+      ],
     },
   ];
 

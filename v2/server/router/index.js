@@ -1,6 +1,6 @@
 const express = require('express');
 const loginController = require('./../controllers/login');
-const addSessionController = require('./../controllers/add-session');
+const addSessionController = require('./../controllers/addSession');
 const ParticipantLoginController = require('./../controllers/participantLogin');
 const usersRouter = require('./users');
 const getParticipantBehavioralInsight = require('./../controllers/behavioralInsight/getParticipantBehavioralInsight');

@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/no-did-update-set-state */
 import React, { Component } from 'react';
 import { DatePicker, Select, Input } from 'antd';
 import moment from 'moment';
@@ -241,9 +243,9 @@ class EditSession extends Component {
               onChange={onSelectRegionChange}
               size="large"
             >
-              {regions.map(region => (
-                <Option key={region} value={region}>
-                  {region}
+              {regions.map(_region => (
+                <Option key={_region} value={_region}>
+                  {_region}
                 </Option>
               ))}
             </Select>
@@ -304,12 +306,12 @@ class EditSession extends Component {
               size="large"
               placeholder="emails"
               onChange={onEmailChange}
-              defaultValue={participantsEmails}
+              defaultValue={participantsEmails.map(item => item.email)}
               style={{ width: '100%', height: '100%' }}
             >
-              {participantsEmails.map(email => (
-                <Option key={email} value={email}>
-                  {email}
+              {participantsEmails.map(item => (
+                <Option key={item.email} value={item.email}>
+                  {item.email}
                 </Option>
               ))}
             </Select>
