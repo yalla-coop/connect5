@@ -33,7 +33,7 @@ const sessionSchema = new Schema({
     {
       _id: { type: mongoose.Types.ObjectId, auto: true },
       email: String,
-      confirmed: Boolean,
+      status: { Type: String, enum: ['new', 'sent', 'confirmed'] },
     },
   ],
 });

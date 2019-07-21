@@ -57,7 +57,7 @@ module.exports.editSessionQuery = async (
 
   session.participantsEmails = [
     ...session.participantsEmails,
-    ...changedEmails.map(item => ({ email: item, confirmed: false })),
+    ...changedEmails.map(item => ({ email: item, status: 'new' })),
   ];
 
   return session.save();
@@ -90,7 +90,7 @@ module.exports.updateEmailsQuery = async (id, participantsEmails) => {
 
   session.participantsEmails = [
     ...session.participantsEmails,
-    ...changedEmails.map(item => ({ email: item, confirmed: false })),
+    ...changedEmails.map(item => ({ email: item, status: 'new' })),
   ];
 
   return session.save();
