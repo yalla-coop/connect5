@@ -173,6 +173,7 @@ const renderQuestionInputType = (
         <div className="answers">
           {options.map(e => {
             const value = e;
+            console.log(value);
             const uniqueId = e + questionId;
             return (
               <div key={`${value}parent`}>
@@ -180,6 +181,12 @@ const renderQuestionInputType = (
                   <label htmlFor={uniqueId}>
                     <input
                       value={value}
+                      checked={
+                        answers[questionId] &&
+                        answers[questionId].answer === value
+                          ? value
+                          : null
+                      }
                       id={uniqueId}
                       name={questionId}
                       type="radio"

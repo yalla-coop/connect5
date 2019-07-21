@@ -252,7 +252,7 @@ class Survey extends Component {
     }
   };
 
-  // // check for any changes to the survey inputs and add them to the formstate
+  // check for any changes to the survey inputs and add them to the formstate
   handleChange = e => {
     const { group, field } = e.target.dataset;
 
@@ -348,18 +348,6 @@ class Survey extends Component {
     });
   };
 
-  checkPageFormState = (questions, answers) => {
-    if (
-      questions !== null &&
-      answers !== 0 &&
-      questions.length > 0 &&
-      answers.length > 0
-    ) {
-      return questions.length === answers.length;
-    }
-    return false;
-  };
-
   render() {
     const {
       formState,
@@ -377,7 +365,7 @@ class Survey extends Component {
 
     // let answerCount = Object.keys(formState).length;
 
-    console.log(formState);
+    console.log('formstate', formState);
 
     const uniqueGroups = surveyDetails && [
       ...new Set(surveyDetails.questionsForSurvey.map(e => e.group)),
@@ -428,7 +416,7 @@ class Survey extends Component {
                     const answered = questions
                       .map(q => q._id)
                       .filter(q => !answers.includes(q));
-                    console.log(answered);
+
                     return (
                       <SurveyQs
                         questions={questions}

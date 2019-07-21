@@ -193,6 +193,7 @@ const renderQuestionInputType = (
                       id={uniqueId}
                       name={questionId}
                       type="radio"
+                      checked={value}
                       onChange={onChange}
                       data-group={group}
                       data-field={participantField}
