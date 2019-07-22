@@ -4,7 +4,8 @@ import axios from 'axios';
 
 import { connect } from 'react-redux';
 // Styles
-import { Spin, Alert, Modal } from 'antd';
+import { Spin, Alert, Modal, Progress } from 'antd';
+import { colors } from '../../../theme';
 
 import Header from '../../common/Header';
 import {
@@ -12,6 +13,7 @@ import {
   SpinWrapper,
   SurveyWrapper,
   SkipButtonsDiv,
+  ProgressWrapper,
 } from './Survey.style';
 
 import Button from '../../common/Button';
@@ -37,6 +39,14 @@ const validNumbers = string => {
   return regex.test(string);
 };
 
+const validPostcode = postcode => {
+  postcode = postcode.replace(/\s/g, '');
+  const regex = /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})/;
+
+  const validPostcode = regex.test(postcode);
+  return validPostcode;
+};
+
 class Survey extends Component {
   state = {
     surveyParts: '',
@@ -49,6 +59,7 @@ class Survey extends Component {
     demoSectionCompleted: false,
     section: 'confirmSurvey',
     completionRate: 0,
+    postcodeValid: false,
   };
 
   componentDidMount() {
@@ -171,13 +182,16 @@ class Survey extends Component {
   // handles user input for PIN field
   handlePIN = e => {
     const PIN = e.target.value;
-    this.setState({ PIN });
-    // this.setState({ PIN }, () => {
-    //   if (PIN.length === 5) {
-    //     this.trackAnswers();
-    //   }
-    // });
+
+    this.setState({ PIN }, () => {
+      if (PIN.length === 5) {
+        this.trackAnswers();
+      }
+    });
   };
+
+  onChangePostcode = e =>
+    this.setState({ postcodeValid: validPostcode(e.target.value) });
 
   checkPINonBlur = () => {
     const { checkPINResponses: checkPINResponsesAction } = this.props;
@@ -355,6 +369,8 @@ class Survey extends Component {
       section,
       PINerror,
       PINSectionCompleted,
+      postcodeValid,
+      completionRate,
     } = this.state;
     const { surveyData } = this.props;
 
@@ -362,10 +378,6 @@ class Survey extends Component {
 
     const { surveyData: surveyDetails } = surveyData;
     const answers = Object.keys(formState);
-
-    // let answerCount = Object.keys(formState).length;
-
-    console.log('formstate', formState);
 
     const uniqueGroups = surveyDetails && [
       ...new Set(surveyDetails.questionsForSurvey.map(e => e.group)),
@@ -420,6 +432,8 @@ class Survey extends Component {
                     return (
                       <SurveyQs
                         questions={questions}
+                        postcodeValid={postcodeValid}
+                        onChangePostcode={this.onChangePostcode}
                         onChange={this.handleChange}
                         handleOther={this.handleOther}
                         answers={formState}
@@ -428,16 +442,25 @@ class Survey extends Component {
                         handleAntdDatePicker={this.handleAntdDatePicker}
                         renderSkipButtons={this.renderSkipButtons(
                           group,
-                          !(answered.length === 0),
+                          answered.length > 0 && !postcodeValid,
                           uniqueGroups
                         )}
                       />
                     );
                   }
+                  return null;
                 })}
                 {section === 'finalSection' && <div>final</div>}
               </SurveyWrapper>
             )}
+            <ProgressWrapper>
+              <Progress
+                type="circle"
+                percent={completionRate}
+                width={80}
+                strokeColor={`${colors.green}`}
+              />
+            </ProgressWrapper>
           </Container>
         )}
       </div>

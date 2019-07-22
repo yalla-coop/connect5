@@ -57,7 +57,9 @@ const renderQuestionInputType = (
   errors,
   handleAntdDatePicker,
   group,
-  participantField
+  participantField,
+  onChangePostcode,
+  postcodeValid
 ) => {
   if (inputType === 'text') {
     return (
@@ -66,21 +68,48 @@ const renderQuestionInputType = (
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
-          {!answers[questionId] && (
-            <Warning>* this question must be answered</Warning>
-          )}
-
           {checkErrors(errorArray, questionId, answers, errors)}
         </header>
-        <input
-          id={index}
-          name={questionId}
-          type="text"
-          onChange={onChange}
-          data-group={group}
-          data-field={participantField}
-          value={answers[questionId] && answers[questionId].answer}
-        />
+
+        {questionText === 'Please enter the postcode where you are active' ? (
+          <div>
+            <Warning>
+              {!postcodeValid && '* please enter a valid UK postcode'}
+            </Warning>
+            <input
+              id={index}
+              name={questionId}
+              type="text"
+              onChange={onChangePostcode}
+              data-group={group}
+              data-field={participantField}
+              value={
+                answers[questionId] && answers[questionId].answer
+                  ? answers[questionId].answer
+                  : ''
+              }
+            />
+          </div>
+        ) : (
+          <div>
+            <Warning>
+              {!answers[questionId] && '* this question must be answered'}
+            </Warning>
+            <input
+              id={index}
+              name={questionId}
+              type="text"
+              onChange={onChange}
+              data-group={group}
+              data-field={participantField}
+              value={
+                answers[questionId] && answers[questionId].answer
+                  ? answers[questionId].answer
+                  : ''
+              }
+            />
+          </div>
+        )}
       </TextField>
     );
   }
@@ -202,7 +231,7 @@ const renderQuestionInputType = (
                         answers[questionId] &&
                         answers[questionId].answer === value
                           ? value
-                          : null
+                          : ''
                       }
                       id={uniqueId}
                       name={questionId}
@@ -261,7 +290,9 @@ const questionsRender = (
   onChange,
   handleOther,
   errors,
-  handleAntdDatePicker
+  handleAntdDatePicker,
+  onChangePostcode,
+  postcodeValid
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group === 'demographic'
@@ -315,7 +346,9 @@ const questionsRender = (
                   errors,
                   handleAntdDatePicker,
                   group,
-                  participantField
+                  participantField,
+                  onChangePostcode,
+                  postcodeValid
                 )}
               </div>
             );
@@ -334,6 +367,8 @@ export default class Questions extends React.Component {
       answers,
       errors,
       handleAntdDatePicker,
+      onChangePostcode,
+      postcodeValid,
     } = this.props;
 
     const errorArray = Object.keys(errors);
@@ -348,7 +383,9 @@ export default class Questions extends React.Component {
             onChange,
             handleOther,
             errors,
-            handleAntdDatePicker
+            handleAntdDatePicker,
+            onChangePostcode,
+            postcodeValid
           )}
           {renderSkipButtons}
         </QuestionWrapper>
