@@ -141,7 +141,7 @@ class Survey extends Component {
   };
 
   // renders back and next button and calls custom actions
-  renderSkipButtons = (section, disabled, uniqueGroups) => (
+  renderSkipButtons = (section, disabled, uniqueGroups, completionRate) => (
     <SkipButtonsDiv>
       <Button
         label="Back"
@@ -151,7 +151,7 @@ class Survey extends Component {
         onClick={() => this.sectionChange('back', uniqueGroups)}
       />
       <Button
-        label="Next"
+        label={completionRate === 100 ? 'Submit' : 'Next'}
         width="100px"
         height="50px"
         type="primary"
@@ -256,10 +256,13 @@ class Survey extends Component {
 
     if (formState && surveyDetails) {
       // add one to total list to include the pin
-      const numberOfQs = surveyDetails.questionsForSurvey.length + 1;
+      const numberOfQs = surveyDetails.questionsForSurvey.length;
       const numberOfAs = Object.values(formState).length;
+      console.log('q', numberOfQs);
+      console.log('a', numberOfAs);
       const pinAnswered = PIN.length === 5 ? 1 : 0;
-      const rate = Math.ceil(((numberOfAs + pinAnswered) / numberOfQs) * 100);
+      const rate = Math.ceil((numberOfAs / numberOfQs) * 100);
+
       this.setState({ completionRate: rate });
     } else {
       this.setState({ completionRate: 0 });
@@ -383,6 +386,7 @@ class Survey extends Component {
       ...new Set(surveyDetails.questionsForSurvey.map(e => e.group)),
     ];
 
+    console.log(formState);
     return (
       <div>
         {!surveyData.loaded ? (
@@ -415,6 +419,7 @@ class Survey extends Component {
                       uniqueGroups
                     )}
                     PINerror={PINerror}
+                    completionRate={completionRate}
                   />
                 )}
                 {uniqueGroups.map(group => {
@@ -443,24 +448,17 @@ class Survey extends Component {
                         renderSkipButtons={this.renderSkipButtons(
                           group,
                           answered.length > 0 && !postcodeValid,
-                          uniqueGroups
+                          uniqueGroups,
+                          completionRate
                         )}
+                        completionRate={completionRate}
                       />
                     );
                   }
                   return null;
                 })}
-                {section === 'finalSection' && <div>final</div>}
               </SurveyWrapper>
             )}
-            <ProgressWrapper>
-              <Progress
-                type="circle"
-                percent={completionRate}
-                width={80}
-                strokeColor={`${colors.green}`}
-              />
-            </ProgressWrapper>
           </Container>
         )}
       </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert } from 'antd';
+import { Alert, Progress } from 'antd';
 import {
   TextField,
   QuestionWrapper,
@@ -7,11 +7,16 @@ import {
   ErrorDiv,
 } from './Questions.style';
 
+import { colors } from '../../../theme';
+
+import {  ProgressWrapper } from './Survey.style';
+
 export default class EnterPIN extends Component {
   render() {
-    const { renderSkipButtons, handlePIN, onPINBlur, PINerror } = this.props;
+    const { renderSkipButtons, handlePIN, onPINBlur, PINerror, completionRate } = this.props;
     return (
       <QuestionWrapper>
+   
         <SectionCategory>Please enter your PIN</SectionCategory>
         <TextField>
           <header>
@@ -44,6 +49,14 @@ export default class EnterPIN extends Component {
           )}
         </TextField>
         {renderSkipButtons}
+               <ProgressWrapper>
+                  <Progress
+                    type="circle"
+                    percent={completionRate}
+                    width={80}
+                    strokeColor={`${colors.green}`}
+                  />
+                </ProgressWrapper>
       </QuestionWrapper>
     );
   }

@@ -55,10 +55,10 @@ export const Form = styled.form`
 `;
 
 export const ProgressWrapper = styled.div`
+  display: flex;
   position: fixed;
-  bottom: 0;
-  right: 0;
-  padding: 1rem;
+  top: 4rem;
+  right: 3rem;
   color: ${colors.white};
 `;
 
