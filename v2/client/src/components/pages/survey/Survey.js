@@ -226,7 +226,12 @@ class Survey extends React.Component {
         .then(() =>
           swal
             .fire('Done!', 'Thanks for submitting your feedback!', 'success')
-            .then(() => history.push('/thank-you'))
+            .then(() =>
+              history.push({
+                pathname: '/participant-dashboard',
+                state: { sessionId, surveySubmited: true },
+              })
+            )
         )
         .catch(err => {
           this.setState({
