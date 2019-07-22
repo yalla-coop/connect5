@@ -21,7 +21,7 @@ import {
   DECIDE_VIEW_URL,
 } from '../../../constants/navigationRoutes';
 
-class Login extends Component {
+export class Login extends Component {
   state = {
     fields: {},
     errors: {},
