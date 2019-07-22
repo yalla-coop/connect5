@@ -37,7 +37,9 @@ class ViewSessions extends Component {
   }
 
   fetchSessionsData = (viewLevel, id) => {
-    this.props.fetchALLSessions();
+    if (viewLevel === 'admin') {
+      this.props.fetchALLSessions();
+    }
     if (viewLevel === 'trainer') {
       this.props.fetchTrainerSessions(id);
     } else {
@@ -69,7 +71,6 @@ const mapStateToProps = state => {
     id: state.auth.id,
     role: state.auth.role,
     sessions: state.sessions.sessions,
-    sessionsNum: state.sessions.sessionsCount,
     viewLevel: state.viewLevel.viewLevel,
   };
 };

@@ -167,21 +167,13 @@ class CreateSession extends Component {
   };
 
   checkError = () => {
-    const {
-      startDate,
-      inviteesNumber,
-      session,
-      region,
-      partnerTrainer1,
-      emails,
-    } = this.state;
+    const { startDate, inviteesNumber, session, region, emails } = this.state;
     const isError = !(
       !!startDate &&
       !!inviteesNumber &&
       !!session &&
       !!region &&
-      !!emails &&
-      !!partnerTrainer1
+      !!emails
     );
 
     this.setState({
