@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import swal from 'sweetalert2';
 
 // Styles
 import Button from '../../common/Button';
@@ -23,7 +24,13 @@ export default class ConfirmSurvey extends Component {
     );
 
   render() {
-    const { sessionDate, trainerNames, surveyType, sectionChange } = this.props;
+    const {
+      sessionDate,
+      trainerNames,
+      surveyType,
+      sectionChange,
+      researchConfirm,
+    } = this.props;
 
     return (
       <div>
@@ -50,7 +57,10 @@ export default class ConfirmSurvey extends Component {
             width="100px"
             height="50px"
             type="primary"
-            onClick={() => sectionChange('forward')}
+            onClick={() => {
+              sectionChange('forward');
+              researchConfirm();
+            }}
           />
           {/* need to decide what to do in case user presses no */}
           <Button label="No" width="100px" height="50px" type="primary" />

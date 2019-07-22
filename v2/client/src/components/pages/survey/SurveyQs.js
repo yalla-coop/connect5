@@ -2,7 +2,7 @@
 // and populate the Survey component
 
 import React from 'react';
-import { Alert, DatePicker, Progress  } from 'antd';
+import { Alert, DatePicker, Progress } from 'antd';
 import {
   RadioField,
   TextField,
@@ -19,7 +19,7 @@ import {
 import 'antd/dist/antd.css';
 import { colors } from '../../../theme';
 
-import {  ProgressWrapper } from './Survey.style';
+import { ProgressWrapper } from './Survey.style';
 // checks if errors are present (renders error msg after submit)
 const checkErrors = (errorArr, questionId, answers, errors) => {
   if (errorArr.includes(questionId) && !answers[questionId]) {
@@ -85,7 +85,6 @@ const renderQuestionInputType = (
               onChange={onChangePostcode}
               data-group={group}
               data-field={participantField}
-              
             />
           </div>
         ) : (
@@ -160,10 +159,10 @@ const renderQuestionInputType = (
           data-group={group}
           data-field={participantField}
           value={
-                answers[questionId] && answers[questionId].answer
-                  ? answers[questionId].answer
-                  : ''
-              }
+            answers[questionId] && answers[questionId].answer
+              ? answers[questionId].answer
+              : ''
+          }
         />
       </TextField>
     );
@@ -268,7 +267,6 @@ const renderQuestionInputType = (
                 onChange={handleOther}
                 data-group={group}
                 data-field={participantField}
-          
               />
             </TextField>
           ) : (
@@ -372,7 +370,7 @@ export default class Questions extends React.Component {
       handleAntdDatePicker,
       onChangePostcode,
       postcodeValid,
-      completionRate
+      completionRate,
     } = this.props;
 
     const errorArray = Object.keys(errors);
@@ -380,7 +378,6 @@ export default class Questions extends React.Component {
     return (
       <React.Fragment>
         <QuestionWrapper>
-        
           {questionsRender(
             questions,
             answers,
@@ -393,14 +390,14 @@ export default class Questions extends React.Component {
             postcodeValid
           )}
           {renderSkipButtons}
-             <ProgressWrapper>
-                  <Progress
-                    type="circle"
-                    percent={completionRate}
-                    width={80}
-                    strokeColor={`${colors.green}`}
-                  />
-                </ProgressWrapper>
+          <ProgressWrapper>
+            <Progress
+              type="circle"
+              percent={completionRate}
+              width={80}
+              strokeColor={`${colors.green}`}
+            />
+          </ProgressWrapper>
         </QuestionWrapper>
       </React.Fragment>
     );

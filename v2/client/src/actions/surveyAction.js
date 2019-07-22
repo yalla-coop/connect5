@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Modal } from 'antd';
 
 import {
   FETCH_SURVEY_DATA,
@@ -38,15 +37,11 @@ export const checkPINResponses = (surveyParts, PIN) => async dispatch => {
       const { exist } = data;
 
       if (exist) {
+        console.log('reached');
         dispatch({
           type: SURVEY_PIN_EXIST_FAIL,
           msg: "The PIN you've entered has already submitted this survey",
         });
-        // Modal.error({
-        //   title: 'Error!',
-        //   content: "The PIN you've entered has already submitted this survey.",
-        //   onOk: history.push('/'),
-        // });
       } else {
         dispatch({
           type: SURVEY_PIN_SUCCESS,

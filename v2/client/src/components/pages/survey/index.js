@@ -13,7 +13,7 @@ import {
   SpinWrapper,
   SurveyWrapper,
   SkipButtonsDiv,
-  ProgressWrapper,
+  Form,
 } from './Survey.style';
 
 import Button from '../../common/Button';
@@ -141,37 +141,74 @@ class Survey extends Component {
   };
 
   // renders back and next button and calls custom actions
-  renderSkipButtons = (section, disabled, uniqueGroups, completionRate) => (
-    <SkipButtonsDiv>
-      <Button
-        label="Back"
-        width="100px"
-        height="50px"
-        type="primary"
-        onClick={() => this.sectionChange('back', uniqueGroups)}
-      />
-      <Button
-        label={completionRate === 100 ? 'Submit' : 'Next'}
-        width="100px"
-        height="50px"
-        type="primary"
-        disabled={disabled}
-        onClick={() => {
-          this.sectionChange('forward', uniqueGroups);
-          // this would be either PIN Submit or Final Submit
-          this.customSubmit(section);
-        }}
-      />
-    </SkipButtonsDiv>
-  );
+  renderSkipButtons = (section, disabled, uniqueGroups, completionRate) => {
+    console.log(completionRate);
+    const { PIN, surveyParts } = this.state;
+    return (
+      <SkipButtonsDiv>
+        <Button
+          label="Back"
+          width="100px"
+          height="50px"
+          type="primary"
+          onClick={() => this.sectionChange('back', uniqueGroups)}
+        />
+        {(!completionRate || completionRate < 100) && (
+          <Button
+            label="Next"
+            width="100px"
+            height="50px"
+            type="primary"
+            disabled={disabled}
+            onClick={() => {
+              this.sectionChange('forward', uniqueGroups);
+              if (section === 'enterPIN') {
+                this.submitPIN(PIN, surveyParts);
+              }
+            }}
+          />
+        )}
+      </SkipButtonsDiv>
+    );
+  };
+
+  researchConfirm = () =>
+    swal
+      .fire({
+        title: 'Research Cooperation <br>(University of Manchester)',
+        type: 'info',
+        text:
+          'Many thanks for agreeing to fill in this form. Your responses will be collated by University of Manchester to evaluate Connect5. University of Manchester will use anonymised data collected for research purposes. Individuals will never been identified by their responses. If you do not consent for your data to be used for research purposes, please tick.',
+        input: 'checkbox',
+        inputPlaceholder: '<strong>I do not agree</strong>',
+      })
+      .then(result => {
+        if (result.value) {
+          swal
+            .fire({
+              type: 'error',
+              text:
+                'Thank you, your data will not be used for research purposes',
+            })
+            .then(() => this.setState({ disagreedToResearch: true }));
+          // do something here
+        } else if (result.value === 0) {
+          swal.fire({ type: 'success', text: 'Thank you!' });
+        } else {
+          console.log(`modal was dismissed by ${result.dismiss}`);
+        }
+      });
 
   // takes section as an input and referes to submitType
-  customSubmit = section => {
+  customSubmit = (section, uniqueGroups) => {
     const { PIN, surveyParts } = this.state;
     switch (section) {
       case 'enterPIN':
         this.submitPIN(PIN, surveyParts);
         break;
+      case uniqueGroups[uniqueGroups.length - 1]:
+        return this.handleSubmit;
+
       default:
         return null;
     }
@@ -250,7 +287,7 @@ class Survey extends Component {
 
   // function to track progress on survey
   trackAnswers = () => {
-    const { formState, PIN } = this.state;
+    const { formState } = this.state;
     const { surveyData } = this.props;
     const { surveyData: surveyDetails } = surveyData;
 
@@ -258,9 +295,6 @@ class Survey extends Component {
       // add one to total list to include the pin
       const numberOfQs = surveyDetails.questionsForSurvey.length;
       const numberOfAs = Object.values(formState).length;
-      console.log('q', numberOfQs);
-      console.log('a', numberOfAs);
-      const pinAnswered = PIN.length === 5 ? 1 : 0;
       const rate = Math.ceil((numberOfAs / numberOfQs) * 100);
 
       this.setState({ completionRate: rate });
@@ -319,12 +353,13 @@ class Survey extends Component {
   // when participant submits form
   // this puts the required info into an object and sends to server
   handleSubmit = e => {
+    console.log('reached');
     e.preventDefault();
-    const { history, surveyData } = this.props;
+    const { history, surveyData, PINExist } = this.props;
     const { surveyType } = surveyData.surveyData;
     const { sessionId } = surveyData.surveyData;
 
-    const { formState, PIN, disagreedToResearch, PINExist } = this.state;
+    const { formState, PIN, disagreedToResearch } = this.state;
 
     const formSubmission = {
       PIN: PIN && PIN.toUpperCase(),
@@ -333,6 +368,8 @@ class Survey extends Component {
       formState,
       disagreedToResearch,
     };
+
+    console.log(formSubmission);
     if (PINExist) {
       return swal.fire({
         title: 'This PIN has already submited the survey before',
@@ -386,7 +423,6 @@ class Survey extends Component {
       ...new Set(surveyDetails.questionsForSurvey.map(e => e.group)),
     ];
 
-    console.log(formState);
     return (
       <div>
         {!surveyData.loaded ? (
@@ -401,62 +437,69 @@ class Survey extends Component {
             )}
             {surveyDetails && surveyDetails !== null && (
               <SurveyWrapper>
-                {section === 'confirmSurvey' && (
-                  <ConfirmSurvey
-                    sessionDate={surveyData.surveyData.sessionDate}
-                    trainerNames={surveyData.surveyData.trainerNames}
-                    surveyType={surveyData.surveyData.surveyType}
-                    sectionChange={this.sectionChange}
-                  />
-                )}
-                {section === 'enterPIN' && (
-                  <EnterPIN
-                    handlePIN={this.handlePIN}
-                    onPINBlur={this.checkPINonBlur}
-                    renderSkipButtons={this.renderSkipButtons(
-                      'enterPIN',
-                      !PINSectionCompleted,
-                      uniqueGroups
-                    )}
-                    PINerror={PINerror}
-                    completionRate={completionRate}
-                  />
-                )}
-                {uniqueGroups.map(group => {
-                  const questions =
-                    surveyDetails &&
-                    surveyDetails.questionsForSurvey.filter(
-                      question => question.group === group
-                    );
+                <Form onSubmit={this.handleSubmit}>
+                  {section === 'confirmSurvey' && (
+                    <ConfirmSurvey
+                      sessionDate={surveyData.surveyData.sessionDate}
+                      trainerNames={surveyData.surveyData.trainerNames}
+                      surveyType={surveyData.surveyData.surveyType}
+                      sectionChange={this.sectionChange}
+                      researchConfirm={this.researchConfirm}
+                    />
+                  )}
+                  {section === 'enterPIN' && (
+                    <EnterPIN
+                      handlePIN={this.handlePIN}
+                      onPINBlur={this.checkPINonBlur}
+                      renderSkipButtons={this.renderSkipButtons(
+                        'enterPIN',
+                        !PINSectionCompleted,
+                        uniqueGroups
+                      )}
+                      PINerror={PINerror}
+                      completionRate={completionRate}
+                    />
+                  )}
 
-                  if (section === group) {
-                    const answered = questions
-                      .map(q => q._id)
-                      .filter(q => !answers.includes(q));
+                  {uniqueGroups.map(group => {
+                    const questions =
+                      surveyDetails &&
+                      surveyDetails.questionsForSurvey.filter(
+                        question => question.group === group
+                      );
 
-                    return (
-                      <SurveyQs
-                        questions={questions}
-                        postcodeValid={postcodeValid}
-                        onChangePostcode={this.onChangePostcode}
-                        onChange={this.handleChange}
-                        handleOther={this.handleOther}
-                        answers={formState}
-                        selectCheckedItem={this.selectCheckedItem}
-                        errors={errors}
-                        handleAntdDatePicker={this.handleAntdDatePicker}
-                        renderSkipButtons={this.renderSkipButtons(
-                          group,
-                          answered.length > 0 && !postcodeValid,
-                          uniqueGroups,
-                          completionRate
-                        )}
-                        completionRate={completionRate}
-                      />
-                    );
-                  }
-                  return null;
-                })}
+                    if (section === group) {
+                      const answered = questions
+                        .map(q => q._id)
+                        .filter(q => !answers.includes(q));
+
+                      return (
+                        <SurveyQs
+                          questions={questions}
+                          postcodeValid={postcodeValid}
+                          onChangePostcode={this.onChangePostcode}
+                          onChange={this.handleChange}
+                          handleOther={this.handleOther}
+                          answers={formState}
+                          selectCheckedItem={this.selectCheckedItem}
+                          errors={errors}
+                          handleAntdDatePicker={this.handleAntdDatePicker}
+                          renderSkipButtons={this.renderSkipButtons(
+                            group,
+                            answered.length > 0 && !postcodeValid,
+                            uniqueGroups,
+                            completionRate
+                          )}
+                          completionRate={completionRate}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
+                  {completionRate === 100 && (
+                    <button type="submit">Submit Feedback</button>
+                  )}
+                </Form>
               </SurveyWrapper>
             )}
           </Container>
