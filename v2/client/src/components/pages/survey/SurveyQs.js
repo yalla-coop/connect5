@@ -1,6 +1,5 @@
 // this is where we map through all the questions
 // and populate the Survey component
-
 import React from 'react';
 import { Alert, DatePicker, Progress } from 'antd';
 import {

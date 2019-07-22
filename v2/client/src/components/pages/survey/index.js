@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import swal from 'sweetalert2';
 import axios from 'axios';
-
 import { connect } from 'react-redux';
-// Styles
-import { Spin, Alert, Modal, Progress } from 'antd';
-import { colors } from '../../../theme';
+import swal from 'sweetalert2';
+import { Spin, Alert, Modal } from 'antd';
 
+// Styles
 import Header from '../../common/Header';
+import Button from '../../common/Button';
 import {
   Container,
   SpinWrapper,
@@ -16,36 +15,23 @@ import {
   Form,
 } from './Survey.style';
 
-import Button from '../../common/Button';
-
-// Action
+// Actions
 import {
   fetchSurveyData,
   checkPINResponses,
 } from '../../../actions/surveyAction';
 
+// Components
 import ConfirmSurvey from './ConfirmSurvey';
 import EnterPIN from './EnterPIN';
 import SurveyQs from './SurveyQs';
 
-// PIN validation
-const validLetters = string => {
-  const regex = /[a-z]{1,3}/gim;
-  return regex.test(string);
-};
-
-const validNumbers = string => {
-  const regex = /^[0-9]{1,2}$/gim;
-  return regex.test(string);
-};
-
-const validPostcode = postcode => {
-  postcode = postcode.replace(/\s/g, '');
-  const regex = /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})/;
-
-  const validPostcode = regex.test(postcode);
-  return validPostcode;
-};
+// Helpers
+import {
+  validLetters,
+  validNumbers,
+  validPostcode,
+} from '../../../helpers/surveyValidation';
 
 class Survey extends Component {
   state = {
@@ -55,8 +41,7 @@ class Survey extends Component {
     PINerror: '',
     errors: {},
     formState: {},
-    PINSectionCompleted: false,
-    demoSectionCompleted: false,
+    PINvalid: false,
     section: 'confirmSurvey',
     completionRate: 0,
     postcodeValid: false,
@@ -66,9 +51,9 @@ class Survey extends Component {
     const { location, fetchSurveyData: fetchSurveyDataAction } = this.props;
     const survey = `${location.pathname}`;
     const surveyParts = survey.split('/')[2];
+    // gets survey data
     fetchSurveyDataAction(surveyParts);
     this.setState({ surveyParts });
-    window.scrollTo(0, 0);
   }
 
   // enables user to change direction of sections
@@ -93,25 +78,16 @@ class Survey extends Component {
           newSection = 'Behavioural Insights';
           break;
         // post day 1, post day 2
-        // behav can be 0 or 1
         case 'Behavioural Insights':
           if (uniqueGroups[1] === 'about your trainer') {
             newSection = 'about your trainer';
             // post day 3, post-special
-          } else {
-            newSection = 'finalSection';
-          }
-          break;
-        case 'about your trainer':
-          newSection = 'finalSection';
-          break;
-        // train the trainers (pre and post)
-        case 'about your usual way of teaching':
-          newSection = 'finalSection';
+          } 
           break;
         default:
           newSection = section;
       }
+      // backward direction
     } else {
       switch (section) {
         case 'enterPIN':
@@ -140,9 +116,8 @@ class Survey extends Component {
     this.setState({ section: newSection });
   };
 
-  // renders back and next button and calls custom actions
+  // renders back and next button and calls next/submit actions
   renderSkipButtons = (section, disabled, uniqueGroups, completionRate) => {
-    console.log(completionRate);
     const { PIN, surveyParts } = this.state;
     return (
       <SkipButtonsDiv>
@@ -151,7 +126,10 @@ class Survey extends Component {
           width="100px"
           height="50px"
           type="primary"
-          onClick={() => this.sectionChange('back', uniqueGroups)}
+          onClick={() => {
+            window.scrollTo(0, 0);
+            this.sectionChange('back', uniqueGroups);
+          }}
         />
         {(!completionRate || completionRate < 100) && (
           <Button
@@ -161,6 +139,7 @@ class Survey extends Component {
             type="primary"
             disabled={disabled}
             onClick={() => {
+              window.scrollTo(0, 0);
               this.sectionChange('forward', uniqueGroups);
               if (section === 'enterPIN') {
                 this.submitPIN(PIN, surveyParts);
@@ -172,6 +151,7 @@ class Survey extends Component {
     );
   };
 
+// renders research confirmation popup
   researchConfirm = () =>
     swal
       .fire({
@@ -199,37 +179,11 @@ class Survey extends Component {
         }
       });
 
-  // takes section as an input and referes to submitType
-  customSubmit = (section, uniqueGroups) => {
-    const { PIN, surveyParts } = this.state;
-    switch (section) {
-      case 'enterPIN':
-        this.submitPIN(PIN, surveyParts);
-        break;
-      case uniqueGroups[uniqueGroups.length - 1]:
-        return this.handleSubmit;
-
-      default:
-        return null;
-    }
-    return null;
-  };
-
-  // PIN FUNCTIONS
+  // VALIDATION
   // handles user input for PIN field
-  handlePIN = e => {
-    const PIN = e.target.value;
+  handlePIN = e => this.setState({ PIN: e.target.value })
 
-    this.setState({ PIN }, () => {
-      if (PIN.length === 5) {
-        this.trackAnswers();
-      }
-    });
-  };
-
-  onChangePostcode = e =>
-    this.setState({ postcodeValid: validPostcode(e.target.value) });
-
+  // validates PIN input on blur
   checkPINonBlur = () => {
     const { checkPINResponses: checkPINResponsesAction } = this.props;
     const { surveyParts, PIN } = this.state;
@@ -237,7 +191,7 @@ class Survey extends Component {
     if (PIN.length < 5) {
       this.setState({
         PINerror: 'PIN must contain 5 characters',
-        PINSectionCompleted: false,
+        PINvalid: false,
       });
     }
     if (PIN.length === 5) {
@@ -249,18 +203,17 @@ class Survey extends Component {
       ) {
         this.setState({
           PINerror: 'PIN must be in the right format',
-          PINSectionCompleted: false,
+          PINvalid: false,
         });
       } else {
-        this.setState({ PINerror: '', PINSectionCompleted: true });
+        this.setState({ PINerror: '', PINvalid: true });
       }
-
       // check if PIN alrady submitted this exact survey
       checkPINResponsesAction(surveyParts, PIN);
-      this.trackAnswers();
     }
   };
 
+// submits and validates PIN request
   submitPIN = () => {
     const { PINExist } = this.props;
     if (PINExist) {
@@ -275,7 +228,6 @@ class Survey extends Component {
   };
 
   // SURVEY FUNCTIONS
-
   // function that will check if the div for the answer has been selected and if so add that answer to the formstate
   selectCheckedItem = (value, questionId) => {
     const { formState } = this.state;
@@ -290,23 +242,33 @@ class Survey extends Component {
     const { formState } = this.state;
     const { surveyData } = this.props;
     const { surveyData: surveyDetails } = surveyData;
-
+  console.log(surveyDetails.questionsForSurvey)
     if (formState && surveyDetails) {
-      // add one to total list to include the pin
       const numberOfQs = surveyDetails.questionsForSurvey.length;
       const numberOfAs = Object.values(formState).length;
       const rate = Math.ceil((numberOfAs / numberOfQs) * 100);
-
+      console.log(numberOfAs)
+      console.log(numberOfQs)
       this.setState({ completionRate: rate });
     } else {
       this.setState({ completionRate: 0 });
     }
   };
 
+    // validate postcode input (UK format only)
+  onChangePostcode = e => {
+    const question = e.target.name;
+    const { formState } = this.state;
+  const answer = { answer: e.target.value, question };
+  
+this.setState({ postcodeValid: validPostcode(e.target.value), formState: { ...formState, [question]: answer } }, () => {
+      this.trackAnswers();
+    });
+  } 
+
   // check for any changes to the survey inputs and add them to the formstate
   handleChange = e => {
     const { group, field } = e.target.dataset;
-
     const question = e.target.name;
     const { formState } = this.state;
     // if any other type we assign the value to answer and put it in the state
@@ -314,7 +276,6 @@ class Survey extends Component {
     if (group === 'demographic') {
       answer.participantField = field;
     }
-
     this.setState({ formState: { ...formState, [question]: answer } }, () => {
       this.trackAnswers();
     });
@@ -324,12 +285,10 @@ class Survey extends Component {
     // const question = e.target.name;
     const { formState } = this.state;
     // if any other type we assign the value to answer and put it in the state
-    // const answer = e.target.value;
     const answer = { answer: value, question };
     if (group === 'demographic') {
       answer.participantField = field;
     }
-
     this.setState({ formState: { ...formState, [question]: answer } }, () => {
       this.trackAnswers();
     });
@@ -353,12 +312,10 @@ class Survey extends Component {
   // when participant submits form
   // this puts the required info into an object and sends to server
   handleSubmit = e => {
-    console.log('reached');
     e.preventDefault();
     const { history, surveyData, PINExist } = this.props;
     const { surveyType } = surveyData.surveyData;
     const { sessionId } = surveyData.surveyData;
-
     const { formState, PIN, disagreedToResearch } = this.state;
 
     const formSubmission = {
@@ -369,7 +326,6 @@ class Survey extends Component {
       disagreedToResearch,
     };
 
-    console.log(formSubmission);
     if (PINExist) {
       return swal.fire({
         title: 'This PIN has already submited the survey before',
@@ -408,7 +364,7 @@ class Survey extends Component {
       errors,
       section,
       PINerror,
-      PINSectionCompleted,
+      PINvalid,
       postcodeValid,
       completionRate,
     } = this.state;
@@ -422,7 +378,7 @@ class Survey extends Component {
     const uniqueGroups = surveyDetails && [
       ...new Set(surveyDetails.questionsForSurvey.map(e => e.group)),
     ];
-
+  console.log(formState)
     return (
       <div>
         {!surveyData.loaded ? (
@@ -453,7 +409,7 @@ class Survey extends Component {
                       onPINBlur={this.checkPINonBlur}
                       renderSkipButtons={this.renderSkipButtons(
                         'enterPIN',
-                        !PINSectionCompleted,
+                        !PINvalid,
                         uniqueGroups
                       )}
                       PINerror={PINerror}
@@ -469,10 +425,10 @@ class Survey extends Component {
                       );
 
                     if (section === group) {
-                      const answered = questions
+                      const unanswered = questions
                         .map(q => q._id)
                         .filter(q => !answers.includes(q));
-
+                        console.log('aaa',unanswered)
                       return (
                         <SurveyQs
                           questions={questions}
@@ -486,7 +442,7 @@ class Survey extends Component {
                           handleAntdDatePicker={this.handleAntdDatePicker}
                           renderSkipButtons={this.renderSkipButtons(
                             group,
-                            answered.length > 0 && !postcodeValid,
+                            unanswered.length > 0 && !postcodeValid,
                             uniqueGroups,
                             completionRate
                           )}
