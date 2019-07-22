@@ -18,7 +18,6 @@ import 'antd/lib/checkbox/style/index.css';
 import 'antd/lib/alert/style/index.css';
 import 'antd/lib/spin/style/index.css';
 import 'antd/lib/divider/style/index.css';
-
 import './index.css';
 
 ReactDOM.render(

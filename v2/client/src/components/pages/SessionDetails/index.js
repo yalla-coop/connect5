@@ -17,7 +17,7 @@ import { SessionDetailsWrapper } from './SessionDetails.Style';
 import SessionTopDetails from './SessionTopDetails';
 import SessionActions from './SessionActions';
 import SessionSurveys from './SessionSurveys';
-import InviteAndPromote from './Invite&Promote';
+import InviteAndPromote from './InviteAndPromote';
 
 const { Panel } = Collapse;
 
@@ -37,7 +37,7 @@ class SessionDetails extends Component {
   };
 
   render() {
-    const { sessionDetails } = this.props;
+    const { sessionDetails, id } = this.props;
     const { openSection } = this.state;
     if (!sessionDetails) {
       return Spin;
@@ -59,7 +59,7 @@ class SessionDetails extends Component {
             <SessionActions sessionDetails={sessionDetails} />
           </Panel>
           <Panel header="Invite & Promote" key="2">
-            <InviteAndPromote />
+            <InviteAndPromote id={id} />
           </Panel>
           <Panel header="Manage Attendees" key="3">
             <p>Hello</p>
