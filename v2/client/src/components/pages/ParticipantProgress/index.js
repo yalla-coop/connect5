@@ -27,7 +27,7 @@ class ParticipantProgress extends Component {
       <Wrapper>
         <Header label="My progress" type="section" />
         <Span>Completed Sessions</Span>
-        <SessionList dataList={sessions} />
+        <SessionList dataList={sessions.filter(item => item.completed)} />
       </Wrapper>
     );
   }
