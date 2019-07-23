@@ -37,6 +37,7 @@ import Certificate from './pages/Certificate';
 import AdminDemographic from './pages/AdminDemographic';
 import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
+import SessionsFiles from './pages/SessionsFiles';
 
 // Error Pages
 import NotFound from './pages/ErrorPages/404';
@@ -320,6 +321,7 @@ class App extends Component {
               role={role}
               navbar
             />
+
             <PrivateRoute
               exact
               path={TRAINER_VIEW_PARTICIPANT}
@@ -330,6 +332,8 @@ class App extends Component {
               role={role}
               navbar
             />
+
+            <Route path="/sessions-files" component={SessionsFiles} />
 
             <Route path="/404err" render={() => <NotFound />} />
             <Route path="/500err" render={() => <ServerError />} />
