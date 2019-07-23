@@ -93,12 +93,12 @@ class SessionSurveys extends Component {
           size="large"
           placeholder="emails"
           onChange={onEmailChange}
-          defaultValue={participantsEmails}
+          defaultValue={participantsEmails.map(item => item.email)}
           style={{ width: '100%', height: '100%' }}
         >
-          {participantsEmails.map(email => (
-            <Option key={email} value={email}>
-              {email}
+          {participantsEmails.map(item => (
+            <Option key={item.email} value={item.email}>
+              {item.email}
             </Option>
           ))}
         </Select>
