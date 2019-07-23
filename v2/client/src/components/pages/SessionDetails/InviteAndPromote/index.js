@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Drawer, Button, Collapse } from 'antd';
-import Icon from 'antd/lib/icon';
+import { Drawer, Button, Collapse, Icon } from 'antd';
+import Header from '../../../common/Header';
 import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
 import SendInvitation from './SendInvitation';
 
 // ANTD COMPONENTS
 import Spin from '../../../common/Spin';
+import EmailsList from '../../../common/List/EmailsList';
+import { BackContainer, BackLink } from './Invite&Promote.style';
 
 const { Panel } = Collapse;
 
@@ -73,7 +75,29 @@ class InviteAndPromote extends Component {
             <p>Hello</p>
           </Panel>
           <Panel header="View emails you have sent" key="4">
-            <p>Hello</p>
+            <div style={{ padding: '1rem' }}>
+              <Button type="primary" onClick={this.showDrawer}>
+                View Emails List
+              </Button>
+              <Drawer
+                placement="right"
+                closable={false}
+                onClose={this.onClose}
+                visible={visible}
+                width="100%"
+              >
+                <div>
+                  <Header type="view" label="Invite Emails" />
+                  <BackContainer style={{ margin: '3rem 0 2rem 0' }}>
+                    <BackLink onClick={this.onClose}>{`< Back`}</BackLink>
+                  </BackContainer>
+                  <EmailsList
+                    onClose={this.onClose}
+                    dataList={sessionDetails}
+                  />
+                </div>
+              </Drawer>
+            </div>
           </Panel>
         </Collapse>
       </div>
