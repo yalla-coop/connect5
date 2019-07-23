@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 //  ANTD COMPONENTS
 import Collapse from 'antd/lib/collapse';
-import Button from 'antd/lib/button';
 import Icon from 'antd/lib/icon';
 
 //  COMMON COMPOENTS
@@ -26,13 +25,13 @@ import {
 // STYLING
 import {
   TrainerResultsWrapper,
-  ButtonWrapper,
   ContentWrapper,
   TopSection,
   Registration,
 } from './UserResults.style';
 
 import TrainerBehavioralInsight from '../../common/BehavioralInsight/Trainer';
+import ExportButton from '../../common/ExportButton';
 
 const { Panel } = Collapse;
 
@@ -51,6 +50,7 @@ const panels = {
 class UserResults extends Component {
   state = {
     selectedUserId: null,
+    selectedUserRole: null,
     toggle: 'left',
   };
 
@@ -63,18 +63,28 @@ class UserResults extends Component {
     // i.e. this would be for an admin viewing
     // otherwise use logged in user's id and role
     const { state } = history.location;
+
+    console.log('STATE', state);
     const { fetchUserResults } = this.props;
     if (state && state.trainer && viewLevel === 'localLead') {
       await fetchUserResults(state.trainer._id, 'trainer');
       await this.fetchSessionsData('trainer', state.trainer._id);
-      this.setState({ selectedUserId: state.trainer._id });
+      this.setState({
+        selectedUserId: state.trainer._id,
+        selectedUserRole: state.trainer.role,
+      });
     } else if (state && state.trainer) {
       await fetchUserResults(state.trainer._id, state.trainer.role);
       await this.fetchSessionsData(state.trainer.role, state.trainer._id);
-      this.setState({ selectedUserId: state.trainer._id });
+      this.setState({
+        selectedUserId: state.trainer._id,
+        selectedUserRole: state.trainer.role,
+      });
     } else {
       await fetchUserResults(userId, viewLevel);
-      this.setState({ selectedUserId: userId });
+      this.setState({
+        selectedUserId: userId,
+      });
     }
 
     // check if localLead is in trainer or lead view and assign the role accordingly
@@ -158,11 +168,12 @@ class UserResults extends Component {
             <SessionList dataList={sessions} />
           </ContentWrapper>
         )}
-        <ButtonWrapper>
+        {/* <ButtonWrapper>
           <Button icon="download" size="large">
             Export to CSV
           </Button>
-        </ButtonWrapper>
+        </ButtonWrapper> */}
+        <ExportButton filter selectedUser={user} />
       </TrainerResultsWrapper>
     );
   }

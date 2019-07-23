@@ -1,6 +1,6 @@
 const express = require('express');
 const loginController = require('./../controllers/login');
-const addSessionController = require('./../controllers/add-session');
+const addSessionController = require('./../controllers/addSession');
 const ParticipantLoginController = require('./../controllers/participantLogin');
 const usersRouter = require('./users');
 const getParticipantBehavioralInsight = require('./../controllers/behavioralInsight/getParticipantBehavioralInsight');
@@ -13,6 +13,7 @@ const surveyQs = require('../controllers/survey/getSurveyQs');
 const storeSurvey = require('../controllers/survey/storeSurvey');
 const getSurveyResponses = require('../controllers/survey/getSurveyResponses');
 const getSessionDetails = require('../controllers/sessionDetails/getSessionDetails');
+const getSessionByShortId = require('../controllers/sessionDetails/getSessionByShortId');
 const deleteSession = require('../controllers/sessionDetails/deleteSession');
 const editSession = require('../controllers/sessionDetails/editSession');
 const updateEmails = require('../controllers/sessionDetails/updateEmails.js');
@@ -23,13 +24,18 @@ const authentication = require('./../middlewares/authentication');
 
 const feedbackFromParticipant = require('./../controllers/feedback/feedbackFromParticipant');
 const getParticipantSessions = require('../controllers/users/getParticipantSessions');
+const getParticipantByPIN = require('../controllers/users/findParticipantByPIN');
 const generateCertificate = require('../controllers/users/generateCertificate');
 const checkPINResponsesOnSurvey = require('../controllers/survey/checkPINResponsesOnSurvey');
+const confirmEmailRegistration = require('../controllers/sessionDetails/confirmEmailRegistration');
+
+const getCSVData = require('../controllers/feedback/exportCSVData');
 
 const router = express.Router();
 
 router.post('/participant-login', ParticipantLoginController);
 router.get('/participant/:id/progress', getParticipantSessions);
+router.get('/participant/:PIN', getParticipantByPIN);
 router.post('/certificate/:sessionId', generateCertificate);
 router.post('/login', loginController);
 router.get('/logout', logoutController);
@@ -40,6 +46,10 @@ router.get(
   getParticipantBehavioralInsight
 );
 
+// Route = "/session?shortId=:shortId"
+router.get('/sessions', getSessionByShortId);
+
+router.patch('/sessions/:sessionId/confirm-email', confirmEmailRegistration);
 router.get('/session-details/:id', getSessionDetails);
 router.delete('/session-delete/:id', deleteSession);
 router.patch('/session-edit/:id', editSession);
@@ -64,5 +74,7 @@ router.get('/session/:sessionId/:surveyType/responses', getSurveyResponses);
 router.post('/survey/submit', storeSurvey);
 
 router.post('/survey/email', sendSurveyByEmail);
+
+router.post('/export-csv', authentication(), getCSVData);
 
 module.exports = router;

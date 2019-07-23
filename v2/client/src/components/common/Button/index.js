@@ -16,6 +16,7 @@ const sharedStyles = css`
   font-weight: 500;
   font-size: 1.125rem;
   box-shadow: ${shadows.primary};
+  margin: ${props => props.margin};
 
   &:hover::after {
     content: '';

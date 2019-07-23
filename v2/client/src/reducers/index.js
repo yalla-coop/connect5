@@ -13,9 +13,11 @@ import fetchedSessions from './fetchSessionReducer';
 import groupsReducer from './groups';
 import viewReducer from './viewReducer';
 import changePasswordReducer from './changePasswordReducer';
+import exportDataReducer from './exportDataReducer';
 import demographicsReducer from './demographics';
 import adminSessionsReducer from './adminSessionsReducer';
 import surveyReducer from './surveyReducer';
+import confirmRegistration from './confirmRegistration';
 
 export default combineReducers({
   auth: authReducer,
@@ -31,7 +33,9 @@ export default combineReducers({
   trainerFeedback: trainerFeedbackReducer,
   viewLevel: viewReducer,
   changePassword: changePasswordReducer,
+  exportData: exportDataReducer,
   demographics: demographicsReducer,
   adminSessions: adminSessionsReducer,
   survey: surveyReducer,
+  confirmRegistration,
 });

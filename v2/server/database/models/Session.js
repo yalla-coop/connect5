@@ -29,7 +29,13 @@ const sessionSchema = new Schema({
     },
   ],
   // list of participants emails
-  participantsEmails: [String],
+  participantsEmails: [
+    {
+      _id: { type: mongoose.Types.ObjectId, auto: true },
+      email: String,
+      status: { Type: String, enum: ['new', 'sent', 'confirmed'] },
+    },
+  ],
 });
 
 const Session = model('sessions', sessionSchema);

@@ -3,9 +3,16 @@ const Session = require('./../../models/Session');
 
 module.exports.getSessionById = id => Session.findById(id);
 
-module.exports.getSessionDetails = id => {
+module.exports.getSessionDetails = ({ id, shortId }) => {
+  let match;
+  if (id) {
+    match = { $match: { _id: mongoose.Types.ObjectId(id) } };
+  } else if (shortId) {
+    match = { $match: { shortId } };
+  }
+
   return Session.aggregate([
-    { $match: { _id: mongoose.Types.ObjectId(id) } },
+    match,
     {
       $lookup: {
         from: 'users',
@@ -21,9 +28,9 @@ module.exports.deleteSession = id => {
   return Session.findByIdAndDelete(id);
 };
 
-module.exports.editSessionQuery = (
+module.exports.editSessionQuery = async (
   id,
-  session,
+  sessionType,
   startDate,
   inviteesNumber,
   region,
@@ -35,18 +42,63 @@ module.exports.editSessionQuery = (
   if (partnerTrainer2) {
     trainers.push(partnerTrainer2);
   }
-  return Session.findByIdAndUpdate(id, {
-    type: session,
+  const session = await Session.findByIdAndUpdate(id, {
+    type: sessionType,
     date: startDate,
     numberOfAttendees: inviteesNumber,
     region,
     trainers,
-    participantsEmails: emails,
   });
+
+  const changedEmails = [...emails];
+
+  session.participantsEmails.forEach((emailObject, index) => {
+    // delete
+    if (!emails.includes(emailObject.email)) {
+      session.participantsEmails[index].remove();
+    } else {
+      // skip
+      const changedIndex = changedEmails.indexOf(emailObject.email);
+      changedEmails.splice(changedIndex, 1);
+    }
+  });
+
+  // add the new emails
+  session.participantsEmails = [
+    ...session.participantsEmails,
+    ...changedEmails.map(item => ({ email: item, status: 'new' })),
+  ];
+
+  return session.save();
 };
 
-module.exports.updateEmailsQuery = (id, participantsEmails) => {
-  return Session.findByIdAndUpdate(id, {
-    participantsEmails,
+module.exports.updateEmailsQuery = async (id, participantsEmails) => {
+  const session = await Session.findById(id);
+  const changedEmails = [...participantsEmails];
+
+  session.participantsEmails.forEach((emailObject, index) => {
+    // delete
+    if (!participantsEmails.includes(emailObject.email)) {
+      session.participantsEmails[index].remove();
+    } else {
+      // skip
+      const changedIndex = changedEmails.indexOf(emailObject.email);
+      changedEmails.splice(changedIndex, 1);
+    }
   });
+
+  // add the new emails
+  session.participantsEmails = [
+    ...session.participantsEmails,
+    ...changedEmails.map(item => ({ email: item, status: 'new' })),
+  ];
+
+  return session.save();
+};
+
+module.exports.updateEmailStatus = async ({ sessionId, email, status }) => {
+  return Session.updateOne(
+    { _id: sessionId, 'participantsEmails.email': email },
+    { $set: { 'participantsEmails.$.status': status } }
+  );
 };
