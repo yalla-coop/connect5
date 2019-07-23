@@ -8,7 +8,7 @@ import SendInvitation from './SendInvitation';
 // ANTD COMPONENTS
 import Spin from '../../../common/Spin';
 import EmailsList from '../../../common/List/EmailsList';
-import { BackContainer, BackLink } from './Invite&Promote.style';
+import { BackContainer, BackLink } from './InviteAndPromote.style';
 
 const { Panel } = Collapse;
 

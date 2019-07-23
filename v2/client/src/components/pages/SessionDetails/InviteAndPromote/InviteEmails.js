@@ -15,7 +15,7 @@ import {
   EmailInfo,
   InfoTitle,
   List,
-} from './Invite&Promote.style';
+} from './InviteAndPromote.style';
 
 class SendInvitation extends Component {
   render() {

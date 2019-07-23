@@ -8,7 +8,7 @@ import InviteEmails from '../../pages/SessionDetails/InviteAndPromote/InviteEmai
 import {
   BackContainer,
   BackLink,
-} from '../../pages/SessionDetails/InviteAndPromote/Invite&Promote.style';
+} from '../../pages/SessionDetails/InviteAndPromote/InviteAndPromote.style';
 
 import {
   Wrapper,

@@ -17,7 +17,7 @@ import {
   BackContainer,
   Form,
   InputDiv,
-} from './Invite&Promote.style';
+} from './InviteAndPromote.style';
 
 const { Option } = Select;
 

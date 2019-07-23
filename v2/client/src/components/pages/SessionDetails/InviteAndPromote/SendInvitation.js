@@ -16,7 +16,7 @@ import {
   BackContainer,
   Form,
   InputDiv,
-} from './Invite&Promote.style';
+} from './InviteAndPromote.style';
 
 const { Option } = Select;
 
@@ -39,8 +39,8 @@ class SendInvitation extends Component {
       sessionDetails,
       SendEmailInvitation: SendEmailInvitationActionCreator,
     } = this.props;
-    const { date, type, trainers, region, _id } = sessionDetails;
-    console.log(_id, date, type, trainers, region);
+
+    const { date, type, trainers, region, _id, startTime } = sessionDetails;
 
     const trainerName = trainers
       .map(trainer => {
@@ -57,8 +57,8 @@ class SendInvitation extends Component {
       type,
       trainerName,
       region,
+      startTime,
     };
-    console.log(InviteData);
     SendEmailInvitationActionCreator(InviteData);
   };
 
