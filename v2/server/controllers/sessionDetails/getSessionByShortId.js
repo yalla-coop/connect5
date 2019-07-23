@@ -4,9 +4,13 @@ const {
 } = require('./../../database/queries/sessionDetails/session');
 
 module.exports = async (req, res, next) => {
-  const { id } = req.params;
-  getSessionDetails({ id })
-    .then(sessionDetails => {
+  const { shortId } = req.query;
+  if (!shortId) {
+    return next();
+  }
+
+  return getSessionDetails({ shortId })
+    .then(([sessionDetails]) => {
       if (sessionDetails) {
         return res.json(sessionDetails);
       }
