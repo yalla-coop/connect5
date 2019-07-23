@@ -37,11 +37,8 @@ import Certificate from './pages/Certificate';
 import AdminDemographic from './pages/AdminDemographic';
 import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
-<<<<<<< HEAD
 import SessionsFiles from './pages/SessionsFiles';
-=======
 import ConfirmRegistration from './pages/ConfirmRegistration';
->>>>>>> 7dd4bf47cd7dbd001d6c1cd82e0dc5cda78d5263
 
 // Error Pages
 import NotFound from './pages/ErrorPages/404';
