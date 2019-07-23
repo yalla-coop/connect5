@@ -1,9 +1,9 @@
 import {
   FETCH_SURVEY_DATA,
-  SURVEY_DATA_FAIL,
   SURVEY_PIN_EXIST_FAIL,
   SURVEY_PIN_SUCCESS,
-  SURVEY_DATA_FAIL_PIN,
+  SURVEY_SUBMISSION_SUCCESS,
+  SURVEY_SUBMISSION_FAIL,
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -11,6 +11,7 @@ const initialState = {
   loaded: false,
   msg: {},
   PINExist: null,
+  errors: {},
 };
 
 const fetchedSurveyData = (state = initialState, action) => {
@@ -23,11 +24,6 @@ const fetchedSurveyData = (state = initialState, action) => {
         surveyData: payload,
         loaded: true,
       };
-    case SURVEY_DATA_FAIL:
-      return {
-        msg: 'fetching survey data failed',
-        loaded: true,
-      };
     case SURVEY_PIN_EXIST_FAIL:
       return {
         ...state,
@@ -38,10 +34,14 @@ const fetchedSurveyData = (state = initialState, action) => {
         ...state,
         PINExist: false,
       };
-    case SURVEY_DATA_FAIL_PIN:
+    case SURVEY_SUBMISSION_SUCCESS:
       return {
         ...state,
-        msg: 'checking PIN process failed',
+      };
+    case SURVEY_SUBMISSION_FAIL:
+      return {
+        ...state,
+        errors: payload,
       };
     default:
       return state;

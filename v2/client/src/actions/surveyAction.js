@@ -1,43 +1,45 @@
 import axios from 'axios';
+import swal from 'sweetalert2';
+import history from '../history';
 
 import {
   FETCH_SURVEY_DATA,
-  SURVEY_DATA_FAIL,
   SURVEY_PIN_EXIST_FAIL,
   SURVEY_PIN_SUCCESS,
-  SURVEY_DATA_FAIL_PIN,
+  SURVEY_SUBMISSION_SUCCESS,
+  SURVEY_SUBMISSION_FAIL,
 } from '../constants/actionTypes';
 
 import { returnErrors } from './errorAction';
 // import history from '../history';
 
-export const fetchSurveyData = surveyParts => async dispatch => {
+export const fetchSurveyData = surveyParts => dispatch => {
   axios
     .get(`/api/survey/${surveyParts}`)
-    .then(res => {
+    .then(({ data }) => {
       dispatch({
         type: FETCH_SURVEY_DATA,
-        payload: res.data,
+        payload: data,
       });
     })
     .catch(err => {
       dispatch(
-        returnErrors(err.response.data, err.response.status, 'SURVEY_DATA_FAIL')
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          'fetching survey data failed'
+        )
       );
-      dispatch({
-        type: SURVEY_DATA_FAIL,
-      });
     });
 };
 
-export const checkPINResponses = (surveyParts, PIN) => async dispatch => {
+export const checkPINResponses = (surveyParts, PIN) => dispatch => {
   axios
     .get(`/api/survey/${surveyParts}/${PIN}`)
     .then(({ data }) => {
       const { exist } = data;
 
       if (exist) {
-        console.log('reached');
         dispatch({
           type: SURVEY_PIN_EXIST_FAIL,
           msg: "The PIN you've entered has already submitted this survey",
@@ -54,11 +56,38 @@ export const checkPINResponses = (surveyParts, PIN) => async dispatch => {
         returnErrors(
           err.response.data,
           err.response.status,
-          'SURVEY_DATA_FAIL_PIN'
+          'checking PIN data failed'
         )
       );
+    });
+};
+
+export const submitSurvey = formSubmission => dispatch => {
+  axios
+    .post(`/api/survey/submit/`, formSubmission)
+    .then(({ data }) => {
       dispatch({
-        type: SURVEY_DATA_FAIL_PIN,
+        type: SURVEY_SUBMISSION_SUCCESS,
+        payload: data,
+      });
+      return swal
+        .fire('Done!', 'Thanks for submitting your feedback!', 'success')
+        .then(() => history.push('/thank-you'))
+        .catch(err => {
+          dispatch(
+            returnErrors(
+              err.response.data,
+              err.response.status,
+              'error submitting survey'
+            )
+          );
+        });
+    })
+    .catch(err => {
+      dispatch({ type: SURVEY_SUBMISSION_FAIL, payload: err.response.data });
+      return swal.fire({
+        title: 'Please answer all required questions',
+        type: 'error',
       });
     });
 };

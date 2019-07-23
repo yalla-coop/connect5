@@ -19,6 +19,7 @@ import {
 import {
   fetchSurveyData,
   checkPINResponses,
+  submitSurvey,
 } from '../../../actions/surveyAction';
 
 // Components
@@ -39,7 +40,6 @@ class Survey extends Component {
     PIN: '',
     disagreedToResearch: false,
     PINerror: '',
-    errors: {},
     formState: {},
     PINvalid: false,
     section: 'confirmSurvey',
@@ -82,7 +82,7 @@ class Survey extends Component {
           if (uniqueGroups[1] === 'about your trainer') {
             newSection = 'about your trainer';
             // post day 3, post-special
-          } 
+          }
           break;
         default:
           newSection = section;
@@ -151,7 +151,7 @@ class Survey extends Component {
     );
   };
 
-// renders research confirmation popup
+  // renders research confirmation popup
   researchConfirm = () =>
     swal
       .fire({
@@ -181,7 +181,7 @@ class Survey extends Component {
 
   // VALIDATION
   // handles user input for PIN field
-  handlePIN = e => this.setState({ PIN: e.target.value })
+  handlePIN = e => this.setState({ PIN: e.target.value });
 
   // validates PIN input on blur
   checkPINonBlur = () => {
@@ -213,7 +213,7 @@ class Survey extends Component {
     }
   };
 
-// submits and validates PIN request
+  // submits and validates PIN request
   submitPIN = () => {
     const { PINExist } = this.props;
     if (PINExist) {
@@ -242,29 +242,34 @@ class Survey extends Component {
     const { formState } = this.state;
     const { surveyData } = this.props;
     const { surveyData: surveyDetails } = surveyData;
-  console.log(surveyDetails.questionsForSurvey)
+
     if (formState && surveyDetails) {
       const numberOfQs = surveyDetails.questionsForSurvey.length;
       const numberOfAs = Object.values(formState).length;
       const rate = Math.ceil((numberOfAs / numberOfQs) * 100);
-      console.log(numberOfAs)
-      console.log(numberOfQs)
+
       this.setState({ completionRate: rate });
     } else {
       this.setState({ completionRate: 0 });
     }
   };
 
-    // validate postcode input (UK format only)
+  // validates and adds postcode input (UK format only)
   onChangePostcode = e => {
     const question = e.target.name;
     const { formState } = this.state;
-  const answer = { answer: e.target.value, question };
-  
-this.setState({ postcodeValid: validPostcode(e.target.value), formState: { ...formState, [question]: answer } }, () => {
-      this.trackAnswers();
-    });
-  } 
+    const answer = { answer: e.target.value, question };
+
+    this.setState(
+      {
+        postcodeValid: validPostcode(e.target.value),
+        formState: { ...formState, [question]: answer },
+      },
+      () => {
+        this.trackAnswers();
+      }
+    );
+  };
 
   // check for any changes to the survey inputs and add them to the formstate
   handleChange = e => {
@@ -313,7 +318,8 @@ this.setState({ postcodeValid: validPostcode(e.target.value), formState: { ...fo
   // this puts the required info into an object and sends to server
   handleSubmit = e => {
     e.preventDefault();
-    const { history, surveyData, PINExist } = this.props;
+    const { surveyData, submitSurvey: submitSurveyAction } = this.props;
+
     const { surveyType } = surveyData.surveyData;
     const { sessionId } = surveyData.surveyData;
     const { formState, PIN, disagreedToResearch } = this.state;
@@ -326,49 +332,20 @@ this.setState({ postcodeValid: validPostcode(e.target.value), formState: { ...fo
       disagreedToResearch,
     };
 
-    if (PINExist) {
-      return swal.fire({
-        title: 'This PIN has already submited the survey before',
-        type: 'error',
-      });
-    }
-
-    // check if PIN was entered before API call
-    if (PIN) {
-      return axios
-        .post(`/api/survey/submit/`, formSubmission)
-        .then(() =>
-          swal
-            .fire('Done!', 'Thanks for submitting your feedback!', 'success')
-            .then(() => history.push('/thank-you'))
-        )
-        .catch(err => {
-          this.setState({
-            errors: err.response.data,
-          });
-          swal.fire({
-            title: 'Please answer all required questions',
-            type: 'error',
-          });
-        });
-    }
-    return swal.fire({
-      title: 'Please enter your PIN',
-      type: 'error',
-    });
+    submitSurveyAction(formSubmission);
   };
 
   render() {
     const {
       formState,
-      errors,
       section,
       PINerror,
       PINvalid,
       postcodeValid,
       completionRate,
     } = this.state;
-    const { surveyData } = this.props;
+
+    const { surveyData, errors } = this.props;
 
     const loadingError = Object.keys(surveyData.msg).length > 0;
 
@@ -378,7 +355,7 @@ this.setState({ postcodeValid: validPostcode(e.target.value), formState: { ...fo
     const uniqueGroups = surveyDetails && [
       ...new Set(surveyDetails.questionsForSurvey.map(e => e.group)),
     ];
-  console.log(formState)
+
     return (
       <div>
         {!surveyData.loaded ? (
@@ -428,7 +405,7 @@ this.setState({ postcodeValid: validPostcode(e.target.value), formState: { ...fo
                       const unanswered = questions
                         .map(q => q._id)
                         .filter(q => !answers.includes(q));
-                        console.log('aaa',unanswered)
+
                       return (
                         <SurveyQs
                           questions={questions}
@@ -469,10 +446,11 @@ const mapStateToProps = state => {
   return {
     surveyData: state.survey,
     PINExist: state.survey.PINExist,
+    errors: state.survey.errors,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchSurveyData, checkPINResponses }
+  { fetchSurveyData, checkPINResponses, submitSurvey }
 )(Survey);
