@@ -2,6 +2,10 @@
 // and populate the Survey component
 import React from 'react';
 import { Alert, DatePicker, Progress } from 'antd';
+// please leave this inside for antd to style right
+import 'antd/dist/antd.css';
+import { colors } from '../../../theme';
+
 import {
   RadioField,
   TextField,
@@ -14,33 +18,9 @@ import {
   SubGroup,
   Warning,
 } from './Questions.style';
-// please leave this inside for antd to style right
-import 'antd/dist/antd.css';
-import { colors } from '../../../theme';
 
 import { ProgressWrapper } from './Survey.style';
 // checks if errors are present (renders error msg after submit)
-const checkErrors = (errorArr, questionId, answers, errors) => {
-  if (errorArr.includes(questionId) && !answers[questionId]) {
-    return (
-      <ErrorDiv>
-        {' '}
-        <Alert message={`${errors[questionId]}`} type="error" />
-      </ErrorDiv>
-    );
-  }
-  if (
-    errorArr.includes(questionId) &&
-    errors[questionId] === 'enter a valid UK postcode'
-  ) {
-    return (
-      <ErrorDiv>
-        <Alert message={`${errors[questionId]}`} type="error" />
-      </ErrorDiv>
-    );
-  }
-  return null;
-};
 
 // renders questions accordingly to their input type
 const renderQuestionInputType = (
@@ -69,7 +49,6 @@ const renderQuestionInputType = (
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
-          {checkErrors(errorArray, questionId, answers, errors)}
         </header>
 
         {questionText === 'Please enter the postcode where you are active' ? (
@@ -121,7 +100,6 @@ const renderQuestionInputType = (
           {!answers[questionId] && (
             <Warning>* this question must be answered</Warning>
           )}
-          {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <DatePicker
           id={index}
@@ -147,7 +125,6 @@ const renderQuestionInputType = (
           {!answers[questionId] && (
             <Warning>* this question must be answered</Warning>
           )}
-          {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <input
           id={index}
@@ -181,7 +158,6 @@ const renderQuestionInputType = (
           {!answers[questionId] && (
             <Warning>* this question must be answered</Warning>
           )}
-          {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <NumberSliderDiv>
           <Slider
@@ -215,7 +191,6 @@ const renderQuestionInputType = (
           {!answers[questionId] && (
             <Warning>* this question must be answered</Warning>
           )}
-          {checkErrors(errorArray, questionId, answers, errors)}
         </header>
         <div className="answers">
           {options.map(e => {

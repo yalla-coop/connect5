@@ -86,7 +86,8 @@ export const submitSurvey = formSubmission => dispatch => {
     .catch(err => {
       dispatch({ type: SURVEY_SUBMISSION_FAIL, payload: err.response.data });
       return swal.fire({
-        title: 'Please answer all required questions',
+        title:
+          'There was an error submitting your survey. Please check that you have answered all required questions and entered your correct PIN',
         type: 'error',
       });
     });

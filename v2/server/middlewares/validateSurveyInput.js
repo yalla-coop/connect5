@@ -11,20 +11,6 @@ module.exports = async data => {
     isRequired: true,
   });
 
-  // Postcode validation
-
-  const postcodeQuestion = await Question.findOne({
-    surveyType: data.surveyType,
-    text: 'Please enter the postcode where you are active',
-  });
-
-  const validPostcode = postcode => {
-    postcode = postcode.replace(/\s/g, '');
-
-    const regex = /^(?:gir(?: *0aa)?|[a-pr-uwyz](?:[a-hk-y]?[0-9]+|[0-9][a-hjkstuw]|[a-hk-y][0-9][abehmnprv-y])(?: *[0-9][abd-hjlnp-uw-z]{2})?)$/gim;
-    return regex.test(postcode);
-  };
-
   // PIN validation
   const validLetters = string => {
     const regex = /[a-z]{1,3}/gim;
@@ -50,13 +36,6 @@ module.exports = async data => {
         errors[e] = 'this question must be answered';
       }
     });
-  }
-  if (
-    postcodeQuestion &&
-    answers.includes(postcodeQuestion._id.toString()) &&
-    !validPostcode(data.formState[postcodeQuestion._id.toString()].answer)
-  ) {
-    errors[postcodeQuestion._id.toString()] = 'enter a valid UK postcode';
   }
   if (
     PIN.length === 0 ||

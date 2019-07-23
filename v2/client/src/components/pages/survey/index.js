@@ -331,8 +331,13 @@ class Survey extends Component {
       formState,
       disagreedToResearch,
     };
-
-    submitSurveyAction(formSubmission);
+    if (PIN) {
+      submitSurveyAction(formSubmission);
+    }
+    return swal.fire({
+      title: 'Please enter a correct PIN',
+      type: 'error',
+    });
   };
 
   render() {
@@ -355,7 +360,7 @@ class Survey extends Component {
     const uniqueGroups = surveyDetails && [
       ...new Set(surveyDetails.questionsForSurvey.map(e => e.group)),
     ];
-
+    console.log(errors);
     return (
       <div>
         {!surveyData.loaded ? (
@@ -419,7 +424,7 @@ class Survey extends Component {
                           handleAntdDatePicker={this.handleAntdDatePicker}
                           renderSkipButtons={this.renderSkipButtons(
                             group,
-                            unanswered.length > 0 && !postcodeValid,
+                            unanswered.length > 0 || !postcodeValid,
                             uniqueGroups,
                             completionRate
                           )}
