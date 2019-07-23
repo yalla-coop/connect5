@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import swal from 'sweetalert2';
 
 // Styles
 import Button from '../../common/Button';

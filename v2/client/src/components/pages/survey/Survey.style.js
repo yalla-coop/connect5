@@ -13,12 +13,6 @@ export const Container = styled.div`
   background: ${colors.backgroundWashOut};
 `;
 
-export const SurveyWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-`;
-
 export const SurveyQs = styled.div`
   main {
     background: ${colorCodes.offWhite};
@@ -34,16 +28,16 @@ export const Disclaimer = styled.div`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  padding-bottom: 24px;
+  padding-bottom: 20px;
   width: 100%;
+  align-items: center;
 
   button {
     border: ${borders.button};
-    color: ${colorCodes.black};
-    padding: 8px;
+    color: ${colors.white};
+    background: ${colors.green};
+    padding: 12px;
     border-radius: 1rem;
-    background: white;
-    margin-top: 24px;
     width: 50%;
     align-self: center;
     cursor: pointer;

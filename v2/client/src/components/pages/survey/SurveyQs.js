@@ -1,7 +1,7 @@
 // this is where we map through all the questions
 // and populate the Survey component
 import React from 'react';
-import { Alert, DatePicker, Progress } from 'antd';
+import { DatePicker, Progress } from 'antd';
 // please leave this inside for antd to style right
 import 'antd/dist/antd.css';
 import { colors } from '../../../theme';
@@ -12,7 +12,6 @@ import {
   Slider,
   NumberSliderDiv,
   NumberOutput,
-  ErrorDiv,
   QuestionWrapper,
   SectionCategory,
   SubGroup,

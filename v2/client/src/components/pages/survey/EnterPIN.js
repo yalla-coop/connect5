@@ -36,6 +36,7 @@ export default class EnterPIN extends Component {
             minLength="5"
             onChange={handlePIN}
             onBlur={onPINBlur}
+            onFocus={onPINBlur}
           />
           {PINerror.length > 0 && (
             <ErrorDiv>
