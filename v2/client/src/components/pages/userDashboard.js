@@ -172,6 +172,7 @@ class UserDashboard extends Component {
         </Content>
         <LinkBtn to="/participant/behavioral-insight">Insights</LinkBtn>
         <LinkBtn to="/participant/progress">Progress</LinkBtn>
+        <LinkBtn to="/sessions-files">Materials</LinkBtn>
       </DashboardWrapper>
     );
   }

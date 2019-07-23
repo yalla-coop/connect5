@@ -333,7 +333,15 @@ class App extends Component {
               navbar
             />
 
-            <Route path="/sessions-files" component={SessionsFiles} />
+            <PrivateRoute
+              exact
+              path="/sessions-files"
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              Component={SessionsFiles}
+              allowedRoles={['participant']}
+              role={role}
+            />
 
             <Route path="/404err" render={() => <NotFound />} />
             <Route path="/500err" render={() => <ServerError />} />
