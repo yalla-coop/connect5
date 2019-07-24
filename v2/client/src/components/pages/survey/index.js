@@ -120,7 +120,7 @@ class Survey extends Component {
   };
 
   // renders back and next button and calls section change and submit actions
-  renderSkipButtons = (section, disabled, uniqueGroups, completionRate) => {
+  renderSkipButtons = (section, disabled, uniqueGroups) => {
     const { PIN, surveyParts } = this.state;
     return (
       <SkipButtonsDiv>
@@ -134,22 +134,23 @@ class Survey extends Component {
             this.sectionChange('back', uniqueGroups);
           }}
         />
-        {(!completionRate || completionRate < 100) && (
-          <Button
-            label="Next"
-            width="100px"
-            height="50px"
-            type="primary"
-            disabled={disabled}
-            onClick={() => {
-              window.scrollTo(0, 0);
-              this.sectionChange('forward', uniqueGroups);
-              if (section === 'enterPIN') {
-                this.submitPIN(PIN, surveyParts);
-              }
-            }}
-          />
-        )}
+
+        <Button
+          label="Next"
+          width="100px"
+          height="50px"
+          type="primary"
+          disabled={
+            section === uniqueGroups[uniqueGroups.length - 1] || disabled
+          }
+          onClick={() => {
+            window.scrollTo(0, 0);
+            this.sectionChange('forward', uniqueGroups);
+            if (section === 'enterPIN') {
+              this.submitPIN(PIN, surveyParts);
+            }
+          }}
+        />
       </SkipButtonsDiv>
     );
   };
@@ -401,6 +402,7 @@ class Survey extends Component {
                 )}
                 {section === 'enterPIN' && (
                   <EnterPIN
+                    key={section}
                     PIN={PIN}
                     PINvalid={PINvalid}
                     handlePIN={this.handlePIN}
@@ -422,6 +424,7 @@ class Survey extends Component {
                       surveyDetails.questionsForSurvey.filter(
                         question => question.group === group
                       );
+                    console.log(questions);
                     if (section === group) {
                       const unanswered = questions
                         .map(q => q._id)

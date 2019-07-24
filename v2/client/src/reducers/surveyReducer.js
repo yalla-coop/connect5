@@ -18,6 +18,8 @@ const initialState = {
   skipDemo: false,
 };
 
+const createGroupsArray = obj => [...new Set(obj.map(e => e.group))];
+
 const fetchedSurveyData = (state = initialState, action) => {
   const { type, payload } = action;
 
@@ -26,9 +28,7 @@ const fetchedSurveyData = (state = initialState, action) => {
       return {
         ...state,
         surveyData: payload,
-        uniqueGroups: [
-          ...new Set(payload.questionsForSurvey.map(e => e.group)),
-        ],
+        uniqueGroups: createGroupsArray(payload.questionsForSurvey),
         loaded: true,
       };
     case SURVEY_PIN_EXIST_FAIL:
@@ -54,15 +54,16 @@ const fetchedSurveyData = (state = initialState, action) => {
       return {
         ...state,
         skipDemo: true,
-        uniqueGroups: [state.uniqueGroups.pop()],
+        uniqueGroups:
+          state.uniqueGroups[0] === 'demographic'
+            ? createGroupsArray(state.surveyData.questionsForSurvey).pop()
+            : createGroupsArray(state.surveyData.questionsForSurvey),
       };
     case GET_PARTICIPANT_BY_PIN_FAIL:
       return {
         ...state,
         skipDemo: false,
-        uniqueGroups: [
-          ...new Set(state.surveyData.questionsForSurvey.map(e => e.group)),
-        ],
+        uniqueGroups: createGroupsArray(state.surveyData.questionsForSurvey),
       };
     default:
       return state;
