@@ -36,7 +36,6 @@ class Survey extends Component {
     surveyParts: '',
     disagreedToResearch: false,
     formState: {},
-    filteredQuestions: {},
     PIN: '',
     PINerror: '',
     PINvalid: false,
@@ -184,7 +183,6 @@ class Survey extends Component {
       });
 
   // VALIDATION
-
   // handles user input for PIN field
   handlePIN = e => this.setState({ PIN: e.target.value });
 
