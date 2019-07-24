@@ -1,10 +1,11 @@
 const boom = require('boom');
+const moment = require('moment');
 const {
   StoreSentEmailDataQuery,
 } = require('./../../database/queries/users/sendInvitation');
 const sendEmailInvitation = require('./../../helpers/emails/sendEmailInvitation');
 
-const addSession = async (req, res, next) => {
+const SendInvitation = async (req, res, next) => {
   const {
     _id,
     participantsEmails,
@@ -13,18 +14,11 @@ const addSession = async (req, res, next) => {
     type,
     trainerName,
     region,
+    startTime,
+    endTime,
   } = req.body;
   const { name } = req.user;
 
-  console.log(
-    _id,
-    participantsEmails,
-    sendingDate,
-    date,
-    type,
-    trainerName,
-    region
-  );
   try {
     if (
       _id &&
@@ -34,7 +28,9 @@ const addSession = async (req, res, next) => {
       date &&
       type &&
       trainerName &&
-      region
+      region &&
+      startTime &&
+      endTime
     ) {
       const StoreSentEmailData = await StoreSentEmailDataQuery({
         _id,
@@ -46,17 +42,19 @@ const addSession = async (req, res, next) => {
         trainerName,
         region,
       });
-      const recipients = participantsEmails.toString();
-      console.log(recipients, 'eeeeeeeeeeee');
-      // sendEmailInvitation({
-      //   name,
-      //   recipients,
-      //   sendingDate,
-      //   date,
-      //   type,
-      //   trainerName,
-      //   region,
-      // });
+      const sessionDate = moment(date).format('DD/MM/YYYY');
+
+      sendEmailInvitation({
+        name,
+        participantsEmails,
+        sessionDate,
+        type,
+        trainerName,
+        region,
+        startTime,
+        endTime,
+      });
+
       return res.json(StoreSentEmailData);
     }
     return next(boom.badRequest('Some arguments are missed'));
@@ -66,4 +64,4 @@ const addSession = async (req, res, next) => {
   }
 };
 
-module.exports = addSession;
+module.exports = SendInvitation;

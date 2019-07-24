@@ -40,7 +40,15 @@ class SendInvitation extends Component {
       SendEmailInvitation: SendEmailInvitationActionCreator,
     } = this.props;
 
-    const { date, type, trainers, region, _id, startTime } = sessionDetails;
+    const {
+      date,
+      type,
+      trainers,
+      region,
+      _id,
+      startTime,
+      endTime,
+    } = sessionDetails;
 
     const trainerName = trainers
       .map(trainer => {
@@ -58,6 +66,7 @@ class SendInvitation extends Component {
       trainerName,
       region,
       startTime,
+      endTime,
     };
     SendEmailInvitationActionCreator(InviteData);
   };
