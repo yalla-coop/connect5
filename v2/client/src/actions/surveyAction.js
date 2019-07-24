@@ -95,7 +95,6 @@ export const submitSurvey = formSubmission => dispatch => {
 };
 
 export const getParticipantByPIN = PIN => dispatch => {
-  console.log('reached');
   axios
     .get(`/api/participant/${PIN}`)
     .then(({ data }) => {

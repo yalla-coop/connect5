@@ -22,11 +22,7 @@ import EnterPIN from './EnterPIN';
 import SurveyQs from './SurveyQs';
 
 // Helpers
-import {
-  validLetters,
-  validNumbers,
-  validPostcode,
-} from '../../../helpers/surveyValidation';
+import { validPIN, validPostcode } from '../../../helpers/surveyValidation';
 
 class Survey extends Component {
   state = {
@@ -39,7 +35,6 @@ class Survey extends Component {
     section: 'confirmSurvey',
     completionRate: 0,
     postcodeValid: false,
-    // groupsToRender: null,
   };
 
   componentDidMount() {
@@ -50,16 +45,6 @@ class Survey extends Component {
     fetchSurveyDataAction(surveyParts);
     this.setState({ surveyParts });
   }
-
-  // componentWillReceiveProps() {
-  //   const { surveyData, skipDemo } = this.props;
-  //   const { uniqueGroups } = surveyData;
-
-  //   if (skipDemo && uniqueGroups.includes('demographic')) {
-  //     this.setState({ groupsToRender: uniqueGroups.shift() });
-  //   }
-  //   this.setState({ groupsToRender: uniqueGroups });
-  // }
 
   // enables user to change direction of sections
   sectionChange = (direction, uniqueGroups) => {
@@ -204,11 +189,7 @@ class Survey extends Component {
     }
     if (PIN.length === 5) {
       // check if PIN is in right format
-      if (
-        !(
-          validLetters(PIN.substring(0, 3)) && validNumbers(PIN.substring(3, 5))
-        )
-      ) {
+      if (!validPIN(PIN)) {
         this.setState({
           PINerror: 'PIN must be in the right format',
           PINvalid: false,

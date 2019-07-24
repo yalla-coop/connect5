@@ -1,11 +1,7 @@
 // PIN validation
-export const validLetters = string => {
-  const regex = /[a-z]{1,3}/gim;
-  return regex.test(string);
-};
-
-export const validNumbers = string => {
-  const regex = /^[0-9]{1,2}$/gim;
+export const validPIN = string => {
+  const regex = new RegExp('^[a-z]{3}[0-9]{1,2}$', 'i');
+  console.log(string);
   return regex.test(string);
 };
 
