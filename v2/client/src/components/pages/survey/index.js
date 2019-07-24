@@ -12,7 +12,7 @@ import {
   SkipButtonsDiv,
   Form,
   SubmitBtnDiv,
-  SubmitBtn
+  SubmitBtn,
 } from './Survey.style';
 
 // Actions
@@ -34,26 +34,33 @@ import { validPIN, validPostcode } from '../../../helpers/surveyValidation';
 class Survey extends Component {
   state = {
     surveyParts: '',
-    PIN: '',
     disagreedToResearch: false,
-    PINerror: '',
     formState: {},
+    filteredQuestions: {},
+    PIN: '',
+    PINerror: '',
     PINvalid: false,
+    postcodeValid: false,
     section: 'confirmSurvey',
     completionRate: 0,
-    postcodeValid: false,
   };
 
   componentDidMount() {
     const { location, fetchSurveyData: fetchSurveyDataAction } = this.props;
     const survey = `${location.pathname}`;
     const surveyParts = survey.split('/')[2];
-    // gets survey data
+    // gets survey data and set state
     fetchSurveyDataAction(surveyParts);
     this.setState({ surveyParts });
+    // info pop up
+    Modal.info({
+      title: 'Important Information',
+      content:
+        'Welcome to the Connect 5 evaluation. Before starting the survey process please make sure all the details related to your session are correct.',
+    });
   }
 
-  // enables user to change direction of sections
+  // enables user to change direction of sections (used by back and next buttons)
   sectionChange = (direction, uniqueGroups) => {
     let newSection;
     const { section } = this.state;
@@ -68,17 +75,17 @@ class Survey extends Component {
         case 'enterPIN':
           newSection = uniqueGroups[0];
           break;
-        // survey questions start
+        // survey groups start here
         // demographic is always 0
-        // pre day 1, pre special
+        // included only in pre day 1 and pre special
         case 'demographic':
           newSection = 'Behavioural Insights';
           break;
-        // post day 1, post day 2
+        // Behav. insights included in post day 1, post day 2
         case 'Behavioural Insights':
+          // trainer feedback included in post day 3, post-special (additionally to behavioural insights)
           if (uniqueGroups[1] === 'about your trainer') {
             newSection = 'about your trainer';
-            // post day 3, post-special
           }
           break;
         default:
@@ -113,7 +120,7 @@ class Survey extends Component {
     this.setState({ section: newSection });
   };
 
-  // renders back and next button and calls next/submit actions
+  // renders back and next button and calls section change and submit actions
   renderSkipButtons = (section, disabled, uniqueGroups, completionRate) => {
     const { PIN, surveyParts } = this.state;
     return (
@@ -148,7 +155,7 @@ class Survey extends Component {
     );
   };
 
-  // renders research confirmation popup
+  // renders research confirmation popup at beginning of enterPIN section
   researchConfirm = () =>
     swal
       .fire({
@@ -177,15 +184,17 @@ class Survey extends Component {
       });
 
   // VALIDATION
+
   // handles user input for PIN field
   handlePIN = e => this.setState({ PIN: e.target.value });
 
-  // validates PIN input on blur
+  // validates PIN input on blur/focus
   checkPINonBlur = () => {
     const {
       checkPINResponses: checkPINResponsesAction,
       getParticipantByPIN: getParticipantByPINAction,
     } = this.props;
+
     const { surveyParts, PIN } = this.state;
 
     if (PIN.length < 5) {
@@ -198,7 +207,7 @@ class Survey extends Component {
       // check if PIN is in right format
       if (!validPIN(PIN)) {
         this.setState({
-          PINerror: 'PIN must be in the right format',
+          PINerror: 'PIN must be in the right format (e.g. ABC01)',
           PINvalid: false,
         });
       } else {
@@ -206,17 +215,15 @@ class Survey extends Component {
       }
       // check if PIN alrady submitted this exact survey
       checkPINResponsesAction(surveyParts, PIN);
+      // check if participant has already filled out demographic section in previous surveys
+      // if so we skip that part
       getParticipantByPINAction(PIN);
     }
   };
 
   // submits and validates PIN request
   submitPIN = () => {
-    // const { PIN } = this.state;
-    const {
-      PINExist,
-      // getParticipantByPIN: getParticipantByPINAction,
-    } = this.props;
+    const { PINExist } = this.props;
 
     if (PINExist) {
       // check if PIN alrady submitted survey
@@ -242,10 +249,13 @@ class Survey extends Component {
   trackAnswers = () => {
     const { formState } = this.state;
     const { surveyData } = this.props;
-    const { surveyData: surveyDetails } = surveyData;
+    const { surveyData: surveyDetails, uniqueGroups } = surveyData;
 
     if (formState && surveyDetails) {
-      const numberOfQs = surveyDetails.questionsForSurvey.length;
+      const questions = surveyDetails.questionsForSurvey.filter(question => {
+        return uniqueGroups.includes(question.group);
+      });
+      const numberOfQs = questions.length;
       const numberOfAs = Object.values(formState).length;
       const rate = Math.ceil((numberOfAs / numberOfQs) * 100);
 
@@ -320,11 +330,14 @@ class Survey extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { surveyData, submitSurvey: submitSurveyAction } = this.props;
+    const { uniqueGroups } = surveyData;
+    const { surveyType, sessionId, questionsForSurvey } = surveyData.surveyData;
 
-    const { surveyType } = surveyData.surveyData;
-    const { sessionId } = surveyData.surveyData;
+    const questionsForParticipant = questionsForSurvey.filter(question => {
+      return uniqueGroups.includes(question.group);
+    });
 
-    const { formState, PIN, disagreedToResearch } = this.state;
+    const { formState, PIN, disagreedToResearch, completionRate } = this.state;
 
     const formSubmission = {
       PIN: PIN && PIN.toUpperCase(),
@@ -332,14 +345,11 @@ class Survey extends Component {
       surveyType,
       formState,
       disagreedToResearch,
+      questionsForParticipant,
     };
-    if (PIN) {
+    if (PIN && completionRate === 100) {
       submitSurveyAction(formSubmission);
     }
-    return swal.fire({
-      title: 'Please enter a correct PIN',
-      type: 'error',
-    });
   };
 
   render() {
@@ -420,6 +430,7 @@ class Survey extends Component {
                         .filter(q => !answers.includes(q));
                       return (
                         <SurveyQs
+                          key={group}
                           questions={questions}
                           postcodeValid={postcodeValid}
                           onChangePostcode={this.onChangePostcode}
@@ -441,12 +452,12 @@ class Survey extends Component {
                     }
                     return null;
                   })}
-              
+
                 {completionRate === 100 &&
                   section === uniqueGroups[uniqueGroups.length - 1] && (
                     <SubmitBtnDiv>
-                    <SubmitBtn type="submit">Submit Feedback</SubmitBtn>
-                     </SubmitBtnDiv>
+                      <SubmitBtn type="submit">Submit Feedback</SubmitBtn>
+                    </SubmitBtnDiv>
                   )}
               </Form>
             )}

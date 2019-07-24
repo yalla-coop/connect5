@@ -32,23 +32,23 @@ export const Form = styled.form`
 `;
 
 export const SubmitBtn = styled.button`
-    border: ${borders.button};
-     box-shadow: ${colors.button};
-    color: ${colors.black};
-    padding: 1rem 3rem;
-    border-radius: 6px;
-    font-weight: 900;
-    font-size: 20px;
-    width: 50%;
-    align-self: center;
-    cursor: pointer;
-     opacity: 0.9;
-    :hover {
-      color: ${colorCodes.lightPrimary};
-      opacity: 1;
-    }
-    @media (min-width: 768px) {
-      width: 40%;
+  border: ${borders.button};
+  box-shadow: ${colors.button};
+  color: ${colors.black};
+  padding: 1rem;
+  border-radius: 6px;
+  font-weight: 900;
+  font-size: 20px;
+  width: 50%;
+  align-self: center;
+  cursor: pointer;
+  opacity: 0.9;
+  :hover {
+    color: ${colorCodes.lightPrimary};
+    opacity: 1;
+  }
+  @media (min-width: 768px) {
+    width: 40%;
   }
 `;
 

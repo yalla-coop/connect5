@@ -1,15 +1,11 @@
 const isEmpty = require('./isEmpty');
-const Question = require('../database/models/Question');
 
 module.exports = async data => {
   // set up error obj to store errors
   const errors = {};
 
-  // query the Question model using data.surveyType to get a list of the question ids for that survey which are required
-  const questions = await Question.find({
-    surveyType: data.surveyType,
-    isRequired: true,
-  });
+  // get all required questions for that survey
+  const { questionsForParticipant } = data;
 
   // PIN validation
   const validLetters = string => {
@@ -23,7 +19,7 @@ module.exports = async data => {
   };
 
   // create array of question ids required
-  const questionIDList = questions.map(e => e._id.toString());
+  const questionIDList = questionsForParticipant.map(e => e._id.toString());
   // create array of question ids for answers submitted
   const answers = Object.keys(data.formState);
   const PIN = data.PIN.toString();

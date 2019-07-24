@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
 // Styles
-import Button from '../../common/Button';
-
 import { Modal } from 'antd';
+import Button from '../../common/Button';
 
 import {
   ButtonDiv,
@@ -13,7 +12,7 @@ import {
   PromptHeadline,
   Paragraph,
   DetailsDiv,
-  SessionDetailsContainer
+  SessionDetailsContainer,
 } from './Survey.style';
 
 export default class ConfirmSurvey extends Component {
@@ -47,7 +46,6 @@ export default class ConfirmSurvey extends Component {
             <Paragraph strong>Trainers: </Paragraph>
             <Paragraph>{this.renderTrainerNames(trainerNames)}</Paragraph>
           </DetailsDiv>
-         
         </SessionDetails>
         <PromptHeadline>Are these details correct?</PromptHeadline>
         <ButtonDiv>
@@ -61,15 +59,21 @@ export default class ConfirmSurvey extends Component {
               researchConfirm();
             }}
           />
-          {/* need to decide what to do in case user presses no */}
-          <Button label="No" width="100px" height="50px" type="primary" onClick={ () => {
-          Modal.error({
-          title: 'Error!',
-          content: "Please make sure that you fill out the correct survey for your session. If these details aren't correct please contact your trainer.",
-           })
-          }
-
-            } />
+          <Button
+            label="No"
+            width="100px"
+            height="50px"
+            type="primary"
+            onClick={() => {
+              sectionChange('forward');
+              Modal.error({
+                title: 'Wrong Survey?',
+                content:
+                  "Please make sure that you fill out the correct survey for your session. If these details aren't correct please contact your trainer.",
+                onOk: sectionChange('back'),
+              });
+            }}
+          />
         </ButtonDiv>
       </SessionDetailsContainer>
     );
