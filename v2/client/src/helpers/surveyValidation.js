@@ -1,8 +1,7 @@
 // PIN validation
 export const validPIN = string => {
   const regex = new RegExp('^[a-z]{3}[0-9]{1,2}$', 'i');
-  console.log(string);
-  return regex.test(string);
+   return regex.test(string);
 };
 
 export const validPostcode = postcode => {

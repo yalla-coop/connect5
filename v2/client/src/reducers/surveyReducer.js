@@ -5,6 +5,7 @@ import {
   SURVEY_SUBMISSION_SUCCESS,
   SURVEY_SUBMISSION_FAIL,
   GET_PARTICIPANT_BY_PIN_SUCCESS,
+  GET_PARTICIPANT_BY_PIN_FAIL,
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -54,6 +55,14 @@ const fetchedSurveyData = (state = initialState, action) => {
         ...state,
         skipDemo: true,
         uniqueGroups: [state.uniqueGroups.pop()],
+      };
+    case GET_PARTICIPANT_BY_PIN_FAIL:
+      return {
+        ...state,
+        skipDemo: false,
+        uniqueGroups: [
+          ...new Set(state.surveyData.questionsForSurvey.map(e => e.group)),
+        ],
       };
     default:
       return state;

@@ -6,7 +6,14 @@ import { Spin, Alert, Modal } from 'antd';
 // Styles
 import Header from '../../common/Header';
 import Button from '../../common/Button';
-import { Container, SpinWrapper, SkipButtonsDiv, Form } from './Survey.style';
+import {
+  Container,
+  SpinWrapper,
+  SkipButtonsDiv,
+  Form,
+  SubmitBtnDiv,
+  SubmitBtn
+} from './Survey.style';
 
 // Actions
 import {
@@ -219,7 +226,6 @@ class Survey extends Component {
         onOk: this.sectionChange('back'),
       });
     }
-    // getParticipantByPINAction(PIN);
   };
 
   // SURVEY FUNCTIONS
@@ -317,6 +323,7 @@ class Survey extends Component {
 
     const { surveyType } = surveyData.surveyData;
     const { sessionId } = surveyData.surveyData;
+
     const { formState, PIN, disagreedToResearch } = this.state;
 
     const formSubmission = {
@@ -343,6 +350,7 @@ class Survey extends Component {
       PINvalid,
       postcodeValid,
       completionRate,
+      PIN,
     } = this.state;
 
     const { surveyData, errors } = this.props;
@@ -385,6 +393,8 @@ class Survey extends Component {
                 )}
                 {section === 'enterPIN' && (
                   <EnterPIN
+                    PIN={PIN}
+                    PINvalid={PINvalid}
                     handlePIN={this.handlePIN}
                     onPINBlur={this.checkPINonBlur}
                     renderSkipButtons={this.renderSkipButtons(
@@ -396,21 +406,18 @@ class Survey extends Component {
                     completionRate={completionRate}
                   />
                 )}
-
+                {/* survey questions start */}
                 {surveyGroups.includes(section) &&
                   uniqueGroups.map(group => {
-                    console.log('map', group);
                     const questions =
                       surveyDetails &&
                       surveyDetails.questionsForSurvey.filter(
                         question => question.group === group
                       );
-
                     if (section === group) {
                       const unanswered = questions
                         .map(q => q._id)
                         .filter(q => !answers.includes(q));
-
                       return (
                         <SurveyQs
                           questions={questions}
@@ -434,9 +441,13 @@ class Survey extends Component {
                     }
                     return null;
                   })}
-                {completionRate === 100 && (
-                  <button type="submit">Submit Feedback</button>
-                )}
+              
+                {completionRate === 100 &&
+                  section === uniqueGroups[uniqueGroups.length - 1] && (
+                    <SubmitBtnDiv>
+                    <SubmitBtn type="submit">Submit Feedback</SubmitBtn>
+                     </SubmitBtnDiv>
+                  )}
               </Form>
             )}
           </Container>

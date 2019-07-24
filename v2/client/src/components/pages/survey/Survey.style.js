@@ -5,18 +5,17 @@ import { colors, colorCodes, borders } from '../../../theme';
 export const Container = styled.div`
   max-width: 900px;
   margin: 0 auto;
-  height: 100vh;
   padding: 3rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: ${colors.backgroundWashOut};
 `;
 
-export const SurveyQs = styled.div`
-  main {
-    background: ${colorCodes.offWhite};
-  }
+export const SessionDetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Disclaimer = styled.div`
@@ -28,24 +27,37 @@ export const Disclaimer = styled.div`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  padding-bottom: 20px;
   width: 100%;
   align-items: center;
+`;
 
-  button {
+export const SubmitBtn = styled.button`
     border: ${borders.button};
-    color: ${colors.white};
-    background: ${colors.green};
-    padding: 12px;
-    border-radius: 1rem;
+     box-shadow: ${colors.button};
+    color: ${colors.black};
+    padding: 1rem 3rem;
+    border-radius: 6px;
+    font-weight: 900;
+    font-size: 20px;
     width: 50%;
     align-self: center;
     cursor: pointer;
-
+     opacity: 0.9;
     :hover {
       color: ${colorCodes.lightPrimary};
+      opacity: 1;
     }
+    @media (min-width: 768px) {
+      width: 40%;
   }
+`;
+
+export const SubmitBtnDiv = styled.div`
+  width: 100%;
+  height: 10vh;
+  background: ${colors.green};
+  display: flex;
+  justify-content: center;
 `;
 
 export const ProgressWrapper = styled.div`
@@ -102,9 +114,9 @@ export const SectionHeadline = styled.h1`
 `;
 
 export const SectionSubHeadline = styled.h2`
-  font-weight: 400;
-  font-size: 1.5rem;
-  color: ${colors.blackSecondary};
+  font-weight: 350
+  font-size: 2rem;
+  color: ${colors.black};
 `;
 
 export const PromptHeadline = styled.h3`
@@ -115,8 +127,8 @@ export const PromptHeadline = styled.h3`
 `;
 
 export const Paragraph = styled.p`
-${({ strong }) => (strong ? 'font-weight: bold;' : '')}
-color: ${colors.blackSecondary};
+${({ strong }) => (strong ? 'font-weight: 600;' : '300')}
+color: ${colors.black};
 `;
 
 export const SessionDetails = styled.div`
@@ -136,6 +148,5 @@ export const DetailsDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  // border: 1px solid black;
   padding-top: 1rem;
 `;

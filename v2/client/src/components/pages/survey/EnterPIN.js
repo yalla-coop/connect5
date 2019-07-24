@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert } from 'antd';
+ 
 import {
   TextField,
   QuestionWrapper,
@@ -9,7 +9,15 @@ import {
 
 export default class EnterPIN extends Component {
   render() {
-    const { renderSkipButtons, handlePIN, onPINBlur, PINerror } = this.props;
+    const {
+      renderSkipButtons,
+      handlePIN,
+      onPINBlur,
+      PINerror,
+      PIN,
+      PINvalid,
+      completionRate,
+    } = this.props;
     return (
       <QuestionWrapper>
         <SectionCategory>Please enter your PIN</SectionCategory>
@@ -37,6 +45,8 @@ export default class EnterPIN extends Component {
             onChange={handlePIN}
             onBlur={onPINBlur}
             onFocus={onPINBlur}
+            disabled={PINvalid && completionRate > 0}
+            value={PIN.length > 0 ? PIN : ''}
           />
           {PINerror.length > 0 && <Warning>* {PINerror}</Warning>}
         </TextField>

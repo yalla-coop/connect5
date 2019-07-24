@@ -32,8 +32,6 @@ export const QuestionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${colors.white};
-  align-items: center;
-  justify-content: center;
   margin: 1rem 0;
   padding: 1rem 0.5rem;
   box-shadow: ${shadows.primary};
@@ -122,7 +120,7 @@ export const TextField = styled(CommonStyles)`
   }
   h4 {
     font-size: 1rem;
-    // ${({ unanswered }) => unanswered && ` color: ${colors.errorRed}`}
+    ${({ unanswered }) => unanswered && ` color: ${colors.errorRed}`}
   }
 
   p {
@@ -179,10 +177,6 @@ export const NumberOutput = styled.output`
   line-height: 1.6em;
 `;
 
-export const QuestionCategory = styled.i`
-  font-size: 1rem;
-  color: ${colors.primary};
-`;
 
 export const SectionCategory = styled.h4`
   font-size: 1.5rem;
@@ -192,6 +186,4 @@ export const SectionCategory = styled.h4`
   color: ${colors.primary};
 `;
 
-export const ErrorDiv = styled.div`
-  margin-bottom: 20px;
-`;
+ 

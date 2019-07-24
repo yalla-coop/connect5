@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 // Styles
 import Button from '../../common/Button';
 
+import { Modal } from 'antd';
+
 import {
   ButtonDiv,
   SessionDetails,
@@ -11,6 +13,7 @@ import {
   PromptHeadline,
   Paragraph,
   DetailsDiv,
+  SessionDetailsContainer
 } from './Survey.style';
 
 export default class ConfirmSurvey extends Component {
@@ -32,10 +35,10 @@ export default class ConfirmSurvey extends Component {
     } = this.props;
 
     return (
-      <div>
+      <SessionDetailsContainer>
         <SectionHeadline>Connect 5 Evaluation</SectionHeadline>
+        <SectionSubHeadline>{surveyType}</SectionSubHeadline>
         <SessionDetails>
-          <SectionSubHeadline>Survey Details</SectionSubHeadline>
           <DetailsDiv>
             <Paragraph strong>Date of Session: </Paragraph>
             <Paragraph>{sessionDate}</Paragraph>
@@ -44,10 +47,7 @@ export default class ConfirmSurvey extends Component {
             <Paragraph strong>Trainers: </Paragraph>
             <Paragraph>{this.renderTrainerNames(trainerNames)}</Paragraph>
           </DetailsDiv>
-          <DetailsDiv>
-            <Paragraph strong>Survey Type:</Paragraph>
-            <Paragraph>{surveyType}</Paragraph>
-          </DetailsDiv>
+         
         </SessionDetails>
         <PromptHeadline>Are these details correct?</PromptHeadline>
         <ButtonDiv>
@@ -62,9 +62,16 @@ export default class ConfirmSurvey extends Component {
             }}
           />
           {/* need to decide what to do in case user presses no */}
-          <Button label="No" width="100px" height="50px" type="primary" />
+          <Button label="No" width="100px" height="50px" type="primary" onClick={ () => {
+          Modal.error({
+          title: 'Error!',
+          content: "Please make sure that you fill out the correct survey for your session. If these details aren't correct please contact your trainer.",
+           })
+          }
+
+            } />
         </ButtonDiv>
-      </div>
+      </SessionDetailsContainer>
     );
   }
 }

@@ -9,6 +9,7 @@ import {
   SURVEY_SUBMISSION_SUCCESS,
   SURVEY_SUBMISSION_FAIL,
   GET_PARTICIPANT_BY_PIN_SUCCESS,
+  GET_PARTICIPANT_BY_PIN_FAIL,
 } from '../constants/actionTypes';
 
 import { returnErrors } from './errorAction';
@@ -101,12 +102,9 @@ export const getParticipantByPIN = PIN => dispatch => {
       dispatch({ type: GET_PARTICIPANT_BY_PIN_SUCCESS, payload: data });
     })
     .catch(err => {
-      dispatch(
-        returnErrors(
-          err.response.data,
-          err.response.status,
-          'no participant found'
-        )
-      );
+      dispatch({
+        type: GET_PARTICIPANT_BY_PIN_FAIL,
+        payload: err.response.data,
+      });
     });
 };
