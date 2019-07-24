@@ -256,13 +256,21 @@ class App extends Component {
             <Route
               exact
               path="/participant-login"
-              render={() => {
+              render={props => {
                 if (loaded) {
+                  const { location } = props;
+                  const { state } = location;
+
                   return isAuthenticated ||
                     (loaded && role === 'participant') ? (
-                    <Redirect to="/participant-dashboard" />
+                    <Redirect
+                      to={{
+                        pathname: '/participant-dashboard',
+                        state,
+                      }}
+                    />
                   ) : (
-                    <ParticipantLogin />
+                    <ParticipantLogin {...props} />
                   );
                 }
                 return <Spin />;
