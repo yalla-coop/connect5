@@ -36,7 +36,10 @@ module.exports.editSessionQuery = async (
   region,
   partnerTrainer1,
   partnerTrainer2,
-  emails
+  emails,
+  startTime,
+  endTime,
+  address
 ) => {
   const trainers = [partnerTrainer1];
   if (partnerTrainer2) {
@@ -48,6 +51,10 @@ module.exports.editSessionQuery = async (
     numberOfAttendees: inviteesNumber,
     region,
     trainers,
+    participantsEmails: emails,
+    startTime,
+    endTime,
+    address,
   });
 
   const changedEmails = [...emails];

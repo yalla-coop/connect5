@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-did-update-set-state */
 import React, { Component } from 'react';
-import { DatePicker, Select, Input } from 'antd';
+import { DatePicker, Select, Input, TimePicker } from 'antd';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
@@ -17,12 +17,13 @@ import { sessions, regions, pattern } from '../../CreateSession/options';
 import {
   Form,
   InputDiv,
-  Heading,
   SubmitBtn,
   Error,
 } from '../../CreateSession/create-session.style';
 
-import { EditSessionWrapper } from './SessionActions.Style';
+import { EditSessionWrapper, InputLabel, BackLink, BackContainer } from './SessionActions.Style';
+
+import Header from '../../../common/Header';
 
 const { Option } = Select;
 
@@ -35,6 +36,9 @@ class EditSession extends Component {
     partnerTrainer1: '',
     partnerTrainer2: '',
     emails: [],
+    startTime: null,
+    endTime: null,
+    address: null,
     err: false,
     stateLoaded: false,
   };
@@ -60,6 +64,9 @@ class EditSession extends Component {
         region,
         participantsEmails,
         trainers,
+        startTime,
+        endTime,
+        address,
       } = sessionDetails;
       if (sessionDetails) {
         this.setState({
@@ -69,6 +76,9 @@ class EditSession extends Component {
           region,
           partnerTrainer1: trainers[0]._id,
           emails: participantsEmails,
+          startTime,
+          endTime,
+          address,
           stateLoaded: true,
         });
 
@@ -85,6 +95,18 @@ class EditSession extends Component {
   onDateChange = defaultValue => {
     this.setState({
       startDate: defaultValue,
+    });
+  };
+
+  onStartTimeChange = (time, timeString) => {
+    this.setState({
+      startTime: timeString,
+    });
+  };
+
+  onEndTimeChange = (time, timeString) => {
+    this.setState({
+      endTime: timeString,
     });
   };
 
@@ -143,6 +165,9 @@ class EditSession extends Component {
       partnerTrainer1,
       partnerTrainer2,
       emails,
+      startTime,
+      endTime,
+      address,
     } = this.state;
     const sessionData = {
       session,
@@ -152,6 +177,9 @@ class EditSession extends Component {
       partnerTrainer1,
       partnerTrainer2,
       emails,
+      startTime,
+      endTime,
+      address,
     };
 
     this.props.sessionUpdateAction(sessionData, id);
@@ -174,11 +202,13 @@ class EditSession extends Component {
     const {
       date,
       type,
+      startTime,
+      endTime,
       numberOfAttendees,
       region,
       participantsEmails,
     } = sessionDetails;
-    const { startDate, inviteesNumber, err } = this.state;
+    const { startDate, inviteesNumber, address, err } = this.state;
     const {
       onDateChange,
       onInputChange,
@@ -188,10 +218,15 @@ class EditSession extends Component {
       onSelectPartner2Change,
       onEmailChange,
       onFormSubmit,
+      onStartTimeChange,
+      onEndTimeChange,
     } = this;
     return (
       <EditSessionWrapper>
-        <Heading>Edit Session</Heading>
+        <Header type="view" label="Edit Session" />
+        <BackContainer>
+          <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
+        </BackContainer>
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
             {date && startDate && (
@@ -318,11 +353,45 @@ class EditSession extends Component {
             <div>{err}</div>
           </InputDiv>
 
+          <InputDiv>
+            <Input
+              type="text"
+              placeholder="Type the venue's address"
+              value={address}
+              onChange={onInputChange}
+              name="address"
+              size="large"
+            />
+          </InputDiv>
+
+          <InputDiv>
+            <InputLabel>Session Start:</InputLabel>
+            <TimePicker
+              onChange={onStartTimeChange}
+              name="startTime"
+              defaultValue={startTime && moment(startTime, 'HH:mm')}
+              size="large"
+              style={{ width: '50%' }}
+              format="HH:mm"
+            />
+          </InputDiv>
+          <InputDiv>
+            <InputLabel>Session Finish:</InputLabel>
+            <TimePicker
+              onChange={onEndTimeChange}
+              name="startTime"
+              defaultValue={endTime && moment(endTime, 'HH:mm')}
+              size="large"
+              style={{ width: '50%' }}
+              format="HH:mm"
+            />
+          </InputDiv>
+
           <SubmitBtn>
             <Button
               onClick={onFormSubmit}
               type="primary"
-              label="Submit"
+              label="Update"
               height="40px"
               width="100%"
             />

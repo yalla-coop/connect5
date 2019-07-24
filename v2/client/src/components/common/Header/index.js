@@ -41,6 +41,7 @@ export const sectionHeader = css`
       width: 50%;
       @media (min-width: 768px) {
         width: 25%;
+      }
     }
   }
 `;
@@ -70,10 +71,10 @@ export const homeHeader = css`
 `;
 
 const StyledHeader = styled.div`
-  ${sharedStyles}
-  ${props => props.type === 'section' && sectionHeader}
-  ${props => props.type === 'view' && viewHeader}
-  ${props => props.type === 'home' && homeHeader}
+  ${sharedStyles};
+  ${props => props.type === 'section' && sectionHeader};
+  ${props => props.type === 'view' && viewHeader};
+  ${props => props.type === 'home' && homeHeader};
 `;
 
 const HomeIcon = styled(NavLink)`
