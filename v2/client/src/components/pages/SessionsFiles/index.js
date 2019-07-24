@@ -2,7 +2,7 @@
 // Pckages
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import SessionList from '../../common/List/SessionList';
+import { Collapse } from 'antd';
 
 // Functions
 import { fetchParticipentSessions } from '../../../actions/groupSessionsAction';
@@ -11,15 +11,16 @@ import { fetchParticipentSessions } from '../../../actions/groupSessionsAction';
 import Header from '../../common/Header';
 import { Wrapper, Title } from './SessionsFiles.style';
 
-const materials = {
-  1: 'https://drive.google.com/drive/folders/18NJclc2zBvotc1q_Hy0gFLjBM1ThvbHN?usp=sharing',
-  2: 'https://drive.google.com/drive/folders/1lMbrWOlnv50n22_lepJ7FQqMw4Rqw5g0?usp=sharing',
-  3: 'https://drive.google.com/drive/folders/1uR9iBD20vN2U-hzUulCEzaTipJYs6yIe?usp=sharing',
-  'special-2-days':
-    'https://drive.google.com/drive/folders/1nifonoZ-bQyEnuoxg3-AVESLh6wgEAMe?usp=sharing',
-  'train-trainers':
-    'https://drive.google.com/open?id=1oopFc6Yy2ZfValQAxRZKn-m6PrOE7c7J',
-};
+// Data
+import materials from './materials';
+
+const uppercaseSurvey = surveyType =>
+  surveyType
+    .split('-')
+    .map(item => item[0].toLocaleUpperCase() + item.slice(1))
+    .join(' ');
+
+const { Panel } = Collapse;
 
 class SessionsFiles extends Component {
   componentDidMount() {
@@ -35,16 +36,32 @@ class SessionsFiles extends Component {
         <Header label="Materials" type="section" />
         <Wrapper>
           <Title>Completed sessions files</Title>
-          <SessionList
-            dataList={completedSessions.map(item => ({
-              ...item,
-              type: item.sessions.type,
-              link: materials[item.sessions.type],
-              blank: true,
-              asLink: true,
-              linkText: 'View/Download',
-            }))}
-          />
+          <Collapse
+            defaultActiveKey={Object.keys(materials)}
+            expandIconPosition="right"
+          >
+            {completedSessions.map(session => (
+              <Panel
+                header={`Session: ${uppercaseSurvey(session.sessions.type)}`}
+                key={session.sessions.type}
+              >
+                <ul style={{ padding: '1rem', width: '90%', margin: '0 auto' }}>
+                  {materials[session.sessions.type].length > 0 &&
+                    materials[session.sessions.type].map(resource => (
+                      <li>
+                        <a
+                          href={resource.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {resource.displayName}
+                        </a>
+                      </li>
+                    ))}
+                </ul>
+              </Panel>
+            ))}
+          </Collapse>
         </Wrapper>
       </div>
     );
