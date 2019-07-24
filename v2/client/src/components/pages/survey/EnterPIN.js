@@ -4,7 +4,7 @@ import {
   TextField,
   QuestionWrapper,
   SectionCategory,
-  ErrorDiv,
+  Warning,
 } from './Questions.style';
 
 export default class EnterPIN extends Component {
@@ -38,11 +38,7 @@ export default class EnterPIN extends Component {
             onBlur={onPINBlur}
             onFocus={onPINBlur}
           />
-          {PINerror.length > 0 && (
-            <ErrorDiv>
-              <Alert message={PINerror} type="error" />
-            </ErrorDiv>
-          )}
+          {PINerror.length > 0 && <Warning>* {PINerror}</Warning>}
         </TextField>
         {renderSkipButtons}
       </QuestionWrapper>

@@ -13,6 +13,7 @@ import {
   fetchSurveyData,
   checkPINResponses,
   submitSurvey,
+  getParticipantByPIN,
 } from '../../../actions/surveyAction';
 
 // Components
@@ -38,6 +39,7 @@ class Survey extends Component {
     section: 'confirmSurvey',
     completionRate: 0,
     postcodeValid: false,
+    // groupsToRender: null,
   };
 
   componentDidMount() {
@@ -48,6 +50,16 @@ class Survey extends Component {
     fetchSurveyDataAction(surveyParts);
     this.setState({ surveyParts });
   }
+
+  // componentWillReceiveProps() {
+  //   const { surveyData, skipDemo } = this.props;
+  //   const { uniqueGroups } = surveyData;
+
+  //   if (skipDemo && uniqueGroups.includes('demographic')) {
+  //     this.setState({ groupsToRender: uniqueGroups.shift() });
+  //   }
+  //   this.setState({ groupsToRender: uniqueGroups });
+  // }
 
   // enables user to change direction of sections
   sectionChange = (direction, uniqueGroups) => {
@@ -178,7 +190,10 @@ class Survey extends Component {
 
   // validates PIN input on blur
   checkPINonBlur = () => {
-    const { checkPINResponses: checkPINResponsesAction } = this.props;
+    const {
+      checkPINResponses: checkPINResponsesAction,
+      getParticipantByPIN: getParticipantByPINAction,
+    } = this.props;
     const { surveyParts, PIN } = this.state;
 
     if (PIN.length < 5) {
@@ -203,12 +218,18 @@ class Survey extends Component {
       }
       // check if PIN alrady submitted this exact survey
       checkPINResponsesAction(surveyParts, PIN);
+      getParticipantByPINAction(PIN);
     }
   };
 
   // submits and validates PIN request
   submitPIN = () => {
-    const { PINExist } = this.props;
+    // const { PIN } = this.state;
+    const {
+      PINExist,
+      // getParticipantByPIN: getParticipantByPINAction,
+    } = this.props;
+
     if (PINExist) {
       // check if PIN alrady submitted survey
       Modal.error({
@@ -217,7 +238,7 @@ class Survey extends Component {
         onOk: this.sectionChange('back'),
       });
     }
-    // check demographic table
+    // getParticipantByPINAction(PIN);
   };
 
   // SURVEY FUNCTIONS
@@ -344,15 +365,20 @@ class Survey extends Component {
     } = this.state;
 
     const { surveyData, errors } = this.props;
+    const { uniqueGroups } = surveyData;
 
     const loadingError = Object.keys(surveyData.msg).length > 0;
 
     const { surveyData: surveyDetails } = surveyData;
     const answers = Object.keys(formState);
 
-    const uniqueGroups = surveyDetails && [
-      ...new Set(surveyDetails.questionsForSurvey.map(e => e.group)),
+    const surveyGroups = [
+      'demographic',
+      'Behavioural Insights',
+      'about your trainer',
+      'about your usual way of teaching',
     ];
+
     return (
       <div>
         {!surveyData.loaded ? (
@@ -390,41 +416,43 @@ class Survey extends Component {
                   />
                 )}
 
-                {uniqueGroups.map(group => {
-                  const questions =
-                    surveyDetails &&
-                    surveyDetails.questionsForSurvey.filter(
-                      question => question.group === group
-                    );
+                {surveyGroups.includes(section) &&
+                  uniqueGroups.map(group => {
+                    console.log('map', group);
+                    const questions =
+                      surveyDetails &&
+                      surveyDetails.questionsForSurvey.filter(
+                        question => question.group === group
+                      );
 
-                  if (section === group) {
-                    const unanswered = questions
-                      .map(q => q._id)
-                      .filter(q => !answers.includes(q));
+                    if (section === group) {
+                      const unanswered = questions
+                        .map(q => q._id)
+                        .filter(q => !answers.includes(q));
 
-                    return (
-                      <SurveyQs
-                        questions={questions}
-                        postcodeValid={postcodeValid}
-                        onChangePostcode={this.onChangePostcode}
-                        onChange={this.handleChange}
-                        handleOther={this.handleOther}
-                        answers={formState}
-                        selectCheckedItem={this.selectCheckedItem}
-                        errors={errors}
-                        handleAntdDatePicker={this.handleAntdDatePicker}
-                        renderSkipButtons={this.renderSkipButtons(
-                          group,
-                          unanswered.length > 0 || !postcodeValid,
-                          uniqueGroups,
-                          completionRate
-                        )}
-                        completionRate={completionRate}
-                      />
-                    );
-                  }
-                  return null;
-                })}
+                      return (
+                        <SurveyQs
+                          questions={questions}
+                          postcodeValid={postcodeValid}
+                          onChangePostcode={this.onChangePostcode}
+                          onChange={this.handleChange}
+                          handleOther={this.handleOther}
+                          answers={formState}
+                          selectCheckedItem={this.selectCheckedItem}
+                          errors={errors}
+                          handleAntdDatePicker={this.handleAntdDatePicker}
+                          renderSkipButtons={this.renderSkipButtons(
+                            group,
+                            unanswered.length > 0 || !postcodeValid,
+                            uniqueGroups,
+                            completionRate
+                          )}
+                          completionRate={completionRate}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
                 {completionRate === 100 && (
                   <button type="submit">Submit Feedback</button>
                 )}
@@ -441,11 +469,12 @@ const mapStateToProps = state => {
   return {
     surveyData: state.survey,
     PINExist: state.survey.PINExist,
+    skipDemo: state.survey.skipDemo,
     errors: state.survey.errors,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchSurveyData, checkPINResponses, submitSurvey }
+  { fetchSurveyData, checkPINResponses, submitSurvey, getParticipantByPIN }
 )(Survey);

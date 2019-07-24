@@ -4,14 +4,17 @@ import {
   SURVEY_PIN_SUCCESS,
   SURVEY_SUBMISSION_SUCCESS,
   SURVEY_SUBMISSION_FAIL,
+  GET_PARTICIPANT_BY_PIN_SUCCESS,
 } from '../constants/actionTypes';
 
 const initialState = {
   surveyData: null,
+  uniqueGroups: null,
   loaded: false,
   msg: {},
   PINExist: null,
   errors: {},
+  skipDemo: false,
 };
 
 const fetchedSurveyData = (state = initialState, action) => {
@@ -22,6 +25,9 @@ const fetchedSurveyData = (state = initialState, action) => {
       return {
         ...state,
         surveyData: payload,
+        uniqueGroups: [
+          ...new Set(payload.questionsForSurvey.map(e => e.group)),
+        ],
         loaded: true,
       };
     case SURVEY_PIN_EXIST_FAIL:
@@ -42,6 +48,12 @@ const fetchedSurveyData = (state = initialState, action) => {
       return {
         ...state,
         errors: payload,
+      };
+    case GET_PARTICIPANT_BY_PIN_SUCCESS:
+      return {
+        ...state,
+        skipDemo: true,
+        uniqueGroups: [state.uniqueGroups.pop()],
       };
     default:
       return state;
