@@ -105,6 +105,11 @@ const behavioural1 = surveyType => [
   {
     code: 'People',
     group: questionConstants.groups.BEHAVIOURAL,
+    subGroup: {
+      subGroupID: questionConstants.subGroupID.BEHAVIOURAL_1,
+      name: questionConstants.subGroupID.BEHAVIOURAL_1,
+      order: 1,
+    },
     surveyType,
     text:
       'How many people have you seen in the last week who could have benefited from some improvement in their mental health and wellbeing?',
@@ -113,6 +118,10 @@ const behavioural1 = surveyType => [
   {
     code: 'B1',
     group: questionConstants.groups.BEHAVIOURAL,
+    subGroup: {
+      subGroupID: questionConstants.subGroupID.BEHAVIOURAL_1,
+      name: questionConstants.subGroupID.BEHAVIOURAL_1,
+    },
     surveyType,
     text:
       'In how many of those people did you: Suggest ways they could take action on their own mental health or wellbeing?',
@@ -121,6 +130,10 @@ const behavioural1 = surveyType => [
   {
     code: 'B2',
     group: questionConstants.groups.BEHAVIOURAL,
+    subGroup: {
+      subGroupID: questionConstants.subGroupID.BEHAVIOURAL_1,
+      name: questionConstants.subGroupID.BEHAVIOURAL_1,
+    },
     surveyType,
     text:
       'In how many of those people did you: have a conversation in which you developed a shared understanding of their mental health and wellbeing needs?',
@@ -129,6 +142,10 @@ const behavioural1 = surveyType => [
   {
     code: 'B3',
     group: questionConstants.groups.BEHAVIOURAL,
+    subGroup: {
+      subGroupID: questionConstants.subGroupID.BEHAVIOURAL_1,
+      name: questionConstants.subGroupID.BEHAVIOURAL_1,
+    },
     surveyType,
     questionType: questionConstants.questionTypes.positiveNumber,
     text:
@@ -140,6 +157,11 @@ const behavioural2 = surveyType => [
   {
     code: 'BE1',
     group: questionConstants.groups.BEHAVIOURAL,
+    subGroup: {
+      subGroupID: questionConstants.subGroupID.BEHAVIOURAL_2,
+      name: questionConstants.subGroupID.BEHAVIOURAL_2,
+      order: 1,
+    },
     surveyType,
     text:
       'For 10 patients you saw who could benefit from some improvement in their mental health and wellbeing in how many would you expect to: Suggest ways they could take action on their own mental health or wellbeing ',
@@ -148,6 +170,10 @@ const behavioural2 = surveyType => [
   {
     code: 'BE2',
     group: questionConstants.groups.BEHAVIOURAL,
+    subGroup: {
+      subGroupID: questionConstants.subGroupID.BEHAVIOURAL_2,
+      name: questionConstants.subGroupID.BEHAVIOURAL_2,
+    },
     surveyType,
     text:
       'For 10 patients you saw who could benefit from some improvement in their mental health and wellbeing in how many would you expect to: Have a conversation in which you develop a shared understanding of their mental health and wellbeing needs?',
@@ -156,6 +182,10 @@ const behavioural2 = surveyType => [
   {
     code: 'BE3',
     group: questionConstants.groups.BEHAVIOURAL,
+    subGroup: {
+      subGroupID: questionConstants.subGroupID.BEHAVIOURAL_2,
+      name: questionConstants.subGroupID.BEHAVIOURAL_2,
+    },
     surveyType,
     text:
       'For 10 patients you saw who could benefit from some improvement in their mental health and wellbeing in how many would you expect to: use appropriate conversational methods to empower them to make a change that addresses their mental health and wellbeing?',
@@ -170,6 +200,7 @@ const behavioural3 = surveyType => [
     subGroup: {
       text: questionConstants.subGroupText.BEHAVIOURAL_3,
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_3,
+      name: questionConstants.subGroupID.BEHAVIOURAL_3,
       order: 1,
     },
     surveyType,
@@ -182,6 +213,7 @@ const behavioural3 = surveyType => [
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_3,
+      name: questionConstants.subGroupID.BEHAVIOURAL_3,
     },
     surveyType,
     text:
@@ -193,6 +225,7 @@ const behavioural3 = surveyType => [
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_3,
+      name: questionConstants.subGroupID.BEHAVIOURAL_3,
     },
     surveyType,
     text:
@@ -204,6 +237,7 @@ const behavioural3 = surveyType => [
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_3,
+      name: questionConstants.subGroupID.BEHAVIOURAL_3,
     },
     surveyType,
     text:
@@ -215,6 +249,7 @@ const behavioural3 = surveyType => [
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_3,
+      name: questionConstants.subGroupID.BEHAVIOURAL_3,
     },
     surveyType,
     text:
@@ -226,6 +261,7 @@ const behavioural3 = surveyType => [
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_3,
+      name: questionConstants.subGroupID.BEHAVIOURAL_3,
     },
     surveyType,
     text:
@@ -237,6 +273,7 @@ const behavioural3 = surveyType => [
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_3,
+      name: questionConstants.subGroupID.BEHAVIOURAL_3,
     },
     surveyType,
     text:
@@ -248,6 +285,7 @@ const behavioural3 = surveyType => [
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_3,
+      name: questionConstants.subGroupID.BEHAVIOURAL_3,
     },
     surveyType,
     text:
@@ -259,6 +297,7 @@ const behavioural3 = surveyType => [
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_3,
+      name: questionConstants.subGroupID.BEHAVIOURAL_3,
     },
     surveyType,
     text:
@@ -269,11 +308,12 @@ const behavioural3 = surveyType => [
 
 const behavioural4 = surveyType => [
   {
-    code: 'KnowB1',
+    code: 'KnowB2',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       text: questionConstants.subGroupText.BEHAVIOURAL_4,
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_4,
+      name: questionConstants.subGroupID.BEHAVIOURAL_4,
       order: 2,
     },
     surveyType,
@@ -282,10 +322,11 @@ const behavioural4 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'SkillB1',
+    code: 'SkillB2',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_4,
+      name: questionConstants.subGroupID.BEHAVIOURAL_4,
     },
     surveyType,
     text:
@@ -293,7 +334,7 @@ const behavioural4 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'HabitB1',
+    code: 'HabitB2',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_4,
@@ -304,10 +345,11 @@ const behavioural4 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'OutEB1',
+    code: 'OutEB2',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_4,
+      name: questionConstants.subGroupID.BEHAVIOURAL_4,
     },
     surveyType,
     text:
@@ -315,10 +357,11 @@ const behavioural4 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'ConfB1',
+    code: 'ConfB2',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_4,
+      name: questionConstants.subGroupID.BEHAVIOURAL_4,
     },
     surveyType,
     text:
@@ -326,10 +369,11 @@ const behavioural4 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'SocE1B1',
+    code: 'SocE1B2',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_4,
+      name: questionConstants.subGroupID.BEHAVIOURAL_4,
     },
     surveyType,
     text:
@@ -337,10 +381,11 @@ const behavioural4 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'SocE2B1',
+    code: 'SocE2B2',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_4,
+      name: questionConstants.subGroupID.BEHAVIOURAL_4,
     },
     surveyType,
     text:
@@ -348,10 +393,11 @@ const behavioural4 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'TimeB1',
+    code: 'TimeB2',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_4,
+      name: questionConstants.subGroupID.BEHAVIOURAL_4,
     },
     surveyType,
     text:
@@ -359,10 +405,11 @@ const behavioural4 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'RoleB1',
+    code: 'RoleB2',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_4,
+      name: questionConstants.subGroupID.BEHAVIOURAL_4,
     },
     surveyType,
     text:
@@ -373,11 +420,12 @@ const behavioural4 = surveyType => [
 
 const behavioural5 = surveyType => [
   {
-    code: 'KnowB1',
+    code: 'KnowB3',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       text: questionConstants.subGroupText.BEHAVIOURAL_5,
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_5,
+      name: questionConstants.subGroupID.BEHAVIOURAL_5,
       order: 3,
     },
     surveyType,
@@ -386,10 +434,11 @@ const behavioural5 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'SkillB1',
+    code: 'SkillB3',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_5,
+      name: questionConstants.subGroupID.BEHAVIOURAL_5,
     },
     surveyType,
     text:
@@ -397,10 +446,11 @@ const behavioural5 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'HabitB1',
+    code: 'HabitB3',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_5,
+      name: questionConstants.subGroupID.BEHAVIOURAL_5,
     },
     surveyType,
     text:
@@ -408,10 +458,11 @@ const behavioural5 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'OutEB1',
+    code: 'OutEB3',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_5,
+      name: questionConstants.subGroupID.BEHAVIOURAL_5,
     },
     surveyType,
     text:
@@ -419,10 +470,11 @@ const behavioural5 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'ConfB1',
+    code: 'ConfB3',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_5,
+      name: questionConstants.subGroupID.BEHAVIOURAL_5,
     },
     surveyType,
     text:
@@ -430,10 +482,11 @@ const behavioural5 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'SocE1B1',
+    code: 'SocE1B3',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_5,
+      name: questionConstants.subGroupID.BEHAVIOURAL_5,
     },
     surveyType,
     text:
@@ -441,10 +494,11 @@ const behavioural5 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'SocE2B1',
+    code: 'SocE2B3',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_5,
+      name: questionConstants.subGroupID.BEHAVIOURAL_5,
     },
     surveyType,
     text:
@@ -452,10 +506,11 @@ const behavioural5 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'TimeB1',
+    code: 'TimeB3',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_5,
+      name: questionConstants.subGroupID.BEHAVIOURAL_5,
     },
     surveyType,
     text:
@@ -463,10 +518,11 @@ const behavioural5 = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
-    code: 'RoleB1',
+    code: 'RoleB3',
     group: questionConstants.groups.BEHAVIOURAL,
     subGroup: {
       subGroupID: questionConstants.subGroupID.BEHAVIOURAL_5,
+      name: questionConstants.subGroupID.BEHAVIOURAL_5,
     },
     surveyType,
     text:
@@ -480,8 +536,9 @@ const yourTrainer1 = surveyType => [
     code: 'Trainquest1',
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
-      text: questionConstants.subGroupText.ABOUT__YOUR_TRAINER_1,
-      subGroupID: questionConstants.subGroupID.ABOUT__YOUR_TRAINER_1,
+      text: questionConstants.subGroupText.ABOUT_YOUR_TRAINER_1,
+      subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_1,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_1,
       order: 1,
     },
     surveyType,
@@ -493,7 +550,8 @@ const yourTrainer1 = surveyType => [
     code: 'Trainquest2',
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
-      subGroupID: questionConstants.subGroupID.ABOUT__YOUR_TRAINER_1,
+      subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_1,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_1,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -505,7 +563,8 @@ const yourTrainer1 = surveyType => [
     code: 'Trainquest3',
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
-      subGroupID: questionConstants.subGroupID.ABOUT__YOUR_TRAINER_1,
+      subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_1,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_1,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -516,7 +575,8 @@ const yourTrainer1 = surveyType => [
     code: 'Trainquest4',
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
-      subGroupID: questionConstants.subGroupID.ABOUT__YOUR_TRAINER_1,
+      subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_1,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_1,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -527,7 +587,8 @@ const yourTrainer1 = surveyType => [
     code: 'Trainquest5',
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
-      subGroupID: questionConstants.subGroupID.ABOUT__YOUR_TRAINER_1,
+      subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_1,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_1,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -544,7 +605,8 @@ const yourTrainer2 = surveyType => [
     subGroup: {
       text: questionConstants.subGroupText.ABOUT_YOUR_TRAINER_2,
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
-      order: 2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      order: 1,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -556,6 +618,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -567,6 +630,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -578,6 +642,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -590,6 +655,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -602,6 +668,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -614,6 +681,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -625,6 +693,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -636,6 +705,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -647,6 +717,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -659,6 +730,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -670,6 +742,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -681,6 +754,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -692,6 +766,7 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -703,18 +778,20 @@ const yourTrainer2 = surveyType => [
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
     text:
-      "was the session at a good pace for you (did you feel you had enough time but that the time didn't drag)?",
+      "Was the session at a good pace for you (did you feel you had enough time but that the time didn't drag)?",
   },
   {
     code: 'SessionOverall3',
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
     subGroup: {
       subGroupID: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
+      name: questionConstants.subGroupID.ABOUT_YOUR_TRAINER_2,
     },
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
@@ -878,12 +955,22 @@ module.exports = () => {
     ...behavioural5('pre-day-1'),
   ];
 
+  const preSpecial2DaysQuestions = [
+    ...demographics('pre-special'),
+    ...behavioural1('pre-special'),
+    ...behavioural2('pre-special'),
+    ...behavioural3('pre-special'),
+    ...behavioural4('pre-special'),
+    ...behavioural5('pre-special'),
+  ];
+
   const postCourseDay1Questions = [
     ...behavioural2('post-day-1'),
     ...behavioural3('post-day-1'),
     ...yourTrainer1('post-day-1'),
     ...yourTrainer2('post-day-1'),
   ];
+
   const postCourseDay2Questions = [
     ...behavioural2('post-day-2'),
     ...behavioural3('post-day-2'),
@@ -940,5 +1027,6 @@ module.exports = () => {
     ...postTrainTheTrainerQuestions,
     ...followUp3MonthsQuestions,
     ...followUp6MonthsQuestions,
+    ...preSpecial2DaysQuestions,
   ]);
 };

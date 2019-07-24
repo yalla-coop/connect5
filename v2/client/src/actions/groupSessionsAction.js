@@ -93,7 +93,7 @@ export const sessionUpdateAction = (sessionData, id) => async dispatch => {
 
 export const updateEmails = (id, participantsEmails) => async dispatch => {
   axios
-    .patch(`/api/emails-update/${id}`, participantsEmails)
+    .patch(`/api/emails-update/${id}`, { participantsEmails })
     .then(res => {
       dispatch(fetchSessionDetails(id));
       return dispatch({
