@@ -22,9 +22,19 @@ const { Option } = Select;
 
 class SendInvitation extends Component {
   state = {
-    participantsEmails: ['marwaajomaa@gmail.com'],
+    participantsEmails: [],
     sendingDate: Date.now(),
   };
+
+  componentDidMount() {
+    const { sessionDetails } = this.props;
+    const { participantsEmails } = sessionDetails;
+
+    const emails = participantsEmails.map(email => {
+      return email.email;
+    });
+    this.setState({ participantsEmails: emails });
+  }
 
   onEmailChange = value => {
     this.setState({
@@ -48,6 +58,7 @@ class SendInvitation extends Component {
       _id,
       startTime,
       endTime,
+      shortId,
     } = sessionDetails;
 
     const trainerName = trainers
@@ -67,7 +78,9 @@ class SendInvitation extends Component {
       region,
       startTime,
       endTime,
+      shortId,
     };
+
     SendEmailInvitationActionCreator(InviteData);
   };
 
@@ -89,14 +102,15 @@ class SendInvitation extends Component {
               size="large"
               placeholder="emails"
               onChange={onEmailChange}
-              defaultValue="example@gmail.com"
+              defaultValue={participantsEmails && participantsEmails[0]}
               style={{ width: '100%', height: '100%' }}
             >
-              {participantsEmails.map(email => (
-                <Option key={email} value={email}>
-                  {email}
-                </Option>
-              ))}
+              {participantsEmails &&
+                participantsEmails.map(email => (
+                  <Option key={email} value={email}>
+                    {email}
+                  </Option>
+                ))}
             </Select>
           </InputDiv>
           <InputDiv>

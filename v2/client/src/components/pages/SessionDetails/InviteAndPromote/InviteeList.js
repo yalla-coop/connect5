@@ -21,15 +21,23 @@ import {
 
 const { Option } = Select;
 
-class SendInvitaion extends Component {
+class InviteeList extends Component {
   state = {
-    participantsEmails: ['example@gmail.com'],
-    sendByEmail: false,
+    sentEmails: [],
   };
+
+  async componentDidMount() {
+    const {
+      dataList,
+      fetchSessionDetails: fetchSessionDetailsActionCreator,
+    } = this.props;
+    const { _id } = dataList;
+    const res = await fetchSessionDetailsActionCreator(_id);
+  }
 
   onEmailChange = value => {
     this.setState({
-      participantsEmails: value,
+      sentEmails: value,
     });
   };
 
@@ -39,11 +47,12 @@ class SendInvitaion extends Component {
 
   onFormSubmit = event => {
     event.preventDefault();
-    const { participantsEmails, sendByEmail } = this.state;
+    const { sentEmails } = this.state;
   };
 
   render() {
-    const { participantsEmails } = this.state;
+    const { dataList } = this.props;
+    const { recipients } = dataList.sentEmails;
     const { onEmailChange, onFormSubmit } = this;
 
     return (
@@ -59,14 +68,15 @@ class SendInvitaion extends Component {
               size="large"
               placeholder="emails"
               onChange={onEmailChange}
-              defaultValue="example@gmail.com"
+              defaultValue={recipients && recipients.map(item => item.email)}
               style={{ width: '100%', height: '100%' }}
             >
-              {participantsEmails.map(email => (
-                <Option key={email} value={email}>
-                  {email}
-                </Option>
-              ))}
+              {recipients &&
+                recipients.map(email => (
+                  <Option key={email} value={email}>
+                    {email}
+                  </Option>
+                ))}
             </Select>
           </InputDiv>
           <InputDiv>
@@ -96,4 +106,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { fetchSessionDetails }
-)(SendInvitaion);
+)(InviteeList);

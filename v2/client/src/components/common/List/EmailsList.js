@@ -5,10 +5,6 @@ import { Icon, Drawer, Button } from 'antd';
 
 import { fetchSessionDetails } from '../../../actions/groupSessionsAction';
 import InviteEmails from '../../pages/SessionDetails/InviteAndPromote/InviteEmails';
-import {
-  BackContainer,
-  BackLink,
-} from '../../pages/SessionDetails/InviteAndPromote/InviteAndPromote.style';
 
 import {
   Wrapper,
@@ -26,9 +22,9 @@ class EmailsList extends Component {
   };
 
   componentDidMount() {
-    const { id } = this.props.sessionDetails;
+    const { _id } = this.props.sessionDetails;
     // call action and pass it the id of session to fetch it's details
-    this.props.fetchSessionDetails(id);
+    this.props.fetchSessionDetails(_id);
   }
 
   componentDidUpdate(prevProps) {
