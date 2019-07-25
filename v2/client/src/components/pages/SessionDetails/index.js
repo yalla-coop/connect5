@@ -22,7 +22,7 @@ const { Panel } = Collapse;
 
 class SessionDetails extends Component {
   state = {
-    openSection: '4',
+    openSection: '1',
   };
 
   componentDidMount() {
