@@ -27,11 +27,7 @@ describe('Test /survey/submit/', () => {
     const PIN = 'TES22';
 
     const questions = await Question.find({ surveyType });
-    const postcodeQuestion = await Question.findOne({
-      surveyType,
-      text: 'Please enter the postcode where you are active',
-    });
-
+    const questionsForParticipant = questions;
     const formState = {};
     formState[questions[0]._id] = {
       answer: 'Under 18',
@@ -95,14 +91,18 @@ describe('Test /survey/submit/', () => {
     formState[questions[39]._id] = { answer: '4' };
     formState[questions[40]._id] = { answer: '4' };
     formState[questions[41]._id] = { answer: '4' };
-    formState[postcodeQuestion._id] = { answer: 'B33DW' };
 
     const dummyFormResponse = {
       PIN,
       sessionId,
       surveyType,
       formState,
+      questionsForParticipant,
     };
+
+    // console.log(dummyFormResponse)
+    // expect(dummyFormResponse).toBe(0);
+    // expect(dummyFormResponse.formState).toBe(0);
 
     const participantBefore = await Participant.findOne({ PIN });
     expect(participantBefore).toBeNull();
@@ -129,7 +129,7 @@ describe('Test /survey/submit/', () => {
     const PIN = 'TES22';
 
     const questions = await Question.find({ surveyType });
-
+    const questionsForParticipant = questions;
     const formState = {};
 
     formState[questions[0]._id] = { answer: 'Under 18' };
@@ -141,6 +141,7 @@ describe('Test /survey/submit/', () => {
       sessionId,
       surveyType,
       formState,
+      questionsForParticipant,
     };
 
     request(app)
@@ -161,6 +162,7 @@ describe('Test /survey/submit/', () => {
     const PIN = 'TEST';
 
     const questions = await Question.find({ surveyType });
+    const questionsForParticipant = questions;
 
     const formState = {};
 
@@ -213,6 +215,7 @@ describe('Test /survey/submit/', () => {
       sessionId,
       surveyType,
       formState,
+      questionsForParticipant,
     };
 
     request(app)

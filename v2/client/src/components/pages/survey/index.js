@@ -197,7 +197,7 @@ class Survey extends Component {
     const { sessionId } = surveyData.surveyData;
 
     const { surveyParts, PIN } = this.state;
-
+    // error handling
     if (PIN.length < 5) {
       this.setState({
         PINerror: 'PIN must contain 5 characters',
@@ -211,13 +211,14 @@ class Survey extends Component {
           PINerror: 'PIN must be in the right format (e.g. ABC01)',
           PINvalid: false,
         });
+        // reset error state
       } else {
         this.setState({ PINerror: '', PINvalid: true });
       }
-      // check if PIN alrady submitted this exact survey
+      // check if PIN alrady submitted this exact survey -> throw error in submit PIN
       checkPINResponsesAction(surveyParts, PIN);
-      // check if participant has already filled out demographic section in previous surveys
-      // if so we skip that part
+
+      // check if participant has already filled out demographic section in previous surveys -> skip that part when submitting
       getParticipantByPINAction(PIN, sessionId);
     }
   };
@@ -227,29 +228,32 @@ class Survey extends Component {
     const { PINExist, surveyData, history } = this.props;
     const { preSurveyResponses } = surveyData;
     const { surveyType } = surveyData.surveyData;
+    // post surveys relevant to be checked if someone filled out pre-survey
     const relevantPostSurveys = [
       'post-day-1',
       'post-special',
       'post-train-trainers',
     ];
+    // if someone needs to fill out pre-survey first -> take object value related to post-survey
     const relevantSurveyCounterParts = {
       'post-day-1': 'pre-day-1',
       'post-special': 'pre-special',
       'post-train-trainers': 'pre-train-trainers',
     };
-
+    // set up pre-survey link for re-direction if pre-survey needs to get filled out
     const linkArr = history.location.pathname.split('/');
     const surveyPart = linkArr[2].split('&')[0];
     const shortId = linkArr[2].split('&')[1];
 
+    // check if PIN alrady submitted survey
     if (PINExist) {
-      // check if PIN alrady submitted survey
       Modal.error({
         title: 'Error!',
         content: "The PIN you've entered has already submitted this survey.",
         onOk: this.sectionChange('back'),
       });
     }
+    // if relevant session check if PIN has already filled out pre survey
     if (relevantPostSurveys.includes(surveyType)) {
       if (!PINExist && !preSurveyResponses.preResponseExists) {
         Modal.error({
@@ -364,7 +368,7 @@ class Survey extends Component {
     const { surveyData, submitSurvey: submitSurveyAction } = this.props;
     const { uniqueGroups } = surveyData;
     const { surveyType, sessionId, questionsForSurvey } = surveyData.surveyData;
-
+    // these are the base of validation in the backend (checked against formstate to see if everything was getting answered correctly)
     const questionsForParticipant = questionsForSurvey.filter(question => {
       return uniqueGroups.includes(question.group);
     });
