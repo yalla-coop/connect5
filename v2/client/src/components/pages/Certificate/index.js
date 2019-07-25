@@ -47,7 +47,7 @@ class Certificate extends Component {
         });
         history.push(`/certificate/${match.params.sessionId}/success`);
       })
-      .catch(err => {
+      .catch(() => {
         this.setState({
           isLoading: false,
         });
