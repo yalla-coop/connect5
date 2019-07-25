@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Select } from 'antd';
 import history from '../../../../history';
-import { SendEmailInvitation } from '../../../../actions/groupSessionsAction';
+import { SendEmailInvitation } from '../../../../actions/InviteAndPromoteAction';
 
 // COMMON COMPONENTS
 import Spin from '../../../common/Spin';

@@ -95,3 +95,22 @@ export const SubDetailsContent = styled.p`
   text-decoration: none;
   margin: 0;
 `;
+
+export const DrawerLink = styled.p`
+  margin: 0;
+`;
+
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95%;
+  align-items: center;
+  cursor: pointer;
+  &:hover p {
+    font-weight: 500;
+  }
+  & * {
+    pointer-events: none;
+  }
+`;

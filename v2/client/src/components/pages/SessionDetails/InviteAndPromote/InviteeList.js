@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Select, Checkbox } from 'antd';
 import history from '../../../../history';
 import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
+import { updateSentEmails } from '../../../../actions/InviteAndPromoteAction';
 // ANTD COMPONENTS
 
 // COMMON COMPONENTS
@@ -23,21 +24,25 @@ const { Option } = Select;
 
 class InviteeList extends Component {
   state = {
-    sentEmails: [],
+    recipients: null,
+    sendByEmail: false,
   };
 
-  async componentDidMount() {
-    const {
-      dataList,
-      fetchSessionDetails: fetchSessionDetailsActionCreator,
-    } = this.props;
-    const { _id } = dataList;
-    const res = await fetchSessionDetailsActionCreator(_id);
+  componentDidMount() {
+    const { dataList } = this.props;
+    const { participantsEmails } = dataList;
+    const recipients = [];
+    participantsEmails.map(recipient => {
+      if (recipient.status === 'sent') {
+        recipients.push(recipient.email);
+      }
+    });
+    this.setState({ recipients });
   }
 
   onEmailChange = value => {
     this.setState({
-      sentEmails: value,
+      recipients: value,
     });
   };
 
@@ -47,13 +52,22 @@ class InviteeList extends Component {
 
   onFormSubmit = event => {
     event.preventDefault();
-    const { sentEmails } = this.state;
+    const { recipients, sendByEmail } = this.state;
+    const { updateSentEmails: updateSentEmailsActionCreator } = this.props;
+    const updatedEmails = {
+      recipients,
+      sendByEmail,
+    };
+    updateSentEmailsActionCreator(updatedEmails);
   };
 
   render() {
-    const { dataList } = this.props;
-    const { recipients } = dataList.sentEmails;
+    const { recipients } = this.state;
     const { onEmailChange, onFormSubmit } = this;
+
+    if (!recipients) {
+      return Spin;
+    }
 
     return (
       <InviteSectionWrapper>
@@ -68,7 +82,7 @@ class InviteeList extends Component {
               size="large"
               placeholder="emails"
               onChange={onEmailChange}
-              defaultValue={recipients && recipients.map(item => item.email)}
+              defaultValue={recipients && recipients.map(email => email)}
               style={{ width: '100%', height: '100%' }}
             >
               {recipients &&
@@ -105,5 +119,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchSessionDetails }
+  { fetchSessionDetails, updateSentEmails }
 )(InviteeList);
