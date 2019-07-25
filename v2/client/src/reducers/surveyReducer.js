@@ -56,7 +56,7 @@ const fetchedSurveyData = (state = initialState, action) => {
         skipDemo: true,
         uniqueGroups:
           state.uniqueGroups[0] === 'demographic'
-            ? createGroupsArray(state.surveyData.questionsForSurvey).pop()
+            ? [createGroupsArray(state.surveyData.questionsForSurvey).pop()]
             : createGroupsArray(state.surveyData.questionsForSurvey),
       };
     case GET_PARTICIPANT_BY_PIN_FAIL:

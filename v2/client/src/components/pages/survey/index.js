@@ -424,11 +424,12 @@ class Survey extends Component {
                       surveyDetails.questionsForSurvey.filter(
                         question => question.group === group
                       );
-                    console.log(questions);
                     if (section === group) {
                       const unanswered = questions
                         .map(q => q._id)
                         .filter(q => !answers.includes(q));
+
+                      console.log(questions);
                       return (
                         <SurveyQs
                           key={group}
@@ -443,7 +444,9 @@ class Survey extends Component {
                           handleAntdDatePicker={this.handleAntdDatePicker}
                           renderSkipButtons={this.renderSkipButtons(
                             group,
-                            unanswered.length > 0 || !postcodeValid,
+                            section === 'demographic'
+                              ? unanswered.length > 0 && !postcodeValid
+                              : unanswered.length > 0,
                             uniqueGroups,
                             completionRate
                           )}
