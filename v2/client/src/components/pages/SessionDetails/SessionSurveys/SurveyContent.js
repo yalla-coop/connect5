@@ -3,16 +3,12 @@ import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Icon } from 'antd';
-import SurveyResultLink from './SurveyResultLink';
 import {
   SurveyContentWrapper,
   SurveyLinkType,
   SurveyLinkInfo,
   SurveyLink,
   CopyLink,
-  MailLink,
-  IconName,
-  ActionsDiv,
   SurveyLinkWrapper,
   ResponseWrapper,
   FeedbackAction,
