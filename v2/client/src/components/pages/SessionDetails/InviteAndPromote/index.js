@@ -1,119 +1,91 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Drawer, Button, Collapse, Icon } from 'antd';
-import Header from '../../../common/Header';
-import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
-// import SendInvitation from './SendInvitation';
-// import InviteeList from './InviteeList';
-import InviteAndPromoteList from '../../../common/List/InviteAndPromoteList';
+import { Icon, Drawer } from 'antd';
 
-// ANTD COMPONENTS
-import Spin from '../../../common/Spin';
+import SendInvitation from './SendInvitation';
+import InviteeList from './InviteeList';
 import EmailsList from '../../../common/List/EmailsList';
-import { BackContainer, BackLink } from './InviteAndPromote.style';
 
-const { Panel } = Collapse;
+import {
+  SessionTopDetailsWrapper,
+  SubDetails,
+  SubDetailsContent,
+  DrawerLink,
+  Row,
+} from '../SessionDetails.Style';
 
 class InviteAndPromote extends Component {
-  state = {
-    openSection: '1',
-    visible: false,
-  };
-
-  showDrawer = () => {
-    this.setState({
-      visible: true,
-    });
-  };
+  state = { visible: false, drawerKey: null };
 
   onClose = () => {
-    this.setState({
-      visible: false,
-    });
+    this.setState({ visible: false, drawerKey: null });
   };
 
-  callback = key => {
-    this.setState({ openSection: key });
+  DrawerOpen = e => {
+    const { key } = e.target.dataset;
+    this.setState({ visible: true, drawerKey: key });
   };
 
   render() {
+    const { visible, drawerKey } = this.state;
     const { sessionDetails } = this.props;
     const { id } = sessionDetails;
-    const { openSection, visible } = this.state;
-    if (!sessionDetails) {
-      return Spin;
-    }
     return (
-      <div>
-        <InviteAndPromoteList id={id} sessionDetails={sessionDetails} />
-      </div>
-      // <Collapse
-      //   accordion
-      //   expandIconPosition="right"
-      //   expandIcon={({ isActive }) => (
-      //     <Icon type="down" rotate={isActive ? 90 : 0} />
-      //   )}
-      //   defaultActiveKey={[openSection]}
-      //   onChange={this.callback}
-      // >
-      //   <Panel header="Registration Link" key="1">
-      //     hi
-      //   </Panel>
-      //   <Panel header="Send email invitation" key="2">
-      //     <div style={{ padding: '1rem' }}>
-      //       <Button type="primary" onClick={this.showDrawer}>
-      //         Send Invitation
-      //       </Button>
-      //       <Drawer
-      //         placement="right"
-      //         closable={false}
-      //         onClose={this.onClose}
-      //         visible={visible}
-      //         width="100%"
-      //       >
-      //         <SendInvitation onClose={this.onClose} id={id} />
-      //       </Drawer>
-      //     </div>
-      //   </Panel>
-      //   <Panel header="View invitees" key="3">
-      //     <InviteeList dataList={sessionDetails} />
-      //   </Panel>
-      //   <Panel header="View emails you have sent" key="4">
-      //     <div style={{ padding: '1rem' }}>
-      //       <Button type="primary" onClick={this.showDrawer}>
-      //         View Emails List
-      //       </Button>
-      //       <Drawer
-      //         placement="right"
-      //         closable={false}
-      //         onClose={this.onClose}
-      //         visible={visible}
-      //         width="100%"
-      //       >
-      //         <div>
-      //           <Header type="view" label="Invite Emails" />
-      //           <BackContainer style={{ margin: '3rem 0 2rem 0' }}>
-      //             <BackLink onClick={this.onClose}>{`< Back`}</BackLink>
-      //           </BackContainer>
-      //           <EmailsList
-      //             onClose={this.onClose}
-      //             dataList={sessionDetails}
-      //           />
-      //         </div>
-      //       </Drawer>
-      //     </div>
-      //   </Panel>
-      // </Collapse>
+      <SessionTopDetailsWrapper>
+        <SubDetails>
+          <DrawerLink>Registration Link</DrawerLink>
+          <SubDetailsContent to="/"> link</SubDetailsContent>
+        </SubDetails>
+        <SubDetails>
+          <Row onClick={this.DrawerOpen} data-key="send-invitation">
+            <DrawerLink>Send Email Invitation</DrawerLink>
+            <Icon type="right" />
+          </Row>
+        </SubDetails>
+        <SubDetails>
+          <Row onClick={this.DrawerOpen} data-key="view-invitees">
+            <DrawerLink>View invitees</DrawerLink>
+            <Icon type="right" />
+          </Row>
+        </SubDetails>
+        <SubDetails>
+          <Row onClick={this.DrawerOpen} data-key="view-emails">
+            <DrawerLink>View emails you have sent</DrawerLink>
+            <Icon type="right" />
+          </Row>
+        </SubDetails>
+        <Drawer
+          title={<span>Hello</span>}
+          placement="left"
+          width="100%"
+          height="100%"
+          onClose={this.onClose}
+          visible={visible}
+          closable
+          getContainer
+        >
+          <DrawerContent
+            drawerKey={drawerKey}
+            id={id}
+            sessionDetails={sessionDetails}
+          />
+        </Drawer>
+      </SessionTopDetailsWrapper>
     );
   }
 }
+export default connect(null)(InviteAndPromote);
 
-const mapStateToProps = state => {
-  return {
-    sessionDetails: state.sessions.sessionDetails[0],
-  };
+const DrawerContent = ({ drawerKey, id, sessionDetails, onClose }) => {
+  switch (drawerKey) {
+    case 'send-invitation':
+      return <SendInvitation onClose={onClose} id={id} />;
+    case 'view-invitees':
+      return <InviteeList onClose={onClose} dataList={sessionDetails} />;
+    case 'view-emails':
+      return <EmailsList onClose={onClose} dataList={sessionDetails} />;
+
+    default:
+      return <h1>hi</h1>;
+  }
 };
-export default connect(
-  mapStateToProps,
-  { fetchSessionDetails }
-)(InviteAndPromote);

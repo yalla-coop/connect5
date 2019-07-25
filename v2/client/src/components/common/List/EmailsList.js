@@ -21,20 +21,6 @@ class EmailsList extends Component {
     visible: false,
   };
 
-  componentDidMount() {
-    const { _id } = this.props.sessionDetails;
-    // call action and pass it the id of session to fetch it's details
-    this.props.fetchSessionDetails(_id);
-  }
-
-  componentDidUpdate(prevProps) {
-    const { sessionDetails } = this.props;
-    const { id } = sessionDetails;
-    if (sessionDetails !== prevProps.essionDetails) {
-      this.props.fetchSessionDetails(id);
-    }
-  }
-
   showDrawer = () => {
     this.setState({
       visible: true,
@@ -51,6 +37,9 @@ class EmailsList extends Component {
     const { dataList } = this.props;
     const { visible } = this.state;
     const { showDrawer, onClose } = this;
+    if (!dataList) {
+      return <p>loading</p>;
+    }
     return (
       <Wrapper>
         <Header>

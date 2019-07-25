@@ -19,5 +19,17 @@ module.exports.StoreSentEmailDataQuery = ({
     trainers: trainerName,
     recipients: participantsEmails,
   };
-  return Session.update({ _id }, { $push: { sentEmails: data } });
+
+  const emails = participantsEmails.map(email => {
+    return {
+      email,
+      status: 'sent',
+    };
+  });
+
+  const updateDoc = Session.update(
+    { _id },
+    { $push: { sentEmails: data, participantsEmails: emails } }
+  );
+  return updateDoc;
 };
