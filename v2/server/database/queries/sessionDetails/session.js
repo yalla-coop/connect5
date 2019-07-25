@@ -109,3 +109,29 @@ module.exports.updateEmailStatus = async ({ sessionId, email, status }) => {
     { $set: { 'participantsEmails.$.status': status } }
   );
 };
+
+module.exports.updateAttendeesList = ({ sessionId, attendeesList, status }) =>
+  Session.findById(sessionId).then(session => {
+    const newEmails = {};
+    attendeesList.forEach(item => {
+      newEmails[item.email] = item.email;
+    });
+
+    session.participantsEmails.forEach(participant => {
+      if (Object.keys(newEmails).includes(participant.email)) {
+        // update
+        // eslint-disable-next-line no-param-reassign
+        session.participantsEmails.id(participant._id).status = status;
+        delete newEmails[participant.email];
+      } else if (participant.status === status) {
+        // delete
+        session.participantsEmails.id(participant._id).remove();
+        delete newEmails[participant.email];
+      }
+    });
+
+    Object.keys(newEmails).forEach(email => {
+      session.participantsEmails.push({ email, status });
+    });
+    return session.save();
+  });

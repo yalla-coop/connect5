@@ -27,6 +27,7 @@ const getParticipantSessions = require('../controllers/users/getParticipantSessi
 const generateCertificate = require('../controllers/users/generateCertificate');
 const checkPINResponsesOnSurvey = require('../controllers/survey/checkPINResponsesOnSurvey');
 const confirmEmailRegistration = require('../controllers/sessionDetails/confirmEmailRegistration');
+const updateAttendeesList = require('../controllers/sessionDetails/updateAttendeesList');
 
 const getCSVData = require('../controllers/feedback/exportCSVData');
 
@@ -74,5 +75,10 @@ router.post('/survey/submit', storeSurvey);
 router.post('/survey/email', sendSurveyByEmail);
 
 router.post('/export-csv', authentication(), getCSVData);
+router.patch(
+  '/sessions/:sessionId/attendeesList',
+  authentication(),
+  updateAttendeesList
+);
 
 module.exports = router;

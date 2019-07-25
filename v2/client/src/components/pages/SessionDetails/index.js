@@ -38,8 +38,10 @@ class SessionDetails extends Component {
   };
 
   render() {
-    const { sessionDetails } = this.props;
+    const { sessionDetails, match } = this.props;
     const { openSection } = this.state;
+    const { id } = match.params;
+
     if (!sessionDetails) {
       return Spin;
     }

@@ -3,6 +3,8 @@ import {
   DELETE_SESSION_SUCCESS,
   EDIT_SESSION_SUCCESS,
   GET_SESSION_DETAILS_BY_SHORT_ID,
+  UPDATE_ATTENDEES_SUCCESS,
+  UPDATE_ATTENDEES_FAIL,
 } from '../constants/actionTypes';
 
 const initState = {
@@ -11,6 +13,7 @@ const initState = {
   date: null,
   address: null,
   _id: null,
+  addendeesUpdatedSuccess: null,
 };
 
 export default function(state = initState, action) {
@@ -33,6 +36,18 @@ export default function(state = initState, action) {
       return {
         ...state,
         ...payload,
+      };
+
+    case UPDATE_ATTENDEES_SUCCESS:
+      return {
+        ...state,
+        addendeesUpdatedSuccess: true,
+      };
+
+    case UPDATE_ATTENDEES_FAIL:
+      return {
+        ...state,
+        addendeesUpdatedSuccess: false,
       };
 
     default:

@@ -3,6 +3,8 @@ import { Modal } from 'antd';
 import {
   ADD_SESSION_SUCCESS,
   GET_SESSION_DETAILS_BY_SHORT_ID,
+  UPDATE_ATTENDEES_SUCCESS,
+  UPDATE_ATTENDEES_FAIL,
 } from '../constants/actionTypes';
 import history from '../history';
 import store from '../store';
@@ -53,5 +55,30 @@ export const getSessionDetails = shortId => dispatch => {
         });
       }
       return history.push('/500err');
+    });
+};
+
+export const updateSessionAttendeesList = ({
+  sessionId,
+  attendeesList,
+  status,
+}) => dispatch => {
+  axios
+    .patch(`/api/sessions/${sessionId}/attendeesList`, {
+      attendeesList,
+      status,
+    })
+    .then(res =>
+      dispatch({
+        type: UPDATE_ATTENDEES_SUCCESS,
+        payload: res.data,
+      })
+    )
+    .catch(err => {
+      return Modal.error({
+        title: 'Error!',
+        content: '',
+        // onOk: () => history.push('/404err'),
+      });
     });
 };
