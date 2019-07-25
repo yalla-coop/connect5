@@ -6,7 +6,7 @@ const {
 module.exports = async (req, res, next) => {
   const { id } = req.params;
   getSessionDetails({ id })
-    .then(sessionDetails => {
+    .then(async sessionDetails => {
       if (sessionDetails) {
         return res.json(sessionDetails);
       }

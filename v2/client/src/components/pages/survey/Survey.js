@@ -2,8 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import swal from 'sweetalert2';
 import { Progress } from 'antd';
-import Header from '../../common/Header';
+import { connect } from 'react-redux';
 
+import Header from '../../common/Header';
 import Questions from './Questions';
 
 import { colors } from '../../../theme';
@@ -195,7 +196,7 @@ class Survey extends React.Component {
   // // this puts the required info into an object and sends to server
   handleSubmit = e => {
     e.preventDefault();
-    const { history } = this.props;
+    const { history, isAuthenticated } = this.props;
     const {
       formState,
       sessionId,
@@ -226,7 +227,14 @@ class Survey extends React.Component {
         .then(() =>
           swal
             .fire('Done!', 'Thanks for submitting your feedback!', 'success')
-            .then(() => history.push('/thank-you'))
+            .then(() => {
+              history.push({
+                pathname: isAuthenticated
+                  ? '/participant-dashboard'
+                  : '/participant-login',
+                state: { sessionId, surveySubmited: true },
+              });
+            })
         )
         .catch(err => {
           this.setState({
@@ -312,4 +320,13 @@ class Survey extends React.Component {
   }
 }
 
-export default Survey;
+const mapStateToProps = state => ({
+  PIN: state.auth.PIN,
+  isAuthenticated: state.auth.isAuthenticated,
+  role: state.auth.role,
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Survey);

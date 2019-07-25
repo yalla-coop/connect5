@@ -32,6 +32,8 @@ const sendReminderEmail = require('../controllers/sessionDetails/sendReminderEma
 
 const getCSVData = require('../controllers/feedback/exportCSVData');
 
+const getResponseCount = require('../controllers/feedback/getResponseCount');
+
 const router = express.Router();
 
 router.post('/participant-login', ParticipantLoginController);
@@ -63,6 +65,8 @@ router.get('/behavioral-insight/trainer/:id', getTrainerBehavioralInsight);
 router.post('/feedback/', getFeedback);
 
 router.get('/feedback/participant/:PIN', feedbackFromParticipant);
+
+router.post('/feedback/responseCount', getResponseCount);
 
 router.use(usersRouter);
 

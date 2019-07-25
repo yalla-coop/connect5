@@ -68,10 +68,9 @@ class SessionDetails extends Component {
             <ManageAttendees sessionDetails={sessionDetails} />
           </Panel>
           <Panel header="Get Feedback" key="4">
-            <p>Hello</p>
+            <SessionSurveys sessionDetails={sessionDetails} />
           </Panel>
         </Collapse>
-        <SessionSurveys sessionDetails={sessionDetails} />
       </SessionDetailsWrapper>
     );
   }
