@@ -20,7 +20,7 @@ module.exports = async () => {
     // type 1 session
     {
       PIN: 'HIO13',
-      trainers: [trainers[0], trainers[1]],
+      trainers: [trainers[0]],
       surveyType: 'pre-day-1',
       session: type1Session,
       participant: participants[0],

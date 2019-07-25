@@ -1,13 +1,21 @@
-import React from 'react';
+/* eslint-disable react/no-did-update-set-state */
+/* eslint-disable react/destructuring-assignment */
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Modal } from 'antd';
+
+import { fetchParticipentSessions } from '../../actions/groupSessionsAction';
+import { uppercaseSurvey } from '../../helpers';
+
 import { colors } from '../../theme';
+import surveyTypes from '../../constants/surveyTypes';
 
 const DashboardWrapper = styled.div`
   width: 90%;
   margin: 0 auto;
-  margin-top: 9rem;
+  padding-top: 5rem;
 `;
 
 const H3 = styled.h3`
@@ -63,22 +71,119 @@ const LinkBtn = styled(Link)`
   }
 `;
 
-const UserDashboard = ({ PIN }) => {
-  return (
-    <DashboardWrapper>
-      <H3>Welcome back</H3>
-      <Content>
-        <Span>my PIN:</Span>
-        <Pin>{PIN}</Pin>
-      </Content>
-      <LinkBtn to="/participant/behavioral-insight">Insights</LinkBtn>
-      <LinkBtn to="/participant/progress">Progress</LinkBtn>
-    </DashboardWrapper>
-  );
-};
+class UserDashboard extends Component {
+  state = {
+    popupVisible: false,
+    dismissed: false,
+    canGetCertivicate: false,
+  };
+
+  componentDidMount() {
+    const { location, PIN } = this.props;
+    if (!location.state) return;
+    const { surveySubmited, sessionId } = location.state;
+    if (surveySubmited && sessionId) {
+      this.props.fetchParticipentSessions(PIN);
+    }
+  }
+
+  componentDidUpdate() {
+    const { sessions, location } = this.props;
+    const { popupVisible, dismissed } = this.state;
+
+    if (!location.state || sessions.length === 0) {
+      return;
+    }
+
+    const { surveySubmited, sessionId } = location.state;
+    // check if the participant completed all session survey
+    if (surveySubmited && sessionId && !popupVisible && !dismissed) {
+      const isSessionCompleted = sessions.some(
+        item => item.sessions._id === sessionId && item.completed
+      );
+      if (isSessionCompleted) {
+        this.setState({ popupVisible: true, canGetCertivicate: true });
+      } else {
+        const [sessionDetails] = sessions.filter(
+          session => session.sessions._id === sessionId
+        );
+
+        const [remainedSession] = surveyTypes[
+          sessionDetails.sessions.type
+        ].filter(type => !sessionDetails.surveyType.includes(type));
+
+        this.setState({
+          popupVisible: true,
+          canGetCertivicate: false,
+          remainedSessionCapital: uppercaseSurvey(remainedSession),
+          remainedSession,
+          shortId: sessionDetails.sessions.shortId,
+        });
+      }
+    }
+  }
+
+  handleOk = () => {
+    const { history } = this.props;
+    const { canGetCertivicate, remainedSession, shortId } = this.state;
+
+    const { sessionId } = history.location;
+    if (canGetCertivicate) {
+      history.push(`/certificate/${sessionId}`);
+    } else {
+      history.push(`/survey/${remainedSession}&${shortId}`);
+    }
+  };
+
+  handleCancel = () => {
+    this.setState({ popupVisible: false, dismissed: true });
+  };
+
+  render() {
+    const { PIN } = this.props;
+    const {
+      popupVisible,
+      canGetCertivicate,
+      remainedSessionCapital,
+      dismissed,
+    } = this.state;
+    return (
+      <DashboardWrapper>
+        <Modal
+          title={canGetCertivicate ? 'Congratulations: 🎉🎉' : 'Thank you!'}
+          visible={popupVisible && !dismissed}
+          onOk={this.handleOk}
+          okText={
+            canGetCertivicate ? 'Get it the cirtificate' : 'Fill the survey'
+          }
+          cancelText="Skip"
+          onCancel={this.handleCancel}
+        >
+          {canGetCertivicate ? (
+            <p>You successfully completed the session{"'"}s surveys</p>
+          ) : (
+            <p>Fill the survey {remainedSessionCapital}</p>
+          )}
+        </Modal>
+        <H3>Welcome back</H3>
+        <Content>
+          <Span>my PIN:</Span>
+          <Pin>{PIN}</Pin>
+        </Content>
+        <LinkBtn to="/participant/behavioral-insight">Insights</LinkBtn>
+        <LinkBtn to="/participant/progress">Progress</LinkBtn>
+        <LinkBtn to="/sessions-files">Materials</LinkBtn>
+      </DashboardWrapper>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   PIN: state.auth.PIN,
+  sessions: state.sessions.sessions,
 });
 
-export default connect(mapStateToProps)(UserDashboard);
+export default connect(
+  mapStateToProps,
+  { fetchParticipentSessions }
+)(UserDashboard);

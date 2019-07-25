@@ -4,9 +4,9 @@ const {
 } = require('./../../database/queries/sessionDetails/session');
 
 module.exports = async (req, res, next) => {
-  const emails = req.body;
+  const { participantsEmails } = req.body;
   const { id } = req.params;
-  updateEmailsQuery(id, emails)
+  updateEmailsQuery(id, participantsEmails)
     .then(() => {
       return res.json('success');
     })

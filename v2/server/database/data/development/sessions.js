@@ -16,11 +16,11 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[0], trainers[1]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'abd@gmail.com',
-        'marwa@gmail.com',
-        'joe@gmail.com',
-        'simon@gmail.com',
+        { email: 'ramy@gmail.com', status: 'new' },
+        { email: 'abd@gmail.com', status: 'new' },
+        { email: 'marwa@gmail.com', status: 'new' },
+        { email: 'joe@gmail.com', status: 'new' },
+        { email: 'simon@gmail.com', status: 'new' },
       ],
     },
     {
@@ -31,11 +31,11 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[3], trainers[4]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'abd@gmail.com',
-        'marwa@gmail.com',
-        'joe@gmail.com',
-        'simon@gmail.com',
+        { email: 'ramy@gmail.com', status: 'new' },
+        { email: 'abd@gmail.com', status: 'new' },
+        { email: 'marwa@gmail.com', status: 'new' },
+        { email: 'joe@gmail.com', status: 'new' },
+        { email: 'simon@gmail.com', status: 'new' },
       ],
     },
     {
@@ -46,11 +46,11 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[0], trainers[2]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'abd@gmail.com',
-        'marwa@gmail.com',
-        'joe@gmail.com',
-        'simon@gmail.com',
+        { email: 'ramy@gmail.com', status: 'new' },
+        { email: 'abd@gmail.com', status: 'new' },
+        { email: 'marwa@gmail.com', status: 'new' },
+        { email: 'joe@gmail.com', status: 'new' },
+        { email: 'simon@gmail.com', status: 'new' },
       ],
     },
     {
@@ -61,11 +61,11 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[0]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'abd@gmail.com',
-        'marwa@gmail.com',
-        'joe@gmail.com',
-        'simon@gmail.com',
+        { email: 'ramy@gmail.com', status: 'new' },
+        { email: 'abd@gmail.com', status: 'new' },
+        { email: 'marwa@gmail.com', status: 'new' },
+        { email: 'joe@gmail.com', status: 'new' },
+        { email: 'simon@gmail.com', status: 'new' },
       ],
     },
     {
@@ -76,11 +76,11 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[0], trainers[2]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'abd@gmail.com',
-        'marwa@gmail.com',
-        'joe@gmail.com',
-        'simon@gmail.com',
+        { email: 'ramy@gmail.com', status: 'new' },
+        { email: 'abd@gmail.com', status: 'new' },
+        { email: 'marwa@gmail.com', status: 'new' },
+        { email: 'joe@gmail.com', status: 'new' },
+        { email: 'simon@gmail.com', status: 'new' },
       ],
     },
     {
@@ -91,10 +91,10 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[0]],
       participantsEmails: [
-        'alex@gmail.com',
-        'nancy@gmail.com',
-        'mark@gmail.com',
-        'john@gmail.com',
+        { email: 'alex@gmail.com', status: 'new' },
+        { email: 'nancy@gmail.com', status: 'new' },
+        { email: 'mark@gmail.com', status: 'new' },
+        { email: 'john@gmail.com', status: 'new' },
       ],
     },
     {
@@ -105,10 +105,10 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[5]],
       participantsEmails: [
-        'alex@gmail.com',
-        'nancy@gmail.com',
-        'mark@gmail.com',
-        'john@gmail.com',
+        { email: 'alex@gmail.com', status: 'new' },
+        { email: 'nancy@gmail.com', status: 'new' },
+        { email: 'mark@gmail.com', status: 'new' },
+        { email: 'john@gmail.com', status: 'new' },
       ],
     },
     {
@@ -119,10 +119,10 @@ module.exports = async () => {
       region: 'North East',
       trainers: [trainers[1]],
       participantsEmails: [
-        'sozan@gmail.com',
-        'amal@gmail.com',
-        'mai@gmail.com',
-        'bakeza@gmail.com',
+        { email: 'sozan@gmail.com', status: 'new' },
+        { email: 'amal@gmail.com', status: 'new' },
+        { email: 'mai@gmail.com', status: 'new' },
+        { email: 'bakeza@gmail.com', status: 'new' },
       ],
     },
     // local lead only session
@@ -135,10 +135,10 @@ module.exports = async () => {
       region: 'North West',
       trainers: [trainers[0], localLeads[0]],
       participantsEmails: [
-        'nichole@gmail.com',
-        'amal@gmail.com',
-        'nancy@gmail.com',
-        'bakeza@gmail.com',
+        { email: 'nichole@gmail.com', status: 'new' },
+        { email: 'amal@gmail.com', status: 'new' },
+        { email: 'nancy@gmail.com', status: 'new' },
+        { email: 'bakeza@gmail.com', status: 'new' },
       ],
     },
     // {
@@ -163,10 +163,10 @@ module.exports = async () => {
       region: 'North West',
       trainers: [localLeads[0]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'hosam@gmail.com',
-        'sa3d@gmail.com',
-        'saleem@gmail.com',
+        { email: 'ramy@gmail.com', status: 'new' },
+        { email: 'hosam@gmail.com', status: 'new' },
+        { email: 'sa3d@gmail.com', status: 'new' },
+        { email: 'saleem@gmail.com', status: 'new' },
       ],
     },
     {
@@ -177,10 +177,10 @@ module.exports = async () => {
       region: 'North West',
       trainers: [localLeads[1]],
       participantsEmails: [
-        'ramy@gmail.com',
-        'hosam@gmail.com',
-        'sa3d@gmail.com',
-        'saleem@gmail.com',
+        { email: 'ramy@gmail.com', status: 'new' },
+        { email: 'hosam@gmail.com', status: 'new' },
+        { email: 'sa3d@gmail.com', status: 'new' },
+        { email: 'saleem@gmail.com', status: 'new' },
       ],
     },
 
@@ -192,7 +192,10 @@ module.exports = async () => {
       numberOfAttendees: 5,
       region: 'North West',
       trainers: [localLeads[0], trainers[0]],
-      participantsEmails: ['samer@gmail.com', 'nael@gmail.com'],
+      participantsEmails: [
+        { email: 'samer@gmail.com', status: 'new' },
+        { email: 'nael@gmail.com', status: 'new' },
+      ],
     },
   ];
 

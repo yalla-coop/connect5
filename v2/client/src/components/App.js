@@ -39,6 +39,8 @@ import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
 import ForgetPassword from './pages/ForgetPassword';
 import ResetPassword from './pages/ForgetPassword/ResetPassword';
+import SessionsFiles from './pages/SessionsFiles';
+import ConfirmRegistration from './pages/ConfirmRegistration';
 
 // Error Pages
 import NotFound from './pages/ErrorPages/404';
@@ -267,13 +269,21 @@ class App extends Component {
             <Route
               exact
               path="/participant-login"
-              render={() => {
+              render={props => {
                 if (loaded) {
+                  const { location } = props;
+                  const { state } = location;
+
                   return isAuthenticated ||
                     (loaded && role === 'participant') ? (
-                    <Redirect to="/participant-dashboard" />
+                    <Redirect
+                      to={{
+                        pathname: '/participant-dashboard',
+                        state,
+                      }}
+                    />
                   ) : (
-                    <ParticipantLogin />
+                    <ParticipantLogin {...props} />
                   );
                 }
                 return <Spin />;
@@ -331,6 +341,7 @@ class App extends Component {
               role={role}
               navbar
             />
+
             <PrivateRoute
               exact
               path={TRAINER_VIEW_PARTICIPANT}
@@ -340,6 +351,22 @@ class App extends Component {
               allowedRoles={['trainer', 'localLead', 'admin']}
               role={role}
               navbar
+            />
+
+            <PrivateRoute
+              exact
+              path="/sessions-files"
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              Component={SessionsFiles}
+              allowedRoles={['participant']}
+              role={role}
+            />
+
+            <Route
+              exact
+              path="/confirm/:shortId"
+              component={ConfirmRegistration}
             />
 
             <Route path="/404err" render={() => <NotFound />} />
