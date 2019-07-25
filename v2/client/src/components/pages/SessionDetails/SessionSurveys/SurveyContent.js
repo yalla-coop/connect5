@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 import { Icon } from 'antd';
 import SurveyResultLink from './SurveyResultLink';
 import {
@@ -10,10 +12,25 @@ import {
   CopyLink,
   MailLink,
   IconName,
-  ActionsDiv
+  ActionsDiv,
+  SurveyLinkWrapper,
+  ResponseWrapper,
 } from './SessionSurveys.Style';
 
 class SurveyContent extends Component {
+  state = {
+    responseCount: 0,
+  };
+
+  componentDidMount() {
+    const { id } = this.props;
+    const sessionId = id;
+
+    axios.post('/api/feedback/responseCount', { sessionId }).then(res => {
+      this.setState({ responseCount: res.data });
+    });
+  }
+
   // Fire Info pop up
   onInfoClick = () => {
     Swal.fire({
@@ -64,7 +81,15 @@ class SurveyContent extends Component {
 
   render() {
     const { onInfoClick, onCopyClick } = this;
-    const { type, surveyURL, subId, id, handleEmailing } = this.props;
+    const {
+      type,
+      surveyURL,
+      subId,
+      id,
+      handleEmailing,
+      sessionDetails,
+    } = this.props;
+    const { responseCount } = this.state;
 
     let url = `https://${surveyURL}`;
 
@@ -75,36 +100,45 @@ class SurveyContent extends Component {
     return (
       <SurveyContentWrapper>
         <SurveyLinkType to={`/survey/${id}/${type}/results`}>
-          {type.includes('pre') ? 'Pre-Session' : 'Post-Session'} Survey Link
+          {type.includes('pre') ? 'Pre-Session' : 'Post-Session'} Survey
         </SurveyLinkType>
 
         <SurveyLinkInfo onClick={onInfoClick}>
           <Icon type="info-circle" />
         </SurveyLinkInfo>
 
-        <SurveyLink
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          id={`link${subId}`}
-        >
-          {url}
-        </SurveyLink>
-
+        <SurveyLinkWrapper onClick={() => onCopyClick(subId)}>
+          <SurveyLink
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            id={`link${subId}`}
+          >
+            {url}
+          </SurveyLink>
+          <CopyLink onClick={() => onCopyClick(subId)}>
+            <Icon type="copy" style={{ fontSize: '32px' }} />
+          </CopyLink>
+        </SurveyLinkWrapper>
+        <ResponseWrapper>
+          <p>
+            Responses: <b>{responseCount}</b> out of{' '}
+            <b>{sessionDetails && sessionDetails.numberOfAttendees}</b>{' '}
+            attendees
+          </p>
+        </ResponseWrapper>
         <ActionsDiv>
+          <MailLink>
+            <Icon type="mail" />
+            <IconName onClick={() => handleEmailing(url, type)}>
+              Email Survey
+            </IconName>
+          </MailLink>
 
-        <MailLink>
-          <Icon type="mail" />
-          <IconName onClick={() => handleEmailing(url, type)}>
-            Email Survey
-          </IconName>
-        </MailLink>
-
-
-        <CopyLink onClick={() => onCopyClick(subId)}>
-          <Icon type="copy" />
-          <IconName>Copy Link</IconName>
-        </CopyLink>
+          <CopyLink onClick={() => onCopyClick(subId)}>
+            <Icon type="copy" />
+            <IconName>Copy Link</IconName>
+          </CopyLink>
         </ActionsDiv>
 
         <SurveyResultLink type={type} id={id} />
@@ -113,4 +147,9 @@ class SurveyContent extends Component {
   }
 }
 
-export default SurveyContent;
+const mapStateToProps = state => {
+  return {
+    sessionDetails: state.sessions.sessionDetails[0],
+  };
+};
+export default connect(mapStateToProps)(SurveyContent);

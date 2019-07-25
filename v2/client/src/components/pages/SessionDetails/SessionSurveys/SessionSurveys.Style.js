@@ -33,10 +33,12 @@ export const Buttons = styled.div`
 
 export const SurveyLinkType = styled(Link)`
   display: inline-block;
-  padding: 1rem;
+  /* padding: 1rem; */
   color: #000;
   text-decoration: none;
   text-transform: capitalize;
+  margin-bottom: 1rem;
+  margin-right: 0.5rem;
 `;
 
 export const SurveyLinkInfo = styled.span`
@@ -59,11 +61,10 @@ export const ActionsDiv = styled.div`
 `;
 
 export const CopyLink = styled.span`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
 `;
 
 export const MailLink = styled.span`
@@ -82,16 +83,22 @@ export const IconName = styled.span`
 export const SurveyLink = styled.a`
   text-decoration: none;
   display: block;
-  padding: 0.5rem;
-  margin-left: 0.5rem;
+  /* padding: 0.5rem;
+  margin-left: 0.5rem; */
   color: ${colors.blackSecondary};
-  cursor: default;
+  margin-bottom: 1rem;
+  cursor: pointer;
   word-break: break-all;
   font-size: 14px;
   & :hover {
     color: blue;
     text-decoration: underline;
   }
+`;
+
+export const SurveyLinkWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const AttendeeBtn = styled.button`
@@ -152,4 +159,9 @@ export const ModalButtonsDiv = styled.div`
   @media (min-width: 768px) {
     margin-left: 55%;
   }
+`;
+
+export const ResponseWrapper = styled.div`
+  display: flex;
+  color: ${colors.blackSecondary};
 `;
