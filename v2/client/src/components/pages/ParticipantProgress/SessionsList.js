@@ -25,7 +25,7 @@ const SessionList = ({ dataList }) => {
       </Header>
       <List>
         {dataList &&
-          dataList.length &&
+          !!dataList.length &&
           dataList.map(({ sessions: dataItem }) => (
             <Row key={dataItem._id}>
               <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>

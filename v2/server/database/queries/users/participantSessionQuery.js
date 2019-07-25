@@ -41,7 +41,7 @@ const getParticipantSessions = pin => {
         sessions: { $first: '$session' },
         trainers: { $first: '$trainers' },
         PIN: { $first: '$PIN' },
-        surveyType: { $first: '$surveyType' },
+        surveyType: { $push: '$surveyType' },
       },
     },
     {
