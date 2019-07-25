@@ -15,6 +15,8 @@ import {
   ActionsDiv,
   SurveyLinkWrapper,
   ResponseWrapper,
+  FeedbackAction,
+  CopyIcon,
 } from './SessionSurveys.Style';
 
 class SurveyContent extends Component {
@@ -23,12 +25,14 @@ class SurveyContent extends Component {
   };
 
   componentDidMount() {
-    const { id } = this.props;
+    const { id, type } = this.props;
     const sessionId = id;
 
-    axios.post('/api/feedback/responseCount', { sessionId }).then(res => {
-      this.setState({ responseCount: res.data });
-    });
+    axios
+      .post('/api/feedback/responseCount', { sessionId, surveyType: type })
+      .then(res => {
+        this.setState({ responseCount: res.data });
+      });
   }
 
   // Fire Info pop up
@@ -107,7 +111,7 @@ class SurveyContent extends Component {
           <Icon type="info-circle" />
         </SurveyLinkInfo>
 
-        <SurveyLinkWrapper onClick={() => onCopyClick(subId)}>
+        <SurveyLinkWrapper>
           <SurveyLink
             href={url}
             target="_blank"
@@ -117,7 +121,7 @@ class SurveyContent extends Component {
             {url}
           </SurveyLink>
           <CopyLink onClick={() => onCopyClick(subId)}>
-            <Icon type="copy" style={{ fontSize: '32px' }} />
+            <CopyIcon className="far fa-copy"></CopyIcon>
           </CopyLink>
         </SurveyLinkWrapper>
         <ResponseWrapper>
@@ -127,21 +131,18 @@ class SurveyContent extends Component {
             attendees
           </p>
         </ResponseWrapper>
-        <ActionsDiv>
-          <MailLink>
-            <Icon type="mail" />
-            <IconName onClick={() => handleEmailing(url, type)}>
-              Email Survey
-            </IconName>
-          </MailLink>
-
-          <CopyLink onClick={() => onCopyClick(subId)}>
-            <Icon type="copy" />
-            <IconName>Copy Link</IconName>
-          </CopyLink>
-        </ActionsDiv>
-
-        <SurveyResultLink type={type} id={id} />
+        <FeedbackAction to="#" onClick={() => handleEmailing(url, type)}>
+          <p>Email survey to attendees</p>
+          <Icon type="right" />
+        </FeedbackAction>
+        <FeedbackAction to="/">
+          <p>Schedule emails</p>
+          <Icon type="right" />
+        </FeedbackAction>
+        <FeedbackAction to={`/survey/${id}/${type}/results`}>
+          <p>View survey results</p>
+          <Icon type="right" />
+        </FeedbackAction>
       </SurveyContentWrapper>
     );
   }

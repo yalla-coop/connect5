@@ -65,6 +65,15 @@ export const CopyLink = styled.span`
   display: flex;
   align-items: center;
   margin-left: 2rem;
+  font-size: 32px !important;
+  :hover,
+  :active {
+    color: ${colors.primary};
+  }
+`;
+
+export const CopyIcon = styled.i`
+  font-size: 20px;
 `;
 
 export const MailLink = styled.span`
@@ -86,12 +95,12 @@ export const SurveyLink = styled.a`
   /* padding: 0.5rem;
   margin-left: 0.5rem; */
   color: ${colors.blackSecondary};
-  margin-bottom: 1rem;
   cursor: pointer;
   word-break: break-all;
   font-size: 14px;
-  & :hover {
-    color: blue;
+  :hover,
+  :focus {
+    color: ${colors.primary};
     text-decoration: underline;
   }
 `;
@@ -99,6 +108,8 @@ export const SurveyLink = styled.a`
 export const SurveyLinkWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 `;
 
 export const AttendeeBtn = styled.button`
@@ -163,5 +174,17 @@ export const ModalButtonsDiv = styled.div`
 
 export const ResponseWrapper = styled.div`
   display: flex;
-  color: ${colors.blackSecondary};
+  margin-bottom: 1rem;
+  /* color: ${colors.blackSecondary}; */
+`;
+
+export const FeedbackAction = styled(Link)`
+  display: flex;
+  justify-content: space-between;
+  color: ${colors.black};
+
+  :hover,
+  :active {
+    color: ${colors.primary};
+  }
 `;

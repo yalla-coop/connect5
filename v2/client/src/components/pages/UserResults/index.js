@@ -64,7 +64,6 @@ class UserResults extends Component {
     // otherwise use logged in user's id and role
     const { state } = history.location;
 
-    console.log('STATE', state);
     const { fetchUserResults } = this.props;
     if (state && state.trainer && viewLevel === 'localLead') {
       await fetchUserResults(state.trainer._id, 'trainer');
