@@ -17,7 +17,7 @@ import { SessionDetailsWrapper } from './SessionDetails.Style';
 import SessionTopDetails from './SessionTopDetails';
 import SessionActions from './SessionActions';
 import SessionSurveys from './SessionSurveys';
-import ManageAttendees from './ ManageAttendees';
+import ManageAttendees from './ManageAttendees';
 import InviteAndPromote from './InviteAndPromote';
 
 const { Panel } = Collapse;

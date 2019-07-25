@@ -4,59 +4,74 @@ const { sessionTypes } = require('./../DBConstants');
 
 const { Schema, model } = mongoose;
 
-const sessionSchema = new Schema({
-  date: {
-    type: Date,
-    default: Date.now(),
-  },
-  type: {
-    type: String,
-    enum: sessionTypes,
-  },
-  shortId: {
-    type: String,
-  },
-  numberOfAttendees: Number,
-  region: {
-    type: String,
-    lowercase: true,
-  },
-  address: {
-    type: String,
-  },
-  startTime: {
-    type: String,
-  },
-  endTime: {
-    type: String,
-  },
-  // array of trainers must be 2 max
-  trainers: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'users',
+const sessionSchema = new Schema(
+  {
+    date: {
+      type: Date,
+      default: Date.now(),
     },
-  ],
-  sentEmails: [
-    {
-      date: Date,
-      trainer: String,
-      sessionDate: Date,
-      sessionType: String,
-      location: String,
-      trainers: String,
-      recipients: [String],
+    type: {
+      type: String,
+      enum: sessionTypes,
     },
-  ],
-  // list of participants emails
-  participantsEmails: [
-    {
-      _id: { type: mongoose.Types.ObjectId, auto: true },
-      email: String,
-      status: { type: String, enum: ['new', 'sent', 'confirmed'] },
+    shortId: {
+      type: String,
     },
-  ],
-});
+    numberOfAttendees: Number,
+    region: {
+      type: String,
+      lowercase: true,
+    },
+    address: {
+      type: String,
+    },
+    startTime: {
+      type: String,
+    },
+    endTime: {
+      type: String,
+    },
+    // array of trainers must be 2 max
+    trainers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+      },
+    ],
+    sentEmails: [
+      {
+        sendDate: {
+          type: Date,
+          default: Date.now(),
+        },
+        trainer: String,
+        sessionDate: String,
+        sessionType: String,
+        location: String,
+        trainers: String,
+        recipients: [String],
+        startTime: String,
+        endTime: String,
+        type: {
+          type: String,
+          enum: ['reminder', 'intial', 'registration'],
+        },
+        preServeyLink: String,
+      },
+    ],
+    // list of participants emails
+    participantsEmails: [
+      {
+        _id: { type: mongoose.Types.ObjectId, auto: true },
+        email: String,
+        status: { type: String, enum: ['new', 'sent', 'confirmed'] },
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const Session = model('sessions', sessionSchema);
 module.exports = Session;
