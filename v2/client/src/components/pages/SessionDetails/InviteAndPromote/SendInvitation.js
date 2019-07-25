@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Select } from 'antd';
-import history from '../../../../history';
 import { SendEmailInvitation } from '../../../../actions/InviteAndPromoteAction';
 
 // COMMON COMPONENTS
-import Spin from '../../../common/Spin';
 import Header from '../../../common/Header';
 import Button from '../../../common/Button';
 
