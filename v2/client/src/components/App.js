@@ -37,6 +37,7 @@ import Certificate from './pages/Certificate';
 import AdminDemographic from './pages/AdminDemographic';
 import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
+import SessionsFiles from './pages/SessionsFiles';
 import ConfirmRegistration from './pages/ConfirmRegistration';
 
 // Error Pages
@@ -329,6 +330,7 @@ class App extends Component {
               role={role}
               navbar
             />
+
             <PrivateRoute
               exact
               path={TRAINER_VIEW_PARTICIPANT}
@@ -338,6 +340,16 @@ class App extends Component {
               allowedRoles={['trainer', 'localLead', 'admin']}
               role={role}
               navbar
+            />
+
+            <PrivateRoute
+              exact
+              path="/sessions-files"
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              Component={SessionsFiles}
+              allowedRoles={['participant']}
+              role={role}
             />
 
             <Route

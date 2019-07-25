@@ -34,8 +34,13 @@ const SessionList = ({ dataList }) => {
               <Type type={dataItem.type}>
                 <p>{dataItem.type.replace(/-/g, ' ')}</p>
               </Type>
-              <StyledLink to={`/session-details/${dataItem._id}`}>
-                <Icon type="right" />
+              <StyledLink
+                as={dataItem.asLink ? 'a' : undefined}
+                href={dataItem.link || undefined}
+                to={dataItem.link || `/session-details/${dataItem._id}`}
+                target={dataItem.blank ? '_blank' : '_self'}
+              >
+                {dataItem.linkText || <Icon type="right" />}
               </StyledLink>
             </Row>
           ))}
