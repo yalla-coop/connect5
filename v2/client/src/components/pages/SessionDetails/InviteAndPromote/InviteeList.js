@@ -32,7 +32,7 @@ class InviteeList extends Component {
     const { dataList } = this.props;
     const { participantsEmails } = dataList;
     const recipients = [];
-    participantsEmails.map(recipient => {
+    participantsEmails.forEach(recipient => {
       if (recipient.status === 'sent') {
         recipients.push(recipient.email);
       }

@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Collapse from 'antd/lib/collapse';
@@ -38,9 +39,8 @@ class SessionDetails extends Component {
   };
 
   render() {
-    const { sessionDetails, match } = this.props;
+    const { sessionDetails } = this.props;
     const { openSection } = this.state;
-    const { id } = match.params;
 
     if (!sessionDetails) {
       return Spin;
