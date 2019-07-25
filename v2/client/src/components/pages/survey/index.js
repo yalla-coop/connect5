@@ -224,7 +224,7 @@ class Survey extends Component {
 
   // submits and validates PIN request
   submitPIN = () => {
-    const { PINExist, surveyData } = this.props;
+    const { PINExist, surveyData, history } = this.props;
     const { preSurveyResponses } = surveyData;
     const { surveyType } = surveyData.surveyData;
     const relevantPostSurveys = [
@@ -232,8 +232,16 @@ class Survey extends Component {
       'post-special',
       'post-train-trainers',
     ];
+    const relevantSurveyCounterParts = {
+      'post-day-1': 'pre-day-1',
+      'post-special': 'pre-special',
+      'post-train-trainers': 'pre-train-trainers',
+    };
 
-    console.log('here', preSurveyResponses);
+    const linkArr = history.location.pathname.split('/');
+    const surveyPart = linkArr[2].split('&')[0];
+    const shortId = linkArr[2].split('&')[1];
+
     if (PINExist) {
       // check if PIN alrady submitted survey
       Modal.error({
@@ -245,10 +253,15 @@ class Survey extends Component {
     if (relevantPostSurveys.includes(surveyType)) {
       if (!PINExist && !preSurveyResponses.preResponseExists) {
         Modal.error({
-          title: 'Error!',
+          title: 'Please fill out the pre-survey for this session!',
           content:
-            'Before filling out this post-survey please submit the pre-survey for this session',
-          onOk: '/',
+            'Before filling out this post-survey please submit the pre-survey. Clicking OK will bring you to the right survey.',
+          onOk: () => {
+            history.push(
+              `/survey/${relevantSurveyCounterParts[surveyPart]}&${shortId}`
+            );
+            window.location.reload();
+          },
         });
       }
     }

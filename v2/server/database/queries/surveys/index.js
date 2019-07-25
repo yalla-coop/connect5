@@ -37,7 +37,7 @@ module.exports.PINfilledPreSurvey = async (PIN, sessionID) => {
     } else {
       preResponseExists = false;
     }
-    return { preResponseExists, response };
+    return { preResponseExists };
   }
   // if no pre-survey included return true
   return 'no pre-survey included in session';
