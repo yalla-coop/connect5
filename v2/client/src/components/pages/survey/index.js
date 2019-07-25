@@ -224,8 +224,16 @@ class Survey extends Component {
 
   // submits and validates PIN request
   submitPIN = () => {
-    const { PINExist } = this.props;
+    const { PINExist, surveyData } = this.props;
+    const { preSurveyResponses } = surveyData;
+    const { surveyType } = surveyData.surveyData;
+    const relevantPostSurveys = [
+      'post-day-1',
+      'post-special',
+      'post-train-trainers',
+    ];
 
+    console.log('here', preSurveyResponses);
     if (PINExist) {
       // check if PIN alrady submitted survey
       Modal.error({
@@ -233,6 +241,16 @@ class Survey extends Component {
         content: "The PIN you've entered has already submitted this survey.",
         onOk: this.sectionChange('back'),
       });
+    }
+    if (relevantPostSurveys.includes(surveyType)) {
+      if (!PINExist && !preSurveyResponses.preResponseExists) {
+        Modal.error({
+          title: 'Error!',
+          content:
+            'Before filling out this post-survey please submit the pre-survey for this session',
+          onOk: '/',
+        });
+      }
     }
   };
 

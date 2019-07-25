@@ -10,7 +10,6 @@ module.exports = async (req, res, next) => {
 
   Promise.all([findParticipantByPIN(PIN), PINfilledPreSurvey(PIN, sessionId)])
     .then(response => {
-      console.log('res json', response);
       res.json(response);
     })
     .catch(err => next(boom.badImplementation()));

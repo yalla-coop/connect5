@@ -16,7 +16,7 @@ const initialState = {
   PINExist: null,
   errors: {},
   skipDemo: false,
-  preResponseExists: null,
+  preSurveyResponses: null,
 };
 
 const createGroupsArray = obj => [...new Set(obj.map(e => e.group))];
@@ -52,12 +52,14 @@ const fetchedSurveyData = (state = initialState, action) => {
         errors: payload,
       };
     case GET_PARTICIPANT_BY_PIN_SUCCESS:
+      // payload[0] tells if PIN is included in participant table -> demographic data exists
+      // payload[1] tells if PIN has filled out a pre-survey if relevant post-session
       return {
         ...state,
         skipDemo: true,
-        preResponseExists: payload[1],
+        preSurveyResponses: payload[1],
         uniqueGroups:
-          state.uniqueGroups[0] === 'demographic'
+          state.uniqueGroups[0] === 'demographic' && payload[0] !== null
             ? [createGroupsArray(state.surveyData.questionsForSurvey).pop()]
             : createGroupsArray(state.surveyData.questionsForSurvey),
       };
@@ -65,7 +67,7 @@ const fetchedSurveyData = (state = initialState, action) => {
       return {
         ...state,
         skipDemo: false,
-        preResponseExists: payload[1],
+        preSurveyResponses: payload[1],
         uniqueGroups: createGroupsArray(state.surveyData.questionsForSurvey),
       };
     default:
