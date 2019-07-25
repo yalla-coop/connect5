@@ -95,3 +95,36 @@ export const SubDetailsContent = styled.p`
   text-decoration: none;
   margin: 0;
 `;
+
+export const DrawerLink = styled.p`
+  margin: 0;
+`;
+
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95%;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover p {
+    font-weight: 500;
+  }
+
+  & * {
+    pointer-events: none;
+  }
+`;
+
+export const Edit = styled.p`
+  margin-left: auto;
+  margin-right: 1rem;
+  font-family: Roboto;
+  font-size: 16px;
+  color: #000000;
+  cursor: pointer;
+  &:hover {
+    font-weight: 500;
+  }
+`;

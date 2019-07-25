@@ -17,6 +17,7 @@ import { SessionDetailsWrapper } from './SessionDetails.Style';
 import SessionTopDetails from './SessionTopDetails';
 import SessionActions from './SessionActions';
 import SessionSurveys from './SessionSurveys';
+import ManageAttendees from './ ManageAttendees';
 
 const { Panel } = Collapse;
 
@@ -61,7 +62,7 @@ class SessionDetails extends Component {
             <p>Hello</p>
           </Panel>
           <Panel header="Manage Attendees" key="3">
-            <p>Hello</p>
+            <ManageAttendees sessionDetails={sessionDetails} />
           </Panel>
           <Panel header="Get Feedback" key="4">
             <p>Hello</p>
