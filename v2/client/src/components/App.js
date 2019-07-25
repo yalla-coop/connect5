@@ -23,7 +23,7 @@ import Home from './pages/LandingPage';
 import SignUp from './pages/SignUp';
 import UserResults from './pages/UserResults';
 import AddTrainer from './pages/AddTrainer';
-import Survey from './pages/Survey/index';
+import Survey from './pages/survey/Survey';
 import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
