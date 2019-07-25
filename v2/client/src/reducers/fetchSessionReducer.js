@@ -4,6 +4,7 @@ import {
   FETCH_ALL_SESSIONS,
   FETCH_SESSION_DETAILS,
   FETCH_PRTICIPENT_SESSIONS_SUCCESS,
+  SEND_INVITATION_SUCCESS,
 } from '../constants/actionTypes';
 
 const initState = {
@@ -18,6 +19,7 @@ const fetchedSessions = (state = initState, action) => {
   switch (type) {
     case FETCH_TRAINERS_SESSIONS:
     case FETCH_LOCAL_LEAD_SESSIONS:
+    case SEND_INVITATION_SUCCESS:
       return { ...state, sessions: payload, loaded: true };
     case FETCH_PRTICIPENT_SESSIONS_SUCCESS:
       return { ...state, sessions: payload };

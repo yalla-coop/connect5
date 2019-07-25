@@ -37,6 +37,17 @@ const sessionSchema = new Schema({
       ref: 'users',
     },
   ],
+  sentEmails: [
+    {
+      date: Date,
+      trainer: String,
+      sessionDate: Date,
+      sessionType: String,
+      location: String,
+      trainers: String,
+      recipients: [String],
+    },
+  ],
   // list of participants emails
   participantsEmails: [
     {

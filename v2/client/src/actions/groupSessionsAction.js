@@ -11,6 +11,7 @@ import {
   UPDATE_EMAILS_SUCCESS,
   SEND_SURVEY_EMAIL_SUCCESS,
   FETCH_PRTICIPENT_SESSIONS_SUCCESS,
+  SEND_INVITATION_SUCCESS,
 } from '../constants/actionTypes';
 
 import history from '../history';
@@ -138,4 +139,20 @@ export const fetchParticipentSessions = pin => async dispatch => {
     message.error('Error! something went wronge');
     return history.push('/404err');
   }
+};
+
+export const SendEmailInvitation = Data => async dispatch => {
+  console.log(Data);
+  axios
+    .post('/api/users/send-invitation', Data)
+    .then(res => {
+      message.success('Done, Emails sent successfully!');
+      return dispatch({
+        type: SEND_INVITATION_SUCCESS,
+      });
+    })
+    .catch(() => {
+      message.error('Error! something went wronge');
+      history.push('/404err');
+    });
 };

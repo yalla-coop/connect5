@@ -18,6 +18,7 @@ import SessionTopDetails from './SessionTopDetails';
 import SessionActions from './SessionActions';
 import SessionSurveys from './SessionSurveys';
 import ManageAttendees from './ ManageAttendees';
+import InviteAndPromote from './InviteAndPromote';
 
 const { Panel } = Collapse;
 
@@ -59,7 +60,7 @@ class SessionDetails extends Component {
             <SessionActions sessionDetails={sessionDetails} />
           </Panel>
           <Panel header="Invite & Promote" key="2">
-            <p>Hello</p>
+            <InviteAndPromote sessionDetails={sessionDetails} />
           </Panel>
           <Panel header="Manage Attendees" key="3">
             <ManageAttendees sessionDetails={sessionDetails} />
