@@ -20,7 +20,8 @@ class ParticipantLogin extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { error, isAuthenticated } = this.props;
+    const { error, isAuthenticated, location } = this.props;
+
     if (error !== prevProps.error) {
       // Check for login error
       this.updateLogin(error);
@@ -28,7 +29,11 @@ class ParticipantLogin extends Component {
 
     // If authenticated,
     if (isAuthenticated) {
-      history.push('/participant-dashboard');
+      const { state } = location;
+      history.push({
+        pathname: '/participant-dashboard',
+        state,
+      });
     }
   }
 

@@ -37,6 +37,7 @@ import Certificate from './pages/Certificate';
 import AdminDemographic from './pages/AdminDemographic';
 import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
+import ConfirmRegistration from './pages/ConfirmRegistration';
 
 // Error Pages
 import NotFound from './pages/ErrorPages/404';
@@ -256,13 +257,21 @@ class App extends Component {
             <Route
               exact
               path="/participant-login"
-              render={() => {
+              render={props => {
                 if (loaded) {
+                  const { location } = props;
+                  const { state } = location;
+
                   return isAuthenticated ||
                     (loaded && role === 'participant') ? (
-                    <Redirect to="/participant-dashboard" />
+                    <Redirect
+                      to={{
+                        pathname: '/participant-dashboard',
+                        state,
+                      }}
+                    />
                   ) : (
-                    <ParticipantLogin />
+                    <ParticipantLogin {...props} />
                   );
                 }
                 return <Spin />;
@@ -329,6 +338,12 @@ class App extends Component {
               allowedRoles={['trainer', 'localLead', 'admin']}
               role={role}
               navbar
+            />
+
+            <Route
+              exact
+              path="/confirm/:shortId"
+              component={ConfirmRegistration}
             />
 
             <Route path="/404err" render={() => <NotFound />} />

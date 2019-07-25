@@ -6,12 +6,12 @@ const Answer = require('../models/Answer');
 const Participant = require('../models/Participant');
 
 const resetDB = async () => {
-  await Session.deleteMany();
   await User.deleteMany();
-  await Response.deleteMany();
-  await Question.deleteMany();
-  await Answer.deleteMany();
   await Participant.deleteMany();
+  await Session.deleteMany();
+  await Question.deleteMany();
+  await Response.deleteMany();
+  await Answer.deleteMany();
 };
 
 module.exports = resetDB;
