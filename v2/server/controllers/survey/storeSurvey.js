@@ -9,7 +9,6 @@ const getStorableAnswers = require('./../../helpers/getAnswersFromForm');
 const getParticipantDetails = require('./../../helpers/getParticipantDetails');
 
 module.exports = async (req, res, next) => {
-  console.log(req.body);
   try {
     const { errors, isValid } = await validateSurveyInput(req.body);
 

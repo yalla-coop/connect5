@@ -16,6 +16,7 @@ const initialState = {
   PINExist: null,
   errors: {},
   skipDemo: false,
+  preResponseExists: null,
 };
 
 const createGroupsArray = obj => [...new Set(obj.map(e => e.group))];
@@ -54,6 +55,7 @@ const fetchedSurveyData = (state = initialState, action) => {
       return {
         ...state,
         skipDemo: true,
+        preResponseExists: payload[1],
         uniqueGroups:
           state.uniqueGroups[0] === 'demographic'
             ? [createGroupsArray(state.surveyData.questionsForSurvey).pop()]
@@ -63,6 +65,7 @@ const fetchedSurveyData = (state = initialState, action) => {
       return {
         ...state,
         skipDemo: false,
+        preResponseExists: payload[1],
         uniqueGroups: createGroupsArray(state.surveyData.questionsForSurvey),
       };
     default:

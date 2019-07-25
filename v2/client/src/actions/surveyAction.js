@@ -95,10 +95,11 @@ export const submitSurvey = formSubmission => dispatch => {
     });
 };
 
-export const getParticipantByPIN = PIN => dispatch => {
+export const getParticipantByPIN = (PIN, sessionId) => dispatch => {
   axios
-    .get(`/api/participant/${PIN}`)
+    .post(`/api/participant/${PIN}`, { sessionId })
     .then(({ data }) => {
+      console.log(data);
       dispatch({ type: GET_PARTICIPANT_BY_PIN_SUCCESS, payload: data });
     })
     .catch(err => {

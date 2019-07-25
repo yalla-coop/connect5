@@ -192,7 +192,9 @@ class Survey extends Component {
     const {
       checkPINResponses: checkPINResponsesAction,
       getParticipantByPIN: getParticipantByPINAction,
+      surveyData,
     } = this.props;
+    const { sessionId } = surveyData.surveyData;
 
     const { surveyParts, PIN } = this.state;
 
@@ -216,7 +218,7 @@ class Survey extends Component {
       checkPINResponsesAction(surveyParts, PIN);
       // check if participant has already filled out demographic section in previous surveys
       // if so we skip that part
-      getParticipantByPINAction(PIN);
+      getParticipantByPINAction(PIN, sessionId);
     }
   };
 
@@ -429,7 +431,6 @@ class Survey extends Component {
                         .map(q => q._id)
                         .filter(q => !answers.includes(q));
 
-                      console.log(questions);
                       return (
                         <SurveyQs
                           key={group}
