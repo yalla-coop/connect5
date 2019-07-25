@@ -16,6 +16,7 @@ const SendInvitation = async (req, res, next) => {
     region,
     startTime,
     endTime,
+    shortId,
   } = req.body;
   const { name } = req.user;
 
@@ -42,6 +43,7 @@ const SendInvitation = async (req, res, next) => {
         trainerName,
         region,
       });
+      console.log(StoreSentEmailData, 'resssssss');
       const sessionDate = moment(date).format('DD/MM/YYYY');
 
       sendEmailInvitation({
@@ -53,6 +55,7 @@ const SendInvitation = async (req, res, next) => {
         region,
         startTime,
         endTime,
+        shortId,
       });
 
       return res.json(StoreSentEmailData);

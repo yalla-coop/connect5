@@ -9,7 +9,9 @@ const sendEmailInvitation = ({
   region,
   startTime,
   endTime,
+  shortId,
 }) => {
+  const registrationURL = `${process.env.DOMAIN}/confirm/${shortId}`;
   const html = `
   <div style="text-align: left;">
     <div style="width: 100%; height: 60px; background-color: #2C3192;">
@@ -25,7 +27,7 @@ const sendEmailInvitation = ({
       <li>- time: ${startTime} to ${endTime}</li>
       <li>- trainers: ${trainerName}</li>
     </ul>
-    <p>To confirm your attendance please click this link: </p>
+    <p>To confirm your attendance please click this link: ${registrationURL}</p>
 
     <p>Sincerely,</p>
 
