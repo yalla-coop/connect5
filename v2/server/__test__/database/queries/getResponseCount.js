@@ -27,7 +27,7 @@ describe('Test exportData query', () => {
       foundResponse.surveyType
     ).then(result => {
       expect(result).toBeDefined();
-      expect(result).toBe('hello');
+      expect(result[0].session).toStrictEqual(foundResponse.session);
       done();
     });
   }, 30000);
