@@ -128,3 +128,9 @@ export const Edit = styled.p`
     font-weight: 500;
   }
 `;
+
+export const DrawerContentWrapper = styled.div`
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+`;
