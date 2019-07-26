@@ -12,6 +12,8 @@ module.exports = async (req, res, next) => {
   try {
     const { errors, isValid } = await validateSurveyInput(req.body);
 
+    console.log('server reached', req.body);
+
     const {
       PIN,
       sessionId,
@@ -60,6 +62,7 @@ module.exports = async (req, res, next) => {
 
     return res.status(200).json({});
   } catch (error) {
+    console.log('ERRO', error);
     return next(boom.badImplementation());
   }
 };

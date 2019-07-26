@@ -7,6 +7,8 @@ import {
   USER_UNAUTHENTICATED,
   RESET_UNIQUE_EMAIL,
   CHECK_UNIQUE_EMAIL_ERROR,
+  CHECK_USER_BY_EMAIL_SUCCESS,
+  CHECK_USER_BY_EMAIL_FAIL,
   LOGOUT,
 } from '../constants/actionTypes';
 
@@ -93,6 +95,18 @@ export default function(state = initialState, action) {
         ...state,
         checkedUserInfo: {},
         isEmailUnique: null,
+      };
+
+    case CHECK_USER_BY_EMAIL_SUCCESS:
+      return {
+        ...state,
+        ...payload,
+      };
+
+    case CHECK_USER_BY_EMAIL_FAIL:
+      return {
+        ...initialState,
+        msg: 'you are not a user',
       };
 
     default:

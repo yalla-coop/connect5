@@ -21,7 +21,13 @@ import {
   Error,
 } from '../../CreateSession/create-session.style';
 
-import { EditSessionWrapper, InputLabel, BackLink, BackContainer } from './SessionActions.Style';
+import {
+  EditSessionWrapper,
+  InputLabel,
+  BackLink,
+  BackContainer,
+  EmailError
+} from './SessionActions.Style';
 
 import Header from '../../../common/Header';
 
@@ -39,7 +45,8 @@ class EditSession extends Component {
     startTime: null,
     endTime: null,
     address: null,
-    err: false,
+    err: null,
+    emailErr: null,
     stateLoaded: false,
   };
 
@@ -68,6 +75,7 @@ class EditSession extends Component {
         endTime,
         address,
       } = sessionDetails;
+
       if (sessionDetails) {
         this.setState({
           session: type,
@@ -141,16 +149,39 @@ class EditSession extends Component {
   };
 
   onEmailChange = value => {
-    // check for email validation
+    const { emails } = this.state;
+    // remove emailError
+    this.setState({ emailErr: null })
 
-    if (!pattern.test(value)) {
+    // check if any emails have been removed
+    const remainingEmails = emails.filter(item => value.includes(item.email));
+
+    // check if there's a new email
+    const justEmails = remainingEmails.map(email => email && email.email);
+    const newEmails = value.filter(item => justEmails.indexOf(item) === -1);
+
+    // check valid new email
+    const incorrectEmails = newEmails.filter(item => !pattern.test(item));
+
+    if (incorrectEmails.length > 0) {
       this.setState({
-        err: '*please enter valid email',
+        emailErr: '* Please enter a valid email',
       });
+    } else if (newEmails.length > 0) {
+      const newEmailObjs = newEmails.map(email => ({ email, status: 'new' }));
+      this.setState({ emails: [...remainingEmails, ...newEmailObjs] });
+    } else {
+      this.setState({ emails: remainingEmails });
     }
-    this.setState({
-      emails: value,
-    });
+
+    // if (!pattern.test(value.email)) {
+    //   this.setState({
+    //     err: '*please enter valid email',
+    //   });
+    // }
+    // this.setState({
+    //   emails: value,
+    // });
   };
 
   onFormSubmit = event => {
@@ -204,11 +235,19 @@ class EditSession extends Component {
       type,
       startTime,
       endTime,
-      numberOfAttendees,
       region,
       participantsEmails,
     } = sessionDetails;
-    const { startDate, inviteesNumber, address, err } = this.state;
+    const {
+      startDate,
+      inviteesNumber,
+      address,
+      err,
+      emailErr,
+      emails,
+      session,
+      partnerTrainer1,
+    } = this.state;
     const {
       onDateChange,
       onInputChange,
@@ -245,6 +284,7 @@ class EditSession extends Component {
               showSearch
               style={{ width: '100%' }}
               placeholder={type}
+              value={session}
               optionFilterProp="children"
               onChange={onSelectSessionChange}
               size="large"
@@ -260,7 +300,7 @@ class EditSession extends Component {
           <InputDiv>
             <Input
               type="number"
-              placeholder={numberOfAttendees}
+              placeholder="Enter number of attendees"
               value={inviteesNumber}
               onChange={onInputChange}
               name="inviteesNumber"
@@ -276,6 +316,7 @@ class EditSession extends Component {
               placeholder={region}
               optionFilterProp="children"
               onChange={onSelectRegionChange}
+              value={this.state.region}
               size="large"
             >
               {regions.map(_region => (
@@ -290,9 +331,12 @@ class EditSession extends Component {
             <Select
               showSearch
               style={{ width: '100%' }}
-              placeholder="Partner Trainer"
+              placeholder={
+                role === 'localLead' ? 'Trainer 1' : 'Partner Trainer'
+              }
               optionFilterProp="children"
               onChange={onSelectPartner1Change}
+              value={partnerTrainer1}
               size="large"
             >
               {trainers &&
@@ -314,7 +358,7 @@ class EditSession extends Component {
               <Select
                 showSearch
                 style={{ width: '100%' }}
-                placeholder="Second Partner Trainer"
+                placeholder="Trainer 2"
                 optionFilterProp="children"
                 onChange={onSelectPartner2Change}
                 size="large"
@@ -342,6 +386,7 @@ class EditSession extends Component {
               placeholder="emails"
               onChange={onEmailChange}
               defaultValue={participantsEmails.map(item => item.email)}
+              value={emails.map(item => item.email)}
               style={{ width: '100%', height: '100%' }}
             >
               {participantsEmails.map(item => (
@@ -350,7 +395,7 @@ class EditSession extends Component {
                 </Option>
               ))}
             </Select>
-            <div>{err}</div>
+            <EmailError>{emailErr}</EmailError>
           </InputDiv>
 
           <InputDiv>

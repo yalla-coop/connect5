@@ -65,10 +65,9 @@ class SessionDetails extends Component {
             <p>Hello</p>
           </Panel>
           <Panel header="Get Feedback" key="4">
-            <p>Hello</p>
+            <SessionSurveys sessionDetails={sessionDetails} />
           </Panel>
         </Collapse>
-        <SessionSurveys sessionDetails={sessionDetails} />
       </SessionDetailsWrapper>
     );
   }
