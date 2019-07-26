@@ -66,7 +66,7 @@ describe('Tesing for addTrainerToGroup route', () => {
 
             // success message
             expect(response.body.success).toBe(
-              `New has been added to ${localLead.name}'s group and login details have just been sent to his/her email`
+              `New has been added to ${localLead.name}'s group and login details have been sent to his/her email`
             );
 
             done(error);
