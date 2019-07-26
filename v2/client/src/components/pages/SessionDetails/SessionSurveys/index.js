@@ -13,8 +13,6 @@ import { ModalStyle } from '../../../common/List/List.style';
 import {
   SessionSurveysWrapper,
   SessionSurveyContainer,
-  Buttons,
-  AttendeeBtn,
   ModalButtonsDiv,
 } from './SessionSurveys.Style';
 
