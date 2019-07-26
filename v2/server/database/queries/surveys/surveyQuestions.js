@@ -22,7 +22,7 @@ const surveyQs = async (surveyType, shortId) => {
   // get the session details
   const sessionDetails = await Session.findOne({ shortId });
   // get the trainer details as an array of ids
-  const { trainers, _id: sessionId } = sessionDetails;
+  const { trainers, _id: sessionId, type } = sessionDetails;
 
   // get users
   const users = await User.find();
@@ -43,6 +43,7 @@ const surveyQs = async (surveyType, shortId) => {
     questionsForSurvey,
     sessionId,
     surveyType,
+    sessionType: type,
   };
 
   return surveyDetails;

@@ -31,20 +31,33 @@ export default class ConfirmSurvey extends Component {
       surveyType,
       sectionChange,
       researchConfirm,
+      sessionType,
     } = this.props;
 
     return (
       <SessionDetailsContainer>
+        {console.log(this.props)}
         <SectionHeadline>Connect 5 Evaluation</SectionHeadline>
-        <SectionSubHeadline>{surveyType}</SectionSubHeadline>
         <SessionDetails>
           <DetailsDiv>
             <Paragraph strong>Date of Session: </Paragraph>
             <Paragraph>{sessionDate}</Paragraph>
           </DetailsDiv>
           <DetailsDiv>
+            <Paragraph strong>Type of Session: </Paragraph>
+            <Paragraph>{sessionType}</Paragraph>
+          </DetailsDiv>
+          <DetailsDiv>
             <Paragraph strong>Trainers: </Paragraph>
             <Paragraph>{this.renderTrainerNames(trainerNames)}</Paragraph>
+          </DetailsDiv>
+          <DetailsDiv>
+            <Paragraph strong>Survey Type: </Paragraph>
+            <Paragraph>
+              {surveyType.includes('pre')
+                ? 'Pre-Session Survey'
+                : 'Post-Session Survey'}
+            </Paragraph>
           </DetailsDiv>
         </SessionDetails>
         <PromptHeadline>Are these details correct?</PromptHeadline>

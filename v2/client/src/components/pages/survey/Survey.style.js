@@ -139,6 +139,7 @@ export const PromptHeadline = styled.h3`
 export const Paragraph = styled.p`
 ${({ strong }) => (strong ? 'font-weight: 600;' : '300')}
 color: ${colors.black};
+margin-bottom: 0;
 `;
 
 export const SessionDetails = styled.div`

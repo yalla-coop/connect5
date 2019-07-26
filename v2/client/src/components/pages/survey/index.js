@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import swal from 'sweetalert2';
-import { Spin, Alert, Modal } from 'antd';
+import { Alert, Modal } from 'antd';
+import Spin from "./../../common/Spin"
 
 // Styles
 import Header from '../../common/Header';
@@ -450,6 +451,7 @@ class Survey extends Component {
                       sessionDate={surveyData.surveyData.sessionDate}
                       trainerNames={surveyData.surveyData.trainerNames}
                       surveyType={surveyData.surveyData.surveyType}
+                      sessionType={surveyData.surveyData.sessionType}
                       sectionChange={this.sectionChange}
                       researchConfirm={this.researchConfirm}
                     />
