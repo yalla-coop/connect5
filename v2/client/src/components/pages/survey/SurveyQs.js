@@ -367,8 +367,9 @@ export default class Questions extends React.Component {
             <Progress
               type="circle"
               percent={completionRate}
-              width={80}
+              width={60}
               strokeColor={`${colors.green}`}
+              style={{ color: 'white !important' }}
             />
           </ProgressWrapper>
         </QuestionWrapper>

@@ -57,8 +57,11 @@ export const SubmitBtn = styled.button`
 
 export const FooterDiv = styled.div`
   background: ${props =>
-    props.colorChange ? colors.green : colorCodes.mediumGray}};
+    props.colorChange ? colors.green : colors.profileFontColor};
   display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   justify-content: center;
   align-items: center;
 `;
@@ -89,7 +92,7 @@ export const ButtonDiv = styled.div`
   justify-content: space-around;
   padding: 1.5rem;
 
-  button {
+  /* button {
     color: ${colors.white};
     background-color: ${colors.blackSecondary};
     border: ${borders.button};
@@ -98,19 +101,12 @@ export const ButtonDiv = styled.div`
   button: hover {
     color: ${colors.white};
     background-color: ${colors.primary};
-  }
+  } */
 `;
 
 export const SkipButtonsDiv = styled(ButtonDiv)`
   button {
-    color: ${colors.white};
-    background-color: ${colors.blackSecondary};
-    border: ${borders.button};
-  }
-
-  button: hover {
-    color: ${colors.white};
-    background-color: ${colors.primary};
+    background-color: ${props => props.submit && colors.green};
   }
 `;
 

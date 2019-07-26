@@ -124,7 +124,10 @@ class Survey extends Component {
 
   // renders back and next button and calls section change and submit actions
   renderSkipButtons = (section, disabled, uniqueGroups) => {
-    const { PIN, surveyParts, currentStep } = this.state;
+    const { PIN, surveyParts, currentStep, completionRate } = this.state;
+    const readyForSubmission =
+      completionRate === 100 &&
+      section === uniqueGroups[uniqueGroups.length - 1];
     return (
       <SkipButtonsDiv>
         <Button
@@ -141,28 +144,38 @@ class Survey extends Component {
           }}
         />
 
+        {readyForSubmission ? (
         <Button
-          label="Next"
+          label="Submit"
+          submit
           width="100px"
           height="50px"
           type="primary"
-          disabled={
-            section === uniqueGroups[uniqueGroups.length - 1] || disabled
-          }
-          onClick={() => {
-            window.scrollTo(0, 0);
-            this.sectionChange('forward', uniqueGroups);
-            this.setState({
-              currentStep:
-                currentStep === uniqueGroups.length + 1
-                  ? uniqueGroups.length + 1
-                  : currentStep + 1,
-            });
-            if (section === 'enterPIN') {
-              this.submitPIN(PIN, surveyParts);
-            }
-          }}
+          onClick={this.handleSubmit}
         />
+        ) : (
+        <Button
+        label="Next"
+        width="100px"
+        height="50px"
+        type="primary"
+        disabled={
+          section === uniqueGroups[uniqueGroups.length - 1] || disabled
+        }
+        onClick={() => {
+          window.scrollTo(0, 0);
+          this.sectionChange('forward', uniqueGroups);
+          this.setState({
+            currentStep:
+              currentStep === uniqueGroups.length + 1
+                ? uniqueGroups.length + 1
+                : currentStep + 1,
+          });
+          if (section === 'enterPIN') {
+            this.submitPIN(PIN, surveyParts);
+          }
+        }}
+        />)}
       </SkipButtonsDiv>
     );
   };
@@ -271,7 +284,7 @@ class Survey extends Component {
         Modal.error({
           title: 'Please fill out the pre-survey for this session!',
           content:
-            'Before filling out this post-survey please submit the pre-survey. Clicking OK will bring you to the right survey.',
+            'Before filling out this Post Session Survey please submit the Pre Session Survey. Clicking OK will bring you to the right survey.',
           onOk: () => {
             history.push(
               `/survey/${relevantSurveyCounterParts[surveyPart]}&${shortId}`
@@ -375,8 +388,9 @@ class Survey extends Component {
 
   // when participant submits form
   // this puts the required info into an object and sends to server
-  handleSubmit = e => {
-    e.preventDefault();
+  handleSubmit = () => {
+    // e.preventDefault();
+    console.log("reached")
     const { surveyData, submitSurvey: submitSurveyAction } = this.props;
     const { uniqueGroups } = surveyData;
     const { surveyType, sessionId, questionsForSurvey } = surveyData.surveyData;
@@ -396,8 +410,9 @@ class Survey extends Component {
       questionsForParticipant,
     };
     if (PIN && completionRate === 100) {
+      console.log("here now")
       submitSurveyAction(formSubmission);
-    }
+    } 
   };
 
   render() {
@@ -506,14 +521,15 @@ class Survey extends Component {
                               completionRate
                             )}
                             completionRate={completionRate}
+                             
                           />
                         );
                       }
                       return null;
                     })}
-                  {readyForSubmission && (
+                  {/* {readyForSubmission && (
                     <SubmitBtn type="submit">Submit Feedback</SubmitBtn>
-                  )}
+                  )} */}
                 </Form>
                 {/* footer rendering */}
                 {section !== 'confirmSurvey' && (
