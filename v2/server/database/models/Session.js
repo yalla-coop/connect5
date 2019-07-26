@@ -40,9 +40,10 @@ const sessionSchema = new Schema({
   // list of participants emails
   participantsEmails: [
     {
-      _id: { type: mongoose.Types.ObjectId, auto: true },
+      // _id: { type: mongoose.Types.ObjectId, auto: true },
       email: String,
-      status: { Type: String, enum: ['new', 'sent', 'confirmed'] },
+      status: String,
+      // status: { type: String, enum: ['new', 'sent', 'confirmed'] },
     },
   ],
 });
