@@ -24,7 +24,6 @@ import {
 
 class ViewSessions extends Component {
   componentDidMount() {
-    this.props.fetchALLSessions();
     const { id, viewLevel } = this.props;
     this.fetchSessionsData(viewLevel, id);
   }
@@ -39,8 +38,7 @@ class ViewSessions extends Component {
   fetchSessionsData = (viewLevel, id) => {
     if (viewLevel === 'admin') {
       this.props.fetchALLSessions();
-    }
-    if (viewLevel === 'trainer') {
+    } else if (viewLevel === 'trainer') {
       this.props.fetchTrainerSessions(id);
     } else if (viewLevel === 'localLead') {
       this.props.fetchLocalLeadSessions(id);

@@ -1,9 +1,10 @@
 const boom = require('boom');
-const createNewsession = require('./../database/queries/add_session');
+const createNewsession = require('./../database/queries/addSession');
 const sendSurvey = require('../helpers/emails/sendSurvey');
 
 const addSession = async (req, res, next) => {
   const { user } = req;
+
   const {
     session,
     startDate,
@@ -17,10 +18,18 @@ const addSession = async (req, res, next) => {
 
   const trainers = [];
   try {
-    if (session && startDate && inviteesNumber && region && emails) {
-      if (partnerTrainer1) {
+    if (
+      session &&
+      startDate &&
+      inviteesNumber &&
+      region &&
+      // partnerTrainer1 &&
+      emails
+    ) {
+      if (partnerTrainer1.length > 0) {
         trainers.push(partnerTrainer1);
-      } else if (partnerTrainer2) {
+      }
+      if (partnerTrainer2.length > 0) {
         trainers.push(partnerTrainer2);
       } else {
         trainers.push(user._id);

@@ -36,11 +36,11 @@ describe('Test Session schema', () => {
       region: 'North East',
       trainers: [trainer],
       participantsEmails: [
-        'ramy@gmail.com',
-        'abd@gmail.com',
-        'marwa@gmail.com',
-        'joe@gmail.com',
-        'simon@gmail.com',
+        { email: 'ramy@gmail.com', status: 'new' },
+        { email: 'abd@gmail.com', status: 'new' },
+        { email: 'marwa@gmail.com', status: 'new' },
+        { email: 'joe@gmail.com', status: 'new' },
+        { email: 'simon@gmail.com', status: 'new' },
       ],
     };
     const storedSession = await Session.create(session);

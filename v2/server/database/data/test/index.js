@@ -15,11 +15,11 @@ const buildTestData = () =>
         // delete all documents from models
         await resetDb();
         await users();
+        await participant();
         await sessions();
         await questions();
         await responses();
         await answers();
-        await participant();
       })
       .then(resolve)
       .catch(reject);

@@ -5,7 +5,7 @@ const {
 
 module.exports = async (req, res, next) => {
   const { id } = req.params;
-  getSessionDetails(id)
+  getSessionDetails({ id })
     .then(sessionDetails => {
       if (sessionDetails) {
         return res.json(sessionDetails);
