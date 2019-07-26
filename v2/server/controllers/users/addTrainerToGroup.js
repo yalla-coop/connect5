@@ -44,7 +44,7 @@ module.exports = async (req, res, next) => {
       await sendNewTrainerLoginDetails(name, email, randomPassword);
     }
     return res.json({
-      success: `${trainer.name} has been added to ${localLeadName}'s group and login details has just been sent to his/her email`,
+      success: `${trainer.name} has been added to ${localLeadName}'s group and login details have been sent to his/her email`,
     });
   } catch (error) {
     return next(boom.badImplementation());
