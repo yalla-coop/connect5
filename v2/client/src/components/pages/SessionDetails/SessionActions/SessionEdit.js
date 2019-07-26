@@ -26,6 +26,7 @@ import {
   InputLabel,
   BackLink,
   BackContainer,
+  EmailError
 } from './SessionActions.Style';
 
 import Header from '../../../common/Header';
@@ -44,7 +45,8 @@ class EditSession extends Component {
     startTime: null,
     endTime: null,
     address: null,
-    err: false,
+    err: null,
+    emailErr: null,
     stateLoaded: false,
   };
 
@@ -148,6 +150,8 @@ class EditSession extends Component {
 
   onEmailChange = value => {
     const { emails } = this.state;
+    // remove emailError
+    this.setState({ emailErr: null })
 
     // check if any emails have been removed
     const remainingEmails = emails.filter(item => value.includes(item.email));
@@ -161,7 +165,7 @@ class EditSession extends Component {
 
     if (incorrectEmails.length > 0) {
       this.setState({
-        err: '* Please enter a valid email',
+        emailErr: '* Please enter a valid email',
       });
     } else if (newEmails.length > 0) {
       const newEmailObjs = newEmails.map(email => ({ email, status: 'new' }));
@@ -240,6 +244,7 @@ class EditSession extends Component {
       inviteesNumber,
       address,
       err,
+      emailErr,
       emails,
       session,
       partnerTrainer1,
@@ -258,7 +263,6 @@ class EditSession extends Component {
     } = this;
     return (
       <EditSessionWrapper>
-        {console.log('emails', participantsEmails)}
         <Header type="view" label="Edit Session" />
         <BackContainer>
           <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
@@ -392,7 +396,7 @@ class EditSession extends Component {
                 </Option>
               ))}
             </Select>
-            <div>{err}</div>
+            <EmailError>{emailErr}</EmailError>
           </InputDiv>
 
           <InputDiv>
