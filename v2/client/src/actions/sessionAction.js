@@ -27,7 +27,6 @@ export const createSessionAction = sessionData => dispatch => {
       });
     })
     .catch(err => {
-      console.log('errr', err);
       return Modal.error({
         title: 'Error',
         content: err,

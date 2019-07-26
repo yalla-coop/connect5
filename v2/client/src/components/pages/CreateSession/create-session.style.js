@@ -20,6 +20,14 @@ export const Heading = styled.h1`
   margin-bottom: 1rem;
 `;
 
+export const Warning = styled.h1`
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 1rem;
+  color: ${colors.errorRed};
+`;
+
 export const Form = styled.form`
   background: ${colors.lightGray};
   display: flex;

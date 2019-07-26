@@ -21,6 +21,7 @@ import {
   Heading,
   SubmitBtn,
   Error,
+  Warning,
 } from './create-session.style';
 
 const { Option } = Select;
@@ -31,9 +32,9 @@ for (let i = 10; i < 36; i += 1) {
 }
 
 const initialState = {
-  session: '',
+  session: null,
   startDate: null,
-  inviteesNumber: '',
+  inviteesNumber: null,
   region: null,
   partnerTrainer1: '',
   partnerTrainer2: '',
@@ -219,7 +220,10 @@ class CreateSession extends Component {
       partnerTrainer1,
       partnerTrainer2,
       emails,
+      startDate,
+      region,
     } = this.state;
+
     const {
       onDateChange,
       onInputChange,
@@ -242,6 +246,7 @@ class CreateSession extends Component {
               size="large"
               style={{ width: '100%' }}
             />
+            {startDate === null && <Warning>* required</Warning>}
           </InputDiv>
 
           <InputDiv>
@@ -260,6 +265,7 @@ class CreateSession extends Component {
                 </Option>
               ))}
             </Select>
+            {session === null && <Warning>* required</Warning>}
           </InputDiv>
 
           <InputDiv>
@@ -272,6 +278,7 @@ class CreateSession extends Component {
               size="large"
               min="0"
             />
+            {inviteesNumber === null && <Warning>* required</Warning>}
           </InputDiv>
 
           <InputDiv>
@@ -282,14 +289,15 @@ class CreateSession extends Component {
               optionFilterProp="children"
               onChange={onSelectRegionChange}
               size="large"
-              value={this.state.region ? this.state.region : undefined}
+              value={region}
             >
-              {regions.map(region => (
-                <Option key={region} value={region}>
-                  {region}
+              {regions.map(reg => (
+                <Option key={reg} value={reg}>
+                  {reg}
                 </Option>
               ))}
             </Select>
+            {region === null && <Warning>* required</Warning>}
           </InputDiv>
 
           <InputDiv>
@@ -415,7 +423,7 @@ class CreateSession extends Component {
               width="100%"
             />
           </SubmitBtn>
-          {err && <Error>All inputs are required</Error>}
+          {err && <Error>Please fill in all required inputs</Error>}
         </Form>
       </CreateSessionWrapper>
     );
