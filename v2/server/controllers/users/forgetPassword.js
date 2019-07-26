@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
 
   crypto.randomBytes(32, (err, buffer) => {
     if (err) {
-      console.log(err);
+      return next(boom.badImplimentation());
     }
     const token = buffer.toString('hex');
 

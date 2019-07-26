@@ -1,8 +1,8 @@
 const mailer = require('./index');
 
 module.exports = (to, token, name) => {
-  // const domain = process.env.DOMAIN;
-  const link = `http://localhost:3000/reset-password/${token}`;
+  const domain = process.env.DOMAIN;
+  const link = `${domain}/reset-password/${token}`;
 
   const html = `
   <div style="text-align: center;">
