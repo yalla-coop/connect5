@@ -235,7 +235,6 @@ class EditSession extends Component {
       type,
       startTime,
       endTime,
-      numberOfAttendees,
       region,
       participantsEmails,
     } = sessionDetails;
