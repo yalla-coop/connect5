@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { colors, colorCodes, borders } from '../../../theme';
+import { colors, borders } from '../../../theme';
 
 export const Container = styled.div`
   max-width: 900px;
   margin: 0 auto;
-  padding: 3rem 0;
+  padding: 3rem 0 7rem 0;
   display: flex;
   flex-direction: column;
   min-height: 95vh;
@@ -34,7 +34,7 @@ export const Form = styled.form`
 `;
 
 export const SubmitBtn = styled.button`
-  border: ${borders.button};
+  border: ${`2px ${colors.green} solid`};
   box-shadow: ${colors.button};
   color: ${colors.black};
   padding: 1rem;
@@ -47,7 +47,7 @@ export const SubmitBtn = styled.button`
   cursor: pointer;
   opacity: 0.9;
   :hover {
-    color: ${colorCodes.lightPrimary};
+    color: ${colors.green};
     opacity: 1;
   }
   @media (min-width: 768px) {

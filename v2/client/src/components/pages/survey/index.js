@@ -144,16 +144,7 @@ class Survey extends Component {
           }}
         />
 
-        {readyForSubmission ? (
-        <Button
-          label="Submit"
-          submit
-          width="100px"
-          height="50px"
-          type="primary"
-          onClick={this.handleSubmit}
-        />
-        ) : (
+        {!readyForSubmission && (
         <Button
         label="Next"
         width="100px"
@@ -388,9 +379,8 @@ class Survey extends Component {
 
   // when participant submits form
   // this puts the required info into an object and sends to server
-  handleSubmit = () => {
-    // e.preventDefault();
-    console.log("reached")
+  handleSubmit = e => {
+    e.preventDefault();
     const { surveyData, submitSurvey: submitSurveyAction } = this.props;
     const { uniqueGroups } = surveyData;
     const { surveyType, sessionId, questionsForSurvey } = surveyData.surveyData;
@@ -410,7 +400,6 @@ class Survey extends Component {
       questionsForParticipant,
     };
     if (PIN && completionRate === 100) {
-      console.log("here now")
       submitSurveyAction(formSubmission);
     } 
   };
@@ -527,9 +516,9 @@ class Survey extends Component {
                       }
                       return null;
                     })}
-                  {/* {readyForSubmission && (
+                  {readyForSubmission && (
                     <SubmitBtn type="submit">Submit Feedback</SubmitBtn>
-                  )} */}
+                  )}
                 </Form>
                 {/* footer rendering */}
                 {section !== 'confirmSurvey' && (

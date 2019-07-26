@@ -8,7 +8,6 @@ import {
   ButtonDiv,
   SessionDetails,
   SectionHeadline,
-  SectionSubHeadline,
   PromptHeadline,
   Paragraph,
   DetailsDiv,
