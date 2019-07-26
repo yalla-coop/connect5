@@ -42,7 +42,7 @@ class ViewSessions extends Component {
     }
     if (viewLevel === 'trainer') {
       this.props.fetchTrainerSessions(id);
-    } else {
+    } else if (viewLevel === 'localLead') {
       this.props.fetchLocalLeadSessions(id);
     }
   };
