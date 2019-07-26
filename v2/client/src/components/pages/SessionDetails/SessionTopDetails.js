@@ -4,17 +4,27 @@ import moment from 'moment';
 import {
   SessionTopDetailsWrapper,
   Statistic,
-  Trainers,
   StatisticItems,
   StatisticName,
   StatisticValue,
   TrainersName,
+  SubDetails,
+  SubDetailsContent,
+  SubDetailsTitle,
 } from './SessionDetails.Style';
 
 class SessionTopDetails extends Component {
   render() {
     const { sessionDetails } = this.props;
-    const { date, type, numberOfAttendees, trainers } = sessionDetails;
+    const {
+      date,
+      type,
+      numberOfAttendees,
+      trainers,
+      startTime,
+      endTime,
+      address,
+    } = sessionDetails;
     if (!sessionDetails) {
       return <div>loading</div>;
     }
@@ -35,15 +45,25 @@ class SessionTopDetails extends Component {
             <StatisticValue>{numberOfAttendees}</StatisticValue>
           </StatisticItems>
         </Statistic>
-        <Trainers>
-          Trainer(s):
+        <SubDetails>
+          <SubDetailsTitle>Trainer(s):</SubDetailsTitle>
           <TrainersName to="/">{trainers[0].name}</TrainersName>
           {trainers[1] && (
             <TrainersName to="/">
               &<span style={{ marginLeft: '.8rem' }}>{trainers[1].name}</span>
             </TrainersName>
           )}
-        </Trainers>
+        </SubDetails>
+        <SubDetails>
+          <SubDetailsTitle>Address:</SubDetailsTitle>
+          <SubDetailsContent>{address || 'Not entered'}</SubDetailsContent>
+        </SubDetails>
+        <SubDetails>
+          <SubDetailsTitle>Times:</SubDetailsTitle>
+          <SubDetailsContent>
+            {startTime || 'N/A'} to {endTime || 'N/A'}
+          </SubDetailsContent>
+        </SubDetails>
       </SessionTopDetailsWrapper>
     );
   }

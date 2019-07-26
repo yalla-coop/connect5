@@ -164,13 +164,7 @@ class SurveyResults extends Component {
                 </Panel>
               </Collapse>
             </div>
-            {/* <ButtonWrapper>
-              <Button icon="download" size="large">
-                Export to CSV
-              </Button>
-            </ButtonWrapper> */}
             <ExportButton />
-            {console.log("you're here")}
           </>
         ) : (
           <IndividualWrapper>

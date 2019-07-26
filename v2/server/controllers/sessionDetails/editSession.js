@@ -14,7 +14,11 @@ module.exports = async (req, res, next) => {
     partnerTrainer1,
     partnerTrainer2,
     emails,
+    startTime,
+    endTime,
+    address,
   } = data;
+
   editSessionQuery(
     id,
     session,
@@ -23,7 +27,10 @@ module.exports = async (req, res, next) => {
     region,
     partnerTrainer1,
     partnerTrainer2,
-    emails
+    emails,
+    startTime,
+    endTime,
+    address
   )
     .then(() => {
       return res.json('success');

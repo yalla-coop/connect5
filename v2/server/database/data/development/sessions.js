@@ -14,6 +14,9 @@ module.exports = async () => {
       shortId: shortid.generate(),
       numberOfAttendees: 10,
       region: 'North East',
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       trainers: [trainers[0], trainers[1]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
@@ -44,6 +47,9 @@ module.exports = async () => {
       shortId: shortid.generate(),
       numberOfAttendees: 10,
       region: 'North East',
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       trainers: [trainers[0], trainers[2]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
@@ -59,6 +65,9 @@ module.exports = async () => {
       shortId: shortid.generate(),
       numberOfAttendees: 5,
       region: 'North East',
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       trainers: [trainers[0]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
@@ -74,6 +83,9 @@ module.exports = async () => {
       shortId: shortid.generate(),
       numberOfAttendees: 7,
       region: 'North East',
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       trainers: [trainers[0], trainers[2]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
@@ -89,6 +101,9 @@ module.exports = async () => {
       shortId: shortid.generate(),
       numberOfAttendees: 8,
       region: 'North East',
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       trainers: [trainers[0]],
       participantsEmails: [
         { email: 'alex@gmail.com', status: 'new' },
@@ -103,6 +118,9 @@ module.exports = async () => {
       shortId: shortid.generate(),
       numberOfAttendees: 33,
       region: 'North East',
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       trainers: [trainers[5]],
       participantsEmails: [
         { email: 'alex@gmail.com', status: 'new' },
@@ -117,6 +135,9 @@ module.exports = async () => {
       shortId: shortid.generate(),
       numberOfAttendees: 12,
       region: 'North East',
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       trainers: [trainers[1]],
       participantsEmails: [
         { email: 'sozan@gmail.com', status: 'new' },
@@ -133,6 +154,9 @@ module.exports = async () => {
       shortId: shortid.generate(),
       numberOfAttendees: 5,
       region: 'North West',
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       trainers: [trainers[0], localLeads[0]],
       participantsEmails: [
         { email: 'nichole@gmail.com', status: 'new' },
@@ -161,6 +185,9 @@ module.exports = async () => {
       shortId: shortid.generate(),
       numberOfAttendees: 7,
       region: 'North West',
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       trainers: [localLeads[0]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
@@ -175,6 +202,9 @@ module.exports = async () => {
       shortId: shortid.generate(),
       numberOfAttendees: 40,
       region: 'North West',
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       trainers: [localLeads[1]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
@@ -190,6 +220,9 @@ module.exports = async () => {
       type: '3',
       shortId: shortid.generate(),
       numberOfAttendees: 5,
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       region: 'North West',
       trainers: [localLeads[0], trainers[0]],
       participantsEmails: [

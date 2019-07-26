@@ -14,6 +14,9 @@ module.exports = async () => {
       shortId: shortid.generate(),
       numberOfAttendees: 10,
       region: 'North East',
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       trainers: [trainers[0], trainers[1]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
@@ -44,6 +47,9 @@ module.exports = async () => {
       shortId: shortid.generate(),
       numberOfAttendees: 10,
       region: 'North East',
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
       trainers: [trainers[0], trainers[2]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },

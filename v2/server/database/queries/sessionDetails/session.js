@@ -36,7 +36,10 @@ module.exports.editSessionQuery = async (
   region,
   partnerTrainer1,
   partnerTrainer2,
-  emails
+  emails,
+  startTime,
+  endTime,
+  address
 ) => {
   const trainers = [partnerTrainer1];
   if (partnerTrainer2) {
@@ -48,26 +51,11 @@ module.exports.editSessionQuery = async (
     numberOfAttendees: inviteesNumber,
     region,
     trainers,
+    participantsEmails: emails,
+    startTime,
+    endTime,
+    address,
   });
-
-  const changedEmails = [...emails];
-
-  session.participantsEmails.forEach((emailObject, index) => {
-    // delete
-    if (!emails.includes(emailObject.email)) {
-      session.participantsEmails[index].remove();
-    } else {
-      // skip
-      const changedIndex = changedEmails.indexOf(emailObject.email);
-      changedEmails.splice(changedIndex, 1);
-    }
-  });
-
-  // add the new emails
-  session.participantsEmails = [
-    ...session.participantsEmails,
-    ...changedEmails.map(item => ({ email: item, status: 'new' })),
-  ];
 
   return session.save();
 };
