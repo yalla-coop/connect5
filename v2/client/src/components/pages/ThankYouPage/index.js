@@ -12,7 +12,7 @@ const ThankYouPage = () => {
     <ThankYouWrapper>
       <ThankYouMsg>Thank you for filling the survey</ThankYouMsg>
       <Paragraph>
-        you can get your certificate by clicking here (this feature is comming
+        you can get your certificate by clicking here (this feature is coming
         soon)
       </Paragraph>
       <StyledLink to="/">

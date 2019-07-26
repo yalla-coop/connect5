@@ -1,54 +1,25 @@
 // this is where we map through all the questions
 // and populate the Survey component
-
 import React from 'react';
-import { Alert, DatePicker } from 'antd';
+import { DatePicker, Progress } from 'antd';
+// please leave this inside for antd to style right
+import 'antd/dist/antd.css';
+import { colors } from '../../../theme';
+
 import {
   RadioField,
   TextField,
   Slider,
   NumberSliderDiv,
   NumberOutput,
-  ErrorDiv,
   QuestionWrapper,
   SectionCategory,
   SubGroup,
+  Warning,
 } from './Questions.style';
-// please leave this inside for antd to style right
-import 'antd/dist/antd.css';
 
+import { ProgressWrapper } from './Survey.style';
 // checks if errors are present (renders error msg after submit)
-const checkErrors = (errorArr, questionId, answers, errors) => {
-  if (errorArr.includes(questionId) && !answers[questionId]) {
-    return (
-      <ErrorDiv>
-        {' '}
-        <Alert message={`${errors[questionId]}`} type="error" />
-      </ErrorDiv>
-    );
-  }
-  if (
-    errorArr.includes(questionId) &&
-    errors[questionId] === 'enter a valid UK postcode'
-  ) {
-    return (
-      <ErrorDiv>
-        <Alert message={`${errors[questionId]}`} type="error" />
-      </ErrorDiv>
-    );
-  }
-  return null;
-};
-
-// checks and renders PIN validation msg
-const checkPINerror = errors =>
-  errors.PIN ? (
-    <ErrorDiv>
-      <Alert message={`${errors.PIN}`} type="error" />
-    </ErrorDiv>
-  ) : (
-    ''
-  );
 
 // renders questions accordingly to their input type
 const renderQuestionInputType = (
@@ -66,27 +37,53 @@ const renderQuestionInputType = (
   errors,
   handleAntdDatePicker,
   group,
-  participantField
+  participantField,
+  onChangePostcode,
+  postcodeValid
 ) => {
   if (inputType === 'text') {
     return (
-      <TextField
-        unanswered={errorArray.includes(questionId) && !answers[questionId]}
-      >
+      <TextField>
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
-          {checkErrors(errorArray, questionId, answers, errors)}
         </header>
-        <input
-          id={index}
-          name={questionId}
-          type="text"
-          onChange={onChange}
-          data-group={group}
-          data-field={participantField}
-        />
+
+        {questionText === 'Please enter the postcode where you are active' ? (
+          <div>
+            <Warning>
+              {!postcodeValid && '* please enter a valid UK postcode'}
+            </Warning>
+            <input
+              id={index}
+              name={questionId}
+              type="text"
+              onChange={onChangePostcode}
+              data-group={group}
+              data-field={participantField}
+            />
+          </div>
+        ) : (
+          <div>
+            <Warning>
+              {!answers[questionId] && '* this question must be answered'}
+            </Warning>
+            <input
+              id={index}
+              name={questionId}
+              type="text"
+              onChange={onChange}
+              data-group={group}
+              data-field={participantField}
+              value={
+                answers[questionId] && answers[questionId].answer
+                  ? answers[questionId].answer
+                  : ''
+              }
+            />
+          </div>
+        )}
       </TextField>
     );
   }
@@ -99,7 +96,9 @@ const renderQuestionInputType = (
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
-          {checkErrors(errorArray, questionId, answers, errors)}
+          {!answers[questionId] && (
+            <Warning>* this question must be answered</Warning>
+          )}
         </header>
         <DatePicker
           id={index}
@@ -107,6 +106,7 @@ const renderQuestionInputType = (
           onChange={value =>
             handleAntdDatePicker(questionId, value, group, participantField)
           }
+          value={answers[questionId] && answers[questionId].answer}
         />
       </TextField>
     );
@@ -121,7 +121,9 @@ const renderQuestionInputType = (
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">Please specify number</p>
           <p className="helpertext">{helperText}</p>
-          {checkErrors(errorArray, questionId, answers, errors)}
+          {!answers[questionId] && (
+            <Warning>* this question must be answered</Warning>
+          )}
         </header>
         <input
           id={index}
@@ -131,6 +133,11 @@ const renderQuestionInputType = (
           onChange={onChange}
           data-group={group}
           data-field={participantField}
+          value={
+            answers[questionId] && answers[questionId].answer
+              ? answers[questionId].answer
+              : ''
+          }
         />
       </TextField>
     );
@@ -147,7 +154,9 @@ const renderQuestionInputType = (
             Please choose: 0 (strongly disagree) to 10 (strongly agree)
           </p>
           <p className="helpertext">{helperText}</p>
-          {checkErrors(errorArray, questionId, answers, errors)}
+          {!answers[questionId] && (
+            <Warning>* this question must be answered</Warning>
+          )}
         </header>
         <NumberSliderDiv>
           <Slider
@@ -178,7 +187,9 @@ const renderQuestionInputType = (
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
-          {checkErrors(errorArray, questionId, answers, errors)}
+          {!answers[questionId] && (
+            <Warning>* this question must be answered</Warning>
+          )}
         </header>
         <div className="answers">
           {options.map(e => {
@@ -190,6 +201,12 @@ const renderQuestionInputType = (
                   <label htmlFor={uniqueId}>
                     <input
                       value={value}
+                      checked={
+                        answers[questionId] &&
+                        answers[questionId].answer === value
+                          ? value
+                          : ''
+                      }
                       id={uniqueId}
                       name={questionId}
                       type="radio"
@@ -247,7 +264,9 @@ const questionsRender = (
   onChange,
   handleOther,
   errors,
-  handleAntdDatePicker
+  handleAntdDatePicker,
+  onChangePostcode,
+  postcodeValid
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group === 'demographic'
@@ -301,7 +320,9 @@ const questionsRender = (
                   errors,
                   handleAntdDatePicker,
                   group,
-                  participantField
+                  participantField,
+                  onChangePostcode,
+                  postcodeValid
                 )}
               </div>
             );
@@ -316,11 +337,13 @@ export default class Questions extends React.Component {
       onChange,
       questions,
       handleOther,
-      handlePIN,
+      renderSkipButtons,
       answers,
       errors,
       handleAntdDatePicker,
-      onPINBlur,
+      onChangePostcode,
+      postcodeValid,
+      completionRate,
     } = this.props;
 
     const errorArray = Object.keys(errors);
@@ -328,42 +351,28 @@ export default class Questions extends React.Component {
     return (
       <React.Fragment>
         <QuestionWrapper>
-          <SectionCategory>Please enter your PIN</SectionCategory>
-          <TextField>
-            <header>
-              <p>
-                {` We want to create a PIN code so that we can link your responses to
-              this survey with your responses to other Connect 5 surveys, whilst
-              you remain entirely anonymous. In order to do that, `}
-                <strong>
-                  {` please type in the third letter of your first name, the first
-                two letters of your mother's first name and the date you were
-                born `}
-                </strong>
-                (e.g., you would type 01 if you were born on the 1st July)
-              </p>
-            </header>
-            {checkPINerror(errors)}
-            <input
-              id="PIN"
-              name="PIN"
-              type="text"
-              maxLength="5"
-              minLength="5"
-              onChange={handlePIN}
-              onBlur={onPINBlur}
+          {questionsRender(
+            questions,
+            answers,
+            errorArray,
+            onChange,
+            handleOther,
+            errors,
+            handleAntdDatePicker,
+            onChangePostcode,
+            postcodeValid
+          )}
+          {renderSkipButtons}
+          <ProgressWrapper>
+            <Progress
+              type="circle"
+              percent={completionRate}
+              width={60}
+              strokeColor={`${colors.green}`}
+              style={{ color: 'white !important' }}
             />
-          </TextField>
+          </ProgressWrapper>
         </QuestionWrapper>
-        {questionsRender(
-          questions,
-          answers,
-          errorArray,
-          onChange,
-          handleOther,
-          errors,
-          handleAntdDatePicker
-        )}
       </React.Fragment>
     );
   }

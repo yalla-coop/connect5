@@ -16,6 +16,7 @@ import changePasswordReducer from './changePasswordReducer';
 import exportDataReducer from './exportDataReducer';
 import demographicsReducer from './demographics';
 import adminSessionsReducer from './adminSessionsReducer';
+import surveyReducer from './surveyReducer';
 import confirmRegistration from './confirmRegistration';
 
 export default combineReducers({
@@ -35,5 +36,6 @@ export default combineReducers({
   exportData: exportDataReducer,
   demographics: demographicsReducer,
   adminSessions: adminSessionsReducer,
+  survey: surveyReducer,
   confirmRegistration,
 });

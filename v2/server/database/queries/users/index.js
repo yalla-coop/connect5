@@ -20,6 +20,9 @@ module.exports.updateParticipant = data =>
   });
 
 module.exports.getParticipantById = id => Participant.findById(id);
+
+module.exports.getParticipantByPIN = PIN => Participant.find({ PIN });
+
 module.exports.updateUserById = (userId, data) =>
   User.findByIdAndUpdate(
     userId,
