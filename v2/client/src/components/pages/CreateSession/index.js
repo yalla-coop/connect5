@@ -194,6 +194,7 @@ class CreateSession extends Component {
       emails,
       sendByEmail,
     } = this.state;
+
     const sessionData = {
       session,
       startDate,
@@ -204,7 +205,6 @@ class CreateSession extends Component {
       emails,
       sendByEmail,
     };
-
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
     return !this.checkError() && this.props.createSessionAction(sessionData);
   };

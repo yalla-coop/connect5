@@ -10,12 +10,12 @@ import store from '../store';
 export const createSessionAction = sessionData => dispatch => {
   axios
     .post('/api/add-session', sessionData)
-    .then(res =>
+    .then(res => {
       dispatch({
         type: ADD_SESSION_SUCCESS,
         payload: res.data,
-      })
-    )
+      });
+    })
     .then(() => {
       const { role } = store.getState().auth;
 
@@ -26,13 +26,14 @@ export const createSessionAction = sessionData => dispatch => {
           history.push(role === 'trainer' ? 'trainer-sessions' : '/sessions'),
       });
     })
-    .catch(err =>
-      Modal.error({
+    .catch(err => {
+      console.log('errr', err);
+      return Modal.error({
         title: 'Error',
         content: err,
         onOk: history.push('/create-session'),
-      })
-    );
+      });
+    });
 };
 
 export const getSessionDetails = shortId => dispatch => {
