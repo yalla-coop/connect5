@@ -301,7 +301,7 @@ class EditSession extends Component {
           <InputDiv>
             <Input
               type="number"
-              placeholder={numberOfAttendees}
+              placeholder="Enter number of attendees"
               value={inviteesNumber}
               onChange={onInputChange}
               name="inviteesNumber"
