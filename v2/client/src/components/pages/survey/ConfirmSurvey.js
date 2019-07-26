@@ -36,7 +36,6 @@ export default class ConfirmSurvey extends Component {
 
     return (
       <SessionDetailsContainer>
-        {console.log(this.props)}
         <SectionHeadline>Connect 5 Evaluation</SectionHeadline>
         <SessionDetails>
           <DetailsDiv>

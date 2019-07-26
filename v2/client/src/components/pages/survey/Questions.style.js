@@ -33,7 +33,7 @@ export const QuestionWrapper = styled.div`
   flex-direction: column;
   background-color: ${colors.white};
   margin: 1rem 0;
-  padding: 1rem 0.5rem;
+  padding: 1rem 1rem;
   box-shadow: ${shadows.primary};
 `;
 
@@ -183,4 +183,8 @@ export const SectionCategory = styled.h4`
   text-transform: capitalize;
   margin-bottom: 0.5rem;
   color: ${colors.primary};
+`;
+
+export const StyledUL = styled.ul`
+  margin-left: 1rem;
 `;
