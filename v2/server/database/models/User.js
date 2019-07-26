@@ -18,6 +18,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    resetToken: {
+      value: 'String',
+      expiresIn: Date,
+    },
     //  the trainer's local lead
     localLead: {
       type: Schema.Types.ObjectId,

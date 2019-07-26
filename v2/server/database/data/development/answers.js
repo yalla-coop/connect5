@@ -23,8 +23,6 @@ module.exports = async () => {
   const postDay2Question2 = await Question.find({ surveyType: 'post-day-2' });
 
   const options = ['not at all', 'a little', 'a lot', "I'm not sure"];
-
-  console.log(participants)
   
   const answers = [
     // DEMOGRAPHIC

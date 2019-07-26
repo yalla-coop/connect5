@@ -21,6 +21,15 @@ const sessionSchema = new Schema({
     type: String,
     lowercase: true,
   },
+  address: {
+    type: String,
+  },
+  startTime: {
+    type: String,
+  },
+  endTime: {
+    type: String,
+  },
   // array of trainers must be 2 max
   trainers: [
     {
@@ -31,9 +40,10 @@ const sessionSchema = new Schema({
   // list of participants emails
   participantsEmails: [
     {
-      _id: { type: mongoose.Types.ObjectId, auto: true },
+      // _id: { type: mongoose.Types.ObjectId, auto: true },
       email: String,
-      status: { Type: String, enum: ['new', 'sent', 'confirmed'] },
+      status: String,
+      // status: { type: String, enum: ['new', 'sent', 'confirmed'] },
     },
   ],
 });

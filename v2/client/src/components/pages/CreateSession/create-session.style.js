@@ -35,6 +35,8 @@ export const Form = styled.form`
 
 export const InputDiv = styled.div`
   width: 100%;
+  display: flex;
+  align-items: center;
   margin: 0 auto;
   border: 1px solid ${colors.lightGray};
   &:not(:last-child) {
