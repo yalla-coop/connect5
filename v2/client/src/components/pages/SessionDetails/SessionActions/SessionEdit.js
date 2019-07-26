@@ -235,7 +235,15 @@ class EditSession extends Component {
       region,
       participantsEmails,
     } = sessionDetails;
-    const { startDate, inviteesNumber, address, err, emails } = this.state;
+    const {
+      startDate,
+      inviteesNumber,
+      address,
+      err,
+      emails,
+      session,
+      partnerTrainer1,
+    } = this.state;
     const {
       onDateChange,
       onInputChange,
@@ -273,6 +281,7 @@ class EditSession extends Component {
               showSearch
               style={{ width: '100%' }}
               placeholder={type}
+              value={session}
               optionFilterProp="children"
               onChange={onSelectSessionChange}
               size="large"
@@ -304,6 +313,7 @@ class EditSession extends Component {
               placeholder={region}
               optionFilterProp="children"
               onChange={onSelectRegionChange}
+              value={this.state.region}
               size="large"
             >
               {regions.map(_region => (
@@ -318,9 +328,12 @@ class EditSession extends Component {
             <Select
               showSearch
               style={{ width: '100%' }}
-              placeholder="Partner Trainer"
+              placeholder={
+                role === 'localLead' ? 'Trainer 1' : 'Partner Trainer'
+              }
               optionFilterProp="children"
               onChange={onSelectPartner1Change}
+              value={partnerTrainer1}
               size="large"
             >
               {trainers &&
@@ -342,7 +355,7 @@ class EditSession extends Component {
               <Select
                 showSearch
                 style={{ width: '100%' }}
-                placeholder="Second Partner Trainer"
+                placeholder="Trainer 2"
                 optionFilterProp="children"
                 onChange={onSelectPartner2Change}
                 size="large"
