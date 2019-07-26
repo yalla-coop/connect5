@@ -8,7 +8,8 @@ export const Container = styled.div`
   padding: 3rem 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  min-height: 95vh;
+  align-items: stretch;
 `;
 
 export const SessionDetailsContainer = styled.div`
@@ -29,6 +30,7 @@ export const Form = styled.form`
   flex-direction: column;
   width: 100%;
   align-items: center;
+  flex-grow: 1;
 `;
 
 export const SubmitBtn = styled.button`
@@ -36,6 +38,7 @@ export const SubmitBtn = styled.button`
   box-shadow: ${colors.button};
   color: ${colors.black};
   padding: 1rem;
+  margin-bottom: 1rem;
   border-radius: 6px;
   font-weight: 900;
   font-size: 20px;
@@ -52,12 +55,19 @@ export const SubmitBtn = styled.button`
   }
 `;
 
-export const SubmitBtnDiv = styled.div`
-  width: 100%;
-  height: 10vh;
-  background: ${colors.green};
+export const FooterDiv = styled.div`
+  background: ${props =>
+    props.colorChange ? colors.green : colorCodes.mediumGray}};
   display: flex;
   justify-content: center;
+  align-items: center;
+`;
+
+export const StepProgress = styled.h3`
+  font-weight: 300;
+  margin-top: 10px;
+  font-size: 2rem;
+  color: ${colors.white};
 `;
 
 export const ProgressWrapper = styled.div`

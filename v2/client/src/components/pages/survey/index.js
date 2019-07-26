@@ -11,8 +11,9 @@ import {
   SpinWrapper,
   SkipButtonsDiv,
   Form,
-  SubmitBtnDiv,
+  FooterDiv,
   SubmitBtn,
+  StepProgress,
 } from './Survey.style';
 
 // Actions
@@ -42,6 +43,7 @@ class Survey extends Component {
     postcodeValid: false,
     section: 'confirmSurvey',
     completionRate: 0,
+    currentStep: 1,
   };
 
   componentDidMount() {
@@ -121,7 +123,7 @@ class Survey extends Component {
 
   // renders back and next button and calls section change and submit actions
   renderSkipButtons = (section, disabled, uniqueGroups) => {
-    const { PIN, surveyParts } = this.state;
+    const { PIN, surveyParts, currentStep } = this.state;
     return (
       <SkipButtonsDiv>
         <Button
@@ -132,6 +134,9 @@ class Survey extends Component {
           onClick={() => {
             window.scrollTo(0, 0);
             this.sectionChange('back', uniqueGroups);
+            this.setState({
+              currentStep: currentStep === 1 ? 1 : currentStep - 1,
+            });
           }}
         />
 
@@ -146,6 +151,12 @@ class Survey extends Component {
           onClick={() => {
             window.scrollTo(0, 0);
             this.sectionChange('forward', uniqueGroups);
+            this.setState({
+              currentStep:
+                currentStep === uniqueGroups.length + 1
+                  ? uniqueGroups.length + 1
+                  : currentStep + 1,
+            });
             if (section === 'enterPIN') {
               this.submitPIN(PIN, surveyParts);
             }
@@ -397,12 +408,17 @@ class Survey extends Component {
       postcodeValid,
       completionRate,
       PIN,
+      currentStep,
     } = this.state;
 
     const { surveyData, errors } = this.props;
     const { uniqueGroups } = surveyData;
 
     const loadingError = Object.keys(surveyData.msg).length > 0;
+
+    const readyForSubmission =
+      completionRate === 100 &&
+      section === uniqueGroups[uniqueGroups.length - 1];
 
     const { surveyData: surveyDetails } = surveyData;
     const answers = Object.keys(formState);
@@ -427,79 +443,86 @@ class Survey extends Component {
               <Alert message={surveyData.msg} type="warning" showIcon />
             )}
             {surveyDetails && surveyDetails !== null && (
-              <Form onSubmit={this.handleSubmit}>
-                {section === 'confirmSurvey' && (
-                  <ConfirmSurvey
-                    sessionDate={surveyData.surveyData.sessionDate}
-                    trainerNames={surveyData.surveyData.trainerNames}
-                    surveyType={surveyData.surveyData.surveyType}
-                    sectionChange={this.sectionChange}
-                    researchConfirm={this.researchConfirm}
-                  />
-                )}
-                {section === 'enterPIN' && (
-                  <EnterPIN
-                    key={section}
-                    PIN={PIN}
-                    PINvalid={PINvalid}
-                    handlePIN={this.handlePIN}
-                    onPINBlur={this.checkPINonBlur}
-                    renderSkipButtons={this.renderSkipButtons(
-                      'enterPIN',
-                      !PINvalid,
-                      uniqueGroups
-                    )}
-                    PINerror={PINerror}
-                    completionRate={completionRate}
-                  />
-                )}
-                {/* survey questions start */}
-                {surveyGroups.includes(section) &&
-                  uniqueGroups.map(group => {
-                    const questions =
-                      surveyDetails &&
-                      surveyDetails.questionsForSurvey.filter(
-                        question => question.group === group
-                      );
-                    if (section === group) {
-                      const unanswered = questions
-                        .map(q => q._id)
-                        .filter(q => !answers.includes(q));
-
-                      return (
-                        <SurveyQs
-                          key={group}
-                          questions={questions}
-                          postcodeValid={postcodeValid}
-                          onChangePostcode={this.onChangePostcode}
-                          onChange={this.handleChange}
-                          handleOther={this.handleOther}
-                          answers={formState}
-                          selectCheckedItem={this.selectCheckedItem}
-                          errors={errors}
-                          handleAntdDatePicker={this.handleAntdDatePicker}
-                          renderSkipButtons={this.renderSkipButtons(
-                            group,
-                            section === 'demographic'
-                              ? unanswered.length > 0 && !postcodeValid
-                              : unanswered.length > 0,
-                            uniqueGroups,
-                            completionRate
-                          )}
-                          completionRate={completionRate}
-                        />
-                      );
-                    }
-                    return null;
-                  })}
-
-                {completionRate === 100 &&
-                  section === uniqueGroups[uniqueGroups.length - 1] && (
-                    <SubmitBtnDiv>
-                      <SubmitBtn type="submit">Submit Feedback</SubmitBtn>
-                    </SubmitBtnDiv>
+              <div>
+                <Form onSubmit={this.handleSubmit}>
+                  {section === 'confirmSurvey' && (
+                    <ConfirmSurvey
+                      sessionDate={surveyData.surveyData.sessionDate}
+                      trainerNames={surveyData.surveyData.trainerNames}
+                      surveyType={surveyData.surveyData.surveyType}
+                      sectionChange={this.sectionChange}
+                      researchConfirm={this.researchConfirm}
+                    />
                   )}
-              </Form>
+                  {section === 'enterPIN' && (
+                    <EnterPIN
+                      key={section}
+                      PIN={PIN}
+                      PINvalid={PINvalid}
+                      handlePIN={this.handlePIN}
+                      onPINBlur={this.checkPINonBlur}
+                      renderSkipButtons={this.renderSkipButtons(
+                        'enterPIN',
+                        !PINvalid,
+                        uniqueGroups
+                      )}
+                      PINerror={PINerror}
+                      completionRate={completionRate}
+                    />
+                  )}
+                  {/* survey questions start */}
+                  {surveyGroups.includes(section) &&
+                    uniqueGroups.map(group => {
+                      const questions =
+                        surveyDetails &&
+                        surveyDetails.questionsForSurvey.filter(
+                          question => question.group === group
+                        );
+                      if (section === group) {
+                        const unanswered = questions
+                          .map(q => q._id)
+                          .filter(q => !answers.includes(q));
+
+                        return (
+                          <SurveyQs
+                            key={group}
+                            questions={questions}
+                            postcodeValid={postcodeValid}
+                            onChangePostcode={this.onChangePostcode}
+                            onChange={this.handleChange}
+                            handleOther={this.handleOther}
+                            answers={formState}
+                            selectCheckedItem={this.selectCheckedItem}
+                            errors={errors}
+                            handleAntdDatePicker={this.handleAntdDatePicker}
+                            renderSkipButtons={this.renderSkipButtons(
+                              group,
+                              section === 'demographic'
+                                ? unanswered.length > 0 && !postcodeValid
+                                : unanswered.length > 0,
+                              uniqueGroups,
+                              completionRate
+                            )}
+                            completionRate={completionRate}
+                          />
+                        );
+                      }
+                      return null;
+                    })}
+                  {readyForSubmission && (
+                    <SubmitBtn type="submit">Submit Feedback</SubmitBtn>
+                  )}
+                </Form>
+                {/* footer rendering */}
+                {section !== 'confirmSurvey' && (
+                  <FooterDiv colorChange={readyForSubmission}>
+                    <StepProgress>
+                      Step {section === 'enterPIN' ? 1 : currentStep}/
+                      {uniqueGroups.length + 1}
+                    </StepProgress>
+                  </FooterDiv>
+                )}
+              </div>
             )}
           </Container>
         )}

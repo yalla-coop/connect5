@@ -177,7 +177,6 @@ export const NumberOutput = styled.output`
   line-height: 1.6em;
 `;
 
-
 export const SectionCategory = styled.h4`
   font-size: 1.5rem;
   font-weight: 300;
@@ -185,5 +184,3 @@ export const SectionCategory = styled.h4`
   margin-bottom: 0.5rem;
   color: ${colors.primary};
 `;
-
- 
