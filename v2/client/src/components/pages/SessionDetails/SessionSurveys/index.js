@@ -129,7 +129,7 @@ class SessionSurveys extends Component {
           {surveyType[type].map((survey, index) => {
             return (
               <SurveyContent
-                subId="1"
+                subId={survey}
                 type={survey}
                 surveyURL={links[index]}
                 id={_id}
@@ -138,11 +138,6 @@ class SessionSurveys extends Component {
             );
           })}
         </SessionSurveyContainer>
-        <Buttons>
-          <AttendeeBtn onClick={() => toggleModal(participantsEmails)}>
-            View Attendees List
-          </AttendeeBtn>
-        </Buttons>
         <Modal
           isOpen={modalOpen}
           onClose={toggleModal}
