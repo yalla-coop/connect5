@@ -1,5 +1,5 @@
 const boom = require('boom');
-const createNewsession = require('./../database/queries/add_session');
+const createNewsession = require('./../database/queries/addSession');
 const sendSurvey = require('../helpers/emails/sendSurvey');
 
 const addSession = async (req, res, next) => {

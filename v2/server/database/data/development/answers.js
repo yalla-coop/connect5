@@ -24,6 +24,8 @@ module.exports = async () => {
 
   const options = ['not at all', 'a little', 'a lot', "I'm not sure"];
 
+  console.log(participants)
+  
   const answers = [
     // DEMOGRAPHIC
     {

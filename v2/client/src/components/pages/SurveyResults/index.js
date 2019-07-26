@@ -4,14 +4,12 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import Collapse from 'antd/lib/collapse';
-import Button from 'antd/lib/button';
 import Icon from 'antd/lib/icon';
 
 import { fetchUserResults } from '../../../actions/users';
 import BehavioralSurveyResults from '../../common/BehavioralInsight/Survey';
 import {
   TrainerResultsWrapper,
-  ButtonWrapper,
   StatsDiv,
   Paragraph,
   Bold,
@@ -26,6 +24,7 @@ import {
 import TrainerFeedback from '../../common/Feedback';
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
+import ExportButton from '../../common/ExportButton';
 
 const { Panel } = Collapse;
 
@@ -165,11 +164,13 @@ class SurveyResults extends Component {
                 </Panel>
               </Collapse>
             </div>
-            <ButtonWrapper>
+            {/* <ButtonWrapper>
               <Button icon="download" size="large">
                 Export to CSV
               </Button>
-            </ButtonWrapper>
+            </ButtonWrapper> */}
+            <ExportButton />
+            {console.log("you're here")}
           </>
         ) : (
           <IndividualWrapper>

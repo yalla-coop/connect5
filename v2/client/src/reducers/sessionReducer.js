@@ -2,10 +2,15 @@ import {
   ADD_SESSION_SUCCESS,
   DELETE_SESSION_SUCCESS,
   EDIT_SESSION_SUCCESS,
+  GET_SESSION_DETAILS_BY_SHORT_ID,
 } from '../constants/actionTypes';
 
 const initState = {
   msg: '',
+  trainers: [],
+  date: null,
+  address: null,
+  _id: null,
 };
 
 export default function(state = initState, action) {
@@ -23,6 +28,13 @@ export default function(state = initState, action) {
         ...state,
         msg: payload,
       };
+
+    case GET_SESSION_DETAILS_BY_SHORT_ID:
+      return {
+        ...state,
+        ...payload,
+      };
+
     default:
       return state;
   }

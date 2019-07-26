@@ -95,6 +95,20 @@ const getListOfTrainers = async (req, res, next) => {
   }
 };
 
+const getLocalLeadsTrainerList = async (req, res, next) => {
+  const { localLeadID } = req.body;
+
+  try {
+    const trainers = await getMyTrainers(localLeadID);
+    const cleanedTrainers = trainers.map(trainer => trainer[0]);
+    return res
+      .status(200)
+      .json({ trainerCount: trainers.length, trainerList: cleanedTrainers });
+  } catch (err) {
+    return next(boom.badImplementation('Internal server error'));
+  }
+};
+
 const getAllTrainersAndLeads = async (req, res, next) => {
   // NEED TO MAKE SURE WE PUT THIS THROUGH AUTH SO ONLY ADMIN CAN ACCESS
   const { user } = req;
@@ -116,4 +130,9 @@ const getAllTrainersAndLeads = async (req, res, next) => {
   }
 };
 
-module.exports = { getUserResults, getListOfTrainers, getAllTrainersAndLeads };
+module.exports = {
+  getUserResults,
+  getListOfTrainers,
+  getLocalLeadsTrainerList,
+  getAllTrainersAndLeads,
+};
