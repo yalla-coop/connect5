@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
+import Header from '../../common/Header';
 import {
   LoginHeading,
   H3,
@@ -10,6 +11,8 @@ import {
   LoginFail,
   NoAccount,
   AnotherLink,
+  Paragraph,
+  ForgetPasswordLink,
 } from './Login.style';
 import { loginUser } from '../../../actions/authAction';
 import { clearErrors } from '../../../actions/errorAction';
@@ -19,6 +22,8 @@ import history from '../../../history';
 import {
   DASHBOARD_URL,
   DECIDE_VIEW_URL,
+  FORGET_PASSWORD,
+  SIGN_UP_URL,
 } from '../../../constants/navigationRoutes';
 
 class Login extends Component {
@@ -116,58 +121,66 @@ class Login extends Component {
     const { emailError, passwordError } = errors;
     const { onInputChange, onFormSubmit } = this;
     return (
-      <div style={{ paddingTop: '6rem' }}>
-        <LoginForm onSubmit={onFormSubmit}>
-          <LoginHeading>
-            <H3>Login</H3>
-          </LoginHeading>
-          <InputDiv>
-            <Input
-              placeholder="Enter your email"
-              name="email"
-              type="text"
-              value={email}
-              onChange={onInputChange}
-              size="large"
-            />
+      <>
+        <Header type="home" />
+        <div style={{ paddingTop: '6rem' }}>
+          <LoginForm onSubmit={onFormSubmit}>
+            <LoginHeading>
+              <H3>Login</H3>
+            </LoginHeading>
+            <InputDiv>
+              <Input
+                placeholder="Enter your email"
+                name="email"
+                type="text"
+                value={email}
+                onChange={onInputChange}
+                size="large"
+              />
 
-            <LoginFail>{emailError}</LoginFail>
-          </InputDiv>
-          <InputDiv>
-            <Input.Password
-              placeholder="input password"
-              size="large"
-              name="password"
-              type="text"
-              value={password}
-              onChange={onInputChange}
-            />
-            <LoginFail>{passwordError}</LoginFail>
-          </InputDiv>
-          <InputDiv>
-            <Button
-              onClick={onFormSubmit}
-              type="primary"
-              label="LOGIN"
-              height="40px"
-              width="100%"
-            />
-          </InputDiv>
+              <LoginFail>{emailError}</LoginFail>
+            </InputDiv>
+            <InputDiv>
+              <Input.Password
+                placeholder="input password"
+                size="large"
+                name="password"
+                type="text"
+                value={password}
+                onChange={onInputChange}
+              />
+              <LoginFail>{passwordError}</LoginFail>
 
-          <LoginFail>{msg}</LoginFail>
-        </LoginForm>
+              <ForgetPasswordLink to={FORGET_PASSWORD}>
+                {' '}
+                Forget password?
+              </ForgetPasswordLink>
+            </InputDiv>
+            <InputDiv>
+              <Button
+                onClick={onFormSubmit}
+                type="primary"
+                label="LOGIN"
+                height="40px"
+                width="100%"
+              />
+            </InputDiv>
 
-        <NoAccount>
-          <p>
-            {"Don't have an account? "}
-            <AnotherLink to="/signup"> Sign Up!</AnotherLink>
-          </p>
-          <p>
-            Course participant?
-            <AnotherLink to="/participant-login"> Login here!</AnotherLink>
-          </p>
-        </NoAccount>
-      </div>
+            <LoginFail>{msg}</LoginFail>
+          </LoginForm>
+
+          <NoAccount>
+            <Paragraph>
+              Don't have an account?
+              <AnotherLink to={SIGN_UP_URL}> Sign Up!</AnotherLink>
+            </Paragraph>
+            <Paragraph>
+              Course participant?
+              <AnotherLink to="/participant-login"> Login here!</AnotherLink>
+            </Paragraph>
+          </NoAccount>
+        </div>
+      </>
     );
   }
 }

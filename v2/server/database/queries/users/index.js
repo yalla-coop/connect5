@@ -20,3 +20,16 @@ module.exports.updateParticipant = data =>
   });
 
 module.exports.getParticipantById = id => Participant.findById(id);
+module.exports.updateUserById = (userId, data) =>
+  User.findByIdAndUpdate(
+    userId,
+    { $set: data },
+    // return the updated document
+    { new: true }
+  );
+
+module.exports.findUserByToken = token =>
+  User.findOne({
+    'resetToken.value': token,
+    'resetToken.expiresIn': { $gt: Date.now() },
+  });
