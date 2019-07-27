@@ -273,7 +273,7 @@ class CreateSession extends Component {
           <InputDiv>
             <Input
               type="number"
-              placeholder="Number of session invitees"
+              placeholder="Number of attendees (this can be an estimate)"
               value={inviteesNumber}
               onChange={onInputChange}
               name="inviteesNumber"
