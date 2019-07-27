@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
       password,
       region,
       localLead,
-      role: 'localLead',
+      role: 'trainer',
     })
       .then(trainer => {
         const trainerInfo = {

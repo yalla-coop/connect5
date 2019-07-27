@@ -64,12 +64,12 @@ class AdminSessions extends Component {
 
   render() {
     const { chartData, maxNumber } = this.state;
-    const { sessionsNum } = this.props;
+    const { sessions } = this.props;
     return (
       <AdminSessionsWrapper>
         <TopInfo>
           <TotalSessions>Total Sessions</TotalSessions>
-          <SessionsNum>{sessionsNum}</SessionsNum>
+          <SessionsNum>{sessions && sessions.length}</SessionsNum>
         </TopInfo>
         <Legend>Regions</Legend>
         <BarChart
@@ -85,7 +85,7 @@ class AdminSessions extends Component {
 
 const mapStateToProps = state => ({
   data: state.adminSessions.sessions,
-  sessionsNum: state.sessions.sessionsCount,
+  sessions: state.sessions.sessions,
 });
 
 export default connect(
