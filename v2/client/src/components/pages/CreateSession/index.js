@@ -289,7 +289,7 @@ class CreateSession extends Component {
               optionFilterProp="children"
               onChange={onSelectRegionChange}
               size="large"
-              value={region}
+              value={region || undefined}
             >
               {regions.map(reg => (
                 <Option key={reg} value={reg}>

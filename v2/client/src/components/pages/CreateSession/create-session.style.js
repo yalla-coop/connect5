@@ -24,8 +24,9 @@ export const Warning = styled.h1`
   font-family: Roboto;
   font-style: normal;
   font-weight: 300;
-  font-size: 1rem;
+  font-size: .875rem;
   color: ${colors.errorRed};
+  align-self: flex-end;
 `;
 
 export const Form = styled.form`
@@ -45,6 +46,8 @@ export const InputDiv = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  flex-direction: column;
+  justify-content: center;
   margin: 0 auto;
   border: 1px solid ${colors.lightGray};
   &:not(:last-child) {
