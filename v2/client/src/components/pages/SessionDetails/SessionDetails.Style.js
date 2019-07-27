@@ -98,6 +98,7 @@ export const SubDetailsContent = styled.p`
 
 export const DrawerLink = styled.p`
   margin: 0;
+  color: ${colors.profileFontColor};
 `;
 
 export const Row = styled.div`
@@ -111,6 +112,7 @@ export const Row = styled.div`
 
   &:hover p {
     font-weight: 500;
+    color: ${colors.primary}
   }
 
   & * {
@@ -127,6 +129,7 @@ export const Edit = styled.p`
   cursor: pointer;
   &:hover {
     font-weight: 500;
+    color: ${colors.primary}
   }
 `;
 

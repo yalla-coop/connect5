@@ -95,6 +95,7 @@ const UpdateAttendeesList = ({
 }) => {
   return (
     <DrawerContentWrapper>
+      <h5 style={{marginBottom: "1rem"}}>To add attendees, please enter their email address below. This will let you email session reminders, survey links and more.</h5>
       <Select
         mode="tags"
         value={confirmedAttendeesList}
@@ -133,6 +134,7 @@ const AddAttendees = ({
 }) => {
   return (
     <DrawerContentWrapper>
+      <h5 style={{marginBottom: "1rem"}}>To add attendees, please enter their email address below. This will let you email session reminders, survey links and more.</h5>
       <Select
         mode="tags"
         value={addedAttendeesList}
