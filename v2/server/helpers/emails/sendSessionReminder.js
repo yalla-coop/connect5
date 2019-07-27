@@ -17,7 +17,7 @@ const sendReminder = ({
     extraParagraph = `
     <div>
       <p>
-        Before starting the training session please follow this link and fill out the <a href="${preServeyLink}">pre-survey</a>.
+        <b>Before starting the training session please follow this link and fill out the <a href="${preServeyLink}">pre-survey</a>.</b>
       </p>
       <div style="text-align: center;">
         <a href="${preServeyLink}" style="display: inline-block; padding: 0.5rem 1rem; background-color: #2C3192; color: white; font-size: 20px; font-weight: 900; border-radius: 10px; box-shadow: 0px 5px 11px 1px #9e9e9e7d; text-decoration: none;">Fill the survey</a>
@@ -43,14 +43,14 @@ const sendReminder = ({
     </ul>
     <p>
       To track your own progress and to ensure that our
-      trainings are effective we would rely on course 
-      participants to fill out surveys for each session.
+      trainings are effective we rely on course 
+      participants to fill out surveys after each session.
       All the data is anonymised. After answering surveys 
       you can immediately see your own progress and access 
-      certificates via the app.
+      certificates via the app. You will receive a link to the post-session survey  from your trainers.  
     </p>
 
-    ${extraParagraph}
+    ${preServeyLink ? extraParagraph : ""}
     </br>
     <p>Sincerely,</p>
 

@@ -18,7 +18,14 @@ module.exports = async (req, res, next) => {
   }
 
   const preSurvey = preSurveys[emailData.sessionType];
-  const preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
+
+  let preServeyLink = null;
+
+  if (preSurvey !== undefined) {
+    preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
+  }
+
+  // const preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
 
   const promises = [
     addEmail({ sessionId, emailData, type, preServeyLink }),

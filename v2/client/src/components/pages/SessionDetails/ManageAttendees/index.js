@@ -47,7 +47,6 @@ class ManageAttendees extends Component {
     if (lastUpdate !== sessionDetails.updatedAt) {
       this.setListIntoState();
     }
-    console.log("sess", sessionDetails)
   }
 
   onClose = () => {

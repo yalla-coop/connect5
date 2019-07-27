@@ -293,26 +293,26 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
           </li>
         </ul>
         <EmailText>
-          To track your own progress and to ensure that our trainings are
-          effective we would rely on course participants to fill out surveys for
-          each session. All the data is anonymised. After answering surveys you
-          can immediately see your own progress and access certificates via the
-          app.
+          To track your own progress and to ensure that our
+          trainings are effective we rely on course 
+          participants to fill out surveys after each session.
+          All the data is anonymised. After answering surveys 
+          you can immediately see your own progress and access 
+          certificates via the app. You will receive a link to the post-session survey from your trainers.  
         </EmailText>
         {activeEmailTemplate.preServeyLink && (
           <>
+            <br />
             <EmailText>
-              Before starting the training session please follow this link and
-              fill out the pre-survey. After the session please click this link
-              and fill out the{' '}
+              <b>Before starting the training session please follow this link and fill out the{' '} 
               <a
                 href={activeEmailTemplate.preServeyLink}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                post-survey
+                pre-survey
               </a>
-              .
+              .</b>
             </EmailText>
           </>
         )}
