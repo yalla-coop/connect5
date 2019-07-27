@@ -118,6 +118,30 @@ class EditSession extends Component {
     });
   };
 
+  getDisabledStartTime = () => {
+    const { endTime } = this.state;
+    if (endTime) {
+      const hour = endTime.split(':')[0] 
+      const unavailableHours = []
+      for (let i = Number(hour); i < 24; i++) {
+        unavailableHours.push(i)
+      }
+      return unavailableHours;
+    }
+  }
+
+  getDisabledEndTime = () => {
+    const { startTime } = this.state;
+    if (startTime) {
+      const hour = startTime.split(':')[0]
+      const unavailableHours = []
+      for (let i = 0; i < Number(hour); i++) {
+        unavailableHours.push(i)
+      }
+      return unavailableHours;
+    }
+  }
+
   onInputChange = ({ target: { value, name } }) => {
     this.setState({
       [name]: value,
@@ -230,6 +254,9 @@ class EditSession extends Component {
     if (!sessionDetails) {
       return null;
     }
+
+    
+
     const {
       date,
       type,
@@ -260,6 +287,7 @@ class EditSession extends Component {
       onStartTimeChange,
       onEndTimeChange,
     } = this;
+
     return (
       <EditSessionWrapper>
         <Header type="view" label="Edit Session" />
@@ -418,6 +446,7 @@ class EditSession extends Component {
               size="large"
               style={{ width: '50%' }}
               format="HH:mm"
+              disabledHours={this.getDisabledStartTime}
             />
           </InputDiv>
           <InputDiv>
@@ -429,6 +458,7 @@ class EditSession extends Component {
               size="large"
               style={{ width: '50%' }}
               format="HH:mm"
+              disabledHours={this.getDisabledEndTime}
             />
           </InputDiv>
 
