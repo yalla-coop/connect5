@@ -401,7 +401,7 @@ class CreateSession extends Component {
             <Select
               mode="tags"
               size="large"
-              placeholder="participants Emails"
+              placeholder="Enter emails for people to invite"
               onChange={onEmailChange}
               style={{ width: '100%', height: '100%' }}
               value={emails}

@@ -335,7 +335,7 @@ class EditSession extends Component {
             </InputDiv>
           )}
 
-          <InputDiv>
+          {/* <InputDiv>
             <Select
               mode="tags"
               size="large"
@@ -351,7 +351,7 @@ class EditSession extends Component {
               ))}
             </Select>
             <div>{err}</div>
-          </InputDiv>
+          </InputDiv> */}
 
           <InputDiv>
             <Input
