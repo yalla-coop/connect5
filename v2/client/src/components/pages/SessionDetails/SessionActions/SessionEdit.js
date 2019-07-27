@@ -206,7 +206,7 @@ class EditSession extends Component {
       endTime,
       numberOfAttendees,
       region,
-      participantsEmails,
+      // participantsEmails,
     } = sessionDetails;
     const { startDate, inviteesNumber, address, err } = this.state;
     const {
@@ -216,7 +216,7 @@ class EditSession extends Component {
       onSelectRegionChange,
       onSelectPartner1Change,
       onSelectPartner2Change,
-      onEmailChange,
+      // onEmailChange,
       onFormSubmit,
       onStartTimeChange,
       onEndTimeChange,
