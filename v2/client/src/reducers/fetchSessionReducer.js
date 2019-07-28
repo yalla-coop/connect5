@@ -20,11 +20,10 @@ const fetchedSessions = (state = initState, action) => {
     case FETCH_TRAINERS_SESSIONS:
     case FETCH_LOCAL_LEAD_SESSIONS:
     case SEND_INVITATION_SUCCESS:
+    case FETCH_ALL_SESSIONS:
       return { ...state, sessions: payload, loaded: true };
     case FETCH_PRTICIPENT_SESSIONS_SUCCESS:
       return { ...state, sessions: payload };
-    case FETCH_ALL_SESSIONS:
-      return { ...state, sessionsCount: payload };
     case FETCH_SESSION_DETAILS:
       return { ...state, sessionDetails: payload, loaded: true };
     default:

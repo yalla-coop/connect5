@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
-
 import { Icon } from 'antd';
+import Spin from '../Spin';
 
 import {
   Wrapper,
@@ -19,6 +19,9 @@ import {
 // NOTE: this component expects dataList to look something like this:
 
 const SessionList = ({ dataList }) => {
+  if (!dataList) {
+    return <Spin />;
+  }
   return (
     <Wrapper>
       <Header>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors } from '../../../../theme';
+import { colors, shadows } from '../../../../theme';
 
 export const InviteSectionWrapper = styled.div`
   display: flex;
@@ -11,16 +11,30 @@ export const InviteSectionWrapper = styled.div`
 `;
 
 export const Form = styled.div`
-  background: ${colors.lightGray};
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 95%;
   margin: 1rem auto;
   padding: 20px 10px;
   border-radius: 10px;
   @media (min-width: 678px) {
     width: 65%;
   }
+`;
+
+export const EmailsList = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 2rem 0.5rem;
+  margin-bottom: 2rem;
+  background: ${colors.offWhite};
+  box-shadow: ${shadows.secondary};
 `;
 
 export const BackLink = styled.button`

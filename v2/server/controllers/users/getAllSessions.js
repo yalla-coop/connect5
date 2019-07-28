@@ -7,8 +7,7 @@ module.exports = async (req, res, next) => {
       if (!sessions) {
         return next(boom.notFound('No sessions founded'));
       }
-      const sessionsCount = sessions.length;
-      return res.json(sessionsCount);
+      return res.json(sessions);
     })
     .catch(err => {
       boom.badImplementation();
