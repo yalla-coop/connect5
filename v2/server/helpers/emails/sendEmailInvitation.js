@@ -2,7 +2,7 @@ const mailer = require('./index');
 
 const sendEmailInvitation = ({
   name,
-  participantsEmails,
+  emails,
   sessionDate,
   type,
   trainerName,
@@ -11,6 +11,7 @@ const sendEmailInvitation = ({
   endTime,
   shortId,
 }) => {
+  const emailsList = emails.map(email => email.email);
   const registrationURL = `${process.env.DOMAIN}/confirm/${shortId}`;
   const html = `
   <div style="text-align: left;">
@@ -50,7 +51,7 @@ const sendEmailInvitation = ({
 
   return mailer({
     from,
-    to: participantsEmails,
+    to: emailsList,
     subject,
     html,
     user,

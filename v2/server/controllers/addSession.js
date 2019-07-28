@@ -4,6 +4,7 @@ const sendSurvey = require('../helpers/emails/sendSurvey');
 
 const addSession = async (req, res, next) => {
   const { user } = req;
+
   const {
     session,
     startDate,
@@ -15,17 +16,20 @@ const addSession = async (req, res, next) => {
     sendByEmail,
   } = req.body;
 
-  const trainers = [partnerTrainer1];
+  const trainers = [];
   try {
     if (
       session &&
       startDate &&
       inviteesNumber &&
       region &&
-      partnerTrainer1 &&
+      // partnerTrainer1 &&
       emails
     ) {
-      if (partnerTrainer2) {
+      if (partnerTrainer1.length > 0) {
+        trainers.push(partnerTrainer1);
+      }
+      if (partnerTrainer2.length > 0) {
         trainers.push(partnerTrainer2);
       } else {
         trainers.push(user._id);

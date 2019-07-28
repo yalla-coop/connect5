@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { Icon, Drawer, Button } from 'antd';
+import { Icon, Drawer } from 'antd';
 
 import Header from '../Header';
 import Spin from '../Spin';
@@ -63,9 +63,17 @@ class EmailsList extends Component {
               dataList.sentEmails.map(dataItem => (
                 <Row key={dataItem._id}>
                   <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
-                  <Button type="primary" onClick={showDrawer}>
+                  <button
+                    type="button"
+                    onClick={showDrawer}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      marginRight: '.5rem',
+                    }}
+                  >
                     <Icon type="right" />
-                  </Button>
+                  </button>
                   <Drawer
                     placement="right"
                     closable={false}

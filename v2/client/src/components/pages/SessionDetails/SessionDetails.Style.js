@@ -96,6 +96,44 @@ export const SubDetailsContent = styled.p`
   margin: 0;
 `;
 
+export const RegistrationDiv = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 90%;
+  padding: 0.4rem;
+`;
+
+export const RegistrationLink = styled(Link)`
+  text-decoration: none;
+  display: block;
+  color: ${colors.blackSecondary};
+  cursor: pointer;
+  word-break: break-all;
+  font-size: 14px;
+  :hover,
+  :focus {
+    color: ${colors.primary};
+    text-decoration: underline;
+  }
+`;
+
+export const CopyLink = styled.span`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+  margin-top: -14px;
+  font-size: 32px !important;
+  :hover,
+  :active {
+    color: ${colors.primary};
+  }
+`;
+
+export const CopyIcon = styled.i`
+  font-size: 20px;
+`;
+
 export const DrawerLink = styled.p`
   margin: 0;
   color: ${colors.profileFontColor};
@@ -112,7 +150,7 @@ export const Row = styled.div`
 
   &:hover p {
     font-weight: 500;
-    color: ${colors.primary}
+    color: ${colors.primary};
   }
 
   & * {
@@ -129,7 +167,7 @@ export const Edit = styled.p`
   cursor: pointer;
   &:hover {
     font-weight: 500;
-    color: ${colors.primary}
+    color: ${colors.primary};
   }
 `;
 

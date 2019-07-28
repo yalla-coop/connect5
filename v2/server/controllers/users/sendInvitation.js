@@ -8,7 +8,7 @@ const sendEmailInvitation = require('./../../helpers/emails/sendEmailInvitation'
 const SendInvitation = async (req, res, next) => {
   const {
     _id,
-    participantsEmails,
+    emails,
     sendingDate,
     date,
     type,
@@ -24,7 +24,7 @@ const SendInvitation = async (req, res, next) => {
     if (
       _id &&
       name &&
-      participantsEmails &&
+      emails &&
       sendingDate &&
       date &&
       type &&
@@ -36,19 +36,21 @@ const SendInvitation = async (req, res, next) => {
       const StoreSentEmailData = await StoreSentEmailDataQuery({
         _id,
         name,
-        participantsEmails,
+        emails,
         sendingDate,
         date,
         type,
         trainerName,
         region,
+        startTime,
+        endTime,
       });
-      console.log(StoreSentEmailData, 'resssssss');
+
       const sessionDate = moment(date).format('DD/MM/YYYY');
 
       sendEmailInvitation({
         name,
-        participantsEmails,
+        emails,
         sessionDate,
         type,
         trainerName,
@@ -62,7 +64,6 @@ const SendInvitation = async (req, res, next) => {
     }
     return next(boom.badRequest('Some arguments are missed'));
   } catch (error) {
-    console.log(error);
     return next(boom.badImplementation());
   }
 };

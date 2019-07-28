@@ -230,6 +230,23 @@ module.exports = async () => {
         { email: 'nael@gmail.com', status: 'new' },
       ],
     },
+    {
+      date: '2019-05-16',
+      type: '3',
+      shortId: shortid.generate(),
+      numberOfAttendees: 5,
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
+      region: 'North West',
+      trainers: [localLeads[0], trainers[0]],
+      participantsEmails: [
+        { email: 'marwaajomaa@gmail.com', status: 'sent' },
+        { email: 'noor@gmail.com', status: 'sent' },
+        { email: 'marwa@gmail.com', status: 'new' },
+        { email: 'mera@gmail.com', status: 'new' },
+      ],
+    },
   ];
 
   return Session.create(sessions);

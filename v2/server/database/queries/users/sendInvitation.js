@@ -3,34 +3,48 @@ const Session = require('./../../models/Session');
 module.exports.StoreSentEmailDataQuery = ({
   _id,
   name,
-  participantsEmails,
+  emails,
   sendingDate,
   date,
   type,
   trainerName,
   region,
+  startTime,
+  endTime,
 }) => {
+  const newEmailsObj = [];
+  emails.map(email => {
+    if (email.status === 'new') {
+      newEmailsObj.push({
+        email: email.email,
+        status: 'sent',
+      });
+    }
+  });
+
+  const newEmails = newEmailsObj.map(email => email.email);
+
+  const sentEmailsObj = emails.filter(email => email.status === 'sent');
+  const sentEmails = sentEmailsObj.map(email => email.email);
+  const emailObjList = [...newEmailsObj, ...sentEmailsObj];
+  const emailList = [...sentEmails, ...newEmails];
+
   const data = {
-    date: sendingDate,
+    sendDate: sendingDate,
     trainer: name,
     sessionDate: date,
     sessionType: type,
     location: region,
     trainers: trainerName,
-    recipients: participantsEmails,
+    recipients: emailList,
+    startTime,
+    endTime,
+    type: 'registration',
   };
-
-  const emails = participantsEmails.map(email => {
-    return {
-      email,
-      status: 'sent',
-    };
-  });
-  console.log(emails);
 
   const updateDoc = Session.update(
     { _id },
-    { $push: { sentEmails: data, participantsEmails: emails } }
+    { $push: { sentEmails: data, participantsEmails: emailObjList } }
   );
   return updateDoc;
 };
