@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { sessionTypes } = require('./../DBConstants');
+const { surveyTypes } = require('./../DBConstants');
 
 const { Schema, model } = mongoose;
 
@@ -65,6 +66,19 @@ const sessionSchema = new Schema(
         _id: { type: mongoose.Types.ObjectId, auto: true },
         email: String,
         status: { type: String, enum: ['new', 'sent', 'confirmed'] },
+      },
+    ],
+    scheduledEmails: [
+      {
+        _id: {
+          type: mongoose.Types.ObjectId,
+          auto: true,
+        },
+        date: Date,
+        surveyType: {
+          type: String,
+          enum: surveyTypes,
+        },
       },
     ],
   },

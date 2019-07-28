@@ -1,12 +1,79 @@
 import React from 'react';
 
-import ScheduleTable from './ScheduleTable';
+import { DatePicker, Empty } from 'antd';
+import moment from 'moment';
 
-const DrawerContent = ({ loading, drawerKey, handleSelectDate }) => {
+import Button from '../../../common/Button';
+
+import {
+  SubDetails,
+  DrawerLink,
+  Row,
+  TableWrapper,
+  TableHeader,
+  Text,
+  FormWrapper,
+} from '../SessionDetails.Style';
+
+const DrawerContent = ({
+  loading,
+  drawerKey,
+  handleSelectDate,
+  handleSubmitSchedule,
+  scheduledEmails,
+  type,
+}) => {
   switch (drawerKey) {
     case 'scheduleTable':
       return (
-        <ScheduleTable loading={loading} handleSelectDate={handleSelectDate} />
+        <div>
+          <FormWrapper>
+            <DatePicker
+              onChange={handleSelectDate}
+              placeholder="Select month"
+              size="large"
+              style={{ width: '100%', marginBottom: '1rem' }}
+            />
+            <Button
+              type="primary"
+              label="Schedule"
+              style={{ width: '100%' }}
+              loading={loading}
+              disabled={loading}
+              onClick={handleSubmitSchedule}
+            />
+          </FormWrapper>
+          {scheduledEmails && scheduledEmails.length > 0 ? (
+            <TableWrapper>
+              <TableHeader>
+                <Text>
+                  Currently scheduled{' '}
+                  {type.includes('pre') ? 'Pre-Session' : 'Post-Session'} Survey
+                  Email
+                </Text>
+              </TableHeader>
+              {scheduledEmails.map(scheduledEmail => (
+                <SubDetails
+                  key={scheduledEmails._id}
+                  style={{
+                    padding: '1rem 0',
+                    borderTop: '1px solid #80808059',
+                  }}
+                >
+                  <Row>
+                    {moment(scheduledEmail.date).format('DD-MM-YYYY')}
+                    <DrawerLink>Cancel</DrawerLink>
+                  </Row>
+                </SubDetails>
+              ))}
+            </TableWrapper>
+          ) : (
+            <Empty
+              description="No Emails Scheduled"
+              style={{ marginTop: '5rem' }}
+            />
+          )}
+        </div>
       );
 
     default:

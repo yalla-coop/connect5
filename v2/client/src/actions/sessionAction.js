@@ -145,14 +145,14 @@ export const sendEmailReminder = (
     });
 };
 
-export const scheduleEmail = (emailData, handleCloseDrawer) => dispatch => {
+export const scheduleNewEmail = (emailData, handleCloseDrawer) => dispatch => {
   // start loading
   dispatch({
     type: LOADING_START,
   });
 
   axios
-    .post(`/api/sessions/${emailData._sessionId}/emails/schedule`, emailData)
+    .post(`/api/sessions/${emailData.sessionId}/scheduled-emails`, emailData)
     .then(res => {
       dispatch({
         type: EMAIL_SCHEDULE_SUCCESS,
@@ -165,7 +165,7 @@ export const scheduleEmail = (emailData, handleCloseDrawer) => dispatch => {
         onOk: handleCloseDrawer,
       });
 
-      return dispatch(fetchSessionDetails(emailData._sessionId));
+      return dispatch(fetchSessionDetails(emailData.sessionId));
     })
     .catch(error => {
       // end loading

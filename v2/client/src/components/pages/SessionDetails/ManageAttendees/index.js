@@ -229,7 +229,8 @@ class ManageAttendees extends Component {
       sessionDetails.sentEmails &&
       sessionDetails.sentEmails.filter(item => item.type === 'reminder');
 
-    const activeEmailTemplate = reminderEmails[activeEmailIndex];
+    const activeEmailTemplate =
+      reminderEmails && reminderEmails[activeEmailIndex];
 
     return (
       <SessionTopDetailsWrapper>

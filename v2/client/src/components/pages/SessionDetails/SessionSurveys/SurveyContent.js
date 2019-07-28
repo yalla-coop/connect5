@@ -6,6 +6,8 @@ import { Icon, Drawer } from 'antd';
 
 import DrawerContent from './DrawerContent';
 
+import { scheduleNewEmail as scheduleNewEmailAction } from '../../../../actions/sessionAction';
+
 import {
   SurveyContentWrapper,
   SurveyLinkType,
@@ -105,8 +107,19 @@ class SurveyContent extends Component {
     this.setState({ scheduledDate: dateString });
   };
 
-  handleClickSchedule = () => {
+  handleSubmitSchedule = () => {
     const { scheduledDate } = this.state;
+    const { scheduleNewEmail, sessionDetails, type } = this.props;
+    if (scheduledDate) {
+      scheduleNewEmail(
+        {
+          date: scheduledDate,
+          sessionId: sessionDetails._id,
+          surveyType: type,
+        },
+        this.handleCloseDrawer
+      );
+    }
   };
 
   render() {
@@ -114,7 +127,7 @@ class SurveyContent extends Component {
       onInfoClick,
       onCopyClick,
       handleSelectDate,
-      handleClickSchedule,
+      handleSubmitSchedule,
     } = this;
     const {
       type,
@@ -123,6 +136,7 @@ class SurveyContent extends Component {
       id,
       handleEmailing,
       sessionDetails,
+      loading,
     } = this.props;
     const { responseCount, drawerKey, visible } = this.state;
     const { scheduledEmails } = sessionDetails;
@@ -207,12 +221,12 @@ class SurveyContent extends Component {
                 </p>
               </BackWrapper>
               <DrawerContent
-                // All
-                // loading={loading}
+                loading={loading}
+                type={type}
                 drawerKey={drawerKey}
                 scheduledEmails={scheduledEmails}
                 handleSelectDate={handleSelectDate}
-                handleClickSchedule={handleClickSchedule}
+                handleSubmitSchedule={handleSubmitSchedule}
               />
             </>
           </Drawer>
@@ -225,6 +239,10 @@ class SurveyContent extends Component {
 const mapStateToProps = state => {
   return {
     sessionDetails: state.sessions.sessionDetails[0],
+    loading: state.session.loading,
   };
 };
-export default connect(mapStateToProps)(SurveyContent);
+export default connect(
+  mapStateToProps,
+  { scheduleNewEmail: scheduleNewEmailAction }
+)(SurveyContent);

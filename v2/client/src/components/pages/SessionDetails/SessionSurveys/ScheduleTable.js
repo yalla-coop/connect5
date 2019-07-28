@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, DatePicker, Empty } from 'antd';
+import { DatePicker, Empty } from 'antd';
 import moment from 'moment';
 
 import Button from '../../../common/Button';
@@ -15,10 +15,11 @@ import {
 } from '../SessionDetails.Style';
 
 const ViewEmailsList = ({
-  handleDrawerOpen,
   scheduledEmails,
   handleSelectDate,
+  handleSubmitSchedule,
   loading,
+  type,
 }) => {
   return (
     <div>
@@ -35,27 +36,26 @@ const ViewEmailsList = ({
           style={{ width: '100%' }}
           loading={loading}
           disabled={loading}
+          onClick={handleSubmitSchedule}
         />
       </FormWrapper>
       {scheduledEmails && scheduledEmails.length > 0 ? (
         <TableWrapper>
           <TableHeader>
-            <Text>Date</Text>
+            <Text>
+              Currently scheduled{' '}
+              {type.includes('pre') ? 'Pre-Session' : 'Post-Session'} Survey
+              Email
+            </Text>
           </TableHeader>
-          {scheduledEmails.map((scheduledEmail, index) => (
+          {scheduledEmails.map(scheduledEmail => (
             <SubDetails
               key={scheduledEmails._id}
               style={{ padding: '1rem 0', borderTop: '1px solid #80808059' }}
             >
-              <Row
-                onClick={handleDrawerOpen}
-                data-key="emailTemplate"
-                data-email-index={index}
-              >
-                <DrawerLink>
-                  {moment(scheduledEmail.date).format('DD-MM-YYYY')}
-                </DrawerLink>
-                <Icon type="right" />
+              <Row>
+                {moment(scheduledEmail.date).format('DD-MM-YYYY')}
+                <DrawerLink>Cancel</DrawerLink>
               </Row>
             </SubDetails>
           ))}
