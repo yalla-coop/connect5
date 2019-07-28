@@ -36,11 +36,12 @@ const initialState = {
   startDate: null,
   inviteesNumber: null,
   region: null,
-  partnerTrainer1: '',
-  partnerTrainer2: '',
+  partnerTrainer1: { key: '', label: '' },
+  partnerTrainer2: { key: '', label: '' },
   emails: [],
   sendByEmail: false,
   err: false,
+  trainersNames: {},
 };
 
 class CreateSession extends Component {
@@ -107,15 +108,21 @@ class CreateSession extends Component {
     });
   };
 
-  onSelectPartner1Change = value => {
+  onSelectPartner1Change = item => {
+    const { trainersNames } = this.state;
+
     this.setState({
-      partnerTrainer1: value,
+      partnerTrainer1: item,
+      trainersNames: { ...trainersNames, [item.label]: item.label },
     });
   };
 
-  onSelectPartner2Change = value => {
+  onSelectPartner2Change = item => {
+    const { trainersNames } = this.state;
+
     this.setState({
-      partnerTrainer2: value,
+      partnerTrainer2: item,
+      trainersNames: { ...trainersNames, [item.label]: item.label },
     });
   };
 
@@ -194,6 +201,7 @@ class CreateSession extends Component {
       partnerTrainer2,
       emails,
       sendByEmail,
+      trainersNames,
     } = this.state;
 
     const sessionData = {
@@ -201,10 +209,11 @@ class CreateSession extends Component {
       startDate,
       inviteesNumber,
       region,
-      partnerTrainer1,
-      partnerTrainer2,
+      partnerTrainer1: partnerTrainer1.key,
+      partnerTrainer2: partnerTrainer2.key,
       emails,
       sendByEmail,
+      trainersNames,
     };
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
     return !this.checkError() && this.props.createSessionAction(sessionData);
@@ -307,8 +316,9 @@ class CreateSession extends Component {
               placeholder="Partner Trainer"
               optionFilterProp="children"
               onChange={onSelectPartner1Change}
+              labelInValue
               size="large"
-              value={partnerTrainer1 || undefined}
+              value={partnerTrainer1.key ? partnerTrainer1 : undefined}
               dropdownRender={menu => (
                 <div
                   onMouseDown={e => {
@@ -358,7 +368,8 @@ class CreateSession extends Component {
                 size="large"
                 showSearch
                 style={{ width: '100%' }}
-                value={partnerTrainer2 || undefined}
+                value={partnerTrainer2.key ? partnerTrainer2 : undefined}
+                labelInValue
                 dropdownRender={menu => (
                   <div
                     onMouseDown={e => {
@@ -410,7 +421,7 @@ class CreateSession extends Component {
           </InputDiv>
           <InputDiv>
             <Checkbox onChange={this.onChangeCheckbox}>
-              Send the survey to participants by email
+              Send a session invite to potential participants by email
             </Checkbox>
           </InputDiv>
 
