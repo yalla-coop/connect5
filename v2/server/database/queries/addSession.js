@@ -8,6 +8,9 @@ const createNewSession = ({
   region,
   trainers,
   emails,
+  startTime,
+  endTime,
+  address,
 }) => {
   const newSession = new Session({
     date: startDate,
@@ -17,6 +20,9 @@ const createNewSession = ({
     region,
     trainers,
     participantsEmails: emails.map(email => ({ email, status: 'new' })),
+    startTime,
+    endTime,
+    address,
   });
   // Add new session
   return newSession.save();

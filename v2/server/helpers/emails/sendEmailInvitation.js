@@ -10,6 +10,7 @@ const sendEmailInvitation = ({
   startTime,
   endTime,
   shortId,
+  address,
 }) => {
   const registrationURL = `${process.env.DOMAIN}/confirm/${shortId}`;
   const html = `
@@ -23,7 +24,7 @@ const sendEmailInvitation = ({
     <ul style="list-style: none;">
       <li>- session date: ${sessionDate}</li>
       <li>- session type: ${type}</li>
-      <li>- region: ${region}</li>
+      <li>- address: ${address}</li>
       <li>- time: ${startTime} to ${endTime}</li>
       <li>- trainers: ${trainerName}</li>
     </ul>

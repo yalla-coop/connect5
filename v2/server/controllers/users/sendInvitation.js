@@ -17,7 +17,9 @@ const SendInvitation = async (req, res, next) => {
     startTime,
     endTime,
     shortId,
+    address,
   } = req.body;
+
   const { name } = req.user;
 
   try {
@@ -42,8 +44,8 @@ const SendInvitation = async (req, res, next) => {
         type,
         trainerName,
         region,
+        address,
       });
-      console.log(StoreSentEmailData, 'resssssss');
       const sessionDate = moment(date).format('DD/MM/YYYY');
 
       sendEmailInvitation({
@@ -56,13 +58,13 @@ const SendInvitation = async (req, res, next) => {
         startTime,
         endTime,
         shortId,
+        address,
       });
 
       return res.json(StoreSentEmailData);
     }
     return next(boom.badRequest('Some arguments are missed'));
   } catch (error) {
-    console.log(error);
     return next(boom.badImplementation());
   }
 };

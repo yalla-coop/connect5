@@ -17,6 +17,7 @@ const addSession = async (req, res, next) => {
     trainersNames,
     startTime,
     endTime,
+    address,
   } = req.body;
 
   const trainers = [];
@@ -46,6 +47,9 @@ const addSession = async (req, res, next) => {
         region,
         trainers,
         emails,
+        startTime,
+        endTime,
+        address,
       });
 
       if (sendByEmail) {
@@ -63,6 +67,7 @@ const addSession = async (req, res, next) => {
             startTime,
             endTime,
             shortId: addedSession.shortId,
+            address,
           });
         }
       }

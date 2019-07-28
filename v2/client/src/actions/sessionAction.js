@@ -14,6 +14,10 @@ import store from '../store';
 import { fetchSessionDetails } from './groupSessionsAction';
 
 export const createSessionAction = sessionData => dispatch => {
+  dispatch({
+    type: LOADING_START,
+  });
+
   axios
     .post('/api/add-session', sessionData)
     .then(res => {
@@ -33,6 +37,10 @@ export const createSessionAction = sessionData => dispatch => {
       });
     })
     .catch(err => {
+      dispatch({
+        type: LOADING_END,
+      });
+
       return Modal.error({
         title: 'Error',
         content: err,

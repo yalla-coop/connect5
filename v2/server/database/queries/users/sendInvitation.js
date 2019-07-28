@@ -8,14 +8,14 @@ module.exports.StoreSentEmailDataQuery = ({
   date,
   type,
   trainerName,
-  region,
+  address,
 }) => {
   const data = {
     date: sendingDate,
     trainer: name,
     sessionDate: date,
     sessionType: type,
-    location: region,
+    location: address,
     trainers: trainerName,
     recipients: participantsEmails,
   };
