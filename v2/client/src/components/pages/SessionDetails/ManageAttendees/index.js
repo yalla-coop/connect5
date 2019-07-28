@@ -271,7 +271,10 @@ class ManageAttendees extends Component {
           </Row>
         </SubDetails>
 
-        <div style={{ width: '100%', position: 'absolute', left: 0 }} id="hhh">
+        <div
+          style={{ width: '100%', position: 'absolute', left: 0 }}
+          id="parentDiv"
+        >
           <Drawer
             placement="left"
             width="100%"
@@ -280,7 +283,7 @@ class ManageAttendees extends Component {
             visible={visible}
             closable
             bodyStyle={{ background: '#f7f8f9', minHeight: '100%' }}
-            getContainer="#hhh"
+            getContainer="#parentDiv"
             destroyOnClose
           >
             <>

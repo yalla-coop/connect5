@@ -154,7 +154,7 @@ export const CheckboxWrapper = styled.div`
 
 export const TableWrapper = styled.div`
   background: #fff;
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
   margin-top: 2rem;
 `;
@@ -208,4 +208,14 @@ export const BackWrapper = styled.div`
   font-weight: 500;
   font-size: 18px;
   cursor: pointer;
+`;
+
+export const FormWrapper = styled.div`
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;

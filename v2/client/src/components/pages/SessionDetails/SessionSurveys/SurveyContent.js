@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { Icon } from 'antd';
+import { Icon, Drawer } from 'antd';
+
+import DrawerContent from './DrawerContent';
+
 import {
   SurveyContentWrapper,
   SurveyLinkType,
@@ -14,10 +17,14 @@ import {
   FeedbackAction,
   CopyIcon,
 } from './SessionSurveys.Style';
+import { BackWrapper } from '../SessionDetails.Style';
 
 class SurveyContent extends Component {
   state = {
     responseCount: 0,
+    visible: false,
+    drawerKey: '',
+    scheduledDate: null,
   };
 
   componentDidMount() {
@@ -79,8 +86,36 @@ class SurveyContent extends Component {
     }
   };
 
+  handleCloseDrawer = () => {
+    this.setState({
+      visible: false,
+      drawerKey: null,
+    });
+  };
+
+  handleDrawerOpen = e => {
+    const { key } = e.target.dataset;
+    this.setState({
+      visible: true,
+      drawerKey: key,
+    });
+  };
+
+  handleSelectDate = (date, dateString) => {
+    this.setState({ scheduledDate: dateString });
+  };
+
+  handleClickSchedule = () => {
+    const { scheduledDate } = this.state;
+  };
+
   render() {
-    const { onInfoClick, onCopyClick } = this;
+    const {
+      onInfoClick,
+      onCopyClick,
+      handleSelectDate,
+      handleClickSchedule,
+    } = this;
     const {
       type,
       surveyURL,
@@ -89,7 +124,8 @@ class SurveyContent extends Component {
       handleEmailing,
       sessionDetails,
     } = this.props;
-    const { responseCount } = this.state;
+    const { responseCount, drawerKey, visible } = this.state;
+    const { scheduledEmails } = sessionDetails;
 
     let url = `https://${surveyURL}`;
 
@@ -131,7 +167,10 @@ class SurveyContent extends Component {
           <p>Email survey to attendees</p>
           <Icon type="right" />
         </FeedbackAction>
-        <FeedbackAction to="/">
+        <FeedbackAction
+          onClick={this.handleDrawerOpen}
+          data-key="scheduleTable"
+        >
           <p>Schedule emails</p>
           <Icon type="right" />
         </FeedbackAction>
@@ -139,6 +178,45 @@ class SurveyContent extends Component {
           <p>View survey results</p>
           <Icon type="right" />
         </FeedbackAction>
+
+        <div
+          style={{ width: '100%', position: 'absolute', left: 0 }}
+          id="parentDiv"
+        >
+          <Drawer
+            placement="left"
+            width="100%"
+            height="100%"
+            onClose={this.handleCloseDrawer}
+            visible={visible}
+            closable
+            bodyStyle={{ background: '#f7f8f9', minHeight: '100%' }}
+            getContainer="#parentDiv"
+            destroyOnClose
+          >
+            <>
+              <BackWrapper onClick={this.handleCloseDrawer}>
+                <Icon type="left" />
+                <p
+                  style={{
+                    marginLeft: '1rem',
+                    marginBottom: '0',
+                  }}
+                >
+                  Back
+                </p>
+              </BackWrapper>
+              <DrawerContent
+                // All
+                // loading={loading}
+                drawerKey={drawerKey}
+                scheduledEmails={scheduledEmails}
+                handleSelectDate={handleSelectDate}
+                handleClickSchedule={handleClickSchedule}
+              />
+            </>
+          </Drawer>
+        </div>
       </SurveyContentWrapper>
     );
   }
