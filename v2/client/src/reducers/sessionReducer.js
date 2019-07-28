@@ -5,6 +5,7 @@ import {
   GET_SESSION_DETAILS_BY_SHORT_ID,
   UPDATE_ATTENDEES_SUCCESS,
   UPDATE_ATTENDEES_FAIL,
+  EMAIL_SCHEDULE_SUCCESS,
   LOADING_START,
   LOADING_END,
 } from '../constants/actionTypes';
@@ -52,6 +53,12 @@ export default function(state = initState, action) {
       return {
         ...state,
         addendeesUpdatedSuccess: false,
+        loading: false,
+      };
+
+    case EMAIL_SCHEDULE_SUCCESS:
+      return {
+        ...state,
         loading: false,
       };
 

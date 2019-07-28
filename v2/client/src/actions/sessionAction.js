@@ -6,6 +6,7 @@ import {
   UPDATE_ATTENDEES_SUCCESS,
   LOADING_START,
   LOADING_END,
+  EMAIL_SCHEDULE_SUCCESS,
 } from '../constants/actionTypes';
 
 import history from '../history';
@@ -129,6 +130,42 @@ export const sendEmailReminder = (
       });
 
       return dispatch(fetchSessionDetails(sessionId));
+    })
+    .catch(error => {
+      // end loading
+      dispatch({
+        type: LOADING_END,
+      });
+
+      return Modal.error({
+        title: 'Error!',
+        content: error.response.data.error,
+        onOk: handleCloseDrawer,
+      });
+    });
+};
+
+export const scheduleEmail = (emailData, handleCloseDrawer) => dispatch => {
+  // start loading
+  dispatch({
+    type: LOADING_START,
+  });
+
+  axios
+    .post(`/api/sessions/${emailData._sessionId}/emails/schedule`, emailData)
+    .then(res => {
+      dispatch({
+        type: EMAIL_SCHEDULE_SUCCESS,
+        payload: res.data,
+      });
+
+      Modal.success({
+        title: 'Done!',
+        content: 'Email successfully scheduled',
+        onOk: handleCloseDrawer,
+      });
+
+      return dispatch(fetchSessionDetails(emailData._sessionId));
     })
     .catch(error => {
       // end loading
