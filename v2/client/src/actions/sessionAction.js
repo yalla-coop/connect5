@@ -3,9 +3,13 @@ import { Modal } from 'antd';
 import {
   ADD_SESSION_SUCCESS,
   GET_SESSION_DETAILS_BY_SHORT_ID,
+  UPDATE_ATTENDEES_SUCCESS,
 } from '../constants/actionTypes';
+
 import history from '../history';
 import store from '../store';
+
+import { fetchSessionDetails } from './groupSessionsAction';
 
 export const createSessionAction = sessionData => dispatch => {
   axios
@@ -53,5 +57,68 @@ export const getSessionDetails = shortId => dispatch => {
         });
       }
       return history.push('/500err');
+    });
+};
+
+export const updateSessionAttendeesList = ({
+  sessionId,
+  attendeesList,
+  status,
+  handleCloseDrawer,
+}) => dispatch => {
+  axios
+    .patch(`/api/sessions/${sessionId}/attendeesList`, {
+      attendeesList,
+      status,
+    })
+    .then(res => {
+      dispatch({
+        type: UPDATE_ATTENDEES_SUCCESS,
+        payload: res.data,
+      });
+
+      Modal.success({
+        title: 'Done!',
+        content: 'Attendees List updated succesfully',
+        onOk: handleCloseDrawer,
+      });
+
+      return dispatch(fetchSessionDetails(sessionId));
+    })
+    .catch(error => {
+      return Modal.error({
+        title: 'Error!',
+        content: error.response.data.error,
+        onOk: handleCloseDrawer,
+      });
+    });
+};
+
+export const sendEmailReminder = (
+  { sessionId, ...emailData },
+  handleCloseDrawer
+) => dispatch => {
+  axios
+    .post(`/api/sessions/${sessionId}/emails?type=reminder`, emailData)
+    .then(res => {
+      dispatch({
+        type: UPDATE_ATTENDEES_SUCCESS,
+        payload: res.data,
+      });
+
+      Modal.success({
+        title: 'Done!',
+        content: 'Emails successfully have been sent',
+        onOk: handleCloseDrawer,
+      });
+
+      return dispatch(fetchSessionDetails(sessionId));
+    })
+    .catch(error => {
+      return Modal.error({
+        title: 'Error!',
+        content: error.response.data.error,
+        onOk: handleCloseDrawer,
+      });
     });
 };

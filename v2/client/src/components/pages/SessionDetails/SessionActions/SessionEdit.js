@@ -26,7 +26,7 @@ import {
   InputLabel,
   BackLink,
   BackContainer,
-  EmailError
+  EmailError,
 } from './SessionActions.Style';
 
 import Header from '../../../common/Header';
@@ -151,7 +151,7 @@ class EditSession extends Component {
   onEmailChange = value => {
     const { emails } = this.state;
     // remove emailError
-    this.setState({ emailErr: null })
+    this.setState({ emailErr: null });
 
     // check if any emails have been removed
     const remainingEmails = emails.filter(item => value.includes(item.email));
@@ -236,7 +236,7 @@ class EditSession extends Component {
       startTime,
       endTime,
       region,
-      participantsEmails,
+      // participantsEmails,
     } = sessionDetails;
     const {
       startDate,
@@ -255,7 +255,7 @@ class EditSession extends Component {
       onSelectRegionChange,
       onSelectPartner1Change,
       onSelectPartner2Change,
-      onEmailChange,
+      // onEmailChange,
       onFormSubmit,
       onStartTimeChange,
       onEndTimeChange,
@@ -379,7 +379,7 @@ class EditSession extends Component {
             </InputDiv>
           )}
 
-          <InputDiv>
+          {/* <InputDiv>
             <Select
               mode="tags"
               size="large"
@@ -397,6 +397,8 @@ class EditSession extends Component {
             </Select>
             <EmailError>{emailErr}</EmailError>
           </InputDiv>
+            <div>{err}</div>
+          </InputDiv> */}
 
           <InputDiv>
             <Input

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { borders, colors } from '../../../../theme';
+import { colors } from '../../../../theme';
 
 export const InviteSectionWrapper = styled.div`
   display: flex;
