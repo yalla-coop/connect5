@@ -35,6 +35,7 @@ class ManageAttendees extends Component {
     checkedEmails: [],
     isCheckAll: true,
     activeEmailIndex: null,
+    loading: null,
   };
 
   componentDidMount() {
@@ -46,6 +47,8 @@ class ManageAttendees extends Component {
     const { sessionDetails } = this.props;
     if (lastUpdate !== sessionDetails.updatedAt) {
       this.setListIntoState();
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ loading: false });
     }
   }
 
@@ -95,6 +98,7 @@ class ManageAttendees extends Component {
       status: 'confirmed',
       handleCloseDrawer: this.handleCloseDrawer,
     });
+    this.setState({ loading: true });
   };
 
   setListIntoState = () => {
@@ -159,6 +163,7 @@ class ManageAttendees extends Component {
       status: 'confirmed',
       handleCloseDrawer: this.handleCloseDrawer,
     });
+    this.setState({ loading: true });
   };
 
   changeSelectedEmails = checkedEmails => {
@@ -202,6 +207,7 @@ class ManageAttendees extends Component {
       sessionDate: moment(sessionDetails.date).format('YYYY-MM-DD'),
     };
     sendEmailReminder(emailData, this.handleCloseDrawer);
+    this.setState({ loading: true });
   };
 
   handleCloseDrawer = () => {
@@ -221,7 +227,9 @@ class ManageAttendees extends Component {
       checkedEmails,
       isCheckAll,
       activeEmailIndex,
+      loading,
     } = this.state;
+
     const { sessionDetails } = this.props;
 
     const reminderEmails =
@@ -295,7 +303,9 @@ class ManageAttendees extends Component {
                 </p>
               </BackWrapper>
               <DrawerContent
+                // All
                 drawerKey={drawerKey}
+                loading={loading}
                 // update
                 handleSubmitUpdateAttendees={this.handleSubmitUpdateAttendees}
                 confirmedAttendeesList={confirmedAttendeesList}

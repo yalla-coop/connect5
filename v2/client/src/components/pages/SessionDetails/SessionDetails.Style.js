@@ -112,7 +112,7 @@ export const Row = styled.div`
 
   &:hover p {
     font-weight: 500;
-    color: ${colors.primary}
+    color: ${colors.primary};
   }
 
   & * {
@@ -129,16 +129,17 @@ export const Edit = styled.p`
   cursor: pointer;
   &:hover {
     font-weight: 500;
-    color: ${colors.primary}
+    color: ${colors.primary};
   }
 `;
 
 export const DrawerContentWrapper = styled.div`
-  max-width: 600px;
+  max-width: 450px;
   margin: 0 auto;
   text-align: center;
   background: #f7f8f9;
   text-align: center;
+  padding-top: 3rem;
 
   .ant-checkbox-group .ant-checkbox-group-item {
     display: block;
@@ -174,10 +175,14 @@ export const Text = styled.p`
 
 export const EmailWrapper = styled.div`
   background: #fff;
-  padding: 2rem;
   max-width: 600px;
   margin: 0 auto;
   margin-top: 4rem;
+  padding: 2rem 1rem;
+
+  @media (min-width: 768px) {
+    padding: 2rem;
+  }
 `;
 
 export const EmailText = styled.p`

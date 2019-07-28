@@ -25,8 +25,6 @@ module.exports = async (req, res, next) => {
     preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
   }
 
-  // const preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
-
   const promises = [
     addEmail({ sessionId, emailData, type, preServeyLink }),
     sendSessionReminder({ shortId, ...emailData, preServeyLink }),
@@ -36,7 +34,6 @@ module.exports = async (req, res, next) => {
       return res.json({});
     })
     .catch(err => {
-      console.log(err)
       next(boom.badImplementation());
     });
 };
