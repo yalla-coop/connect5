@@ -273,7 +273,7 @@ class CreateSession extends Component {
           <InputDiv>
             <Input
               type="number"
-              placeholder="Number of session invitees"
+              placeholder="Number of attendees (this can be an estimate)"
               value={inviteesNumber}
               onChange={onInputChange}
               name="inviteesNumber"
@@ -401,7 +401,7 @@ class CreateSession extends Component {
             <Select
               mode="tags"
               size="large"
-              placeholder="participants Emails"
+              placeholder="Enter emails for people to invite"
               onChange={onEmailChange}
               style={{ width: '100%', height: '100%' }}
               value={emails}

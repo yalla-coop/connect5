@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
 
 // COMMON COMPONENTS
-import Spin from '../../../common/Spin';
 import Header from '../../../common/Header';
 
 // STYLE

@@ -11,7 +11,6 @@ import {
   UPDATE_EMAILS_SUCCESS,
   SEND_SURVEY_EMAIL_SUCCESS,
   FETCH_PRTICIPENT_SESSIONS_SUCCESS,
-  SEND_INVITATION_SUCCESS,
 } from '../constants/actionTypes';
 
 import history from '../history';
