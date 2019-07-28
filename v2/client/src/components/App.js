@@ -23,7 +23,7 @@ import Home from './pages/LandingPage';
 import SignUp from './pages/SignUp';
 import UserResults from './pages/UserResults';
 import AddTrainer from './pages/AddTrainer';
-import Survey from './pages/survey/Survey';
+import Survey from './pages/survey/index';
 import TrainerListPage from './pages/TrainerListPage';
 import ViewSessions from './pages/ViewSessions';
 import ParticipantBehavioral from './pages/ParticipantBehavioral';
@@ -37,6 +37,9 @@ import Certificate from './pages/Certificate';
 import AdminDemographic from './pages/AdminDemographic';
 import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
+import ForgetPassword from './pages/ForgetPassword';
+import ResetPassword from './pages/ForgetPassword/ResetPassword';
+import SessionsFiles from './pages/SessionsFiles';
 import ConfirmRegistration from './pages/ConfirmRegistration';
 
 // Error Pages
@@ -62,6 +65,7 @@ import {
   GROUP_SESSIONS_URL,
   DECIDE_VIEW_URL,
   SESSION_DETAILS_URL,
+  FORGET_PASSWORD,
   TRAINER_VIEW_PARTICIPANT,
 } from '../constants/navigationRoutes';
 
@@ -112,6 +116,11 @@ class App extends Component {
             />
             <Route exact path="/" component={Home} />
             <Route exact path="/thank-you" component={ThankYouPage} />
+            <Route
+              exact
+              path="/reset-password/:token"
+              component={ResetPassword}
+            />
             <PrivateRoute
               exact
               path={TRAINER_RESULTS_URL}
@@ -122,6 +131,7 @@ class App extends Component {
               role={role}
               navbar
             />
+
             <PrivateRoute
               exact
               path={GROUP_RESULTS_URL}
@@ -240,6 +250,8 @@ class App extends Component {
                 return <Spin />;
               }}
             />
+            <Route exact path={FORGET_PASSWORD} component={ForgetPassword} />
+
             <Route
               exact
               path={SIGN_UP_URL}
@@ -329,6 +341,7 @@ class App extends Component {
               role={role}
               navbar
             />
+
             <PrivateRoute
               exact
               path={TRAINER_VIEW_PARTICIPANT}
@@ -338,6 +351,16 @@ class App extends Component {
               allowedRoles={['trainer', 'localLead', 'admin']}
               role={role}
               navbar
+            />
+
+            <PrivateRoute
+              exact
+              path="/sessions-files"
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              Component={SessionsFiles}
+              allowedRoles={['participant']}
+              role={role}
             />
 
             <Route

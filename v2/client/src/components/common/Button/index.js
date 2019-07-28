@@ -63,7 +63,7 @@ export const roundStyles = css`
 `;
 
 export const primaryStyles = css`
-  background-color: ${colors.primary};
+  background-color: ${props => (props.submit ? colors.green : colors.primary)};
   color: ${colors.white};
 `;
 

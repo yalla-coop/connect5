@@ -24,7 +24,7 @@ module.exports = (answers, surveyTitle) => {
     {
       text:
         'When you think about suggesting to people ways in which they could take action on their own mental health or wellbeing, you perceive your capability to be',
-      formulae: (answers.KnowB1 + answers.SkillB1) * 50,
+      formulae: (answers.KnowB1 + answers.SkillB1) * 5,
       survey: surveyTitle,
     },
     {
@@ -46,13 +46,13 @@ module.exports = (answers, surveyTitle) => {
     {
       text:
         'When you think about having a conversation with people in which you develop a shared understanding of their mental health and wellbeing needs, you perceive your capability to be',
-      formulae: (answers.KnowB2 + answers.SkillB2) * 50,
+      formulae: (answers.KnowB2 + answers.SkillB2) * 5,
       survey: surveyTitle,
     },
     {
       text:
         'When you think about having a conversation with people in which you develop a shared understanding of their mental health and wellbeing needs, you perceive your opportunity to be',
-      formulae: ((answers.SocE1B2 + answers.SocE2B2, answers.TimeB2) / 3) * 10,
+      formulae: ((answers.SocE1B2 + answers.SocE2B2 + answers.TimeB2) / 3) * 10,
       survey: surveyTitle,
     },
     {
@@ -67,7 +67,7 @@ module.exports = (answers, surveyTitle) => {
     {
       text:
         'When you think about using appropriate conversational methods to empower poeple to make a change that addresses their mental health and wellbeing needs, you perceive your capability to be',
-      formulae: (answers.KnowB3 + answers.SkillB3) * 50,
+      formulae: (answers.KnowB3 + answers.SkillB3) * 5,
       survey: surveyTitle,
     },
     {

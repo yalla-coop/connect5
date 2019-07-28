@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { colors, borders, shadows } from '../../../theme';
 
-const CommonStyles = styled.div`
+export const CommonStyles = styled.div`
   margin-bottom: 3rem;
 
   h4 {
@@ -23,19 +23,21 @@ const CommonStyles = styled.div`
   }
 `;
 
-const SubGroup = styled.p`
+export const SubGroup = styled.p`
   font-size: 1.125;
   font-weight: 500;
 `;
 
-const QuestionWrapper = styled.div`
+export const QuestionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   background-color: ${colors.white};
   margin: 1rem 0;
-  padding: 1rem 0.5rem;
+  padding: 1rem 1rem;
   box-shadow: ${shadows.primary};
 `;
 
-const RadioField = styled(CommonStyles)`
+export const RadioField = styled(CommonStyles)`
   .other-div {
     justify-self: center;
     #other {
@@ -107,7 +109,7 @@ const RadioField = styled(CommonStyles)`
   }
 `;
 
-const TextField = styled(CommonStyles)`
+export const TextField = styled(CommonStyles)`
   padding-top: 1rem;
   input,
   .ant-calendar-picker {
@@ -133,13 +135,19 @@ const TextField = styled(CommonStyles)`
   }
 `;
 
-const NumberSliderDiv = styled.div`
+export const Warning = styled.p`
+  color: ${colors.errorRed};
+  font-size: 14px;
+  opacity: 0.6;
+`;
+
+export const NumberSliderDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
-const Slider = styled.input`
+export const Slider = styled.input`
   -webkit-appearance: none;
   width: 100%;
   height: 25px;
@@ -156,7 +164,7 @@ const Slider = styled.input`
   }
 `;
 
-const NumberOutput = styled.output`
+export const NumberOutput = styled.output`
   margin-top: 10px;
   font-size: 1rem;
   font-weight: 300;
@@ -169,12 +177,7 @@ const NumberOutput = styled.output`
   line-height: 1.6em;
 `;
 
-const QuestionCategory = styled.i`
-  font-size: 1rem;
-  color: ${colors.primary};
-`;
-
-const SectionCategory = styled.h4`
+export const SectionCategory = styled.h4`
   font-size: 1.5rem;
   font-weight: 300;
   text-transform: capitalize;
@@ -182,18 +185,6 @@ const SectionCategory = styled.h4`
   color: ${colors.primary};
 `;
 
-export const ErrorDiv = styled.div`
-  margin-bottom: 20px;
+export const StyledUL = styled.ul`
+  margin-left: 1rem;
 `;
-
-export {
-  QuestionCategory,
-  Slider,
-  RadioField,
-  TextField,
-  NumberOutput,
-  NumberSliderDiv,
-  QuestionWrapper,
-  SectionCategory,
-  SubGroup,
-};

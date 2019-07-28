@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Modal } from 'antd';
 
 import history from '../history';
 
@@ -99,4 +100,56 @@ export const addTrainerToGroup = trianerInfo => async dispatch => {
       payload: error.response.data.error,
     });
   }
+};
+
+export const checkUserByEmail = email => async dispatch => {
+  axios
+    .get(`/api/users/forget-password/?email=${email}`)
+    .then(res =>
+      dispatch({
+        type: types.CHECK_USER_BY_EMAIL_SUCCESS,
+        payload: res.data,
+      })
+    )
+    .then(() =>
+      Modal.success({
+        title: 'Password reset email sent!',
+        content:
+          'We just sent a message to the email you provided with a link to reset your password. Please check your inbox and follow the instructions in the email.',
+        onOk: history.push('/login'),
+      })
+    )
+    .catch(() => {
+      history.push('/404err');
+    });
+};
+
+export const resetPassword = resetPasswordData => async dispatch => {
+  axios
+    .post('/api/users/reset-password', resetPasswordData)
+    .then(res =>
+      dispatch({
+        type: types.RESET_PASSWORD_SUCCESS,
+        payload: res.data,
+      })
+    )
+    .then(() =>
+      Modal.success({
+        title: 'Done!',
+        content: 'Password reset successfully',
+        onOk: history.push('/login'),
+      })
+    )
+    .catch(err => {
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          'RESET_PASSWORD_FAIL'
+        )
+      );
+      dispatch({
+        type: types.RESET_PASSWORD_FAIL,
+      });
+    });
 };

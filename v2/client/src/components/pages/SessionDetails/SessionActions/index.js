@@ -14,15 +14,18 @@ import {
 
 class SessionActions extends Component {
   deleteSession = _id => {
+    const { deleteSessionAction: deleteSession } = this.props;
+
     Swal.fire({
-      title: 'warning',
-      text: 'Are you sure that you want to delete this session?',
+      title: 'Are you sure that you want to delete this session?',
+      text: "You won't be able to revert this!",
       type: 'warning',
       confirmButtonText: 'Delete',
+      showCancelButton: true,
     })
       .then(willDelete => {
-        if (willDelete) {
-          this.props.deleteSessionAction(_id);
+        if (willDelete.value) {
+          deleteSession(_id);
 
           Swal.fire({
             title: 'success',

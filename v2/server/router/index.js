@@ -24,6 +24,7 @@ const authentication = require('./../middlewares/authentication');
 
 const feedbackFromParticipant = require('./../controllers/feedback/feedbackFromParticipant');
 const getParticipantSessions = require('../controllers/users/getParticipantSessions');
+const participantSurveyStatus = require('../controllers/users/participantSurveyStatus');
 const generateCertificate = require('../controllers/users/generateCertificate');
 const checkPINResponsesOnSurvey = require('../controllers/survey/checkPINResponsesOnSurvey');
 const confirmEmailRegistration = require('../controllers/sessionDetails/confirmEmailRegistration');
@@ -38,6 +39,7 @@ const router = express.Router();
 
 router.post('/participant-login', ParticipantLoginController);
 router.get('/participant/:id/progress', getParticipantSessions);
+router.post('/participant/:PIN', participantSurveyStatus);
 router.post('/certificate/:sessionId', generateCertificate);
 router.post('/login', loginController);
 router.get('/logout', logoutController);

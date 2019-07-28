@@ -18,6 +18,7 @@ module.exports = async (req, res, next) => {
     endTime,
     address,
   } = data;
+
   editSessionQuery(
     id,
     session,
