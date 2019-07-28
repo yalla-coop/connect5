@@ -95,3 +95,117 @@ export const SubDetailsContent = styled.p`
   text-decoration: none;
   margin: 0;
 `;
+
+export const DrawerLink = styled.p`
+  margin: 0;
+  color: ${colors.profileFontColor};
+`;
+
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95%;
+  margin: 0 auto;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover p {
+    font-weight: 500;
+    color: ${colors.primary};
+  }
+
+  & * {
+    pointer-events: none;
+  }
+`;
+
+export const Edit = styled.p`
+  margin-left: auto;
+  margin-right: 1rem;
+  font-family: Roboto;
+  font-size: 16px;
+  color: #000000;
+  cursor: pointer;
+  &:hover {
+    font-weight: 500;
+    color: ${colors.primary};
+  }
+`;
+
+export const DrawerContentWrapper = styled.div`
+  max-width: 450px;
+  margin: 0 auto;
+  text-align: center;
+  background: #f7f8f9;
+  text-align: center;
+  padding-top: 3rem;
+
+  .ant-checkbox-group .ant-checkbox-group-item {
+    display: block;
+    margin: 1rem 0;
+  }
+`;
+
+export const CheckboxWrapper = styled.div`
+  width: 100%;
+  text-align: left;
+`;
+
+export const TableWrapper = styled.div`
+  background: #fff;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 2rem;
+`;
+
+export const TableHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95%;
+  margin: 0 auto;
+  align-items: center;
+`;
+
+export const Text = styled.p`
+  margin: 1rem 0;
+  font-weight: 700;
+`;
+
+export const EmailWrapper = styled.div`
+  background: #fff;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 4rem;
+  padding: 2rem 1rem;
+
+  @media (min-width: 768px) {
+    padding: 2rem;
+  }
+`;
+
+export const EmailText = styled.p`
+  font-family: Roboto;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 26px;
+  margin-bottom: 0rem;
+`;
+
+export const BoldSpan = styled.span`
+  font-weight: 500;
+`;
+
+export const BackWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80px;
+  padding-left: 5%;
+  cursor: pointer;
+  margin: 2rem 0;
+  font-weight: 500;
+  font-size: 18px;
+  cursor: pointer;
+`;
