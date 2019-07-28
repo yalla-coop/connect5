@@ -30,6 +30,7 @@ class InviteAndPromote extends Component {
     const { visible, drawerKey } = this.state;
     const { sessionDetails } = this.props;
     const { id } = sessionDetails;
+
     return (
       <SessionTopDetailsWrapper>
         <SubDetails style={{ display: 'flex', flexDirection: 'column' }}>
@@ -64,7 +65,6 @@ class InviteAndPromote extends Component {
           onClose={this.onClose}
           visible={visible}
           closable
-          getContainer
         >
           <DrawerContent
             drawerKey={drawerKey}
