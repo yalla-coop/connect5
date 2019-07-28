@@ -87,7 +87,7 @@ export const EmailInfoWrapper = styled.div`
 export const EmailInfo = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2rem 1.5rem;
+  padding: 2rem 0.5rem;
 `;
 
 export const InfoTitle = styled.p`
@@ -96,9 +96,15 @@ export const InfoTitle = styled.p`
   color: black;
 `;
 
+export const SessionInfoTitle = styled.span`
+  color: ${colors.blackSecondary};
+  margin-right: 2px;
+`;
+
 export const List = styled.ul`
   & > * {
     list-style: none;
     margin-left: 0.5rem;
+    font-size: 16px;
   }
 `;

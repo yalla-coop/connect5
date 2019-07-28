@@ -81,7 +81,7 @@ class SendInvitation extends Component {
     const { onFormSubmit } = this;
     const { onClose } = this.props;
     if (!emails) {
-      return <h3>No New emails to sent</h3>;
+      return <h3>No emails to sent</h3>;
     }
     return (
       <InviteSectionWrapper>
