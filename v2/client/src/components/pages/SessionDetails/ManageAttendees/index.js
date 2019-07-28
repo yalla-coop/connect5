@@ -49,10 +49,6 @@ class ManageAttendees extends Component {
     }
   }
 
-  onClose = () => {
-    this.setState({ visible: false, drawerKey: null });
-  };
-
   handleDrawerOpen = e => {
     const { key, emailIndex } = e.target.dataset;
     this.setState({
@@ -146,12 +142,15 @@ class ManageAttendees extends Component {
 
   submitAddAttendeesList = () => {
     // add attendees
-    const { addedAttendeesList } = this.state;
+    const { addedAttendeesList, confirmedAttendeesList } = this.state;
+
     const { sessionDetails, updateSessionAttendeesList } = this.props;
-    const updatedList = addedAttendeesList.map(item => ({
-      email: item,
-      status: 'confirmed',
-    }));
+    const updatedList = [...confirmedAttendeesList, ...addedAttendeesList].map(
+      item => ({
+        email: item,
+        status: 'confirmed',
+      })
+    );
 
     updateSessionAttendeesList({
       sessionId: sessionDetails._id,
@@ -209,6 +208,7 @@ class ManageAttendees extends Component {
       visible: false,
       drawerKey: null,
       activeEmailIndex: null,
+      addedAttendeesList: [],
     });
   };
 
@@ -276,7 +276,7 @@ class ManageAttendees extends Component {
             placement="left"
             width="100%"
             height="100%"
-            onClose={this.onClose}
+            onClose={this.handleCloseDrawer}
             visible={visible}
             closable
             bodyStyle={{ background: '#f7f8f9', minHeight: '100%' }}

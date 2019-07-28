@@ -1,5 +1,7 @@
 const boom = require('boom');
-const { addEmail } = require('./../../database/queries/sessionDetails/session');
+const {
+  addSentEmail,
+} = require('./../../database/queries/sessionDetails/session');
 const sendSessionReminder = require('./../../helpers/emails/sendSessionReminder');
 
 const preSurveys = {
@@ -26,7 +28,7 @@ module.exports = async (req, res, next) => {
   }
 
   const promises = [
-    addEmail({ sessionId, emailData, type, preServeyLink }),
+    addSentEmail({ sessionId, emailData, type, preServeyLink }),
     sendSessionReminder({ shortId, ...emailData, preServeyLink }),
   ];
   return Promise.all(promises)
