@@ -182,6 +182,7 @@ class SurveyContent extends Component {
           <Icon type="right" />
         </FeedbackAction>
         <FeedbackAction
+          as="div"
           onClick={this.handleDrawerOpen}
           data-key="scheduleTable"
         >
@@ -206,7 +207,6 @@ class SurveyContent extends Component {
             closable
             bodyStyle={{ background: '#f7f8f9', minHeight: '100%' }}
             getContainer="#parentDiv"
-            destroyOnClose
           >
             <>
               <BackWrapper onClick={this.handleCloseDrawer}>

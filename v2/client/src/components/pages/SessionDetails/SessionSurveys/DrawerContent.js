@@ -54,7 +54,7 @@ const DrawerContent = ({
               </TableHeader>
               {scheduledEmails.map(scheduledEmail => (
                 <SubDetails
-                  key={scheduledEmails._id}
+                  key={scheduledEmail._id}
                   style={{
                     padding: '1rem 0',
                     borderTop: '1px solid #80808059',
