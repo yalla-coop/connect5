@@ -50,6 +50,13 @@ class SendInvitation extends Component {
       SendEmailInvitation: SendEmailInvitationActionCreator,
     } = this.props;
 
+    const emails = participantsEmails.map(email => {
+      return {
+        email: email.email,
+        status: 'sent',
+      };
+    });
+
     const {
       date,
       type,
@@ -70,7 +77,7 @@ class SendInvitation extends Component {
     // send participantsEmails + date.now +session details form props + registration link
     const InviteData = {
       _id,
-      participantsEmails,
+      emails,
       sendingDate,
       date,
       type,
@@ -80,7 +87,7 @@ class SendInvitation extends Component {
       endTime,
       shortId,
     };
-
+    console.log(InviteData);
     SendEmailInvitationActionCreator(InviteData);
   };
 

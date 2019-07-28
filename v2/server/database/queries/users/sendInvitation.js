@@ -26,6 +26,7 @@ module.exports.StoreSentEmailDataQuery = ({
       status: 'sent',
     };
   });
+  console.log(emails);
 
   const updateDoc = Session.update(
     { _id },

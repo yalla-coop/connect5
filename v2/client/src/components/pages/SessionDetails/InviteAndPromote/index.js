@@ -29,13 +29,15 @@ class InviteAndPromote extends Component {
   render() {
     const { visible, drawerKey } = this.state;
     const { sessionDetails } = this.props;
-    console.log(sessionDetails);
     const { id } = sessionDetails;
     return (
       <SessionTopDetailsWrapper>
-        <SubDetails>
+        <SubDetails style={{ display: 'flex', flexDirection: 'column' }}>
           <DrawerLink>Registration Link</DrawerLink>
-          <SubDetailsContent to="/"> link</SubDetailsContent>
+          <SubDetailsContent to="/" style={{ paddingTop: '.3rem' }}>
+            {' '}
+            link
+          </SubDetailsContent>
         </SubDetails>
         <SubDetails>
           <Row onClick={this.DrawerOpen} data-key="send-invitation">
@@ -56,7 +58,6 @@ class InviteAndPromote extends Component {
           </Row>
         </SubDetails>
         <Drawer
-          title={<span>Hello</span>}
           placement="left"
           width="100%"
           height="100%"
@@ -69,6 +70,7 @@ class InviteAndPromote extends Component {
             drawerKey={drawerKey}
             id={id}
             sessionDetails={sessionDetails}
+            onClose={this.onClose}
           />
         </Drawer>
       </SessionTopDetailsWrapper>
@@ -87,6 +89,6 @@ const DrawerContent = ({ drawerKey, id, sessionDetails, onClose }) => {
       return <EmailsList onClose={onClose} dataList={sessionDetails} />;
 
     default:
-      return <h1>hi</h1>;
+      return null;
   }
 };

@@ -4,6 +4,7 @@ import { Select, Checkbox } from 'antd';
 import history from '../../../../history';
 import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
 import { updateSentEmails } from '../../../../actions/InviteAndPromoteAction';
+import { pattern } from '../../../../constants/regex';
 // ANTD COMPONENTS
 
 // COMMON COMPONENTS
@@ -25,7 +26,10 @@ const { Option } = Select;
 class InviteeList extends Component {
   state = {
     recipients: null,
+    newEmails: null,
     sendByEmail: false,
+    sendingDate: Date.now(),
+    err: '',
   };
 
   componentDidMount() {
@@ -34,16 +38,43 @@ class InviteeList extends Component {
     const recipients = [];
     participantsEmails.map(recipient => {
       if (recipient.status === 'sent') {
-        recipients.push(recipient.email);
+        recipients.push({ email: recipient.email, status: recipient.status });
       }
     });
+
     this.setState({ recipients });
+    // setTimeout(() => {
+    //   console.log(this.state.recipients);
+    // }, 2000);
   }
 
-  onEmailChange = value => {
-    this.setState({
-      recipients: value,
-    });
+  onUpdateEmailsChange = value => {
+    const { recipients } = this.state;
+
+    // remaining emails
+    const remainingEmails = recipients.filter(item =>
+      value.includes(item.email)
+    );
+
+    const sentEmails = recipients.map(item => item.email && item.email);
+
+    // new emails
+    const newEmails = value.filter(item => sentEmails.indexOf(item) === -1);
+
+    // // check valid new email
+    const incorrectEmails = newEmails.filter(item => !pattern.test(item));
+
+    if (incorrectEmails.length > 0) {
+      this.setState({
+        err: '*please enter valid email',
+      });
+    } else if (newEmails.length > 0) {
+      const newEmailsObj = newEmails.map(email => ({ email, status: 'sent' }));
+      this.setState({ newEmails: newEmailsObj });
+      this.setState({ recipients: [...remainingEmails, ...newEmailsObj] });
+    } else {
+      this.setState({ recipients: remainingEmails });
+    }
   };
 
   onCheckboxChange = e => {
@@ -52,21 +83,61 @@ class InviteeList extends Component {
 
   onFormSubmit = event => {
     event.preventDefault();
-    const { recipients, sendByEmail } = this.state;
-    const { updateSentEmails: updateSentEmailsActionCreator } = this.props;
-    const updatedEmails = {
-      recipients,
+    const { recipients, sendByEmail, newEmails, sendingDate } = this.state;
+    const {
+      updateSentEmails: updateSentEmailsActionCreator,
+      sessionDetails,
+    } = this.props;
+
+    const {
+      date,
+      type,
+      trainers,
+      region,
+      _id,
+      startTime,
+      endTime,
+      shortId,
+    } = sessionDetails;
+
+    const trainerName = trainers
+      .map(trainer => {
+        return trainer.name;
+      })
+      .join(' & ');
+
+    const updatedEmails = recipients.map(email => {
+      return {
+        email: email.email,
+        status: 'sent',
+      };
+    });
+
+    const updatedEmailsList = {
+      updatedEmails,
       sendByEmail,
+      newEmails,
+      date,
+      type,
+      trainers,
+      region,
+      _id,
+      startTime,
+      endTime,
+      shortId,
+      trainerName,
     };
-    updateSentEmailsActionCreator(updatedEmails);
+    // console.log(updatedEmailsList, 'uuuuuuupdatedEmails');
+    updateSentEmailsActionCreator(updatedEmailsList);
   };
 
   render() {
-    const { recipients } = this.state;
-    const { onEmailChange, onFormSubmit } = this;
+    const { recipients, err } = this.state;
+    const { onUpdateEmailsChange, onFormSubmit } = this;
+    console.log(recipients);
 
     if (!recipients) {
-      return Spin;
+      return <Spin />;
     }
 
     return (
@@ -81,18 +152,20 @@ class InviteeList extends Component {
               mode="tags"
               size="large"
               placeholder="emails"
-              onChange={onEmailChange}
-              defaultValue={recipients && recipients.map(email => email)}
+              onChange={onUpdateEmailsChange}
+              defaultValue={recipients && recipients.map(obj => obj.email)}
+              value={recipients.map(item => item.email)}
               style={{ width: '100%', height: '100%' }}
             >
               {recipients &&
-                recipients.map(email => (
-                  <Option key={email} value={email}>
-                    {email}
+                recipients.map(obj => (
+                  <Option key={obj.email} value={obj.email}>
+                    {obj.email}
                   </Option>
                 ))}
             </Select>
           </InputDiv>
+          <div>{err}</div>
           <InputDiv>
             <Checkbox onChange={this.onCheckboxChange}>
               Send the survey to participants by email
