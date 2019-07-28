@@ -78,13 +78,18 @@ class InviteAndPromote extends Component {
         <SubDetails style={{ display: 'flex', flexDirection: 'column' }}>
           <DrawerLink>Registration Link</DrawerLink>
           <RegistrationDiv>
-            <RegistrationLink
-              to={`${window.location.host}/confirm/${shortId}`}
+            <a
+              href={`${
+                process.env.NODE_ENV === 'prodcution' ? 'https://' : 'http://'
+              }${window.location.host}/confirm/${shortId}`}
               target="_blank"
               id="registration-link"
+              rel="noopener noreferrer"
             >
-              {`${window.location.host}/confirm/${shortId}`}
-            </RegistrationLink>
+              {`${
+                process.env.NODE_ENV === 'prodcution' ? 'https://' : 'http://'
+              }${window.location.host}/confirm/${shortId}`}
+            </a>
             <CopyLink onClick={onCopyClick}>
               <CopyIcon className="far fa-copy" />
             </CopyLink>
