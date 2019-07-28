@@ -26,7 +26,7 @@ import {
   InputLabel,
   BackLink,
   BackContainer,
-  EmailError
+  EmailError,
 } from './SessionActions.Style';
 
 import Header from '../../../common/Header';
@@ -121,26 +121,28 @@ class EditSession extends Component {
   getDisabledStartTime = () => {
     const { endTime } = this.state;
     if (endTime) {
-      const hour = endTime.split(':')[0] 
-      const unavailableHours = []
-      for (let i = Number(hour); i < 24; i++) {
-        unavailableHours.push(i)
+      const hour = endTime.split(':')[0];
+      const unavailableHours = [];
+      for (let i = Number(hour); i < 24; i += 1) {
+        unavailableHours.push(i);
       }
       return unavailableHours;
     }
-  }
+    return null;
+  };
 
   getDisabledEndTime = () => {
     const { startTime } = this.state;
     if (startTime) {
-      const hour = startTime.split(':')[0]
-      const unavailableHours = []
-      for (let i = 0; i < Number(hour); i++) {
-        unavailableHours.push(i)
+      const hour = startTime.split(':')[0];
+      const unavailableHours = [];
+      for (let i = 0; i < Number(hour); i += 1) {
+        unavailableHours.push(i);
       }
       return unavailableHours;
     }
-  }
+    return null;
+  };
 
   onInputChange = ({ target: { value, name } }) => {
     this.setState({
@@ -175,7 +177,7 @@ class EditSession extends Component {
   onEmailChange = value => {
     const { emails } = this.state;
     // remove emailError
-    this.setState({ emailErr: null })
+    this.setState({ emailErr: null });
 
     // check if any emails have been removed
     const remainingEmails = emails.filter(item => value.includes(item.email));
@@ -254,8 +256,6 @@ class EditSession extends Component {
     if (!sessionDetails) {
       return null;
     }
-
-    
 
     const {
       date,
@@ -406,7 +406,6 @@ class EditSession extends Component {
               </Select>
             </InputDiv>
           )}
-
           <InputDiv>
             <Select
               mode="tags"
