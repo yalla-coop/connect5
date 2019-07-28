@@ -1,43 +1,55 @@
 const boom = require('boom');
-const moment = require('moment');
-const {
-  UpdateSentEmailsQuery,
-} = require('./../../database/queries/users/sendInvitation');
+
 const sendEmailInvitation = require('./../../helpers/emails/sendEmailInvitation');
 
+const {
+  getSessionDetails,
+  updateInviteesList,
+  addEmail,
+} = require('../../database/queries/sessionDetails/session');
+
+const preSurveys = {
+  1: 'pre-day-1',
+  'special-2-days': 'pre-special',
+  'train-trainers': 'pre-train-trainers',
+};
+
 const updateSentInvitationEmails = async (req, res, next) => {
-  const {
-    updatedEmails,
-    sendByEmail,
-    newEmails,
-    date,
-    type,
-    region,
-    _id,
-    startTime,
-    endTime,
-    shortId,
-    trainerName,
-    sendingDate,
-  } = req.body;
+  const { sessionId, newEmails, deletedEmails, sendByEmail } = req.body;
   const { name } = req.user;
+
+  let newEmailsObj = newEmails.map(email => ({ email, status: 'new' }));
   try {
-    if (
-      updatedEmails &&
-      sendByEmail &&
-      sessionDate &&
-      type &&
-      region &&
-      _id &&
-      startTime &&
-      endTime &&
-      shortId &&
-      trainerName &&
-      sendingDate
-    ) {
-      sendEmailInvitation({
+    const sessionDetails = await getSessionDetails({ id: sessionId });
+
+    const {
+      date: sessionDate,
+      type,
+      region,
+      startTime,
+      endTime,
+      trainers,
+      shortId,
+    } = sessionDetails[0];
+
+    const preSurvey = preSurveys[type];
+
+    let preServeyLink = null;
+
+    if (preSurvey !== undefined) {
+      preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
+    }
+
+    const trainerName = trainers
+      .map(trainer => {
+        return trainer.name;
+      })
+      .join(' & ');
+
+    if (sendByEmail) {
+      await sendEmailInvitation({
         name,
-        newEmails,
+        participantsEmails: newEmails,
         sessionDate,
         type,
         trainerName,
@@ -46,11 +58,37 @@ const updateSentInvitationEmails = async (req, res, next) => {
         endTime,
         shortId,
       });
-    }
+      console.log('email successfully sent');
+      // update the email status to sent;
+      newEmailsObj = newEmails.map(email => {
+        return { email, status: 'sent' };
+      });
 
-    res.json();
-  } catch (error) {
-    console.log(error);
+      await addEmail({
+        sessionId,
+        emailData: {
+          type,
+          region,
+          startTime,
+          endTime,
+          trainers,
+          shortId,
+          newEmails,
+        },
+        type,
+        preServeyLink,
+      });
+    }
+    // just update the db
+    await updateInviteesList({
+      sessionId,
+      newEmailsObj,
+      deletedEmails,
+    });
+
+    return res.json();
+  } catch (err) {
+    console.log('err', err);
     return next(boom.badImplementation());
   }
 };

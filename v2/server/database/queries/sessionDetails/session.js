@@ -124,3 +124,25 @@ module.exports.addEmail = ({ sessionId, emailData, type, preServeyLink }) => {
     { upsert: true }
   );
 };
+
+// update the emails list without send emails
+module.exports.updateInviteesList = ({
+  sessionId,
+  newEmailsObj,
+  deletedEmails,
+}) =>
+  Session.findById(sessionId).then(session => {
+    session.participantsEmails.forEach((participant, index) => {
+      if (deletedEmails.length && deletedEmails.includes(participant.email)) {
+        session.participantsEmails[index].remove();
+      }
+    });
+
+    if (newEmailsObj && newEmailsObj.length) {
+      newEmailsObj.forEach(email => {
+        session.participantsEmails.push(email);
+      });
+    }
+
+    return session.save();
+  });

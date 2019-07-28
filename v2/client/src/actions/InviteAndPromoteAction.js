@@ -28,12 +28,12 @@ export const SendEmailInvitation = Data => async dispatch => {
 };
 
 export const updateSentEmails = updatedEmailsList => async dispatch => {
-  const { _Id } = updatedEmailsList;
+  const { sessionId } = updatedEmailsList;
   axios
     .post('/api/users/update-sent-emails', updatedEmailsList)
     .then(res => {
       message.success('Done, Emails sent successfully!');
-      dispatch(fetchSessionDetails(_Id));
+      dispatch(fetchSessionDetails(sessionId));
       return dispatch({
         type: UPDATE_SENT_EMAILS_SUCCESS,
         payload: res.data,

@@ -1,10 +1,11 @@
+/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Select, Checkbox } from 'antd';
 import history from '../../../../history';
 import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
 import { updateSentEmails } from '../../../../actions/InviteAndPromoteAction';
-import { pattern } from '../../../../constants/regex';
+// import { pattern } from '../../../../constants/regex';
 // ANTD COMPONENTS
 
 // COMMON COMPONENTS
@@ -25,55 +26,54 @@ const { Option } = Select;
 
 class InviteeList extends Component {
   state = {
-    recipients: null,
-    newEmails: null,
     sendByEmail: false,
     sendingDate: Date.now(),
     err: '',
+    inviteesEmailsList: [],
+    isSubmmiting: false,
+    emails: [],
+    newEmails: [],
+    deletedEmails: [],
   };
 
   componentDidMount() {
-    const { dataList } = this.props;
-    const { participantsEmails } = dataList;
-    const recipients = [];
-    participantsEmails.forEach(recipient => {
-      if (recipient.status === 'sent') {
-        recipients.push({ email: recipient.email, status: recipient.status });
-      }
-    });
+    const { inviteesEmailsList } = this.props;
+    const emailsString = inviteesEmailsList.map(emailObj => emailObj.email);
 
-    this.setState({ recipients });
-    // setTimeout(() => {
-    //   console.log(this.state.recipients);
-    // }, 2000);
+    this.setState({
+      inviteesEmailsList,
+      emails: emailsString,
+    });
   }
 
-  onUpdateEmailsChange = value => {
-    const { recipients } = this.state;
+  onUpdateEmailsChange = values => {
+    const {
+      emails,
+      deletedEmails: oldDeletedEmails,
+      newEmails: prevNewEmails,
+    } = this.state;
 
-    // remaining emails
-    const remainingEmails = recipients.filter(item =>
-      value.includes(item.email)
-    );
-
-    const sentEmails = recipients.map(item => item.email && item.email);
-
-    // new emails
-    const newEmails = value.filter(item => sentEmails.indexOf(item) === -1);
-
-    // // check valid new email
-    const incorrectEmails = newEmails.filter(item => !pattern.test(item));
-
-    if (incorrectEmails.length > 0) {
-      this.setState({
-        err: '*please enter valid email',
+    const deletedEmails = [...oldDeletedEmails];
+    let newEmails = [...prevNewEmails];
+    if (values.length < emails.length) {
+      emails.forEach(email => {
+        if (!values.includes(email)) {
+          if (!newEmails.includes(email)) {
+            deletedEmails.push(email);
+          } else {
+            newEmails = newEmails.filter(newEmail => newEmail !== email);
+          }
+        }
       });
-    } else if (newEmails.length > 0) {
-      const newEmailsObj = newEmails.map(email => ({ email, status: 'sent' }));
-      this.setState({ newEmails: newEmailsObj });
-      this.setState({ recipients: [...remainingEmails, ...newEmailsObj] });
-    } else {
-      this.setState({ recipients: remainingEmails });
+
+      this.setState({ emails: values, deletedEmails, newEmails });
+    } else if (values.length > emails.length) {
+      values.forEach(val => {
+        if (!emails.includes(val)) {
+          newEmails.push(val);
+        }
+      });
+      this.setState({ emails: values, newEmails });
     }
   };
 
@@ -81,62 +81,43 @@ class InviteeList extends Component {
     this.setState({ sendByEmail: e.target.checked });
   };
 
-  onFormSubmit = event => {
-    event.preventDefault();
-    const { recipients, sendByEmail, newEmails, sendingDate } = this.state;
+  onFormSubmit = async e => {
+    e.preventDefault();
+    const {
+      inviteesEmailsList,
+      sendByEmail,
+      newEmails,
+      deletedEmails,
+    } = this.state;
     const {
       updateSentEmails: updateSentEmailsActionCreator,
       sessionDetails,
     } = this.props;
 
-    const {
-      date,
-      type,
-      trainers,
-      region,
-      _id,
-      startTime,
-      endTime,
-      shortId,
-    } = sessionDetails;
+    const { _id: sessionId } = sessionDetails;
 
-    const trainerName = trainers
-      .map(trainer => {
-        return trainer.name;
-      })
-      .join(' & ');
-
-    const updatedEmails = recipients.map(email => {
-      return {
-        email: email.email,
-        status: 'sent',
-      };
-    });
-
-    const updatedEmailsList = {
-      updatedEmails,
-      sendByEmail,
-      newEmails,
-      date,
-      type,
-      trainers,
-      region,
-      _id,
-      startTime,
-      endTime,
-      shortId,
-      trainerName,
-    };
-    // console.log(updatedEmailsList, 'uuuuuuupdatedEmails');
-    updateSentEmailsActionCreator(updatedEmailsList);
+    try {
+      this.setState({ isSubmmiting: true });
+      await updateSentEmailsActionCreator({
+        sessionId,
+        inviteesEmailsList,
+        newEmails,
+        deletedEmails,
+        sendByEmail,
+      });
+      this.setState({ isSubmmiting: false });
+    } catch (err) {
+      console.log('err', err);
+      this.setState({ isSubmmiting: false });
+    }
   };
 
   render() {
-    const { recipients, err } = this.state;
+    const { err } = this.state;
     const { onUpdateEmailsChange, onFormSubmit } = this;
-    console.log(recipients);
+    const { inviteesEmailsList, emails, isSubmmiting } = this.state;
 
-    if (!recipients) {
+    if (!inviteesEmailsList) {
       return <Spin />;
     }
 
@@ -153,12 +134,11 @@ class InviteeList extends Component {
               size="large"
               placeholder="emails"
               onChange={onUpdateEmailsChange}
-              defaultValue={recipients && recipients.map(obj => obj.email)}
-              value={recipients.map(item => item.email)}
+              value={emails}
               style={{ width: '100%', height: '100%' }}
             >
-              {recipients &&
-                recipients.map(obj => (
+              {inviteesEmailsList &&
+                inviteesEmailsList.map(obj => (
                   <Option key={obj.email} value={obj.email}>
                     {obj.email}
                   </Option>
@@ -168,7 +148,7 @@ class InviteeList extends Component {
           <div>{err}</div>
           <InputDiv>
             <Checkbox onChange={this.onCheckboxChange}>
-              Send the survey to participants by email
+              Email invitation to new emails I have just added
             </Checkbox>
           </InputDiv>
           <InputDiv>
@@ -178,6 +158,7 @@ class InviteeList extends Component {
               label="Update"
               height="40px"
               width="100%"
+              disabled={isSubmmiting}
             />
           </InputDiv>
         </Form>
@@ -186,9 +167,18 @@ class InviteeList extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  sessionDetails: state.sessions.sessionDetails[0],
-});
+const mapStateToProps = state => {
+  const {
+    sessionDetails: [sessionDetails],
+  } = state.sessions;
+  const inviteesEmailsList = sessionDetails.participantsEmails.filter(email => {
+    return email.status === 'new' || email.status === 'sent';
+  });
+  return {
+    sessionDetails: state.sessions.sessionDetails[0],
+    inviteesEmailsList,
+  };
+};
 
 export default connect(
   mapStateToProps,
