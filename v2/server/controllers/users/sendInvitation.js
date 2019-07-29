@@ -47,19 +47,19 @@ const SendInvitation = async (req, res, next) => {
       });
 
       const sessionDate = moment(date).format('DD/MM/YYYY');
-
-      sendEmailInvitation({
-        name,
-        emails,
-        sessionDate,
-        type,
-        trainerName,
-        region,
-        startTime,
-        endTime,
-        shortId,
-      });
-
+      if (process.env.NODE_ENV === 'production') {
+        sendEmailInvitation({
+          name,
+          emails,
+          sessionDate,
+          type,
+          trainerName,
+          region,
+          startTime,
+          endTime,
+          shortId,
+        });
+      }
       return res.json(StoreSentEmailData);
     }
     return next(boom.badRequest('Some arguments are missed'));

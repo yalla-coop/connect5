@@ -73,6 +73,7 @@ export const TrainersName = styled(Link)`
   font-weight: 400;
   text-decoration: none;
   text-transform: capitalize;
+  padding-left: 0.7rem;
 `;
 
 // NEW COMPONENTS
@@ -86,6 +87,7 @@ export const SubDetails = styled.div`
 export const SubDetailsTitle = styled.p`
   width: 25%;
   margin: 0;
+  padding-right: 1rem;
 `;
 
 export const SubDetailsContent = styled.p`
@@ -93,7 +95,9 @@ export const SubDetailsContent = styled.p`
   color: ${colors.black};
   font-weight: 400;
   text-decoration: none;
+  font-size: 0.95rem;
   margin: 0;
+  padding-left: 0.5rem;
 `;
 
 export const RegistrationDiv = styled.div`
