@@ -9,4 +9,4 @@ module.exports.updateUserPasswordById = (userId, password) => {
   return User.findByIdAndUpdate(userId, { password }, { new: true });
 };
 
-module.exports.findParticipantByPIN = PIN => Participant.findOne({ PIN });
+module.exports.findParticipantByPIN = PIN => Participant.find({ PIN });

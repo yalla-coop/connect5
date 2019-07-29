@@ -546,7 +546,6 @@ const mapStateToProps = state => {
   return {
     surveyData: state.survey,
     PINExist: state.survey.PINExist,
-    skipDemo: state.survey.skipDemo,
     errors: state.survey.errors,
   };
 };

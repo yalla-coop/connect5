@@ -15,7 +15,6 @@ const initialState = {
   msg: {},
   PINExist: null,
   errors: {},
-  skipDemo: false,
   preSurveyResponses: null,
 };
 
@@ -56,17 +55,15 @@ const fetchedSurveyData = (state = initialState, action) => {
       // payload[1] tells if PIN has filled out a pre-survey if relevant post-session
       return {
         ...state,
-        skipDemo: true,
         preSurveyResponses: payload[1],
         uniqueGroups:
-          state.uniqueGroups[0] === 'demographic' && payload[0] !== null
+          state.uniqueGroups[0] === 'demographic' && payload[0].length > 0
             ? [createGroupsArray(state.surveyData.questionsForSurvey).pop()]
             : createGroupsArray(state.surveyData.questionsForSurvey),
       };
     case GET_PARTICIPANT_BY_PIN_FAIL:
       return {
         ...state,
-        skipDemo: false,
         preSurveyResponses: payload[1],
         uniqueGroups: createGroupsArray(state.surveyData.questionsForSurvey),
       };

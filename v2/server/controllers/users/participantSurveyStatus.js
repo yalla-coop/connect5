@@ -1,7 +1,6 @@
 const boom = require('boom');
 
 const { findParticipantByPIN } = require('../../database/queries/user');
-
 const { PINfilledPreSurvey } = require('../../database/queries/surveys');
 
 module.exports = async (req, res, next) => {
