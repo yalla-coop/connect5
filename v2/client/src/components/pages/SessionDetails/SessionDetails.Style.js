@@ -107,7 +107,7 @@ export const RegistrationDiv = styled.div`
   padding: 0.4rem;
 `;
 
-export const RegistrationLink = styled(Link)`
+export const RegistrationLink = styled.a`
   text-decoration: none;
   display: block;
   color: ${colors.blackSecondary};
