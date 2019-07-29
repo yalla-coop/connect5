@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import NameForm from './NameForm';
 import ClaimCertificate from './ClaimCertificate';
 import SucessMsg from './SucessMsg';
+import Header from '../../common/Header';
 
 import { Wrapper, Paragraph, ButtonsWrapper } from './Certificate.style';
 
@@ -82,6 +83,7 @@ class Certificate extends Component {
           exact
           render={props => (
             <Wrapper>
+              <Header type="home" userRole="participent" />
               <Paragraph>
                 You can get your certificate by clicking here
               </Paragraph>

@@ -3,6 +3,7 @@ import { Input } from 'antd';
 import * as Yup from 'yup';
 
 import Button from '../../common/Button';
+import Header from '../../common/Header';
 
 import {
   Wrapper,
@@ -86,6 +87,7 @@ export default class NameForm extends Component {
 
     return (
       <Wrapper>
+        <Header type="home" userRole="participent" />
         <LoginForm onSubmit={this.handleSubmit}>
           <Content>
             <Input
