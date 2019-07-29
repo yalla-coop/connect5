@@ -108,12 +108,14 @@ export const Row = styled.div`
   width: 95%;
   margin: 0 auto;
   align-items: center;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 
   &:hover p {
     font-weight: 500;
     color: ${colors.primary};
+    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   }
+
   ${({ enabled }) =>
     enabled
       ? ''

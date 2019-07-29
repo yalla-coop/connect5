@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Icon, Drawer, Modal } from 'antd';
+import { Icon, Drawer, Modal, Popover } from 'antd';
 import * as Yup from 'yup';
 import moment from 'moment';
 
@@ -259,12 +259,23 @@ class ManageAttendees extends Component {
             <Icon type="right" />
           </Row>
         </SubDetails>
-        <SubDetails>
-          <Row onClick={this.handleDrawerOpen} data-key="sendEmails">
-            <DrawerLink>Send session info email reminder</DrawerLink>
-            <Icon type="right" />
-          </Row>
-        </SubDetails>
+        {confirmedAttendeesList.length ? (
+          <SubDetails>
+            <Row onClick={this.handleDrawerOpen} data-key="sendEmails">
+              <DrawerLink>Send session info email reminder</DrawerLink>
+              <Icon type="right" />
+            </Row>
+          </SubDetails>
+        ) : (
+          <Popover content="No confirmed participants" placement="topLeft">
+            <SubDetails>
+              <Row disabled>
+                <DrawerLink>Send session info email reminder</DrawerLink>
+                <Icon type="right" />
+              </Row>
+            </SubDetails>
+          </Popover>
+        )}
         <SubDetails>
           <Row onClick={this.handleDrawerOpen} data-key="viewEmails">
             <DrawerLink>View emails you have sent</DrawerLink>
