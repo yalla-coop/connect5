@@ -28,6 +28,7 @@ export default function(state = initState, action) {
         ...state,
         ...payload,
         msg: 'success',
+        loading: false,
       };
     case DELETE_SESSION_SUCCESS:
       return {

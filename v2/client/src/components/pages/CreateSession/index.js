@@ -2,7 +2,17 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
-import { DatePicker, Select, Input, Checkbox, Icon, Divider } from 'antd';
+
+import {
+  DatePicker,
+  Select,
+  Input,
+  Checkbox,
+  Icon,
+  Divider,
+  TimePicker,
+} from 'antd';
+
 import moment from 'moment';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
@@ -22,6 +32,7 @@ import {
   SubmitBtn,
   Error,
   Warning,
+  InputLabel,
 } from './create-session.style';
 
 const { Option } = Select;
@@ -36,11 +47,15 @@ const initialState = {
   startDate: null,
   inviteesNumber: null,
   region: null,
-  partnerTrainer1: '',
-  partnerTrainer2: '',
+  partnerTrainer1: { key: '', label: '' },
+  partnerTrainer2: { key: '', label: '' },
   emails: [],
   sendByEmail: false,
   err: false,
+  trainersNames: {},
+  startTime: null,
+  endTime: null,
+  address: '',
 };
 
 class CreateSession extends Component {
@@ -107,15 +122,21 @@ class CreateSession extends Component {
     });
   };
 
-  onSelectPartner1Change = value => {
+  onSelectPartner1Change = item => {
+    const { trainersNames } = this.state;
+
     this.setState({
-      partnerTrainer1: value,
+      partnerTrainer1: item,
+      trainersNames: { ...trainersNames, [item.label]: item.label },
     });
   };
 
-  onSelectPartner2Change = value => {
+  onSelectPartner2Change = item => {
+    const { trainersNames } = this.state;
+
     this.setState({
-      partnerTrainer2: value,
+      partnerTrainer2: item,
+      trainersNames: { ...trainersNames, [item.label]: item.label },
     });
   };
 
@@ -194,6 +215,10 @@ class CreateSession extends Component {
       partnerTrainer2,
       emails,
       sendByEmail,
+      trainersNames,
+      startTime,
+      endTime,
+      address,
     } = this.state;
 
     const sessionData = {
@@ -201,13 +226,55 @@ class CreateSession extends Component {
       startDate,
       inviteesNumber,
       region,
-      partnerTrainer1,
-      partnerTrainer2,
+      partnerTrainer1: partnerTrainer1.key,
+      partnerTrainer2: partnerTrainer2.key,
       emails,
       sendByEmail,
+      trainersNames,
+      startTime,
+      endTime,
+      address,
     };
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
     return !this.checkError() && this.props.createSessionAction(sessionData);
+  };
+
+  onStartTimeChange = (time, timeString) => {
+    this.setState({
+      startTime: timeString,
+    });
+  };
+
+  onEndTimeChange = (time, timeString) => {
+    this.setState({
+      endTime: timeString,
+    });
+  };
+
+  getDisabledStartTime = () => {
+    const { endTime } = this.state;
+    if (endTime) {
+      const hour = endTime.split(':')[0];
+      const unavailableHours = [];
+      for (let i = Number(hour); i < 24; i += 1) {
+        unavailableHours.push(i);
+      }
+      return unavailableHours;
+    }
+    return null;
+  };
+
+  getDisabledEndTime = () => {
+    const { startTime } = this.state;
+    if (startTime) {
+      const hour = startTime.split(':')[0];
+      const unavailableHours = [];
+      for (let i = 0; i < Number(hour); i += 1) {
+        unavailableHours.push(i);
+      }
+      return unavailableHours;
+    }
+    return null;
   };
 
   render() {
@@ -222,7 +289,12 @@ class CreateSession extends Component {
       emails,
       startDate,
       region,
+      endTime,
+      startTime,
+      address,
     } = this.state;
+
+    const { loading } = this.props;
 
     const {
       onDateChange,
@@ -233,6 +305,8 @@ class CreateSession extends Component {
       onSelectPartner2Change,
       onEmailChange,
       onFormSubmit,
+      onStartTimeChange,
+      onEndTimeChange,
     } = this;
 
     return (
@@ -301,14 +375,26 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <Input
+              type="text"
+              placeholder="Type the venue's address"
+              value={address}
+              onChange={onInputChange}
+              name="address"
+              size="large"
+            />
+          </InputDiv>
+
+          <InputDiv>
             <Select
               showSearch
               style={{ width: '100%' }}
               placeholder="Partner Trainer"
               optionFilterProp="children"
               onChange={onSelectPartner1Change}
+              labelInValue
               size="large"
-              value={partnerTrainer1 || undefined}
+              value={partnerTrainer1.key ? partnerTrainer1 : undefined}
               dropdownRender={menu => (
                 <div
                   onMouseDown={e => {
@@ -358,7 +444,8 @@ class CreateSession extends Component {
                 size="large"
                 showSearch
                 style={{ width: '100%' }}
-                value={partnerTrainer2 || undefined}
+                value={partnerTrainer2.key ? partnerTrainer2 : undefined}
+                labelInValue
                 dropdownRender={menu => (
                   <div
                     onMouseDown={e => {
@@ -406,11 +493,50 @@ class CreateSession extends Component {
               style={{ width: '100%', height: '100%' }}
               value={emails}
             />
+
+            <InputDiv
+              style={{
+                marginTop: '1rem',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}
+            >
+              <InputLabel>Session Start:</InputLabel>
+              <TimePicker
+                onChange={onStartTimeChange}
+                name="startTime"
+                defaultValue={startTime && moment(startTime, 'HH:mm')}
+                size="large"
+                format="HH:mm"
+                disabledHours={this.getDisabledStartTime}
+              />
+            </InputDiv>
+
+            <InputDiv
+              style={{
+                marginTop: '1rem',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}
+            >
+              <InputLabel>Session Finish:</InputLabel>
+              <TimePicker
+                onChange={onEndTimeChange}
+                name="startTime"
+                defaultValue={endTime && moment(endTime, 'HH:mm')}
+                size="large"
+                format="HH:mm"
+                disabledHours={this.getDisabledEndTime}
+              />
+            </InputDiv>
+
             <div>{err}</div>
           </InputDiv>
           <InputDiv>
             <Checkbox onChange={this.onChangeCheckbox}>
-              Send the survey to participants by email
+              Send a session invite to potential participants by email
             </Checkbox>
           </InputDiv>
 
@@ -421,6 +547,8 @@ class CreateSession extends Component {
               label="Submit"
               height="40px"
               width="100%"
+              loading={loading}
+              disabled={loading}
             />
           </SubmitBtn>
           {err && <Error>Please fill in all required inputs</Error>}
@@ -441,6 +569,7 @@ const mapStateToProps = state => {
     currentUser: state.auth,
     localLeadTrainersGroup: state.fetchedData.localLeadGroup,
     leadsAndTrainers,
+    loading: state.session.loading,
   };
 };
 
