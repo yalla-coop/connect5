@@ -143,6 +143,7 @@ class UserDashboard extends Component {
           remainedSessionCapital: uppercaseSurvey(remainedSession),
           remainedSession,
           shortId: sessionDetails.sessions.shortId,
+          dismissed: isSessionPre || !isSessionDone,
         });
       }
     }
