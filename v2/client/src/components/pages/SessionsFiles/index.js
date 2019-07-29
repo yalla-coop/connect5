@@ -33,7 +33,8 @@ class SessionsFiles extends Component {
     const completedSessions = sessions.filter(session => session.completed);
     return (
       <div>
-        <Header label="Materials" type="section" />
+        <Header type="home" userRole="participent" />
+
         <Wrapper>
           <Title>Completed sessions files</Title>
           <Collapse

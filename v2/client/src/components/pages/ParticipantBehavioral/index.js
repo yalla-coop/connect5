@@ -11,7 +11,7 @@ const ParticipantBehavioral = ({ isAuthenticated, PIN, role }) => {
   }
   return (
     <>
-      <Header type="view" label="Behavioural Insights" />
+      <Header type="home" userRole="participent" />
       <Wrapper>
         <Paragraph>
           Behaviour is influenced by our perceptions of our capability,

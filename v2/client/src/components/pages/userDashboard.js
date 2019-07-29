@@ -12,8 +12,7 @@ import { uppercaseSurvey } from '../../helpers';
 
 import { colors } from '../../theme';
 import surveyTypes from '../../constants/surveyTypes';
-
-import Header from '../common/Header'
+import Header from '../common/Header';
 
 const DashboardWrapper = styled.div`
   width: 90%;
@@ -166,7 +165,7 @@ class UserDashboard extends Component {
     } = this.state;
     return (
       <DashboardWrapper>
-        <Header type='home' />
+        <Header type="home" />
         <Modal
           title={canGetCertivicate ? 'Congratulations: 🎉🎉' : 'Thank you!'}
           visible={popupVisible && !dismissed}

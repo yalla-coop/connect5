@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Spin, Icon } from 'antd';
 
+import Header from '../../common/Header';
+
 import {
   Wrapper,
   Paragraph,
@@ -17,6 +19,7 @@ export default class ClaimCertificate extends Component {
     const { handleClick, isLoading } = this.props;
     return (
       <Wrapper>
+        <Header type="home" userRole="participent" />
         <Content>
           <Paragraph>you can get your certificate by clicking here</Paragraph>
           <ButtonsWrapper>

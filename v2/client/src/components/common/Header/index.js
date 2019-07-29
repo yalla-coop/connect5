@@ -93,12 +93,12 @@ const Logo = styled.img`
 // NOTE: If you need Section and View header at same time
 // then give your section header the nudge prop to shift it down
 
-const Header = ({ label, type, ...props }) => {
+const Header = ({ label, type, userRole, ...props }) => {
   return (
     <>
       {type === 'home' ? (
         <StyledHeader type={type} {...props}>
-          <HomeIcon to={HOME_URL}>
+          <HomeIcon to={userRole ? '/participant-dashboard' : HOME_URL}>
             <i className="fas fa-home" />
           </HomeIcon>
           <Logo src={Connect5Logo} alt="logo" />

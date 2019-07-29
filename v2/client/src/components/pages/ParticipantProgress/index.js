@@ -25,7 +25,7 @@ class ParticipantProgress extends Component {
     }
     return (
       <Wrapper>
-        <Header label="My progress" type="section" />
+        <Header type="home" userRole="participent" />
         <Span>Completed Sessions</Span>
         <SessionList dataList={sessions.filter(item => item.completed)} />
       </Wrapper>
