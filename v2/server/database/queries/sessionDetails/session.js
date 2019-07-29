@@ -139,7 +139,10 @@ module.exports.updateInviteesList = ({
   Session.findById(sessionId).then(session => {
     session.participantsEmails.forEach((participant, index) => {
       if (deletedEmails.length && deletedEmails.includes(participant.email)) {
-        session.participantsEmails[index].remove();
+        // eslint-disable-next-line no-param-reassign
+        session.participantsEmails = session.participantsEmails.filter(
+          item => item.email !== participant.email
+        );
       }
     });
 
