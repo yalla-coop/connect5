@@ -13,6 +13,7 @@ import {
   BackContainer,
   EmailInfo,
   InfoTitle,
+  SessionInfoTitle,
   List,
 } from './InviteAndPromote.style';
 
@@ -52,13 +53,23 @@ class SendInvitation extends Component {
             training session.
           </p>
           <List>
-            <li>- Session Date: {moment(sessionDate).format('DD/MM/YYYY')}</li>
-            <li>- Session Type: {sessionType}</li>
-            <li>- Location: {location}</li>
             <li>
-              - time:{startTime} to {endTime}{' '}
+              - <SessionInfoTitle> Session Date:</SessionInfoTitle>{' '}
+              {moment(sessionDate).format('DD/MM/YYYY')}
             </li>
-            <li>- Trainer(s): {trainers}</li>
+            <li>
+              - <SessionInfoTitle>Session Type:</SessionInfoTitle> {sessionType}
+            </li>
+            <li>
+              -<SessionInfoTitle> Location:</SessionInfoTitle> {location}
+            </li>
+            <li>
+              - <SessionInfoTitle>time:</SessionInfoTitle>
+              {startTime} to {endTime}{' '}
+            </li>
+            <li>
+              - <SessionInfoTitle>Trainer(s):</SessionInfoTitle> {trainers}
+            </li>
           </List>
           <p>To confirm your attendance please click this link: </p>
 

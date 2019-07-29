@@ -32,6 +32,7 @@ const getParticipantsDemogrphics = require('../controllers/users/getParticipants
 const sendInvitation = require('../controllers/users/sendInvitation');
 const forgetPassword = require('../controllers/users/forgetPassword');
 const resetPassword = require('../controllers/users/resetPassword');
+const updateSentInvitationEmails = require('../controllers/users/updatSendInvitation');
 
 // check eamil route if the route doen't contain email query
 // then it will skip with next()
@@ -51,6 +52,11 @@ router.post('/users/local-leads/group', authentication(), addTrainerToGroup);
 
 router.post('/users/change-password', authentication(), changePassword);
 router.post('/users/send-invitation', authentication(), sendInvitation);
+router.post(
+  '/users/update-sent-emails',
+  authentication(),
+  updateSentInvitationEmails
+);
 router.get('/local-leads', getLocalLeads);
 
 router.use('/users/:id/results', authentication(), getUserResults);

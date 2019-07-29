@@ -50,7 +50,7 @@ class SessionTopDetails extends Component {
           <TrainersName to="/">{trainers[0].name}</TrainersName>
           {trainers[1] && (
             <TrainersName to="/">
-              &<span style={{ marginLeft: '.8rem' }}>{trainers[1].name}</span>
+              &<span style={{ marginLeft: '.5rem' }}>{trainers[1].name}</span>
             </TrainersName>
           )}
         </SubDetails>

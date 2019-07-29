@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Drawer } from 'antd';
+import Swal from 'sweetalert2';
 
 import SendInvitation from './SendInvitation';
 import InviteeList from './InviteeList';
@@ -9,8 +10,10 @@ import EmailsList from '../../../common/List/EmailsList';
 import {
   SessionTopDetailsWrapper,
   SubDetails,
-  SubDetailsContent,
+  RegistrationDiv,
   DrawerLink,
+  CopyLink,
+  CopyIcon,
   Row,
 } from '../SessionDetails.Style';
 
@@ -26,15 +29,70 @@ class InviteAndPromote extends Component {
     this.setState({ visible: true, drawerKey: key });
   };
 
+  // Copy the link of the survey and fire pop up for success
+  onCopyClick = () => {
+    const copyText = document.getElementById('registration-link');
+    let range;
+    let selection;
+    if (document.body.createTextRange) {
+      range = document.body.createTextRange();
+      range.moveToElementText(copyText);
+      range.select();
+    } else if (window.getSelection) {
+      selection = window.getSelection();
+      range = document.createRange();
+      range.selectNodeContents(copyText);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+
+    try {
+      document.execCommand('copy');
+      Swal.fire({
+        title: 'Success',
+        text: 'Link copied!',
+        type: 'success',
+        timer: 2000,
+        confirmButtonText: 'Ok',
+      });
+    } catch (err) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Unable to cop the Link',
+        type: 'error',
+        timer: 2000,
+        confirmButtonText: 'Ok',
+      });
+    }
+  };
+
   render() {
     const { visible, drawerKey } = this.state;
     const { sessionDetails } = this.props;
-    const { id } = sessionDetails;
+    const { onCopyClick } = this;
+    const { id, shortId } = sessionDetails;
+
     return (
       <SessionTopDetailsWrapper>
-        <SubDetails>
+        <SubDetails style={{ display: 'flex', flexDirection: 'column' }}>
           <DrawerLink>Registration Link</DrawerLink>
-          <SubDetailsContent to="/"> link</SubDetailsContent>
+          <RegistrationDiv>
+            <a
+              href={`${
+                process.env.NODE_ENV === 'prodcution' ? 'https://' : 'http://'
+              }${window.location.host}/confirm/${shortId}`}
+              target="_blank"
+              id="registration-link"
+              rel="noopener noreferrer"
+            >
+              {`${
+                process.env.NODE_ENV === 'prodcution' ? 'https://' : 'http://'
+              }${window.location.host}/confirm/${shortId}`}
+            </a>
+            <CopyLink onClick={onCopyClick}>
+              <CopyIcon className="far fa-copy" />
+            </CopyLink>
+          </RegistrationDiv>
         </SubDetails>
         <SubDetails>
           <Row onClick={this.DrawerOpen} data-key="send-invitation">
@@ -55,19 +113,18 @@ class InviteAndPromote extends Component {
           </Row>
         </SubDetails>
         <Drawer
-          title={<span>Hello</span>}
           placement="left"
           width="100%"
           height="100%"
           onClose={this.onClose}
           visible={visible}
           closable
-          getContainer
         >
           <DrawerContent
             drawerKey={drawerKey}
             id={id}
             sessionDetails={sessionDetails}
+            onClose={this.onClose}
           />
         </Drawer>
       </SessionTopDetailsWrapper>
@@ -86,6 +143,6 @@ const DrawerContent = ({ drawerKey, id, sessionDetails, onClose }) => {
       return <EmailsList onClose={onClose} dataList={sessionDetails} />;
 
     default:
-      return <h1>hi</h1>;
+      return null;
   }
 };

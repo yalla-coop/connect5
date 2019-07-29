@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { Icon, Drawer, Button } from 'antd';
+import { Icon, Drawer } from 'antd';
+
+import Header from '../Header';
+import Spin from '../Spin';
 
 import { fetchSessionDetails } from '../../../actions/groupSessionsAction';
 import InviteEmails from '../../pages/SessionDetails/InviteAndPromote/InviteEmails';
 
 import {
   Wrapper,
-  Header,
+  Header as Heading,
   DateHeader,
   DetailsHeader,
   List,
   Row,
   Date,
 } from './List.style';
+import {
+  BackContainer,
+  BackLink,
+} from '../../pages/SessionDetails/SessionActions/SessionActions.Style';
 
 class EmailsList extends Component {
   state = {
@@ -27,50 +34,64 @@ class EmailsList extends Component {
     });
   };
 
-  onClose = () => {
+  onDrawerClose = () => {
     this.setState({
       visible: false,
     });
   };
 
   render() {
-    const { dataList } = this.props;
+    const { dataList, onClose } = this.props;
     const { visible } = this.state;
-    const { showDrawer, onClose } = this;
+    const { showDrawer, onDrawerClose } = this;
     if (!dataList) {
-      return <p>loading</p>;
+      return <Spin />;
     }
     return (
-      <Wrapper>
-        <Header>
-          <DateHeader>Date</DateHeader>
-          <DetailsHeader>Info</DetailsHeader>
-        </Header>
-        <List>
-          {dataList &&
-            dataList.sentEmails.map(dataItem => (
-              <Row key={dataItem._id}>
-                <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
-                <Button type="primary" onClick={showDrawer}>
-                  <Icon type="right" />
-                </Button>
-                <Drawer
-                  placement="right"
-                  closable={false}
-                  onClose={onClose}
-                  visible={visible}
-                  width="100%"
-                >
-                  <InviteEmails
-                    sessionDetails={dataList}
-                    emailInfo={dataItem}
-                    onClose={this.onClose}
-                  />
-                </Drawer>
-              </Row>
-            ))}
-        </List>
-      </Wrapper>
+      <>
+        <Header type="view" label="Invitee List" />
+        <BackContainer style={{ margin: '2rem 0' }}>
+          <BackLink onClick={onClose}>{`< Back`}</BackLink>
+        </BackContainer>
+        <Wrapper>
+          <Heading>
+            <DateHeader>Date</DateHeader>
+            <DetailsHeader>Info</DetailsHeader>
+          </Heading>
+          <List>
+            {dataList &&
+              dataList.sentEmails.map(dataItem => (
+                <Row key={dataItem._id}>
+                  <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
+                  <button
+                    type="button"
+                    onClick={showDrawer}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      marginRight: '.5rem',
+                    }}
+                  >
+                    <Icon type="right" />
+                  </button>
+                  <Drawer
+                    placement="right"
+                    closable={false}
+                    onClose={onDrawerClose}
+                    visible={visible}
+                    width="100%"
+                  >
+                    <InviteEmails
+                      sessionDetails={dataList}
+                      emailInfo={dataItem}
+                      onClose={onDrawerClose}
+                    />
+                  </Drawer>
+                </Row>
+              ))}
+          </List>
+        </Wrapper>
+      </>
     );
   }
 }

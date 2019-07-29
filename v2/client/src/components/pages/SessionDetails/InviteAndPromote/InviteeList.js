@@ -1,9 +1,10 @@
+/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Select, Checkbox } from 'antd';
-import history from '../../../../history';
 import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
 import { updateSentEmails } from '../../../../actions/InviteAndPromoteAction';
+// import { pattern } from '../../../../constants/regex';
 // ANTD COMPONENTS
 
 // COMMON COMPONENTS
@@ -24,56 +25,107 @@ const { Option } = Select;
 
 class InviteeList extends Component {
   state = {
-    recipients: null,
     sendByEmail: false,
+    sendingDate: Date.now(),
+    err: '',
+    inviteesEmailsList: [],
+    emails: [],
+    newEmails: [],
+    deletedEmails: [],
   };
 
   componentDidMount() {
-    const { dataList } = this.props;
-    const { participantsEmails } = dataList;
-    const recipients = [];
-    participantsEmails.forEach(recipient => {
-      if (recipient.status === 'sent') {
-        recipients.push(recipient.email);
-      }
+    const { inviteesEmailsList } = this.props;
+    const emailsString = inviteesEmailsList.map(emailObj => emailObj.email);
+
+    this.setState({
+      inviteesEmailsList,
+      emails: emailsString,
     });
-    this.setState({ recipients });
   }
 
-  onEmailChange = value => {
-    this.setState({
-      recipients: value,
-    });
+  onUpdateEmailsChange = values => {
+    const {
+      emails,
+      deletedEmails: oldDeletedEmails,
+      newEmails: prevNewEmails,
+    } = this.state;
+
+    const deletedEmails = [...oldDeletedEmails];
+    let newEmails = [...prevNewEmails];
+    if (values.length < emails.length) {
+      emails.forEach(email => {
+        if (!values.includes(email)) {
+          if (!newEmails.includes(email)) {
+            deletedEmails.push(email);
+          } else {
+            newEmails = newEmails.filter(newEmail => newEmail !== email);
+          }
+        }
+      });
+
+      this.setState({ emails: values, deletedEmails, newEmails });
+    } else if (values.length > emails.length) {
+      values.forEach(val => {
+        if (!emails.includes(val)) {
+          newEmails.push(val);
+        }
+      });
+      this.setState({ emails: values, newEmails });
+    }
   };
 
   onCheckboxChange = e => {
     this.setState({ sendByEmail: e.target.checked });
   };
 
-  onFormSubmit = event => {
-    event.preventDefault();
-    const { recipients, sendByEmail } = this.state;
-    const { updateSentEmails: updateSentEmailsActionCreator } = this.props;
-    const updatedEmails = {
-      recipients,
+  onFormSubmit = e => {
+    e.preventDefault();
+    const {
+      inviteesEmailsList,
       sendByEmail,
-    };
-    updateSentEmailsActionCreator(updatedEmails);
+      newEmails,
+      deletedEmails,
+    } = this.state;
+
+    this.setState({ err: '' });
+
+    if (sendByEmail && newEmails.length === 0) {
+      return this.setState({
+        err: 'You must insert a new email to send a message',
+      });
+    }
+    const {
+      updateSentEmails: updateSentEmailsActionCreator,
+      sessionDetails,
+    } = this.props;
+
+    const { _id: sessionId } = sessionDetails;
+
+    return updateSentEmailsActionCreator({
+      sessionId,
+      inviteesEmailsList,
+      newEmails,
+      deletedEmails,
+      sendByEmail,
+    });
   };
 
   render() {
-    const { recipients } = this.state;
-    const { onEmailChange, onFormSubmit } = this;
+    const { err } = this.state;
+    const { onUpdateEmailsChange, onFormSubmit } = this;
+    const { inviteesEmailsList, emails } = this.state;
+    const { loading, onClose } = this.props;
 
-    if (!recipients) {
-      return Spin;
+    if (!inviteesEmailsList) {
+      return <Spin />;
     }
 
     return (
       <InviteSectionWrapper>
         <Header type="view" label="Invitee List" />
         <BackContainer>
-          <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
+          <BackLink onClick={onClose}>{`< Back`}</BackLink>
         </BackContainer>
         <Form>
           <InputDiv>
@@ -81,31 +133,42 @@ class InviteeList extends Component {
               mode="tags"
               size="large"
               placeholder="emails"
-              onChange={onEmailChange}
-              defaultValue={recipients && recipients.map(email => email)}
+              onChange={onUpdateEmailsChange}
+              value={emails}
               style={{ width: '100%', height: '100%' }}
             >
-              {recipients &&
-                recipients.map(email => (
-                  <Option key={email} value={email}>
-                    {email}
+              {inviteesEmailsList &&
+                inviteesEmailsList.map(obj => (
+                  <Option key={obj.email} value={obj.email}>
+                    {obj.email}
                   </Option>
                 ))}
             </Select>
           </InputDiv>
+          <div>{err}</div>
           <InputDiv>
             <Checkbox onChange={this.onCheckboxChange}>
-              Send the survey to participants by email
+              Email invitation to new emails I have just added
             </Checkbox>
           </InputDiv>
           <InputDiv>
             <Button
-              onClick={onFormSubmit}
               type="primary"
+              style={{
+                width: '100%',
+                marginTop: '2rem',
+                fontSize: '19px',
+                fontWeight: 'bold',
+                padding: '0.5rem 1rem',
+                height: 'auto',
+              }}
+              onClick={onFormSubmit}
+              disabled={loading}
+              loading={loading}
               label="Update"
-              height="40px"
-              width="100%"
-            />
+            >
+              Update
+            </Button>
           </InputDiv>
         </Form>
       </InviteSectionWrapper>
@@ -113,9 +176,19 @@ class InviteeList extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  sessionDetails: state.sessions.sessionDetails[0],
-});
+const mapStateToProps = state => {
+  const {
+    sessionDetails: [sessionDetails],
+  } = state.sessions;
+  const inviteesEmailsList = sessionDetails.participantsEmails.filter(email => {
+    return email.status === 'new' || email.status === 'sent';
+  });
+  return {
+    sessionDetails: state.sessions.sessionDetails[0],
+    inviteesEmailsList,
+    loading: state.session.loading,
+  };
+};
 
 export default connect(
   mapStateToProps,

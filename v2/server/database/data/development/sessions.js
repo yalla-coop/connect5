@@ -19,11 +19,9 @@ module.exports = async () => {
       endTime: '17:00',
       trainers: [trainers[0], trainers[1]],
       participantsEmails: [
-        { email: 'ramy@gmail.com', status: 'new' },
-        { email: 'abd@gmail.com', status: 'new' },
-        { email: 'marwa@gmail.com', status: 'new' },
-        { email: 'joe@gmail.com', status: 'new' },
-        { email: 'simon@gmail.com', status: 'new' },
+        { email: 'ramyshurafa@gmail.com', status: 'new' },
+        { email: 'abdalsamad.y.m@gmail.com', status: 'new' },
+        { email: 'a.shatat@hotmail.com', status: 'new' },
       ],
     },
     {
@@ -228,6 +226,23 @@ module.exports = async () => {
       participantsEmails: [
         { email: 'samer@gmail.com', status: 'new' },
         { email: 'nael@gmail.com', status: 'new' },
+      ],
+    },
+    {
+      date: '2019-05-16',
+      type: '3',
+      shortId: shortid.generate(),
+      numberOfAttendees: 5,
+      address: '1 Test Street, Test City, TE 5TT',
+      startTime: '14:00',
+      endTime: '17:00',
+      region: 'North West',
+      trainers: [localLeads[0], trainers[0]],
+      participantsEmails: [
+        { email: 'marwaajomaa@gmail.com', status: 'sent' },
+        { email: 'noor@gmail.com', status: 'sent' },
+        { email: 'marwa@gmail.com', status: 'new' },
+        { email: 'mera@gmail.com', status: 'new' },
       ],
     },
   ];

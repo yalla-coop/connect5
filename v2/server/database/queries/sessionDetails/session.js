@@ -129,3 +129,28 @@ module.exports.addSentEmail = ({
     { upsert: true }
   );
 };
+
+// update the emails list without send emails
+module.exports.updateInviteesList = ({
+  sessionId,
+  newEmailsObj,
+  deletedEmails,
+}) =>
+  Session.findById(sessionId).then(session => {
+    session.participantsEmails.forEach((participant, index) => {
+      if (deletedEmails.length && deletedEmails.includes(participant.email)) {
+        // eslint-disable-next-line no-param-reassign
+        session.participantsEmails = session.participantsEmails.filter(
+          item => item.email !== participant.email
+        );
+      }
+    });
+
+    if (newEmailsObj && newEmailsObj.length) {
+      newEmailsObj.forEach(email => {
+        session.participantsEmails.push(email);
+      });
+    }
+
+    return session.save();
+  });

@@ -32,14 +32,17 @@ module.exports = (req, res, next) => {
         updateUserById(_id, data)
           // send the token via email
 
-          .then(() => resetPasswordMailing(email, token, user.name))
+          .then(() => {
+            if (process.env.NODE_ENV === 'production') {
+              resetPasswordMailing(email, token, user.name);
+            }
+          })
           .then(() => {
             //  send success message
             res.json({ success: true });
           });
       })
       .catch(err => {
-        console.log(err);
         next(boom.badImplementation());
       });
   });
