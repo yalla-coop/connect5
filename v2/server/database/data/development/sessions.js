@@ -19,11 +19,9 @@ module.exports = async () => {
       endTime: '17:00',
       trainers: [trainers[0], trainers[1]],
       participantsEmails: [
-        { email: 'ramy@gmail.com', status: 'new' },
-        { email: 'abd@gmail.com', status: 'new' },
-        { email: 'marwa@gmail.com', status: 'new' },
-        { email: 'joe@gmail.com', status: 'new' },
-        { email: 'simon@gmail.com', status: 'new' },
+        { email: 'ramyshurafa@gmail.com', status: 'new' },
+        { email: 'abdalsamad.y.m@gmail.com', status: 'new' },
+        { email: 'a.shatat@hotmail.com', status: 'new' },
       ],
     },
     {

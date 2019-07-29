@@ -27,6 +27,7 @@ class SendInvitation extends Component {
     const { participantsEmails } = sessionDetails;
     const emails = [];
 
+    // eslint-disable-next-line array-callback-return
     participantsEmails.map(email => {
       if (email.status === 'new' || email.status === 'sent') {
         emails.push({ email: email.email, status: email.status });
@@ -79,7 +80,7 @@ class SendInvitation extends Component {
   render() {
     const { emails } = this.state;
     const { onFormSubmit } = this;
-    const { onClose } = this.props;
+    const { onClose, loading } = this.props;
     if (!emails) {
       return <h3>No emails to sent</h3>;
     }
@@ -102,6 +103,8 @@ class SendInvitation extends Component {
               label="Send invitation"
               height="40px"
               width="100%"
+              loading={loading}
+              disabled={loading}
             />
           </InputDiv>
         </Form>
@@ -112,6 +115,7 @@ class SendInvitation extends Component {
 
 const mapStateToProps = state => ({
   sessionDetails: state.sessions.sessionDetails[0],
+  loading: state.session.loading,
 });
 
 export default connect(

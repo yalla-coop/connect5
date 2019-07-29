@@ -11,7 +11,6 @@ import {
   SessionTopDetailsWrapper,
   SubDetails,
   RegistrationDiv,
-  RegistrationLink,
   DrawerLink,
   CopyLink,
   CopyIcon,
