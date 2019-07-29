@@ -15,9 +15,6 @@ import {
   TRAINERS_URL,
   GROUP_SESSIONS_URL,
   DEMOGRAPHICS_URL,
-  USER_INSIGHTS,
-  USER_PROGRESS,
-  USER_DASHBOARD,
   DECIDE_VIEW_URL,
 } from '../../../constants/navigationRoutes';
 
@@ -131,17 +128,21 @@ const Navbar = ({ viewLevel, role }) => {
       {/* USER */}
       {viewLevel === USER_TYPES.participant && (
         <>
-          <MenuItem to={USER_DASHBOARD}>
+          <MenuItem to="/participant-dashboard">
             <MenuIcon className="fas fa-home" />
             Home
           </MenuItem>
-          <MenuItem to={USER_INSIGHTS}>
+          <MenuItem to="/participant/behavioral-insight">
             <MenuIcon className="fas fa-poll-h" />
             Insights
           </MenuItem>
-          <MenuItem to={USER_PROGRESS}>
+          <MenuItem to="/participant/progress">
             <MenuIcon className="fas fa-tasks" />
             Progress
+          </MenuItem>
+          <MenuItem to="/sessions-files">
+            <MenuIcon className="fas fa-tasks" />
+            Materials
           </MenuItem>
         </>
       )}

@@ -11,6 +11,7 @@ module.exports.StoreSentEmailDataQuery = ({
   startTime,
   endTime,
   address,
+  confirmedEmails,
 }) => {
   const newEmailsObj = emails.map(email => {
     if (email.status === 'new') {
@@ -37,7 +38,10 @@ module.exports.StoreSentEmailDataQuery = ({
 
   const updateDoc = Session.update(
     { _id },
-    { $push: { sentEmails: data }, $set: { participantsEmails: newEmailsObj } }
+    {
+      $push: { sentEmails: data },
+      $set: { participantsEmails: [...newEmailsObj, ...confirmedEmails] },
+    }
   );
   return updateDoc;
 };

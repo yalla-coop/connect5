@@ -57,7 +57,16 @@ class SessionSurveys extends Component {
     const { sendEmails } = this.props;
 
     const { participantsEmails } = sessionDetails;
-    AntdModal.info({
+
+    if (participantsEmails.length < 1) {
+      return AntdModal.error({
+        title: 'No participants in this session',
+        content:
+          'You may need to add participants to be able to send the survey',
+      });
+    }
+
+    return AntdModal.info({
       title:
         'Do you want to send the survey link to all participants by emails?',
       content: (

@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { DatePicker, Select, Input, TimePicker } from 'antd';
 import moment from 'moment';
-import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import history from '../../../../history';
 import Button from '../../../common/Button';
@@ -213,7 +212,6 @@ class EditSession extends Component {
   onFormSubmit = event => {
     event.preventDefault();
     const { id } = this.props.match.params;
-    const { msg } = this.props;
     const {
       session,
       startDate,
@@ -240,15 +238,6 @@ class EditSession extends Component {
     };
 
     this.props.sessionUpdateAction(sessionData, id);
-    if (msg === 'success') {
-      Swal.fire({
-        title: 'success',
-        text: 'session has been successfully edited',
-        type: 'success',
-        confirmButtonText: 'Ok',
-      });
-      history.push(`/session-details/${id}`);
-    }
   };
 
   render() {

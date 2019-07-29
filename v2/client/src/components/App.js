@@ -298,6 +298,7 @@ class App extends Component {
               loaded={loaded}
               isAuthenticated={isAuthenticated}
               allowedRoles={['participant']}
+              viewLevel="participant"
               role={role}
             />
             <PrivateRoute
@@ -307,6 +308,7 @@ class App extends Component {
               loaded={loaded}
               isAuthenticated={isAuthenticated}
               allowedRoles={['participant']}
+              viewLevel="participant"
               role={role}
               navbar
             />
@@ -317,6 +319,7 @@ class App extends Component {
               loaded={loaded}
               isAuthenticated={isAuthenticated}
               allowedRoles={['participant']}
+              viewLevel="participant"
               role={role}
               navbar
             />
@@ -362,7 +365,9 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               Component={SessionsFiles}
               allowedRoles={['participant']}
+              viewLevel="participant"
               role={role}
+              navbar
             />
 
             <Route
