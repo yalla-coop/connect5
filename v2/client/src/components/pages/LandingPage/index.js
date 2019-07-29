@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+
 import {
   Wrapper,
   LogoContainer,
@@ -21,7 +24,21 @@ import Connect5Logo from '../../../assets/connect-5-white.png';
 
 import Button from '../../common/Button';
 
-export default function LandingPage() {
+function LandingPage({ isAuthenticated, role }) {
+  if (isAuthenticated) {
+    switch (role) {
+      case 'admin':
+      case 'localLead':
+        return <Redirect to="/welcome-back" />;
+      case 'trainer':
+        return <Redirect to="/dashboard" />;
+      case 'participant':
+        return <Redirect to="/participant-dashboard" />;
+      default:
+        break;
+    }
+  }
+
   return (
     <Wrapper>
       <LogoContainer>
@@ -69,3 +86,12 @@ export default function LandingPage() {
     </Wrapper>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    role: state.auth.role,
+  };
+};
+
+export default connect(mapStateToProps)(LandingPage);

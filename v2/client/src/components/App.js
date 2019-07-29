@@ -95,7 +95,9 @@ class App extends Component {
       viewLevel,
     } = this.props;
 
-    if (role && !viewLevel) updateViewLevelActionCreator(role);
+    if (role && !viewLevel) {
+      updateViewLevelActionCreator(role);
+    }
   }
 
   render() {
