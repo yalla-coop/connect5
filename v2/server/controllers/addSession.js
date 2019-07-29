@@ -4,7 +4,6 @@ const sendEmailInvitation = require('../helpers/emails/sendEmailInvitation');
 
 const addSession = async (req, res, next) => {
   const { user } = req;
-
   const {
     session,
     startDate,
@@ -19,7 +18,6 @@ const addSession = async (req, res, next) => {
     endTime,
     address,
   } = req.body;
-
   const trainers = [];
   try {
     if (
@@ -37,7 +35,7 @@ const addSession = async (req, res, next) => {
         trainers.push(partnerTrainer2);
       } else {
         trainers.push(user._id);
-        trainersNames[user.name] = user.name;
+        trainersNames.push(user.name);
       }
 
       const addedSession = await createNewsession({
@@ -55,14 +53,18 @@ const addSession = async (req, res, next) => {
       if (sendByEmail) {
         if (process.env.NODE_ENV === 'production') {
           // send invitation link to participant
+
+          const string = trainersNames
+            .filter(item => !!item)
+            .map(name => `${name[0].toUpperCase()}${name.slice(1)}`)
+            .join(' & ');
+
           await sendEmailInvitation({
             name: user.name,
-            participantsEmails: emails,
+            emails,
             sessionDate: startDate,
             type: session,
-            trainerName: Object.keys(trainersNames)
-              .map(name => `${name[0].toUpperCase()}${name.slice(1)}`)
-              .join(' & '),
+            trainerName: string,
             region,
             startTime,
             endTime,
@@ -71,6 +73,7 @@ const addSession = async (req, res, next) => {
           });
         }
       }
+
       return res.json(addedSession);
     }
 

@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
             surveyURL,
           },
         ],
-        participantsList,
+        participantsList: participantsList.map(item => item.email),
       });
     }
     res.json();

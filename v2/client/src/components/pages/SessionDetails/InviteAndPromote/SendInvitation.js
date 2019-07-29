@@ -55,7 +55,9 @@ class SendInvitation extends Component {
       shortId,
       address,
     } = sessionDetails;
-
+    const confirmedEmails = sessionDetails.participantsEmails.filter(
+      item => item.status === 'confirmed'
+    );
     const trainerName = trainers
       .map(trainer => {
         return trainer.name;
@@ -75,6 +77,7 @@ class SendInvitation extends Component {
       endTime,
       shortId,
       address,
+      confirmedEmails,
     };
     SendEmailInvitationActionCreator(InviteData);
   };

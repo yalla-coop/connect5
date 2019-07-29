@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import swal from 'sweetalert2';
 import { Alert, Modal } from 'antd';
-import Spin from "./../../common/Spin"
+import Spin from '../../common/Spin';
 
 // Styles
 import Header from '../../common/Header';
@@ -75,7 +75,7 @@ class Survey extends Component {
           break;
         // second section
         case 'enterPIN':
-          newSection = uniqueGroups[0];
+          [newSection] = uniqueGroups;
           break;
         // survey groups start here
         // demographic is always 0
@@ -145,28 +145,29 @@ class Survey extends Component {
         />
 
         {!readyForSubmission && (
-        <Button
-        label="Next"
-        width="100px"
-        height="50px"
-        type="primary"
-        disabled={
-          section === uniqueGroups[uniqueGroups.length - 1] || disabled
-        }
-        onClick={() => {
-          window.scrollTo(0, 0);
-          this.sectionChange('forward', uniqueGroups);
-          this.setState({
-            currentStep:
-              currentStep === uniqueGroups.length + 1
-                ? uniqueGroups.length + 1
-                : currentStep + 1,
-          });
-          if (section === 'enterPIN') {
-            this.submitPIN(PIN, surveyParts);
-          }
-        }}
-        />)}
+          <Button
+            label="Next"
+            width="100px"
+            height="50px"
+            type="primary"
+            disabled={
+              section === uniqueGroups[uniqueGroups.length - 1] || disabled
+            }
+            onClick={() => {
+              window.scrollTo(0, 0);
+              this.sectionChange('forward', uniqueGroups);
+              this.setState({
+                currentStep:
+                  currentStep === uniqueGroups.length + 1
+                    ? uniqueGroups.length + 1
+                    : currentStep + 1,
+              });
+              if (section === 'enterPIN') {
+                this.submitPIN(PIN, surveyParts);
+              }
+            }}
+          />
+        )}
       </SkipButtonsDiv>
     );
   };
@@ -381,7 +382,11 @@ class Survey extends Component {
   // this puts the required info into an object and sends to server
   handleSubmit = e => {
     e.preventDefault();
-    const { surveyData, submitSurvey: submitSurveyAction } = this.props;
+    const {
+      surveyData,
+      submitSurvey: submitSurveyAction,
+      isAuthenticated,
+    } = this.props;
     const { uniqueGroups } = surveyData;
     const { surveyType, sessionId, questionsForSurvey } = surveyData.surveyData;
     // these are the base of validation in the backend (checked against formstate to see if everything was getting answered correctly)
@@ -400,8 +405,8 @@ class Survey extends Component {
       questionsForParticipant,
     };
     if (PIN && completionRate === 100) {
-      submitSurveyAction(formSubmission);
-    } 
+      submitSurveyAction(formSubmission, isAuthenticated, sessionId);
+    }
   };
 
   render() {
@@ -510,7 +515,6 @@ class Survey extends Component {
                               completionRate
                             )}
                             completionRate={completionRate}
-                             
                           />
                         );
                       }

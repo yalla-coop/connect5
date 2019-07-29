@@ -7,6 +7,7 @@ import { getSessionDetails } from '../../../actions/sessionAction';
 import { confirmRegistration } from '../../../actions/confirmRegistration';
 
 import Header from '../../common/Header';
+import CommonButton from '../../common/Button';
 
 import {
   Wrapper,
@@ -16,7 +17,6 @@ import {
   Details,
   BoldSpan,
   Input,
-  Button,
   CapitalizedSpan,
 } from './ConfirmRegistration.style';
 
@@ -84,13 +84,14 @@ class ConfirmRegistration extends Component {
               />
             </WhiteDiv>
 
-            <Button
+            <CommonButton
               size="large"
-              style={{ background: '#c4c4c4', color: 'white' }}
-              type="submit"
+              style={{ marginTop: '2rem' }}
+              type="primary"
+              label="Register"
             >
               Register
-            </Button>
+            </CommonButton>
           </form>
         </ContentWrapper>
       </Wrapper>

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
+import moment from 'moment';
 
 import { fetchParticipentSessions } from '../../actions/groupSessionsAction';
 import { logout } from '../../actions/authAction';
@@ -12,6 +13,7 @@ import { uppercaseSurvey } from '../../helpers';
 
 import { colors } from '../../theme';
 import surveyTypes from '../../constants/surveyTypes';
+
 import Header from '../common/Header';
 
 const DashboardWrapper = styled.div`
@@ -128,12 +130,20 @@ class UserDashboard extends Component {
           sessionDetails.sessions.type
         ].filter(type => !sessionDetails.surveyType.includes(type));
 
+        // check if the session done
+        // then show the post survey link
+        const isSessionDone =
+          Date.now() >= moment(sessionDetails.sessions.date).valueOf();
+
+        const isSessionPre = remainedSession.includes('pre');
+
         this.setState({
-          popupVisible: true,
+          popupVisible: isSessionPre || isSessionDone,
           canGetCertivicate: false,
           remainedSessionCapital: uppercaseSurvey(remainedSession),
           remainedSession,
           shortId: sessionDetails.sessions.shortId,
+          dismissed: isSessionPre || !isSessionDone,
         });
       }
     }
@@ -143,7 +153,7 @@ class UserDashboard extends Component {
     const { history } = this.props;
     const { canGetCertivicate, remainedSession, shortId } = this.state;
 
-    const { sessionId } = history.location;
+    const { sessionId } = history.location.state;
     if (canGetCertivicate) {
       history.push(`/certificate/${sessionId}`);
     } else {
