@@ -306,7 +306,6 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               allowedRoles={['participant']}
               role={role}
-              navbar
             />
             <PrivateRoute
               exact
@@ -316,7 +315,6 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               allowedRoles={['participant']}
               role={role}
-              navbar
             />
 
             <Route path="/certificate/:sessionId" component={Certificate} />
