@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DatePicker, Empty } from 'antd';
+import { DatePicker, Empty, Popconfirm } from 'antd';
 import moment from 'moment';
 
 import Button from '../../../common/Button';
@@ -22,6 +22,7 @@ const DrawerContent = ({
   handleSubmitSchedule,
   scheduledEmails,
   type,
+  handleCancelEmail,
 }) => {
   switch (drawerKey) {
     case 'scheduleTable':
@@ -60,9 +61,19 @@ const DrawerContent = ({
                     borderTop: '1px solid #80808059',
                   }}
                 >
-                  <Row>
+                  <Row enabled>
                     {moment(scheduledEmail.date).format('DD-MM-YYYY')}
-                    <DrawerLink>Cancel</DrawerLink>
+
+                    <Popconfirm
+                      title="Are you sure delete this task?"
+                      onConfirm={() => handleCancelEmail(scheduledEmail._id)}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <DrawerLink style={{ cursor: 'pointer' }}>
+                        Cancel
+                      </DrawerLink>
+                    </Popconfirm>
                   </Row>
                 </SubDetails>
               ))}

@@ -145,7 +145,7 @@ export const sendEmailReminder = (
     });
 };
 
-export const scheduleNewEmail = (emailData, handleCloseDrawer) => dispatch => {
+export const scheduleNewEmail = emailData => dispatch => {
   // start loading
   dispatch({
     type: LOADING_START,
@@ -162,7 +162,6 @@ export const scheduleNewEmail = (emailData, handleCloseDrawer) => dispatch => {
       Modal.success({
         title: 'Done!',
         content: 'Email successfully scheduled',
-        onOk: handleCloseDrawer,
       });
 
       return dispatch(fetchSessionDetails(emailData.sessionId));
@@ -176,7 +175,34 @@ export const scheduleNewEmail = (emailData, handleCloseDrawer) => dispatch => {
       return Modal.error({
         title: 'Error!',
         content: error.response.data.error,
-        onOk: handleCloseDrawer,
+      });
+    });
+};
+
+export const cancelScheduledEmail = ({
+  sessionId,
+  scheduledEmailId,
+}) => dispatch => {
+  // start loading
+  axios
+    .delete(`/api/sessions/${sessionId}/scheduled-emails/${scheduledEmailId}`)
+    .then(() => {
+      Modal.success({
+        title: 'Done!',
+        content: 'Email successfully canceled',
+      });
+
+      return dispatch(fetchSessionDetails(sessionId));
+    })
+    .catch(error => {
+      // end loading
+      dispatch({
+        type: LOADING_END,
+      });
+
+      return Modal.error({
+        title: 'Error!',
+        content: error.response.data.error,
       });
     });
 };

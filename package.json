@@ -33,7 +33,7 @@
     "heroku-postbuild": "npm run client:init && npm run client:build",
     "coverage": "codecov",
     "build:data:dev": "NODE_ENV=dev node v2/server/database/data/development/index.js",
-    "build:data:prd": "node v2/server/database/data/production/index.js",
+    "build:data:prd": "NODE_ENV=production node v2/server/database/data/production/index.js",
     "lint": "eslint ."
   },
   "dependencies": {

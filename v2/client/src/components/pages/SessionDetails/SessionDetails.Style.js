@@ -114,10 +114,12 @@ export const Row = styled.div`
     font-weight: 500;
     color: ${colors.primary};
   }
-
-  & * {
-    pointer-events: none;
-  }
+  ${({ enabled }) =>
+    enabled
+      ? ''
+      : `& * {
+        pointer-events: none;
+      }`}
 `;
 
 export const Edit = styled.p`

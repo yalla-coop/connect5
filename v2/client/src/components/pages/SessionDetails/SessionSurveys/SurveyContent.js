@@ -6,7 +6,10 @@ import { Icon, Drawer } from 'antd';
 
 import DrawerContent from './DrawerContent';
 
-import { scheduleNewEmail as scheduleNewEmailAction } from '../../../../actions/sessionAction';
+import {
+  scheduleNewEmail as scheduleNewEmailAction,
+  cancelScheduledEmail as cancelScheduledEmailAction,
+} from '../../../../actions/sessionAction';
 
 import {
   SurveyContentWrapper,
@@ -122,12 +125,22 @@ class SurveyContent extends Component {
     }
   };
 
+  handleCancelEmail = emailId => {
+    const { cancelScheduledEmail, sessionDetails } = this.props;
+
+    cancelScheduledEmail({
+      sessionId: sessionDetails._id,
+      scheduledEmailId: emailId,
+    });
+  };
+
   render() {
     const {
       onInfoClick,
       onCopyClick,
       handleSelectDate,
       handleSubmitSchedule,
+      handleCancelEmail,
     } = this;
     const {
       type,
@@ -206,7 +219,6 @@ class SurveyContent extends Component {
             visible={visible}
             closable
             bodyStyle={{ background: '#f7f8f9', minHeight: '100%' }}
-            getContainer="#parentDiv"
           >
             <>
               <BackWrapper onClick={this.handleCloseDrawer}>
@@ -227,6 +239,7 @@ class SurveyContent extends Component {
                 scheduledEmails={scheduledEmails}
                 handleSelectDate={handleSelectDate}
                 handleSubmitSchedule={handleSubmitSchedule}
+                handleCancelEmail={handleCancelEmail}
               />
             </>
           </Drawer>
@@ -244,5 +257,8 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { scheduleNewEmail: scheduleNewEmailAction }
+  {
+    scheduleNewEmail: scheduleNewEmailAction,
+    cancelScheduledEmail: cancelScheduledEmailAction,
+  }
 )(SurveyContent);
