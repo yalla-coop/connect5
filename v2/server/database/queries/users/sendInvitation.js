@@ -12,22 +12,15 @@ module.exports.StoreSentEmailDataQuery = ({
   startTime,
   endTime,
 }) => {
-  const newEmailsObj = [];
-  emails.map(email => {
+  const newEmailsObj = emails.map(email => {
     if (email.status === 'new') {
-      newEmailsObj.push({
-        email: email.email,
-        status: 'sent',
-      });
+      // eslint-disable-next-line no-param-reassign
+      email.status = 'sent';
     }
+    return email;
   });
 
   const newEmails = newEmailsObj.map(email => email.email);
-
-  const sentEmailsObj = emails.filter(email => email.status === 'sent');
-  const sentEmails = sentEmailsObj.map(email => email.email);
-  const emailObjList = [...newEmailsObj, ...sentEmailsObj];
-  const emailList = [...sentEmails, ...newEmails];
 
   const data = {
     sendDate: sendingDate,
@@ -36,7 +29,7 @@ module.exports.StoreSentEmailDataQuery = ({
     sessionType: type,
     location: region,
     trainers: trainerName,
-    recipients: emailList,
+    recipients: newEmails,
     startTime,
     endTime,
     type: 'registration',
@@ -44,7 +37,7 @@ module.exports.StoreSentEmailDataQuery = ({
 
   const updateDoc = Session.update(
     { _id },
-    { $push: { sentEmails: data, participantsEmails: emailObjList } }
+    { $push: { sentEmails: data }, $set: { participantsEmails: newEmailsObj } }
   );
   return updateDoc;
 };
