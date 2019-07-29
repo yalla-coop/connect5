@@ -6,6 +6,7 @@ import {
   UPDATE_ATTENDEES_SUCCESS,
   LOADING_START,
   LOADING_END,
+  EMAIL_SCHEDULE_SUCCESS,
 } from '../constants/actionTypes';
 
 import history from '../history';
@@ -148,6 +149,68 @@ export const sendEmailReminder = (
         title: 'Error!',
         content: error.response.data.error,
         onOk: handleCloseDrawer,
+      });
+    });
+};
+
+export const scheduleNewEmail = emailData => dispatch => {
+  // start loading
+  dispatch({
+    type: LOADING_START,
+  });
+
+  axios
+    .post(`/api/sessions/${emailData.sessionId}/scheduled-emails`, emailData)
+    .then(res => {
+      dispatch({
+        type: EMAIL_SCHEDULE_SUCCESS,
+        payload: res.data,
+      });
+
+      Modal.success({
+        title: 'Done!',
+        content: 'Email successfully scheduled',
+      });
+
+      return dispatch(fetchSessionDetails(emailData.sessionId));
+    })
+    .catch(error => {
+      // end loading
+      dispatch({
+        type: LOADING_END,
+      });
+
+      return Modal.error({
+        title: 'Error!',
+        content: error.response.data.error,
+      });
+    });
+};
+
+export const cancelScheduledEmail = ({
+  sessionId,
+  scheduledEmailId,
+}) => dispatch => {
+  // start loading
+  axios
+    .delete(`/api/sessions/${sessionId}/scheduled-emails/${scheduledEmailId}`)
+    .then(() => {
+      Modal.success({
+        title: 'Done!',
+        content: 'Email successfully canceled',
+      });
+
+      return dispatch(fetchSessionDetails(sessionId));
+    })
+    .catch(error => {
+      // end loading
+      dispatch({
+        type: LOADING_END,
+      });
+
+      return Modal.error({
+        title: 'Error!',
+        content: error.response.data.error,
       });
     });
 };

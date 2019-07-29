@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { Icon } from 'antd';
+import { Icon, Drawer } from 'antd';
+
+import DrawerContent from './DrawerContent';
+
+import {
+  scheduleNewEmail as scheduleNewEmailAction,
+  cancelScheduledEmail as cancelScheduledEmailAction,
+} from '../../../../actions/sessionAction';
+
 import {
   SurveyContentWrapper,
   SurveyLinkType,
@@ -14,10 +22,14 @@ import {
   FeedbackAction,
   CopyIcon,
 } from './SessionSurveys.Style';
+import { BackWrapper } from '../SessionDetails.Style';
 
 class SurveyContent extends Component {
   state = {
     responseCount: 0,
+    visible: false,
+    drawerKey: '',
+    scheduledDate: null,
   };
 
   componentDidMount() {
@@ -79,8 +91,57 @@ class SurveyContent extends Component {
     }
   };
 
+  handleCloseDrawer = () => {
+    this.setState({
+      visible: false,
+      drawerKey: null,
+    });
+  };
+
+  handleDrawerOpen = e => {
+    const { key } = e.target.dataset;
+    this.setState({
+      visible: true,
+      drawerKey: key,
+    });
+  };
+
+  handleSelectDate = (date, dateString) => {
+    this.setState({ scheduledDate: dateString });
+  };
+
+  handleSubmitSchedule = () => {
+    const { scheduledDate } = this.state;
+    const { scheduleNewEmail, sessionDetails, type } = this.props;
+    if (scheduledDate) {
+      scheduleNewEmail(
+        {
+          date: scheduledDate,
+          sessionId: sessionDetails._id,
+          surveyType: type,
+        },
+        this.handleCloseDrawer
+      );
+    }
+  };
+
+  handleCancelEmail = emailId => {
+    const { cancelScheduledEmail, sessionDetails } = this.props;
+
+    cancelScheduledEmail({
+      sessionId: sessionDetails._id,
+      scheduledEmailId: emailId,
+    });
+  };
+
   render() {
-    const { onInfoClick, onCopyClick } = this;
+    const {
+      onInfoClick,
+      onCopyClick,
+      handleSelectDate,
+      handleSubmitSchedule,
+      handleCancelEmail,
+    } = this;
     const {
       type,
       surveyURL,
@@ -88,8 +149,10 @@ class SurveyContent extends Component {
       id,
       handleEmailing,
       sessionDetails,
+      loading,
     } = this.props;
-    const { responseCount } = this.state;
+    const { responseCount, drawerKey, visible } = this.state;
+    const { scheduledEmails } = sessionDetails;
 
     let url = `https://${surveyURL}`;
 
@@ -131,7 +194,12 @@ class SurveyContent extends Component {
           <p>Email survey to attendees</p>
           <Icon type="right" />
         </FeedbackAction>
-        <FeedbackAction to="/">
+        <FeedbackAction
+          as="div"
+          onClick={this.handleDrawerOpen}
+          data-key="scheduleTable"
+          style={{ cursor: 'pointer' }}
+        >
           <p>Schedule emails</p>
           <Icon type="right" />
         </FeedbackAction>
@@ -139,6 +207,44 @@ class SurveyContent extends Component {
           <p>View survey results</p>
           <Icon type="right" />
         </FeedbackAction>
+
+        <div
+          style={{ width: '100%', position: 'absolute', left: 0 }}
+          id="parentDiv"
+        >
+          <Drawer
+            placement="left"
+            width="100%"
+            height="100%"
+            onClose={this.handleCloseDrawer}
+            visible={visible}
+            closable
+            bodyStyle={{ background: '#f7f8f9', minHeight: '100%' }}
+          >
+            <>
+              <BackWrapper onClick={this.handleCloseDrawer}>
+                <Icon type="left" />
+                <p
+                  style={{
+                    marginLeft: '1rem',
+                    marginBottom: '0',
+                  }}
+                >
+                  Back
+                </p>
+              </BackWrapper>
+              <DrawerContent
+                loading={loading}
+                type={type}
+                drawerKey={drawerKey}
+                scheduledEmails={scheduledEmails}
+                handleSelectDate={handleSelectDate}
+                handleSubmitSchedule={handleSubmitSchedule}
+                handleCancelEmail={handleCancelEmail}
+              />
+            </>
+          </Drawer>
+        </div>
       </SurveyContentWrapper>
     );
   }
@@ -147,6 +253,13 @@ class SurveyContent extends Component {
 const mapStateToProps = state => {
   return {
     sessionDetails: state.sessions.sessionDetails[0],
+    loading: state.session.loading,
   };
 };
-export default connect(mapStateToProps)(SurveyContent);
+export default connect(
+  mapStateToProps,
+  {
+    scheduleNewEmail: scheduleNewEmailAction,
+    cancelScheduledEmail: cancelScheduledEmailAction,
+  }
+)(SurveyContent);

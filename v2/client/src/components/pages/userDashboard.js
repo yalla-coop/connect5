@@ -115,6 +115,7 @@ class UserDashboard extends Component {
 
     const { surveySubmited, sessionId } = location.state;
     // check if the participant completed all session survey
+
     if (surveySubmited && sessionId && !popupVisible && !dismissed) {
       const isSessionCompleted = sessions.some(
         item => item.sessions._id === sessionId && item.completed
