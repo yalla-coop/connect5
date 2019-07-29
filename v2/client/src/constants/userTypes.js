@@ -1,5 +1,5 @@
 const USER_TYPES = {
-  user: 'participant',
+  participant: 'participant',
   trainer: 'trainer',
   localLead: 'localLead',
   admin: 'admin',
