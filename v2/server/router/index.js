@@ -30,6 +30,8 @@ const checkPINResponsesOnSurvey = require('../controllers/survey/checkPINRespons
 const confirmEmailRegistration = require('../controllers/sessionDetails/confirmEmailRegistration');
 const updateAttendeesList = require('../controllers/sessionDetails/updateAttendeesList');
 const sendReminderEmail = require('../controllers/sessionDetails/sendReminderEmail');
+const scheduleEmail = require('../controllers/sessionDetails/scheduleEmail');
+const cancelScheduleEmail = require('../controllers/sessionDetails/cancelScheduleEmail');
 
 const getCSVData = require('../controllers/feedback/exportCSVData');
 
@@ -89,5 +91,17 @@ router.patch(
 );
 
 router.post('/sessions/:sessionId/emails', authentication(), sendReminderEmail);
+
+router.post(
+  '/sessions/:sessionId/scheduled-emails',
+  authentication(),
+  scheduleEmail
+);
+
+router.delete(
+  '/sessions/:sessionId/scheduled-emails/:scheduledEmailId',
+  authentication(),
+  cancelScheduleEmail
+);
 
 module.exports = router;

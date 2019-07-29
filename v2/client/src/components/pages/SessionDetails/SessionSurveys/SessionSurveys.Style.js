@@ -187,4 +187,8 @@ export const FeedbackAction = styled(Link)`
   :active {
     color: ${colors.primary};
   }
+
+  * {
+    pointer-events: none;
+  }
 `;

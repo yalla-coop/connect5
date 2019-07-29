@@ -132,6 +132,7 @@ class SessionSurveys extends Component {
                 surveyURL={links[index]}
                 id={_id}
                 handleEmailing={this.handleEmailing}
+                key={survey}
               />
             );
           })}
