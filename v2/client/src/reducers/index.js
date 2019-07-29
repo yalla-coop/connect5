@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 
+import { LOGOUT } from '../constants/actionTypes';
+
 import behavioralInsightReducer from './behavioralInsight';
 import trainerFeedbackReducer from './trainerFeedback';
 import userResults from './user';
@@ -19,7 +21,7 @@ import adminSessionsReducer from './adminSessionsReducer';
 import surveyReducer from './surveyReducer';
 import confirmRegistration from './confirmRegistration';
 
-export default combineReducers({
+const appReducer = combineReducers({
   auth: authReducer,
   error: errorReducer,
   fetchedData: fetchedDataReducer,
@@ -39,3 +41,13 @@ export default combineReducers({
   survey: surveyReducer,
   confirmRegistration,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === LOGOUT) {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+};
+
+export default rootReducer;
