@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
+import moment from 'moment';
 
 import { fetchParticipentSessions } from '../../actions/groupSessionsAction';
 import { logout } from '../../actions/authAction';
@@ -13,7 +14,7 @@ import { uppercaseSurvey } from '../../helpers';
 import { colors } from '../../theme';
 import surveyTypes from '../../constants/surveyTypes';
 
-import Header from '../common/Header'
+import Header from '../common/Header';
 
 const DashboardWrapper = styled.div`
   width: 90%;
@@ -129,8 +130,15 @@ class UserDashboard extends Component {
           sessionDetails.sessions.type
         ].filter(type => !sessionDetails.surveyType.includes(type));
 
+        // check if the session done
+        // then show the post survey link
+        const isSessionDone =
+          Date.now() >= moment(sessionDetails.sessions.date).valueOf();
+
+        const isSessionPre = remainedSession.includes('pre');
+
         this.setState({
-          popupVisible: true,
+          popupVisible: isSessionPre || isSessionDone,
           canGetCertivicate: false,
           remainedSessionCapital: uppercaseSurvey(remainedSession),
           remainedSession,
@@ -166,7 +174,7 @@ class UserDashboard extends Component {
     } = this.state;
     return (
       <DashboardWrapper>
-        <Header type='home' />
+        <Header type="home" />
         <Modal
           title={canGetCertivicate ? 'Congratulations: 🎉🎉' : 'Thank you!'}
           visible={popupVisible && !dismissed}

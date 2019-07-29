@@ -64,7 +64,11 @@ export const checkPINResponses = (surveyParts, PIN) => dispatch => {
     });
 };
 
-export const submitSurvey = formSubmission => dispatch => {
+export const submitSurvey = (
+  formSubmission,
+  isAuthenticated,
+  sessionId
+) => dispatch => {
   axios
     .post(`/api/survey/submit/`, formSubmission)
     .then(({ data }) => {
@@ -74,7 +78,14 @@ export const submitSurvey = formSubmission => dispatch => {
       });
       return swal
         .fire('Done!', 'Thanks for submitting your feedback!', 'success')
-        .then(() => history.push('/thank-you'))
+        .then(() => {
+          history.push({
+            pathname: isAuthenticated
+              ? '/participant-dashboard'
+              : '/participant-login',
+            state: { sessionId, surveySubmited: true },
+          });
+        })
         .catch(err => {
           dispatch(
             returnErrors(
