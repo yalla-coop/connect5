@@ -31,7 +31,7 @@ const DrawerContent = ({
           <FormWrapper>
             <DatePicker
               onChange={handleSelectDate}
-              placeholder="Select month"
+              placeholder="Select date"
               size="large"
               style={{ width: '100%', marginBottom: '1rem' }}
             />
@@ -53,30 +53,33 @@ const DrawerContent = ({
                   Email
                 </Text>
               </TableHeader>
-              {scheduledEmails.map(scheduledEmail => (
-                <SubDetails
-                  key={scheduledEmail._id}
-                  style={{
-                    padding: '1rem 0',
-                    borderTop: '1px solid #80808059',
-                  }}
-                >
-                  <Row enabled>
-                    {moment(scheduledEmail.date).format('DD-MM-YYYY')}
-
-                    <Popconfirm
-                      title="Are you sure delete this task?"
-                      onConfirm={() => handleCancelEmail(scheduledEmail._id)}
-                      okText="Yes"
-                      cancelText="No"
-                    >
-                      <DrawerLink style={{ cursor: 'pointer' }}>
-                        Cancel
-                      </DrawerLink>
-                    </Popconfirm>
-                  </Row>
-                </SubDetails>
-              ))}
+              {scheduledEmails
+                .filter(scheduledEmail =>
+                  scheduledEmail.surveyType.includes(type)
+                )
+                .map(scheduledEmail => (
+                  <SubDetails
+                    key={scheduledEmail._id}
+                    style={{
+                      padding: '1rem 0',
+                      borderTop: '1px solid #80808059',
+                    }}
+                  >
+                    <Row enabled>
+                      {moment(scheduledEmail.date).format('DD-MM-YYYY')}
+                      <Popconfirm
+                        title="Are you sure delete this task?"
+                        onConfirm={() => handleCancelEmail(scheduledEmail._id)}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <DrawerLink style={{ cursor: 'pointer' }}>
+                          Cancel
+                        </DrawerLink>
+                      </Popconfirm>
+                    </Row>
+                  </SubDetails>
+                ))}
             </TableWrapper>
           ) : (
             <Empty

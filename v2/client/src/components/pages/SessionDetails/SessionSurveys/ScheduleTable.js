@@ -26,7 +26,7 @@ const ViewEmailsList = ({
       <FormWrapper>
         <DatePicker
           onChange={handleSelectDate}
-          placeholder="Select month"
+          placeholder="Select date"
           size="large"
           style={{ width: '100%', marginBottom: '1rem' }}
         />
