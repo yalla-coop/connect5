@@ -62,11 +62,11 @@ export const ButtonLink = styled(Link)``;
 export const ButtonDiv = styled.div`
   width: 300px;
   height: 60px;
-  padding: 10px 10px 10px 10px;
+  padding: 10px;
 
   @media ${breakpointsMax.mobileS} {
-    width: 150px;
-    height: 80px;
+    width: 257px;
+    height: 66px;
   }
 
   button {
