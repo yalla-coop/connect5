@@ -20,3 +20,9 @@ module.exports.getScheduledEmails = () =>
     { $unwind: '$scheduledEmails' },
     { $match: { 'scheduledEmails.date': { $lte: new Date() } } },
   ]);
+
+module.exports.removeScheduledEmail = ({ sessionId, scheduledEmailId }) =>
+  Session.updateOne([
+    { _id: sessionId },
+    { $pull: { 'scheduledEmails._id': scheduledEmailId } },
+  ]);

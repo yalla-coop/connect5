@@ -55,9 +55,10 @@ const sessionSchema = new Schema(
         endTime: String,
         type: {
           type: String,
-          enum: ['reminder', 'intial', 'registration'],
+          enum: ['reminder', 'intial', 'registration', 'surveyLink'],
         },
         preServeyLink: String,
+        surveyURL: String,
       },
     ],
     // list of participants emails
