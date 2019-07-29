@@ -121,7 +121,7 @@ class InviteeList extends Component {
     const { err } = this.state;
     const { onUpdateEmailsChange, onFormSubmit } = this;
     const { inviteesEmailsList, emails } = this.state;
-    const { loading } = this.props;
+    const { loading, onClose } = this.props;
 
     if (!inviteesEmailsList) {
       return <Spin />;
@@ -131,7 +131,7 @@ class InviteeList extends Component {
       <InviteSectionWrapper>
         <Header type="view" label="Invitee List" />
         <BackContainer>
-          <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
+          <BackLink onClick={onClose}>{`< Back`}</BackLink>
         </BackContainer>
         <Form>
           <InputDiv>
