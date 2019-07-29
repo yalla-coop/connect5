@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Select, Checkbox } from 'antd';
-import history from '../../../../history';
 import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
 import { updateSentEmails } from '../../../../actions/InviteAndPromoteAction';
 // import { pattern } from '../../../../constants/regex';
@@ -80,7 +79,7 @@ class InviteeList extends Component {
     this.setState({ sendByEmail: e.target.checked });
   };
 
-  onFormSubmit = async e => {
+  onFormSubmit = e => {
     e.preventDefault();
     const {
       inviteesEmailsList,
@@ -103,18 +102,13 @@ class InviteeList extends Component {
 
     const { _id: sessionId } = sessionDetails;
 
-    try {
-      await updateSentEmailsActionCreator({
-        sessionId,
-        inviteesEmailsList,
-        newEmails,
-        deletedEmails,
-        sendByEmail,
-      });
-      // this.props.onClose();
-    } catch (err) {
-      console.log('err', err);
-    }
+    return updateSentEmailsActionCreator({
+      sessionId,
+      inviteesEmailsList,
+      newEmails,
+      deletedEmails,
+      sendByEmail,
+    });
   };
 
   render() {
