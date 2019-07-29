@@ -117,7 +117,12 @@ module.exports.updateAttendeesList = ({ sessionId, attendeesList, status }) =>
     return session.save();
   });
 
-module.exports.addEmail = ({ sessionId, emailData, type, preServeyLink }) => {
+module.exports.addSentEmail = ({
+  sessionId,
+  emailData,
+  type,
+  preServeyLink,
+}) => {
   return Session.updateOne(
     { _id: sessionId },
     { $push: { sentEmails: { ...emailData, type, preServeyLink } } },

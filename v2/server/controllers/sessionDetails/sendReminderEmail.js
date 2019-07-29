@@ -1,5 +1,7 @@
 const boom = require('boom');
-const { addEmail } = require('./../../database/queries/sessionDetails/session');
+const {
+  addSentEmail,
+} = require('./../../database/queries/sessionDetails/session');
 const sendSessionReminder = require('./../../helpers/emails/sendSessionReminder');
 
 const preSurveys = {
@@ -25,10 +27,8 @@ module.exports = async (req, res, next) => {
     preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
   }
 
-  // const preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
-
   const promises = [
-    addEmail({ sessionId, emailData, type, preServeyLink }),
+    addSentEmail({ sessionId, emailData, type, preServeyLink }),
     sendSessionReminder({ shortId, ...emailData, preServeyLink }),
   ];
   return Promise.all(promises)
@@ -36,7 +36,6 @@ module.exports = async (req, res, next) => {
       return res.json({});
     })
     .catch(err => {
-      console.log(err)
       next(boom.badImplementation());
     });
 };

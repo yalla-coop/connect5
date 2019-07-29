@@ -4,6 +4,8 @@ import {
   ADD_SESSION_SUCCESS,
   GET_SESSION_DETAILS_BY_SHORT_ID,
   UPDATE_ATTENDEES_SUCCESS,
+  LOADING_START,
+  LOADING_END,
 } from '../constants/actionTypes';
 
 import history from '../history';
@@ -66,6 +68,11 @@ export const updateSessionAttendeesList = ({
   status,
   handleCloseDrawer,
 }) => dispatch => {
+  // start loading
+  dispatch({
+    type: LOADING_START,
+  });
+
   axios
     .patch(`/api/sessions/${sessionId}/attendeesList`, {
       attendeesList,
@@ -86,6 +93,10 @@ export const updateSessionAttendeesList = ({
       return dispatch(fetchSessionDetails(sessionId));
     })
     .catch(error => {
+      // end loading
+      dispatch({
+        type: LOADING_END,
+      });
       return Modal.error({
         title: 'Error!',
         content: error.response.data.error,
@@ -98,6 +109,11 @@ export const sendEmailReminder = (
   { sessionId, ...emailData },
   handleCloseDrawer
 ) => dispatch => {
+  // start loading
+  dispatch({
+    type: LOADING_START,
+  });
+
   axios
     .post(`/api/sessions/${sessionId}/emails?type=reminder`, emailData)
     .then(res => {
@@ -115,6 +131,11 @@ export const sendEmailReminder = (
       return dispatch(fetchSessionDetails(sessionId));
     })
     .catch(error => {
+      // end loading
+      dispatch({
+        type: LOADING_END,
+      });
+
       return Modal.error({
         title: 'Error!',
         content: error.response.data.error,

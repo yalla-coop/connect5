@@ -7,15 +7,18 @@ import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
 
 import { fetchParticipentSessions } from '../../actions/groupSessionsAction';
+import { logout } from '../../actions/authAction';
 import { uppercaseSurvey } from '../../helpers';
 
 import { colors } from '../../theme';
 import surveyTypes from '../../constants/surveyTypes';
 
+import Header from '../common/Header'
+
 const DashboardWrapper = styled.div`
   width: 90%;
   margin: 0 auto;
-  padding-top: 5rem;
+  padding-top: 3rem;
 `;
 
 const H3 = styled.h3`
@@ -68,6 +71,20 @@ const LinkBtn = styled(Link)`
   &:active {
     position: relative;
     top: 1px;
+  }
+`;
+
+const LogOut = styled.div`
+  font-weight: 300;
+  font-size: 14px;
+  color: ${colors.profileFontColor};
+  padding: 0.5rem 0;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+
+  :hover {
+    color: ${colors.red};
   }
 `;
 
@@ -140,7 +157,7 @@ class UserDashboard extends Component {
   };
 
   render() {
-    const { PIN } = this.props;
+    const { PIN, logout: logoutAction } = this.props;
     const {
       popupVisible,
       canGetCertivicate,
@@ -149,6 +166,7 @@ class UserDashboard extends Component {
     } = this.state;
     return (
       <DashboardWrapper>
+        <Header type='home' />
         <Modal
           title={canGetCertivicate ? 'Congratulations: 🎉🎉' : 'Thank you!'}
           visible={popupVisible && !dismissed}
@@ -173,6 +191,7 @@ class UserDashboard extends Component {
         <LinkBtn to="/participant/behavioral-insight">Insights</LinkBtn>
         <LinkBtn to="/participant/progress">Progress</LinkBtn>
         <LinkBtn to="/sessions-files">Materials</LinkBtn>
+        <LogOut onClick={logoutAction}>Log out</LogOut>
       </DashboardWrapper>
     );
   }
@@ -185,5 +204,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchParticipentSessions }
+  { fetchParticipentSessions, logout }
 )(UserDashboard);

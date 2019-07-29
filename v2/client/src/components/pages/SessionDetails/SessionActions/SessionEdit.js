@@ -118,6 +118,32 @@ class EditSession extends Component {
     });
   };
 
+  getDisabledStartTime = () => {
+    const { endTime } = this.state;
+    if (endTime) {
+      const hour = endTime.split(':')[0];
+      const unavailableHours = [];
+      for (let i = Number(hour); i < 24; i += 1) {
+        unavailableHours.push(i);
+      }
+      return unavailableHours;
+    }
+    return null;
+  };
+
+  getDisabledEndTime = () => {
+    const { startTime } = this.state;
+    if (startTime) {
+      const hour = startTime.split(':')[0];
+      const unavailableHours = [];
+      for (let i = 0; i < Number(hour); i += 1) {
+        unavailableHours.push(i);
+      }
+      return unavailableHours;
+    }
+    return null;
+  };
+
   onInputChange = ({ target: { value, name } }) => {
     this.setState({
       [name]: value,
@@ -230,13 +256,14 @@ class EditSession extends Component {
     if (!sessionDetails) {
       return null;
     }
+
     const {
       date,
       type,
       startTime,
       endTime,
       region,
-      // participantsEmails,
+      participantsEmails,
     } = sessionDetails;
     const {
       startDate,
@@ -255,11 +282,12 @@ class EditSession extends Component {
       onSelectRegionChange,
       onSelectPartner1Change,
       onSelectPartner2Change,
-      // onEmailChange,
+      onEmailChange,
       onFormSubmit,
       onStartTimeChange,
       onEndTimeChange,
     } = this;
+
     return (
       <EditSessionWrapper>
         <Header type="view" label="Edit Session" />
@@ -378,8 +406,7 @@ class EditSession extends Component {
               </Select>
             </InputDiv>
           )}
-
-          {/* <InputDiv>
+          <InputDiv>
             <Select
               mode="tags"
               size="large"
@@ -397,8 +424,6 @@ class EditSession extends Component {
             </Select>
             <EmailError>{emailErr}</EmailError>
           </InputDiv>
-            <div>{err}</div>
-          </InputDiv> */}
 
           <InputDiv>
             <Input
@@ -420,6 +445,7 @@ class EditSession extends Component {
               size="large"
               style={{ width: '50%' }}
               format="HH:mm"
+              disabledHours={this.getDisabledStartTime}
             />
           </InputDiv>
           <InputDiv>
@@ -431,6 +457,7 @@ class EditSession extends Component {
               size="large"
               style={{ width: '50%' }}
               format="HH:mm"
+              disabledHours={this.getDisabledEndTime}
             />
           </InputDiv>
 

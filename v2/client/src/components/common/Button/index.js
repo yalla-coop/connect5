@@ -1,7 +1,13 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
+import { Spin, Icon } from 'antd';
+
 import { colors, borders, shadows } from '../../../theme';
+
+const antIcon = (
+  <Icon type="loading" style={{ fontSize: 24, color: '#fff' }} spin />
+);
 
 const sharedStyles = css`
   position: relative;
@@ -94,9 +100,10 @@ const StyledButton = styled.button`
   ${props => props.type === 'outline' && outlineStyles}
 `;
 
-const Button = ({ label, ...props }) => {
+const Button = ({ label, loading, ...props }) => {
   return (
     <StyledButton aria-label={label} {...props}>
+      {loading && <Spin indicator={antIcon} />}
       {label}
     </StyledButton>
   );
