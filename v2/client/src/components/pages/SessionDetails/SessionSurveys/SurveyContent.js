@@ -198,6 +198,7 @@ class SurveyContent extends Component {
           as="div"
           onClick={this.handleDrawerOpen}
           data-key="scheduleTable"
+          style={{ cursor: 'pointer' }}
         >
           <p>Schedule emails</p>
           <Icon type="right" />
