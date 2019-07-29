@@ -30,7 +30,6 @@ class InviteeList extends Component {
     sendingDate: Date.now(),
     err: '',
     inviteesEmailsList: [],
-    isSubmmiting: false,
     emails: [],
     newEmails: [],
     deletedEmails: [],
@@ -89,6 +88,14 @@ class InviteeList extends Component {
       newEmails,
       deletedEmails,
     } = this.state;
+
+    this.setState({ err: '' });
+
+    if (sendByEmail && newEmails.length === 0) {
+      return this.setState({
+        err: 'You must insert a new email to send a message',
+      });
+    }
     const {
       updateSentEmails: updateSentEmailsActionCreator,
       sessionDetails,
@@ -97,7 +104,6 @@ class InviteeList extends Component {
     const { _id: sessionId } = sessionDetails;
 
     try {
-      this.setState({ isSubmmiting: true });
       await updateSentEmailsActionCreator({
         sessionId,
         inviteesEmailsList,
@@ -105,17 +111,17 @@ class InviteeList extends Component {
         deletedEmails,
         sendByEmail,
       });
-      this.setState({ isSubmmiting: false });
+      this.props.onClose();
     } catch (err) {
       console.log('err', err);
-      this.setState({ isSubmmiting: false });
     }
   };
 
   render() {
     const { err } = this.state;
     const { onUpdateEmailsChange, onFormSubmit } = this;
-    const { inviteesEmailsList, emails, isSubmmiting } = this.state;
+    const { inviteesEmailsList, emails } = this.state;
+    const { loading } = this.props;
 
     if (!inviteesEmailsList) {
       return <Spin />;
@@ -153,13 +159,22 @@ class InviteeList extends Component {
           </InputDiv>
           <InputDiv>
             <Button
-              onClick={onFormSubmit}
               type="primary"
+              style={{
+                width: '100%',
+                marginTop: '2rem',
+                fontSize: '19px',
+                fontWeight: 'bold',
+                padding: '0.5rem 1rem',
+                height: 'auto',
+              }}
+              onClick={onFormSubmit}
+              disabled={loading}
+              loading={loading}
               label="Update"
-              height="40px"
-              width="100%"
-              disabled={isSubmmiting}
-            />
+            >
+              Update
+            </Button>
           </InputDiv>
         </Form>
       </InviteSectionWrapper>
@@ -177,6 +192,7 @@ const mapStateToProps = state => {
   return {
     sessionDetails: state.sessions.sessionDetails[0],
     inviteesEmailsList,
+    loading: state.session.loading,
   };
 };
 
