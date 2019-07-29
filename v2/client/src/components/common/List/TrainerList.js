@@ -126,6 +126,7 @@ export default class TrainerList extends Component {
                     type="danger"
                     ghost
                     onClick={() => deleteUser(dataItem._id)}
+                    style={{ marginLeft: '1.5px' }}
                   >
                     Delete
                   </AntButton>

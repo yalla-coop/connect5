@@ -19,6 +19,7 @@ import {
   Item,
   Bold,
   Paragraph,
+  H3,
 } from './AddTrainer.style';
 
 const { Option } = Select;
@@ -134,6 +135,7 @@ class AddTrainer extends Component {
 
     return (
       <Wrapper>
+        <H3>Add New Trainer</H3>
         <ContentWrapper className="add-trainer">
           <Modal
             visible={isEmailUnique === false}
