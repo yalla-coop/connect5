@@ -11,7 +11,13 @@ const sendEmailInvitation = ({
   endTime,
   shortId,
 }) => {
-  const emailsList = emails.map(email => email.email);
+  let emailsList = [];
+  if (typeof emails[0] === 'string') {
+    emailsList = emails;
+  } else {
+    emailsList = emails.map(email => email.email);
+  }
+  // const emailsList = emails.map(email => email.email);
   const registrationURL = `${process.env.DOMAIN}/confirm/${shortId}`;
   const html = `
   <div style="text-align: left;">

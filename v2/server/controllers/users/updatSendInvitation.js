@@ -5,7 +5,7 @@ const sendEmailInvitation = require('./../../helpers/emails/sendEmailInvitation'
 const {
   getSessionDetails,
   updateInviteesList,
-  addEmail,
+  addSentEmail,
 } = require('../../database/queries/sessionDetails/session');
 
 const preSurveys = {
@@ -49,7 +49,7 @@ const updateSentInvitationEmails = async (req, res, next) => {
     if (sendByEmail) {
       await sendEmailInvitation({
         name,
-        participantsEmails: newEmails,
+        emails: newEmails,
         sessionDate,
         type,
         trainerName,
@@ -58,24 +58,23 @@ const updateSentInvitationEmails = async (req, res, next) => {
         endTime,
         shortId,
       });
-      console.log('email successfully sent');
       // update the email status to sent;
       newEmailsObj = newEmails.map(email => {
         return { email, status: 'sent' };
       });
-
-      await addEmail({
+      await addSentEmail({
         sessionId,
         emailData: {
-          type,
-          region,
+          location: region,
           startTime,
           endTime,
-          trainers,
+          trainers: trainerName,
           shortId,
-          newEmails,
+          sessionType: type,
+          trainerName,
+          recipients: newEmails,
         },
-        type,
+        type: 'registration',
         preServeyLink,
       });
     }
