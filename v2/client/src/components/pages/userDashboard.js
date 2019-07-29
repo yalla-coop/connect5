@@ -152,7 +152,7 @@ class UserDashboard extends Component {
     const { history } = this.props;
     const { canGetCertivicate, remainedSession, shortId } = this.state;
 
-    const { sessionId } = history.location;
+    const { sessionId } = history.location.state;
     if (canGetCertivicate) {
       history.push(`/certificate/${sessionId}`);
     } else {
