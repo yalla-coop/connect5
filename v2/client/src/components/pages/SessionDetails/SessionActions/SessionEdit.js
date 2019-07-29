@@ -436,26 +436,38 @@ class EditSession extends Component {
             />
           </InputDiv>
 
-          <InputDiv>
+          <InputDiv
+            style={{
+              marginTop: '1rem',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+            }}
+          >
             <InputLabel>Session Start:</InputLabel>
             <TimePicker
               onChange={onStartTimeChange}
               name="startTime"
               defaultValue={startTime && moment(startTime, 'HH:mm')}
               size="large"
-              style={{ width: '50%' }}
               format="HH:mm"
               disabledHours={this.getDisabledStartTime}
             />
           </InputDiv>
-          <InputDiv>
+          <InputDiv
+            style={{
+              marginTop: '1rem',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+            }}
+          >
             <InputLabel>Session Finish:</InputLabel>
             <TimePicker
               onChange={onEndTimeChange}
               name="startTime"
               defaultValue={endTime && moment(endTime, 'HH:mm')}
               size="large"
-              style={{ width: '50%' }}
               format="HH:mm"
               disabledHours={this.getDisabledEndTime}
             />

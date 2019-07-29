@@ -17,7 +17,9 @@ const SendInvitation = async (req, res, next) => {
     startTime,
     endTime,
     shortId,
+    address,
   } = req.body;
+
   const { name } = req.user;
 
   try {
@@ -41,12 +43,13 @@ const SendInvitation = async (req, res, next) => {
         date,
         type,
         trainerName,
-        region,
+        location: region,
         startTime,
         endTime,
+        address,
       });
-
       const sessionDate = moment(date).format('DD/MM/YYYY');
+
       if (process.env.NODE_ENV === 'production') {
         sendEmailInvitation({
           name,
@@ -54,7 +57,7 @@ const SendInvitation = async (req, res, next) => {
           sessionDate,
           type,
           trainerName,
-          region,
+          address: region,
           startTime,
           endTime,
           shortId,

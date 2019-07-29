@@ -111,7 +111,7 @@ class InviteeList extends Component {
         deletedEmails,
         sendByEmail,
       });
-      this.props.onClose();
+      // this.props.onClose();
     } catch (err) {
       console.log('err', err);
     }

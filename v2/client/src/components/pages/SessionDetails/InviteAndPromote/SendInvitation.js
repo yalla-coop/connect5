@@ -53,6 +53,7 @@ class SendInvitation extends Component {
       startTime,
       endTime,
       shortId,
+      address,
     } = sessionDetails;
 
     const trainerName = trainers
@@ -73,6 +74,7 @@ class SendInvitation extends Component {
       startTime,
       endTime,
       shortId,
+      address,
     };
     SendEmailInvitationActionCreator(InviteData);
   };

@@ -8,9 +8,9 @@ module.exports.StoreSentEmailDataQuery = ({
   date,
   type,
   trainerName,
-  region,
   startTime,
   endTime,
+  address,
 }) => {
   const newEmailsObj = emails.map(email => {
     if (email.status === 'new') {
@@ -27,7 +27,7 @@ module.exports.StoreSentEmailDataQuery = ({
     trainer: name,
     sessionDate: date,
     sessionType: type,
-    location: region,
+    location: address,
     trainers: trainerName,
     recipients: newEmails,
     startTime,

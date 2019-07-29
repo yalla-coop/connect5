@@ -24,9 +24,11 @@ export const Warning = styled.h1`
   font-family: Roboto;
   font-style: normal;
   font-weight: 300;
-  font-size: .875rem;
+  font-size: 0.875rem;
   color: ${colors.errorRed};
   align-self: flex-end;
+  position: absolute;
+  top: 100%;
 `;
 
 export const Form = styled.form`
@@ -49,9 +51,10 @@ export const InputDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
+  position: relative;
   border: 1px solid ${colors.lightGray};
   &:not(:last-child) {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
   }
 
   @media (min-width: 768px) {
@@ -60,14 +63,19 @@ export const InputDiv = styled.div`
 `;
 
 export const SubmitBtn = styled.div`
-  margin: .5rem 0;
+  margin: 0.5rem 0;
   @media (min-width: 768px) {
     width: 90%;
     margin: 0 auto;
+  }
 `;
 
 export const Error = styled.p`
   color: red;
   padding: 0;
   margin: 20px auto 0;
+`;
+
+export const InputLabel = styled.label`
+  width: 50%;
 `;
