@@ -15,7 +15,7 @@ const surveyQs = async (surveyType, shortId) => {
       $match: { surveyType },
     },
     {
-      $sort: { 'subGroup.name': 1, 'subGroup.order': -1 },
+      $sort: { 'group.order': 1, 'subGroup.name': 1, 'subGroup.order': -1 },
     },
   ]);
 

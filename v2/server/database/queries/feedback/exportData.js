@@ -19,7 +19,7 @@ module.exports.exportData = () =>
     },
     {
       $sort: {
-        'question.group': 1,
+        'question.group.order': 1,
         'question.subGroup.name': 1,
         'question.subGroup.order': -1,
       },
@@ -98,7 +98,7 @@ module.exports.exportData = () =>
         'answers._id': 1,
         'answers.answer': 1,
         'answers.question.text': 1,
-        'answers.question.group': 1,
+        'answers.question.group.text': 1,
         'answers.question.subGroup': 1,
       },
     },

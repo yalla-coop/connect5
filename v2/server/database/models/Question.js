@@ -11,8 +11,11 @@ const questionSchema = new Schema({
   },
   code: String,
   // the general group
-  // [ "ABOUT YOU", "ABOUT YOUR TRAINER", "ABOUT YOUR USUAL WAY OF TEACHING"]
-  group: String,
+  // [ { text: "ABOUT YOU", order: 1 }, { text: "ABOUT YOUR TRAINER", order: 2 }]
+  group: {
+    text: String,
+    order: Number,
+  },
 
   // sub groups
   // ["Did your trainer ask questions...", "Did your trainer...", ...]
