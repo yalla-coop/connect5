@@ -12,6 +12,7 @@ import {
   Paragraph,
   DetailsDiv,
   SessionDetailsContainer,
+  ImportantNote,
 } from './Survey.style';
 
 export default class ConfirmSurvey extends Component {
@@ -58,6 +59,16 @@ export default class ConfirmSurvey extends Component {
             </Paragraph>
           </DetailsDiv>
         </SessionDetails>
+        <ImportantNote>
+          <strong>Important notice</strong>:{' '}
+          <em>
+            All data collected will be anonymised and used to evaluate Connect 5
+            as a mental health training programme. Moreover the participant will
+            be able to see own results. By clicking Yes the participant agrees
+            that submitted feedback data will be used for internal evaluation
+            procedures.
+          </em>
+        </ImportantNote>
         <PromptHeadline>Are these details correct?</PromptHeadline>
         <ButtonDiv>
           <Button
