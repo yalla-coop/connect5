@@ -34,7 +34,10 @@ const sendEmailInvitation = ({
       <li>- time: ${startTime} to ${endTime}</li>
       <li>- trainers: ${trainerName}</li>
     </ul>
-    <p>To confirm your attendance please click this link: ${registrationURL}</p>
+    <div style="text-align: center;">
+    <p>To confirm your attendance please click this link here</p>
+      <a href="${registrationURL}" style="display: inline-block; padding: 0.5rem 1rem; background: #787BB9; color: white; font-size: 16px; font-weight: 900; border-radius: 10px; box-shadow: 0px 5px 11px 1px #9e9e9e7d; text-decoration: none;">confirm our registration</a>
+    </div>
 
     <p>Sincerely,</p>
 

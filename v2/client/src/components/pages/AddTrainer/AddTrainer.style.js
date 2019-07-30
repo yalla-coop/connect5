@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Form as AntForm, Input as AntInput, Select as AntSelect } from 'antd';
+import { colors } from '../../../theme';
 
 const { Item: AntItem } = AntForm;
 
@@ -8,13 +9,32 @@ export const Wrapper = styled.div``;
 export const ContentWrapper = styled.div`
   max-width: 25rem;
   margin: 0 auto;
-  padding: 5rem 15px;
+  padding: 2rem 15px;
 `;
 
 export const Form = styled(AntForm)`
+  border: 1px solid ${colors.transLightGray};
+  box-sizing: border-box;
+  border-radius: 4px;
   margin: 0 auto;
   text-align: center;
-  padding: 20px 0;
+  padding: 2rem 0;
+  box-shadow: rgb(204, 204, 204) 0px 0px 4px;
+  & > div {
+    margin: 0 auto;
+  }
+  & > div:first-child {
+    padding-top: 0.5rem;
+  }
+`;
+
+export const H3 = styled.h3`
+  text-align: center;
+  font-weight: 300;
+  line-height: 29px;
+  text-align: center;
+  padding: 2rem 0 0 0;
+  color: ${colors.profileFontColor};
 `;
 
 export const Input = styled(AntInput)`

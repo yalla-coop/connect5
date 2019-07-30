@@ -11,6 +11,7 @@ import {
   SessionTopDetailsWrapper,
   SubDetails,
   RegistrationDiv,
+  RegistrationLink,
   DrawerLink,
   CopyLink,
   CopyIcon,
@@ -77,7 +78,7 @@ class InviteAndPromote extends Component {
         <SubDetails style={{ display: 'flex', flexDirection: 'column' }}>
           <DrawerLink>Registration Link</DrawerLink>
           <RegistrationDiv>
-            <a
+            <RegistrationLink
               href={`${
                 process.env.NODE_ENV === 'prodcution' ? 'https://' : 'http://'
               }${window.location.host}/confirm/${shortId}`}
@@ -88,7 +89,7 @@ class InviteAndPromote extends Component {
               {`${
                 process.env.NODE_ENV === 'prodcution' ? 'https://' : 'http://'
               }${window.location.host}/confirm/${shortId}`}
-            </a>
+            </RegistrationLink>
             <CopyLink onClick={onCopyClick}>
               <CopyIcon className="far fa-copy" />
             </CopyLink>

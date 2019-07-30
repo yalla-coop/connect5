@@ -151,7 +151,7 @@ class TrainerListPage extends Component {
             </Link>
           )}
         </HeaderSection>
-        <div style={{ maxWidth: '650px', margin: '0 auto', width: '100%' }}>
+        <div style={{ maxWidth: '650px', margin: '0 auto', width: '90%' }}>
           <TrainerList
             dataList={toggle === 'left' ? trainers : localLeads}
             viewRole={role}
