@@ -157,3 +157,15 @@ export const DetailsDiv = styled.div`
   align-items: center;
   padding-top: 1rem;
 `;
+
+export const ImportantNote = styled.p`
+  max-width: 800px;
+  width: 70%;
+  margin: 30px auto;
+  color: ${colors.black};
+  font-weight: 600;
+
+  @media (max-width: 768px) {
+    max-width: 400px;
+  }
+`;
