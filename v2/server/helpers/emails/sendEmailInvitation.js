@@ -57,7 +57,7 @@ const sendEmailInvitation = ({
 
   return mailer({
     from,
-    to: emailsList,
+    bcc: emailsList,
     subject,
     html,
     user,

@@ -1,6 +1,15 @@
 const nodemailer = require('nodemailer');
 
-module.exports = ({ from, to, subject, html, user, pass, attachments }) => {
+module.exports = ({
+  from,
+  to,
+  subject,
+  html,
+  user,
+  pass,
+  attachments,
+  bcc,
+}) => {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     host: 'smtp.googlemail.com', // Gmail Host
@@ -12,6 +21,11 @@ module.exports = ({ from, to, subject, html, user, pass, attachments }) => {
     },
   });
 
+  // should on of 'to' or 'bcc' be proviced at lest
+  if (!to && !bcc) {
+    return Promise.reject(new Error('no recipients'));
+  }
+
   // send mail with defined transport object
   return transporter.sendMail({
     from, // sender address
@@ -19,5 +33,6 @@ module.exports = ({ from, to, subject, html, user, pass, attachments }) => {
     subject, // Subject line
     html, // html body
     attachments,
+    bcc, // bcc receivers
   });
 };
