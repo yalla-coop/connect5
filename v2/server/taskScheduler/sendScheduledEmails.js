@@ -13,25 +13,31 @@ const {
 } = require('./../database/queries/sessionDetails/scheduleEmails');
 
 const sendScheduledEmails = () =>
+  // run the cron job function at 1:00 AM
+  // at London time zone
   cron.schedule(
-    // '0 0 * * *',
-    '*/20 * * * * * *',
+    '0 1 * * *',
     async () => {
       const sheduledEmails = await getScheduledEmails();
 
       const editedSheduledEmails = [...sheduledEmails];
 
+      if (editedSheduledEmails.length < 1) {
+        return;
+      }
+
       const sendEmailsTask = cron.schedule(
         // 'running a task every 15 minutes'
-        '*/5 * * * * *',
-        // '*/15 * * * *',
+        // to avoid block the email by sending a lot of emails at once
+        '*/15 * * * *',
         async () => {
           try {
+            // if all email have been sent, then stop the function
             if (editedSheduledEmails.length < 1) {
-              return sendEmailsTask.distroy();
+              return sendEmailsTask.destroy();
             }
 
-            // getlast element
+            // get last element
             const emailDetails = sheduledEmails[sheduledEmails.length - 1];
             const recipients = emailDetails.participantsEmails
               .filter(item => item.status === 'confirmed')
@@ -50,10 +56,13 @@ const sendScheduledEmails = () =>
               });
             }
 
-            const emailData = {
-              sendDate: Date.now(),
-              trainers: emailDetails.trainers.map(item => item._id),
+            const trainers = emailDetails.trainers
+              .map(item => item.name)
+              .join(' & ');
 
+            const emailData = {
+              sendDate: moment().format('YYYY-MM-DD'),
+              trainers,
               sessionDate: moment(emailDetails.date).format('YYYY-MM-DD'),
               sessionType: emailDetails.type,
               location: emailDetails.address,
@@ -78,9 +87,11 @@ const sendScheduledEmails = () =>
               scheduledEmailId: emailDetails.scheduledEmails._id,
             });
 
-            // delete the scheduled email from the tasks
+            // delete the scheduled email from the tasks list
             return editedSheduledEmails.pop();
           } catch (error) {
+            // eslint-disable-next-line no-console
+            console.log(error);
             return error;
           }
         },
