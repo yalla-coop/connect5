@@ -43,6 +43,7 @@ export default function(state = initialState, action) {
     case LOGOUT:
       return {
         ...state,
+        ...initialState,
         role: null,
         email: null,
         name: null,
@@ -55,6 +56,7 @@ export default function(state = initialState, action) {
         isAuthenticated: false,
         loaded: true,
         PIN: null,
+        viewLevel: null,
       };
 
     case CHECK_UNIQUE_EMAIL_UNIQUE:
