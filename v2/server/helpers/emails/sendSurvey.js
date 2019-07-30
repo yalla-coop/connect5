@@ -51,7 +51,7 @@ const sendSurvey = ({ surveyURLs, participantsList }) => {
 
   return mailer({
     from,
-    to: participantsList,
+    bcc: participantsList,
     subject,
     html,
     user,

@@ -50,7 +50,7 @@ const sendReminder = ({
       certificates via the app. You will receive a link to the post-session survey  from your trainers.  
     </p>
 
-    ${preServeyLink ? extraParagraph : ""}
+    ${preServeyLink ? extraParagraph : ''}
     </br>
     <p>Sincerely,</p>
 
@@ -73,7 +73,7 @@ const sendReminder = ({
 
   return mailer({
     from,
-    to: recipients,
+    bcc: recipients,
     subject,
     html,
     user,
