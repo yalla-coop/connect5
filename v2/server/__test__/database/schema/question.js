@@ -22,7 +22,7 @@ describe('Test Question schema', () => {
   test('should Question schema get data correctly', async done => {
     const questions = await Question.find();
 
-    expect(questions).toHaveLength(319);
+    expect(questions).toHaveLength(317);
     done();
   });
 
