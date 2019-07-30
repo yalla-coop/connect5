@@ -204,7 +204,6 @@ describe('Test /survey/submit/', () => {
     formState[questions[38]._id] = { answer: '4' };
     formState[questions[39]._id] = { answer: '4' };
     formState[questions[40]._id] = { answer: '4' };
-    formState[questions[41]._id] = { answer: '4' };
 
     const dummyFormResponse = {
       PIN,
