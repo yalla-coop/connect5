@@ -23,7 +23,6 @@ const ParticipantSchema = new Schema(
     },
     ethnic: String,
     region: String,
-    postcode: { type: String, lowercase: true },
     Session1Date: Date,
     occupation: { type: String, lowercase: true },
     workforce: { type: String, lowercase: true },

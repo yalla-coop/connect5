@@ -43,15 +43,6 @@ const demographics = surveyType => [
     participantField: 'region',
   },
   {
-    text: 'Please enter the postcode where you are active',
-    helperText:
-      'if you do not work in a fixed location please put the location you are most often working in',
-    questionType: questionConstants.questionTypes.text,
-    group: questionConstants.groups.DEMOGRAPHIC,
-    surveyType,
-    participantField: 'postcode',
-  },
-  {
     text: 'Please enter the first date of your Connect 5 training session 1',
     questionType: questionConstants.questionTypes.date,
     group: questionConstants.groups.DEMOGRAPHIC,

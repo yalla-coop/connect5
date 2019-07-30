@@ -46,17 +46,14 @@ describe('Test /survey/submit/', () => {
       participantField: 'region',
     };
     formState[questions[4]._id] = {
-      answer: 'e50dw',
-      participantField: 'postcode',
-    };
-    formState[questions[5]._id] = {
       answer: '2019-05-23',
       participantField: 'Session1Date',
     };
-    formState[questions[6]._id] = { answer: 'social worker' };
-    formState[questions[7]._id] = {
+    formState[questions[5]._id] = { answer: 'social worker' };
+    formState[questions[6]._id] = {
       answer: 'Emergency services (including fire service, police,ambulance)',
     };
+    formState[questions[7]._id] = { answer: '4' };
     formState[questions[8]._id] = { answer: '4' };
     formState[questions[9]._id] = { answer: '4' };
     formState[questions[10]._id] = { answer: '4' };
@@ -90,7 +87,6 @@ describe('Test /survey/submit/', () => {
     formState[questions[38]._id] = { answer: '4' };
     formState[questions[39]._id] = { answer: '4' };
     formState[questions[40]._id] = { answer: '4' };
-    formState[questions[41]._id] = { answer: '4' };
 
     const dummyFormResponse = {
       PIN,
