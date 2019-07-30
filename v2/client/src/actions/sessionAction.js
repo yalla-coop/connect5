@@ -44,7 +44,7 @@ export const createSessionAction = sessionData => dispatch => {
 
       return Modal.error({
         title: 'Error',
-        content: err,
+        content: 'Error in creating session',
         onOk: history.push('/create-session'),
       });
     });

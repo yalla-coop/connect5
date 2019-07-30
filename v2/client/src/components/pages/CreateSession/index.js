@@ -52,7 +52,7 @@ const initialState = {
   emails: [],
   sendByEmail: false,
   err: false,
-  trainersNames: {},
+  trainersNames: { partner1: '', partner2: '' },
   startTime: null,
   endTime: null,
   address: '',
@@ -127,7 +127,7 @@ class CreateSession extends Component {
 
     this.setState({
       partnerTrainer1: item,
-      trainersNames: { ...trainersNames, [item.label]: item.label },
+      trainersNames: { ...trainersNames, partner1: item.label },
     });
   };
 
@@ -136,7 +136,7 @@ class CreateSession extends Component {
 
     this.setState({
       partnerTrainer2: item,
-      trainersNames: { ...trainersNames, [item.label]: item.label },
+      trainersNames: { ...trainersNames, partner2: item.label },
     });
   };
 
@@ -221,6 +221,15 @@ class CreateSession extends Component {
       address,
     } = this.state;
 
+    const trainersNamesArray = [];
+    if (partnerTrainer1) {
+      trainersNamesArray.push(trainersNames.partner1);
+    }
+
+    if (partnerTrainer2) {
+      trainersNamesArray.push(trainersNames.partner2);
+    }
+
     const sessionData = {
       session,
       startDate,
@@ -230,7 +239,7 @@ class CreateSession extends Component {
       partnerTrainer2: partnerTrainer2.key,
       emails,
       sendByEmail,
-      trainersNames,
+      trainersNames: trainersNamesArray,
       startTime,
       endTime,
       address,
