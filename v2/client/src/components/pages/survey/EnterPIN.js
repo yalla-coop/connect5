@@ -40,7 +40,7 @@ export default class EnterPIN extends Component {
                   </strong>
                 </li>
                 <li>
-                  <strong>the date you were born</strong> (e.g., you would type
+                  <strong>the day you were born</strong> (e.g., you would type
                   01 if you were born on the 1st July)
                 </li>
               </StyledUL>
