@@ -269,19 +269,19 @@ const questionsRender = (
   postcodeValid
 ) => {
   const demographicQs = arrayOfQuestions.filter(
-    question => question.group === 'demographic'
+    question => question.group.text === 'demographic'
   );
 
   const behaviourQs = arrayOfQuestions.filter(
-    question => question.group === 'Behavioural Insights'
+    question => question.group.text === 'Behavioural Insights'
   );
 
   const trainerQs = arrayOfQuestions.filter(
-    question => question.group === 'about your trainer'
+    question => question.group.text === 'about your trainer'
   );
 
   const teachingQs = arrayOfQuestions.filter(
-    question => question.group === 'about your usual way of teaching'
+    question => question.group.text === 'about your usual way of teaching'
   );
 
   return [demographicQs, behaviourQs, trainerQs, teachingQs]
@@ -289,7 +289,7 @@ const questionsRender = (
     .map((section, index) => (
       // map through each section
       <QuestionWrapper key={section[0].group}>
-        <SectionCategory>{section[0] && section[0].group}</SectionCategory>
+        <SectionCategory>{section[0] && section[0].group.text}</SectionCategory>
         {section &&
           section.map(el => {
             // map through all the questions

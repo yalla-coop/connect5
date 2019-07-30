@@ -66,7 +66,6 @@ class Survey extends Component {
   sectionChange = (direction, uniqueGroups) => {
     let newSection;
     const { section } = this.state;
-
     if (direction === 'forward') {
       switch (section) {
         // first section
@@ -306,7 +305,7 @@ class Survey extends Component {
 
     if (formState && surveyDetails) {
       const questions = surveyDetails.questionsForSurvey.filter(question => {
-        return uniqueGroups.includes(question.group);
+        return uniqueGroups.includes(question.group.text);
       });
       const numberOfQs = questions.length;
       const numberOfAs = Object.values(formState).length;
@@ -391,7 +390,7 @@ class Survey extends Component {
     const { surveyType, sessionId, questionsForSurvey } = surveyData.surveyData;
     // these are the base of validation in the backend (checked against formstate to see if everything was getting answered correctly)
     const questionsForParticipant = questionsForSurvey.filter(question => {
-      return uniqueGroups.includes(question.group);
+      return uniqueGroups.includes(question.group.text);
     });
 
     const { formState, PIN, disagreedToResearch, completionRate } = this.state;
@@ -487,7 +486,7 @@ class Survey extends Component {
                       const questions =
                         surveyDetails &&
                         surveyDetails.questionsForSurvey.filter(
-                          question => question.group === group
+                          question => question.group.text === group
                         );
                       if (section === group) {
                         const unanswered = questions

@@ -30,7 +30,7 @@ module.exports = async (req, res, next) => {
             }
 
             newResponseObj[
-              `${question.group}: ${subGroupText} ${question.text}`
+              `${question.group.text}: ${subGroupText} ${question.text}`
             ] = answer.answer;
             return newResponseObj;
           });

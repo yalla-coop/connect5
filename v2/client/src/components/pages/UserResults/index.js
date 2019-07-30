@@ -50,7 +50,6 @@ const panels = {
 class UserResults extends Component {
   state = {
     selectedUserId: null,
-    selectedUserRole: null,
     toggle: 'left',
   };
 
@@ -70,14 +69,12 @@ class UserResults extends Component {
       await this.fetchSessionsData('trainer', state.trainer._id);
       this.setState({
         selectedUserId: state.trainer._id,
-        selectedUserRole: state.trainer.role,
       });
     } else if (state && state.trainer) {
       await fetchUserResults(state.trainer._id, state.trainer.role);
       await this.fetchSessionsData(state.trainer.role, state.trainer._id);
       this.setState({
         selectedUserId: state.trainer._id,
-        selectedUserRole: state.trainer.role,
       });
     } else {
       await fetchUserResults(userId, viewLevel);

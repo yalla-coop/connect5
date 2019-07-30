@@ -37,10 +37,13 @@ module.exports.surveyTypes = [
 const questionConstants = {};
 
 questionConstants.groups = {
-  DEMOGRAPHIC: 'demographic',
-  BEHAVIOURAL: 'Behavioural Insights',
-  ABOUT_YOUR_TRAINER: 'about your trainer',
-  ABOUT_YOUR_USUAL_WAY_OF_TEACHING: 'about your usual way of teaching',
+  DEMOGRAPHIC: { text: 'demographic', order: 1 },
+  BEHAVIOURAL: { text: 'Behavioural Insights', order: 2 },
+  ABOUT_YOUR_TRAINER: { text: 'about your trainer', order: 3 },
+  ABOUT_YOUR_USUAL_WAY_OF_TEACHING: {
+    text: 'about your usual way of teaching',
+    order: 4,
+  },
 };
 
 questionConstants.subGroupText = {
