@@ -19,7 +19,6 @@ class SessionTopDetails extends Component {
     const {
       date,
       type,
-      numberOfAttendees,
       trainers,
       startTime,
       endTime,
@@ -28,6 +27,12 @@ class SessionTopDetails extends Component {
     if (!sessionDetails) {
       return <div>loading</div>;
     }
+
+    const confirmedAttendeesNumber =
+      sessionDetails &&
+      sessionDetails.participantsEmails.filter(
+        item => item.status === 'confirmed'
+      ).length;
 
     return (
       <SessionTopDetailsWrapper>
@@ -42,7 +47,7 @@ class SessionTopDetails extends Component {
           </StatisticItems>
           <StatisticItems>
             <StatisticName>Attendees</StatisticName>
-            <StatisticValue>{numberOfAttendees}</StatisticValue>
+            <StatisticValue>{confirmedAttendeesNumber}</StatisticValue>
           </StatisticItems>
         </Statistic>
         <SubDetails>
