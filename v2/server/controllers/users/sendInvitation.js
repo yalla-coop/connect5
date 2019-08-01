@@ -32,9 +32,7 @@ const SendInvitation = async (req, res, next) => {
       date &&
       type &&
       trainerName &&
-      region &&
-      startTime &&
-      endTime
+      region
     ) {
       const StoreSentEmailData = await StoreSentEmailDataQuery({
         _id,
@@ -44,9 +42,8 @@ const SendInvitation = async (req, res, next) => {
         date,
         type,
         trainerName,
-        location: region,
-        startTime,
-        endTime,
+        startTime: startTime || 'N/A',
+        endTime: endTime || 'N/A',
         address,
         confirmedEmails,
       });
