@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../../common/Header';
 import rightQuote from '../../../assets/rightQuote.png';
 import leftQuote from '../../../assets/leftQuote.png';
 
