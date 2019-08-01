@@ -18,6 +18,7 @@ const SendInvitation = async (req, res, next) => {
     endTime,
     shortId,
     address,
+    confirmedEmails,
   } = req.body;
 
   const { name } = req.user;
@@ -47,6 +48,7 @@ const SendInvitation = async (req, res, next) => {
         startTime,
         endTime,
         address,
+        confirmedEmails,
       });
       const sessionDate = moment(date).format('DD/MM/YYYY');
 

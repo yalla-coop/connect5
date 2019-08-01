@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Drawer } from 'antd';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import AboutUs from './AboutUs';
+
 import {
   Wrapper,
   LogoContainer,
@@ -37,6 +40,22 @@ class LandingPage extends Component {
   render() {
     const { visible } = this.state;
     const { onClose, DrawerOpen } = this;
+    const { isAuthenticated, role } = this.props;
+
+    if (isAuthenticated) {
+      switch (role) {
+        case 'admin':
+        case 'localLead':
+          return <Redirect to="/welcome-back" />;
+        case 'trainer':
+          return <Redirect to="/dashboard" />;
+        case 'participant':
+          return <Redirect to="/participant-dashboard" />;
+        default:
+          break;
+      }
+    }
+
     return (
       <Wrapper>
         <LogoContainer>
@@ -70,31 +89,36 @@ class LandingPage extends Component {
               />
             </ButtonDiv>
           </ButtonLink>
-          <ButtonLink to="/">
-            <ButtonDiv>
-              <Button
-                label="I want to find out more"
-                width="100%"
-                height="100%"
-                type="primary"
-                onClick={DrawerOpen}
-              />
-              <Drawer
-                placement="left"
-                width="100%"
-                height="100%"
-                onClose={onClose}
-                visible={visible}
-                closable
-              >
-                <AboutUs />
-              </Drawer>
-            </ButtonDiv>
-          </ButtonLink>
+          <ButtonDiv>
+            <Button
+              label="I want to find out more"
+              width="100%"
+              height="100%"
+              type="primary"
+              onClick={DrawerOpen}
+            />
+            <Drawer
+              placement="left"
+              width="100%"
+              height="100%"
+              onClose={onClose}
+              visible={visible}
+              closable
+            >
+              <AboutUs />
+            </Drawer>
+          </ButtonDiv>
         </ButtonContainer>
       </Wrapper>
     );
   }
 }
 
-export default LandingPage;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    role: state.auth.role,
+  };
+};
+
+export default connect(mapStateToProps)(LandingPage);

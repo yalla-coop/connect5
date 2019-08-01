@@ -19,7 +19,7 @@ const initialState = {
   preSurveyResponses: null,
 };
 
-const createGroupsArray = obj => [...new Set(obj.map(e => e.group))];
+const createGroupsArray = obj => [...new Set(obj.map(e => e.group.text))];
 
 const fetchedSurveyData = (state = initialState, action) => {
   const { type, payload } = action;

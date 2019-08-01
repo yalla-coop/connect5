@@ -37,9 +37,7 @@ const renderQuestionInputType = (
   errors,
   handleAntdDatePicker,
   group,
-  participantField,
-  onChangePostcode,
-  postcodeValid
+  participantField
 ) => {
   if (inputType === 'text') {
     return (
@@ -50,40 +48,24 @@ const renderQuestionInputType = (
           <p className="helpertext">{helperText}</p>
         </header>
 
-        {questionText === 'Please enter the postcode where you are active' ? (
-          <div>
-            <Warning>
-              {!postcodeValid && '* please enter a valid UK postcode'}
-            </Warning>
-            <input
-              id={index}
-              name={questionId}
-              type="text"
-              onChange={onChangePostcode}
-              data-group={group}
-              data-field={participantField}
-            />
-          </div>
-        ) : (
-          <div>
-            <Warning>
-              {!answers[questionId] && '* this question must be answered'}
-            </Warning>
-            <input
-              id={index}
-              name={questionId}
-              type="text"
-              onChange={onChange}
-              data-group={group}
-              data-field={participantField}
-              value={
-                answers[questionId] && answers[questionId].answer
-                  ? answers[questionId].answer
-                  : ''
-              }
-            />
-          </div>
-        )}
+        <div>
+          <Warning>
+            {!answers[questionId] && '* this question must be answered'}
+          </Warning>
+          <input
+            id={index}
+            name={questionId}
+            type="text"
+            onChange={onChange}
+            data-group={group}
+            data-field={participantField}
+            value={
+              answers[questionId] && answers[questionId].answer
+                ? answers[questionId].answer
+                : ''
+            }
+          />
+        </div>
       </TextField>
     );
   }
@@ -264,24 +246,22 @@ const questionsRender = (
   onChange,
   handleOther,
   errors,
-  handleAntdDatePicker,
-  onChangePostcode,
-  postcodeValid
+  handleAntdDatePicker
 ) => {
   const demographicQs = arrayOfQuestions.filter(
-    question => question.group === 'demographic'
+    question => question.group.text === 'demographic'
   );
 
   const behaviourQs = arrayOfQuestions.filter(
-    question => question.group === 'Behavioural Insights'
+    question => question.group.text === 'Behavioural Insights'
   );
 
   const trainerQs = arrayOfQuestions.filter(
-    question => question.group === 'about your trainer'
+    question => question.group.text === 'about your trainer'
   );
 
   const teachingQs = arrayOfQuestions.filter(
-    question => question.group === 'about your usual way of teaching'
+    question => question.group.text === 'about your usual way of teaching'
   );
 
   return [demographicQs, behaviourQs, trainerQs, teachingQs]
@@ -289,7 +269,7 @@ const questionsRender = (
     .map((section, index) => (
       // map through each section
       <QuestionWrapper key={section[0].group}>
-        <SectionCategory>{section[0] && section[0].group}</SectionCategory>
+        <SectionCategory>{section[0] && section[0].group.text}</SectionCategory>
         {section &&
           section.map(el => {
             // map through all the questions
@@ -320,9 +300,7 @@ const questionsRender = (
                   errors,
                   handleAntdDatePicker,
                   group,
-                  participantField,
-                  onChangePostcode,
-                  postcodeValid
+                  participantField
                 )}
               </div>
             );
@@ -341,8 +319,6 @@ export default class Questions extends React.Component {
       answers,
       errors,
       handleAntdDatePicker,
-      onChangePostcode,
-      postcodeValid,
       completionRate,
     } = this.props;
 
@@ -358,9 +334,7 @@ export default class Questions extends React.Component {
             onChange,
             handleOther,
             errors,
-            handleAntdDatePicker,
-            onChangePostcode,
-            postcodeValid
+            handleAntdDatePicker
           )}
           {renderSkipButtons}
           <ProgressWrapper>

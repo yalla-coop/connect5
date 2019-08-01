@@ -33,7 +33,6 @@ export const DescriptionContainer = styled.div`
 
 export const Headline = styled.h1`
   font-size: 1.5rem;
-
   @media ${breakpointsMax.mobileS} {
     font-size: 1.1rem;
   }
@@ -51,7 +50,6 @@ export const ButtonContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   @media (min-width: 678px) {
     width: 65%;
   }
@@ -63,12 +61,10 @@ export const ButtonDiv = styled.div`
   width: 300px;
   height: 60px;
   padding: 10px;
-
   @media ${breakpointsMax.mobileS} {
     width: 257px;
     height: 66px;
   }
-
   button {
     font-size: 1rem;
     font-weight: 350;
@@ -76,7 +72,6 @@ export const ButtonDiv = styled.div`
     color: ${colors.black};
     background-color: ${colors.white};
   }
-
   button: hover {
     opacity: 1;
     font-weight: 400;

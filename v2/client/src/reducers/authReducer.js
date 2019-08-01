@@ -43,10 +43,20 @@ export default function(state = initialState, action) {
     case LOGOUT:
       return {
         ...state,
+        ...initialState,
+        role: null,
+        email: null,
+        name: null,
+        userLevel: null,
+        id: null,
+        organization: null,
+        region: null,
         token: null,
         user: null,
         isAuthenticated: false,
         loaded: true,
+        PIN: null,
+        viewLevel: null,
       };
 
     case CHECK_UNIQUE_EMAIL_UNIQUE:

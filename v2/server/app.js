@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-// const taskScheduler = require('./taskScheduler');
+const taskScheduler = require('./taskScheduler');
 
 require('dotenv').config();
 
@@ -16,7 +16,7 @@ const app = express();
 dbConnection();
 
 // start the cron job functions
-// taskScheduler();
+taskScheduler();
 
 const port = process.env.PORT || 4000;
 app.set('port', port);

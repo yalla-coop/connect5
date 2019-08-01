@@ -64,8 +64,8 @@ module.exports.feedback = async (trainerId, sessionId, surveyType) => {
         $and: [
           {
             $or: [
-              { 'questions.group': 'about your trainer' },
-              { 'questions.group': 'about your usual way of teaching' },
+              { 'questions.group.text': 'about your trainer' },
+              { 'questions.group.text': 'about your usual way of teaching' },
             ],
           },
         ],
@@ -118,9 +118,9 @@ module.exports.feedback = async (trainerId, sessionId, surveyType) => {
 
     const counter = answersArr.map(answer => {
       const surveyAnswerCounter = answer[1].reduce((acc, cur) => {
-        const surveyType = cur.split('/')[0];
+        const surveyTypeArray = cur.split('/')[0];
 
-        acc[surveyType] = (acc[surveyType] || 0) + 1;
+        acc[surveyTypeArray] = (acc[surveyTypeArray] || 0) + 1;
 
         return acc;
       }, {});

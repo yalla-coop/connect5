@@ -31,7 +31,7 @@ import EnterPIN from './EnterPIN';
 import SurveyQs from './SurveyQs';
 
 // Helpers
-import { validPIN, validPostcode } from '../../../helpers/surveyValidation';
+import { validPIN } from '../../../helpers/surveyValidation';
 
 class Survey extends Component {
   state = {
@@ -41,7 +41,6 @@ class Survey extends Component {
     PIN: '',
     PINerror: '',
     PINvalid: false,
-    postcodeValid: false,
     section: 'confirmSurvey',
     completionRate: 0,
     currentStep: 1,
@@ -66,7 +65,6 @@ class Survey extends Component {
   sectionChange = (direction, uniqueGroups) => {
     let newSection;
     const { section } = this.state;
-
     if (direction === 'forward') {
       switch (section) {
         // first section
@@ -306,7 +304,7 @@ class Survey extends Component {
 
     if (formState && surveyDetails) {
       const questions = surveyDetails.questionsForSurvey.filter(question => {
-        return uniqueGroups.includes(question.group);
+        return uniqueGroups.includes(question.group.text);
       });
       const numberOfQs = questions.length;
       const numberOfAs = Object.values(formState).length;
@@ -316,23 +314,6 @@ class Survey extends Component {
     } else {
       this.setState({ completionRate: 0 });
     }
-  };
-
-  // validates and adds postcode input (UK format only)
-  onChangePostcode = e => {
-    const question = e.target.name;
-    const { formState } = this.state;
-    const answer = { answer: e.target.value, question };
-
-    this.setState(
-      {
-        postcodeValid: validPostcode(e.target.value),
-        formState: { ...formState, [question]: answer },
-      },
-      () => {
-        this.trackAnswers();
-      }
-    );
   };
 
   // check for any changes to the survey inputs and add them to the formstate
@@ -391,7 +372,7 @@ class Survey extends Component {
     const { surveyType, sessionId, questionsForSurvey } = surveyData.surveyData;
     // these are the base of validation in the backend (checked against formstate to see if everything was getting answered correctly)
     const questionsForParticipant = questionsForSurvey.filter(question => {
-      return uniqueGroups.includes(question.group);
+      return uniqueGroups.includes(question.group.text);
     });
 
     const { formState, PIN, disagreedToResearch, completionRate } = this.state;
@@ -415,7 +396,6 @@ class Survey extends Component {
       section,
       PINerror,
       PINvalid,
-      postcodeValid,
       completionRate,
       PIN,
       currentStep,
@@ -487,7 +467,7 @@ class Survey extends Component {
                       const questions =
                         surveyDetails &&
                         surveyDetails.questionsForSurvey.filter(
-                          question => question.group === group
+                          question => question.group.text === group
                         );
                       if (section === group) {
                         const unanswered = questions
@@ -498,8 +478,6 @@ class Survey extends Component {
                           <SurveyQs
                             key={group}
                             questions={questions}
-                            postcodeValid={postcodeValid}
-                            onChangePostcode={this.onChangePostcode}
                             onChange={this.handleChange}
                             handleOther={this.handleOther}
                             answers={formState}
@@ -508,9 +486,8 @@ class Survey extends Component {
                             handleAntdDatePicker={this.handleAntdDatePicker}
                             renderSkipButtons={this.renderSkipButtons(
                               group,
-                              section === 'demographic'
-                                ? unanswered.length > 0 && !postcodeValid
-                                : unanswered.length > 0,
+                              section === 'demographic' &&
+                                unanswered.length > 0,
                               uniqueGroups,
                               completionRate
                             )}

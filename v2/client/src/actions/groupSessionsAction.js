@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { message } from 'antd';
+import Swal from 'sweetalert2';
 
 import {
   FETCH_ALL_SESSIONS,
@@ -81,12 +82,20 @@ export const sessionUpdateAction = (sessionData, id) => async dispatch => {
   // const body = JSON.stringify(sessionData);
   axios
     .patch(`/api/session-edit/${id}`, sessionData)
-    .then(res =>
+    .then(res => {
+      Swal.fire({
+        title: 'success',
+        text: 'session has been successfully edited',
+        type: 'success',
+        confirmButtonText: 'Ok',
+      });
+      history.push(`/session-details/${id}`);
+
       dispatch({
         type: EDIT_SESSION_SUCCESS,
         payload: res.data,
-      })
-    )
+      });
+    })
     .catch(() => history.push('/404err'));
 };
 
