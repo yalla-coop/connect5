@@ -13,7 +13,7 @@ import {
 } from './SessionActions.Style';
 
 class SessionActions extends Component {
-  deleteSession = _id => {
+  deleteSession = (_id, role) => {
     const { deleteSessionAction: deleteSession } = this.props;
 
     Swal.fire({
@@ -26,14 +26,6 @@ class SessionActions extends Component {
       .then(willDelete => {
         if (willDelete.value) {
           deleteSession(_id);
-
-          Swal.fire({
-            title: 'success',
-            text: 'session has been successfully delete',
-            type: 'success',
-            confirmButtonText: 'Ok',
-          });
-          history.push('/sessions');
         }
       })
       .catch(() => {
@@ -42,7 +34,8 @@ class SessionActions extends Component {
   };
 
   render() {
-    const { sessionDetails, msg } = this.props;
+    const { sessionDetails, msg, role } = this.props;
+    console.log(role);
     const { _id } = sessionDetails;
     const { deleteSession } = this;
     return (
@@ -58,7 +51,7 @@ class SessionActions extends Component {
         </SessionAction>
 
         <SessionAction>
-          <SessionDelete onClick={() => deleteSession(_id, msg)}>
+          <SessionDelete onClick={() => deleteSession(_id, role)}>
             <Icon
               type="delete"
               style={{ width: '2rem', height: '2rem', color: 'red' }}
@@ -73,6 +66,7 @@ class SessionActions extends Component {
 
 const mapStateToProps = state => ({
   msg: state.session.msg,
+  role: state.auth.role,
 });
 
 export default connect(

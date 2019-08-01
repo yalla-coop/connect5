@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { message } from 'antd';
+import { message, Modal } from 'antd';
 import Swal from 'sweetalert2';
+import store from '../store';
 
 import {
   FETCH_ALL_SESSIONS,
@@ -75,6 +76,16 @@ export const deleteSessionAction = id => async dispatch => {
         payload: res.data,
       })
     )
+    .then(() => {
+      const { role } = store.getState().auth;
+
+      Modal.success({
+        title: 'success',
+        content: 'session has been successfully delete',
+        onOk: () =>
+          history.push(role === 'trainer' ? '/trainer-sessions' : '/sessions'),
+      });
+    })
     .catch(() => history.push('/404err'));
 };
 
