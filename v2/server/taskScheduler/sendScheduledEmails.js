@@ -13,10 +13,10 @@ const {
 } = require('./../database/queries/sessionDetails/scheduleEmails');
 
 const sendScheduledEmails = () =>
-  // run the cron job function at 1:00 AM
+  // run the cron job function at the head of every hour
   // at London time zone
   cron.schedule(
-    '0 1 * * *',
+    '0 * * * *',
     async () => {
       const sheduledEmails = await getScheduledEmails();
 
