@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Drawer } from 'antd';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Drawer } from 'antd';
 import AboutUs from './AboutUs';
 
 import {
