@@ -67,22 +67,24 @@ class EmailsList extends Component {
           </Heading>
           <List>
             {dataList &&
-              dataList.sentEmails.map(dataItem => (
-                <Row key={dataItem._id}>
-                  <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
-                  <button
-                    type="button"
-                    onClick={() => showDrawer(dataItem && dataItem._id)}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      marginRight: '.5rem',
-                    }}
-                  >
-                    <Icon type="right" />
-                  </button>
-                </Row>
-              ))}
+              dataList.sentEmails
+                .filter(item => item.type === 'registration')
+                .map(dataItem => (
+                  <Row key={dataItem._id}>
+                    <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
+                    <button
+                      type="button"
+                      onClick={() => showDrawer(dataItem && dataItem._id)}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        marginRight: '.5rem',
+                      }}
+                    >
+                      <Icon type="right" />
+                    </button>
+                  </Row>
+                ))}
             <Drawer
               placement="right"
               closable={false}
