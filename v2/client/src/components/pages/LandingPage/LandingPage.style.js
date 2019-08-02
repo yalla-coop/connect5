@@ -41,8 +41,8 @@ export const Headline = styled.h1`
 export const Paragraph = styled.p`
   font-size: 1rem;
   font-weight: 300;
-  text-align: center;
-  padding: 1.3rem 0 0.7rem 0;
+  text-align: left;
+  padding: 0.5rem 0 0.7rem 0;
 `;
 
 export const ButtonContainer = styled.div`
@@ -112,20 +112,23 @@ export const Heading = styled.h2`
     position: absolute;
     border-bottom: ${borders.heading};
     bottom: -6px;
-    left: 72px;
-    width: 45%;
-    @media (min-width: 768px) {
-      width: 25%;
-      left: 37%;
-    }
+    left: 37.5%;
+    width: 25%;
   }
 `;
 
 export const H3 = styled.h3`
   font-size: 1rem;
   font-weight: 400;
-  text-align: center;
-  padding: 1.5rem 0;
+  padding-top: 1.5rem;
+`;
+
+export const QuoteH3 = styled.h3`
+  font-size: 1rem;
+  font-weight: 400;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 `;
 
 export const H4 = styled.h4`
@@ -165,7 +168,6 @@ export const Question = styled.div`
 `;
 
 export const Ul = styled.li`
-  padding-left: 10px;
   margin: 20px 0;
   list-style: none;
 `;
@@ -181,17 +183,17 @@ export const Li = styled.li`
 export const Blockquote = styled.div`
   display: block;
   grid-area: blockquote;
-  background-color: ${colors.backgroundWashOut};
-  color: ${colors.red};
   border: none;
   position: relative;
   margin: 0 0 20px;
-  padding: 20px;
+  
 `;
 
 export const Block = styled.blockquote`
   margin-top: 30px;
   width: 100%;
+  border: 1px red solid;
+  padding: 0.5rem 0 0.7rem 0;
   &:before {
     content: '\2706';
     font-size: 30px;
@@ -205,7 +207,7 @@ export const Quote = styled.p`
   margin-bottom: 20px;
   margin: 40 0 20px;
   line-height: 1.4;
-  font-weight: 400;
+  font-weight: 300;
   font-size: 1rem;
 `;
 
@@ -214,4 +216,5 @@ export const Speaker = styled.p`
   font-size: 16px;
   margin: 0 0 30px;
   line-height: 1.4;
+  text-align: right;
 `;

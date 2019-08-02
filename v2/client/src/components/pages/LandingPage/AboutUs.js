@@ -19,30 +19,30 @@ import {
   Heading,
   H4,
   H3,
+  QuoteH3
 } from './LandingPage.style';
 
 const AboutUs = () => (
   <AboutUsWrapper>
     <Summury>
       <Heading>About Us</Heading>
-      <H3>Who We Are?</H3>
-      <P>
+    </Summury>
+    <Mission>
+      <H3>Who Are We?</H3>
+      <Paragraph>
         Connect 5 has been developed to give frontline staff the confidence to
         have more effective conversations with the public about their mental
         health and wellbeing
-      </P>
-    </Summury>
-    <Mission>
-      <H3>-Our Mission-</H3>
-      <P>
+      </Paragraph>
+    
+      <H3>Our Mission</H3>
+      <Paragraph>
         To provides participants with skills and competencies that build
         confidence in having conversations about mental health and wellbeing in
         their routine practice.
-      </P>
+      </Paragraph>
     </Mission>
-    <About>
-      <Question>
-        <H4>What is Connect 5?</H4>
+        <H3>What is Connect 5?</H3>
         <Paragraph>
           Connect 5 is focused on training staff to enable them to support their
           patients or clients to live well mentally, to better manage their
@@ -59,9 +59,7 @@ const AboutUs = () => (
           take place for between a half-day and two and a half days depending on
           who it is for and how much support they can provide.
         </Paragraph>
-      </Question>
-      <Question>
-        <H4>Why has it been developed?</H4>
+        <H3>Why has it been developed?</H3>
         <Paragraph>
           With mental health emerging as a pressing priority, and services
           struggling to cope with the burden, promoting self-management is at
@@ -82,11 +80,9 @@ const AboutUs = () => (
           and wellbeing, and make more effective referrals in to mental health
           services.
         </Paragraph>
-      </Question>
-      <Question>
-        <H4>
+        <H3>
           How does Connect 5 fit with national health and care priorities?
-        </H4>
+        </H3>
         <Ul>
           <Li>
             Builds capacity and capability to support prevention and reduce
@@ -113,10 +109,8 @@ const AboutUs = () => (
           </Li>
           <Li>Mental Health Leadership and Workforce Development Framework</Li>
         </Ul>
-      </Question>
-    </About>
     <Blockquote>
-      <H3>What did people say about us?</H3>
+      <QuoteH3>What did people say about us?</QuoteH3>
       <Block>
         <Quote>
           <img
