@@ -130,10 +130,6 @@ class ManageAttendees extends Component {
     });
   };
 
-  onSelectBlur = () => {
-    this.setState({ focused: false });
-  };
-
   onCopy = () => {
     const { target, addedAttendeesList, confirmedAttendeesList } = this.state;
     let dataForCopy;
@@ -175,6 +171,10 @@ class ManageAttendees extends Component {
     }
 
     this.setState({ [clearTarget]: [] });
+  };
+
+  onSelectBlur = () => {
+    this.setState({ focused: false });
   };
 
   onSelectFocus = () => {

@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Select, Checkbox } from 'antd';
+import { Select, Checkbox, message, Tooltip, Button as AntButton } from 'antd';
 import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
 import { updateSentEmails } from '../../../../actions/InviteAndPromoteAction';
 // import { pattern } from '../../../../constants/regex';
@@ -11,6 +11,8 @@ import { updateSentEmails } from '../../../../actions/InviteAndPromoteAction';
 import Spin from '../../../common/Spin';
 import Header from '../../../common/Header';
 import Button from '../../../common/Button';
+
+import { SelecetWrapper, IconsWrapper } from '../SessionDetails.Style';
 
 // STYLE
 import {
@@ -32,17 +34,73 @@ class InviteeList extends Component {
     emails: [],
     newEmails: [],
     deletedEmails: [],
+    focused: false,
   };
 
   componentDidMount() {
     const { inviteesEmailsList } = this.props;
     const emailsString = inviteesEmailsList.map(emailObj => emailObj.email);
 
+    let dT = null;
+    try {
+      dT = new DataTransfer();
+    } catch (e) {
+      // ignore the error
+    }
+    const evt = new ClipboardEvent('paste', { clipboardData: dT });
+    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+
+    document.addEventListener('paste', this.pasteEmails);
+
+    document.dispatchEvent(evt);
+
     this.setState({
       inviteesEmailsList,
       emails: emailsString,
     });
   }
+
+  pasteEmails = event => {
+    const { focused, emails } = this.state;
+
+    let emailsArray;
+
+    if (focused) {
+      event.preventDefault();
+      const pastedString = event.clipboardData.getData('text/plain');
+      const splittedEmails = pastedString.split(';');
+      if (pastedString === splittedEmails) {
+        emailsArray = pastedString.split(';');
+      }
+      emailsArray = splittedEmails
+        .map(item => item.trim())
+        .filter(item => !emails.includes(item));
+
+      this.onUpdateEmailsChange([...emails, ...emailsArray]);
+    }
+  };
+
+  onCopy = () => {
+    const { emails } = this.state;
+
+    if (emails.length) {
+      navigator.clipboard.writeText(emails.join(';'));
+      message.success('Copied');
+    }
+  };
+
+  onClear = () => {
+    this.setState({ emails: [] });
+    this.onUpdateEmailsChange([]);
+  };
+
+  onSelectBlur = () => {
+    this.setState({ focused: false });
+  };
+
+  onSelectFocus = () => {
+    this.setState({ focused: true });
+  };
 
   onUpdateEmailsChange = values => {
     const {
@@ -129,21 +187,45 @@ class InviteeList extends Component {
         </BackContainer>
         <Form>
           <InputDiv>
-            <Select
-              mode="tags"
-              size="large"
-              placeholder="emails"
-              onChange={onUpdateEmailsChange}
-              value={emails}
-              style={{ width: '100%', height: '100%' }}
-            >
-              {inviteesEmailsList &&
-                inviteesEmailsList.map(obj => (
-                  <Option key={obj.email} value={obj.email}>
-                    {obj.email}
-                  </Option>
-                ))}
-            </Select>
+            <SelecetWrapper>
+              <IconsWrapper>
+                <Tooltip placement="top" title="Copy">
+                  <AntButton
+                    type="primary"
+                    icon="copy"
+                    ghost
+                    onClick={this.onCopy}
+                    disabled={!emails.length}
+                  />
+                </Tooltip>
+                <Tooltip placement="top" title="Delete">
+                  <AntButton
+                    type="danger"
+                    icon="delete"
+                    ghost
+                    onClick={this.onClear}
+                    disabled={!emails.length}
+                  />
+                </Tooltip>
+              </IconsWrapper>
+              <Select
+                mode="tags"
+                size="large"
+                placeholder="emails"
+                onChange={onUpdateEmailsChange}
+                value={emails}
+                style={{ width: '100%', height: '100%' }}
+                onBlur={this.onSelectBlur}
+                onFocus={this.onSelectFocus}
+              >
+                {inviteesEmailsList &&
+                  inviteesEmailsList.map(obj => (
+                    <Option key={obj.email} value={obj.email}>
+                      {obj.email}
+                    </Option>
+                  ))}
+              </Select>
+            </SelecetWrapper>
           </InputDiv>
           <div>{err}</div>
           <InputDiv>
