@@ -10,6 +10,7 @@ const sendEmailInvitation = ({
   endTime,
   shortId,
   address,
+  region,
 }) => {
   let emailsList = [];
   if (typeof emails[0] === 'string') {
@@ -31,6 +32,7 @@ const sendEmailInvitation = ({
       <li>- session date: ${sessionDate}</li>
       <li>- session type: ${type}</li>
       <li>- address: ${address}</li>
+      <li>- region: ${region}</li>
       <li>- time: ${startTime} to ${endTime}</li>
       <li>- trainers: ${trainerName}</li>
     </ul>
