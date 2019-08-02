@@ -60,6 +60,10 @@ class InviteeList extends Component {
     });
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('paste', this.pasteEmails);
+  }
+
   pasteEmails = event => {
     const { focused, emails } = this.state;
 

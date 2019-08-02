@@ -51,6 +51,20 @@ class EditSession extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
+
+    let dT = null;
+    try {
+      dT = new DataTransfer();
+    } catch (e) {
+      // ignore the error
+    }
+    const evt = new ClipboardEvent('paste', { clipboardData: dT });
+    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+
+    document.addEventListener('paste', this.pasteEmails);
+
+    document.dispatchEvent(evt);
+
     // call action and pass it the id of session to fetch it's details
     this.props.fetchSessionDetails(id);
 
@@ -98,6 +112,38 @@ class EditSession extends Component {
       }
     }
   }
+
+  componentWillUnmount() {
+    document.removeEventListener('paste', this.pasteEmails);
+  }
+
+  onSelectBlur = () => {
+    this.setState({ focused: false });
+  };
+
+  onSelectFocus = () => {
+    this.setState({ focused: true });
+  };
+
+  pasteEmails = event => {
+    const { focused, emails } = this.state;
+
+    let emailsArray;
+
+    if (focused) {
+      event.preventDefault();
+      const pastedString = event.clipboardData.getData('text/plain');
+      const splittedEmails = pastedString.split(';');
+      if (pastedString === splittedEmails) {
+        emailsArray = pastedString.split(';');
+      }
+      emailsArray = splittedEmails
+        .map(item => item.trim())
+        .filter(item => !emails.includes(item));
+
+      this.onEmailChange([...emails.map(item => item.email), ...emailsArray]);
+    }
+  };
 
   onDateChange = defaultValue => {
     this.setState({
@@ -404,6 +450,8 @@ class EditSession extends Component {
               defaultValue={participantsEmails.map(item => item.email)}
               value={emails.map(item => item.email)}
               style={{ width: '100%', height: '100%' }}
+              onBlur={this.onSelectBlur}
+              onFocus={this.onSelectFocus}
             >
               {participantsEmails.map(item => (
                 <Option key={item.email} value={item.email}>
