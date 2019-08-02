@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Icon, Drawer, Modal, Popover } from 'antd';
+import { Icon, Drawer, Modal, Popover, message } from 'antd';
 import * as Yup from 'yup';
 import moment from 'moment';
 
@@ -35,9 +35,21 @@ class ManageAttendees extends Component {
     checkedEmails: [],
     isCheckAll: true,
     activeEmailIndex: null,
+    focused: false,
   };
 
   componentDidMount() {
+    let dT = null;
+    try {
+      dT = new DataTransfer();
+    } catch (e) {
+      // ignore the error
+    }
+    const evt = new ClipboardEvent('paste', { clipboardData: dT });
+    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+    document.addEventListener('paste', this.pasteEmails);
+    document.dispatchEvent(evt);
+
     this.setListIntoState();
   }
 
@@ -49,16 +61,21 @@ class ManageAttendees extends Component {
     }
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('paste', this.pasteEmails);
+  }
+
   handleDrawerOpen = e => {
-    const { key, emailIndex } = e.target.dataset;
+    const { key, emailIndex, target } = e.target.dataset;
     this.setState({
       visible: true,
       drawerKey: key,
       activeEmailIndex: emailIndex,
+      target,
     });
   };
 
-  handleUpdateAttendees = async values => {
+  handleUpdateAttendees = values => {
     const validEmails = [];
     values.forEach(item => {
       try {
@@ -113,6 +130,86 @@ class ManageAttendees extends Component {
     });
   };
 
+  onSelectBlur = () => {
+    this.setState({ focused: false });
+  };
+
+  onCopy = () => {
+    const { target, addedAttendeesList, confirmedAttendeesList } = this.state;
+    let dataForCopy;
+    switch (target) {
+      case 'add':
+        dataForCopy = addedAttendeesList;
+        break;
+
+      case 'update':
+        dataForCopy = confirmedAttendeesList;
+        break;
+
+      default:
+        dataForCopy = [];
+        break;
+    }
+
+    if (dataForCopy.length) {
+      navigator.clipboard.writeText(dataForCopy.join(';'));
+      message.success('Copied');
+    }
+  };
+
+  onClear = () => {
+    const { target } = this.state;
+    let clearTarget;
+    switch (target) {
+      case 'add':
+        clearTarget = 'addedAttendeesList';
+        break;
+
+      case 'update':
+        clearTarget = 'confirmedAttendeesList';
+        break;
+
+      default:
+        clearTarget = [];
+        break;
+    }
+
+    this.setState({ [clearTarget]: [] });
+  };
+
+  onSelectFocus = () => {
+    this.setState({ focused: true });
+  };
+
+  pasteEmails = event => {
+    const { target, focused } = this.state;
+
+    let emailsArray;
+
+    if (focused) {
+      event.preventDefault();
+      const pastedString = event.clipboardData.getData('text/plain');
+      const splittedEmails = pastedString.split(';');
+      if (pastedString === splittedEmails) {
+        emailsArray = pastedString.split(';');
+      }
+      emailsArray = splittedEmails.map(item => item.trim());
+
+      switch (target) {
+        case 'add':
+          this.handleAddAttendees(emailsArray);
+          break;
+
+        case 'update':
+          this.handleUpdateAttendees(emailsArray);
+          break;
+
+        default:
+          break;
+      }
+    }
+  };
+
   handleAddAttendees = values => {
     const { confirmedAttendeesList } = this.state;
     const validEmails = [];
@@ -126,7 +223,12 @@ class ManageAttendees extends Component {
           } else {
             Modal.error({
               title: 'Email already confirmed',
-              content: 'This Email is already in the confirmed emails',
+              content: (
+                <p>
+                  This Email <span style={{ fontWeight: '700' }}>{item}</span>{' '}
+                  is already in the confirmed emails
+                </p>
+              ),
             });
           }
         }
@@ -210,6 +312,7 @@ class ManageAttendees extends Component {
       activeEmailIndex: null,
       addedAttendeesList: [],
     });
+    this.setListIntoState();
   };
 
   render() {
@@ -248,20 +351,32 @@ class ManageAttendees extends Component {
           </Edit>
         </SubDetails>
         <SubDetails>
-          <Row onClick={this.handleDrawerOpen} data-key="viewAttendeesList">
+          <Row
+            onClick={this.handleDrawerOpen}
+            data-key="viewAttendeesList"
+            data-target="update"
+          >
             <DrawerLink>View Attendees List</DrawerLink>
             <Icon type="right" />
           </Row>
         </SubDetails>
         <SubDetails>
-          <Row onClick={this.handleDrawerOpen} data-key="addAttendees">
+          <Row
+            onClick={this.handleDrawerOpen}
+            data-key="addAttendees"
+            data-target="add"
+          >
             <DrawerLink>Add Attendees</DrawerLink>
             <Icon type="right" />
           </Row>
         </SubDetails>
         {confirmedAttendeesList.length ? (
           <SubDetails>
-            <Row onClick={this.handleDrawerOpen} data-key="sendEmails">
+            <Row
+              onClick={this.handleDrawerOpen}
+              data-key="sendEmails"
+              data-target="send"
+            >
               <DrawerLink>Send session info email reminder</DrawerLink>
               <Icon type="right" />
             </Row>
@@ -314,6 +429,8 @@ class ManageAttendees extends Component {
                 // All
                 drawerKey={drawerKey}
                 loading={loading}
+                onSelectBlur={this.onSelectBlur}
+                onSelectFocus={this.onSelectFocus}
                 // update
                 handleSubmitUpdateAttendees={this.handleSubmitUpdateAttendees}
                 confirmedAttendeesList={confirmedAttendeesList}
@@ -322,6 +439,8 @@ class ManageAttendees extends Component {
                 handleAddAttendees={this.handleAddAttendees}
                 addedAttendeesList={addedAttendeesList}
                 submitAddAttendeesList={this.submitAddAttendeesList}
+                onCopy={this.onCopy}
+                onClear={this.onClear}
                 // sendEmails
                 changeSelectedEmails={this.changeSelectedEmails}
                 checkedEmails={checkedEmails}
