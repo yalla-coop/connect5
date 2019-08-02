@@ -19,7 +19,7 @@ import {
 // NOTE: this component expects dataList to look something like this:
 
 const SessionList = ({ dataList }) => {
-  if (!dataList) {
+  if (!dataList || !Array.isArray(dataList)) {
     return <Spin />;
   }
   return (

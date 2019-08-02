@@ -54,6 +54,7 @@ export const colorCodes = {
   mediumGray: '#E1E1E2',
   black: '#4F4F4F',
   blackSecondary: '#8e8e8e',
+  yellow: '#FFC107',
 
   // transparent
   transGray: 'rgba(212, 212, 216, 0.3)',
@@ -83,4 +84,5 @@ export const borders = {
   button: `1px solid ${colors.gray}`,
   header: `1px solid ${colors.offWhite}`,
   toggle: `1px solid ${colors.black}`,
+  heading: `1px solid ${colors.yellow}`,
 };

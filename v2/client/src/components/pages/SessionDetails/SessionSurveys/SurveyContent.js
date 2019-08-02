@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { Icon, Drawer } from 'antd';
-
+import moment from 'moment';
 import DrawerContent from './DrawerContent';
 
 import {
@@ -24,12 +24,15 @@ import {
 } from './SessionSurveys.Style';
 import { BackWrapper } from '../SessionDetails.Style';
 
+import('moment-timezone');
+
 class SurveyContent extends Component {
   state = {
     responseCount: 0,
     visible: false,
     drawerKey: '',
     scheduledDate: null,
+    selectedTime: null,
   };
 
   componentDidMount() {
@@ -110,13 +113,18 @@ class SurveyContent extends Component {
     this.setState({ scheduledDate: dateString });
   };
 
+  handleSelectTime = (time, timeString) => {
+    this.setState({ selectedTime: timeString });
+  };
+
   handleSubmitSchedule = () => {
-    const { scheduledDate } = this.state;
+    const { scheduledDate, selectedTime } = this.state;
     const { scheduleNewEmail, sessionDetails, type } = this.props;
-    if (scheduledDate) {
+    if (scheduledDate && selectedTime) {
+      const date = moment(`${scheduledDate} ${selectedTime}`);
       scheduleNewEmail(
         {
-          date: scheduledDate,
+          date: date.tz('Europe/London'),
           sessionId: sessionDetails._id,
           surveyType: type,
         },
@@ -141,6 +149,7 @@ class SurveyContent extends Component {
       handleSelectDate,
       handleSubmitSchedule,
       handleCancelEmail,
+      handleSelectTime,
     } = this;
     const {
       type,
@@ -153,6 +162,12 @@ class SurveyContent extends Component {
     } = this.props;
     const { responseCount, drawerKey, visible } = this.state;
     const { scheduledEmails } = sessionDetails;
+
+    const confirmedAttendeesNumber =
+      sessionDetails &&
+      sessionDetails.participantsEmails.filter(
+        item => item.status === 'confirmed'
+      ).length;
 
     let url = `https://${surveyURL}`;
 
@@ -186,8 +201,7 @@ class SurveyContent extends Component {
         <ResponseWrapper>
           <p>
             Responses: <b>{responseCount}</b> out of{' '}
-            <b>{sessionDetails && sessionDetails.numberOfAttendees}</b>{' '}
-            attendees
+            <b>{confirmedAttendeesNumber}</b> attendees
           </p>
         </ResponseWrapper>
         <FeedbackAction to="#" onClick={() => handleEmailing(url, type)}>
@@ -241,6 +255,7 @@ class SurveyContent extends Component {
                 handleSelectDate={handleSelectDate}
                 handleSubmitSchedule={handleSubmitSchedule}
                 handleCancelEmail={handleCancelEmail}
+                handleSelectTime={handleSelectTime}
               />
             </>
           </Drawer>

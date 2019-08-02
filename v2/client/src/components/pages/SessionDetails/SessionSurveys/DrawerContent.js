@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DatePicker, Empty, Popconfirm } from 'antd';
+import { DatePicker, Empty, Popconfirm, TimePicker } from 'antd';
 import moment from 'moment';
 
 import Button from '../../../common/Button';
@@ -15,84 +15,93 @@ import {
   FormWrapper,
 } from '../SessionDetails.Style';
 
+const format = 'HH:mm';
+
 const DrawerContent = ({
   loading,
-  drawerKey,
   handleSelectDate,
   handleSubmitSchedule,
   scheduledEmails,
   type,
   handleCancelEmail,
+  handleSelectTime,
 }) => {
-  switch (drawerKey) {
-    case 'scheduleTable':
-      return (
-        <div>
-          <FormWrapper>
-            <DatePicker
-              onChange={handleSelectDate}
-              placeholder="Select date"
-              size="large"
-              style={{ width: '100%', marginBottom: '1rem' }}
-            />
-            <Button
-              type="primary"
-              label="Schedule"
-              style={{ width: '100%' }}
-              loading={loading}
-              disabled={loading}
-              onClick={handleSubmitSchedule}
-            />
-          </FormWrapper>
-          {scheduledEmails && scheduledEmails.length > 0 ? (
-            <TableWrapper>
-              <TableHeader>
-                <Text>
-                  Currently scheduled{' '}
-                  {type.includes('pre') ? 'Pre-Session' : 'Post-Session'} Survey
-                  Email
-                </Text>
-              </TableHeader>
-              {scheduledEmails
-                .filter(scheduledEmail =>
-                  scheduledEmail.surveyType.includes(type)
-                )
-                .map(scheduledEmail => (
-                  <SubDetails
-                    key={scheduledEmail._id}
-                    style={{
-                      padding: '1rem 0',
-                      borderTop: '1px solid #80808059',
-                    }}
-                  >
-                    <Row enabled>
-                      {moment(scheduledEmail.date).format('DD-MM-YYYY')}
-                      <Popconfirm
-                        title="Are you sure delete this task?"
-                        onConfirm={() => handleCancelEmail(scheduledEmail._id)}
-                        okText="Yes"
-                        cancelText="No"
-                      >
-                        <DrawerLink style={{ cursor: 'pointer' }}>
-                          Cancel
-                        </DrawerLink>
-                      </Popconfirm>
-                    </Row>
-                  </SubDetails>
-                ))}
-            </TableWrapper>
-          ) : (
-            <Empty
-              description="No Emails Scheduled"
-              style={{ marginTop: '5rem' }}
-            />
-          )}
+  const filteredScheduledEmails = scheduledEmails.filter(scheduledEmail =>
+    scheduledEmail.surveyType.includes(type)
+  );
+  return (
+    <div>
+      <FormWrapper>
+        <div
+          style={{
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'space-between',
+          }}
+        >
+          <DatePicker
+            onChange={handleSelectDate}
+            placeholder="Select date"
+            size="large"
+            style={{ width: '60%', marginBottom: '1rem' }}
+          />
+          <TimePicker
+            onChange={handleSelectTime}
+            style={{ width: '35%', marginBottom: '1rem' }}
+            format={format}
+            minuteStep="60"
+            size="large"
+          />
         </div>
-      );
 
-    default:
-      return null;
-  }
+        <Button
+          type="primary"
+          label="Schedule"
+          style={{ width: '100%' }}
+          loading={loading}
+          disabled={loading}
+          onClick={handleSubmitSchedule}
+        />
+      </FormWrapper>
+      {filteredScheduledEmails && filteredScheduledEmails.length > 0 ? (
+        <TableWrapper>
+          <TableHeader>
+            <Text>
+              Currently scheduled{' '}
+              {type.includes('pre') ? 'Pre-Session' : 'Post-Session'} Survey
+              Email
+            </Text>
+          </TableHeader>
+          {filteredScheduledEmails.map(scheduledEmail => (
+            <SubDetails
+              key={scheduledEmail._id}
+              style={{
+                padding: '1rem 0',
+                borderTop: '1px solid #80808059',
+              }}
+            >
+              <Row enabled>
+                {moment(scheduledEmail.date).format('DD-MM-YYYY')}
+                <Popconfirm
+                  title="Are you sure you want to cancel this email?"
+                  onConfirm={() => handleCancelEmail(scheduledEmail._id)}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <DrawerLink style={{ cursor: 'pointer' }}>Cancel</DrawerLink>
+                </Popconfirm>
+              </Row>
+            </SubDetails>
+          ))}
+        </TableWrapper>
+      ) : (
+        <Empty
+          description="No Emails Scheduled"
+          style={{ marginTop: '5rem' }}
+        />
+      )}
+    </div>
+  );
 };
 
 export default DrawerContent;

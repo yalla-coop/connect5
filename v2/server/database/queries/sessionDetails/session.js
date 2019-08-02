@@ -97,6 +97,7 @@ module.exports.updateAttendeesList = ({ sessionId, attendeesList, status }) =>
     attendeesList.forEach(item => {
       newEmails[item.email] = item.email;
     });
+    const deletedEmailsIds = [];
 
     session.participantsEmails.forEach(participant => {
       if (Object.keys(newEmails).includes(participant.email)) {
@@ -106,14 +107,19 @@ module.exports.updateAttendeesList = ({ sessionId, attendeesList, status }) =>
         delete newEmails[participant.email];
       } else if (participant.status === status) {
         // delete
-        session.participantsEmails.id(participant._id).remove();
+        deletedEmailsIds.push(participant._id);
         delete newEmails[participant.email];
       }
+    });
+
+    deletedEmailsIds.forEach(id => {
+      session.participantsEmails.id(id).remove();
     });
 
     Object.keys(newEmails).forEach(email => {
       session.participantsEmails.push({ email, status });
     });
+
     return session.save();
   });
 

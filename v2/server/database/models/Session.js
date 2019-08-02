@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
+require('moment-timezone');
 
 const { sessionTypes } = require('./../DBConstants');
 const { surveyTypes } = require('./../DBConstants');
@@ -55,6 +57,7 @@ const sessionSchema = new Schema(
         endTime: String,
         type: {
           type: String,
+          // registration === invitaion
           enum: ['reminder', 'intial', 'registration', 'surveyLink'],
         },
         preServeyLink: String,
@@ -75,7 +78,10 @@ const sessionSchema = new Schema(
           type: mongoose.Types.ObjectId,
           auto: true,
         },
-        date: Date,
+        date: {
+          type: Date,
+          default: moment.tz(moment(), 'Europe/London'),
+        },
         surveyType: {
           type: String,
           enum: surveyTypes,
