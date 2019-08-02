@@ -10,14 +10,10 @@ import {
   Blockquote,
   Li,
   Ul,
-  Question,
-  About,
   Mission,
   Paragraph,
-  P,
   Summury,
   Heading,
-  H4,
   H3,
   QuoteH3
 } from './LandingPage.style';
