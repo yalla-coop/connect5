@@ -163,6 +163,12 @@ class SurveyContent extends Component {
     const { responseCount, drawerKey, visible } = this.state;
     const { scheduledEmails } = sessionDetails;
 
+    const confirmedAttendeesNumber =
+      sessionDetails &&
+      sessionDetails.participantsEmails.filter(
+        item => item.status === 'confirmed'
+      ).length;
+
     let url = `https://${surveyURL}`;
 
     if (process.env.NODE_ENV === 'development') {
@@ -195,8 +201,7 @@ class SurveyContent extends Component {
         <ResponseWrapper>
           <p>
             Responses: <b>{responseCount}</b> out of{' '}
-            <b>{sessionDetails && sessionDetails.numberOfAttendees}</b>{' '}
-            attendees
+            <b>{confirmedAttendeesNumber}</b> attendees
           </p>
         </ResponseWrapper>
         <FeedbackAction to="#" onClick={() => handleEmailing(url, type)}>

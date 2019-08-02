@@ -2,13 +2,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-
+import { message } from 'antd';
 import { getSessionDetails } from '../../../actions/sessionAction';
 import { confirmRegistration } from '../../../actions/confirmRegistration';
 
 import Header from '../../common/Header';
 import CommonButton from '../../common/Button';
 
+import { DASHBOARD_URL } from '../../../constants/navigationRoutes';
 import {
   Wrapper,
   ContentWrapper,
@@ -31,6 +32,14 @@ class ConfirmRegistration extends Component {
     } = this.props;
     const { shortId } = params;
     this.props.getSessionDetails(shortId);
+  }
+
+  componentDidUpdate() {
+    const { isAuthenticated, role, history } = this.props;
+    if (isAuthenticated && role !== 'participant') {
+      message.warning(`You logged in as ${role}`);
+      history.push(DASHBOARD_URL);
+    }
   }
 
   handleSubmit = e => {
@@ -99,12 +108,14 @@ class ConfirmRegistration extends Component {
   }
 }
 
-const mapStateToProps = ({ session: _session }) => {
+const mapStateToProps = ({ session: _session, auth: _auth }) => {
   return {
     trainers: _session.trainers,
     sessionId: _session._id,
     address: _session.address,
     date: _session.date,
+    isAuthenticated: _auth.isAuthenticated,
+    role: _auth.role,
   };
 };
 

@@ -57,6 +57,7 @@ const sessionSchema = new Schema(
         endTime: String,
         type: {
           type: String,
+          // registration === invitaion
           enum: ['reminder', 'intial', 'registration', 'surveyLink'],
         },
         preServeyLink: String,

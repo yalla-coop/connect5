@@ -26,11 +26,13 @@ import {
 class EmailsList extends Component {
   state = {
     visible: false,
+    emailId: null,
   };
 
-  showDrawer = () => {
+  showDrawer = id => {
     this.setState({
       visible: true,
+      emailId: id,
     });
   };
 
@@ -42,8 +44,13 @@ class EmailsList extends Component {
 
   render() {
     const { dataList, onClose } = this.props;
-    const { visible } = this.state;
+    const { visible, emailId } = this.state;
     const { showDrawer, onDrawerClose } = this;
+    const activeEmail =
+      dataList &&
+      dataList.sentEmails.filter(item => {
+        return item._id === emailId;
+      });
     if (!dataList) {
       return <Spin />;
     }
@@ -60,35 +67,37 @@ class EmailsList extends Component {
           </Heading>
           <List>
             {dataList &&
-              dataList.sentEmails.map(dataItem => (
-                <Row key={dataItem._id}>
-                  <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
-                  <button
-                    type="button"
-                    onClick={showDrawer}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      marginRight: '.5rem',
-                    }}
-                  >
-                    <Icon type="right" />
-                  </button>
-                  <Drawer
-                    placement="right"
-                    closable={false}
-                    onClose={onDrawerClose}
-                    visible={visible}
-                    width="100%"
-                  >
-                    <InviteEmails
-                      sessionDetails={dataList}
-                      emailInfo={dataItem}
-                      onClose={onDrawerClose}
-                    />
-                  </Drawer>
-                </Row>
-              ))}
+              dataList.sentEmails
+                .filter(item => item.type === 'registration')
+                .map(dataItem => (
+                  <Row key={dataItem._id}>
+                    <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
+                    <button
+                      type="button"
+                      onClick={() => showDrawer(dataItem && dataItem._id)}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        marginRight: '.5rem',
+                      }}
+                    >
+                      <Icon type="right" />
+                    </button>
+                  </Row>
+                ))}
+            <Drawer
+              placement="right"
+              closable={false}
+              onClose={onDrawerClose}
+              visible={visible}
+              width="100%"
+            >
+              <InviteEmails
+                sessionDetails={dataList}
+                emailInfo={activeEmail && activeEmail[0]}
+                onClose={onDrawerClose}
+              />
+            </Drawer>
           </List>
         </Wrapper>
       </>
