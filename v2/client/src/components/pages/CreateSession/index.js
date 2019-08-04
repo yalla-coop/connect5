@@ -21,7 +21,10 @@ import {
   fetchLocalLeads,
   fetchLocalLeadTrainersGroup,
 } from '../../../actions/users';
-import { createSessionAction } from '../../../actions/sessionAction';
+import {
+  createSessionAction,
+  storeInputData,
+} from '../../../actions/sessionAction';
 import { sessions, regions, pattern } from './options';
 
 import {
@@ -94,53 +97,61 @@ class CreateSession extends Component {
     }
   };
 
-  onChangeCheckbox = e => {
-    this.setState({ sendByEmail: e.target.checked });
+  onChangeCheckbox = async e => {
+    await this.setState({ sendByEmail: e.target.checked });
+    this.props.storeInputData(this.state);
   };
 
-  onDateChange = defaultValue => {
-    this.setState({
+  onDateChange = async defaultValue => {
+    await this.setState({
       startDate: defaultValue,
     });
+    this.props.storeInputData(this.state);
   };
 
-  onInputChange = ({ target: { value, name } }) => {
-    this.setState({
+  onInputChange = async ({ target: { value, name } }) => {
+    await this.setState({
       [name]: value,
     });
+    await this.props.storeInputData(value);
+    setTimeout(() => console.log(this.props.data), 5000);
   };
 
-  onSelectSessionChange = value => {
-    this.setState({
+  onSelectSessionChange = async value => {
+    await this.setState({
       session: value,
     });
+    this.props.storeInputData(this.state);
   };
 
-  onSelectRegionChange = value => {
-    this.setState({
+  onSelectRegionChange = async value => {
+    await this.setState({
       region: value,
     });
+    this.props.storeInputData(this.state);
   };
 
-  onSelectPartner1Change = item => {
+  onSelectPartner1Change = async item => {
     const { trainersNames } = this.state;
 
-    this.setState({
+    await this.setState({
       partnerTrainer1: item,
       trainersNames: { ...trainersNames, partner1: item.label },
     });
+    this.props.storeInputData(this.state);
   };
 
-  onSelectPartner2Change = item => {
+  onSelectPartner2Change = async item => {
     const { trainersNames } = this.state;
 
-    this.setState({
+    await this.setState({
       partnerTrainer2: item,
       trainersNames: { ...trainersNames, partner2: item.label },
     });
+    this.props.storeInputData(this.state);
   };
 
-  onEmailChange = value => {
+  onEmailChange = async value => {
     let err = '';
     const valuesToBeStored = [];
     // check for email validation
@@ -152,10 +163,11 @@ class CreateSession extends Component {
       }
     });
 
-    this.setState({
+    await this.setState({
       emails: valuesToBeStored,
       err,
     });
+    this.props.storeInputData(this.state);
   };
 
   renderTrainersList = () => {
@@ -188,7 +200,7 @@ class CreateSession extends Component {
     return null;
   };
 
-  checkError = () => {
+  checkError = async () => {
     const { startDate, inviteesNumber, session, region, emails } = this.state;
     const isError = !(
       !!startDate &&
@@ -198,9 +210,10 @@ class CreateSession extends Component {
       !!emails
     );
 
-    this.setState({
+    await this.setState({
       err: isError,
     });
+    this.props.storeInputData(this.state);
     return isError;
   };
 
@@ -248,16 +261,18 @@ class CreateSession extends Component {
     return !this.checkError() && this.props.createSessionAction(sessionData);
   };
 
-  onStartTimeChange = (time, timeString) => {
-    this.setState({
+  onStartTimeChange = async (time, timeString) => {
+    await this.setState({
       startTime: timeString,
     });
+    this.props.storeInputData(this.state);
   };
 
-  onEndTimeChange = (time, timeString) => {
-    this.setState({
+  onEndTimeChange = async (time, timeString) => {
+    await this.setState({
       endTime: timeString,
     });
+    this.props.storeInputData(this.state);
   };
 
   getDisabledStartTime = () => {
@@ -287,7 +302,8 @@ class CreateSession extends Component {
   };
 
   render() {
-    const { role } = this.props;
+    const { role, data, loading } = this.props;
+    console.log(data, 'uuuuuuuuuuuuuuoh');
 
     const {
       inviteesNumber,
@@ -302,8 +318,6 @@ class CreateSession extends Component {
       startTime,
       address,
     } = this.state;
-
-    const { loading } = this.props;
 
     const {
       onDateChange,
@@ -570,6 +584,7 @@ class CreateSession extends Component {
 const mapStateToProps = state => {
   const { trainers } = state.trainers;
   const localLeads = state.fetchedData.localLeadsList;
+  const data = state.storeSessionData.inviteesNumber;
 
   const leadsAndTrainers = [...localLeads, ...trainers];
   return {
@@ -589,5 +604,6 @@ export default connect(
     createSessionAction,
     fetchLocalLeads,
     fetchLocalLeadTrainersGroup,
+    storeInputData,
   }
 )(CreateSession);
