@@ -92,7 +92,15 @@ const Logo = styled.img`
 // NOTE: If you need Section and View header at same time
 // then give your section header the nudge prop to shift it down
 
-const Header = ({ label, type, userRole, isDeskTop, isMobile, ...props }) => {
+const Header = ({
+  label,
+  type,
+  userRole,
+  isDeskTop,
+  isMobile,
+  isAuthenticated,
+  ...props
+}) => {
   return (
     <>
       {type === 'home' ? (
@@ -109,7 +117,11 @@ const Header = ({ label, type, userRole, isDeskTop, isMobile, ...props }) => {
       ) : (
         <StyledHeader type={type} {...props}>
           <h1>{label}</h1>
-          {isDeskTop && type === 'section' && <HumburgerMenu />}
+          {isAuthenticated && isDeskTop && type === 'section' ? (
+            <HumburgerMenu />
+          ) : (
+            <Logo src={Connect5Logo} alt="logo" />
+          )}
         </StyledHeader>
       )}
     </>
@@ -121,6 +133,7 @@ const mapStateToProps = state => ({
   isMobile: state.checkBrowserWidth.isMobile,
   isDeskTop: state.checkBrowserWidth.isDeskTop,
   viewLevel: state.viewLevel.viewLevel,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(

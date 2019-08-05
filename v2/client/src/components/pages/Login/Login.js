@@ -122,7 +122,6 @@ class Login extends Component {
     const { onInputChange, onFormSubmit } = this;
     return (
       <>
-        <Header type="home" />
         <div style={{ paddingTop: '6rem' }}>
           <LoginForm onSubmit={onFormSubmit}>
             <LoginHeading>
