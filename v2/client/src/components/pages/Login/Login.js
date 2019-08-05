@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
-import Header from '../../common/Header';
 import {
   LoginHeading,
   H3,

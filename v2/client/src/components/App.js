@@ -144,7 +144,7 @@ class App extends Component {
   };
 
   render() {
-    const { isAuthenticated, loaded, role, isMobile } = this.props;
+    const { isAuthenticated, loaded, role } = this.props;
     return (
       <Wrapper>
         <Router history={history}>
@@ -437,7 +437,6 @@ const mapStateToProps = state => ({
   role: state.auth.role,
   loaded: state.auth.loaded,
   viewLevel: state.viewLevel.viewLevel,
-  isMobile: state.checkBrowserWidth.isMobile,
 });
 
 export default connect(
