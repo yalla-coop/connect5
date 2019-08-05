@@ -29,7 +29,6 @@ import {
   Form,
   CreateSessionWrapper,
   InputDiv,
-  Heading,
   SubmitBtn,
   Error,
   Warning,

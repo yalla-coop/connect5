@@ -12,7 +12,7 @@ export const Menu = styled.div`
   z-index: 100;
   top: 0;
   right: 0;
-  width: 250px;
+  width: 300px;
   height: 100vh;
   transition: all 1s ease;
   padding: 40px 10px;
