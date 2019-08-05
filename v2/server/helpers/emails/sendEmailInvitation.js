@@ -28,7 +28,7 @@ const sendEmailInvitation = ({
     <p>Dear course participants,</p>
 
     <p><span style="text-transform: capitalize">${name}</span> has invited you to register for an upcoming Connect 5 training session.</p>
-    <ul style="list-style: none; text-transfrom: capitalize; letter-space: 5px">
+    <ul style="text-transfrom: capitalize">
       <li>Session Date: ${sessionDate}</li>
       <li>Session Type: ${type}</li>
       <li>Address: ${address}</li>
