@@ -20,6 +20,7 @@ import demographicsReducer from './demographics';
 import adminSessionsReducer from './adminSessionsReducer';
 import surveyReducer from './surveyReducer';
 import confirmRegistration from './confirmRegistration';
+import checkBrowserWidth from './checkBrowserWidthReducer';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -40,6 +41,7 @@ const appReducer = combineReducers({
   adminSessions: adminSessionsReducer,
   survey: surveyReducer,
   confirmRegistration,
+  checkBrowserWidth,
 });
 
 const rootReducer = (state, action) => {

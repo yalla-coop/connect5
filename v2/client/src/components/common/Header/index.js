@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
@@ -7,6 +8,8 @@ import { colors, borders, shadows } from '../../../theme';
 import Connect5Logo from '../../../assets/connect-5-white.png';
 
 import { HOME_URL } from '../../../constants/navigationRoutes';
+import { checkBrowserWidth } from '../../../actions/checkBrowserWidth';
+import HumburgerMenu from '../Menu';
 
 const sharedStyles = css`
   position: fixed;
@@ -19,29 +22,26 @@ const sharedStyles = css`
 `;
 
 export const sectionHeader = css`
+  display: flex;
+  justify-content: space-between;
   top: ${props => (props.nudge ? '31px' : 0)};
   background-color: ${colors.primary};
   color: ${colors.offWhite};
   height: 48px;
   text-align: left;
   text-transform: capitalize;
-
   h1 {
     font-size: 1.5rem;
     font-weight: 400;
     position: relative;
     color: ${colors.offWhite};
-
     &::after {
       content: ' ';
       position: absolute;
       border-bottom: ${borders.header};
-      bottom: -2px;
+      bottom: -10px;
       left: 0;
-      width: 50%;
-      @media (min-width: 768px) {
-        width: 25%;
-      }
+      width: 100%;
     }
   }
 `;
@@ -53,7 +53,6 @@ export const viewHeader = css`
   height: 32px;
   text-align: center;
   text-transform: capitalize;
-
   h1 {
     font-size: 1rem;
     font-weight: 300;
@@ -93,7 +92,7 @@ const Logo = styled.img`
 // NOTE: If you need Section and View header at same time
 // then give your section header the nudge prop to shift it down
 
-const Header = ({ label, type, userRole, ...props }) => {
+const Header = ({ label, type, userRole, isDeskTop, isMobile, ...props }) => {
   return (
     <>
       {type === 'home' ? (
@@ -101,15 +100,30 @@ const Header = ({ label, type, userRole, ...props }) => {
           <HomeIcon to={userRole ? '/participant-dashboard' : HOME_URL}>
             <i className="fas fa-home" />
           </HomeIcon>
-          <Logo src={Connect5Logo} alt="logo" />
+          {isDeskTop ? (
+            <HumburgerMenu />
+          ) : (
+            <Logo src={Connect5Logo} alt="logo" />
+          )}
         </StyledHeader>
       ) : (
         <StyledHeader type={type} {...props}>
           <h1>{label}</h1>
+          {isDeskTop && type === 'section' && <HumburgerMenu />}
         </StyledHeader>
       )}
     </>
   );
 };
 
-export default Header;
+const mapStateToProps = state => ({
+  width: state.checkBrowserWidth.width,
+  isMobile: state.checkBrowserWidth.isMobile,
+  isDeskTop: state.checkBrowserWidth.isDeskTop,
+  viewLevel: state.viewLevel.viewLevel,
+});
+
+export default connect(
+  mapStateToProps,
+  { checkBrowserWidth }
+)(Header);

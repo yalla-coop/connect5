@@ -9,6 +9,7 @@ import moment from 'moment';
 
 import { checkAuth } from '../actions/authAction';
 import { updateViewLevel } from '../actions/viewLevelAction';
+import { checkBrowserWidth } from '../actions/checkBrowserWidth';
 
 import { colors } from '../theme';
 
@@ -83,9 +84,30 @@ const Wrapper = styled.div`
 `;
 
 class App extends Component {
+  state = {
+    width: window.innerWidth,
+  };
+
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange);
+  }
+
   componentDidMount() {
-    const { checkAuth: checkAuthActionCreator } = this.props;
+    const {
+      checkAuth: checkAuthActionCreator,
+      checkBrowserWidth: checkBrowserWidthActionCreator,
+    } = this.props;
+    const { width } = this.state;
+    const isMobile = width <= 500;
+    const isDeskTop = width >= 500;
+
+    const data = {
+      width,
+      isMobile,
+      isDeskTop,
+    };
     checkAuthActionCreator();
+    checkBrowserWidthActionCreator(data);
   }
 
   componentDidUpdate() {
@@ -100,8 +122,16 @@ class App extends Component {
     }
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth });
+  };
+
   render() {
-    const { isAuthenticated, loaded, role } = this.props;
+    const { isAuthenticated, loaded, role, isMobile } = this.props;
     return (
       <Wrapper>
         <Router history={history}>
@@ -394,9 +424,10 @@ const mapStateToProps = state => ({
   role: state.auth.role,
   loaded: state.auth.loaded,
   viewLevel: state.viewLevel.viewLevel,
+  isMobile: state.checkBrowserWidth.isMobile,
 });
 
 export default connect(
   mapStateToProps,
-  { checkAuth, updateViewLevel }
+  { checkAuth, updateViewLevel, checkBrowserWidth }
 )(App);
