@@ -16,6 +16,7 @@ import {
 import moment from 'moment';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
+import Header from '../../common/Header';
 import { fetchAllTrainers } from '../../../actions/trainerAction';
 import {
   fetchLocalLeads,
@@ -320,7 +321,7 @@ class CreateSession extends Component {
 
     return (
       <CreateSessionWrapper>
-        <Heading>Create New Session</Heading>
+        <Header type="section" label="Create New Session" />
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
             <DatePicker
