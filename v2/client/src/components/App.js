@@ -113,6 +113,7 @@ class App extends Component {
   componentDidUpdate() {
     const {
       updateViewLevel: updateViewLevelActionCreator,
+      checkBrowserWidth: checkBrowserWidthActionCreator,
       role,
       viewLevel,
     } = this.props;
@@ -120,6 +121,18 @@ class App extends Component {
     if (role && !viewLevel) {
       updateViewLevelActionCreator(role);
     }
+
+    const { width } = this.state;
+    const isMobile = width <= 500;
+    const isDeskTop = width >= 500;
+
+    const data = {
+      width,
+      isMobile,
+      isDeskTop,
+    };
+
+    checkBrowserWidthActionCreator(data);
   }
 
   componentWillUnmount() {
