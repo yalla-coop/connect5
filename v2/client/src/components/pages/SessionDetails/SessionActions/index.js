@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 import { Icon } from 'antd';
-import history from '../../../../history';
 import { deleteSessionAction } from '../../../../actions/groupSessionsAction';
 import {
   SessionActionsWrapper,
@@ -13,7 +12,7 @@ import {
 } from './SessionActions.Style';
 
 class SessionActions extends Component {
-  deleteSession = (_id, role) => {
+  deleteSession = _id => {
     const { deleteSessionAction: deleteSession } = this.props;
 
     Swal.fire({
@@ -34,8 +33,7 @@ class SessionActions extends Component {
   };
 
   render() {
-    const { sessionDetails, msg, role } = this.props;
-    console.log(role);
+    const { sessionDetails } = this.props;
     const { _id } = sessionDetails;
     const { deleteSession } = this;
     return (
@@ -51,7 +49,7 @@ class SessionActions extends Component {
         </SessionAction>
 
         <SessionAction>
-          <SessionDelete onClick={() => deleteSession(_id, role)}>
+          <SessionDelete onClick={() => deleteSession(_id)}>
             <Icon
               type="delete"
               style={{ width: '2rem', height: '2rem', color: 'red' }}
