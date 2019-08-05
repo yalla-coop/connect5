@@ -1,9 +1,13 @@
 import React from 'react';
-import { Select } from 'antd';
+import { Select, Tooltip, Button as AntButton } from 'antd';
 
 import Button from '../../../common/Button';
 
-import { DrawerContentWrapper } from '../SessionDetails.Style';
+import {
+  DrawerContentWrapper,
+  SelecetWrapper,
+  IconsWrapper,
+} from '../SessionDetails.Style';
 
 const { Option } = Select;
 
@@ -11,7 +15,11 @@ const UpdateAttendeesList = ({
   handleSubmitUpdateAttendees,
   confirmedAttendeesList,
   handleUpdateAttendees,
+  onSelectBlur,
+  onSelectFocus,
   loading,
+  onCopy,
+  onClear,
 }) => {
   return (
     <DrawerContentWrapper>
@@ -19,19 +27,45 @@ const UpdateAttendeesList = ({
         To add attendees, please enter their email address below. This will let
         you email session reminders, survey links and more.
       </h5>
-      <Select
-        mode="tags"
-        value={confirmedAttendeesList}
-        placeholder="Select users"
-        onChange={handleUpdateAttendees}
-        style={{ width: '100%' }}
-        size="large"
-      >
-        {confirmedAttendeesList.map(item => (
-          <Option value={item}>{item}</Option>
-        ))}
-      </Select>
+      <SelecetWrapper>
+        <IconsWrapper>
+          <Tooltip placement="top" title="Copy">
+            <AntButton
+              type="primary"
+              icon="copy"
+              ghost
+              onClick={onCopy}
+              disabled={!confirmedAttendeesList.length}
+            />
+          </Tooltip>
+          <Tooltip placement="top" title="Delete">
+            <AntButton
+              type="danger"
+              icon="delete"
+              ghost
+              onClick={onClear}
+              disabled={!confirmedAttendeesList.length}
+            />
+          </Tooltip>
+        </IconsWrapper>
 
+        <Select
+          mode="tags"
+          value={confirmedAttendeesList}
+          placeholder="Select users"
+          onChange={handleUpdateAttendees}
+          style={{ width: '100%' }}
+          size="large"
+          onBlur={onSelectBlur}
+          onFocus={onSelectFocus}
+        >
+          {confirmedAttendeesList.map(item => (
+            <Option value={item} key={item}>
+              {item}
+            </Option>
+          ))}
+        </Select>
+      </SelecetWrapper>
       <Button
         type="primary"
         style={{

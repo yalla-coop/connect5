@@ -79,6 +79,19 @@ class CreateSession extends Component {
       this.props.fetchAllTrainers();
       this.props.fetchLocalLeads();
     }
+
+    let dT = null;
+    try {
+      dT = new DataTransfer();
+    } catch (e) {
+      // ignore the error
+    }
+    const evt = new ClipboardEvent('paste', { clipboardData: dT });
+    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+
+    document.addEventListener('paste', this.pasteEmails);
+
+    document.dispatchEvent(evt);
   }
 
   componentDidUpdate(prevProps) {
@@ -86,6 +99,38 @@ class CreateSession extends Component {
       this.fetchLocalLeadsAndTrainers();
     }
   }
+
+  componentWillUnmount() {
+    document.removeEventListener('paste', this.pasteEmails);
+  }
+
+  onSelectBlur = () => {
+    this.setState({ focused: false });
+  };
+
+  onSelectFocus = () => {
+    this.setState({ focused: true });
+  };
+
+  pasteEmails = event => {
+    const { focused, emails } = this.state;
+
+    let emailsArray;
+
+    if (focused) {
+      event.preventDefault();
+      const pastedString = event.clipboardData.getData('text/plain');
+      const splittedEmails = pastedString.split(';');
+      if (pastedString === splittedEmails) {
+        emailsArray = pastedString.split(';');
+      }
+      emailsArray = splittedEmails
+        .map(item => item.trim())
+        .filter(item => !emails.includes(item));
+
+      this.onEmailChange([...emails, ...emailsArray]);
+    }
+  };
 
   fetchLocalLeadsAndTrainers = () => {
     const { id, role } = this.props.currentUser;
@@ -515,6 +560,8 @@ class CreateSession extends Component {
               onChange={onEmailChange}
               style={{ width: '100%', height: '100%' }}
               value={emails}
+              onBlur={this.onSelectBlur}
+              onFocus={this.onSelectFocus}
             />
 
             <InputDiv

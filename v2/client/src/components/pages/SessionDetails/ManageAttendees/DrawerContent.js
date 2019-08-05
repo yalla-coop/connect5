@@ -17,6 +17,10 @@ const DrawerContent = ({
   handleAddAttendees,
   addedAttendeesList,
   submitAddAttendeesList,
+  onSelectBlur,
+  onSelectFocus,
+  onCopy,
+  onClear,
   // send emails
   changeSelectedEmails,
   checkedEmails,
@@ -36,6 +40,10 @@ const DrawerContent = ({
           handleSubmitUpdateAttendees={handleSubmitUpdateAttendees}
           confirmedAttendeesList={confirmedAttendeesList}
           handleUpdateAttendees={handleUpdateAttendees}
+          onSelectBlur={onSelectBlur}
+          onSelectFocus={onSelectFocus}
+          onCopy={onCopy}
+          onClear={onClear}
           loading={loading}
         />
       );
@@ -45,6 +53,10 @@ const DrawerContent = ({
           addedAttendeesList={addedAttendeesList}
           handleAddAttendees={handleAddAttendees}
           submitAddAttendeesList={submitAddAttendeesList}
+          onSelectBlur={onSelectBlur}
+          onSelectFocus={onSelectFocus}
+          onCopy={onCopy}
+          onClear={onClear}
           loading={loading}
         />
       );
