@@ -265,3 +265,18 @@ export const FormWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+
+export const SelecetWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+`;
+
+export const IconsWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  min-width: 90px;
+  margin-bottom: 5px;
+`;

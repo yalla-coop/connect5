@@ -65,7 +65,7 @@ export const InputDiv = styled.div`
   display: flex;
   align-items: center;
   margin: 0 auto;
-  border: 1px solid ${colors.lightGray};
+
   &:not(:last-child) {
     margin-bottom: 1.2rem;
   }
