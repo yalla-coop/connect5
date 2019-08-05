@@ -159,7 +159,8 @@ class CreateSession extends Component {
       [name]: value,
     });
     await this.props.storeInputData(value);
-    setTimeout(() => console.log(this.props.data), 5000);
+    const { inviteeNumber } = this.props;
+    setTimeout(() => console.log(inviteeNumber), 5000);
   };
 
   onSelectSessionChange = async value => {
@@ -347,8 +348,8 @@ class CreateSession extends Component {
   };
 
   render() {
-    const { role, data, loading } = this.props;
-    console.log(data, 'uuuuuuuuuuuuuuoh');
+    const { role, inviteeNumber, loading } = this.props;
+    console.log(inviteeNumber, 'uuuuuuuuuuuuuuoh');
 
     const {
       inviteesNumber,
@@ -631,7 +632,7 @@ class CreateSession extends Component {
 const mapStateToProps = state => {
   const { trainers } = state.trainers;
   const localLeads = state.fetchedData.localLeadsList;
-  const data = state.storeSessionData.inviteesNumber;
+  const inviteeNumber = state.storeSessionData.inviteesNumber;
 
   const leadsAndTrainers = [...localLeads, ...trainers];
   return {
