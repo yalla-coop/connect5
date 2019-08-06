@@ -260,7 +260,9 @@ class CreateSession extends Component {
       trainersNames,
       startTime,
       endTime,
-      address,
+      location,
+      addressLine1,
+      addressLine2,
     } = inputData;
 
     const trainersNamesArray = [];
@@ -284,7 +286,9 @@ class CreateSession extends Component {
       trainersNames: trainersNamesArray,
       startTime,
       endTime,
-      address,
+      location,
+      addressLine1,
+      addressLine2,
     };
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
     return !this.checkError() && this.props.createSessionAction(sessionData);
@@ -338,7 +342,9 @@ class CreateSession extends Component {
       region,
       endTime,
       startTime,
-      address,
+      location,
+      addressLine1,
+      addressLine2,
     } = inputData;
 
     const {
@@ -423,9 +429,29 @@ class CreateSession extends Component {
             <Input
               type="text"
               placeholder="Type the venue's address"
-              value={address}
+              value={location}
               onChange={onInputChange}
-              name="address"
+              name="location"
+              size="large"
+            />
+          </InputDiv>
+          <InputDiv>
+            <Input
+              type="text"
+              placeholder="address line1"
+              value={addressLine1}
+              onChange={onInputChange}
+              name="addressLine1"
+              size="large"
+            />
+          </InputDiv>
+          <InputDiv>
+            <Input
+              type="text"
+              placeholder="address line2"
+              value={addressLine2}
+              onChange={onInputChange}
+              name="addressLine2"
               size="large"
             />
           </InputDiv>
