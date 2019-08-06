@@ -326,7 +326,6 @@ class CreateSession extends Component {
 
   render() {
     const { role, inputData, loading } = this.props;
-    console.log(inputData.startDate);
 
     const {
       inviteesNumber,
