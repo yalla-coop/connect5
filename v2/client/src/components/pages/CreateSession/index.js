@@ -142,62 +142,45 @@ class CreateSession extends Component {
     }
   };
 
-  onChangeCheckbox = async e => {
-    await this.setState({ sendByEmail: e.target.checked });
-    this.props.storeInputData(this.state);
+  onChangeCheckbox = e => {
+    this.props.storeInputData({ sendByEmail: e.target.checked });
   };
 
-  onDateChange = async defaultValue => {
-    await this.setState({
-      startDate: defaultValue,
-    });
-    this.props.storeInputData(this.state);
+  onDateChange = defaultValue => {
+    this.props.storeInputData({ startDate: defaultValue });
   };
 
-  onInputChange = async ({ target: { value, name } }) => {
-    await this.setState({
-      [name]: value,
-    });
-    await this.props.storeInputData(value);
-    const { inviteeNumber } = this.props;
-    setTimeout(() => console.log(inviteeNumber), 5000);
+  onInputChange = ({ target: { value, name } }) => {
+    this.props.storeInputData({ [name]: value });
   };
 
-  onSelectSessionChange = async value => {
-    await this.setState({
-      session: value,
-    });
-    this.props.storeInputData(this.state);
+  onSelectSessionChange = value => {
+    this.props.storeInputData({ session: value });
   };
 
-  onSelectRegionChange = async value => {
-    await this.setState({
-      region: value,
-    });
-    this.props.storeInputData(this.state);
+  onSelectRegionChange = value => {
+    this.props.storeInputData({ region: value });
   };
 
-  onSelectPartner1Change = async item => {
+  onSelectPartner1Change = item => {
     const { trainersNames } = this.state;
 
-    await this.setState({
+    this.props.storeInputData({
       partnerTrainer1: item,
       trainersNames: { ...trainersNames, partner1: item.label },
     });
-    this.props.storeInputData(this.state);
   };
 
-  onSelectPartner2Change = async item => {
+  onSelectPartner2Change = item => {
     const { trainersNames } = this.state;
 
-    await this.setState({
+    this.props.storeInputData({
       partnerTrainer2: item,
       trainersNames: { ...trainersNames, partner2: item.label },
     });
-    this.props.storeInputData(this.state);
   };
 
-  onEmailChange = async value => {
+  onEmailChange = value => {
     let err = '';
     const valuesToBeStored = [];
     // check for email validation
@@ -209,11 +192,10 @@ class CreateSession extends Component {
       }
     });
 
-    await this.setState({
+    this.props.storeInputData({
       emails: valuesToBeStored,
       err,
     });
-    this.props.storeInputData(this.state);
   };
 
   renderTrainersList = () => {
@@ -246,8 +228,9 @@ class CreateSession extends Component {
     return null;
   };
 
-  checkError = async () => {
-    const { startDate, inviteesNumber, session, region, emails } = this.state;
+  checkError = () => {
+    const { inputData } = this.props;
+    const { startDate, inviteesNumber, session, region, emails } = inputData;
     const isError = !(
       !!startDate &&
       !!inviteesNumber &&
@@ -256,15 +239,15 @@ class CreateSession extends Component {
       !!emails
     );
 
-    await this.setState({
+    this.props.storeInputData({
       err: isError,
     });
-    this.props.storeInputData(this.state);
     return isError;
   };
 
   onFormSubmit = event => {
     event.preventDefault();
+    const { inputData } = this.props;
     const {
       session,
       startDate,
@@ -278,7 +261,7 @@ class CreateSession extends Component {
       startTime,
       endTime,
       address,
-    } = this.state;
+    } = inputData;
 
     const trainersNamesArray = [];
     if (partnerTrainer1) {
@@ -307,18 +290,12 @@ class CreateSession extends Component {
     return !this.checkError() && this.props.createSessionAction(sessionData);
   };
 
-  onStartTimeChange = async (time, timeString) => {
-    await this.setState({
-      startTime: timeString,
-    });
-    this.props.storeInputData(this.state);
+  onStartTimeChange = (time, timeString) => {
+    this.props.storeInputData({ startTime: timeString });
   };
 
-  onEndTimeChange = async (time, timeString) => {
-    await this.setState({
-      endTime: timeString,
-    });
-    this.props.storeInputData(this.state);
+  onEndTimeChange = (time, timeString) => {
+    this.props.storeInputData({ endTime: timeString });
   };
 
   getDisabledStartTime = () => {
@@ -348,8 +325,8 @@ class CreateSession extends Component {
   };
 
   render() {
-    const { role, inviteeNumber, loading } = this.props;
-    console.log(inviteeNumber, 'uuuuuuuuuuuuuuoh');
+    const { role, inputData, loading } = this.props;
+    console.log(inputData.startDate);
 
     const {
       inviteesNumber,
@@ -363,7 +340,7 @@ class CreateSession extends Component {
       endTime,
       startTime,
       address,
-    } = this.state;
+    } = inputData;
 
     const {
       onDateChange,
@@ -463,7 +440,11 @@ class CreateSession extends Component {
               onChange={onSelectPartner1Change}
               labelInValue
               size="large"
-              value={partnerTrainer1.key ? partnerTrainer1 : undefined}
+              value={
+                partnerTrainer1 && partnerTrainer1.key
+                  ? partnerTrainer1
+                  : undefined
+              }
               dropdownRender={menu => (
                 <div
                   onMouseDown={e => {
@@ -513,7 +494,11 @@ class CreateSession extends Component {
                 size="large"
                 showSearch
                 style={{ width: '100%' }}
-                value={partnerTrainer2.key ? partnerTrainer2 : undefined}
+                value={
+                  partnerTrainer2 && partnerTrainer2.key
+                    ? partnerTrainer2
+                    : undefined
+                }
                 labelInValue
                 dropdownRender={menu => (
                   <div
@@ -632,7 +617,7 @@ class CreateSession extends Component {
 const mapStateToProps = state => {
   const { trainers } = state.trainers;
   const localLeads = state.fetchedData.localLeadsList;
-  const inviteeNumber = state.storeSessionData.inviteesNumber;
+  const inputData = state.storeSessionData;
 
   const leadsAndTrainers = [...localLeads, ...trainers];
   return {
@@ -642,6 +627,7 @@ const mapStateToProps = state => {
     localLeadTrainersGroup: state.fetchedData.localLeadGroup,
     leadsAndTrainers,
     loading: state.session.loading,
+    inputData,
   };
 };
 

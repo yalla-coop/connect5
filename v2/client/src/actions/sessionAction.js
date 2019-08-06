@@ -52,7 +52,6 @@ export const createSessionAction = sessionData => dispatch => {
 };
 
 export const storeInputData = data => async dispatch => {
-  console.log(data, 'ssssssssss');
   dispatch({
     type: STORE_SESSION_DATA,
     payload: data,
