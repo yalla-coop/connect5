@@ -28,7 +28,11 @@ class SessionTopDetails extends Component {
       return <div>loading</div>;
     }
 
-    const fullAddress = `${address.location}, ${address.addressLine1}, ${address.addressLine2}`;
+    const { location, addressLine1, addressLine2 } = address;
+    let fullAddress = '';
+    if (location || addressLine1 || addressLine2) {
+      fullAddress = `${address.location}, ${address.addressLine1}, ${address.addressLine2}`;
+    }
 
     const confirmedAttendeesNumber =
       sessionDetails &&
