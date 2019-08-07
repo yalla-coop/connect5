@@ -41,7 +41,6 @@ class SessionDetails extends Component {
   render() {
     const { sessionDetails } = this.props;
     const { openSection } = this.state;
-    console.log(sessionDetails);
 
     if (!sessionDetails) {
       return Spin;
