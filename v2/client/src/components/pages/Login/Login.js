@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
-import Header from '../../common/Header';
 import {
   LoginHeading,
   H3,
@@ -122,7 +121,6 @@ class Login extends Component {
     const { onInputChange, onFormSubmit } = this;
     return (
       <>
-        <Header type="home" />
         <div style={{ paddingTop: '6rem' }}>
           <LoginForm onSubmit={onFormSubmit}>
             <LoginHeading>

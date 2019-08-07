@@ -9,6 +9,7 @@ import moment from 'moment';
 
 import { checkAuth } from '../actions/authAction';
 import { updateViewLevel } from '../actions/viewLevelAction';
+import { checkBrowserWidth } from '../actions/checkBrowserWidth';
 
 import { colors } from '../theme';
 
@@ -83,14 +84,36 @@ const Wrapper = styled.div`
 `;
 
 class App extends Component {
+  state = {
+    width: window.innerWidth,
+  };
+
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowSizeChange);
+  }
+
   componentDidMount() {
-    const { checkAuth: checkAuthActionCreator } = this.props;
+    const {
+      checkAuth: checkAuthActionCreator,
+      checkBrowserWidth: checkBrowserWidthActionCreator,
+    } = this.props;
+    const { width } = this.state;
+    const isMobile = width <= 500;
+    const isDeskTop = width >= 500;
+
+    const data = {
+      width,
+      isMobile,
+      isDeskTop,
+    };
     checkAuthActionCreator();
+    checkBrowserWidthActionCreator(data);
   }
 
   componentDidUpdate() {
     const {
       updateViewLevel: updateViewLevelActionCreator,
+      checkBrowserWidth: checkBrowserWidthActionCreator,
       role,
       viewLevel,
     } = this.props;
@@ -98,7 +121,27 @@ class App extends Component {
     if (role && !viewLevel) {
       updateViewLevelActionCreator(role);
     }
+
+    const { width } = this.state;
+    const isMobile = width <= 500;
+    const isDeskTop = width >= 500;
+
+    const data = {
+      width,
+      isMobile,
+      isDeskTop,
+    };
+
+    checkBrowserWidthActionCreator(data);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth });
+  };
 
   render() {
     const { isAuthenticated, loaded, role } = this.props;
@@ -398,5 +441,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { checkAuth, updateViewLevel }
+  { checkAuth, updateViewLevel, checkBrowserWidth }
 )(App);
