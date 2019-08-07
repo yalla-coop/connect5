@@ -19,6 +19,7 @@ const PrivateRoute = ({
   role,
   navbar,
   viewLevel,
+  isMobile,
   ...rest
 }) => {
   const authorized = authorization(role, allowedRoles);
@@ -34,7 +35,9 @@ const PrivateRoute = ({
             authorized ? (
               <>
                 <Component {...LinkProps} {...rest} role={role} />
-                {navbar && <Navbar viewLevel={viewLevel} role={role} />}
+                {isMobile && navbar && (
+                  <Navbar viewLevel={viewLevel} role={role} />
+                )}
               </>
             ) : (
               history.push('/unauthorized') && null
@@ -52,6 +55,7 @@ const PrivateRoute = ({
 
 const mapStateToProps = state => ({
   viewLevel: state.viewLevel.viewLevel,
+  isMobile: state.checkBrowserWidth.isMobile,
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

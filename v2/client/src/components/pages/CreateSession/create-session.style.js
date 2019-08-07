@@ -4,7 +4,7 @@ import { colors } from '../../../theme';
 export const CreateSessionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 40px 0;
+  padding: 5rem 0;
   margin: 0 auto;
   max-width: 600px;
   margin-bottom: 80px;
