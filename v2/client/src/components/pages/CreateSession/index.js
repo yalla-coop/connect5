@@ -27,6 +27,7 @@ import {
   storeInputData,
 } from '../../../actions/sessionAction';
 import { sessions, regions, pattern } from './options';
+import history from '../../../history';
 
 import {
   Form,
@@ -37,6 +38,8 @@ import {
   Warning,
   InputLabel,
 } from './create-session.style';
+
+import { BackContainer, BackLink } from '../AddTrainer/AddTrainer.style';
 
 const { Option } = Select;
 
@@ -357,6 +360,9 @@ class CreateSession extends Component {
     return (
       <CreateSessionWrapper>
         <Header type="section" label="Create New Session" />
+        <BackContainer style={{ paddingTop: '0' }}>
+          <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
+        </BackContainer>
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
             <DatePicker
