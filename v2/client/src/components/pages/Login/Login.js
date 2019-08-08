@@ -4,18 +4,21 @@ import { connect } from 'react-redux';
 import Button from '../../common/Button';
 import {
   LoginHeading,
-  H3,
+  H4,
   InputDiv,
   LoginForm,
   LoginFail,
   NoAccount,
   AnotherLink,
   Paragraph,
+  Logo,
   ForgetPasswordLink,
+  LoginDiv,
 } from './Login.style';
 import { loginUser } from '../../../actions/authAction';
 import { clearErrors } from '../../../actions/errorAction';
 import history from '../../../history';
+import logo from '../../../assets/logo.png';
 
 // ROUTES
 import {
@@ -121,11 +124,12 @@ class Login extends Component {
     const { onInputChange, onFormSubmit } = this;
     return (
       <>
-        <div style={{ paddingTop: '6rem' }}>
+        <LoginHeading>
+          <Logo src={logo} alt="img" />
+          <H4>Login to your account</H4>
+        </LoginHeading>
+        <LoginDiv>
           <LoginForm onSubmit={onFormSubmit}>
-            <LoginHeading>
-              <H3>Login</H3>
-            </LoginHeading>
             <InputDiv>
               <Input
                 placeholder="Enter your email"
@@ -177,7 +181,7 @@ class Login extends Component {
               <AnotherLink to="/participant-login"> Login here!</AnotherLink>
             </Paragraph>
           </NoAccount>
-        </div>
+        </LoginDiv>
       </>
     );
   }
