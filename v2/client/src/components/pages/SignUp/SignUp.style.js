@@ -18,7 +18,7 @@ export const Title = styled.h1`
   font-family: Roboto;
   font-style: normal;
   font-weight: 300;
-  font-size: 25px;
+  font-size: 21px;
   line-height: 29px;
   text-align: center;
   color: ${colors.profileFontColor};

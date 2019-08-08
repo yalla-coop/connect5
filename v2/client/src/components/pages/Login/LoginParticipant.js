@@ -11,6 +11,7 @@ import {
   NoAccount,
   Content,
   AnotherLink,
+  Paragraph,
 } from './Login.style';
 import { loginParticipant } from '../../../actions/authAction';
 
@@ -118,10 +119,10 @@ class ParticipantLogin extends Component {
             <LoginFail>{msg}</LoginFail>
           </InputDiv>
           <NoAccount>
-            <p>
+            <Paragraph>
               Not a participant?{' '}
               <AnotherLink to="/login"> Login here!</AnotherLink>
-            </p>
+            </Paragraph>
           </NoAccount>
         </LoginPINForm>
       </>

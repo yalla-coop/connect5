@@ -4,8 +4,9 @@ import { colors, shadows, breakpoints } from '../../../theme';
 
 export const LoginDiv = styled.div`
   margin: 0 auto;
-  max-width: 400px;
+  // max-width: 400px;
   border-radius: 10px;
+  max-width: 25rem;
   @media ${breakpoints.mobileL} {
     box-shadow: ${shadows.secondary};
     background: ${colors.transGray};
@@ -79,13 +80,14 @@ export const LoginFail = styled.div`
 `;
 
 export const NoAccount = styled(InputDiv)`
-  padding: 0 1.6rem;
+  margin: 0 auto;
+  margin-right: 0.6rem;
   &:not(:last-child) {
     margin-top: 6rem;
   }
 
   @media ${breakpoints.mobileL} {
-    width: 60%;
+    width: 70%;
     text-align: center;
     margin: 0 auto;
     padding: 0;
@@ -100,7 +102,6 @@ export const AnotherLink = styled(Link)`
 
 export const Paragraph = styled.p`
   font-size: 0.9rem;
-  font-weight: 500;
 `;
 
 export const ForgetPasswordLink = styled(Link)`
