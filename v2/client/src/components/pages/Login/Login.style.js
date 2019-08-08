@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { colors, shadows } from '../../../theme';
+import { colors, shadows, breakpoints } from '../../../theme';
 
 export const LoginDiv = styled.div`
   margin: 0 auto;
   max-width: 400px;
   border-radius: 10px;
-  @media (min-width: 768px) {
+  @media ${breakpoints.mobileL} {
     box-shadow: ${shadows.secondary};
     background: ${colors.transGray};
-    padding: 2.2rem 0;
+    padding: 2.6rem 0 2rem;
   }
 `;
 
@@ -19,7 +19,7 @@ export const LoginHeading = styled.div`
   text-align: center;
   postion: absolute;
   padding: 3rem 0 2rem;
-  @media (min-width: 768px) {
+  @media ${breakpoints.mobileL} {
     padding: 1.5rem 0;
   }
 `;
@@ -30,7 +30,7 @@ export const H4 = styled.h4`
   color: #526192;
   left: -15%;
   top: -29px;
-  @media (min-width: 768px) {
+  @media ${breakpoints.mobileL} {
     left: -5%;
   }
 `;
@@ -45,23 +45,35 @@ export const Logo = styled.img`
 
 export const LoginForm = styled.form``;
 
+export const LoginPINForm = styled.form`
+  max-width: 25rem;
+  margin: 0 auto;
+  @media ${breakpoints.mobileL} {
+    box-shadow: ${shadows.secondary};
+    background: ${colors.transGray};
+    margin: 0 auto;
+    padding: 1rem 0;
+    margin-top: 2rem;
+  }
+`;
+
 export const InputDiv = styled.div`
   width: 80%;
   margin: 0 auto;
   margin-bottom: 2rem;
 
-  @media (min-width: 768px)
+  @media ${breakpoints.mobileL} {
     background: ${colors.ligthGray};
   }
 `;
 
 export const LoginFail = styled.div`
   width: 80%;
-  color: red;
+  color: ${colors.red};
   margin-left: 3rem;
   font-size: 1rem;
 
-  @media (min-width: 768px) {
+  @media ${breakpoints.mobileL} {
     margin-left: 1rem;
   }
 `;
@@ -72,7 +84,7 @@ export const NoAccount = styled(InputDiv)`
     margin-top: 6rem;
   }
 
-  @media (min-width: 768px) {
+  @media ${breakpoints.mobileL} {
     width: 60%;
     text-align: center;
     margin: 0 auto;
@@ -102,8 +114,7 @@ export const Content = styled.p`
   text-align: center;
   margin: 0 auto;
 
-  @media (min-width: 768px) {
-    width: 50%;
+  @media ${breakpoints.mobileL} {
     text-align: center;
     margin: 2rem auto;
   }

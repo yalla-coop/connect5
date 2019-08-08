@@ -6,7 +6,7 @@ import history from '../../../history';
 import {
   LoginHeading,
   InputDiv,
-  LoginForm,
+  LoginPINForm,
   LoginFail,
   NoAccount,
   Content,
@@ -82,7 +82,8 @@ class ParticipantLogin extends Component {
     const { onFormSubmit, onInputChange } = this;
     return (
       <>
-        <LoginForm onSubmit={onFormSubmit}>
+        <div style={{ paddingBottom: '2rem' }} />
+        <LoginPINForm onSubmit={onFormSubmit}>
           <LoginHeading>
             <Content>
               {`To access your results, please enter your unique pin. This is the
@@ -113,16 +114,16 @@ class ParticipantLogin extends Component {
               width="100%"
             />
           </InputDiv>
-        </LoginForm>
-        <InputDiv>
-          <LoginFail>{msg}</LoginFail>
-        </InputDiv>
-        <NoAccount>
-          <p>
-            Not a participant?{' '}
-            <AnotherLink to="/login"> Login here!</AnotherLink>
-          </p>
-        </NoAccount>
+          <InputDiv>
+            <LoginFail>{msg}</LoginFail>
+          </InputDiv>
+          <NoAccount>
+            <p>
+              Not a participant?{' '}
+              <AnotherLink to="/login"> Login here!</AnotherLink>
+            </p>
+          </NoAccount>
+        </LoginPINForm>
       </>
     );
   }
