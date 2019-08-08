@@ -125,7 +125,9 @@ class Login extends Component {
     return (
       <>
         <LoginHeading>
-          <Logo src={logo} alt="img" />
+          <AnotherLink to="/">
+            <Logo src={logo} alt="img" />
+          </AnotherLink>
           <H4>Login to your account</H4>
         </LoginHeading>
         <LoginDiv>
