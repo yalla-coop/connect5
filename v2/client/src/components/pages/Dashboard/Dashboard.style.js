@@ -41,10 +41,10 @@ export const StatsWrapper = styled.div`
   width: 100%;
   box-shadow: ${shadows.primary};
   margin-bottom: 1rem;
-  // @media ${breakpoints.mobileL} {
-  //   margin-bottom: 1rem;
-  //   padding-bottom: 2rem;
-  // }
+  @media ${breakpoints.mobileL} {
+    margin-bottom: 1rem;
+    padding-bottom: 2rem;
+  }
 `;
 
 export const StatItem = styled(Link)`
