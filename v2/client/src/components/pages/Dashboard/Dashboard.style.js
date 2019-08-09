@@ -13,11 +13,11 @@ export const Wrapper = styled.div`
 `;
 
 export const TopSection = styled.div`
-  margin: 2rem 0;
+  margin-bottom: 1rem;
   width: 100%;
   @media ${breakpoints.mobileL} {
     text-align: center;
-    margin: 1.5rem 0;
+    margin: 1.2rem 0;
   }
 `;
 
@@ -41,10 +41,6 @@ export const StatsWrapper = styled.div`
   width: 100%;
   box-shadow: ${shadows.primary};
   margin-bottom: 1rem;
-  @media ${breakpoints.mobileL} {
-    margin-bottom: 1rem;
-    padding-bottom: 2rem;
-  }
 `;
 
 export const StatItem = styled(Link)`
@@ -59,6 +55,9 @@ export const StatItem = styled(Link)`
 
   :hover {
     color: ${colors.profileFontColor};
+  }
+  @media ${breakpoints.mobileL} {
+    padding: 2rem 0;
   }
 `;
 
