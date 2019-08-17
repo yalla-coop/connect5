@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
@@ -10,6 +11,8 @@ import {
   ForgetPasswordForm,
   ErrorMsg,
   Hint,
+  ButtonsDiv,
+  StyledLink,
 } from './ForgetPassword.style';
 
 import { checkUserByEmail } from '../../../actions/users';
@@ -74,7 +77,7 @@ class ForgetPassword extends Component {
     return (
       <>
         <Header type="home" />
-        <div style={{ paddingTop: '6rem' }}>
+        <div style={{ paddingTop: '7rem' }}>
           <ForgetPasswordForm onSubmit={onFormSubmit}>
             <Heading>
               <H3>Forget Your Password!</H3>
@@ -96,16 +99,18 @@ class ForgetPassword extends Component {
 
               <ErrorMsg>{emailError}</ErrorMsg>
             </InputDiv>
+            <ButtonsDiv>
+              <StyledLink to="/login">Cancel</StyledLink>
 
-            <InputDiv>
               <Button
                 onClick={onFormSubmit}
                 type="primary"
-                label="Get New Password"
+                label="Reset Password"
                 height="40px"
-                width="100%"
+                width="65%"
+                marginLeft="5px"
               />
-            </InputDiv>
+            </ButtonsDiv>
 
             <ErrorMsg>{msg}</ErrorMsg>
           </ForgetPasswordForm>
