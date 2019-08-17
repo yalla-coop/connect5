@@ -11,7 +11,11 @@ export const Heading = styled.div`
 
 export const H3 = styled.h3`
   text-align: center;
-  font-size: 1.4rem;
+  font-size: 1.28rem;
+  padding: 0.5rem;
+  @media (min-width: 768px) {
+    font-size: 1.4rem;
+  }
 `;
 
 export const Hint = styled.p`

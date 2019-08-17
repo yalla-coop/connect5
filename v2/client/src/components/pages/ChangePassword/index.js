@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
+import Header from '../../common/Header';
 import { changePasswordActionCreator } from '../../../actions/changePasswordAction';
 import {
   ChangePasswordForm,
@@ -9,8 +10,10 @@ import {
   H3,
   InputDiv,
   Error,
+  BackContainer,
+  BackLink,
 } from './ChangePassword.style';
-// import history from '../../../history';
+import history from '../../../history';
 
 class ChangePassword extends Component {
   state = {
@@ -118,58 +121,65 @@ class ChangePassword extends Component {
     const { oldPassword, newPassword, reNewPassword } = fields;
     const { oldPasswordError, newPasswordError, reNewPasswordError } = errors;
     return (
-      <ChangePasswordForm onSubmit={onFormSubmit}>
-        <Heading>
-          <H3>Change your password</H3>
-        </Heading>
+      <>
+        <Header type="home" />
+        <div style={{ paddingTop: '4rem' }} />
+        <BackContainer>
+          <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
+        </BackContainer>
+        <ChangePasswordForm onSubmit={onFormSubmit}>
+          <Heading>
+            <H3>Change your password</H3>
+          </Heading>
 
-        <InputDiv>
-          <Input.Password
-            placeholder="current password"
-            size="large"
-            name="oldPassword"
-            type="text"
-            onChange={onInputChange}
-            value={oldPassword}
-          />
-          <Error>{oldPasswordError}</Error>
-        </InputDiv>
+          <InputDiv>
+            <Input.Password
+              placeholder="current password"
+              size="large"
+              name="oldPassword"
+              type="text"
+              onChange={onInputChange}
+              value={oldPassword}
+            />
+            <Error>{oldPasswordError}</Error>
+          </InputDiv>
 
-        <InputDiv>
-          <Input.Password
-            placeholder="new password"
-            size="large"
-            name="newPassword"
-            type="text"
-            onChange={onInputChange}
-            value={newPassword}
-          />
-          <Error>{newPasswordError}</Error>
-        </InputDiv>
+          <InputDiv>
+            <Input.Password
+              placeholder="new password"
+              size="large"
+              name="newPassword"
+              type="text"
+              onChange={onInputChange}
+              value={newPassword}
+            />
+            <Error>{newPasswordError}</Error>
+          </InputDiv>
 
-        <InputDiv>
-          <Input.Password
-            placeholder="confirm new password"
-            size="large"
-            name="reNewPassword"
-            type="text"
-            onChange={onInputChange}
-            value={reNewPassword}
-          />
-          <Error>{reNewPasswordError}</Error>
-        </InputDiv>
+          <InputDiv>
+            <Input.Password
+              placeholder="confirm new password"
+              size="large"
+              name="reNewPassword"
+              type="text"
+              onChange={onInputChange}
+              value={reNewPassword}
+            />
+            <Error>{reNewPasswordError}</Error>
+          </InputDiv>
 
-        <InputDiv>
-          <Button
-            onClick={onFormSubmit}
-            type="primary"
-            label="Submit"
-            height="40px"
-            width="100%"
-          />
-        </InputDiv>
-        <Error>{msg}</Error>
-      </ChangePasswordForm>
+          <InputDiv>
+            <Button
+              onClick={onFormSubmit}
+              type="primary"
+              label="Submit"
+              height="40px"
+              width="100%"
+            />
+          </InputDiv>
+          <Error>{msg}</Error>
+        </ChangePasswordForm>
+      </>
     );
   }
 }
