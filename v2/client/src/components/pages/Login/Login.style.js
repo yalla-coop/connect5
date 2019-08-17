@@ -9,7 +9,7 @@ export const LoginDiv = styled.div`
   max-width: 25rem;
   @media ${breakpoints.mobileL} {
     box-shadow: ${shadows.secondary};
-    background: ${colors.transGray};
+    background: ${colors.backgroundWashOut};
     padding: 2.6rem 0 2rem;
   }
 `;
@@ -51,9 +51,9 @@ export const LoginPINForm = styled.form`
   margin: 0 auto;
   @media ${breakpoints.mobileL} {
     box-shadow: ${shadows.secondary};
-    background: ${colors.transGray};
+    background: ${colors.backgroundWashOut};
     margin: 0 auto;
-    padding: 1rem 0;
+    padding: 0.55rem 0;
     margin-top: 2rem;
   }
 `;

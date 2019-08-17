@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Input } from 'antd';
 import Button from '../../common/Button';
+import Header from '../../common/Header';
 import history from '../../../history';
 import {
   LoginHeading,
@@ -83,7 +84,8 @@ class ParticipantLogin extends Component {
     const { onFormSubmit, onInputChange } = this;
     return (
       <>
-        <div style={{ paddingBottom: '2rem' }} />
+        <Header type="home" />
+        <div style={{ paddingBottom: '4rem' }} />
         <LoginPINForm onSubmit={onFormSubmit}>
           <LoginHeading>
             <Content>
