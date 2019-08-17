@@ -6,7 +6,7 @@ export const SessionDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 600px
+  max-width: 650px
   margin: 0 auto;
   padding: 5rem 0.3rem;
   @media ${breakpoints.mobileL} {

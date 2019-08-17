@@ -1,17 +1,21 @@
 import styled from 'styled-components';
+import { breakpoints } from '../../../theme';
 
 export const TrainerResultsWrapper = styled.div`
-  max-width: 800px;
+  max-width: 650px;
   margin: 0 auto;
-  padding-top: ${props => (props.nudge ? '79px' : '48px')};
+  padding-top: ${props => (props.nudge ? '79px' : '50px')};
   padding-bottom: 7rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media ${breakpoints.mobileL} {
+    padding: 6rem 0.5rem;
+  }
 `;
 
 export const ContentWrapper = styled.div`
-  /* padding: 0 1rem; */
+  padding: 0.5rem;
   width: 100%;
 `;
 
