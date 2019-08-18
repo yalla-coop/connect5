@@ -8,77 +8,133 @@ const mongoose = require('mongoose');
 const Response = require('../../models/Response');
 
 module.exports.feedback = async (trainerId, sessionId, surveyType) => {
-  const match = () => {
-    // feedback for individ. survey
-    if (sessionId && surveyType) {
+  let feedbackArray;
+  if (!sessionId && !surveyType) {
+    // for admin feedback
+    feedbackArray = await Response.aggregate([
+      // get all answers for responses
+      {
+        $lookup: {
+          from: 'answers',
+          localField: '_id',
+          foreignField: 'response',
+          as: 'answers',
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          answers: 1,
+          surveyType: 1,
+        },
+      },
+      { $unwind: '$answers' },
+      // get all questions for response answers
+      {
+        $lookup: {
+          from: 'questions',
+          localField: 'answers.question',
+          foreignField: '_id',
+          as: 'questions',
+        },
+      },
+      { $unwind: '$questions' },
+      {
+        $match: {
+          $and: [
+            {
+              $or: [
+                { 'questions.group.text': 'about your trainer' },
+                { 'questions.group.text': 'about your usual way of teaching' },
+              ],
+            },
+          ],
+        },
+      },
+      {
+        $project: {
+          surveyType: 1,
+          questionText: '$questions.text',
+          answer: '$answers.answer',
+        },
+      },
+    ]);
+  } else {
+    const match = () => {
+      // feedback for individ. survey
+      if (sessionId && surveyType) {
+        return {
+          $and: [
+            { session: mongoose.Types.ObjectId(sessionId) },
+            { surveyType },
+          ],
+        };
+      }
+      // feedback for indiv. session
+      if (sessionId) {
+        return {
+          session: mongoose.Types.ObjectId(sessionId),
+        };
+      }
+      // feedback for indiv. trainer
       return {
-        $and: [{ session: mongoose.Types.ObjectId(sessionId) }, { surveyType }],
+        trainers: mongoose.Types.ObjectId(trainerId),
       };
-    }
-    // feedback for indiv. session
-    if (sessionId) {
-      return {
-        session: mongoose.Types.ObjectId(sessionId),
-      };
-    }
-    // feedback for indiv. trainer
-    return {
-      trainers: mongoose.Types.ObjectId(trainerId),
     };
-  };
 
-  const feedbackArray = await Response.aggregate([
-    {
-      $match: match(),
-    },
+    feedbackArray = await Response.aggregate([
+      {
+        $match: match(),
+      },
 
-    // get all answers for responses
-    {
-      $lookup: {
-        from: 'answers',
-        localField: '_id',
-        foreignField: 'response',
-        as: 'answers',
+      // get all answers for responses
+      {
+        $lookup: {
+          from: 'answers',
+          localField: '_id',
+          foreignField: 'response',
+          as: 'answers',
+        },
       },
-    },
-    {
-      $project: {
-        _id: 0,
-        answers: 1,
-        surveyType: 1,
+      {
+        $project: {
+          _id: 0,
+          answers: 1,
+          surveyType: 1,
+        },
       },
-    },
-    { $unwind: '$answers' },
-    // get all questions for response answers
-    {
-      $lookup: {
-        from: 'questions',
-        localField: 'answers.question',
-        foreignField: '_id',
-        as: 'questions',
+      { $unwind: '$answers' },
+      // get all questions for response answers
+      {
+        $lookup: {
+          from: 'questions',
+          localField: 'answers.question',
+          foreignField: '_id',
+          as: 'questions',
+        },
       },
-    },
-    { $unwind: '$questions' },
-    {
-      $match: {
-        $and: [
-          {
-            $or: [
-              { 'questions.group.text': 'about your trainer' },
-              { 'questions.group.text': 'about your usual way of teaching' },
-            ],
-          },
-        ],
+      { $unwind: '$questions' },
+      {
+        $match: {
+          $and: [
+            {
+              $or: [
+                { 'questions.group.text': 'about your trainer' },
+                { 'questions.group.text': 'about your usual way of teaching' },
+              ],
+            },
+          ],
+        },
       },
-    },
-    {
-      $project: {
-        surveyType: 1,
-        questionText: '$questions.text',
-        answer: '$answers.answer',
+      {
+        $project: {
+          surveyType: 1,
+          questionText: '$questions.text',
+          answer: '$answers.answer',
+        },
       },
-    },
-  ]);
+    ]);
+  }
 
   // group array by question text
   // {questionTxt: [{surveyType, questionTxt, answer}, ...], ...}

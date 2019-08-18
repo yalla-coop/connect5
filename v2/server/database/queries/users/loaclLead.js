@@ -77,6 +77,12 @@ const getTrainerGroupSurveys = async leadId => {
       participants: 0,
       type: 'Post Session 3',
     },
+    'pre-special': {
+      _id: 'pre-special',
+      responses: 0,
+      participants: 0,
+      type: 'Pre 2-day Intensive',
+    },
     'post-special': {
       _id: 'post-special',
       responses: 0,
@@ -109,7 +115,7 @@ const getTrainerGroupSurveys = async leadId => {
     },
   };
 
-  uniqueResponses.map(response => {
+  uniqueResponses.forEach(response => {
     result[response.surveyType]._id = response.surveyType;
     result[response.surveyType].responses += 1;
     result[response.surveyType].participants += response.participants;
@@ -174,7 +180,7 @@ const getTrainerGroupSessions = async leadId => {
     },
   };
 
-  uniqueSessions.map(session => {
+  uniqueSessions.forEach(session => {
     result[session.type]._id = session.type;
     result[session.type].sessions += 1;
     result[session.type].participants += session.numberOfAttendees;
