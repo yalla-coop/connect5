@@ -20,6 +20,7 @@ import demographicsReducer from './demographics';
 import adminSessionsReducer from './adminSessionsReducer';
 import surveyReducer from './surveyReducer';
 import confirmRegistration from './confirmRegistration';
+import storeSessionData from './storeSessionData';
 import checkBrowserWidth from './checkBrowserWidthReducer';
 
 const appReducer = combineReducers({
@@ -41,6 +42,7 @@ const appReducer = combineReducers({
   adminSessions: adminSessionsReducer,
   survey: surveyReducer,
   confirmRegistration,
+  storeSessionData,
   checkBrowserWidth,
 });
 

@@ -22,8 +22,12 @@ import {
   fetchLocalLeads,
   fetchLocalLeadTrainersGroup,
 } from '../../../actions/users';
-import { createSessionAction } from '../../../actions/sessionAction';
+import {
+  createSessionAction,
+  storeInputData,
+} from '../../../actions/sessionAction';
 import { sessions, regions, pattern } from './options';
+import history from '../../../history';
 
 import {
   Form,
@@ -34,6 +38,8 @@ import {
   Warning,
   InputLabel,
 } from './create-session.style';
+
+import { BackContainer, BackLink } from '../AddTrainer/AddTrainer.style';
 
 const { Option } = Select;
 
@@ -140,37 +146,29 @@ class CreateSession extends Component {
   };
 
   onChangeCheckbox = e => {
-    this.setState({ sendByEmail: e.target.checked });
+    this.props.storeInputData({ sendByEmail: e.target.checked });
   };
 
   onDateChange = defaultValue => {
-    this.setState({
-      startDate: defaultValue,
-    });
+    this.props.storeInputData({ startDate: defaultValue });
   };
 
   onInputChange = ({ target: { value, name } }) => {
-    this.setState({
-      [name]: value,
-    });
+    this.props.storeInputData({ [name]: value });
   };
 
   onSelectSessionChange = value => {
-    this.setState({
-      session: value,
-    });
+    this.props.storeInputData({ session: value });
   };
 
   onSelectRegionChange = value => {
-    this.setState({
-      region: value,
-    });
+    this.props.storeInputData({ region: value });
   };
 
   onSelectPartner1Change = item => {
     const { trainersNames } = this.state;
 
-    this.setState({
+    this.props.storeInputData({
       partnerTrainer1: item,
       trainersNames: { ...trainersNames, partner1: item.label },
     });
@@ -179,7 +177,7 @@ class CreateSession extends Component {
   onSelectPartner2Change = item => {
     const { trainersNames } = this.state;
 
-    this.setState({
+    this.props.storeInputData({
       partnerTrainer2: item,
       trainersNames: { ...trainersNames, partner2: item.label },
     });
@@ -197,7 +195,7 @@ class CreateSession extends Component {
       }
     });
 
-    this.setState({
+    this.props.storeInputData({
       emails: valuesToBeStored,
       err,
     });
@@ -234,7 +232,8 @@ class CreateSession extends Component {
   };
 
   checkError = () => {
-    const { startDate, inviteesNumber, session, region, emails } = this.state;
+    const { inputData } = this.props;
+    const { startDate, inviteesNumber, session, region, emails } = inputData;
     const isError = !(
       !!startDate &&
       !!inviteesNumber &&
@@ -243,7 +242,7 @@ class CreateSession extends Component {
       !!emails
     );
 
-    this.setState({
+    this.props.storeInputData({
       err: isError,
     });
     return isError;
@@ -251,6 +250,7 @@ class CreateSession extends Component {
 
   onFormSubmit = event => {
     event.preventDefault();
+    const { inputData } = this.props;
     const {
       session,
       startDate,
@@ -263,8 +263,10 @@ class CreateSession extends Component {
       trainersNames,
       startTime,
       endTime,
-      address,
-    } = this.state;
+      location,
+      addressLine1,
+      addressLine2,
+    } = inputData;
 
     const trainersNamesArray = [];
     if (partnerTrainer1) {
@@ -287,22 +289,20 @@ class CreateSession extends Component {
       trainersNames: trainersNamesArray,
       startTime,
       endTime,
-      address,
+      location,
+      addressLine1,
+      addressLine2,
     };
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
     return !this.checkError() && this.props.createSessionAction(sessionData);
   };
 
   onStartTimeChange = (time, timeString) => {
-    this.setState({
-      startTime: timeString,
-    });
+    this.props.storeInputData({ startTime: timeString });
   };
 
   onEndTimeChange = (time, timeString) => {
-    this.setState({
-      endTime: timeString,
-    });
+    this.props.storeInputData({ endTime: timeString });
   };
 
   getDisabledStartTime = () => {
@@ -332,7 +332,7 @@ class CreateSession extends Component {
   };
 
   render() {
-    const { role } = this.props;
+    const { role, inputData, loading } = this.props;
 
     const {
       inviteesNumber,
@@ -345,10 +345,10 @@ class CreateSession extends Component {
       region,
       endTime,
       startTime,
-      address,
-    } = this.state;
-
-    const { loading } = this.props;
+      location,
+      addressLine1,
+      addressLine2,
+    } = inputData;
 
     const {
       onDateChange,
@@ -366,6 +366,9 @@ class CreateSession extends Component {
     return (
       <CreateSessionWrapper>
         <Header type="section" label="Create New Session" />
+        <BackContainer style={{ paddingTop: '0' }}>
+          <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
+        </BackContainer>
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
             <DatePicker
@@ -432,9 +435,29 @@ class CreateSession extends Component {
             <Input
               type="text"
               placeholder="Type the venue's address"
-              value={address}
+              value={location}
               onChange={onInputChange}
-              name="address"
+              name="location"
+              size="large"
+            />
+          </InputDiv>
+          <InputDiv>
+            <Input
+              type="text"
+              placeholder="address line1"
+              value={addressLine1}
+              onChange={onInputChange}
+              name="addressLine1"
+              size="large"
+            />
+          </InputDiv>
+          <InputDiv>
+            <Input
+              type="text"
+              placeholder="address line2"
+              value={addressLine2}
+              onChange={onInputChange}
+              name="addressLine2"
               size="large"
             />
           </InputDiv>
@@ -448,7 +471,11 @@ class CreateSession extends Component {
               onChange={onSelectPartner1Change}
               labelInValue
               size="large"
-              value={partnerTrainer1.key ? partnerTrainer1 : undefined}
+              value={
+                partnerTrainer1 && partnerTrainer1.key
+                  ? partnerTrainer1
+                  : undefined
+              }
               dropdownRender={menu => (
                 <div
                   onMouseDown={e => {
@@ -498,7 +525,11 @@ class CreateSession extends Component {
                 size="large"
                 showSearch
                 style={{ width: '100%' }}
-                value={partnerTrainer2.key ? partnerTrainer2 : undefined}
+                value={
+                  partnerTrainer2 && partnerTrainer2.key
+                    ? partnerTrainer2
+                    : undefined
+                }
                 labelInValue
                 dropdownRender={menu => (
                   <div
@@ -617,6 +648,7 @@ class CreateSession extends Component {
 const mapStateToProps = state => {
   const { trainers } = state.trainers;
   const localLeads = state.fetchedData.localLeadsList;
+  const inputData = state.storeSessionData;
 
   const leadsAndTrainers = [...localLeads, ...trainers];
   return {
@@ -626,6 +658,7 @@ const mapStateToProps = state => {
     localLeadTrainersGroup: state.fetchedData.localLeadGroup,
     leadsAndTrainers,
     loading: state.session.loading,
+    inputData,
   };
 };
 
@@ -636,5 +669,6 @@ export default connect(
     createSessionAction,
     fetchLocalLeads,
     fetchLocalLeadTrainersGroup,
+    storeInputData,
   }
 )(CreateSession);

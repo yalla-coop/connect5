@@ -9,6 +9,7 @@ import { checkUniqeEmail } from '../../../actions/authAction';
 import { resetgroup, resetUniqueEmail } from '../../../actions/reset';
 
 import Button from '../../common/Button';
+import Header from '../../common/Header';
 
 import {
   Wrapper,
@@ -19,7 +20,8 @@ import {
   Item,
   Bold,
   Paragraph,
-  H3,
+  BackContainer,
+  BackLink,
 } from './AddTrainer.style';
 
 const { Option } = Select;
@@ -135,7 +137,10 @@ class AddTrainer extends Component {
 
     return (
       <Wrapper>
-        <H3>Add New Trainer</H3>
+        <Header type="view" label="Add new trainer" />
+        <BackContainer>
+          <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
+        </BackContainer>
         <ContentWrapper className="add-trainer">
           <Modal
             visible={isEmailUnique === false}

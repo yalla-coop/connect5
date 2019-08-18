@@ -36,3 +36,5 @@ module.exports.findUserByToken = token =>
     'resetToken.value': token,
     'resetToken.expiresIn': { $gt: Date.now() },
   });
+
+module.exports.getAllPins = () => Participant.find({}, { PIN: 1 });

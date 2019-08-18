@@ -31,7 +31,7 @@ export const sectionHeader = css`
   text-align: left;
   text-transform: capitalize;
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 400;
     position: relative;
     color: ${colors.offWhite};
@@ -116,7 +116,9 @@ const Header = ({
         </StyledHeader>
       ) : (
         <StyledHeader type={type} {...props}>
-          {isAuthenticated && type === 'section' && <HumburgerMenu />}
+          {isAuthenticated && isDeskTop && type === 'section' && (
+            <HumburgerMenu />
+          )}
           <h1>{label}</h1>
         </StyledHeader>
       )}

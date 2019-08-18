@@ -7,6 +7,7 @@ import {
   LOADING_START,
   LOADING_END,
   EMAIL_SCHEDULE_SUCCESS,
+  STORE_SESSION_DATA,
 } from '../constants/actionTypes';
 
 import history from '../history';
@@ -48,6 +49,13 @@ export const createSessionAction = sessionData => dispatch => {
         onOk: history.push('/create-session'),
       });
     });
+};
+
+export const storeInputData = data => async dispatch => {
+  dispatch({
+    type: STORE_SESSION_DATA,
+    payload: data,
+  });
 };
 
 export const getSessionDetails = shortId => dispatch => {

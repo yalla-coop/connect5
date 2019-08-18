@@ -39,7 +39,9 @@ const panels = {
   reach: { text: 'Reach', render: props => <Reach data={props.results} /> },
   behavior: {
     text: 'Behavioural',
-    render: props => <TrainerBehavioralInsight trainerId={props.trainerId} />,
+    render: props => (
+      <TrainerBehavioralInsight trainerId={props.trainerId} {...props} />
+    ),
   },
   feedback: {
     text: 'Trainer feedback',
@@ -153,7 +155,11 @@ class UserResults extends Component {
             >
               {Object.keys(panels).map(panel => (
                 <Panel header={panels[panel].text} key={panel}>
-                  {panels[panel].render({ results, trainerId: selectedUserId })}
+                  {panels[panel].render({
+                    results,
+                    trainerId: selectedUserId,
+                    role,
+                  })}
                 </Panel>
               ))}
             </Collapse>

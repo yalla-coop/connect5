@@ -26,7 +26,9 @@ const sessionSchema = new Schema(
       lowercase: true,
     },
     address: {
-      type: String,
+      location: String,
+      addressLine1: String,
+      addressLine2: String,
     },
     startTime: {
       type: String,

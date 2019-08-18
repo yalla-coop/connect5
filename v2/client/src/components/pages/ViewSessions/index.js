@@ -52,7 +52,7 @@ class ViewSessions extends Component {
     }
     return (
       <ViewSessionsWrapper>
-        <Header label="sessions" type="section" />
+        <Header label="Your group sessions" type="section" />
         <TotalSessions>
           <Span>Total Sessions</Span>
           <SessionsCount>{sessions && sessions.length}</SessionsCount>
