@@ -81,7 +81,7 @@ export const LoginFail = styled.div`
 
 export const NoAccount = styled(InputDiv)`
   margin: 0 auto;
-  margin-right: 0.6rem;
+  margin-right: 1.6rem;
   &:not(:last-child) {
     margin-top: 6rem;
   }
