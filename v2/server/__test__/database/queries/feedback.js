@@ -43,8 +43,9 @@ describe('Test trainer feedback query', () => {
       done();
     });
   });
+
   test('throws an error with invalid trainerId', async done => {
-    feedback('dont exist').catch(err => {
+    feedback('trainerId dont exist', 'sessionId dont exist').catch(err => {
       expect(err).toBeDefined();
       done();
     });
