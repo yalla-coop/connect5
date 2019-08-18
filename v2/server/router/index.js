@@ -6,6 +6,7 @@ const usersRouter = require('./users');
 const getParticipantBehavioralInsight = require('./../controllers/behavioralInsight/getParticipantBehavioralInsight');
 const getSessionBehavioralInsight = require('./../controllers/behavioralInsight/getSessionBehavioralInsight');
 const getTrainerBehavioralInsight = require('./../controllers/behavioralInsight/getTrainerBehavioralInsight');
+const getAdminBehavioralInsight = require('./../controllers/behavioralInsight/getAdminBehavioralInsight');
 const getFeedback = require('../controllers/feedback/getFeedback');
 const logoutController = require('../controllers/logout');
 
@@ -65,6 +66,12 @@ router.get(
   getSessionBehavioralInsight
 );
 router.get('/behavioral-insight/trainer/:id', getTrainerBehavioralInsight);
+
+router.get(
+  '/behavioral-insight/admin',
+  authentication(),
+  getAdminBehavioralInsight
+);
 
 router.post('/feedback/', getFeedback);
 

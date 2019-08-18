@@ -46,9 +46,12 @@ function drawBarValues() {
 
 class BehavioralTrainerResults extends Component {
   componentDidMount() {
-    const { trainerId, fetchbehavioralInsight } = this.props;
-
-    fetchbehavioralInsight(`/api/behavioral-insight/trainer/${trainerId}`);
+    const { trainerId, fetchbehavioralInsight, role } = this.props;
+    if (role === 'admin') {
+      fetchbehavioralInsight('/api/behavioral-insight/admin');
+    } else {
+      fetchbehavioralInsight(`/api/behavioral-insight/trainer/${trainerId}`);
+    }
   }
 
   render() {
