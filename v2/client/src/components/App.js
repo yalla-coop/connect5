@@ -51,6 +51,7 @@ import Unauthorized from './pages/ErrorPages/403';
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
 import Spin from './common/Spin';
+import HumburgerMenu from './common/Menu';
 
 // ROUTES
 import {
@@ -81,6 +82,7 @@ moment.updateLocale('en', {
 const Wrapper = styled.div`
   min-height: 100vh;
   background-color: ${colors.offWhite};
+  margin-left: ${props => (props.toggleShow ? '30%' : 0)};
 `;
 
 class App extends Component {
@@ -143,10 +145,22 @@ class App extends Component {
     this.setState({ width: window.innerWidth });
   };
 
+  // openMenu = toggle => {
+  //   const { toggleShow } = this.state;
+  //   this.setState({ toggleShow: toggle }, () => {
+  //     if (toggleShow) {
+  //       document.getElementById('wrapper').style.marginLeft = '250px';
+  //     }
+  //     if (!toggleShow) {
+  //       document.getElementById('wrapper').style.marginLeft = '0';
+  //     }
+  //   });
+  // };
+
   render() {
     const { isAuthenticated, loaded, role } = this.props;
     return (
-      <Wrapper>
+      <Wrapper id="wrapper">
         <Router history={history}>
           <Switch>
             <PrivateRoute
