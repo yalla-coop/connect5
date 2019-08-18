@@ -32,20 +32,31 @@ class HumburgerMenu extends Component {
     toggleShow: false,
   };
 
+  componentDidUpdate() {
+    /*
+    const { toggleShow } = this.state;
+    if (toggleShow) {
+      document.getElementById('wrapper').style.marginLeft = '300px';
+    }
+    if (!toggleShow) {
+      document.getElementById('wrapper').style.marginLeft = '0';
+    } */
+  }
+
   onClick = () => {
     const { toggleShow } = this.state;
     this.setState({ toggleShow: !toggleShow }, () => {
-      setTimeout(() => console.log(toggleShow), 3000);
-      if (!toggleShow) {
+      console.log('toggleShow =? ', this.state.toggleShow);
+      if (this.state.toggleShow) {
         document.getElementById('wrapper').style.marginLeft = '300px';
-      }
-      if (toggleShow) {
+      } else {
         document.getElementById('wrapper').style.marginLeft = '0';
       }
     });
   };
 
   render() {
+    // console.log(this.state);
     const { toggleShow } = this.state;
     const { role, viewLevel, logout: logoutAction } = this.props;
     return (
