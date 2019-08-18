@@ -10,6 +10,7 @@ const sendEmailInvitation = ({
   endTime,
   shortId,
   address,
+  region,
 }) => {
   let emailsList = [];
   if (typeof emails[0] === 'string') {
@@ -26,13 +27,14 @@ const sendEmailInvitation = ({
     </div>
     <p>Dear course participants,</p>
 
-    <p>${name} has invited you to register for an upcoming Connect 5 training session.</p>
-    <ul style="list-style: none;">
-      <li>- session date: ${sessionDate}</li>
-      <li>- session type: ${type}</li>
-      <li>- address: ${address}</li>
-      <li>- time: ${startTime} to ${endTime}</li>
-      <li>- trainers: ${trainerName}</li>
+    <p><span style="text-transform: capitalize">${name}</span> has invited you to register for an upcoming Connect 5 training session.</p>
+    <ul style="text-transfrom: capitalize">
+      <li>Session Date: ${sessionDate}</li>
+      <li>Session Type: ${type}</li>
+      <li>Address: ${address}</li>
+      <li>Region: ${region}</li>
+      <li>Time: ${startTime} to ${endTime}</li>
+      <li>Trainers: ${trainerName}</li>
     </ul>
     <div style="text-align: center;">
     <p>To confirm your attendance please click this link here</p>

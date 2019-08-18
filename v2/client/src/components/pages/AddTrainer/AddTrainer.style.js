@@ -18,7 +18,7 @@ export const Form = styled(AntForm)`
   border-radius: 4px;
   margin: 0 auto;
   text-align: center;
-  padding: 2rem 0;
+  padding: 1rem 0;
   box-shadow: rgb(204, 204, 204) 0px 0px 4px;
   & > div {
     margin: 0 auto;
@@ -26,15 +26,6 @@ export const Form = styled(AntForm)`
   & > div:first-child {
     padding-top: 0.5rem;
   }
-`;
-
-export const H3 = styled.h3`
-  text-align: center;
-  font-weight: 300;
-  line-height: 29px;
-  text-align: center;
-  padding: 2rem 0 0 0;
-  color: ${colors.profileFontColor};
 `;
 
 export const Input = styled(AntInput)`
@@ -60,3 +51,27 @@ export const Bold = styled.span`
 `;
 
 export const Paragraph = styled.p``;
+
+export const BackLink = styled.button`
+  border: none;
+  background: none;
+  color: ${colors.lightPrimary};
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+
+  :focus,
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
+export const BackContainer = styled.div`
+  width: 90%;
+  padding: 0 20px;
+  align-self: center;
+  padding: 3rem 1rem 1rem;
+  @media (min-width: 678px) {
+    width: 65%;
+  }
+`;

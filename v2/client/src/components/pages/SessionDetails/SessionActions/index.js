@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 import { Icon } from 'antd';
-import history from '../../../../history';
 import { deleteSessionAction } from '../../../../actions/groupSessionsAction';
 import {
   SessionActionsWrapper,
@@ -26,14 +25,6 @@ class SessionActions extends Component {
       .then(willDelete => {
         if (willDelete.value) {
           deleteSession(_id);
-
-          Swal.fire({
-            title: 'success',
-            text: 'session has been successfully delete',
-            type: 'success',
-            confirmButtonText: 'Ok',
-          });
-          history.push('/sessions');
         }
       })
       .catch(() => {
@@ -42,7 +33,7 @@ class SessionActions extends Component {
   };
 
   render() {
-    const { sessionDetails, msg } = this.props;
+    const { sessionDetails } = this.props;
     const { _id } = sessionDetails;
     const { deleteSession } = this;
     return (
@@ -58,7 +49,7 @@ class SessionActions extends Component {
         </SessionAction>
 
         <SessionAction>
-          <SessionDelete onClick={() => deleteSession(_id, msg)}>
+          <SessionDelete onClick={() => deleteSession(_id)}>
             <Icon
               type="delete"
               style={{ width: '2rem', height: '2rem', color: 'red' }}
@@ -73,6 +64,7 @@ class SessionActions extends Component {
 
 const mapStateToProps = state => ({
   msg: state.session.msg,
+  role: state.auth.role,
 });
 
 export default connect(
