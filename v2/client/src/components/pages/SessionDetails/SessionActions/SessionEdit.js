@@ -43,7 +43,9 @@ class EditSession extends Component {
     emails: [],
     startTime: null,
     endTime: null,
-    address: null,
+    location: null,
+    addressLine1: null,
+    addressLine2: null,
     err: null,
     emailErr: null,
     stateLoaded: false,
@@ -88,7 +90,7 @@ class EditSession extends Component {
         endTime,
         address,
       } = sessionDetails;
-
+      const { location, addressLine1, addressLine2 } = address;
       if (sessionDetails) {
         this.setState({
           session: type,
@@ -99,7 +101,9 @@ class EditSession extends Component {
           emails: participantsEmails,
           startTime,
           endTime,
-          address,
+          location,
+          addressLine1,
+          addressLine2,
           stateLoaded: true,
         });
 
@@ -268,8 +272,11 @@ class EditSession extends Component {
       emails,
       startTime,
       endTime,
-      address,
+      location,
+      addressLine1,
+      addressLine2,
     } = this.state;
+
     const sessionData = {
       session,
       startDate,
@@ -280,7 +287,9 @@ class EditSession extends Component {
       emails,
       startTime,
       endTime,
-      address,
+      location,
+      addressLine1,
+      addressLine2,
     };
 
     this.props.sessionUpdateAction(sessionData, id);
@@ -300,16 +309,20 @@ class EditSession extends Component {
       region,
       participantsEmails,
     } = sessionDetails;
+
     const {
       startDate,
       inviteesNumber,
-      address,
       err,
       emailErr,
       emails,
       session,
       partnerTrainer1,
+      location,
+      addressLine1,
+      addressLine2,
     } = this.state;
+
     const {
       onDateChange,
       onInputChange,
@@ -466,9 +479,31 @@ class EditSession extends Component {
             <Input
               type="text"
               placeholder="Type the venue's address"
-              value={address}
+              value={location}
               onChange={onInputChange}
-              name="address"
+              name="location"
+              size="large"
+            />
+          </InputDiv>
+
+          <InputDiv>
+            <Input
+              type="text"
+              placeholder="address line1"
+              value={addressLine1}
+              onChange={onInputChange}
+              name="addressLine1"
+              size="large"
+            />
+          </InputDiv>
+
+          <InputDiv>
+            <Input
+              type="text"
+              placeholder="address line2"
+              value={addressLine2}
+              onChange={onInputChange}
+              name="addressLine2"
               size="large"
             />
           </InputDiv>

@@ -16,8 +16,16 @@ module.exports = async (req, res, next) => {
     emails,
     startTime,
     endTime,
-    address,
+    location,
+    addressLine1,
+    addressLine2,
   } = data;
+
+  const address = {
+    location,
+    addressLine1,
+    addressLine2,
+  };
 
   editSessionQuery(
     id,

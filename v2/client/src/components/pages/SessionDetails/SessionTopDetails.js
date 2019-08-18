@@ -28,6 +28,12 @@ class SessionTopDetails extends Component {
       return <div>loading</div>;
     }
 
+    const { location, addressLine1, addressLine2 } = address;
+    let fullAddress = '';
+    if (location || addressLine1 || addressLine2) {
+      fullAddress = `${address.location}, ${address.addressLine1}, ${address.addressLine2}`;
+    }
+
     const confirmedAttendeesNumber =
       sessionDetails &&
       sessionDetails.participantsEmails.filter(
@@ -61,7 +67,7 @@ class SessionTopDetails extends Component {
         </SubDetails>
         <SubDetails>
           <SubDetailsTitle>Address:</SubDetailsTitle>
-          <SubDetailsContent>{address || 'Not entered'}</SubDetailsContent>
+          <SubDetailsContent>{fullAddress || 'Not entered'}</SubDetailsContent>
         </SubDetails>
         <SubDetails>
           <SubDetailsTitle>Times:</SubDetailsTitle>

@@ -16,7 +16,9 @@ const addSession = async (req, res, next) => {
     trainersNames,
     startTime,
     endTime,
-    address,
+    location,
+    addressLine1,
+    addressLine2,
   } = req.body;
   const trainers = [];
   try {
@@ -37,6 +39,12 @@ const addSession = async (req, res, next) => {
         trainers.push(user._id);
         trainersNames.push(user.name);
       }
+
+      const address = {
+        location,
+        addressLine1,
+        addressLine2,
+      };
 
       const addedSession = await createNewsession({
         startDate,
