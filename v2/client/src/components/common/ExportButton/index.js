@@ -20,7 +20,6 @@ class ExportButton extends Component {
 
   componentDidMount() {
     const { viewLevel, selectedUser, userId } = this.props;
-    console.log('role', selectedUser);
     // check if there's a selectedUserRole
 
     // if trainer then just filter for that trainer

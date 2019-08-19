@@ -46,7 +46,6 @@ class LandingPage extends Component {
       switch (role) {
         case 'admin':
         case 'localLead':
-          return <Redirect to="/welcome-back" />;
         case 'trainer':
           return <Redirect to="/dashboard" />;
         case 'participant':

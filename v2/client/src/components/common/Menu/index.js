@@ -66,6 +66,7 @@ class HumburgerMenu extends Component {
     const { isDeskTop } = this.props;
     this.setState({ toggleShow: !toggleShow }, () => {
       if (isDeskTop) {
+        // eslint-disable-next-line react/destructuring-assignment
         if (this.state.toggleShow) {
           document.getElementById('wrapper').style.marginLeft = '300px';
         } else {
@@ -81,7 +82,7 @@ class HumburgerMenu extends Component {
 
   render() {
     // console.log(this.state);
-    const { toggleShow } = this.state;
+    const { toggleShow, activeSub } = this.state;
     const { role, logout: logoutAction, dark } = this.props;
 
     return (
@@ -134,7 +135,7 @@ class HumburgerMenu extends Component {
                   >
                     <MenuIcon className="fas fa-poll-h" />
                     Results
-                    {this.state.activeSub === 'results' && (
+                    {activeSub === 'results' && (
                       <>
                         <MenuItem to={TRAINER_RESULTS_URL} block sub>
                           <MenuIcon className="fas fa-poll-h" />

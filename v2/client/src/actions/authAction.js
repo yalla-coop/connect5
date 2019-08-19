@@ -14,8 +14,6 @@ import {
 } from '../constants/actionTypes';
 import { returnErrors } from './errorAction';
 
-import { updateViewLevel } from './viewLevelAction';
-
 // Login User
 export const loginUser = loginData => dispatch => {
   const { email, password } = loginData;

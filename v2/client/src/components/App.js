@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import moment from 'moment';
 
 import { checkAuth } from '../actions/authAction';
-import { updateViewLevel } from '../actions/viewLevelAction';
 import { checkBrowserWidth } from '../actions/checkBrowserWidth';
 
 import { colors } from '../theme';
@@ -67,6 +66,7 @@ import {
   SESSION_DETAILS_URL,
   FORGET_PASSWORD,
   TRAINER_VIEW_PARTICIPANT,
+  MY_RESULTS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -110,16 +110,7 @@ class App extends Component {
   }
 
   componentDidUpdate() {
-    const {
-      updateViewLevel: updateViewLevelActionCreator,
-      checkBrowserWidth: checkBrowserWidthActionCreator,
-      role,
-      viewLevel,
-    } = this.props;
-
-    if (role && !viewLevel) {
-      updateViewLevelActionCreator(role);
-    }
+    const { checkBrowserWidth: checkBrowserWidthActionCreator } = this.props;
 
     const { width } = this.state;
     const isMobile = width <= 500;
@@ -165,6 +156,7 @@ class App extends Component {
               path="/reset-password/:token"
               component={ResetPassword}
             />
+
             <PrivateRoute
               exact
               path={TRAINER_RESULTS_URL}
@@ -175,6 +167,18 @@ class App extends Component {
               role={role}
               navbar
             />
+
+            <PrivateRoute
+              exact
+              path={MY_RESULTS_URL}
+              Component={UserResults}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['trainer', 'admin', 'localLead']}
+              role={role}
+              navbar
+            />
+
             <PrivateRoute
               exact
               path={GROUP_RESULTS_URL}
@@ -429,5 +433,8 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { checkAuth, updateViewLevel, checkBrowserWidth }
+  {
+    checkAuth,
+    checkBrowserWidth,
+  }
 )(App);
