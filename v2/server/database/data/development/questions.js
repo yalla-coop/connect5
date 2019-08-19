@@ -24,7 +24,7 @@ const demographics = surveyType => [
   },
   {
     text:
-      'What is your ethnic group? (please choose the best option that describes you ethnic group or background)',
+      'What is your ethnic group? (please choose the best option that describes your ethnic group or background)',
     helperText: [
       'Choose one option that best describes your ethnic group or background',
     ],
