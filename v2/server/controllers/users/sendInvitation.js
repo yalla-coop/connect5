@@ -49,25 +49,24 @@ const SendInvitation = async (req, res, next) => {
       });
       const sessionDate = moment(date).format('DD/MMMM/YYYY');
 
-      // if (process.env.NODE_ENV === 'production') {
-      sendEmailInvitation({
-        name,
-        emails,
-        sessionDate,
-        type,
-        trainerName,
-        address: address || 'TBC',
-        region,
-        startTime,
-        endTime,
-        shortId,
-      });
-      // }
+      if (process.env.NODE_ENV === 'production') {
+        sendEmailInvitation({
+          name,
+          emails,
+          sessionDate,
+          type,
+          trainerName,
+          address: address || 'TBC',
+          region,
+          startTime,
+          endTime,
+          shortId,
+        });
+      }
       return res.json(StoreSentEmailData);
     }
     return next(boom.badRequest('Some arguments are missed'));
   } catch (error) {
-    console.log(error);
     return next(boom.badImplementation());
   }
 };

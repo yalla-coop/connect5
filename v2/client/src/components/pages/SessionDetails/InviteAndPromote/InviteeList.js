@@ -162,7 +162,7 @@ class InviteeList extends Component {
       sessionDetails,
     } = this.props;
 
-    const { _id: sessionId } = sessionDetails;
+    const { _id: sessionId, address } = sessionDetails;
 
     return updateSentEmailsActionCreator({
       sessionId,
@@ -170,6 +170,7 @@ class InviteeList extends Component {
       newEmails,
       deletedEmails,
       sendByEmail,
+      address,
     });
   };
 

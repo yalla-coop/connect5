@@ -91,7 +91,6 @@ const updateSentInvitationEmails = async (req, res, next) => {
 
     return res.json();
   } catch (err) {
-    console.log('err', err);
     return next(boom.badImplementation());
   }
 };
