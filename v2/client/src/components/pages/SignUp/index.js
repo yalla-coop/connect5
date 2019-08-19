@@ -119,6 +119,7 @@ class SignUp extends Component {
       isAuthenticated,
       history,
       isDeskTop,
+      loading,
     } = this.props;
 
     if (isAuthenticated) {
@@ -282,6 +283,7 @@ class SignUp extends Component {
                   width="100%"
                   height="100%"
                   style={{ fontSize: '19px' }}
+                  loading={loading}
                 >
                   Sign Up
                 </Button>
@@ -305,6 +307,7 @@ const mapStateToProps = state => {
     isAuthenticated: state.auth.isAuthenticated,
     isEmailUnique: state.auth.isEmailUnique,
     isDeskTop: state.checkBrowserWidth.isDeskTop,
+    loading: state.loading.signupLoading,
   };
 };
 

@@ -71,6 +71,7 @@ class ForgetPassword extends Component {
 
   render() {
     const { email, errors, msg } = this.state;
+    const { loading } = this.props;
     const { emailError } = errors;
     const { onInputChange, onFormSubmit } = this;
     return (
@@ -81,8 +82,8 @@ class ForgetPassword extends Component {
             <Heading>
               <H3>Forget Your Password!</H3>
               <Hint>
-                Please enter your email adress and we'll send you instructions
-                on how to reset your password
+                Please enter your email adress and we{"'"}ll send you
+                instructions on how to reset your password
               </Hint>
             </Heading>
 
@@ -108,6 +109,7 @@ class ForgetPassword extends Component {
                 height="40px"
                 width="65%"
                 marginLeft="5px"
+                loading={loading}
               />
             </ButtonsDiv>
 
@@ -123,6 +125,7 @@ const mapStateToProps = state => {
   return {
     isEmailUnique: state.auth.isEmailUnique,
     checkedUserInfo: state.auth.checkedUserInfo,
+    loading: state.loading.forgetPasswordLoading,
   };
 };
 

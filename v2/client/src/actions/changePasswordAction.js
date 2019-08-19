@@ -3,26 +3,40 @@ import { Modal } from 'antd';
 import {
   CHANGE_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_FAIL,
+  LOADING_TRUE,
+  LOADING_FALSE,
 } from '../constants/actionTypes';
 import { returnErrors } from './errorAction';
 import history from '../history';
 
 export const changePasswordActionCreator = data => async dispatch => {
+  dispatch({
+    type: LOADING_TRUE,
+    payload: 'changePasswordLoading',
+  });
   axios
     .post('/api/users/change-password', data)
-    .then(res =>
+    .then(res => {
       dispatch({
         type: CHANGE_PASSWORD_SUCCESS,
         payload: res.data,
-      })
-    )
-    .then(() =>
+      });
+      dispatch({
+        type: LOADING_FALSE,
+        payload: 'changePasswordLoading',
+      });
+    })
+    .then(() => {
       Modal.success({
         title: 'Done!',
         content: 'Password Changed',
         onOk: history.push('/dashboard'),
-      })
-    )
+      });
+      dispatch({
+        type: LOADING_FALSE,
+        payload: 'changePasswordLoading',
+      });
+    })
 
     .catch(err => {
       dispatch(

@@ -13,6 +13,8 @@ import {
   UPDATE_EMAILS_SUCCESS,
   SEND_SURVEY_EMAIL_SUCCESS,
   FETCH_PRTICIPENT_SESSIONS_SUCCESS,
+  LOADING_FALSE,
+  LOADING_TRUE,
 } from '../constants/actionTypes';
 
 import history from '../history';
@@ -91,6 +93,12 @@ export const deleteSessionAction = id => async dispatch => {
 
 export const sessionUpdateAction = (sessionData, id) => async dispatch => {
   // const body = JSON.stringify(sessionData);
+
+  dispatch({
+    type: LOADING_TRUE,
+    payload: 'sessionEditLoading',
+  });
+
   axios
     .patch(`/api/session-edit/${id}`, sessionData)
     .then(res => {
@@ -106,8 +114,19 @@ export const sessionUpdateAction = (sessionData, id) => async dispatch => {
         type: EDIT_SESSION_SUCCESS,
         payload: res.data,
       });
+
+      dispatch({
+        type: LOADING_FALSE,
+        payload: 'sessionEditLoading',
+      });
     })
-    .catch(() => history.push('/404err'));
+    .catch(() => {
+      dispatch({
+        type: LOADING_FALSE,
+        payload: 'sessionEditLoading',
+      });
+      history.push('/404err');
+    });
 };
 
 export const updateEmails = (id, participantsEmails) => async dispatch => {
