@@ -71,7 +71,7 @@ export const SubmitBtn = styled.div`
 `;
 
 export const Error = styled.p`
-  color: red;
+  color: ${colors.red};
   padding: 0;
   margin: 20px auto 0;
 `;

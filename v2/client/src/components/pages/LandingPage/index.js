@@ -64,7 +64,7 @@ class LandingPage extends Component {
         </LogoContainer>
         <DescriptionContainer>
           <Headline>Welcome to the Connect5</Headline>
-          <Paragraph>
+          <Paragraph style={{ textAlign: 'center' }}>
             Welcome to the App of the mental health training programme Connect 5
           </Paragraph>
         </DescriptionContainer>

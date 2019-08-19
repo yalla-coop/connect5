@@ -2,15 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Input } from 'antd';
 import Button from '../../common/Button';
+import HumburgerMenu from '../../common/Menu';
+import logo from '../../../assets/logo.png';
 import history from '../../../history';
 import {
   LoginHeading,
   InputDiv,
-  LoginForm,
+  LoginPINForm,
   LoginFail,
   NoAccount,
   Content,
   AnotherLink,
+  Paragraph,
+  Logo,
+  H4,
 } from './Login.style';
 import { loginParticipant } from '../../../actions/authAction';
 
@@ -80,9 +85,17 @@ class ParticipantLogin extends Component {
   render() {
     const { PIN, error, msg } = this.state;
     const { onFormSubmit, onInputChange } = this;
+    const { isDeskTop } = this.props;
     return (
       <>
-        <LoginForm onSubmit={onFormSubmit}>
+        {isDeskTop && <HumburgerMenu dark="dark" />}
+        <LoginHeading>
+          <AnotherLink to="/">
+            <Logo src={logo} alt="img" />
+          </AnotherLink>
+          <H4>Login to your account</H4>
+        </LoginHeading>
+        <LoginPINForm onSubmit={onFormSubmit}>
           <LoginHeading>
             <Content>
               {`To access your results, please enter your unique pin. This is the
@@ -113,16 +126,16 @@ class ParticipantLogin extends Component {
               width="100%"
             />
           </InputDiv>
-        </LoginForm>
-        <InputDiv>
-          <LoginFail>{msg}</LoginFail>
-        </InputDiv>
-        <NoAccount>
-          <p>
-            Not a participant?{' '}
-            <AnotherLink to="/login"> Login here!</AnotherLink>
-          </p>
-        </NoAccount>
+          <InputDiv>
+            <LoginFail>{msg}</LoginFail>
+          </InputDiv>
+          <NoAccount>
+            <Paragraph>
+              Not a participant?{' '}
+              <AnotherLink to="/login"> Login here!</AnotherLink>
+            </Paragraph>
+          </NoAccount>
+        </LoginPINForm>
       </>
     );
   }
@@ -131,6 +144,7 @@ class ParticipantLogin extends Component {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
+  isDeskTop: state.checkBrowserWidth.isDeskTop,
 });
 
 export default connect(

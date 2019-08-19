@@ -66,7 +66,7 @@ export const Row = styled.div`
     border-bottom: ${borders.inputBox};
   }
   @media (min-width: 768px) {
-    margin-left: 1rem;
+    margin-left: 2rem;
   }
 `;
 

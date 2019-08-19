@@ -6,6 +6,9 @@ export const Wrapper = styled.div`
   padding: 5rem 0;
   display: flex;
   flex-direction: column;
+  min-width: 300px;
+  max-width: 650px;
+  margin: 0 auto;
 `;
 
 export const HeaderSection = styled.div`

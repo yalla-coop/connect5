@@ -117,7 +117,11 @@ export default class TrainerList extends Component {
               <Row key={dataItem._id}>
                 <Name>{dataItem.name}</Name>
                 <ArrowWrapper onClick={() => this.toggleModal(dataItem)}>
-                  <AntButton type="primary" ghost>
+                  <AntButton
+                    type="primary"
+                    ghost
+                    style={{ marginRight: '2px' }}
+                  >
                     View
                   </AntButton>
                 </ArrowWrapper>
@@ -126,7 +130,7 @@ export default class TrainerList extends Component {
                     type="danger"
                     ghost
                     onClick={() => deleteUser(dataItem._id)}
-                    style={{ marginLeft: '1.5px' }}
+                    style={{ marginLeft: '2px' }}
                   >
                     Delete
                   </AntButton>

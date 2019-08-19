@@ -1,18 +1,24 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { colors, shadows } from '../../../theme';
+import { colors, shadows, breakpoints } from '../../../theme';
 
 export const Wrapper = styled.div`
   padding: 80px 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 750px;
+  margin: 0 auto;
 `;
 
 export const TopSection = styled.div`
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   width: 100%;
+  @media ${breakpoints.mobileL} {
+    text-align: center;
+    margin: 1.2rem 0;
+  }
 `;
 
 export const Title = styled.h2`
@@ -49,6 +55,9 @@ export const StatItem = styled(Link)`
 
   :hover {
     color: ${colors.profileFontColor};
+  }
+  @media ${breakpoints.mobileL} {
+    padding: 2rem 0;
   }
 `;
 

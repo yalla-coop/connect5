@@ -2,20 +2,25 @@ import React, { Component } from 'react';
 import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
+import HumburgerMenu from '../../common/Menu';
+
 import {
   LoginHeading,
-  H3,
+  H4,
   InputDiv,
   LoginForm,
   LoginFail,
   NoAccount,
   AnotherLink,
   Paragraph,
+  Logo,
   ForgetPasswordLink,
+  LoginDiv,
 } from './Login.style';
 import { loginUser } from '../../../actions/authAction';
 import { clearErrors } from '../../../actions/errorAction';
 import history from '../../../history';
+import logo from '../../../assets/logo.png';
 
 // ROUTES
 import {
@@ -119,13 +124,18 @@ class Login extends Component {
     const { email, password } = fields;
     const { emailError, passwordError } = errors;
     const { onInputChange, onFormSubmit } = this;
+    const { isDeskTop } = this.props;
     return (
       <>
-        <div style={{ paddingTop: '6rem' }}>
+        {isDeskTop && <HumburgerMenu dark="dark" />}
+        <LoginHeading>
+          <AnotherLink to="/">
+            <Logo src={logo} alt="img" />
+          </AnotherLink>
+          <H4>Login to your account</H4>
+        </LoginHeading>
+        <LoginDiv>
           <LoginForm onSubmit={onFormSubmit}>
-            <LoginHeading>
-              <H3>Login</H3>
-            </LoginHeading>
             <InputDiv>
               <Input
                 placeholder="Enter your email"
@@ -177,7 +187,7 @@ class Login extends Component {
               <AnotherLink to="/participant-login"> Login here!</AnotherLink>
             </Paragraph>
           </NoAccount>
-        </div>
+        </LoginDiv>
       </>
     );
   }
@@ -187,6 +197,7 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
   role: state.auth.role,
+  isDeskTop: state.checkBrowserWidth.isDeskTop,
 });
 
 export default connect(
