@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Input } from 'antd';
 import Button from '../../common/Button';
 import Header from '../../common/Header';
+import HumburgerMenu from '../../common/Menu';
+import logo from '../../../assets/logo.png';
 import history from '../../../history';
 import {
   LoginHeading,
@@ -13,6 +15,8 @@ import {
   Content,
   AnotherLink,
   Paragraph,
+  Logo,
+  H4,
 } from './Login.style';
 import { loginParticipant } from '../../../actions/authAction';
 
@@ -82,10 +86,16 @@ class ParticipantLogin extends Component {
   render() {
     const { PIN, error, msg } = this.state;
     const { onFormSubmit, onInputChange } = this;
+    const { isDeskTop } = this.props;
     return (
       <>
-        <Header type="home" />
-        <div style={{ paddingBottom: '4rem' }} />
+        {isDeskTop && <HumburgerMenu dark="dark" />}
+        <LoginHeading>
+          <AnotherLink to="/">
+            <Logo src={logo} alt="img" />
+          </AnotherLink>
+          <H4>Login to your account</H4>
+        </LoginHeading>
         <LoginPINForm onSubmit={onFormSubmit}>
           <LoginHeading>
             <Content>
@@ -135,6 +145,7 @@ class ParticipantLogin extends Component {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
+  isDeskTop: state.checkBrowserWidth.isDeskTop,
 });
 
 export default connect(

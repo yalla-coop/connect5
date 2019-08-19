@@ -49,12 +49,12 @@ export const LoginForm = styled.form``;
 export const LoginPINForm = styled.form`
   max-width: 25rem;
   margin: 0 auto;
+  margin-top: -4rem;
   @media ${breakpoints.mobileL} {
     box-shadow: ${shadows.secondary};
     background: ${colors.backgroundWashOut};
     margin: 0 auto;
     padding: 0.55rem 0;
-    margin-top: 2rem;
   }
 `;
 

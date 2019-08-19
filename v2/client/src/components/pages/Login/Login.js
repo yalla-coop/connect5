@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
+import HumburgerMenu from '../../common/Menu';
+
 import {
   LoginHeading,
   H4,
@@ -122,8 +124,10 @@ class Login extends Component {
     const { email, password } = fields;
     const { emailError, passwordError } = errors;
     const { onInputChange, onFormSubmit } = this;
+    const { isDeskTop } = this.props;
     return (
       <>
+        {isDeskTop && <HumburgerMenu dark="dark" />}
         <LoginHeading>
           <AnotherLink to="/">
             <Logo src={logo} alt="img" />
@@ -193,6 +197,7 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
   role: state.auth.role,
+  isDeskTop: state.checkBrowserWidth.isDeskTop,
 });
 
 export default connect(
