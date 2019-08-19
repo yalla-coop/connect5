@@ -35,19 +35,19 @@ const sendReminder = ({
 
     <p>This is a friendly reminder related to the following Connect 5 training session:</p>
     <ul style={{listStyle: 'none'}}>
-      <li>- Session Date: ${sessionDate || 'N/A'}</li>
-      <li>- Session Type: ${sessionType || 'N/A'}</li>
-      <li>- Location: ${location || 'N/A'}</li>
-      <li>- time: ${startTime || 'N/A'} to ${endTime || 'N/A'}</li>
-      <li>- trainers: ${trainers || 'N/A'}</li>
+      <li> Session Date: ${sessionDate || 'N/A'}</li>
+      <li> Session Type: ${sessionType || 'N/A'}</li>
+      <li> Location: ${location || 'N/A'}</li>
+      <li> time: ${startTime || 'N/A'} to ${endTime || 'N/A'}</li>
+      <li> trainers: ${trainers || 'N/A'}</li>
     </ul>
     <p>
       To track your own progress and to ensure that our
-      trainings are effective we rely on course 
+      trainings are effective we rely on course
       participants to fill out surveys after each session.
-      All the data is anonymised. After answering surveys 
-      you can immediately see your own progress and access 
-      certificates via the app. You will receive a link to the post-session survey  from your trainers.  
+      All the data is anonymised. After answering surveys
+      you can immediately see your own progress and access
+      certificates via the app. You will receive a link to the post-session survey  from your trainers.
     </p>
 
     ${preServeyLink ? extraParagraph : ''}
