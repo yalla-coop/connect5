@@ -520,7 +520,8 @@ const yourTrainer1 = surveyType => [
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: '… in a way that included as many of the learners as possible?',
+    text:
+      'Did your trainer ask questions in a way that included as many of the learners as possible?',
   },
   {
     code: 'Trainquest2',
@@ -533,7 +534,7 @@ const yourTrainer1 = surveyType => [
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
     text:
-      '… about how you or other learners are learning (for example ‘how do you know that?’ Or ‘can you explain how you came to that answer?’)',
+      'Did your trainer ask questions about how you or other learners are learning (for example ‘how do you know that?’ Or ‘can you explain how you came to that answer?’)',
   },
   {
     code: 'Trainquest3',
@@ -545,7 +546,8 @@ const yourTrainer1 = surveyType => [
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: '… that are open ended, challenging, searching or probing?',
+    text:
+      'Did your trainer ask questions that are open ended, challenging, searching or probing?',
   },
   {
     code: 'Trainquest4',
@@ -557,7 +559,8 @@ const yourTrainer1 = surveyType => [
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: '… that required you or other learners to apply your knowledge?',
+    text:
+      'Did your trainer ask questions that required you or other learners to apply your knowledge?',
   },
   {
     code: 'Trainquest5',
@@ -570,7 +573,7 @@ const yourTrainer1 = surveyType => [
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
     text:
-      '… about how what you are currently learning relates to what you knew before?',
+      'Did your trainer ask questions about how what you are currently learning relates to what you knew before?',
   },
 ];
 
@@ -587,7 +590,7 @@ const yourTrainer2 = surveyType => [
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: 'Listen to you and other learners?',
+    text: 'Did your trainer listen to you and other learners?',
   },
   {
     code: 'TrainAtt2',
@@ -599,7 +602,7 @@ const yourTrainer2 = surveyType => [
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: 'Respond positively to being asked questions?',
+    text: 'Did your trainer respond positively to being asked questions?',
   },
   {
     code: 'TrainAtt3',
@@ -611,7 +614,7 @@ const yourTrainer2 = surveyType => [
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: 'Celebrate learner contributions and successes?',
+    text: 'Did your trainer celebrate learner contributions and successes?',
   },
   {
     code: 'TrainAtt4',
@@ -624,7 +627,7 @@ const yourTrainer2 = surveyType => [
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
     text:
-      'Demonstrate an interest in the topic and in the activities of the learners?',
+      'Did your trainer demonstrate an interest in the topic and in the activities of the learners?',
   },
   {
     code: 'TrainAtt5',
@@ -637,7 +640,7 @@ const yourTrainer2 = surveyType => [
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
     text:
-      'Use language to praise, support and show positive regard to you and other learners?',
+      'Did your trainer use language to praise, support and show positive regard to you and other learners?',
   },
   {
     code: 'TrainAtt6',
@@ -650,7 +653,7 @@ const yourTrainer2 = surveyType => [
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
     text:
-      'Demonstrate their own lack of understanding either current or previous?',
+      'Did your trainer demonstrate their own lack of understanding either current or previous?',
   },
   {
     code: 'TrainAtt7',
@@ -662,7 +665,7 @@ const yourTrainer2 = surveyType => [
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: 'Use derogatory or humiliating language?',
+    text: 'Did your trainer use derogatory or humiliating language?',
   },
   {
     code: 'TrainAtt8',
@@ -674,7 +677,7 @@ const yourTrainer2 = surveyType => [
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: 'Make eye contact with multiple learners?',
+    text: 'Did your trainer make eye contact with multiple learners?',
   },
   {
     code: 'TrainAtt9',
@@ -686,7 +689,7 @@ const yourTrainer2 = surveyType => [
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: 'Speak with an enthusiastic tone?',
+    text: 'Did your trainer speak with an enthusiastic tone?',
   },
   {
     code: 'TrainAtt10',
@@ -699,7 +702,7 @@ const yourTrainer2 = surveyType => [
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
     text:
-      'Use verbal and non-verbal communication that indicated they were listening to  you or other learners?',
+      'Did your trainer use verbal and non-verbal communication that indicated they were listening to  you or other learners?',
   },
   {
     code: 'TrainAtt11',
@@ -711,7 +714,7 @@ const yourTrainer2 = surveyType => [
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: 'Use words to encourage you or other learners?',
+    text: 'Did your trainer use words to encourage you or other learners?',
   },
   {
     code: 'TrainAtt12',
@@ -723,7 +726,7 @@ const yourTrainer2 = surveyType => [
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: 'Use the names of the learners?',
+    text: 'Did your trainer use the names of the learners?',
   },
   {
     code: 'TrainAtt13',
@@ -735,7 +738,8 @@ const yourTrainer2 = surveyType => [
     surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: 'Demonstrate their own curiosity and interest in the topic?',
+    text:
+      'Did your trainer demonstrate their own curiosity and interest in the topic?',
   },
   {
     code: 'SessionOverall1',
@@ -760,7 +764,7 @@ const yourTrainer2 = surveyType => [
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
     text:
-      "Was the session at a good pace for you (did you feel you had enough time but that the time didn't drag)?",
+      "Was the session at a good pace for you? did you feel you had enough time but that the time didn't drag?",
   },
   {
     code: 'SessionOverall3',
