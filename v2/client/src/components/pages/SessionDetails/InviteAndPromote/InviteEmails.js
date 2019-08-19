@@ -27,10 +27,17 @@ class SendInvitation extends Component {
       trainers,
       trainer,
       sessionType,
-      location,
+      location: address,
       recipients,
     } = emailInfo;
 
+    const { location, addressLine1, addressLine2 } = address;
+    let fullAddress = '';
+    if (address) {
+      if (location || addressLine1 || addressLine2) {
+        fullAddress = `${address.location}, ${address.addressLine1}, ${address.addressLine2}`;
+      }
+    }
     return (
       <EmailInfoWrapper>
         <Header type="view" label="Invite Emails" />
@@ -54,21 +61,22 @@ class SendInvitation extends Component {
           </p>
           <List>
             <li>
-              - <SessionInfoTitle> Session Date:</SessionInfoTitle>{' '}
+              <SessionInfoTitle> Session Date:</SessionInfoTitle>{' '}
               {moment(sessionDate).format('DD/MM/YYYY')}
             </li>
             <li>
-              - <SessionInfoTitle>Session Type:</SessionInfoTitle> {sessionType}
+              <SessionInfoTitle>Session Type:</SessionInfoTitle> {sessionType}
             </li>
             <li>
-              -<SessionInfoTitle> Location:</SessionInfoTitle> {location}
+              <SessionInfoTitle> Location:</SessionInfoTitle>{' '}
+              {(fullAddress && fullAddress) || 'Not entered'}
             </li>
             <li>
-              - <SessionInfoTitle>time:</SessionInfoTitle>
+              <SessionInfoTitle>time:</SessionInfoTitle>
               {startTime} to {endTime}{' '}
             </li>
             <li>
-              - <SessionInfoTitle>Trainer(s):</SessionInfoTitle> {trainers}
+              <SessionInfoTitle>Trainer(s):</SessionInfoTitle> {trainers}
             </li>
           </List>
           <p>To confirm your attendance please click this link: </p>
