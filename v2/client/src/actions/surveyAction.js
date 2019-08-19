@@ -1,7 +1,11 @@
 import axios from 'axios';
 import swal from 'sweetalert2';
 import history from '../history';
-
+import {
+  PARTICIPANT_LOGIN,
+  DASHBOARD_URL,
+  PARTICIPANT_DASHBOARD,
+} from '../constants/navigationRoutes';
 import {
   FETCH_SURVEY_DATA,
   SURVEY_PIN_EXIST_FAIL,
@@ -64,11 +68,12 @@ export const checkPINResponses = (surveyParts, PIN) => dispatch => {
     });
 };
 
-export const submitSurvey = (
+export const submitSurvey = ({
   formSubmission,
   isAuthenticated,
-  sessionId
-) => dispatch => {
+  sessionId,
+  role,
+}) => dispatch => {
   axios
     .post(`/api/survey/submit/`, formSubmission)
     .then(({ data }) => {
@@ -79,10 +84,19 @@ export const submitSurvey = (
       return swal
         .fire('Done!', 'Thanks for submitting your feedback!', 'success')
         .then(() => {
+          let pushTo;
+          if (isAuthenticated) {
+            if (role === 'participant') {
+              pushTo = PARTICIPANT_DASHBOARD;
+            } else {
+              pushTo = DASHBOARD_URL;
+            }
+          } else {
+            pushTo = PARTICIPANT_LOGIN;
+          }
+
           history.push({
-            pathname: isAuthenticated
-              ? '/participant-dashboard'
-              : '/participant-login',
+            pathname: pushTo,
             state: { sessionId, surveySubmited: true },
           });
         })
