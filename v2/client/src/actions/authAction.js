@@ -136,11 +136,10 @@ export const loginParticipant = PIN => dispatch => {
 export const logout = () => async dispatch => {
   try {
     await axios.get('/api/logout');
-    history.push('/');
+    history.push('/login');
     dispatch({
       type: LOGOUT,
     });
-    dispatch(updateViewLevel());
   } catch (error) {
     console.log('err', error);
   }

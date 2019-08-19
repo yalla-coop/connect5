@@ -27,14 +27,11 @@ export const MainDiv = styled.div`
 `;
 
 export const MenuItem = styled(Link)`
-  margin-bottom: 1.5rem;
-  display: flex;
+  margin-bottom: ${({ sub }) => (sub ? '0' : '1.5rem')};
+  display: ${({ block }) => (block ? 'block' : 'flex')};
   padding: 4px;
   align-items: center;
-  color: ${({ dark }) => {
-    console.log(dark);
-    return dark ? '#fff' : colors.lightPrimary;
-  }};
+  color: ${({ dark }) => (dark ? '#fff' : colors.lightPrimary)};
   font-weight: bold;
   transition: all 500ms ease;
   cursor: pointer;

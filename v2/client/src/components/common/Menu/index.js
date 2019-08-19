@@ -28,12 +28,14 @@ import {
 
 class HumburgerMenu extends Component {
   state = {
-    toggleShow: null,
+    toggleShow: false,
+    activeSub: null,
   };
 
   componentDidMount() {
     const { isDeskTop } = this.props;
     const toggleShow = !!isDeskTop;
+    this.setState({ toggleShow });
     if (isDeskTop) {
       if (toggleShow) {
         document.getElementById('wrapper').style.marginLeft = '300px';
@@ -55,18 +57,26 @@ class HumburgerMenu extends Component {
     }
   }
 
+  componentWillUnmount() {
+    document.getElementById('wrapper').style.marginLeft = '0';
+  }
+
   onClick = () => {
     const { toggleShow } = this.state;
     const { isDeskTop } = this.props;
-    this.setState({ toggleShow: !toggleShow }, newState => {
+    this.setState({ toggleShow: !toggleShow }, () => {
       if (isDeskTop) {
-        if (newState.toggleShow) {
+        if (this.state.toggleShow) {
           document.getElementById('wrapper').style.marginLeft = '300px';
         } else {
           document.getElementById('wrapper').style.marginLeft = '0';
         }
       }
     });
+  };
+
+  handleSubClick = target => {
+    this.setState({ activeSub: target });
   };
 
   render() {
@@ -117,9 +127,25 @@ class HumburgerMenu extends Component {
                     <MenuIcon className="fas fa-home" />
                     Home
                   </MenuItem>
-                  <MenuItem to={GROUP_RESULTS_URL}>
+                  <MenuItem
+                    as="div"
+                    onClick={() => this.handleSubClick('results')}
+                    block
+                  >
                     <MenuIcon className="fas fa-poll-h" />
                     Results
+                    {this.state.activeSub === 'results' && (
+                      <>
+                        <MenuItem to={TRAINER_RESULTS_URL} block sub>
+                          <MenuIcon className="fas fa-poll-h" />
+                          Your Results
+                        </MenuItem>
+                        <MenuItem to={GROUP_RESULTS_URL} block sub>
+                          <MenuIcon className="fas fa-poll-h" />
+                          All Results
+                        </MenuItem>
+                      </>
+                    )}
                   </MenuItem>
                   <MenuItem to={GROUP_SESSIONS_URL}>
                     <MenuIcon className="far fa-calendar-alt" />
