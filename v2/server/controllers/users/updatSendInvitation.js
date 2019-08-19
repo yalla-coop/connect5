@@ -1,4 +1,5 @@
 const boom = require('boom');
+const moment = require('moment');
 
 const sendEmailInvitation = require('./../../helpers/emails/sendEmailInvitation');
 
@@ -23,16 +24,18 @@ const updateSentInvitationEmails = async (req, res, next) => {
     const sessionDetails = await getSessionDetails({ id: sessionId });
 
     const {
-      date: sessionDate,
+      date,
       type,
       region,
       startTime,
       endTime,
       trainers,
       shortId,
+      address,
     } = sessionDetails[0];
 
     const preSurvey = preSurveys[type];
+    const sessionDate = moment(date).format('DD/MMMM/YYYY');
 
     let preServeyLink = null;
 
@@ -57,6 +60,7 @@ const updateSentInvitationEmails = async (req, res, next) => {
         startTime,
         endTime,
         shortId,
+        address: address || 'TBC',
       });
       // update the email status to sent;
       newEmailsObj = newEmails.map(email => {
@@ -65,7 +69,7 @@ const updateSentInvitationEmails = async (req, res, next) => {
       await addSentEmail({
         sessionId,
         emailData: {
-          location: region,
+          location: address,
           startTime,
           endTime,
           trainers: trainerName,

@@ -67,6 +67,7 @@ const SendInvitation = async (req, res, next) => {
     }
     return next(boom.badRequest('Some arguments are missed'));
   } catch (error) {
+    console.log(error);
     return next(boom.badImplementation());
   }
 };
