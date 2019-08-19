@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Input } from 'antd';
 import Button from '../../common/Button';
-import Header from '../../common/Header';
 import HumburgerMenu from '../../common/Menu';
 import logo from '../../../assets/logo.png';
 import history from '../../../history';

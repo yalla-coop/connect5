@@ -4,13 +4,11 @@ import { fetchLocalLeads } from '../../../actions/users';
 import { signUpTrainer, checkUniqeEmail } from '../../../actions/authAction';
 
 import Button from '../../common/Button';
-import Header from '../../common/Header';
 import HumburgerMenu from '../../common/Menu';
 import logo from '../../../assets/logo.png';
 import {
   Wrapper,
   ContentWrapper,
-  Title,
   Form,
   Input,
   Password,

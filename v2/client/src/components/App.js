@@ -51,7 +51,6 @@ import Unauthorized from './pages/ErrorPages/403';
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
 import Spin from './common/Spin';
-import HumburgerMenu from './common/Menu';
 
 // ROUTES
 import {
