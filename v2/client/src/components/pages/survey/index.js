@@ -200,7 +200,14 @@ class Survey extends Component {
 
   // VALIDATION
   // handles user input for PIN field
-  handlePIN = e => this.setState({ PIN: e.target.value });
+  handlePIN = e => {
+    const { value } = e.target;
+    this.setState({ PIN: value }, () => {
+      if (value.length === 5) {
+        this.checkPINonBlur();
+      }
+    });
+  };
 
   // validates PIN input on blur/focus
   checkPINonBlur = () => {
