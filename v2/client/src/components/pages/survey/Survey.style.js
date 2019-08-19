@@ -120,7 +120,7 @@ export const SectionHeadline = styled.h1`
 `;
 
 export const SectionSubHeadline = styled.h2`
-  font-weight: 350
+  font-weight: 350;
   font-size: 2rem;
   color: ${colors.black};
 `;
