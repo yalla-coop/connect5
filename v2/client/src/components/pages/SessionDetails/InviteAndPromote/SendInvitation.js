@@ -55,6 +55,7 @@ class SendInvitation extends Component {
       shortId,
       address,
     } = sessionDetails;
+    console.log(address);
     const confirmedEmails = sessionDetails.participantsEmails.filter(
       item => item.status === 'confirmed'
     );
