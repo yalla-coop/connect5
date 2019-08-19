@@ -36,7 +36,7 @@ import ChangePassword from './pages/ChangePassword';
 import ParticipantProgress from './pages/ParticipantProgress';
 import Certificate from './pages/Certificate';
 import AdminDemographic from './pages/AdminDemographic';
-import DecideView from './pages/DecideView';
+// import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
 import ForgetPassword from './pages/ForgetPassword';
 import ResetPassword from './pages/ForgetPassword/ResetPassword';
@@ -64,7 +64,6 @@ import {
   GROUP_RESULTS_URL,
   TRAINER_SESSIONS_URL,
   GROUP_SESSIONS_URL,
-  DECIDE_VIEW_URL,
   SESSION_DETAILS_URL,
   FORGET_PASSWORD,
   TRAINER_VIEW_PARTICIPANT,
@@ -176,7 +175,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path={GROUP_RESULTS_URL}
@@ -238,7 +236,7 @@ class App extends Component {
               role={role}
               navbar
             />
-            <PrivateRoute
+            {/* <PrivateRoute
               exact
               path={DECIDE_VIEW_URL}
               Component={DecideView}
@@ -248,6 +246,7 @@ class App extends Component {
               role={role}
               navbar
             />
+          */}
             <PrivateRoute
               exact
               path="/create-session"
@@ -278,16 +277,13 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <Route
               exact
               path={LOGIN_URL}
               render={() => {
                 if (loaded) {
                   return isAuthenticated ? (
-                    <Redirect
-                      to={role === 'trainer' ? DASHBOARD_URL : DECIDE_VIEW_URL}
-                    />
+                    <Redirect to={DASHBOARD_URL} />
                   ) : (
                     <Login />
                   );
@@ -296,7 +292,6 @@ class App extends Component {
               }}
             />
             <Route exact path={FORGET_PASSWORD} component={ForgetPassword} />
-
             <Route
               exact
               path={SIGN_UP_URL}
@@ -366,9 +361,7 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <Route path="/certificate/:sessionId" component={Certificate} />
-
             <PrivateRoute
               exact
               path={TRAINER_SESSIONS_URL}
@@ -389,7 +382,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path={TRAINER_VIEW_PARTICIPANT}
@@ -400,7 +392,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path="/sessions-files"
@@ -412,17 +403,14 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <Route
               exact
               path="/confirm/:shortId"
               component={ConfirmRegistration}
             />
-
             <Route path="/404err" render={() => <NotFound />} />
             <Route path="/500err" render={() => <ServerError />} />
             <Route path="/unauthorized" render={() => <Unauthorized />} />
-
             <Route render={() => <NotFound />} />
           </Switch>
         </Router>

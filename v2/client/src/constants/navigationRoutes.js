@@ -20,7 +20,7 @@ export const GROUP_RESULTS_URL = '/group-results';
 export const TRAINERS_URL = '/trainers';
 export const GROUP_SESSIONS_URL = '/sessions';
 export const ADD_TRAINER_URL = '/add-trainer';
-export const DECIDE_VIEW_URL = '/welcome-back';
+// export const DECIDE_VIEW_URL = '/welcome-back';
 
 // local lead
 export const LOCAL_LEAD_SESSIONS_URL = '/localLead-sessions';

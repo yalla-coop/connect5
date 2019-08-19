@@ -10,7 +10,6 @@ import {
   TRAINERS_URL,
   GROUP_SESSIONS_URL,
   DEMOGRAPHICS_URL,
-  DECIDE_VIEW_URL,
 } from '../../../constants/navigationRoutes';
 
 import USER_TYPES from '../../../constants/userTypes';
@@ -36,7 +35,7 @@ class HumburgerMenu extends Component {
 
   render() {
     const { toggleShow } = this.state;
-    const { viewLevel, role } = this.props;
+    const { viewLevel } = this.props;
     return (
       <>
         <MenuDiv>
@@ -54,9 +53,7 @@ class HumburgerMenu extends Component {
                 {/* trainer */}
                 {viewLevel === USER_TYPES.trainer && (
                   <>
-                    <MenuItem
-                      to={role === 'trainer' ? DASHBOARD_URL : DECIDE_VIEW_URL}
-                    >
+                    <MenuItem to={DASHBOARD_URL}>
                       <MenuIcon className="fas fa-home" />
                       Home
                     </MenuItem>
@@ -78,7 +75,7 @@ class HumburgerMenu extends Component {
                 {/* Admin */}
                 {viewLevel === USER_TYPES.admin && (
                   <>
-                    <MenuItem to={DECIDE_VIEW_URL}>
+                    <MenuItem to={DASHBOARD_URL}>
                       <MenuIcon className="fas fa-home" />
                       Home
                     </MenuItem>
@@ -104,7 +101,7 @@ class HumburgerMenu extends Component {
                 {/* LOCAL LEAD */}
                 {viewLevel === USER_TYPES.localLead && (
                   <>
-                    <MenuItem to={DECIDE_VIEW_URL}>
+                    <MenuItem to={DASHBOARD_URL}>
                       <MenuIcon className="fas fa-home" />
                       Home
                     </MenuItem>

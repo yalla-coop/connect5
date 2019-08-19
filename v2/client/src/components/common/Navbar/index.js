@@ -15,7 +15,6 @@ import {
   TRAINERS_URL,
   GROUP_SESSIONS_URL,
   DEMOGRAPHICS_URL,
-  DECIDE_VIEW_URL,
 } from '../../../constants/navigationRoutes';
 
 import USER_TYPES from '../../../constants/userTypes';
@@ -53,7 +52,7 @@ const MenuIcon = styled.i`
   font-size: 25px;
 `;
 
-const Navbar = ({ viewLevel, role }) => {
+const Navbar = ({ viewLevel }) => {
   // RENDERING IS BASED ON KNOWING THE TYPE OF USER
 
   return (
@@ -61,7 +60,7 @@ const Navbar = ({ viewLevel, role }) => {
       {/* TRAINER */}
       {viewLevel === USER_TYPES.trainer && (
         <>
-          <MenuItem to={role === 'trainer' ? DASHBOARD_URL : DECIDE_VIEW_URL}>
+          <MenuItem to={DASHBOARD_URL}>
             <MenuIcon className="fas fa-home" />
             Home
           </MenuItem>
@@ -82,7 +81,7 @@ const Navbar = ({ viewLevel, role }) => {
       {/* ADMIN */}
       {viewLevel === USER_TYPES.admin && (
         <>
-          <MenuItem to={DECIDE_VIEW_URL}>
+          <MenuItem to={DASHBOARD_URL}>
             <MenuIcon className="fas fa-home" />
             Home
           </MenuItem>
@@ -107,7 +106,7 @@ const Navbar = ({ viewLevel, role }) => {
       {/* LOCAL LEAD */}
       {viewLevel === USER_TYPES.localLead && (
         <>
-          <MenuItem to={DECIDE_VIEW_URL}>
+          <MenuItem to={DASHBOARD_URL}>
             <MenuIcon className="fas fa-home" />
             Home
           </MenuItem>
