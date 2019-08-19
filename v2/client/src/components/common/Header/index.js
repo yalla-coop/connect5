@@ -23,7 +23,7 @@ const sharedStyles = css`
 
 export const sectionHeader = css`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   top: ${props => (props.nudge ? '31px' : 0)};
   background-color: ${colors.primary};
   color: ${colors.offWhite};
@@ -39,7 +39,7 @@ export const sectionHeader = css`
       content: ' ';
       position: absolute;
       border-bottom: ${borders.header};
-      bottom: -10px;
+      bottom: -12px;
       left: 0;
       width: 100%;
     }
@@ -105,21 +105,19 @@ const Header = ({
     <>
       {type === 'home' ? (
         <StyledHeader type={type} {...props}>
-          <HomeIcon to={userRole ? '/participant-dashboard' : HOME_URL}>
-            <i className="fas fa-home" />
-          </HomeIcon>
-          {isDeskTop ? (
+          {isAuthenticated ? (
             <HumburgerMenu />
           ) : (
             <Logo src={Connect5Logo} alt="logo" />
           )}
+          <HomeIcon to={userRole ? '/participant-dashboard' : HOME_URL}>
+            <i className="fas fa-home" />
+          </HomeIcon>
         </StyledHeader>
       ) : (
         <StyledHeader type={type} {...props}>
+          {isAuthenticated && type === 'section' && <HumburgerMenu />}
           <h1>{label}</h1>
-          {isAuthenticated && isDeskTop && type === 'section' && (
-            <HumburgerMenu />
-          )}
         </StyledHeader>
       )}
     </>

@@ -145,7 +145,7 @@ class App extends Component {
   render() {
     const { isAuthenticated, loaded, role } = this.props;
     return (
-      <Wrapper>
+      <Wrapper id="wrapper">
         <Router history={history}>
           <Switch>
             <PrivateRoute

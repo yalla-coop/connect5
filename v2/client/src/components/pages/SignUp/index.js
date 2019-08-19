@@ -4,11 +4,11 @@ import { fetchLocalLeads } from '../../../actions/users';
 import { signUpTrainer, checkUniqeEmail } from '../../../actions/authAction';
 
 import Button from '../../common/Button';
-import Header from '../../common/Header';
+import HumburgerMenu from '../../common/Menu';
+import logo from '../../../assets/logo.png';
 import {
   Wrapper,
   ContentWrapper,
-  Title,
   Form,
   Input,
   Password,
@@ -16,6 +16,10 @@ import {
   Item,
   Redirecting,
   StyledLink,
+  LoginHeading,
+  H4,
+  Logo,
+  AnotherLink,
 } from './SignUp.style';
 
 const { Option } = Select;
@@ -114,6 +118,7 @@ class SignUp extends Component {
       localLeads,
       isAuthenticated,
       history,
+      isDeskTop,
     } = this.props;
 
     if (isAuthenticated) {
@@ -123,10 +128,15 @@ class SignUp extends Component {
 
     return (
       <>
-        <Header type="home" />
+        {isDeskTop && <HumburgerMenu dark="dark" />}
+        <LoginHeading>
+          <AnotherLink to="/">
+            <Logo src={logo} alt="img" />
+          </AnotherLink>
+          <H4>Create a new account</H4>
+        </LoginHeading>
         <Wrapper className="sign-up">
           <ContentWrapper>
-            <Title>Create a new Connect 5 Trainer Account</Title>
             <Form
               onSubmit={this.handleSubmit}
               className="login-form"
@@ -294,6 +304,7 @@ const mapStateToProps = state => {
     localLeads: state.fetchedData.localLeadsList,
     isAuthenticated: state.auth.isAuthenticated,
     isEmailUnique: state.auth.isEmailUnique,
+    isDeskTop: state.checkBrowserWidth.isDeskTop,
   };
 };
 

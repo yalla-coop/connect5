@@ -1,17 +1,23 @@
 import styled from 'styled-components';
 
-import { colors } from '../../../theme';
+import { colors, breakpoints } from '../../../theme';
 
 export const Wrapper = styled.div`
   padding: 80px 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
 `;
 
 export const TopSection = styled.div`
   margin-bottom: 2rem;
   width: 100%;
+  @media ${breakpoints.mobileL} {
+    text-align: center;
+    margin: 3rem 0;
+  }
 `;
 
 export const Title = styled.h2`
