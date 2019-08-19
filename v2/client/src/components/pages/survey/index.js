@@ -374,6 +374,7 @@ class Survey extends Component {
       surveyData,
       submitSurvey: submitSurveyAction,
       isAuthenticated,
+      role,
     } = this.props;
     const { uniqueGroups } = surveyData;
     const { surveyType, sessionId, questionsForSurvey } = surveyData.surveyData;
@@ -393,7 +394,7 @@ class Survey extends Component {
       questionsForParticipant,
     };
     if (PIN && completionRate === 100) {
-      submitSurveyAction(formSubmission, isAuthenticated, sessionId);
+      submitSurveyAction({ formSubmission, isAuthenticated, sessionId, role });
     }
   };
 
@@ -532,6 +533,8 @@ const mapStateToProps = state => {
     PINExist: state.survey.PINExist,
     skipDemo: state.survey.skipDemo,
     errors: state.survey.errors,
+    role: state.auth.role,
+    isAuthenticated: state.auth.isAuthenticated,
   };
 };
 
