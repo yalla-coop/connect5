@@ -12,6 +12,7 @@ import {
   GROUP_SESSIONS_URL,
   DEMOGRAPHICS_URL,
   DECIDE_VIEW_URL,
+  SIGN_UP_URL,
 } from '../../../constants/navigationRoutes';
 
 import USER_TYPES from '../../../constants/userTypes';
@@ -21,7 +22,6 @@ import {
   Menu,
   MenuItem,
   MainDiv,
-  MenuClose,
   MenuIcon,
   LogOut,
   OpenIconDiv,
@@ -29,28 +29,41 @@ import {
 
 class HumburgerMenu extends Component {
   state = {
-    toggleShow: false,
+    toggleShow: !!this.props.isDeskTop,
   };
 
-  componentDidUpdate() {
-    /*
+  componentDidMount() {
     const { toggleShow } = this.state;
-    if (toggleShow) {
-      document.getElementById('wrapper').style.marginLeft = '300px';
-    }
-    if (!toggleShow) {
+    if (this.props.isDeskTop) {
+      if (toggleShow) {
+        document.getElementById('wrapper').style.marginLeft = '300px';
+      }
+    } else {
       document.getElementById('wrapper').style.marginLeft = '0';
-    } */
+    }
+  }
+
+  componentDidUpdate() {
+    const { toggleShow } = this.state;
+    if (this.props.isDeskTop) {
+      if (toggleShow) {
+        document.getElementById('wrapper').style.marginLeft = '300px';
+      }
+    } else {
+      document.getElementById('wrapper').style.marginLeft = '0';
+    }
   }
 
   onClick = () => {
     const { toggleShow } = this.state;
+    const { isDeskTop } = this.props;
     this.setState({ toggleShow: !toggleShow }, () => {
-      console.log('toggleShow =? ', this.state.toggleShow);
-      if (this.state.toggleShow) {
-        document.getElementById('wrapper').style.marginLeft = '300px';
-      } else {
-        document.getElementById('wrapper').style.marginLeft = '0';
+      if (isDeskTop) {
+        if (this.state.toggleShow) {
+          document.getElementById('wrapper').style.marginLeft = '300px';
+        } else {
+          document.getElementById('wrapper').style.marginLeft = '0';
+        }
       }
     });
   };
@@ -58,15 +71,17 @@ class HumburgerMenu extends Component {
   render() {
     // console.log(this.state);
     const { toggleShow } = this.state;
-    const { role, viewLevel, logout: logoutAction } = this.props;
+    const { role, viewLevel, logout: logoutAction, dark } = this.props;
+
     return (
       <MenuDiv>
-        <OpenIconDiv onClick={this.onClick}>
-          <MenuIcon className="fas fa-bars" />
-        </OpenIconDiv>
-
+        {viewLevel && (
+          <OpenIconDiv onClick={this.onClick}>
+            <MenuIcon className="fas fa-bars" />
+          </OpenIconDiv>
+        )}
         {toggleShow && (
-          <Menu>
+          <Menu dark={dark}>
             <MainDiv>
               {/* trainer */}
               {viewLevel === USER_TYPES.trainer && (
@@ -176,6 +191,23 @@ class HumburgerMenu extends Component {
                   </LogOut>
                 </>
               )}
+              {!viewLevel && (
+                <>
+                  {console.log(dark)}
+                  <MenuItem to="/login" dark={dark}>
+                    <MenuIcon className="fas fa-sign-in-alt" />
+                    LOGIN TO YOUR ACCOUNT
+                  </MenuItem>
+                  <MenuItem to="/participant-login" dark={dark}>
+                    <MenuIcon className="fas fa-sign-in-alt" />
+                    LOGIN AS ACOURSE PARTICIPANT
+                  </MenuItem>
+                  <MenuItem to={SIGN_UP_URL} dark={dark}>
+                    <MenuIcon className="fas fa-user-plus" />
+                    CREATE NEW ACCOUNT
+                  </MenuItem>
+                </>
+              )}
             </MainDiv>
           </Menu>
         )}
@@ -188,6 +220,7 @@ const mapStateToProps = state => ({
   role: state.auth.role,
   loaded: state.auth.loaded,
   viewLevel: state.viewLevel.viewLevel,
+  isDeskTop: state.checkBrowserWidth.isDeskTop,
 });
 
 export default connect(

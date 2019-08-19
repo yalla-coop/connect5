@@ -116,9 +116,7 @@ const Header = ({
         </StyledHeader>
       ) : (
         <StyledHeader type={type} {...props}>
-          {isAuthenticated && isDeskTop && type === 'section' && (
-            <HumburgerMenu />
-          )}
+          {isAuthenticated && type === 'section' && <HumburgerMenu />}
           <h1>{label}</h1>
         </StyledHeader>
       )}

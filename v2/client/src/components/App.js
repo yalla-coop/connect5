@@ -82,7 +82,6 @@ moment.updateLocale('en', {
 const Wrapper = styled.div`
   min-height: 100vh;
   background-color: ${colors.offWhite};
-  margin-left: ${props => (props.toggleShow ? '30%' : 0)};
 `;
 
 class App extends Component {
@@ -144,18 +143,6 @@ class App extends Component {
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
   };
-
-  // openMenu = toggle => {
-  //   const { toggleShow } = this.state;
-  //   this.setState({ toggleShow: toggle }, () => {
-  //     if (toggleShow) {
-  //       document.getElementById('wrapper').style.marginLeft = '250px';
-  //     }
-  //     if (!toggleShow) {
-  //       document.getElementById('wrapper').style.marginLeft = '0';
-  //     }
-  //   });
-  // };
 
   render() {
     const { isAuthenticated, loaded, role } = this.props;

@@ -8,14 +8,14 @@ export const MenuDiv = styled.div`
 `;
 export const Menu = styled.div`
   position: absolute;
-  background: ${colors.white};
+  background: ${({ dark }) => (dark ? '#526192' : '#fff')};
   z-index: 100;
-  top: 48px;
+  top: ${({ dark }) => (dark ? '0' : '48px')};
   left: 0;
   width: 250px;
   height: 100vh;
   transition: all 1s ease;
-  padding: 10px;
+  padding: ${({ dark }) => (dark ? '3rem 0 0 1rem' : '2rem 0 0 1rem')};
   z-index: 2000;
   @media ${breakpoints.mobileL} {
     width: 300px;
@@ -31,7 +31,10 @@ export const MenuItem = styled(Link)`
   display: flex;
   padding: 4px;
   align-items: center;
-  color: ${colors.lightPrimary};
+  color: ${({ dark }) => {
+    console.log(dark);
+    return dark ? '#fff' : colors.lightPrimary;
+  }};
   font-weight: bold;
   transition: all 500ms ease;
   cursor: pointer;
@@ -39,8 +42,7 @@ export const MenuItem = styled(Link)`
     margin-right: 0.5rem;
   }
   :hover {
-    text-indent: 10px;
-    font-size: 1.1rem;
+    text-indent: 5px;
     background: ${colors.lightGray};
     color: ${colors.primary};
   }
