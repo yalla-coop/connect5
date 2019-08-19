@@ -64,6 +64,7 @@ export const FooterDiv = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
+  max-width: 900px;
 `;
 
 export const StepProgress = styled.h3`
