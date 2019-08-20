@@ -153,8 +153,13 @@ class CreateSession extends Component {
     this.props.storeInputData({ startDate: defaultValue });
   };
 
+  onKeyPress = e => {
+    return e.key === 'Enter' && e.preventDefault();
+  };
+
   onInputChange = ({ target: { value, name } }) => {
-    this.props.storeInputData({ [name]: value });
+    const newValue = value.replace(/^\s*\s*$/, '');
+    this.props.storeInputData({ [name]: newValue });
   };
 
   onSelectSessionChange = value => {
@@ -355,6 +360,7 @@ class CreateSession extends Component {
       onFormSubmit,
       onStartTimeChange,
       onEndTimeChange,
+      onKeyPress,
     } = this;
 
     return (
@@ -402,6 +408,7 @@ class CreateSession extends Component {
               name="inviteesNumber"
               size="large"
               min="0"
+              onKeyPress={e => onKeyPress(e)}
             />
             {inviteesNumber === null && <Warning>* required</Warning>}
           </InputDiv>
@@ -433,6 +440,7 @@ class CreateSession extends Component {
               onChange={onInputChange}
               name="location"
               size="large"
+              onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
           <InputDiv>
@@ -443,6 +451,7 @@ class CreateSession extends Component {
               onChange={onInputChange}
               name="addressLine1"
               size="large"
+              onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
           <InputDiv>
@@ -453,6 +462,7 @@ class CreateSession extends Component {
               onChange={onInputChange}
               name="addressLine2"
               size="large"
+              onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
 
