@@ -6,6 +6,7 @@ export const MenuDiv = styled.div`
   justify-self: flex-start;
   z-index: 1000;
 `;
+
 export const Menu = styled.div`
   position: absolute;
   background: ${({ dark }) => (dark ? '#526192' : '#fff')};
@@ -15,7 +16,7 @@ export const Menu = styled.div`
   width: 250px;
   height: 100vh;
   transition: all 1s ease;
-  padding: ${({ dark }) => (dark ? '3rem 0 0 1rem' : '2rem 0 0 1rem')};
+  padding: ${({ dark }) => (dark ? '3rem 0 0 .4rem' : '2rem 0 0 1rem')};
   z-index: 2000;
   @media ${breakpoints.mobileL} {
     width: 300px;
@@ -32,7 +33,6 @@ export const MenuItem = styled(Link)`
   padding: 4px;
   align-items: center;
   color: ${({ dark }) => {
-    console.log(dark);
     return dark ? '#fff' : colors.lightPrimary;
   }};
   font-weight: bold;
@@ -42,7 +42,7 @@ export const MenuItem = styled(Link)`
     margin-right: 0.5rem;
   }
   :hover {
-    text-indent: 5px;
+    text-indent: 4px;
     background: ${colors.lightGray};
     color: ${colors.primary};
   }
@@ -64,8 +64,7 @@ export const LogOut = styled.button`
     margin-right: 0.5rem;
   }
   :hover {
-    text-indent: 10px;
-    font-size: 1.1rem;
+    text-indent: 4px;
     background: ${colors.lightGray};
     color: ${colors.primary};
   }
@@ -75,13 +74,9 @@ export const OpenIconDiv = styled.div`
   cursor: pointer;
   border-radius: 50%;
   display: inline-block;
-  padding: 5px 8px 5px 12px;
+  padding: 4px 8px 3px 0px;
   margin-top: -7px;
   margin-right: 10px;
-  // :hover {
-  //   background: ${colors.transLightGray};
-  //   outline: none;
-  // }
   @media ${breakpoints.mobileL} {
     margin-right: 20px;
   }
@@ -95,16 +90,5 @@ export const MenuIcon = styled.i`
   :hover {
     color: ${colors.lightPrimary};
     outline: none;
-  }
-`;
-
-export const MenuClose = styled.i`
-  color: '#F7F7F9',
-  padding: '5px 5px 0 0'
-  font-size: 30px;
-  cursor: pointer;
-
-  :hover {
-    color: ${colors.primary};
   }
 `;

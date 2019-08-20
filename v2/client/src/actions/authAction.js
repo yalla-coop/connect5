@@ -11,6 +11,8 @@ import {
   ADD_TRAINER_TO_GROUP_SUCCESS,
   CHECK_UNIQUE_EMAIL_ERROR,
   LOGOUT,
+  LOADING_TRUE,
+  LOADING_FALSE,
 } from '../constants/actionTypes';
 import { returnErrors } from './errorAction';
 
@@ -30,18 +32,31 @@ export const loginUser = loginData => dispatch => {
   // Request body
   const body = JSON.stringify({ email, password });
 
+  dispatch({
+    type: LOADING_TRUE,
+    payload: 'loginLoading',
+  });
+
   axios
     .post('/api/login', body, config)
-    .then(res =>
+    .then(res => {
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
-      })
-    )
+      });
+      dispatch({
+        type: LOADING_FALSE,
+        payload: 'loginLoading',
+      });
+    })
     .catch(err => {
       dispatch(
         returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL')
       );
+      dispatch({
+        type: LOADING_FALSE,
+        payload: 'loginLoading',
+      });
       dispatch({
         type: LOGIN_FAIL,
       });
@@ -51,12 +66,27 @@ export const loginUser = loginData => dispatch => {
 // send a request to register new trainer
 export const signUpTrainer = trainerData => async dispatch => {
   try {
+    dispatch({
+      type: LOADING_TRUE,
+      payload: 'signupLoading',
+    });
     const res = await axios.post('/api/trainers', trainerData);
     const { data } = res;
 
-    dispatch({ type: LOGIN_SUCCESS, payload: data });
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: data,
+    });
+
+    dispatch({
+      type: LOADING_FALSE,
+      payload: 'signupLoading',
+    });
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: LOADING_FALSE,
+      payload: 'signupLoading',
+    });
   }
 };
 
@@ -117,18 +147,30 @@ export const loginParticipant = PIN => dispatch => {
   // Request body
   const body = JSON.stringify({ PIN });
 
+  dispatch({
+    type: LOADING_TRUE,
+    payload: 'loginParticipantsLoading',
+  });
   axios
     .post('/api/participant-login', body, config)
-    .then(res =>
+    .then(res => {
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
-      })
-    )
+      });
+      dispatch({
+        type: LOADING_FALSE,
+        payload: 'loginParticipantsLoading',
+      });
+    })
     .catch(err => {
       dispatch(returnErrors(err.response, err.response.status, 'LOGIN_FAIL'));
       dispatch({
         type: LOGIN_FAIL,
+      });
+      dispatch({
+        type: LOADING_FALSE,
+        payload: 'loginParticipantsLoading',
       });
     });
 };

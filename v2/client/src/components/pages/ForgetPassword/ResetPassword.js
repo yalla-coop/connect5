@@ -80,10 +80,10 @@ class ResetPassword extends Component {
   };
 
   onFormSubmit = e => {
-    const { token } = this.props.match.params;
+    const { resetPassword: resetPasswordActionCreator, match } = this.props;
+    const { token } = match.params;
     const { fields } = this.state;
     const { newPassword } = fields;
-    const { resetPassword: resetPasswordActionCreator } = this.props;
     e.preventDefault();
     const isValide = this.validateForm();
     if (isValide) {
@@ -99,6 +99,7 @@ class ResetPassword extends Component {
 
   render() {
     const { onInputChange, onFormSubmit } = this;
+    const { loading } = this.props;
     const { fields, errors, msg } = this.state;
     const { newPassword, reNewPassword } = fields;
     const { newPasswordError, reNewPasswordError } = errors;
@@ -142,6 +143,7 @@ class ResetPassword extends Component {
                 label="Submit"
                 height="40px"
                 width="100%"
+                loading={loading}
               />
             </InputDiv>
             <ErrorMsg>{msg}</ErrorMsg>
@@ -154,6 +156,7 @@ class ResetPassword extends Component {
 
 const mapStateToProps = state => ({
   error: state.error,
+  loading: state.loading.resetPasswordLoading,
 });
 
 export default connect(

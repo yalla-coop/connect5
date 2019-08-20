@@ -124,7 +124,7 @@ class Login extends Component {
     const { email, password } = fields;
     const { emailError, passwordError } = errors;
     const { onInputChange, onFormSubmit } = this;
-    const { isDeskTop } = this.props;
+    const { isDeskTop, loading } = this.props;
     return (
       <>
         {isDeskTop && <HumburgerMenu dark="dark" />}
@@ -171,6 +171,7 @@ class Login extends Component {
                 label="LOGIN"
                 height="40px"
                 width="100%"
+                loading={loading}
               />
             </InputDiv>
 
@@ -179,7 +180,7 @@ class Login extends Component {
 
           <NoAccount>
             <Paragraph>
-              Don't have an account?
+              Don{"'"}t have an account?
               <AnotherLink to={SIGN_UP_URL}> Sign Up!</AnotherLink>
             </Paragraph>
             <Paragraph>
@@ -198,6 +199,7 @@ const mapStateToProps = state => ({
   error: state.error,
   role: state.auth.role,
   isDeskTop: state.checkBrowserWidth.isDeskTop,
+  loading: state.loading.loginLoading,
 });
 
 export default connect(

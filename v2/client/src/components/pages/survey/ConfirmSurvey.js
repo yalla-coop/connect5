@@ -47,16 +47,16 @@ export default class ConfirmSurvey extends Component {
             <Paragraph>{sessionType}</Paragraph>
           </DetailsDiv>
           <DetailsDiv>
-            <Paragraph strong>Trainers: </Paragraph>
-            <Paragraph>{this.renderTrainerNames(trainerNames)}</Paragraph>
-          </DetailsDiv>
-          <DetailsDiv>
             <Paragraph strong>Survey Type: </Paragraph>
             <Paragraph>
               {surveyType.includes('pre')
                 ? 'Pre-Session Survey'
                 : 'Post-Session Survey'}
             </Paragraph>
+          </DetailsDiv>
+          <DetailsDiv>
+            <Paragraph strong>Trainers: </Paragraph>
+            <Paragraph>{this.renderTrainerNames(trainerNames)}</Paragraph>
           </DetailsDiv>
         </SessionDetails>
         <ImportantNote>
