@@ -31,13 +31,15 @@ class SendInvitation extends Component {
       recipients,
     } = emailInfo;
 
-    const { location, addressLine1, addressLine2 } = address;
     let fullAddress = '';
+
     if (address) {
+      const { location, addressLine1, addressLine2 } = address;
       if (location || addressLine1 || addressLine2) {
-        fullAddress = `${address.location}, ${address.addressLine1}, ${address.addressLine2}`;
+        fullAddress = `${location}, ${addressLine1}, ${addressLine2}`;
       }
     }
+
     return (
       <EmailInfoWrapper>
         <Header type="view" label="Invite Emails" />
