@@ -2,7 +2,7 @@
 // Pckages
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Collapse } from 'antd';
+import { Collapse, Empty } from 'antd';
 
 // Functions
 import { fetchParticipentSessions } from '../../../actions/groupSessionsAction';
@@ -30,7 +30,7 @@ class SessionsFiles extends Component {
 
   render() {
     const { sessions } = this.props;
-    const completedSessions = sessions.filter(session => session.completed);
+    const completedSessions = sessions;
     return (
       <div>
         <Header type="home" userRole="participent" />
@@ -41,27 +41,41 @@ class SessionsFiles extends Component {
             defaultActiveKey={Object.keys(materials)}
             expandIconPosition="right"
           >
-            {completedSessions.map(session => (
-              <Panel
-                header={`Session: ${uppercaseSurvey(session.sessions.type)}`}
-                key={session.sessions.type}
-              >
-                <ul style={{ padding: '1rem', width: '90%', margin: '0 auto' }}>
-                  {materials[session.sessions.type].length > 0 &&
-                    materials[session.sessions.type].map(resource => (
-                      <li>
-                        <a
-                          href={resource.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {resource.displayName}
-                        </a>
-                      </li>
-                    ))}
-                </ul>
-              </Panel>
-            ))}
+            {completedSessions.length ? (
+              completedSessions.map(
+                session =>
+                  materials[session.sessions.type].length > 0 && (
+                    <Panel
+                      header={`Session: ${uppercaseSurvey(
+                        session.sessions.type
+                      )}`}
+                      key={session.sessions.type}
+                    >
+                      <ul
+                        style={{
+                          padding: '1rem',
+                          width: '90%',
+                          margin: '0 auto',
+                        }}
+                      >
+                        {materials[session.sessions.type].map(resource => (
+                          <li>
+                            <a
+                              href={resource.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {resource.displayName}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </Panel>
+                  )
+              )
+            ) : (
+              <Empty description="No Material" />
+            )}
           </Collapse>
         </Wrapper>
       </div>

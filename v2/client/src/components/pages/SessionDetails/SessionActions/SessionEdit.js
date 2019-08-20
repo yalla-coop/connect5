@@ -287,9 +287,9 @@ class EditSession extends Component {
       emails,
       startTime,
       endTime,
-      location,
-      addressLine1,
-      addressLine2,
+      location: location || 'N/A',
+      addressLine1: addressLine1 || 'N/A',
+      addressLine2: addressLine2 || 'N/A',
     };
 
     this.props.sessionUpdateAction(sessionData, id);

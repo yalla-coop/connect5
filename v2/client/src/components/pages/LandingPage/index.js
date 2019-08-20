@@ -108,6 +108,20 @@ class LandingPage extends Component {
               <AboutUs />
             </Drawer>
           </ButtonDiv>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://drive.google.com/file/d/1UKj901L9flxLPN1ZA11oNGk3UKhXBHqy/view?usp=sharing"
+          >
+            <ButtonDiv>
+              <Button
+                label="Read Connect 5 User Manual"
+                width="100%"
+                height="100%"
+                type="primary"
+              />
+            </ButtonDiv>
+          </a>
         </ButtonContainer>
       </Wrapper>
     );

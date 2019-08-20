@@ -233,14 +233,8 @@ class CreateSession extends Component {
 
   checkError = () => {
     const { inputData } = this.props;
-    const { startDate, inviteesNumber, session, region, emails } = inputData;
-    const isError = !(
-      !!startDate &&
-      !!inviteesNumber &&
-      !!session &&
-      !!region &&
-      !!emails
-    );
+    const { startDate, inviteesNumber, session, region } = inputData;
+    const isError = !(!!startDate && !!inviteesNumber && !!session && !!region);
 
     this.props.storeInputData({
       err: isError,
@@ -282,16 +276,16 @@ class CreateSession extends Component {
       startDate,
       inviteesNumber,
       region,
-      partnerTrainer1: partnerTrainer1.key,
-      partnerTrainer2: partnerTrainer2.key,
+      partnerTrainer1: partnerTrainer1 && partnerTrainer1.key,
+      partnerTrainer2: partnerTrainer2 && partnerTrainer2.key,
       emails,
       sendByEmail,
       trainersNames: trainersNamesArray,
       startTime,
       endTime,
-      location,
-      addressLine1,
-      addressLine2,
+      location: location || 'N/A',
+      addressLine1: addressLine1 || 'N/A',
+      addressLine2: addressLine2 || 'N/A',
     };
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
     return !this.checkError() && this.props.createSessionAction(sessionData);

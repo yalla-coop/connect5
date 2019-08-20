@@ -22,18 +22,11 @@ const addSession = async (req, res, next) => {
   } = req.body;
   const trainers = [];
   try {
-    if (
-      session &&
-      startDate &&
-      inviteesNumber &&
-      region &&
-      // partnerTrainer1 &&
-      emails
-    ) {
-      if (partnerTrainer1.length > 0) {
+    if (session && startDate && inviteesNumber && region) {
+      if (partnerTrainer1 && partnerTrainer1.length > 0) {
         trainers.push(partnerTrainer1);
       }
-      if (partnerTrainer2.length > 0) {
+      if (partnerTrainer2 && partnerTrainer2.length > 0) {
         trainers.push(partnerTrainer2);
       } else {
         trainers.push(user._id);
@@ -62,22 +55,24 @@ const addSession = async (req, res, next) => {
         if (process.env.NODE_ENV === 'production') {
           // send invitation link to participant
 
-          const string = trainersNames
-            .filter(item => !!item)
-            .map(name => `${name[0].toUpperCase()}${name.slice(1)}`)
-            .join(' & ');
+          const string =
+            trainersNames &&
+            trainersNames
+              .filter(item => !!item)
+              .map(name => `${name[0].toUpperCase()}${name.slice(1)}`)
+              .join(' & ');
 
           await sendEmailInvitation({
             name: user.name,
             emails,
             sessionDate: startDate,
             type: session,
-            trainerName: string,
+            trainerName: string || 'N/A',
             region,
             startTime,
             endTime,
             shortId: addedSession.shortId,
-            address,
+            address: address || 'N/A',
           });
         }
       }

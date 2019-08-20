@@ -34,3 +34,4 @@ export const USER_PROGRESS = '/my-progress';
 export const USER_LOGIN = '/user-login';
 export const USER_DASHBOARD = '/my-dashboard';
 export const FORGET_PASSWORD = '/forget-password';
+export const PARTICIPANT_DASHBOARD = '/participant-dashboard';
