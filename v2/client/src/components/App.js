@@ -68,6 +68,8 @@ import {
   TRAINER_VIEW_PARTICIPANT,
   MY_RESULTS_URL,
   ALL_RESULTS_URL,
+  ALL_SESSIONS_URL,
+  MY_SESSIONS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -157,7 +159,6 @@ class App extends Component {
               path="/reset-password/:token"
               component={ResetPassword}
             />
-
             <PrivateRoute
               exact
               path={TRAINER_RESULTS_URL}
@@ -168,7 +169,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path={MY_RESULTS_URL}
@@ -179,7 +179,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path={ALL_RESULTS_URL}
@@ -190,7 +189,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path={GROUP_RESULTS_URL}
@@ -378,6 +376,28 @@ class App extends Component {
               navbar
             />
             <Route path="/certificate/:sessionId" component={Certificate} />
+
+            <PrivateRoute
+              exact
+              path={ALL_SESSIONS_URL}
+              Component={ViewSessions}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['trainer', 'localLead', 'admin']}
+              role={role}
+              navbar
+            />
+            <PrivateRoute
+              exact
+              path={MY_SESSIONS_URL}
+              Component={ViewSessions}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['trainer', 'localLead', 'admin']}
+              role={role}
+              navbar
+            />
+
             <PrivateRoute
               exact
               path={TRAINER_SESSIONS_URL}
@@ -388,6 +408,7 @@ class App extends Component {
               role={role}
               navbar
             />
+
             <PrivateRoute
               exact
               path={GROUP_SESSIONS_URL}

@@ -90,7 +90,7 @@ class UserResults extends Component {
       this.props.fetchUserResults(resultsFor, resultForRule);
     } else if (
       match &&
-      match.path === '/group-results' &&
+      match.path === '/group-results/:trainerId?' &&
       (role === 'admin' || role === 'localLead')
     ) {
       if (localLeadId && role === 'admin') {
@@ -110,7 +110,7 @@ class UserResults extends Component {
       }
     } else if (
       match &&
-      match.path === '/trainer-results' &&
+      match.path === '/trainer-results/:trainerId?' &&
       (role === 'admin' || role === 'localLead')
     ) {
       // admin || local-lead viewing trainer || local-lead as a trainer result

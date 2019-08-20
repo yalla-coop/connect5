@@ -15,6 +15,7 @@ import {
   ALL_RESULTS_URL,
   MY_RESULTS_URL,
   MY_SESSIONS_URL,
+  ALL_SESSIONS_URL,
 } from '../../../constants/navigationRoutes';
 
 import USER_TYPES from '../../../constants/userTypes';
@@ -161,18 +162,17 @@ class HumburgerMenu extends Component {
                     Sessions
                     {activeSub === 'sessions' && (
                       <>
-                        <MenuItem to={TRAINER_RESULTS_URL} block sub>
+                        <MenuItem to={MY_SESSIONS_URL} block sub>
                           <MenuIcon className="far fa-calendar-alt" />
                           Your Sessions
                         </MenuItem>
-                        <MenuItem to={GROUP_SESSIONS_URL} block sub>
+                        <MenuItem to={ALL_SESSIONS_URL} block sub>
                           <MenuIcon className="far fa-calendar-alt" />
                           All Sessions
                         </MenuItem>
                       </>
                     )}
                   </MenuItem>
-
                   <MenuItem to={TRAINERS_URL}>
                     <MenuIcon className="fas fa-users" />
                     Trainers & Local Leads
@@ -230,7 +230,7 @@ class HumburgerMenu extends Component {
                           <MenuIcon className="far fa-calendar-alt" />
                           Your Sessions
                         </MenuItem>
-                        <MenuItem to={GROUP_SESSIONS_URL} block sub>
+                        <MenuItem to="/group-sessions" block sub>
                           <MenuIcon className="far fa-calendar-alt" />
                           Your Group Sessions
                         </MenuItem>
