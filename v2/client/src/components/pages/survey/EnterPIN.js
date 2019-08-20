@@ -36,7 +36,7 @@ export default class EnterPIN extends Component {
                 </li>
                 <li>
                   <strong>
-                    the first two letters of your mother's first name
+                    the first two letters of your mother{"'"}s first name
                   </strong>
                 </li>
                 <li>

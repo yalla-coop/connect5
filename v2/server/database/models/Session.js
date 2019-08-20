@@ -52,7 +52,11 @@ const sessionSchema = new Schema(
         trainer: String,
         sessionDate: String,
         sessionType: String,
-        location: String,
+        location: {
+          location: String,
+          addressLine1: String,
+          addressLine2: String,
+        },
         trainers: String,
         recipients: [String],
         startTime: String,
