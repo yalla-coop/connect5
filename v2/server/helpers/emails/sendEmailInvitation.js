@@ -12,6 +12,12 @@ const sendEmailInvitation = ({
   address,
   region,
 }) => {
+  const { location, addressLine1, addressLine2 } = address;
+  let fullAddress = '';
+  if (location || addressLine1 || addressLine2) {
+    fullAddress = `${address.location}, ${address.addressLine1}, ${address.addressLine2}`;
+  }
+
   let emailsList = [];
   if (typeof emails[0] === 'string') {
     emailsList = emails;
@@ -31,7 +37,7 @@ const sendEmailInvitation = ({
     <ul style="text-transfrom: capitalize">
       <li>Session Date: ${sessionDate}</li>
       <li>Session Type: ${type}</li>
-      <li>Address: ${address}</li>
+      <li>Address: ${fullAddress}</li>
       <li>Region: ${region}</li>
       <li>Time: ${startTime} to ${endTime}</li>
       <li>Trainers: ${trainerName}</li>

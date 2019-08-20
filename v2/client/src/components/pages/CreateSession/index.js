@@ -233,13 +233,12 @@ class CreateSession extends Component {
 
   checkError = () => {
     const { inputData } = this.props;
-    const { startDate, inviteesNumber, session, region, emails } = inputData;
+    const { startDate, inviteesNumber, session, region } = inputData; 
     const isError = !(
       !!startDate &&
       !!inviteesNumber &&
       !!session &&
-      !!region &&
-      !!emails
+      !!region 
     );
 
     this.props.storeInputData({
@@ -282,8 +281,8 @@ class CreateSession extends Component {
       startDate,
       inviteesNumber,
       region,
-      partnerTrainer1: partnerTrainer1.key,
-      partnerTrainer2: partnerTrainer2.key,
+      partnerTrainer1: partnerTrainer1 && partnerTrainer1.key,
+      partnerTrainer2: partnerTrainer2 && partnerTrainer2.key,
       emails,
       sendByEmail,
       trainersNames: trainersNamesArray,

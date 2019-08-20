@@ -19,7 +19,8 @@ const createNewSession = ({
     numberOfAttendees: inviteesNumber,
     region,
     trainers,
-    participantsEmails: emails.map(email => ({ email, status: 'new' })),
+    participantsEmails:
+      emails && emails.map(email => ({ email, status: 'new' })),
     startTime,
     endTime,
     address,

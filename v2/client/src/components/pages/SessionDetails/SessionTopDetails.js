@@ -28,10 +28,13 @@ class SessionTopDetails extends Component {
       return <div>loading</div>;
     }
 
-    const { location, addressLine1, addressLine2 } = address;
     let fullAddress = '';
-    if (location || addressLine1 || addressLine2) {
-      fullAddress = `${address.location}, ${address.addressLine1}, ${address.addressLine2}`;
+
+    if (address) {
+      const { location, addressLine1, addressLine2 } = address;
+      if (location || addressLine1 || addressLine2) {
+        fullAddress = `${location}, ${addressLine1}, ${addressLine2}`;
+      }
     }
 
     const confirmedAttendeesNumber =
