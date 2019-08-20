@@ -28,6 +28,7 @@ export const LOCAL_LEAD_SESSIONS_URL = '/localLead-sessions';
 
 // admin
 export const DEMOGRAPHICS_URL = '/demographics';
+export const ALL_RESULTS_URL = '/all-results';
 
 // user
 export const USER_INSIGHTS = '/my-insights';

@@ -12,6 +12,7 @@ import {
   GROUP_SESSIONS_URL,
   DEMOGRAPHICS_URL,
   SIGN_UP_URL,
+  ALL_RESULTS_URL,
 } from '../../../constants/navigationRoutes';
 
 import USER_TYPES from '../../../constants/userTypes';
@@ -141,20 +142,38 @@ class HumburgerMenu extends Component {
                           <MenuIcon className="fas fa-poll-h" />
                           Your Results
                         </MenuItem>
-                        <MenuItem to={GROUP_RESULTS_URL} block sub>
+                        <MenuItem to={ALL_RESULTS_URL} block sub>
                           <MenuIcon className="fas fa-poll-h" />
                           All Results
                         </MenuItem>
                       </>
                     )}
                   </MenuItem>
-                  <MenuItem to={GROUP_SESSIONS_URL}>
+
+                  <MenuItem
+                    as="div"
+                    onClick={() => this.handleSubClick('sessions')}
+                    block
+                  >
                     <MenuIcon className="far fa-calendar-alt" />
                     Sessions
+                    {activeSub === 'sessions' && (
+                      <>
+                        <MenuItem to={TRAINER_RESULTS_URL} block sub>
+                          <MenuIcon className="far fa-calendar-alt" />
+                          Your Sessions
+                        </MenuItem>
+                        <MenuItem to={GROUP_SESSIONS_URL} block sub>
+                          <MenuIcon className="far fa-calendar-alt" />
+                          All Sessions
+                        </MenuItem>
+                      </>
+                    )}
                   </MenuItem>
+
                   <MenuItem to={TRAINERS_URL}>
                     <MenuIcon className="fas fa-users" />
-                    Trainers
+                    Trainers & Local Leads
                   </MenuItem>
                   <MenuItem to={DEMOGRAPHICS_URL}>
                     <MenuIcon className="fas fa-chart-pie" />
@@ -174,17 +193,52 @@ class HumburgerMenu extends Component {
                     <MenuIcon className="fas fa-home" />
                     Home
                   </MenuItem>
-                  <MenuItem to={GROUP_RESULTS_URL}>
+
+                  <MenuItem
+                    as="div"
+                    onClick={() => this.handleSubClick('results')}
+                    block
+                  >
                     <MenuIcon className="fas fa-poll-h" />
                     Results
+                    {activeSub === 'results' && (
+                      <>
+                        <MenuItem to={TRAINER_RESULTS_URL} block sub>
+                          <MenuIcon className="fas fa-poll-h" />
+                          Your Results
+                        </MenuItem>
+                        <MenuItem to={GROUP_RESULTS_URL} block sub>
+                          <MenuIcon className="fas fa-poll-h" />
+                          Your Group Results
+                        </MenuItem>
+                      </>
+                    )}
                   </MenuItem>
-                  <MenuItem to={GROUP_SESSIONS_URL}>
+
+                  <MenuItem
+                    as="div"
+                    onClick={() => this.handleSubClick('sessions')}
+                    block
+                  >
                     <MenuIcon className="far fa-calendar-alt" />
                     Sessions
+                    {activeSub === 'sessions' && (
+                      <>
+                        <MenuItem to={TRAINER_RESULTS_URL} block sub>
+                          <MenuIcon className="far fa-calendar-alt" />
+                          Your Sessions
+                        </MenuItem>
+                        <MenuItem to={GROUP_SESSIONS_URL} block sub>
+                          <MenuIcon className="far fa-calendar-alt" />
+                          Your Group Sessions
+                        </MenuItem>
+                      </>
+                    )}
                   </MenuItem>
+
                   <MenuItem to={TRAINERS_URL}>
                     <MenuIcon className="fas fa-users" />
-                    Trainers
+                    Your group Trainers
                   </MenuItem>
                   <LogOut onClick={logoutAction}>
                     <MenuIcon className="fas fa-sign-out-alt" />

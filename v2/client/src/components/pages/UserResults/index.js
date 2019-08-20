@@ -136,12 +136,12 @@ class UserResults extends Component {
       if (localLeadId && role === 'admin') {
         // admin is viewing local-lead's group results
         resultsFor = localLeadId;
-        fetchLocalLeadSessions(resultsFor);
+        this.props.fetchLocalLeadSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, 'localLead');
       } else {
         // local-lead is viewing his group results
         resultsFor = userId;
-        fetchLocalLeadSessions(resultsFor);
+        this.props.fetchLocalLeadSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, 'localLead');
       }
     } else if (
@@ -153,13 +153,13 @@ class UserResults extends Component {
       if (trainerId) {
         resultsFor = trainerId;
 
-        fetchLocalLeadSessions(resultsFor);
+        this.props.fetchLocalLeadSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, 'trainer');
       }
     } else if (match && match.path === '/all-results' && role === 'admin') {
       // admin viewing all sessions results
-      resultsFor = trainerId;
-      fetchALLSessions(resultsFor, 'admin');
+      resultsFor = userId;
+      this.props.fetchALLSessions();
       this.props.fetchUserResults(resultsFor, 'admin');
     }
 
@@ -262,7 +262,8 @@ class UserResults extends Component {
 const mapStateToProps = state => ({
   results: state.results,
   userId: state.auth.id,
-  sessions: state.results.sessions,
+  sessions: state.sessions.sessions,
+  // sessions: state.results.sessions,
   sessionsNum: state.sessions.sessionsCount,
   viewLevel: state.viewLevel.viewLevel,
 });

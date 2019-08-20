@@ -67,6 +67,7 @@ import {
   FORGET_PASSWORD,
   TRAINER_VIEW_PARTICIPANT,
   MY_RESULTS_URL,
+  ALL_RESULTS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -175,6 +176,17 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               loaded={loaded}
               allowedRoles={['trainer', 'admin', 'localLead']}
+              role={role}
+              navbar
+            />
+
+            <PrivateRoute
+              exact
+              path={ALL_RESULTS_URL}
+              Component={UserResults}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin']}
               role={role}
               navbar
             />
