@@ -85,7 +85,7 @@ class ParticipantLogin extends Component {
   render() {
     const { PIN, error, msg } = this.state;
     const { onFormSubmit, onInputChange } = this;
-    const { isDeskTop } = this.props;
+    const { isDeskTop, loading } = this.props;
     return (
       <>
         {isDeskTop && <HumburgerMenu dark="dark" />}
@@ -124,6 +124,7 @@ class ParticipantLogin extends Component {
               label="LOGIN"
               height="40px"
               width="100%"
+              loading={loading}
             />
           </InputDiv>
           <InputDiv>
@@ -145,6 +146,7 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
   isDeskTop: state.checkBrowserWidth.isDeskTop,
+  loading: state.loading.loginParticipantsLoading,
 });
 
 export default connect(

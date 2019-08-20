@@ -42,7 +42,7 @@ class AddTrainer extends Component {
   state = {};
 
   componentDidMount() {
-    const { isAuthenticated, history } = this.props;
+    const { isAuthenticated } = this.props;
     if (!isAuthenticated) {
       return history.push('/');
     }
@@ -109,7 +109,7 @@ class AddTrainer extends Component {
   };
 
   handleSuccessOk = () => {
-    const { location, history } = this.props;
+    const { location } = this.props;
     if (location.state) {
       history.push({
         pathname: '/create-session',
@@ -133,6 +133,7 @@ class AddTrainer extends Component {
       localLeads,
       checkedUserInfo,
       isEmailUnique,
+      addTrainerLoading,
     } = this.props;
 
     return (
@@ -243,6 +244,7 @@ class AddTrainer extends Component {
                 width="100%"
                 height="100%"
                 style={{ fontSize: '19px' }}
+                loading={addTrainerLoading}
               />
             </Item>
           </Form>
@@ -283,6 +285,7 @@ const mapStateToProps = state => {
     isEmailUnique: state.auth.isEmailUnique,
     checkedUserInfo: state.auth.checkedUserInfo,
     group: state.groups,
+    addTrainerLoading: state.loading.addTrainerLoading,
   };
 };
 

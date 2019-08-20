@@ -56,7 +56,7 @@ class ConfirmRegistration extends Component {
   };
 
   render() {
-    const { trainers, address, date } = this.props;
+    const { trainers, address, date, loading } = this.props;
     const { email } = this.state;
 
     const trainersNames = trainers.map(trainer => trainer.name).join(' & ');
@@ -98,6 +98,7 @@ class ConfirmRegistration extends Component {
               style={{ marginTop: '2rem' }}
               type="primary"
               label="Register"
+              loading={loading}
             >
               Register
             </CommonButton>
@@ -108,7 +109,11 @@ class ConfirmRegistration extends Component {
   }
 }
 
-const mapStateToProps = ({ session: _session, auth: _auth }) => {
+const mapStateToProps = ({
+  session: _session,
+  auth: _auth,
+  loading: _loading,
+}) => {
   return {
     trainers: _session.trainers,
     sessionId: _session._id,
@@ -116,6 +121,7 @@ const mapStateToProps = ({ session: _session, auth: _auth }) => {
     date: _session.date,
     isAuthenticated: _auth.isAuthenticated,
     role: _auth.role,
+    loading: _loading.confirmRegistrationLoading,
   };
 };
 

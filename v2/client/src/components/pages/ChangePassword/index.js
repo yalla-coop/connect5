@@ -120,6 +120,7 @@ class ChangePassword extends Component {
     const { fields, errors, msg } = this.state;
     const { oldPassword, newPassword, reNewPassword } = fields;
     const { oldPasswordError, newPasswordError, reNewPasswordError } = errors;
+    const { loading } = this.props;
     return (
       <>
         <Header type="home" />
@@ -175,6 +176,7 @@ class ChangePassword extends Component {
               label="Submit"
               height="40px"
               width="100%"
+              loading={loading}
             />
           </InputDiv>
           <Error>{msg}</Error>
@@ -189,6 +191,7 @@ const mapStateToProps = state => ({
   userId: state.auth.id,
   error: state.error,
   role: state.auth.role,
+  loading: state.loading.changePasswordLoading,
 });
 
 export default connect(

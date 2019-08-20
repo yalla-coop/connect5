@@ -296,7 +296,7 @@ class EditSession extends Component {
   };
 
   render() {
-    const { trainers, role, localLeads, sessionDetails } = this.props;
+    const { trainers, role, localLeads, sessionDetails, loading } = this.props;
     if (!sessionDetails) {
       return null;
     }
@@ -552,6 +552,7 @@ class EditSession extends Component {
               label="Update"
               height="40px"
               width="100%"
+              loading={loading}
             />
           </SubmitBtn>
           {err && <Error>All inputs are required</Error>}
@@ -568,6 +569,7 @@ const mapStateToProps = state => ({
   sessionDetails: state.sessions.sessionDetails[0],
   loaded: state.sessions.loaded,
   msg: state.session.msg,
+  loading: state.loading.sessionEditLoading,
 });
 
 export default connect(
