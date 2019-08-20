@@ -9,6 +9,7 @@ export const ADD_SESSION_URL = '/create-session';
 export const SURVEY_URL = '/survey/:id';
 export const SESSION_DETAILS_URL = '/session-details/:id';
 export const MY_RESULTS_URL = '/my-results';
+export const MY_SESSIONS_URL = '/my-sessions';
 
 // trainer
 export const TRAINER_RESULTS_URL = '/trainer-results';

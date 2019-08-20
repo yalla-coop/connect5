@@ -17,6 +17,7 @@ export const Menu = styled.div`
   transition: all 1s ease;
   padding: ${({ dark }) => (dark ? '3rem 0 0 1rem' : '2rem 0 0 1rem')};
   z-index: 2000;
+  overflow: auto;
   @media ${breakpoints.mobileL} {
     width: 300px;
   }
@@ -96,8 +97,8 @@ export const MenuIcon = styled.i`
 `;
 
 export const MenuClose = styled.i`
-  color: '#F7F7F9',
-  padding: '5px 5px 0 0'
+  color: '#F7F7F9';
+  padding: '5px 5px 0 0';
   font-size: 30px;
   cursor: pointer;
 

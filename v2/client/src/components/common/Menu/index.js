@@ -13,6 +13,8 @@ import {
   DEMOGRAPHICS_URL,
   SIGN_UP_URL,
   ALL_RESULTS_URL,
+  MY_RESULTS_URL,
+  MY_SESSIONS_URL,
 } from '../../../constants/navigationRoutes';
 
 import USER_TYPES from '../../../constants/userTypes';
@@ -103,11 +105,11 @@ class HumburgerMenu extends Component {
                     <MenuIcon className="fas fa-home" />
                     Home
                   </MenuItem>
-                  <MenuItem to={TRAINER_RESULTS_URL}>
+                  <MenuItem to={MY_RESULTS_URL}>
                     <MenuIcon className="fas fa-poll-h" />
                     Results
                   </MenuItem>
-                  <MenuItem to={TRAINER_SESSIONS_URL}>
+                  <MenuItem to={MY_SESSIONS_URL}>
                     <MenuIcon className="far fa-calendar-alt" />
                     Sessions
                   </MenuItem>
@@ -138,7 +140,7 @@ class HumburgerMenu extends Component {
                     Results
                     {activeSub === 'results' && (
                       <>
-                        <MenuItem to={TRAINER_RESULTS_URL} block sub>
+                        <MenuItem to={MY_RESULTS_URL} block sub>
                           <MenuIcon className="fas fa-poll-h" />
                           Your Results
                         </MenuItem>
@@ -203,7 +205,7 @@ class HumburgerMenu extends Component {
                     Results
                     {activeSub === 'results' && (
                       <>
-                        <MenuItem to={TRAINER_RESULTS_URL} block sub>
+                        <MenuItem to={MY_RESULTS_URL} block sub>
                           <MenuIcon className="fas fa-poll-h" />
                           Your Results
                         </MenuItem>
@@ -224,7 +226,7 @@ class HumburgerMenu extends Component {
                     Sessions
                     {activeSub === 'sessions' && (
                       <>
-                        <MenuItem to={TRAINER_RESULTS_URL} block sub>
+                        <MenuItem to={MY_SESSIONS_URL} block sub>
                           <MenuIcon className="far fa-calendar-alt" />
                           Your Sessions
                         </MenuItem>
