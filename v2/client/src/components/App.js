@@ -189,17 +189,19 @@ class App extends Component {
               role={role}
               navbar
             />
+
             <PrivateRoute
               exact
               path={GROUP_RESULTS_URL}
               Component={UserResults}
               isAuthenticated={isAuthenticated}
               loaded={loaded}
-              allowedRoles={['trainer', 'admin', 'localLead']}
+              allowedRoles={['admin', 'localLead']}
               role={role}
               groupView
               navbar
             />
+
             <Route exact path={HOME_URL} component={Home} />
             <PrivateRoute
               exact

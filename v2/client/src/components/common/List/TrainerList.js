@@ -58,7 +58,7 @@ export default class TrainerList extends Component {
   };
 
   render() {
-    const { dataList, viewRole, deleteUser } = this.props;
+    const { dataList, role, deleteUser } = this.props;
     const { modalOpen, selectedTrainer } = this.state;
 
     const modalContent = selectedTrainer && (
@@ -81,7 +81,7 @@ export default class TrainerList extends Component {
             </ModalRow>
           )}
           {/* render number of trainers if local lead */}
-          {selectedTrainer.role === 'localLead' && viewRole === 'admin' && (
+          {selectedTrainer.role === 'localLead' && role === 'admin' && (
             <ModalRow>
               <Left>No of trainers: </Left>
               <p>{`${selectedTrainer.trainerCount}` || 'N/A'}</p>
@@ -94,13 +94,63 @@ export default class TrainerList extends Component {
             </a>
           </ModalRow>
         </ModalContent>
-        <Link
-          to={{
-            pathname: `/trainer-results/${selectedTrainer._id}`,
-          }}
-        >
-          <Button label="view results" type="outline" width="150px" />
-        </Link>
+        {selectedTrainer && selectedTrainer.role === 'localLead' ? (
+          <>
+            <Link
+              to={{
+                pathname: `/group-results/${selectedTrainer._id}`,
+                state: { trainer: selectedTrainer },
+              }}
+            >
+              <Button
+                style={{
+                  height: 'auto',
+                  fontSize: '1rem',
+                  marginBottom: '1rem',
+                  padding: '0.5rem 1rem',
+                  width: 'auto',
+                }}
+                label={`view ${selectedTrainer.name}'s group results`}
+                type="outline"
+                width="150px"
+              />
+            </Link>
+
+            <Link
+              to={{
+                pathname: `/trainer-results/${selectedTrainer._id}`,
+                state: { trainer: selectedTrainer },
+              }}
+            >
+              <Button
+                style={{
+                  height: 'auto',
+                  fontSize: '1rem',
+                  marginBottom: '1rem',
+                  padding: '0.5rem 1rem',
+                  width: 'auto',
+                }}
+                label={`view ${selectedTrainer.name}'s results`}
+                type="outline"
+                width="150px"
+              />
+            </Link>
+          </>
+        ) : (
+          <Link
+            to={{
+              pathname: `/trainer-results/${selectedTrainer._id}`,
+              state: { trainer: selectedTrainer },
+            }}
+          >
+            <Button
+              style={{ color: 'red' }}
+              label={`view ${selectedTrainer.name}'s results`}
+              type="outline"
+              width="150px"
+            />
+          </Link>
+        )}
       </>
     );
 

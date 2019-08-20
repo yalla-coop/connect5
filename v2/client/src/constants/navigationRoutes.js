@@ -18,7 +18,7 @@ export const TRAINER_FEEDBACK_URL = '/feedback';
 export const TRAINER_VIEW_PARTICIPANT = '/participant/:PIN';
 
 // local lead & admin
-export const GROUP_RESULTS_URL = '/group-results/:trainerId?';
+export const GROUP_RESULTS_URL = '/group-results/:localLeadId?';
 export const TRAINERS_URL = '/trainers';
 export const GROUP_SESSIONS_URL = '/group-sessions/:localLeadId?';
 export const ADD_TRAINER_URL = '/add-trainer';

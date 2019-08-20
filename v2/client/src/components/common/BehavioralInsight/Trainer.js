@@ -50,8 +50,7 @@ class BehavioralTrainerResults extends Component {
     if (role === 'admin') {
       fetchbehavioralInsight('/api/behavioral-insight/admin');
     } else if (role === 'localLead') {
-      // @todo fetch group behanioral insight
-      //
+      fetchbehavioralInsight(`/api/behavioral-insight/local-lead/${trainerId}`);
     } else {
       fetchbehavioralInsight(`/api/behavioral-insight/trainer/${trainerId}`);
     }
