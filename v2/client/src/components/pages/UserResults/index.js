@@ -81,11 +81,14 @@ class UserResults extends Component {
     const { localLeadId, trainerId } = match.params;
     let resultsFor;
     let resultForRule;
+    let headerTitle;
 
     if (match && match.path === '/my-results') {
       // admin || local-lead || trainer viewing his own results as a trainer
       resultsFor = userId;
       resultForRule = 'trainer';
+      headerTitle = 'Your ';
+
       this.props.fetchTrainerSessions(resultsFor);
       this.props.fetchUserResults(resultsFor, resultForRule);
     } else if (
@@ -97,6 +100,7 @@ class UserResults extends Component {
         // admin is viewing local-lead's group results
         resultsFor = localLeadId;
         resultForRule = 'localLead';
+        headerTitle = "Group's ";
 
         this.props.fetchLocalLeadSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, resultForRule);
@@ -104,6 +108,7 @@ class UserResults extends Component {
         // local-lead is viewing his group results
         resultsFor = userId;
         resultForRule = 'localLead';
+        headerTitle = "Your Group's ";
 
         this.props.fetchLocalLeadSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, resultForRule);
@@ -117,6 +122,7 @@ class UserResults extends Component {
       if (trainerId) {
         resultsFor = trainerId;
         resultForRule = 'trainer';
+        headerTitle = "Trainer's ";
 
         this.props.fetchLocalLeadSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, resultForRule);
@@ -125,13 +131,14 @@ class UserResults extends Component {
       // admin viewing all sessions results
       resultsFor = userId;
       resultForRule = 'admin';
+      headerTitle = 'All Sessions ';
 
       this.props.fetchALLSessions();
       this.props.fetchUserResults(resultsFor, resultForRule);
     } else {
       history.push('/unauthorized');
     }
-    this.setState({ resultsFor, resultForRule });
+    this.setState({ resultsFor, resultForRule, headerTitle });
   };
 
   fetchSessionsData = (role, id) => {
@@ -149,27 +156,25 @@ class UserResults extends Component {
   };
 
   render() {
-    const { results, role, history, groupView, sessions } = this.props;
+    const { results, role, history, groupView, sessions, userId } = this.props;
     const { state } = history.location;
-    const { toggle, resultsFor, resultForRule } = this.state;
+    const { toggle, resultsFor, resultForRule, headerTitle } = this.state;
     // if a user has been passed on then store as the user
     const user = state && state.trainer;
 
     const topLevelView = !groupView && ['admin', 'localLead'].includes(role);
     return (
       <TrainerResultsWrapper nudge={topLevelView}>
-        {true && (
-          <Header
-            label={user ? `Viewing ${user.name}` : 'Individual View'}
-            type="view"
-          />
-        )}
         <Header
-          label={toggle === 'left' ? 'results' : 'sessions'}
+          label={
+            toggle === 'left'
+              ? `${headerTitle} Results`
+              : `${headerTitle} Sessions`
+          }
           type="section"
           nudge={topLevelView}
         />
-        {true && (
+        {userId !== resultsFor && (
           <TopSection>
             <Registration>
               Data collected since registering on {results.registrationDate}
@@ -224,7 +229,6 @@ const mapStateToProps = state => ({
   results: state.results,
   userId: state.auth.id,
   sessions: state.sessions.sessions,
-  // sessions: state.results.sessions,
   sessionsNum: state.sessions.sessionsCount,
   viewLevel: state.viewLevel.viewLevel,
 });

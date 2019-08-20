@@ -24,8 +24,7 @@ import {
 
 class ViewSessions extends Component {
   state = {
-    resultsFor: null,
-    resultForRule: null,
+    headerTitle: null,
   };
 
   componentDidMount() {
@@ -45,10 +44,12 @@ class ViewSessions extends Component {
     const { localLeadId, trainerId } = match.params;
     let resultsFor;
     let resultForRule;
+    let headerTitle;
     // admin || local lead || trainer viewing his own session
     if (match && match.path === '/my-sessions') {
       resultsFor = userId;
       resultForRule = 'trainer';
+      headerTitle = 'Your Sessions';
       this.fetchSessionsData(resultForRule, resultsFor);
     } else if (
       (match &&
@@ -59,24 +60,30 @@ class ViewSessions extends Component {
       if (localLeadId) {
         resultsFor = localLeadId;
         resultForRule = 'localLead';
+        headerTitle = 'Group Sessions';
         this.fetchSessionsData(resultForRule, resultsFor);
       } else {
         resultsFor = userId;
         resultForRule = 'localLead';
+        headerTitle = 'Yours Group Sessions';
         this.fetchSessionsData(resultForRule, resultsFor);
       }
     } else if (match && match.path === '/all-sessions') {
       resultsFor = userId;
       resultForRule = 'admin';
+      headerTitle = 'All Sessions';
+
       this.fetchSessionsData(resultForRule, resultsFor);
     } else if (match && match.path === '/trainer-sessions/trainerId?') {
       if (trainerId) {
         resultsFor = trainerId;
         resultForRule = 'trainer';
+        headerTitle = 'Trainer Sessions';
+
         this.fetchSessionsData(resultForRule, resultsFor);
       }
     }
-    this.setState({ resultsFor, resultForRule });
+    this.setState({ headerTitle });
   };
 
   fetchSessionsData = (role, id) => {
@@ -90,13 +97,15 @@ class ViewSessions extends Component {
   };
 
   render() {
+    const { headerTitle } = this.state;
+
     const { sessions } = this.props;
     if (!sessions) {
       return <div>loading</div>;
     }
     return (
       <ViewSessionsWrapper>
-        <Header label="Your group sessions" type="section" />
+        <Header label={headerTitle} type="section" />
         <TotalSessions>
           <Span>Total Sessions</Span>
           <SessionsCount>{sessions && sessions.length}</SessionsCount>

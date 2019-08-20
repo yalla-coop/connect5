@@ -5,11 +5,7 @@ import { logout } from '../../../actions/authAction';
 import {
   DASHBOARD_URL,
   ADD_SESSION_URL,
-  TRAINER_RESULTS_URL,
-  TRAINER_SESSIONS_URL,
-  GROUP_RESULTS_URL,
   TRAINERS_URL,
-  GROUP_SESSIONS_URL,
   DEMOGRAPHICS_URL,
   SIGN_UP_URL,
   ALL_RESULTS_URL,
@@ -209,7 +205,7 @@ class HumburgerMenu extends Component {
                           <MenuIcon className="fas fa-poll-h" />
                           Your Results
                         </MenuItem>
-                        <MenuItem to={GROUP_RESULTS_URL} block sub>
+                        <MenuItem to="/group-results" block sub>
                           <MenuIcon className="fas fa-poll-h" />
                           Your Group Results
                         </MenuItem>
