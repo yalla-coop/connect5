@@ -42,8 +42,8 @@ const panels = {
     render: ({ resultsFor, resultForRule, ...props }) => {
       return (
         <TrainerBehavioralInsight
-          trainerId={resultsFor}
           {...props}
+          trainerId={resultsFor}
           role={resultForRule}
         />
       );
@@ -51,8 +51,8 @@ const panels = {
   },
   feedback: {
     text: 'Trainer feedback',
-    render: ({ resultsFor, resultForRule, ...props }) => (
-      <Feedback trainerId={props.resultsFor} role={resultForRule} />
+    render: ({ resultsFor, resultForRule }) => (
+      <Feedback trainerId={resultsFor} role={resultForRule} />
     ),
   },
 };
