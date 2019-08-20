@@ -18,7 +18,7 @@ export default (state = initState, action) => {
       return { ...initState, [payload]: true };
 
     case types.LOADING_FALSE:
-      return { ...initState, [payload]: true };
+      return { ...initState, [payload]: false };
 
     default:
       return state;
