@@ -193,9 +193,14 @@ class EditSession extends Component {
     return null;
   };
 
+  onKeyPress = e => {
+    return e.key === 'Enter' && e.preventDefault();
+  };
+
   onInputChange = ({ target: { value, name } }) => {
+    const newValue = value.replace(/^\s*\s*$/, '');
     this.setState({
-      [name]: value,
+      [name]: newValue,
     });
   };
 
@@ -334,6 +339,7 @@ class EditSession extends Component {
       onFormSubmit,
       onStartTimeChange,
       onEndTimeChange,
+      onKeyPress,
     } = this;
 
     return (
@@ -382,6 +388,7 @@ class EditSession extends Component {
               name="inviteesNumber"
               size="large"
               min="0"
+              onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
 
@@ -483,6 +490,7 @@ class EditSession extends Component {
               onChange={onInputChange}
               name="location"
               size="large"
+              onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
 
@@ -494,6 +502,7 @@ class EditSession extends Component {
               onChange={onInputChange}
               name="addressLine1"
               size="large"
+              onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
 
@@ -505,6 +514,7 @@ class EditSession extends Component {
               onChange={onInputChange}
               name="addressLine2"
               size="large"
+              onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
 
