@@ -6,21 +6,26 @@ const {
   updateUserById,
 } = require('./../../database/queries/users');
 const resetPasswordMailing = require('../../helpers/emails/resetPasswordByEmail');
+const sendSignUpLinkByEmail = require('../../helpers/emails/sendSignUpLinkByEmail');
 
 module.exports = (req, res, next) => {
   const { email } = req.query;
 
   crypto.randomBytes(32, (err, buffer) => {
     if (err) {
-      return next(boom.badImplimentation());
+      return next(boom.badImplimentation(err));
     }
     const token = buffer.toString('hex');
 
     return getUserByEmail(email)
       .then(user => {
         if (!user) {
-          return next(boom.unauthorized('No account with that email found'));
+          if (process.env.NODE_ENV === 'production') {
+            sendSignUpLinkByEmail(email);
+          }
+          return res.json({ success: true });
         }
+
         const { _id } = user;
 
         const data = {
@@ -29,21 +34,23 @@ module.exports = (req, res, next) => {
             expiresIn: Date.now() + resetTokenMaxAge,
           },
         };
-        updateUserById(_id, data)
-          // send the token via email
+        return (
+          updateUserById(_id, data)
+            // send the token via email
 
-          .then(() => {
-            if (process.env.NODE_ENV === 'production') {
-              resetPasswordMailing(email, token, user.name);
-            }
-          })
-          .then(() => {
-            //  send success message
-            res.json({ success: true });
-          });
+            .then(() => {
+              if (process.env.NODE_ENV === 'production') {
+                resetPasswordMailing(email, token, user.name);
+              }
+            })
+            .then(() => {
+              //  send success message
+              res.json({ success: true });
+            })
+        );
       })
-      .catch(err => {
-        next(boom.badImplementation());
+      .catch(error => {
+        next(boom.badImplementation(error));
       });
   });
 };
