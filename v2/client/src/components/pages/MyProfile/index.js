@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Swal from 'sweetalert2';
 
 import { fetchStatsData } from '../../../actions/users';
 import { logout } from '../../../actions/authAction';
+import { deleteAccountAction } from '../../../actions/deleteAccountAction';
 
 // STYLING
 import {
@@ -11,6 +13,7 @@ import {
   Detail,
   BoldSpan,
   Row,
+  DeteteAccountBtn,
 } from './MyProfile.style';
 
 //  COMMON COMPONENTS
@@ -19,8 +22,31 @@ import Header from '../../common/Header';
 class MyProfile extends Component {
   componentDidMount() {}
 
+  deleteAccount = (userId, role) => {
+    const { deleteAccountAction: deleteAccountActionCreator } = this.props;
+    if (role === 'trainer' || role === 'localLead') {
+      Swal.fire({
+        title: 'Are you sure that you want to delete your account?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        confirmButtonText: 'Delete',
+        showCancelButton: true,
+        fontSize: '1.6rem !important',
+      })
+        .then(willDelete => {
+          if (willDelete.value) {
+            deleteAccountActionCreator(userId);
+          }
+        })
+        .catch(() => {
+          Swal.fire('Oops!', 'Something error in deleting your account');
+        });
+    }
+  };
+
   render() {
-    const { userName, role, organization, region } = this.props;
+    const { userName, role, organization, region, userId } = this.props;
+    const { deleteAccount } = this;
 
     const captalizesName =
       userName && userName[0].toUpperCase() + userName.substr(1);
@@ -57,6 +83,9 @@ class MyProfile extends Component {
             </Detail>
           </Row>
         </DetailsContent>
+        <DeteteAccountBtn onClick={() => deleteAccount(userId, role)}>
+          Delete My Account
+        </DeteteAccountBtn>
       </Wrapper>
     );
   }
@@ -75,5 +104,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchStatsData, logout }
+  { fetchStatsData, logout, deleteAccountAction }
 )(MyProfile);
