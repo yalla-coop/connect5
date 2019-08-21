@@ -30,6 +30,7 @@ module.exports = async (req, res, next) => {
           organization: trainer.organization,
           region: trainer.region,
           email: trainer.email,
+          localLead: trainer.localLead,
         };
         addTrainertoGroup(localLead, trainer._id)
           .then(result => {

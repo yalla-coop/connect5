@@ -10,6 +10,7 @@ const initState = {
   sessionEditLoading: false,
   signupLoading: false,
   updateUserLoading: false,
+  deleteAccountLoading: false,
 };
 
 export default (state = initState, action) => {

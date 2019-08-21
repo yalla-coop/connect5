@@ -39,7 +39,7 @@ const editProfile = require('../controllers/users/editProfile');
 // check eamil route if the route doen't contain email query
 // then it will skip with next()
 router.get('/users', checkUniqueEmail);
-router.put('/users', authentication(), editProfile);
+router.patch('/users', authentication(), editProfile);
 router.get('/users/forget-password', forgetPassword);
 router.post('/users/reset-password', resetPassword);
 
@@ -83,7 +83,7 @@ router.delete(
   removeTrainerToGroup
 );
 
-router.delete('/users/:userId/deleteAccount', authentication(), deleteAccount);
+router.delete('/users/:userId', authentication(), deleteAccount);
 router.get('/fetch-trainers', fetchAllTrainers);
 router.get('/users/admin/trainers-and-leads', getAllTrainersAndLeads);
 router.get('/users/trainer-sessions/:id', getTrainerSessions);

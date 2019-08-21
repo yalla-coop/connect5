@@ -205,7 +205,7 @@ export const updateUserInfo = (data, updateState) => async dispatch => {
   });
 
   axios
-    .put('/api/users', data)
+    .patch('/api/users', data)
     .then(() => {
       updateState({ visible: false });
 

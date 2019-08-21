@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Select, Modal, Input } from 'antd';
 
-import Swal from 'sweetalert2';
 import {
   fetchLocalLeads as fetchLocalLeadsAction,
   updateUserInfo as updateUserInfoAction,
@@ -24,6 +23,8 @@ import {
 
 //  COMMON COMPONENTS
 import Header from '../../common/Header';
+
+const { confirm } = Modal;
 
 const captalizesName = name => name && name[0].toUpperCase() + name.substr(1);
 
@@ -115,24 +116,25 @@ class MyProfile extends Component {
   };
 
   deleteAccount = (userId, role) => {
-    const { deleteAccountAction: deleteAccountActionCreator } = this.props;
+    const {
+      deleteAccountAction: deleteAccountActionCreator,
+      deleteAccountLoading,
+    } = this.props;
     if (role === 'trainer' || role === 'localLead') {
-      Swal.fire({
+      confirm({
         title: 'Are you sure that you want to delete your account?',
-        text: "You won't be able to revert this!",
-        type: 'warning',
-        confirmButtonText: 'Delete',
-        showCancelButton: true,
-        fontSize: '1.6rem !important',
-      })
-        .then(willDelete => {
-          if (willDelete.value) {
-            deleteAccountActionCreator(userId);
-          }
-        })
-        .catch(() => {
-          Swal.fire('Oops!', 'Something error in deleting your account');
-        });
+        content: "You won't be able to revert this!",
+        okText: 'Delete',
+        okType: 'danger',
+        cancelText: 'Cancel',
+        okButtonProps: {
+          loading: deleteAccountLoading,
+        },
+        loading: true,
+        onOk() {
+          deleteAccountActionCreator(userId);
+        },
+      });
     }
   };
 
@@ -213,18 +215,20 @@ class MyProfile extends Component {
             </Detail>
           </Row>
 
-          <Row>
-            <Detail>
-              <BoldSpan>Local lead: </BoldSpan>
-              {captalizesName(trainerLocalLead && trainerLocalLead.name) ||
-                'N/A'}
-            </Detail>
-            <Detail>
-              <BoldSpan onClick={() => this.showModal('Local Lead')} pointer>
-                Edit
-              </BoldSpan>
-            </Detail>
-          </Row>
+          {role === 'trainer' && (
+            <Row>
+              <Detail>
+                <BoldSpan>Local lead: </BoldSpan>
+                {captalizesName(trainerLocalLead && trainerLocalLead.name) ||
+                  'N/A'}
+              </Detail>
+              <Detail>
+                <BoldSpan onClick={() => this.showModal('Local Lead')} pointer>
+                  Edit
+                </BoldSpan>
+              </Detail>
+            </Row>
+          )}
         </DetailsContent>
         <DeteteAccountBtn onClick={() => deleteAccount(userId, role)}>
           Delete My Account
@@ -245,10 +249,11 @@ class MyProfile extends Component {
             />
           ) : (
             <Select
+              style={{ width: '100%' }}
+              placeholder="Select your trainer"
               defaultValue={captalizesName(
-                trainerLocalLead && trainerLocalLead.name
+                (trainerLocalLead && trainerLocalLead.name) || undefined
               )}
-              style={{ width: 200 }}
               onChange={this.handleChangeLocalLead}
             >
               {Object.keys(groupedLocalLeads).map(item => (
@@ -277,6 +282,7 @@ const mapStateToProps = state => {
     localLead: state.auth.localLead,
     localLeadsList: state.fetchedData.localLeadsList,
     updateUserLoading: state.loading.updateUserLoading,
+    deleteAccountLoading: state.loading.deleteAccountLoading,
   };
 };
 
@@ -288,6 +294,5 @@ export default connect(
     fetchStatsData,
     logout,
     deleteAccountAction,
-    fetchLocalLeads: fetchLocalLeadsAction,
   }
 )(MyProfile);

@@ -1,14 +1,26 @@
 import axios from 'axios';
-import { Modal } from 'antd';
-import { DELETE_ACCOUNT_SUCCESS } from '../constants/actionTypes';
+import { Modal, message } from 'antd';
+import {
+  DELETE_ACCOUNT_SUCCESS,
+  LOADING_FALSE,
+  LOADING_TRUE,
+} from '../constants/actionTypes';
 import { logout } from './authAction';
 
-import history from '../history';
-
 export const deleteAccountAction = userId => async dispatch => {
+  dispatch({
+    type: LOADING_TRUE,
+    payload: 'deleteAccountLoading',
+  });
+
   axios
-    .delete(`/api/users/${userId}/deleteAccount`)
+    .delete(`/api/users/${userId}`)
     .then(() => {
+      dispatch({
+        type: LOADING_FALSE,
+        payload: 'deleteAccountLoading',
+      });
+
       dispatch({
         type: DELETE_ACCOUNT_SUCCESS,
       });
@@ -23,6 +35,13 @@ export const deleteAccountAction = userId => async dispatch => {
       });
     })
     .catch(err => {
-      history.push('/404');
+      dispatch({
+        type: LOADING_FALSE,
+        payload: 'deleteAccountLoading',
+      });
+
+      const error =
+        err.response && err.response.data && err.response.data.error;
+      message.error(error || 'Something went wrong');
     });
 };

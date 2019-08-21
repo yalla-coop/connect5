@@ -37,6 +37,20 @@ module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
   ]);
 };
 
+// remove trainer from a localLead group
+module.exports.removeLocalLeadFromUser = localLeadId => {
+  return User.bulkWrite([
+    {
+      updateMany: {
+        filter: { localLead: localLeadId },
+        update: {
+          $unset: { localLead: '' },
+        },
+      },
+    },
+  ]);
+};
+
 // get localLead group
 
 module.exports.getLocalLeadTrainersGroup = id => {
