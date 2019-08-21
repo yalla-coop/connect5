@@ -37,3 +37,16 @@ export const Row = styled.div`
   justify-content: space-between;
   margin-bottom: 1rem;
 `;
+
+export const DeteteAccountBtn = styled.div`
+  margin: 0 auto;
+  font-weight: 300;
+  font-size: 14px;
+  color: ${colors.profileFontColor};
+  padding: 0.5rem 0;
+  cursor: pointer;
+
+  :hover {
+    color: ${colors.red};
+  }
+`;

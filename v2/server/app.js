@@ -45,6 +45,7 @@ app.use((req, res, next) => {
 // error handler
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
+  // console.log(err, 'errorrrrrrrr');
   // send the error object
   if (err.isBoom) {
     // for boom errors

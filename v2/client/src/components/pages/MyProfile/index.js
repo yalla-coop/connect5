@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Select, Modal, Input } from 'antd';
 
+import Swal from 'sweetalert2';
 import {
   fetchLocalLeads as fetchLocalLeadsAction,
   updateUserInfo as updateUserInfoAction,
+  fetchStatsData,
 } from '../../../actions/users';
+
+import { logout } from '../../../actions/authAction';
+import { deleteAccountAction } from '../../../actions/deleteAccountAction';
 
 // STYLING
 import {
@@ -14,6 +19,7 @@ import {
   Detail,
   BoldSpan,
   Row,
+  DeteteAccountBtn,
 } from './MyProfile.style';
 
 //  COMMON COMPONENTS
@@ -108,7 +114,30 @@ class MyProfile extends Component {
     this.setState({ localLead });
   };
 
+  deleteAccount = (userId, role) => {
+    const { deleteAccountAction: deleteAccountActionCreator } = this.props;
+    if (role === 'trainer' || role === 'localLead') {
+      Swal.fire({
+        title: 'Are you sure that you want to delete your account?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        confirmButtonText: 'Delete',
+        showCancelButton: true,
+        fontSize: '1.6rem !important',
+      })
+        .then(willDelete => {
+          if (willDelete.value) {
+            deleteAccountActionCreator(userId);
+          }
+        })
+        .catch(() => {
+          Swal.fire('Oops!', 'Something error in deleting your account');
+        });
+    }
+  };
+
   render() {
+    const { deleteAccount } = this;
     const {
       userName,
       role,
@@ -117,6 +146,7 @@ class MyProfile extends Component {
       localLeadsList,
       localLead,
       organization,
+      userId,
     } = this.props;
 
     const {
@@ -144,7 +174,7 @@ class MyProfile extends Component {
 
     return (
       <Wrapper>
-        <Header type="home" />
+        <Header type="section" label="My Profile" />
         <DetailsContent>
           <Row>
             <Detail>
@@ -196,6 +226,10 @@ class MyProfile extends Component {
             </Detail>
           </Row>
         </DetailsContent>
+        <DeteteAccountBtn onClick={() => deleteAccount(userId, role)}>
+          Delete My Account
+        </DeteteAccountBtn>
+
         <Modal
           title={`Edit ${activeStatus}`}
           visible={visible}
@@ -251,5 +285,9 @@ export default connect(
   {
     fetchLocalLeads: fetchLocalLeadsAction,
     updateUserInfo: updateUserInfoAction,
+    fetchStatsData,
+    logout,
+    deleteAccountAction,
+    fetchLocalLeads: fetchLocalLeadsAction,
   }
 )(MyProfile);

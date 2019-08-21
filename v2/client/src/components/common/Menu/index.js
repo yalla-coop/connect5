@@ -165,6 +165,10 @@ class HumburgerMenu extends Component {
                     <MenuIcon className="fas fa-users" />
                     Trainers
                   </MenuItem>
+                  <MenuItem to={MY_PROFILE_URL}>
+                    <MenuIcon className="fas fa-cogs" />
+                    Profile
+                  </MenuItem>
                   <LogOut onClick={logoutAction}>
                     <MenuIcon className="fas fa-sign-out-alt" />
                     Logout
