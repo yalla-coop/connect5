@@ -13,6 +13,7 @@ import {
   DEMOGRAPHICS_URL,
   DECIDE_VIEW_URL,
   SIGN_UP_URL,
+  MY_PROFILE_URL,
 } from '../../../constants/navigationRoutes';
 
 import USER_TYPES from '../../../constants/userTypes';
@@ -103,6 +104,10 @@ class HumburgerMenu extends Component {
                   <MenuItem to={ADD_SESSION_URL}>
                     <MenuIcon className="fas fa-plus" />
                     Add
+                  </MenuItem>
+                  <MenuItem to={MY_PROFILE_URL}>
+                    <MenuIcon className="fas fa-cogs" />
+                    Profile
                   </MenuItem>
                   <LogOut onClick={logoutAction}>
                     <MenuIcon className="fas fa-sign-out-alt" />
