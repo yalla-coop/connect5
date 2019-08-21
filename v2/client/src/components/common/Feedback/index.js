@@ -23,7 +23,6 @@ class TrainerFeedbackOverall extends Component {
     const { role: oldRole } = prevProps;
     const { role } = this.props;
     if (role !== oldRole) {
-      console.log('=========================');
       this.getData();
     }
   }
@@ -45,13 +44,13 @@ class TrainerFeedbackOverall extends Component {
     });
   };
 
-  handleOk = e => {
+  handleOk = () => {
     this.setState({
       visible: false,
     });
   };
 
-  handleCancel = e => {
+  handleCancel = () => {
     this.setState({
       visible: false,
     });

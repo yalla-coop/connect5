@@ -136,7 +136,7 @@ class UserResults extends Component {
         resultForRule = 'trainer';
         headerTitle = `${viewdUserName} - `;
 
-        this.props.fetchLocalLeadSessions(resultsFor);
+        this.props.fetchTrainerSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, resultForRule);
       }
     } else if (match && match.path === ALL_RESULTS_URL && role === 'admin') {
@@ -151,14 +151,6 @@ class UserResults extends Component {
       history.push('/unauthorized');
     }
     this.setState({ resultsFor, resultForRule, headerTitle });
-  };
-
-  fetchSessionsData = (role, id) => {
-    if (role === 'trainer') {
-      this.props.fetchTrainerSessions(id);
-    } else if (role === 'localLead') {
-      this.props.fetchLocalLeadSessions(id);
-    } else this.props.fetchALLSessions();
   };
 
   clickToggle = () => {
