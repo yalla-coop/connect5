@@ -18,7 +18,6 @@ const PrivateRoute = ({
   allowedRoles,
   role,
   navbar,
-  viewLevel,
   isMobile,
   ...rest
 }) => {
@@ -52,7 +51,6 @@ const PrivateRoute = ({
 };
 
 const mapStateToProps = state => ({
-  viewLevel: state.viewLevel.viewLevel,
   isMobile: state.checkBrowserWidth.isMobile,
 });
 

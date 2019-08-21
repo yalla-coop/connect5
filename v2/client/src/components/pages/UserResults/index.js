@@ -235,7 +235,6 @@ const mapStateToProps = state => ({
   userId: state.auth.id,
   sessions: state.sessions.sessions,
   sessionsNum: state.sessions.sessionsCount,
-  viewLevel: state.viewLevel.viewLevel,
 });
 
 export default connect(

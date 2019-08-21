@@ -128,7 +128,6 @@ const mapStateToProps = state => ({
   width: state.checkBrowserWidth.width,
   isMobile: state.checkBrowserWidth.isMobile,
   isDeskTop: state.checkBrowserWidth.isDeskTop,
-  viewLevel: state.viewLevel.viewLevel,
   isAuthenticated: state.auth.isAuthenticated,
 });
 

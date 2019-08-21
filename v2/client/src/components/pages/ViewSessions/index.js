@@ -122,7 +122,6 @@ const mapStateToProps = state => {
     userId: state.auth.id,
     role: state.auth.role,
     sessions: state.sessions.sessions,
-    viewLevel: state.viewLevel.viewLevel,
   };
 };
 

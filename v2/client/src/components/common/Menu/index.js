@@ -296,7 +296,6 @@ class HumburgerMenu extends Component {
 const mapStateToProps = state => ({
   role: state.auth.role,
   loaded: state.auth.loaded,
-  viewLevel: state.viewLevel.viewLevel,
   isDeskTop: state.checkBrowserWidth.isDeskTop,
 });
 
