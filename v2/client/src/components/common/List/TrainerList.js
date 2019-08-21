@@ -144,7 +144,13 @@ export default class TrainerList extends Component {
             }}
           >
             <Button
-              style={{ color: 'red' }}
+              style={{
+                height: 'auto',
+                fontSize: '1rem',
+                marginBottom: '1rem',
+                padding: '0.5rem 1rem',
+                width: 'auto',
+              }}
               label={`view ${selectedTrainer.name}'s results`}
               type="outline"
               width="150px"
