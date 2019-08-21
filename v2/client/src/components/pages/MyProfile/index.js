@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Select, Modal, Button, Input } from 'antd';
+import { Select, Modal, Input } from 'antd';
 
-import { fetchAllTrainers as fetchAllTrainersAction } from '../../../actions/trainerAction';
-
-import { fetchLocalLeads as fetchLocalLeadsAction } from '../../../actions/users';
+import {
+  fetchLocalLeads as fetchLocalLeadsAction,
+  updateUserInfo as updateUserInfoAction,
+} from '../../../actions/users';
 
 // STYLING
 import {
@@ -25,8 +26,8 @@ const { Option, OptGroup } = Select;
 class MyProfile extends Component {
   state = {
     organization: null,
+    localLead: null,
     visible: false,
-    setOrgLoading: false,
     activeStatus: '',
   };
 
@@ -36,46 +37,60 @@ class MyProfile extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { organization: currentOrganization } = this.props;
-    const { organization: prevOrganization } = prevProps;
+    const {
+      organization: currentOrganization,
+      localLead: currentLocalLead,
+    } = this.props;
+    const {
+      organization: prevOrganization,
+      localLead: prevLocalLead,
+    } = prevProps;
     if (currentOrganization !== prevOrganization) {
-      this.setOrgs(currentOrganization);
+      this.updateState({ organization: currentOrganization });
+    }
+    if (currentLocalLead !== prevLocalLead) {
+      this.updateState({ localLead: currentLocalLead });
     }
   }
 
-  setOrgs = currentOrganization => {
-    this.setState({ organization: currentOrganization });
+  updateState = data => {
+    this.setState(data);
   };
 
   showModal = key => {
+    const { organization } = this.props;
     this.setState({
       visible: true,
       activeStatus: key,
+      organization,
     });
   };
 
-  handleOkLocalLead = () => {
-    this.setState({
-      setLocalLeadLoading: true,
-    });
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        setLocalLeadLoading: false,
-      });
-    }, 2000);
-  };
+  handleOk = () => {
+    const {
+      localLead: localLeadState,
+      organization: organizationState,
+    } = this.state;
 
-  handleOkOrg = () => {
-    this.setState({
-      setOrgLoading: true,
-    });
-    setTimeout(() => {
-      this.setState({
-        visible: false,
-        setOrgLoading: false,
-      });
-    }, 2000);
+    const {
+      localLead: localLeadProps,
+      organization: organizationProps,
+      updateUserInfo,
+    } = this.props;
+
+    const data = {};
+
+    if (localLeadProps !== localLeadState) {
+      data.localLead = localLeadState;
+    }
+
+    if (organizationProps !== organizationState) {
+      data.organization = organizationState;
+    }
+
+    if (Object.keys(data).length > 0) {
+      updateUserInfo(data, this.updateState);
+    }
   };
 
   handleCancel = () => {
@@ -86,11 +101,11 @@ class MyProfile extends Component {
 
   handleChangeOrg = e => {
     const { value } = e.target;
-    this.setOrgs(value);
+    this.setState({ organization: value });
   };
 
-  handleChangeLocalLead = e => {
-    console.log(e);
+  handleChangeLocalLead = localLead => {
+    this.setState({ localLead });
   };
 
   render() {
@@ -106,9 +121,9 @@ class MyProfile extends Component {
 
     const {
       visible,
-      setOrgLoading,
       activeStatus,
-      setLocalLeadLoading,
+      updateUserLoading,
+      organization: organizationState,
     } = this.state;
 
     const [trainerLocalLead] = localLeadsList.filter(
@@ -162,7 +177,7 @@ class MyProfile extends Component {
               {organization || 'N/A'}
             </Detail>
             <Detail>
-              <BoldSpan onClick={() => this.showModal('Organisation')}>
+              <BoldSpan onClick={() => this.showModal('Organisation')} pointer>
                 Edit
               </BoldSpan>
             </Detail>
@@ -175,7 +190,7 @@ class MyProfile extends Component {
                 'N/A'}
             </Detail>
             <Detail>
-              <BoldSpan onClick={() => this.showModal('Local Lead')}>
+              <BoldSpan onClick={() => this.showModal('Local Lead')} pointer>
                 Edit
               </BoldSpan>
             </Detail>
@@ -184,20 +199,16 @@ class MyProfile extends Component {
         <Modal
           title={`Edit ${activeStatus}`}
           visible={visible}
-          onOk={
-            activeStatus === 'Organisation'
-              ? this.handleOkOrg
-              : this.handleOkLocalLead
-          }
-          confirmLoading={
-            activeStatus === 'Organisation'
-              ? setOrgLoading
-              : setLocalLeadLoading
-          }
+          onOk={this.handleOk}
+          confirmLoading={updateUserLoading}
           onCancel={this.handleCancel}
         >
           {activeStatus === 'Organisation' ? (
-            <Input placeholder="Organisation" onChange={this.handleChangeOrg} />
+            <Input
+              placeholder="Organisation"
+              onChange={this.handleChangeOrg}
+              value={organizationState}
+            />
           ) : (
             <Select
               defaultValue={captalizesName(
@@ -231,10 +242,14 @@ const mapStateToProps = state => {
     region: state.auth.region,
     localLead: state.auth.localLead,
     localLeadsList: state.fetchedData.localLeadsList,
+    updateUserLoading: state.loading.updateUserLoading,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchLocalLeads: fetchLocalLeadsAction }
+  {
+    fetchLocalLeads: fetchLocalLeadsAction,
+    updateUserInfo: updateUserInfoAction,
+  }
 )(MyProfile);

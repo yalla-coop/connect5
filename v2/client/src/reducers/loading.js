@@ -9,6 +9,7 @@ const initState = {
   loginParticipantsLoading: false,
   sessionEditLoading: false,
   signupLoading: false,
+  updateUserLoading: false,
 };
 
 export default (state = initState, action) => {

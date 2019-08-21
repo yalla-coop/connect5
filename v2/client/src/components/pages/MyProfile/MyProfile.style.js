@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
-import { colors, shadows, breakpoints } from '../../../theme';
+import { colors, shadows } from '../../../theme';
 
 export const Wrapper = styled.div`
   padding: 80px 1rem;
@@ -30,6 +29,7 @@ export const Detail = styled.h2`
 
 export const BoldSpan = styled.span`
   font-weight: 500;
+  cursor: ${pointer => pointer && 'pointer'};
 `;
 
 export const Row = styled.div`
