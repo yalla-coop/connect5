@@ -159,7 +159,7 @@ class MyProfile extends Component {
 
     return (
       <Wrapper>
-        <Header type="home" />
+        <Header type="section" label="My Profile" />
         <DetailsContent>
           <Row>
             <Detail>
