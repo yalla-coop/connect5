@@ -35,9 +35,7 @@ const PrivateRoute = ({
             authorized ? (
               <>
                 <Component {...LinkProps} {...rest} role={role} />
-                {isMobile && navbar && (
-                  <Navbar viewLevel={viewLevel} role={role} />
-                )}
+                {isMobile && navbar && <Navbar role={role} />}
               </>
             ) : (
               history.push('/unauthorized') && null

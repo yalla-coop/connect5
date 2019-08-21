@@ -32,6 +32,12 @@ import {
 
 import TrainerBehavioralInsight from '../../common/BehavioralInsight/Trainer';
 import ExportButton from '../../common/ExportButton';
+import {
+  TRAINER_RESULTS_URL,
+  ALL_RESULTS_URL,
+  GROUP_RESULTS_URL,
+  MY_RESULTS_URL,
+} from '../../../constants/navigationRoutes';
 
 const { Panel } = Collapse;
 
@@ -82,7 +88,7 @@ class UserResults extends Component {
     let resultsFor;
     let resultForRule;
     let headerTitle;
-    if (match && match.path === '/my-results') {
+    if (match && match.path === MY_RESULTS_URL) {
       // admin || local-lead || trainer viewing his own results as a trainer
       resultsFor = userId;
       resultForRule = 'trainer';
@@ -92,7 +98,7 @@ class UserResults extends Component {
       this.props.fetchUserResults(resultsFor, resultForRule);
     } else if (
       match &&
-      match.path === '/group-results/:localLeadId?' &&
+      match.path === GROUP_RESULTS_URL &&
       (role === 'admin' || role === 'localLead')
     ) {
       if (localLeadId && role === 'admin') {
@@ -114,7 +120,7 @@ class UserResults extends Component {
       }
     } else if (
       match &&
-      match.path === '/trainer-results/:trainerId?' &&
+      match.path === TRAINER_RESULTS_URL &&
       (role === 'admin' || role === 'localLead')
     ) {
       // admin || local-lead viewing trainer || local-lead as a trainer result
@@ -126,7 +132,7 @@ class UserResults extends Component {
         this.props.fetchLocalLeadSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, resultForRule);
       }
-    } else if (match && match.path === '/all-results' && role === 'admin') {
+    } else if (match && match.path === ALL_RESULTS_URL && role === 'admin') {
       // admin viewing all sessions results
       resultsFor = userId;
       resultForRule = 'admin';
