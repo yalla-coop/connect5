@@ -153,8 +153,13 @@ class CreateSession extends Component {
     this.props.storeInputData({ startDate: defaultValue });
   };
 
+  onKeyPress = e => {
+    return e.key === 'Enter' && e.preventDefault();
+  };
+
   onInputChange = ({ target: { value, name } }) => {
-    this.props.storeInputData({ [name]: value });
+    const newValue = value.replace(/^\s*\s*$/, '');
+    this.props.storeInputData({ [name]: newValue });
   };
 
   onSelectSessionChange = value => {
@@ -233,13 +238,8 @@ class CreateSession extends Component {
 
   checkError = () => {
     const { inputData } = this.props;
-    const { startDate, inviteesNumber, session, region } = inputData; 
-    const isError = !(
-      !!startDate &&
-      !!inviteesNumber &&
-      !!session &&
-      !!region 
-    );
+    const { startDate, inviteesNumber, session, region } = inputData;
+    const isError = !(!!startDate && !!inviteesNumber && !!session && !!region);
 
     this.props.storeInputData({
       err: isError,
@@ -288,9 +288,9 @@ class CreateSession extends Component {
       trainersNames: trainersNamesArray,
       startTime,
       endTime,
-      location,
-      addressLine1,
-      addressLine2,
+      location: location || 'N/A',
+      addressLine1: addressLine1 || 'N/A',
+      addressLine2: addressLine2 || 'N/A',
     };
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
     return !this.checkError() && this.props.createSessionAction(sessionData);
@@ -360,6 +360,7 @@ class CreateSession extends Component {
       onFormSubmit,
       onStartTimeChange,
       onEndTimeChange,
+      onKeyPress,
     } = this;
 
     return (
@@ -407,6 +408,7 @@ class CreateSession extends Component {
               name="inviteesNumber"
               size="large"
               min="0"
+              onKeyPress={e => onKeyPress(e)}
             />
             {inviteesNumber === null && <Warning>* required</Warning>}
           </InputDiv>
@@ -438,6 +440,7 @@ class CreateSession extends Component {
               onChange={onInputChange}
               name="location"
               size="large"
+              onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
           <InputDiv>
@@ -448,6 +451,7 @@ class CreateSession extends Component {
               onChange={onInputChange}
               name="addressLine1"
               size="large"
+              onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
           <InputDiv>
@@ -458,6 +462,7 @@ class CreateSession extends Component {
               onChange={onInputChange}
               name="addressLine2"
               size="large"
+              onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
 
