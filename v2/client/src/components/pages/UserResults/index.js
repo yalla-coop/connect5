@@ -85,6 +85,13 @@ class UserResults extends Component {
   getData = () => {
     const { userId, history, match, role } = this.props;
     const { localLeadId, trainerId } = match.params;
+    const { state } = history.location;
+
+    // if a user has been passed on then store as the user
+    const user = state && state.trainer;
+    const viewdUserName =
+      user && user.name && user.name[0].toUpperCase() + user.name.slice(1);
+
     let resultsFor;
     let resultForRule;
     let headerTitle;
@@ -105,7 +112,7 @@ class UserResults extends Component {
         // admin is viewing local-lead's group results
         resultsFor = localLeadId;
         resultForRule = 'localLead';
-        headerTitle = "Group's ";
+        headerTitle = `${viewdUserName} - Group `;
 
         this.props.fetchLocalLeadSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, resultForRule);
@@ -127,7 +134,7 @@ class UserResults extends Component {
       if (trainerId) {
         resultsFor = trainerId;
         resultForRule = 'trainer';
-        headerTitle = "Trainer's ";
+        headerTitle = `${viewdUserName} - `;
 
         this.props.fetchLocalLeadSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, resultForRule);
@@ -136,7 +143,7 @@ class UserResults extends Component {
       // admin viewing all sessions results
       resultsFor = userId;
       resultForRule = 'admin';
-      headerTitle = 'All Sessions ';
+      headerTitle = 'All - ';
 
       this.props.fetchALLSessions();
       this.props.fetchUserResults(resultsFor, resultForRule);
@@ -161,15 +168,14 @@ class UserResults extends Component {
   };
 
   render() {
-    const { results, role, history, groupView, sessions, userId } = this.props;
+    const { results, role, history, sessions, userId } = this.props;
     const { state } = history.location;
     const { toggle, resultsFor, resultForRule, headerTitle } = this.state;
     // if a user has been passed on then store as the user
     const user = state && state.trainer;
 
-    const topLevelView = !groupView && ['admin', 'localLead'].includes(role);
     return (
-      <TrainerResultsWrapper nudge={topLevelView}>
+      <TrainerResultsWrapper>
         <Header
           label={
             toggle === 'left'
@@ -177,7 +183,6 @@ class UserResults extends Component {
               : `${headerTitle} Sessions`
           }
           type="section"
-          nudge={topLevelView}
         />
         {userId !== resultsFor && (
           <TopSection>

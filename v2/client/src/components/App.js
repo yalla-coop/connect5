@@ -198,7 +198,6 @@ class App extends Component {
               loaded={loaded}
               allowedRoles={['admin', 'localLead']}
               role={role}
-              groupView
               navbar
             />
 
