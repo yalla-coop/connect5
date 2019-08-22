@@ -41,6 +41,8 @@ const surveysColumns = [
 const Head = styled.h3`
   font-size: 18px;
   color: #4f4f4f;
+  padding: 0.6rem;
+  color: rgba(0, 0, 0, 0.85);
 `;
 
 const Reach = ({ data }) => {
