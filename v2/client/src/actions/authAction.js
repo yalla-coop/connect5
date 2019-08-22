@@ -16,8 +16,6 @@ import {
 } from '../constants/actionTypes';
 import { returnErrors } from './errorAction';
 
-import { updateViewLevel } from './viewLevelAction';
-
 // Login User
 export const loginUser = loginData => dispatch => {
   const { email, password } = loginData;
@@ -178,11 +176,10 @@ export const loginParticipant = PIN => dispatch => {
 export const logout = () => async dispatch => {
   try {
     await axios.get('/api/logout');
-    history.push('/');
+    history.push('/login');
     dispatch({
       type: LOGOUT,
     });
-    dispatch(updateViewLevel());
   } catch (error) {
     console.log('err', error);
   }

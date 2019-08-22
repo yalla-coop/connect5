@@ -35,7 +35,9 @@ const SessionList = ({ dataList }) => {
             <Row key={dataItem.id}>
               <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
               <Type type={dataItem.type}>
-                <p>{dataItem.type.replace(/-/g, ' ')}</p>
+                <p>
+                  {dataItem.type ? dataItem.type.replace(/-/g, ' ') : 'N/A'}
+                </p>
               </Type>
               <StyledLink
                 as={dataItem.asLink ? 'a' : undefined}

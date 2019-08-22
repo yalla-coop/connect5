@@ -18,6 +18,7 @@ export const Menu = styled.div`
   transition: all 1s ease;
   padding: ${({ dark }) => (dark ? '3rem 0 0 .4rem' : '2rem 0 0 1rem')};
   z-index: 2000;
+  overflow: auto;
   @media ${breakpoints.mobileL} {
     width: 300px;
   }
@@ -28,13 +29,11 @@ export const MainDiv = styled.div`
 `;
 
 export const MenuItem = styled(Link)`
-  margin-bottom: 1.5rem;
-  display: flex;
+  margin-bottom: ${({ sub }) => (sub ? '0' : '1.5rem')};
+  display: ${({ block }) => (block ? 'block' : 'flex')};
   padding: 4px;
   align-items: center;
-  color: ${({ dark }) => {
-    return dark ? '#fff' : colors.lightPrimary;
-  }};
+  color: ${({ dark }) => (dark ? '#fff' : colors.lightPrimary)};
   font-weight: bold;
   transition: all 500ms ease;
   cursor: pointer;
@@ -90,5 +89,16 @@ export const MenuIcon = styled.i`
   :hover {
     color: ${colors.lightPrimary};
     outline: none;
+  }
+`;
+
+export const MenuClose = styled.i`
+  color: '#F7F7F9';
+  padding: '5px 5px 0 0';
+  font-size: 30px;
+  cursor: pointer;
+
+  :hover {
+    color: ${colors.primary};
   }
 `;
