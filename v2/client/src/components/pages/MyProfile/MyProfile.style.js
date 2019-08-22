@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { colors, shadows } from '../../../theme';
 
@@ -39,6 +40,19 @@ export const Row = styled.div`
 `;
 
 export const DeteteAccountBtn = styled.div`
+  margin: 0 auto;
+  font-weight: 300;
+  font-size: 14px;
+  color: ${colors.profileFontColor};
+  padding: 0.5rem 0;
+  cursor: pointer;
+
+  :hover {
+    color: ${colors.red};
+  }
+`;
+
+export const StyledLink = styled(Link)`
   margin: 0 auto;
   font-weight: 300;
   font-size: 14px;

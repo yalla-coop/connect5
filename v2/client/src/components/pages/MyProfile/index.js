@@ -19,6 +19,7 @@ import {
   BoldSpan,
   Row,
   DeteteAccountBtn,
+  StyledLink,
 } from './MyProfile.style';
 
 //  COMMON COMPONENTS
@@ -230,6 +231,8 @@ class MyProfile extends Component {
             </Row>
           )}
         </DetailsContent>
+        <StyledLink to="/change-password">Change My Password</StyledLink>
+
         <DeteteAccountBtn onClick={() => deleteAccount(userId, role)}>
           Delete My Account
         </DeteteAccountBtn>
