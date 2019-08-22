@@ -19,7 +19,7 @@ describe('Tesing for getTrainerFeedback route', () => {
 
   test('test with valid trainer id', async done => {
     const trainers = await User.find({ role: 'trainer' });
-    const data = { trainerId: trainers[0]._id };
+    const data = { trainerId: trainers[0]._id, role: 'trainer' };
     request(app)
       .post(`/api/feedback/`)
       .send(data)

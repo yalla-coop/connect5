@@ -16,14 +16,27 @@ class TrainerFeedbackOverall extends Component {
   state = { visible: false };
 
   componentDidMount() {
+    this.getData();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { role: oldRole } = prevProps;
+    const { role } = this.props;
+    if (role !== oldRole) {
+      this.getData();
+    }
+  }
+
+  getData = () => {
     const {
       fetchTrainerFeedback,
       trainerId,
       sessionId,
       surveyType,
+      role,
     } = this.props;
-    fetchTrainerFeedback(trainerId, sessionId, surveyType);
-  }
+    fetchTrainerFeedback({ trainerId, sessionId, surveyType, role });
+  };
 
   showModal = () => {
     this.setState({
@@ -31,13 +44,13 @@ class TrainerFeedbackOverall extends Component {
     });
   };
 
-  handleOk = e => {
+  handleOk = () => {
     this.setState({
       visible: false,
     });
   };
 
-  handleCancel = e => {
+  handleCancel = () => {
     this.setState({
       visible: false,
     });
@@ -89,7 +102,6 @@ const mapStateToProps = state => ({
   feedbackData: state.trainerFeedback.trainer.data,
   loaded: state.trainerFeedback.trainer.loaded,
   isAuthenticated: state.auth.isAuthenticated,
-  role: state.auth.role,
 });
 
 export default connect(

@@ -25,7 +25,6 @@ import logo from '../../../assets/logo.png';
 // ROUTES
 import {
   DASHBOARD_URL,
-  DECIDE_VIEW_URL,
   FORGET_PASSWORD,
   SIGN_UP_URL,
 } from '../../../constants/navigationRoutes';
@@ -38,7 +37,7 @@ class Login extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { error, isAuthenticated, role } = this.props;
+    const { error, isAuthenticated } = this.props;
     if (error !== prevProps.error) {
       // Check for login error
       this.updateLogin(error);
@@ -46,9 +45,7 @@ class Login extends Component {
 
     // If authenticated,
     if (isAuthenticated) {
-      role === 'trainer'
-        ? history.push(DASHBOARD_URL)
-        : history.push(DECIDE_VIEW_URL);
+      history.push(DASHBOARD_URL);
     }
   }
 

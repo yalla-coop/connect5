@@ -19,14 +19,15 @@ export const fetchUserResults = (id, role) => async dispatch => {
   }
 };
 
-export const fetchTrainerFeedback = (
+export const fetchTrainerFeedback = ({
   trainerId,
   sessionId,
-  surveyType
-) => async dispatch => {
+  surveyType,
+  role,
+}) => async dispatch => {
   try {
     const url = `/api/feedback/`;
-    const data = { trainerId, sessionId, surveyType };
+    const data = { trainerId, sessionId, surveyType, role };
 
     const res = await axios.post(url, data);
 
