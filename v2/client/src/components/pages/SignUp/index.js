@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Checkbox } from 'antd';
 import { fetchLocalLeads } from '../../../actions/users';
 import { signUpTrainer, checkUniqeEmail } from '../../../actions/authAction';
 
@@ -38,6 +39,7 @@ const regions = [
 class SignUp extends Component {
   state = {
     confirmDirty: false,
+    checkLocalLead: false,
   };
 
   componentDidMount() {
@@ -72,12 +74,24 @@ class SignUp extends Component {
     }
   };
 
+  onChangeCheckbox = e => {
+    this.setState({ checkLocalLead: e.target.checked });
+  };
+
   handleSubmit = e => {
+    const { checkLocalLead } = this.state;
+    let role = '';
+    if (checkLocalLead) {
+      role = 'localLead';
+    } else {
+      role = 'trainer';
+    }
     const { form, signUpTrainer: signUpTrainerActionCreator } = this.props;
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
+      console.log(err);
       if (!err) {
-        signUpTrainerActionCreator(values);
+        signUpTrainerActionCreator({ role, ...values });
       }
     });
   };
@@ -113,6 +127,7 @@ class SignUp extends Component {
   };
 
   render() {
+    const { checkLocalLead } = this.state;
     const {
       form: { getFieldDecorator },
       localLeads,
@@ -121,6 +136,8 @@ class SignUp extends Component {
       isDeskTop,
       loading,
     } = this.props;
+
+    const { onChangeCheckbox } = this;
 
     if (isAuthenticated) {
       history.push('/dashboard');
@@ -236,26 +253,37 @@ class SignUp extends Component {
                 )}
               </Item>
 
-              <Item style={{ margin: '0 auto 20' }}>
-                {getFieldDecorator('localLead', {
-                  rules: [
-                    {
-                      required: true,
-                      message: 'Please select your local lead',
-                    },
-                  ],
-                })(
-                  <Select placeholder="Local Lead" size="large">
-                    {localLeads &&
-                      localLeads.map(({ name, _id }) => (
-                        <Option value={_id} key={_id}>
-                          {name}
-                        </Option>
-                      ))}
-                  </Select>
-                )}
-              </Item>
-
+              <Checkbox
+                onChange={onChangeCheckbox}
+                style={{ padding: ' 0 0 .5rem 0', margin: '.3rem ' }}
+              >
+                <span style={{ fontSize: '.9rem' }}>
+                  {' '}
+                  I{"''"}m acting as local lead and/or I manage groups of
+                  trainers
+                </span>
+              </Checkbox>
+              {!checkLocalLead && (
+                <Item style={{ margin: '0 auto 20' }}>
+                  {getFieldDecorator('localLead', {
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Please select your local lead',
+                      },
+                    ],
+                  })(
+                    <Select placeholder="Local Lead" size="large">
+                      {localLeads &&
+                        localLeads.map(({ name, _id }) => (
+                          <Option value={_id} key={_id}>
+                            {name}
+                          </Option>
+                        ))}
+                    </Select>
+                  )}
+                </Item>
+              )}
               <Item style={{ margin: '0 auto 20' }}>
                 {getFieldDecorator('region', {
                   rules: [
