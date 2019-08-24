@@ -9,8 +9,6 @@ import { colors, borders } from '../../../theme';
 import {
   DASHBOARD_URL,
   ADD_SESSION_URL,
-  TRAINER_RESULTS_URL,
-  TRAINER_SESSIONS_URL,
   TRAINERS_URL,
   MY_GROUP_RESULTS_URL,
   DEMOGRAPHICS_URL,
