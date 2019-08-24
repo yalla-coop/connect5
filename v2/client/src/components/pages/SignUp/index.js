@@ -89,7 +89,6 @@ class SignUp extends Component {
     const { form, signUpTrainer: signUpTrainerActionCreator } = this.props;
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
-      console.log(err);
       if (!err) {
         signUpTrainerActionCreator({ role, ...values });
       }

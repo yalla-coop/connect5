@@ -12,7 +12,6 @@ const {
 
 module.exports = async (req, res, next) => {
   const { name, email, password, localLead, region, role } = req.body;
-  console.log(req.body, 'ggggggggggg');
   if (name && email && password && region) {
     return createNewTrainer({
       name,
