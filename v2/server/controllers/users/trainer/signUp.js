@@ -11,15 +11,16 @@ const {
 } = require('./../../../database/queries/users/localLead');
 
 module.exports = async (req, res, next) => {
-  const { name, email, password, localLead, region } = req.body;
-  if (name && email && password && localLead && region) {
+  const { name, email, password, localLead, region, role } = req.body;
+  console.log(req.body, 'ggggggggggg');
+  if (name && email && password && region) {
     return createNewTrainer({
       name,
       email,
       password,
       region,
-      localLead,
-      role: 'trainer',
+      localLead: localLead || 'N/A',
+      role,
     })
       .then(trainer => {
         const trainerInfo = {
