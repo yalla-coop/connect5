@@ -85,3 +85,12 @@ export const Label = styled.label`
   margin-left: 0.5rem;
   color: ${colors.blackSecondary};
 `;
+
+export const LabelDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-left: -115px;
+  @media (min-width: 678px) {
+    margin-left: -180px;
+  }
+`;

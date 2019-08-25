@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-did-update-set-state */
 import React, { Component } from 'react';
-import { DatePicker, Select, Input, TimePicker } from 'antd';
+import { DatePicker, Select, Input, TimePicker, Popover } from 'antd';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import history from '../../../../history';
@@ -27,6 +27,7 @@ import {
   BackContainer,
   EmailError,
   Label,
+  LabelDiv,
 } from './SessionActions.Style';
 
 import Header from '../../../common/Header';
@@ -343,6 +344,15 @@ class EditSession extends Component {
       onKeyPress,
     } = this;
 
+    const content = (
+      <div style={{ maxWidth: '250px', margin: '0 auto' }}>
+        <p>
+          this is where you can store the expected maximum attendance. This
+          number can be changed later.
+        </p>
+      </div>
+    );
+
     return (
       <EditSessionWrapper>
         <Header type="view" label="Edit Session" />
@@ -367,6 +377,7 @@ class EditSession extends Component {
           <InputDiv>
             <Label htmlFor="sessionType">Session Type:</Label>
             <Select
+              id="sessionType"
               showSearch
               style={{ width: '100%' }}
               placeholder={type}
@@ -384,9 +395,22 @@ class EditSession extends Component {
           </InputDiv>
 
           <InputDiv>
-            <Label htmlFor="attendees">Attendees Number:</Label>
+            <LabelDiv>
+              <Label htmlFor="sessionCapacity">Session Capacity:</Label>
+              <Popover content={content} style={{ marginRight: '2rem' }}>
+                <button
+                  type="button"
+                  style={{ background: 'none', border: 'none' }}
+                >
+                  <i
+                    className="fas fa-question-circle"
+                    style={{ color: 'green' }}
+                  />
+                </button>
+              </Popover>
+            </LabelDiv>
             <Input
-              id="attendees"
+              id="sessionCapacity"
               type="number"
               placeholder="Enter number of attendees"
               value={inviteesNumber}
