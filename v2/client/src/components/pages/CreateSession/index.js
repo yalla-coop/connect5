@@ -372,7 +372,7 @@ class CreateSession extends Component {
         </BackContainer>
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
-            <Label htmlFor="DatePicker">Session Date:</Label>
+            <Label htmlFor="DatePicker">*Session Date:</Label>
             <DatePicker
               id="DatePicker"
               onChange={onDateChange}
@@ -384,7 +384,7 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
-            <Label htmlFor="sessionType">Session Type:</Label>
+            <Label htmlFor="sessionType">*Session Type:</Label>
             <Select
               showSearch
               id="sessionType"
@@ -405,7 +405,7 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
-            <Label htmlFor="attendees">Attendees Number:</Label>
+            <Label htmlFor="attendees">*Attendees Number:</Label>
             <Input
               id="attendees"
               type="number"
@@ -421,7 +421,7 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
-            <Label htmlFor="region">Region:</Label>
+            <Label htmlFor="region">*Region:</Label>
             <Select
               id="region"
               showSearch
