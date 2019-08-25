@@ -79,3 +79,10 @@ export const Error = styled.p`
 export const InputLabel = styled.label`
   width: 50%;
 `;
+
+export const Label = styled.label`
+  width: 100%;
+  font-size: 15px;
+  margin-left: 0.5rem;
+  color: ${colors.black};
+`;

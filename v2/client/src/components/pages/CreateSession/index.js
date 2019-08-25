@@ -37,6 +37,7 @@ import {
   Error,
   Warning,
   InputLabel,
+  Label,
 } from './create-session.style';
 
 import { BackContainer, BackLink } from '../AddTrainer/AddTrainer.style';
@@ -371,7 +372,9 @@ class CreateSession extends Component {
         </BackContainer>
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
+            <Label htmlFor="DatePicker">Session Date:</Label>
             <DatePicker
+              id="DatePicker"
               onChange={onDateChange}
               name="startDate"
               size="large"
@@ -381,8 +384,10 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <Label htmlFor="sessionType">Session Type:</Label>
             <Select
               showSearch
+              id="sessionType"
               style={{ width: '100%' }}
               placeholder="Click to select session No."
               optionFilterProp="children"
@@ -400,7 +405,9 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <Label htmlFor="attendees">Attendees Number:</Label>
             <Input
+              id="attendees"
               type="number"
               placeholder="Number of attendees (this can be an estimate)"
               value={inviteesNumber}
@@ -414,7 +421,9 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <Label htmlFor="region">Region:</Label>
             <Select
+              id="region"
               showSearch
               style={{ width: '100%' }}
               placeholder="Region"
@@ -433,9 +442,11 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <Label htmlFor="addressLine1">Address Line1:</Label>
             <Input
+              id="addressLine1"
               type="text"
-              placeholder="Type the venue's address"
+              placeholder="Address line1"
               value={location}
               onChange={onInputChange}
               name="location"
@@ -444,20 +455,23 @@ class CreateSession extends Component {
             />
           </InputDiv>
           <InputDiv>
+            <Label htmlFor="addressLine2">Address Line2:</Label>
             <Input
+              id="addressLine2"
               type="text"
-              placeholder="address line1"
+              placeholder="address line2"
               value={addressLine1}
               onChange={onInputChange}
-              name="addressLine1"
+              name="AddressLine2"
               size="large"
               onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
           <InputDiv>
+            <Label htmlFor="PostCode">Post Code:</Label>
             <Input
               type="text"
-              placeholder="address line2"
+              placeholder="Post Code"
               value={addressLine2}
               onChange={onInputChange}
               name="addressLine2"
@@ -467,7 +481,9 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
             <Select
+              id="PartnerTrainer"
               showSearch
               style={{ width: '100%' }}
               placeholder="Partner Trainer"
@@ -522,7 +538,9 @@ class CreateSession extends Component {
           </InputDiv>
           {role === 'localLead' && (
             <InputDiv>
+              <Label htmlFor="PartnerTrainer2">Second Partner Trainer:</Label>
               <Select
+                id="PartnerTrainer2"
                 placeholder="Second Partner Trainer"
                 optionFilterProp="children"
                 onChange={onSelectPartner2Change}
@@ -574,7 +592,9 @@ class CreateSession extends Component {
           )}
 
           <InputDiv>
+            <Label htmlFor="EmailsToInvite">Emails To Invite:</Label>
             <Select
+              id="EmailsToInvite"
               mode="tags"
               size="large"
               placeholder="Enter emails for people to invite"
