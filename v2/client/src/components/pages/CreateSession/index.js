@@ -470,6 +470,7 @@ class CreateSession extends Component {
           <InputDiv>
             <Label htmlFor="PostCode">Post Code:</Label>
             <Input
+              id="PostCode"
               type="text"
               placeholder="Post Code"
               value={addressLine2}

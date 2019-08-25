@@ -26,6 +26,7 @@ import {
   BackLink,
   BackContainer,
   EmailError,
+  Label,
 } from './SessionActions.Style';
 
 import Header from '../../../common/Header';
@@ -350,8 +351,10 @@ class EditSession extends Component {
         </BackContainer>
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
+            <Label htmlFor="DatePicker">Session Date:</Label>
             {date && startDate && (
               <DatePicker
+                id="DatePicker"
                 onChange={onDateChange}
                 name="startDate"
                 defaultValue={moment(date, 'YYYY-MM-DD')}
@@ -362,6 +365,7 @@ class EditSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <Label htmlFor="sessionType">Session Type:</Label>
             <Select
               showSearch
               style={{ width: '100%' }}
@@ -380,7 +384,9 @@ class EditSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <Label htmlFor="attendees">Attendees Number:</Label>
             <Input
+              id="attendees"
               type="number"
               placeholder="Enter number of attendees"
               value={inviteesNumber}
@@ -393,7 +399,9 @@ class EditSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <Label htmlFor="region">Region:</Label>
             <Select
+              id="region"
               showSearch
               style={{ width: '100%' }}
               placeholder={region}
@@ -411,7 +419,50 @@ class EditSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <Label htmlFor="addressLine1">Address Line1:</Label>
+            <Input
+              id="addressLine1"
+              type="text"
+              placeholder="Address line1"
+              value={location}
+              onChange={onInputChange}
+              name="location"
+              size="large"
+              onKeyPress={e => onKeyPress(e)}
+            />
+          </InputDiv>
+
+          <InputDiv>
+            <Label htmlFor="addressLine2">Address Line2:</Label>
+            <Input
+              id="addressLine2"
+              type="text"
+              placeholder="address line2"
+              value={addressLine1}
+              onChange={onInputChange}
+              name="addressLine1"
+              size="large"
+              onKeyPress={e => onKeyPress(e)}
+            />
+          </InputDiv>
+
+          <InputDiv>
+            <Label htmlFor="PostCode">Post Code:</Label>
+            <Input
+              id="PostCode"
+              type="text"
+              placeholder="Post Code"
+              value={addressLine2}
+              onChange={onInputChange}
+              name="addressLine2"
+              size="large"
+              onKeyPress={e => onKeyPress(e)}
+            />
+          </InputDiv>
+          <InputDiv>
+            <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
             <Select
+              id="PartnerTrainer"
               showSearch
               style={{ width: '100%' }}
               placeholder={
@@ -438,7 +489,9 @@ class EditSession extends Component {
           </InputDiv>
           {role === 'localLead' && (
             <InputDiv>
+              <Label htmlFor="PartnerTrainer2">Second Partner Trainer:</Label>
               <Select
+                id="PartnerTrainer2"
                 showSearch
                 style={{ width: '100%' }}
                 placeholder="Trainer 2"
@@ -462,7 +515,9 @@ class EditSession extends Component {
             </InputDiv>
           )}
           <InputDiv>
+            <Label htmlFor="EmailsToInvite">Emails To Invite:</Label>
             <Select
+              id="EmailsToInvite"
               mode="tags"
               size="large"
               placeholder="emails"
@@ -480,42 +535,6 @@ class EditSession extends Component {
               ))}
             </Select>
             <EmailError>{emailErr}</EmailError>
-          </InputDiv>
-
-          <InputDiv>
-            <Input
-              type="text"
-              placeholder="Type the venue's address"
-              value={location}
-              onChange={onInputChange}
-              name="location"
-              size="large"
-              onKeyPress={e => onKeyPress(e)}
-            />
-          </InputDiv>
-
-          <InputDiv>
-            <Input
-              type="text"
-              placeholder="address line1"
-              value={addressLine1}
-              onChange={onInputChange}
-              name="addressLine1"
-              size="large"
-              onKeyPress={e => onKeyPress(e)}
-            />
-          </InputDiv>
-
-          <InputDiv>
-            <Input
-              type="text"
-              placeholder="address line2"
-              value={addressLine2}
-              onChange={onInputChange}
-              name="addressLine2"
-              size="large"
-              onKeyPress={e => onKeyPress(e)}
-            />
           </InputDiv>
 
           <InputDiv

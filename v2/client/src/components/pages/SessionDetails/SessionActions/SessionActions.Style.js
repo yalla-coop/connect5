@@ -78,3 +78,10 @@ export const EmailError = styled.div`
   font-size: 0.875rem;
   color: ${colors.red};
 `;
+
+export const Label = styled.label`
+  width: 100%;
+  font-size: 15px;
+  margin-left: 0.5rem;
+  color: ${colors.blackSecondary};
+`;
