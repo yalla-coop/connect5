@@ -585,6 +585,12 @@ class CreateSession extends Component {
               onFocus={this.onSelectFocus}
             />
 
+            <InputDiv>
+              <Checkbox onChange={this.onChangeCheckbox}>
+                Automatically send an invite to these emails
+              </Checkbox>
+            </InputDiv>
+
             <InputDiv
               style={{
                 marginTop: '1rem',
@@ -624,11 +630,6 @@ class CreateSession extends Component {
             </InputDiv>
 
             <div>{err}</div>
-          </InputDiv>
-          <InputDiv>
-            <Checkbox onChange={this.onChangeCheckbox}>
-              Send a session invite to potential participants by email
-            </Checkbox>
           </InputDiv>
 
           <SubmitBtn>
