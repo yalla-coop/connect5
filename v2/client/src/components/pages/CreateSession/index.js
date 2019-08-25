@@ -11,6 +11,7 @@ import {
   Icon,
   Divider,
   TimePicker,
+  Popover,
 } from 'antd';
 
 import moment from 'moment';
@@ -39,6 +40,7 @@ import {
   InputLabel,
   Label,
   RequiredMark,
+  LabelDiv,
 } from './create-session.style';
 
 import { BackContainer, BackLink } from '../AddTrainer/AddTrainer.style';
@@ -365,6 +367,15 @@ class CreateSession extends Component {
       onKeyPress,
     } = this;
 
+    const content = (
+      <div style={{ maxWidth: '250px', margin: '0 auto' }}>
+        <p>
+          this is where you can store the expected maximum attendance. This
+          number can be changed later.
+        </p>
+      </div>
+    );
+
     return (
       <CreateSessionWrapper>
         <Header type="section" label="Create New Session" />
@@ -410,13 +421,29 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
-            <Label htmlFor="attendees">
-              <RequiredMark>*</RequiredMark>Attendees Number:
-            </Label>
+            <LabelDiv>
+              <Label htmlFor="sessionCapacity">
+                <RequiredMark>*</RequiredMark>Session Capacity:
+              </Label>
+              <div>
+                <Popover content={content} style={{ marginRight: '2rem' }}>
+                  <button
+                    type="button"
+                    style={{ background: 'none', border: 'none' }}
+                  >
+                    <i
+                      className="fas fa-question-circle"
+                      style={{ color: 'green' }}
+                    />
+                  </button>
+                </Popover>
+              </div>
+            </LabelDiv>
+
             <Input
-              id="attendees"
+              id="sessionCapacity"
               type="number"
-              placeholder="Number of attendees (this can be an estimate)"
+              placeholder="Session Capacity"
               value={inviteesNumber}
               onChange={onInputChange}
               name="inviteesNumber"

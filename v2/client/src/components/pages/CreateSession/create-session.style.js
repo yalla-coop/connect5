@@ -90,3 +90,12 @@ export const Label = styled.label`
 export const RequiredMark = styled.label`
   color: ${colors.red};
 `;
+
+export const LabelDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-left: -115px;
+  @media (min-width: 678px) {
+    margin-left: -180px;
+  }
+`;
