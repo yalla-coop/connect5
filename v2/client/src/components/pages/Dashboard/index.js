@@ -92,7 +92,7 @@ class Dashboard extends Component {
                 Welcome back, <br />
                 {captalizesName}
               </Title>
-              <Role>Role: {role}</Role>
+              <Role>Role: {role === 'localLead' ? 'Local Lead' : role}</Role>
             </TopSection>
             <StatsWrapper>
               <StatItem to={sessionURL}>
