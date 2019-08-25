@@ -86,3 +86,7 @@ export const Label = styled.label`
   margin-left: 0.5rem;
   color: ${colors.black};
 `;
+
+export const RequiredMark = styled.label`
+  color: ${colors.red};
+`;

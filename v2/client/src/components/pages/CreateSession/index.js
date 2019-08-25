@@ -38,6 +38,7 @@ import {
   Warning,
   InputLabel,
   Label,
+  RequiredMark,
 } from './create-session.style';
 
 import { BackContainer, BackLink } from '../AddTrainer/AddTrainer.style';
@@ -372,7 +373,9 @@ class CreateSession extends Component {
         </BackContainer>
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
-            <Label htmlFor="DatePicker">*Session Date:</Label>
+            <Label htmlFor="DatePicker">
+              <RequiredMark>*</RequiredMark>Session Date:
+            </Label>
             <DatePicker
               id="DatePicker"
               onChange={onDateChange}
@@ -384,7 +387,9 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
-            <Label htmlFor="sessionType">*Session Type:</Label>
+            <Label htmlFor="sessionType">
+              <RequiredMark>*</RequiredMark>Session Type:
+            </Label>
             <Select
               showSearch
               id="sessionType"
@@ -405,7 +410,9 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
-            <Label htmlFor="attendees">*Attendees Number:</Label>
+            <Label htmlFor="attendees">
+              <RequiredMark>*</RequiredMark>Attendees Number:
+            </Label>
             <Input
               id="attendees"
               type="number"
@@ -421,7 +428,9 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
-            <Label htmlFor="region">*Region:</Label>
+            <Label htmlFor="region">
+              <RequiredMark>*</RequiredMark>Region:
+            </Label>
             <Select
               id="region"
               showSearch
