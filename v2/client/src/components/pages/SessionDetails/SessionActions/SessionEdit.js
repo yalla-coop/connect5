@@ -1,7 +1,15 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-did-update-set-state */
 import React, { Component } from 'react';
-import { DatePicker, Select, Input, TimePicker } from 'antd';
+import {
+  DatePicker,
+  Select,
+  Input,
+  TimePicker,
+  Tooltip,
+  Button as AntButton,
+  message,
+} from 'antd';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import history from '../../../../history';
@@ -19,6 +27,8 @@ import {
   SubmitBtn,
   Error,
 } from '../../CreateSession/create-session.style';
+
+import { SelecetWrapper, IconsWrapper } from '../SessionDetails.Style';
 
 import {
   EditSessionWrapper,
@@ -264,6 +274,35 @@ class EditSession extends Component {
     // });
   };
 
+  onCopy = () => {
+    const { emails } = this.state;
+
+    if (emails.length) {
+      const copyText = document.getElementById('emails');
+      let range;
+      let selection;
+      if (document.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(copyText);
+
+        range.select();
+      } else if (window.getSelection) {
+        selection = window.getSelection();
+        range = document.createRange();
+        range.selectNodeContents(copyText);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+
+      try {
+        document.execCommand('copy');
+        message.success('copied');
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
   onFormSubmit = event => {
     event.preventDefault();
     const { id } = this.props.match.params;
@@ -462,25 +501,49 @@ class EditSession extends Component {
             </InputDiv>
           )}
           <InputDiv>
-            <Select
-              mode="tags"
-              size="large"
-              placeholder="emails"
-              onChange={onEmailChange}
-              defaultValue={participantsEmails.map(item => item.email)}
-              value={emails.map(item => item.email)}
-              style={{ width: '100%', height: '100%' }}
-              onBlur={this.onSelectBlur}
-              onFocus={this.onSelectFocus}
-            >
-              {participantsEmails.map(item => (
-                <Option key={item.email} value={item.email}>
-                  {item.email}
-                </Option>
-              ))}
-            </Select>
-            <EmailError>{emailErr}</EmailError>
+            <SelecetWrapper>
+              <IconsWrapper>
+                <Tooltip placement="top" title="Copy">
+                  <AntButton
+                    type="primary"
+                    icon="copy"
+                    ghost
+                    onClick={this.onCopy}
+                  />
+                </Tooltip>
+              </IconsWrapper>
+              <EmailError>{emailErr}</EmailError>{' '}
+              <Select
+                mode="tags"
+                size="large"
+                placeholder="emails"
+                onChange={onEmailChange}
+                defaultValue={participantsEmails.map(item => item.email)}
+                value={emails.map(item => item.email)}
+                style={{ width: '100%', height: '100%' }}
+                onBlur={this.onSelectBlur}
+                onFocus={this.onSelectFocus}
+              >
+                {participantsEmails.map(item => (
+                  <Option key={item.email} value={item.email}>
+                    {item.email}
+                  </Option>
+                ))}
+              </Select>
+            </SelecetWrapper>
           </InputDiv>
+          <div
+            id="emails"
+            style={{
+              opacity: '0',
+              position: 'absolute',
+              width: '0',
+              hieght: '0',
+            }}
+          >
+            {emails && emails.map(email => email.email).join(';')}
+          </div>
+          <EmailError>{emailErr}</EmailError>
 
           <InputDiv>
             <Input
