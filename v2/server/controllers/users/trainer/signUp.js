@@ -12,13 +12,14 @@ const {
 
 module.exports = async (req, res, next) => {
   const { name, email, password, localLead, region, role } = req.body;
+  console.log(role, 'rollllllllllle');
   if (name && email && password && region) {
     return createNewTrainer({
       name,
       email,
       password,
       region,
-      localLead: localLead || 'N/A',
+      localLead,
       role,
     })
       .then(trainer => {
@@ -48,6 +49,7 @@ module.exports = async (req, res, next) => {
           });
       })
       .catch(err => {
+        console.log(err);
         next(boom.badImplementation());
       });
   }

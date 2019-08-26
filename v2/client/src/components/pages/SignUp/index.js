@@ -39,7 +39,7 @@ const regions = [
 class SignUp extends Component {
   state = {
     confirmDirty: false,
-    checkLocalLead: false,
+    role: 'trainer',
   };
 
   componentDidMount() {
@@ -75,17 +75,20 @@ class SignUp extends Component {
   };
 
   onChangeCheckbox = e => {
-    this.setState({ checkLocalLead: e.target.checked });
-  };
-
-  handleSubmit = e => {
-    const { checkLocalLead } = this.state;
     let role = '';
-    if (checkLocalLead) {
+    if (e.target.checked) {
+      console.log(e.target.checked);
       role = 'localLead';
     } else {
       role = 'trainer';
     }
+    this.setState({ role });
+  };
+
+  handleSubmit = e => {
+    const { role } = this.state;
+    console.log(role, 'rolllllllllle');
+
     const { form, signUpTrainer: signUpTrainerActionCreator } = this.props;
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
@@ -126,7 +129,7 @@ class SignUp extends Component {
   };
 
   render() {
-    const { checkLocalLead } = this.state;
+    const { role } = this.state;
     const {
       form: { getFieldDecorator },
       localLeads,
@@ -262,13 +265,18 @@ class SignUp extends Component {
                   trainers
                 </span>
               </Checkbox>
-              {!checkLocalLead && (
+              {role !== 'localLead' && (
                 <Item style={{ margin: '0 auto 20' }}>
                   {getFieldDecorator('localLead', {
                     rules: [
                       {
-                        required: true,
-                        message: 'Please select your local lead',
+                        validator: (rule, value, callback) => {
+                          if (!value && role === 'trainer') {
+                            callback('Please select your local lead');
+                          } else {
+                            callback();
+                          }
+                        },
                       },
                     ],
                   })(
