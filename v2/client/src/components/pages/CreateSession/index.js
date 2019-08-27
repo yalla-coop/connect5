@@ -20,6 +20,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
 import Header from '../../common/Header';
+import InfoPopUp from '../../common/InfoPopup';
 import { fetchAllTrainers } from '../../../actions/trainerAction';
 import {
   fetchLocalLeads,
@@ -401,6 +402,9 @@ class CreateSession extends Component {
       onKeyPress,
     } = this;
 
+    const details =
+      'Email addresses of invitees can be either added one by one or copied from a list separated by commas, spaces etc. This list is not required to set up sessions. It can be created/updated in continuation.';
+
     return (
       <CreateSessionWrapper>
         <Header type="section" label="Create New Session" />
@@ -622,6 +626,7 @@ class CreateSession extends Component {
                     onClick={this.onCopy}
                   />
                 </Tooltip>
+                <InfoPopUp details={details} />
               </IconsWrapper>
               <Select
                 mode="tags"

@@ -14,6 +14,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import history from '../../../../history';
 import Button from '../../../common/Button';
+import InfoPopUp from '../../../common/InfoPopup';
 import { fetchAllTrainers } from '../../../../actions/trainerAction';
 import { fetchLocalLeads } from '../../../../actions/users';
 import {
@@ -381,6 +382,9 @@ class EditSession extends Component {
       onKeyPress,
     } = this;
 
+    const details =
+      'Email addresses of invitees can be either added one by one or copied from a list separated by commas, spaces etc. This list is not required to set up sessions. It can be created/updated in continuation.';
+
     return (
       <EditSessionWrapper>
         <Header type="view" label="Edit Session" />
@@ -511,6 +515,7 @@ class EditSession extends Component {
                     onClick={this.onCopy}
                   />
                 </Tooltip>
+                <InfoPopUp details={details} />
               </IconsWrapper>
               <EmailError>{emailErr}</EmailError>{' '}
               <Select

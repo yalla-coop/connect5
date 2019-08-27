@@ -1,13 +1,25 @@
 import React from 'react';
 import { Popover } from 'antd';
+import styled from 'styled-components';
+import { colors } from '../../../theme';
+
+export const AntdBtn = styled.button`
+  background: none;
+  border: none;
+`;
+
+export const Icon = styled.i`
+  color: ${colors.green};
+  font-size: 25px;
+`;
 
 const InfoPopUp = ({ details, ...props }) => {
   return (
-    <div>
+    <div style={{ maxWidth: '200px' }}>
       <Popover content={details}>
-        <button type="button" style={{ background: 'none', border: 'none' }}>
-          <i className="fas fa-question-circle" style={{ color: 'green' }} />
-        </button>
+        <AntdBtn type="button">
+          <Icon className="fas fa-question-circle" />
+        </AntdBtn>
       </Popover>
     </div>
   );
