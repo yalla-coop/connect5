@@ -31,8 +31,6 @@ export const createSessionAction = sessionData => dispatch => {
       });
     })
     .then(() => {
-      const { role } = store.getState().auth;
-
       Modal.success({
         title: 'Done!',
         content: 'Session created',
