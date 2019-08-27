@@ -404,7 +404,7 @@ class EditSession extends Component {
                 >
                   <i
                     className="fas fa-question-circle"
-                    style={{ color: 'green' }}
+                    style={{ color: '#9FCE67' }}
                   />
                 </button>
               </Popover>
@@ -484,14 +484,16 @@ class EditSession extends Component {
             />
           </InputDiv>
           <InputDiv>
-            <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
+            {role === 'localLead' ? (
+              <Label htmlFor="PartnerTrainer">Trainer:</Label>
+            ) : (
+              <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
+            )}
             <Select
               id="PartnerTrainer"
               showSearch
               style={{ width: '100%' }}
-              placeholder={
-                role === 'localLead' ? 'Trainer 1' : 'Partner Trainer'
-              }
+              placeholder={role === 'localLead' ? 'Trainer' : 'Partner Trainer'}
               optionFilterProp="children"
               onChange={onSelectPartner1Change}
               value={partnerTrainer1}

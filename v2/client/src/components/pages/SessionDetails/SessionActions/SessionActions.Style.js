@@ -87,10 +87,9 @@ export const Label = styled.label`
 `;
 
 export const LabelDiv = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  margin-left: -115px;
-  @media (min-width: 678px) {
-    margin-left: -180px;
+  justify-content: space-evenly;
+
   }
 `;

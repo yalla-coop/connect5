@@ -211,11 +211,20 @@ class CreateSession extends Component {
   };
 
   renderTrainersList = () => {
-    const { leadsAndTrainers, role, localLeadTrainersGroup, id } = this.props;
+    const {
+      leadsAndTrainers,
+      role,
+      localLeadTrainersGroup,
+      id,
+      name: loggedInName,
+    } = this.props;
     if (role && role === 'localLead') {
       if (localLeadTrainersGroup) {
-        return localLeadTrainersGroup
-          .filter(({ _id }) => _id !== id)
+        return [
+          { _id: id, name: loggedInName, keep: true },
+          ...localLeadTrainersGroup,
+        ]
+          .filter(({ _id, keep }) => _id !== id || keep === true)
           .map(({ name, _id }) => {
             return (
               <Option
@@ -241,9 +250,21 @@ class CreateSession extends Component {
   };
 
   checkError = () => {
-    const { inputData } = this.props;
-    const { startDate, inviteesNumber, session, region } = inputData;
-    const isError = !(!!startDate && !!inviteesNumber && !!session && !!region);
+    const { inputData, role } = this.props;
+    const {
+      startDate,
+      inviteesNumber,
+      session,
+      region,
+      partnerTrainer1,
+    } = inputData;
+    const isError = !(
+      !!startDate &&
+      !!inviteesNumber &&
+      !!session &&
+      !!region &&
+      (role === 'localLead' && !!partnerTrainer1)
+    );
 
     this.props.storeInputData({
       err: isError,
@@ -385,7 +406,7 @@ class CreateSession extends Component {
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
             <Label htmlFor="DatePicker">
-              <RequiredMark>*</RequiredMark>Session Date:
+              {!startDate && <RequiredMark>*</RequiredMark>}Session Date:
             </Label>
             <DatePicker
               id="DatePicker"
@@ -399,7 +420,7 @@ class CreateSession extends Component {
 
           <InputDiv>
             <Label htmlFor="sessionType">
-              <RequiredMark>*</RequiredMark>Session Type:
+              {!session && <RequiredMark>*</RequiredMark>}Session Type:
             </Label>
             <Select
               showSearch
@@ -423,21 +444,21 @@ class CreateSession extends Component {
           <InputDiv>
             <LabelDiv>
               <Label htmlFor="sessionCapacity">
-                <RequiredMark>*</RequiredMark>Session Capacity:
+                {!inviteesNumber && <RequiredMark>*</RequiredMark>}Session
+                Capacity:
               </Label>
-              <div>
-                <Popover content={content} style={{ marginRight: '2rem' }}>
-                  <button
-                    type="button"
-                    style={{ background: 'none', border: 'none' }}
-                  >
-                    <i
-                      className="fas fa-question-circle"
-                      style={{ color: 'green' }}
-                    />
-                  </button>
-                </Popover>
-              </div>
+
+              <Popover content={content} style={{ marginRight: '2rem' }}>
+                <button
+                  type="button"
+                  style={{ background: 'none', border: 'none' }}
+                >
+                  <i
+                    className="fas fa-question-circle"
+                    style={{ color: '#9FCE67' }}
+                  />
+                </button>
+              </Popover>
             </LabelDiv>
 
             <Input
@@ -456,7 +477,7 @@ class CreateSession extends Component {
 
           <InputDiv>
             <Label htmlFor="region">
-              <RequiredMark>*</RequiredMark>Region:
+              {!region && <RequiredMark>*</RequiredMark>}Region:
             </Label>
             <Select
               id="region"
@@ -518,12 +539,19 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
-            <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
+            {role === 'localLead' ? (
+              <Label htmlFor="PartnerTrainer">
+                {!partnerTrainer1 && <RequiredMark>*</RequiredMark>}
+                Trainer:
+              </Label>
+            ) : (
+              <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
+            )}
             <Select
               id="PartnerTrainer"
               showSearch
               style={{ width: '100%' }}
-              placeholder="Partner Trainer"
+              placeholder={role === 'localLead' ? 'Trainer' : 'Partner Trainer'}
               optionFilterProp="children"
               onChange={onSelectPartner1Change}
               labelInValue
@@ -572,6 +600,9 @@ class CreateSession extends Component {
             >
               {this.renderTrainersList()}
             </Select>
+            {role === 'localLead' && partnerTrainer1 === null && (
+              <Warning>* required</Warning>
+            )}
           </InputDiv>
           {role === 'localLead' && (
             <InputDiv>
@@ -717,6 +748,7 @@ const mapStateToProps = state => {
     id: state.auth.id,
     role: state.auth.role,
     currentUser: state.auth,
+    name: state.auth.name,
     localLeadTrainersGroup: state.fetchedData.localLeadGroup,
     leadsAndTrainers,
     loading: state.session.loading,

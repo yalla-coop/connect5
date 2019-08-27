@@ -49,7 +49,6 @@ export const InputDiv = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: center;
   margin: 0 auto;
   position: relative;
   border: 1px solid ${colors.lightGray};
@@ -76,9 +75,7 @@ export const Error = styled.p`
   margin: 20px auto 0;
 `;
 
-export const InputLabel = styled.label`
-  width: 50%;
-`;
+export const InputLabel = styled.label``;
 
 export const Label = styled.label`
   width: 100%;
@@ -92,10 +89,7 @@ export const RequiredMark = styled.label`
 `;
 
 export const LabelDiv = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  margin-left: -115px;
-  @media (min-width: 678px) {
-    margin-left: -180px;
-  }
+  justify-content: space-evenly;
 `;
