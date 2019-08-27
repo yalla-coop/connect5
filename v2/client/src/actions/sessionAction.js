@@ -13,7 +13,6 @@ import {
 import { MY_SESSIONS_URL } from '../constants/navigationRoutes';
 
 import history from '../history';
-import store from '../store';
 
 import { fetchSessionDetails } from './groupSessionsAction';
 
