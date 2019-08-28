@@ -62,6 +62,8 @@ export const Row = styled.div`
   align-items: center;
   padding: 0.5rem 0;
   margin-left: 0.55rem;
+  cursor: pointer;
+
   &:not(:last-child) {
     border-bottom: ${borders.inputBox};
   }
