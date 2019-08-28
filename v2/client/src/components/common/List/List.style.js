@@ -56,7 +56,7 @@ export const List = styled.div`
   flex-direction: column;
 `;
 
-export const Row = styled.div`
+export const Row = styled(Link)`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -70,6 +70,7 @@ export const Row = styled.div`
   @media (min-width: 768px) {
     margin-left: 2rem;
   }
+  color: black;
 `;
 
 const sharedItemStyles = css`
