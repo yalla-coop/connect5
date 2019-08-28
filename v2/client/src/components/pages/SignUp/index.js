@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Checkbox, Modal } from 'antd';
+
 import { fetchLocalLeads } from '../../../actions/users';
 import { signUpTrainer, checkUniqeEmail } from '../../../actions/authAction';
 
@@ -38,6 +40,7 @@ const regions = [
 class SignUp extends Component {
   state = {
     confirmDirty: false,
+    givenPermission: true,
   };
 
   componentDidMount() {
@@ -73,10 +76,11 @@ class SignUp extends Component {
   };
 
   handleSubmit = e => {
+    const { givenPermission } = this.state;
     const { form, signUpTrainer: signUpTrainerActionCreator } = this.props;
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
+      if (!err && givenPermission) {
         signUpTrainerActionCreator(values);
       }
     });
@@ -112,7 +116,31 @@ class SignUp extends Component {
     callback();
   };
 
+  onChangeCheckbox = e => {
+    const { checked } = e.target;
+    this.setState({ givenPermission: checked }, () => {
+      if (!checked) {
+        Modal.warning({
+          content: (
+            <div>
+              <p>
+                To make sure Connect 5 succeeds as a mental health training
+                programme we depend on monitoring and feedback data related to
+                course participants and trainers. If you do not agree to giving
+                your local lead/ managing organisation permission to access
+                individual feedback data please contact them to discuss this
+                issue
+              </p>
+            </div>
+          ),
+        });
+      }
+    });
+  };
+
   render() {
+    const { givenPermission } = this.state;
+
     const {
       form: { getFieldDecorator },
       localLeads,
@@ -275,6 +303,22 @@ class SignUp extends Component {
                 )}
               </Item>
 
+              <Checkbox
+                onChange={this.onChangeCheckbox}
+                style={{
+                  textAlign: 'left',
+                  padding: '0 20px',
+                  marginBottom: '24px',
+                }}
+                defaultChecked
+                value={givenPermission}
+              >
+                By signing up I confirm that my local lead can access individual
+                profile data such as name, email and organisation as well as
+                session results collected via the app after each session which I
+                was assigned to as trainer{' '}
+              </Checkbox>
+
               <Item style={{ margin: '0 auto 20' }}>
                 <Button
                   type="primary"
@@ -284,6 +328,7 @@ class SignUp extends Component {
                   height="100%"
                   style={{ fontSize: '19px' }}
                   loading={loading}
+                  disabled={!givenPermission}
                 >
                   Sign Up
                 </Button>
