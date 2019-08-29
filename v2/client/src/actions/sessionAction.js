@@ -58,7 +58,7 @@ export const storeInputData = data => async dispatch => {
 
 export const getSessionDetails = shortId => dispatch => {
   axios
-    .get(`/api/sessions?shortId=${shortId}`, shortId)
+    .get(`/api/sessions?shortId=${shortId}`)
     .then(res =>
       dispatch({
         type: GET_SESSION_DETAILS_BY_SHORT_ID,

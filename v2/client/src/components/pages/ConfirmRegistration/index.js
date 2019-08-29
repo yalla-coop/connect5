@@ -76,7 +76,16 @@ class ConfirmRegistration extends Component {
                 <CapitalizedSpan>{trainersNames || 'N/A'}</CapitalizedSpan>
               </Details>
               <Details>
-                <BoldSpan>Location:</BoldSpan> {address || 'N/A'}
+                <BoldSpan>Location:</BoldSpan>{' '}
+                {(address && address.location) || 'N/A'}
+              </Details>
+              <Details>
+                <BoldSpan>Address Line 1:</BoldSpan>{' '}
+                {(address && address.addressLine1) || 'N/A'}
+              </Details>
+              <Details>
+                <BoldSpan>Address Line 2:</BoldSpan>{' '}
+                {(address && address.Addressline2) || 'N/A'}
               </Details>
               <Details center>
                 <BoldSpan>
