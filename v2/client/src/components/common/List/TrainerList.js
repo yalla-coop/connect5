@@ -142,18 +142,22 @@ export default class TrainerList extends Component {
               pathname: `/trainer-results/${selectedTrainer._id}`,
               state: { trainer: selectedTrainer },
             }}
-            disabled={!selectedTrainer.givenPermission}
+            disabled={!selectedTrainer.givenPermission && role !== 'admin'}
           >
-            <Alert
-              message="This Trainer din't give you an access permission"
-              type="warning"
-              style={{ marginBottom: '2rem' }}
-            />
+            {!selectedTrainer.givenPermission && role !== 'admin' && (
+              <Alert
+                message="This Trainer din't give you an access permission"
+                type="warning"
+                style={{ marginBottom: '2rem' }}
+              />
+            )}
 
             <Button
               style={{
                 height: 'auto',
                 fontSize: '1rem',
+                margin: '0 auto',
+                display: 'block',
                 marginBottom: '1rem',
                 padding: '0.5rem 1rem',
                 width: 'auto',
@@ -161,7 +165,7 @@ export default class TrainerList extends Component {
               label={`view ${selectedTrainer.name}'s results`}
               type="outline"
               width="150px"
-              disabled={!selectedTrainer.givenPermission}
+              disabled={!selectedTrainer.givenPermission && role !== 'admin'}
             />
           </Link>
         )}
