@@ -30,6 +30,7 @@ module.exports = async (req, res, next) => {
         region,
         localLead,
         role: 'trainer',
+        givenPermission: false,
       });
     }
 
