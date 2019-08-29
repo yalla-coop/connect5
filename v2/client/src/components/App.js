@@ -41,6 +41,7 @@ import ForgetPassword from './pages/ForgetPassword';
 import ResetPassword from './pages/ForgetPassword/ResetPassword';
 import SessionsFiles from './pages/SessionsFiles';
 import ConfirmRegistration from './pages/ConfirmRegistration';
+import MyProfile from './pages/MyProfile';
 
 // Error Pages
 import NotFound from './pages/ErrorPages/404';
@@ -66,6 +67,7 @@ import {
   SESSION_DETAILS_URL,
   FORGET_PASSWORD,
   TRAINER_VIEW_PARTICIPANT,
+  MY_PROFILE_URL,
   MY_RESULTS_URL,
   ALL_RESULTS_URL,
   ALL_SESSIONS_URL,
@@ -292,6 +294,17 @@ class App extends Component {
               role={role}
               navbar
             />
+
+            <PrivateRoute
+              path={MY_PROFILE_URL}
+              Component={MyProfile}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
+
             <Route
               exact
               path={LOGIN_URL}
