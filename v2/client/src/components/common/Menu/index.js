@@ -113,7 +113,7 @@ class HumburgerMenu extends Component {
                   </MenuItem>
                   <MenuItem to={ADD_SESSION_URL}>
                     <MenuIcon className="fas fa-plus" />
-                    Add
+                    Add Session
                   </MenuItem>
                   <MenuItem to={MY_PROFILE_URL}>
                     <MenuIcon className="fas fa-cogs" />
@@ -178,10 +178,17 @@ class HumburgerMenu extends Component {
                     <MenuIcon className="fas fa-users" />
                     Trainers & Local Leads
                   </MenuItem>
+
                   <MenuItem to={DEMOGRAPHICS_URL}>
                     <MenuIcon className="fas fa-chart-pie" />
                     People
                   </MenuItem>
+
+                  <MenuItem to={ADD_SESSION_URL}>
+                    <MenuIcon className="fas fa-plus" />
+                    Add Session
+                  </MenuItem>
+
                   <LogOut onClick={logoutAction}>
                     <MenuIcon className="fas fa-sign-out-alt" />
                     Logout
@@ -243,10 +250,17 @@ class HumburgerMenu extends Component {
                     <MenuIcon className="fas fa-users" />
                     Your group Trainers
                   </MenuItem>
+
                   <MenuItem to={MY_PROFILE_URL}>
                     <MenuIcon className="fas fa-cogs" />
                     Profile
                   </MenuItem>
+
+                  <MenuItem to={ADD_SESSION_URL}>
+                    <MenuIcon className="fas fa-plus" />
+                    Add Session
+                  </MenuItem>
+
                   <LogOut onClick={logoutAction}>
                     <MenuIcon className="fas fa-sign-out-alt" />
                     Logout

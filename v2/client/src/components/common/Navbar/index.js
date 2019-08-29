@@ -9,8 +9,6 @@ import { colors, borders } from '../../../theme';
 import {
   DASHBOARD_URL,
   ADD_SESSION_URL,
-  TRAINER_RESULTS_URL,
-  TRAINER_SESSIONS_URL,
   TRAINERS_URL,
   MY_GROUP_RESULTS_URL,
   DEMOGRAPHICS_URL,
@@ -98,11 +96,11 @@ class Navbar extends Component {
               <MenuIcon className="fas fa-home" />
               Home
             </MenuItem>
-            <MenuItem to={TRAINER_RESULTS_URL}>
+            <MenuItem to={MY_RESULTS_URL}>
               <MenuIcon className="fas fa-poll-h" />
               Results
             </MenuItem>
-            <MenuItem to={TRAINER_SESSIONS_URL}>
+            <MenuItem to={MY_SESSIONS_URL}>
               <MenuIcon className="far fa-calendar-alt" />
               Sessions
             </MenuItem>

@@ -11,16 +11,24 @@ const {
 } = require('./../../../database/queries/users/localLead');
 
 module.exports = async (req, res, next) => {
-  const { name, email, password, localLead, region, organization } = req.body;
-  if (name && email && password && localLead && region) {
+  const {
+    name,
+    email,
+    password,
+    localLead,
+    region,
+    organization,
+    role,
+  } = req.body;
+  if (name && email && password && region) {
     return createNewTrainer({
       name,
       email,
       password,
       region,
       localLead,
-      role: 'trainer',
       organization,
+      role,
     })
       .then(trainer => {
         const trainerInfo = {
@@ -50,6 +58,7 @@ module.exports = async (req, res, next) => {
           });
       })
       .catch(err => {
+        console.log(err);
         next(boom.badImplementation());
       });
   }
