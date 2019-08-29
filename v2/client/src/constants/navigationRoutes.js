@@ -8,6 +8,7 @@ export const DASHBOARD_URL = '/dashboard';
 export const ADD_SESSION_URL = '/create-session';
 export const SURVEY_URL = '/survey/:id';
 export const SESSION_DETAILS_URL = '/session-details/:id';
+export const MY_PROFILE_URL = '/my-profile';
 export const MY_RESULTS_URL = '/my-results';
 export const MY_SESSIONS_URL = '/my-sessions';
 export const ALL_SESSIONS_URL = '/all-sessions';

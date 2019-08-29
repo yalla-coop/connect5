@@ -37,6 +37,7 @@ const regions = [
   'South East',
   'South West',
 ];
+
 class SignUp extends Component {
   state = {
     confirmDirty: false,
@@ -222,6 +223,12 @@ class SignUp extends Component {
                     onBlur={this.handleEmailBlur}
                     size="large"
                   />
+                )}
+              </Item>
+
+              <Item hasFeedback>
+                {getFieldDecorator('organization')(
+                  <Input placeholder="Your Organization" size="large" />
                 )}
               </Item>
 
