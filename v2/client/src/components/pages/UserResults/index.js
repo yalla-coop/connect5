@@ -43,6 +43,12 @@ const { Panel } = Collapse;
 
 const panels = {
   reach: { text: 'Reach', render: props => <Reach data={props.results} /> },
+  feedback: {
+    text: 'Trainer feedback',
+    render: ({ resultsFor, resultForRule }) => (
+      <Feedback trainerId={resultsFor} role={resultForRule} />
+    ),
+  },
   behavior: {
     text: 'Behavioural',
     render: ({ resultsFor, resultForRule, ...props }) => {
@@ -54,12 +60,6 @@ const panels = {
         />
       );
     },
-  },
-  feedback: {
-    text: 'Trainer feedback',
-    render: ({ resultsFor, resultForRule }) => (
-      <Feedback trainerId={resultsFor} role={resultForRule} />
-    ),
   },
 };
 

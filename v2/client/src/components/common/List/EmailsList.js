@@ -70,7 +70,10 @@ class EmailsList extends Component {
               dataList.sentEmails
                 .filter(item => item.type === 'registration')
                 .map(dataItem => (
-                  <Row key={dataItem._id}>
+                  <Row
+                    key={dataItem._id}
+                    onClick={() => showDrawer(dataItem && dataItem._id)}
+                  >
                     <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
                     <button
                       type="button"
