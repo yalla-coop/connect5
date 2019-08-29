@@ -45,11 +45,20 @@ export const LinkBtn = styled(Link)`
   text-decoration: none;
   text-shadow: 0px 1px 0px #2f6627;
   &:hover {
-	background-color: ${colors.white};
-  color: ${colors.lightPrimary};
-  border: 1px solid ${colors.lightPrimary}
-}
+    background-color: ${colors.white};
+    color: ${colors.lightPrimary};
+    border: 1px solid ${colors.lightPrimary};
+  }
   &:active {
-	position:relative;
-	top:1px;
+    position: relative;
+    top: 1px;
+  }
+`;
+
+export const HeaderSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 2rem;
 `;
