@@ -12,6 +12,7 @@ import {
   TopSection,
   Title,
   Role,
+  TotalReach,
   StatsWrapper,
   StatItem,
   Label,
@@ -92,8 +93,9 @@ class Dashboard extends Component {
                 Welcome back, <br />
                 {captalizesName}
               </Title>
-              <Role>Role: {role}</Role>
+              <Role>Role: {role === 'localLead' ? 'Local Lead' : role}</Role>
             </TopSection>
+            <TotalReach>Your Total Reach</TotalReach>
             <StatsWrapper>
               <StatItem to={sessionURL}>
                 <Label>Sessions</Label>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { colors, breakpointsMax, borders } from '../../../theme';
+import { colors, breakpointsMax, borders, shadows } from '../../../theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -66,11 +66,12 @@ export const ButtonDiv = styled.div`
     height: 66px;
   }
   button {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 350;
     opacity: 0.8;
     color: ${colors.black};
-    background-color: ${colors.white};
+    background-color: ${colors.lightGray};
+    box-shadow: ${shadows.secondary};
   }
   button: hover {
     opacity: 1;
@@ -78,6 +79,8 @@ export const ButtonDiv = styled.div`
     color: ${colors.white};
     background-color: ${colors.primary};
   }
+  button:active {
+  transform: translateY(4px);
 `;
 
 // Style for about us page
@@ -186,7 +189,6 @@ export const Blockquote = styled.div`
   border: none;
   position: relative;
   margin: 0 0 20px;
-  
 `;
 
 export const Block = styled.blockquote`

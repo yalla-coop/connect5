@@ -31,7 +31,13 @@ export const Role = styled.p`
   font-size: 14px;
   font-weight: 300;
   text-transform: capitalize;
+  @media ${breakpoints.mobileL} {
+    font-size: 1rem;
+    font-weight: 300;
+  }
 `;
+
+export const TotalReach = styled(Role)``;
 
 export const StatsWrapper = styled.div`
   background-color: ${colors.white};
