@@ -14,7 +14,22 @@ export const fetchUserResults = (id, role) => async dispatch => {
       payload: res.data,
     });
   } catch (err) {
-    history.push('/404err');
+    if (err.response && err.response.status === 403) {
+      return Modal.error({
+        title: 'No access permission',
+        content:
+          "This trainer didn't give an access permission to his/her data",
+        onOk: () => history.goBack(),
+      });
+    }
+    if (err.response && err.response.status === 404) {
+      return Modal.error({
+        title: 'Trainer not found',
+        content: 'trainer data not found',
+        onOk: history.goBack(),
+      });
+    }
+    return history.push('/500err');
   }
 };
 
