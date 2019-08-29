@@ -127,7 +127,6 @@ class TrainerListPage extends Component {
     const { role } = this.props;
 
     if (!loaded) return <p>Loading...</p>;
-    console.log(trainers);
     return (
       <Wrapper>
         <Header type="section" label="trainers" />
