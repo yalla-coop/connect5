@@ -9,6 +9,8 @@ import {
   sendEmailReminder as sendEmailReminderAction,
 } from '../../../../actions/sessionAction';
 
+import AntdModal from '../../../common/AntdModal';
+
 import {
   SessionTopDetailsWrapper,
   SubDetails,
@@ -335,8 +337,17 @@ class ManageAttendees extends Component {
     const activeEmailTemplate =
       reminderEmails && reminderEmails[activeEmailIndex];
 
+    const content =
+      'This section provides tools to manage email addresses of confirmed participants. You can edit current lists by clicking on "Manage Attendees", email out session reminders and view previously sent emails.';
+
     return (
       <SessionTopDetailsWrapper>
+        <AntdModal
+          title="About this section"
+          content={content}
+          btnStyle={{ margin: '1.5rem' }}
+          style={{ top: '20' }}
+        />
         <SubDetails>
           <DrawerLink>Confirmed attendees:</DrawerLink>
           <SubDetailsContent

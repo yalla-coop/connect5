@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import SendInvitation from './SendInvitation';
 import InviteeList from './InviteeList';
 import EmailsList from '../../../common/List/EmailsList';
+import AntdModal from '../../../common/AntdModal';
 
 import {
   SessionTopDetailsWrapper,
@@ -72,63 +73,73 @@ class InviteAndPromote extends Component {
     const { sessionDetails } = this.props;
     const { onCopyClick } = this;
     const { id, shortId } = sessionDetails;
+    const content =
+      'This section lets you invite people to your session. To add invitees, please enter their email address below. This will let you automatically email them an invite with the link to register. You can also copy the link and share it manually on social media etc. Once someone registers they will appear in the manage attendees section.';
 
     return (
-      <SessionTopDetailsWrapper>
-        <SubDetails style={{ display: 'flex', flexDirection: 'column' }}>
-          <DrawerLink>Registration Link</DrawerLink>
-          <RegistrationDiv>
-            <RegistrationLink
-              href={`${
-                process.env.NODE_ENV === 'prodcution' ? 'https://' : 'http://'
-              }${window.location.host}/confirm/${shortId}`}
-              target="_blank"
-              id="registration-link"
-              rel="noopener noreferrer"
-            >
-              {`${
-                process.env.NODE_ENV === 'prodcution' ? 'https://' : 'http://'
-              }${window.location.host}/confirm/${shortId}`}
-            </RegistrationLink>
-            <CopyLink onClick={onCopyClick}>
-              <CopyIcon className="far fa-copy" />
-            </CopyLink>
-          </RegistrationDiv>
-        </SubDetails>
-        <SubDetails>
-          <Row onClick={this.DrawerOpen} data-key="send-invitation">
-            <DrawerLink>Send Email Invitation</DrawerLink>
-            <Icon type="right" />
-          </Row>
-        </SubDetails>
-        <SubDetails>
-          <Row onClick={this.DrawerOpen} data-key="view-invitees">
-            <DrawerLink>View invitees</DrawerLink>
-            <Icon type="right" />
-          </Row>
-        </SubDetails>
-        <SubDetails>
-          <Row onClick={this.DrawerOpen} data-key="view-emails">
-            <DrawerLink>View emails you have sent</DrawerLink>
-            <Icon type="right" />
-          </Row>
-        </SubDetails>
-        <Drawer
-          placement="left"
-          width="100%"
-          height="100%"
-          onClose={this.onClose}
-          visible={visible}
-          closable
-        >
-          <DrawerContent
-            drawerKey={drawerKey}
-            id={id}
-            sessionDetails={sessionDetails}
+      <>
+        <AntdModal
+          title="About this section"
+          content={content}
+          btnStyle={{ margin: '1.5rem' }}
+          style={{ top: '20' }}
+        />
+        <SessionTopDetailsWrapper>
+          <SubDetails style={{ display: 'flex', flexDirection: 'column' }}>
+            <DrawerLink>Registration Link</DrawerLink>
+            <RegistrationDiv>
+              <RegistrationLink
+                href={`${
+                  process.env.NODE_ENV === 'prodcution' ? 'https://' : 'http://'
+                }${window.location.host}/confirm/${shortId}`}
+                target="_blank"
+                id="registration-link"
+                rel="noopener noreferrer"
+              >
+                {`${
+                  process.env.NODE_ENV === 'prodcution' ? 'https://' : 'http://'
+                }${window.location.host}/confirm/${shortId}`}
+              </RegistrationLink>
+              <CopyLink onClick={onCopyClick}>
+                <CopyIcon className="far fa-copy" />
+              </CopyLink>
+            </RegistrationDiv>
+          </SubDetails>
+          <SubDetails>
+            <Row onClick={this.DrawerOpen} data-key="send-invitation">
+              <DrawerLink>Send Email Invitation</DrawerLink>
+              <Icon type="right" />
+            </Row>
+          </SubDetails>
+          <SubDetails>
+            <Row onClick={this.DrawerOpen} data-key="view-invitees">
+              <DrawerLink>manage invitees</DrawerLink>
+              <Icon type="right" />
+            </Row>
+          </SubDetails>
+          <SubDetails>
+            <Row onClick={this.DrawerOpen} data-key="view-emails">
+              <DrawerLink>View emails you have sent</DrawerLink>
+              <Icon type="right" />
+            </Row>
+          </SubDetails>
+          <Drawer
+            placement="left"
+            width="100%"
+            height="100%"
             onClose={this.onClose}
-          />
-        </Drawer>
-      </SessionTopDetailsWrapper>
+            visible={visible}
+            closable
+          >
+            <DrawerContent
+              drawerKey={drawerKey}
+              id={id}
+              sessionDetails={sessionDetails}
+              onClose={this.onClose}
+            />
+          </Drawer>
+        </SessionTopDetailsWrapper>
+      </>
     );
   }
 }
