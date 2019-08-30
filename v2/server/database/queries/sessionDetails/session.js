@@ -21,6 +21,14 @@ module.exports.getSessionDetails = ({ id, shortId }) => {
         as: 'trainers',
       },
     },
+    {
+      $lookup: {
+        from: 'specialrequirements',
+        localField: '_id',
+        foreignField: 'session',
+        as: 'specialRequirements',
+      },
+    },
   ]);
 };
 
