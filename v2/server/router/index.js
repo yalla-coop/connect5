@@ -34,6 +34,7 @@ const updateAttendeesList = require('../controllers/sessionDetails/updateAttende
 const sendReminderEmail = require('../controllers/sessionDetails/sendReminderEmail');
 const scheduleEmail = require('../controllers/sessionDetails/scheduleEmail');
 const cancelScheduleEmail = require('../controllers/sessionDetails/cancelScheduleEmail');
+const createSpecialRequirements = require('../controllers/createSpecialRequirements');
 
 const getCSVData = require('../controllers/feedback/exportCSVData');
 
@@ -112,6 +113,11 @@ router.delete(
   '/sessions/:sessionId/scheduled-emails/:scheduledEmailId',
   authentication(),
   cancelScheduleEmail
+);
+
+router.post(
+  '/sessions/:sessionId/special-requirements',
+  createSpecialRequirements
 );
 
 module.exports = router;
