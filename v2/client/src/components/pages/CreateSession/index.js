@@ -41,7 +41,7 @@ import {
   Label,
   RequiredMark,
   LabelDiv,
-} from './create-session.style';
+} from './CreateSession.style';
 
 import { BackContainer, BackLink } from '../AddTrainer/AddTrainer.style';
 

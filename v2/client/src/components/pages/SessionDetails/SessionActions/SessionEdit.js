@@ -18,7 +18,7 @@ import {
   InputDiv,
   SubmitBtn,
   Error,
-} from '../../CreateSession/create-session.style';
+} from '../../CreateSession/CreateSession.style';
 
 import {
   EditSessionWrapper,
