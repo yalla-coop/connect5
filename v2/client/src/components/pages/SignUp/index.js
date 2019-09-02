@@ -129,7 +129,7 @@ class SignUp extends Component {
     callback();
   };
 
-  onChangeCheckbox = e => {
+  onChangeCheckboxPermission = e => {
     const { role } = this.state;
     const { checked } = e.target;
     this.setState({ givenPermission: checked }, () => {
@@ -163,7 +163,7 @@ class SignUp extends Component {
       loading,
     } = this.props;
 
-    const { onChangeCheckbox } = this;
+    const { onChangeCheckbox, onChangeCheckboxPermission } = this;
 
     if (isAuthenticated) {
       history.push('/dashboard');
@@ -287,11 +287,14 @@ class SignUp extends Component {
 
               <Checkbox
                 onChange={onChangeCheckbox}
-                style={{ padding: ' 0 0 .5rem 0', margin: '.3rem ' }}
+                style={{
+                  textAlign: 'left',
+                  padding: '0 20px',
+                  marginBottom: '24px',
+                }}
               >
                 <span style={{ fontSize: '.9rem' }}>
-                  {' '}
-                  I{"''"}m acting as local lead and/or I manage groups of
+                  I{"'"}m acting as local lead and/or I manage groups of
                   trainers
                 </span>
               </Checkbox>
@@ -342,19 +345,22 @@ class SignUp extends Component {
 
               {role === 'trainer' && (
                 <Checkbox
-                  onChange={this.onChangeCheckbox}
+                  onChange={this.onChangeCheckboxPermission}
                   style={{
                     textAlign: 'left',
                     padding: '0 20px',
                     marginBottom: '24px',
+                    fontSize: '16px',
                   }}
                   defaultChecked
                   value={givenPermission}
                 >
-                  By signing up I confirm that my local lead can access
-                  individual profile data such as name, email and organisation
-                  as well as session results collected via the app after each
-                  session which I was assigned to as trainer{' '}
+                  <span style={{ fontSize: '.9rem' }}>
+                    By signing up I confirm that my local lead can access
+                    individual profile data such as name, email and organisation
+                    as well as session results collected via the app after each
+                    session which I was assigned to as trainer{' '}
+                  </span>
                 </Checkbox>
               )}
 
