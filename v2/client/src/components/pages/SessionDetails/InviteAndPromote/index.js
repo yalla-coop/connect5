@@ -113,7 +113,7 @@ class InviteAndPromote extends Component {
           </SubDetails>
           <SubDetails>
             <Row onClick={this.DrawerOpen} data-key="view-invitees">
-              <DrawerLink>manage invitees</DrawerLink>
+              <DrawerLink>Manage invitees</DrawerLink>
               <Icon type="right" />
             </Row>
           </SubDetails>

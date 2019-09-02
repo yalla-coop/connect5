@@ -45,9 +45,10 @@ import {
   Label,
   RequiredMark,
   LabelDiv,
+  BackContainer,
+  BackLink,
 } from './create-session.style';
 
-import { BackContainer, BackLink } from '../AddTrainer/AddTrainer.style';
 import {
   SelecetWrapper,
   IconsWrapper,

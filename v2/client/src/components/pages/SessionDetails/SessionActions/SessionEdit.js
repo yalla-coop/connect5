@@ -397,175 +397,152 @@ class EditSession extends Component {
     );
 
     return (
-      <EditSessionWrapper>
-        <Header type="view" label="Edit Session" />
+      <>
         <BackContainer>
           <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
         </BackContainer>
-        <Form onSubmit={onFormSubmit}>
-          <InputDiv>
-            <Label htmlFor="DatePicker">Session Date:</Label>
-            {date && startDate && (
-              <DatePicker
-                id="DatePicker"
-                onChange={onDateChange}
-                name="startDate"
-                defaultValue={moment(date, 'YYYY-MM-DD')}
-                size="large"
-                style={{ width: '100%' }}
-              />
-            )}
-          </InputDiv>
-
-          <InputDiv>
-            <Label htmlFor="sessionType">Session Type:</Label>
-            <Select
-              id="sessionType"
-              showSearch
-              style={{ width: '100%' }}
-              placeholder={type}
-              value={session}
-              optionFilterProp="children"
-              onChange={onSelectSessionChange}
-              size="large"
-            >
-              {sessions.map(({ value, label }) => (
-                <Option key={value} value={value}>
-                  {label}
-                </Option>
-              ))}
-            </Select>
-          </InputDiv>
-
-          <InputDiv>
-            <LabelDiv>
-              <Label htmlFor="sessionCapacity">Session Capacity:</Label>
-              <Popover content={content} style={{ marginRight: '2rem' }}>
-                <button
-                  type="button"
-                  style={{ background: 'none', border: 'none' }}
-                >
-                  <i
-                    className="fas fa-question-circle"
-                    style={{ color: '#9FCE67' }}
-                  />
-                </button>
-              </Popover>
-            </LabelDiv>
-            <Input
-              id="sessionCapacity"
-              type="number"
-              placeholder="Enter number of attendees"
-              value={inviteesNumber}
-              onChange={onInputChange}
-              name="inviteesNumber"
-              size="large"
-              min="0"
-              onKeyPress={e => onKeyPress(e)}
-            />
-          </InputDiv>
-
-          <InputDiv>
-            <Label htmlFor="region">Region:</Label>
-            <Select
-              id="region"
-              showSearch
-              style={{ width: '100%' }}
-              placeholder={region}
-              optionFilterProp="children"
-              onChange={onSelectRegionChange}
-              value={this.state.region}
-              size="large"
-            >
-              {regions.map(_region => (
-                <Option key={_region} value={_region}>
-                  {_region}
-                </Option>
-              ))}
-            </Select>
-          </InputDiv>
-
-          <InputDiv>
-            <Label htmlFor="addressLine1">Address Line1:</Label>
-            <Input
-              id="addressLine1"
-              type="text"
-              placeholder="Address line1"
-              value={location}
-              onChange={onInputChange}
-              name="location"
-              size="large"
-              onKeyPress={e => onKeyPress(e)}
-            />
-          </InputDiv>
-
-          <InputDiv>
-            <Label htmlFor="addressLine2">Address Line2:</Label>
-            <Input
-              id="addressLine2"
-              type="text"
-              placeholder="address line2"
-              value={addressLine1}
-              onChange={onInputChange}
-              name="addressLine1"
-              size="large"
-              onKeyPress={e => onKeyPress(e)}
-            />
-          </InputDiv>
-
-          <InputDiv>
-            <Label htmlFor="PostCode">Post Code:</Label>
-            <Input
-              id="PostCode"
-              type="text"
-              placeholder="Post Code"
-              value={addressLine2}
-              onChange={onInputChange}
-              name="addressLine2"
-              size="large"
-              onKeyPress={e => onKeyPress(e)}
-            />
-          </InputDiv>
-          <InputDiv>
-            {role === 'localLead' ? (
-              <Label htmlFor="PartnerTrainer">Trainer:</Label>
-            ) : (
-              <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
-            )}
-            <Select
-              id="PartnerTrainer"
-              showSearch
-              style={{ width: '100%' }}
-              placeholder={role === 'localLead' ? 'Trainer' : 'Partner Trainer'}
-              optionFilterProp="children"
-              onChange={onSelectPartner1Change}
-              value={partnerTrainer1}
-              size="large"
-            >
-              {trainers &&
-                trainers.map(({ name, _id }) => (
-                  <Option key={_id} value={_id}>
-                    {name}
-                  </Option>
-                ))}
-              {role === 'localLead' &&
-                localLeads.map(({ name, _id }) => (
-                  <Option key={_id} value={_id}>
-                    {name}
-                  </Option>
-                ))}
-            </Select>
-          </InputDiv>
-          {role === 'localLead' && (
+        <EditSessionWrapper>
+          <Header type="view" label="Edit Session" />
+          <Form onSubmit={onFormSubmit}>
             <InputDiv>
-              <Label htmlFor="PartnerTrainer2">Second Partner Trainer:</Label>
+              <Label htmlFor="DatePicker">Session Date:</Label>
+              {date && startDate && (
+                <DatePicker
+                  id="DatePicker"
+                  onChange={onDateChange}
+                  name="startDate"
+                  defaultValue={moment(date, 'YYYY-MM-DD')}
+                  size="large"
+                  style={{ width: '100%' }}
+                />
+              )}
+            </InputDiv>
+
+            <InputDiv>
+              <Label htmlFor="sessionType">Session Type:</Label>
               <Select
-                id="PartnerTrainer2"
+                id="sessionType"
                 showSearch
                 style={{ width: '100%' }}
-                placeholder="Trainer 2"
+                placeholder={type}
+                value={session}
                 optionFilterProp="children"
-                onChange={onSelectPartner2Change}
+                onChange={onSelectSessionChange}
+                size="large"
+              >
+                {sessions.map(({ value, label }) => (
+                  <Option key={value} value={value}>
+                    {label}
+                  </Option>
+                ))}
+              </Select>
+            </InputDiv>
+
+            <InputDiv>
+              <LabelDiv>
+                <Label htmlFor="sessionCapacity">Session Capacity:</Label>
+                <Popover content={content} style={{ marginRight: '2rem' }}>
+                  <button
+                    type="button"
+                    style={{ background: 'none', border: 'none' }}
+                  >
+                    <i
+                      className="fas fa-question-circle"
+                      style={{ color: '#9FCE67' }}
+                    />
+                  </button>
+                </Popover>
+              </LabelDiv>
+              <Input
+                id="sessionCapacity"
+                type="number"
+                placeholder="Enter number of attendees"
+                value={inviteesNumber}
+                onChange={onInputChange}
+                name="inviteesNumber"
+                size="large"
+                min="0"
+                onKeyPress={e => onKeyPress(e)}
+              />
+            </InputDiv>
+
+            <InputDiv>
+              <Label htmlFor="region">Region:</Label>
+              <Select
+                id="region"
+                showSearch
+                style={{ width: '100%' }}
+                placeholder={region}
+                optionFilterProp="children"
+                onChange={onSelectRegionChange}
+                value={this.state.region}
+                size="large"
+              >
+                {regions.map(_region => (
+                  <Option key={_region} value={_region}>
+                    {_region}
+                  </Option>
+                ))}
+              </Select>
+            </InputDiv>
+
+            <InputDiv>
+              <Label htmlFor="addressLine1">Address Line1:</Label>
+              <Input
+                id="addressLine1"
+                type="text"
+                placeholder="Address line1"
+                value={location}
+                onChange={onInputChange}
+                name="location"
+                size="large"
+                onKeyPress={e => onKeyPress(e)}
+              />
+            </InputDiv>
+
+            <InputDiv>
+              <Label htmlFor="addressLine2">Address Line2:</Label>
+              <Input
+                id="addressLine2"
+                type="text"
+                placeholder="address line2"
+                value={addressLine1}
+                onChange={onInputChange}
+                name="addressLine1"
+                size="large"
+                onKeyPress={e => onKeyPress(e)}
+              />
+            </InputDiv>
+
+            <InputDiv>
+              <Label htmlFor="PostCode">Post Code:</Label>
+              <Input
+                id="PostCode"
+                type="text"
+                placeholder="Post Code"
+                value={addressLine2}
+                onChange={onInputChange}
+                name="addressLine2"
+                size="large"
+                onKeyPress={e => onKeyPress(e)}
+              />
+            </InputDiv>
+            <InputDiv>
+              {role === 'localLead' ? (
+                <Label htmlFor="PartnerTrainer">Trainer:</Label>
+              ) : (
+                <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
+              )}
+              <Select
+                id="PartnerTrainer"
+                showSearch
+                style={{ width: '100%' }}
+                placeholder={
+                  role === 'localLead' ? 'Trainer' : 'Partner Trainer'
+                }
+                optionFilterProp="children"
+                onChange={onSelectPartner1Change}
+                value={partnerTrainer1}
                 size="large"
               >
                 {trainers &&
@@ -582,104 +559,131 @@ class EditSession extends Component {
                   ))}
               </Select>
             </InputDiv>
-          )}
-          <InputDiv>
-            <SelecetWrapper>
-              <IconsWrapper>
-                <Tooltip placement="top" title="Copy">
-                  <AntButton
-                    type="primary"
-                    icon="copy"
-                    ghost
-                    onClick={this.onCopy}
-                  />
-                </Tooltip>
-                <InfoPopUp details={details} />
-              </IconsWrapper>
-              <Label htmlFor="EmailsToInvite">Emails To Invite:</Label>
-              <Select
-                id="EmailsToInvite"
-                mode="tags"
+            {role === 'localLead' && (
+              <InputDiv>
+                <Label htmlFor="PartnerTrainer2">Second Partner Trainer:</Label>
+                <Select
+                  id="PartnerTrainer2"
+                  showSearch
+                  style={{ width: '100%' }}
+                  placeholder="Trainer 2"
+                  optionFilterProp="children"
+                  onChange={onSelectPartner2Change}
+                  size="large"
+                >
+                  {trainers &&
+                    trainers.map(({ name, _id }) => (
+                      <Option key={_id} value={_id}>
+                        {name}
+                      </Option>
+                    ))}
+                  {role === 'localLead' &&
+                    localLeads.map(({ name, _id }) => (
+                      <Option key={_id} value={_id}>
+                        {name}
+                      </Option>
+                    ))}
+                </Select>
+              </InputDiv>
+            )}
+            <InputDiv>
+              <SelecetWrapper>
+                <IconsWrapper>
+                  <Tooltip placement="top" title="Copy">
+                    <AntButton
+                      type="primary"
+                      icon="copy"
+                      ghost
+                      onClick={this.onCopy}
+                    />
+                  </Tooltip>
+                  <InfoPopUp details={details} />
+                </IconsWrapper>
+                <Label htmlFor="EmailsToInvite">Emails To Invite:</Label>
+                <Select
+                  id="EmailsToInvite"
+                  mode="tags"
+                  size="large"
+                  placeholder="emails"
+                  onChange={onEmailChange}
+                  defaultValue={participantsEmails.map(item => item.email)}
+                  value={emails.map(item => item.email)}
+                  style={{ width: '100%', height: '100%' }}
+                  onBlur={this.onSelectBlur}
+                  onFocus={this.onSelectFocus}
+                >
+                  {participantsEmails.map(item => (
+                    <Option key={item.email} value={item.email}>
+                      {item.email}
+                    </Option>
+                  ))}
+                </Select>
+              </SelecetWrapper>
+            </InputDiv>
+            <div
+              id="emails"
+              style={{
+                opacity: '0',
+                position: 'absolute',
+                width: '0',
+                hieght: '0',
+              }}
+            >
+              {emails && emails.map(email => email.email).join(';')}
+            </div>
+            <EmailError>{emailErr}</EmailError>
+
+            <InputDiv
+              style={{
+                marginTop: '1rem',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}
+            >
+              <InputLabel>Session Start:</InputLabel>
+              <TimePicker
+                onChange={onStartTimeChange}
+                name="startTime"
+                defaultValue={startTime && moment(startTime, 'HH:mm')}
                 size="large"
-                placeholder="emails"
-                onChange={onEmailChange}
-                defaultValue={participantsEmails.map(item => item.email)}
-                value={emails.map(item => item.email)}
-                style={{ width: '100%', height: '100%' }}
-                onBlur={this.onSelectBlur}
-                onFocus={this.onSelectFocus}
-              >
-                {participantsEmails.map(item => (
-                  <Option key={item.email} value={item.email}>
-                    {item.email}
-                  </Option>
-                ))}
-              </Select>
-            </SelecetWrapper>
-          </InputDiv>
-          <div
-            id="emails"
-            style={{
-              opacity: '0',
-              position: 'absolute',
-              width: '0',
-              hieght: '0',
-            }}
-          >
-            {emails && emails.map(email => email.email).join(';')}
-          </div>
-          <EmailError>{emailErr}</EmailError>
+                format="HH:mm"
+                disabledHours={this.getDisabledStartTime}
+              />
+            </InputDiv>
+            <InputDiv
+              style={{
+                marginTop: '1rem',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}
+            >
+              <InputLabel>Session Finish:</InputLabel>
+              <TimePicker
+                onChange={onEndTimeChange}
+                name="startTime"
+                defaultValue={endTime && moment(endTime, 'HH:mm')}
+                size="large"
+                format="HH:mm"
+                disabledHours={this.getDisabledEndTime}
+              />
+            </InputDiv>
 
-          <InputDiv
-            style={{
-              marginTop: '1rem',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            }}
-          >
-            <InputLabel>Session Start:</InputLabel>
-            <TimePicker
-              onChange={onStartTimeChange}
-              name="startTime"
-              defaultValue={startTime && moment(startTime, 'HH:mm')}
-              size="large"
-              format="HH:mm"
-              disabledHours={this.getDisabledStartTime}
-            />
-          </InputDiv>
-          <InputDiv
-            style={{
-              marginTop: '1rem',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            }}
-          >
-            <InputLabel>Session Finish:</InputLabel>
-            <TimePicker
-              onChange={onEndTimeChange}
-              name="startTime"
-              defaultValue={endTime && moment(endTime, 'HH:mm')}
-              size="large"
-              format="HH:mm"
-              disabledHours={this.getDisabledEndTime}
-            />
-          </InputDiv>
-
-          <SubmitBtn>
-            <Button
-              onClick={onFormSubmit}
-              type="primary"
-              label="Update"
-              height="40px"
-              width="100%"
-              loading={loading}
-            />
-          </SubmitBtn>
-          {err && <Error>All inputs are required</Error>}
-        </Form>
-      </EditSessionWrapper>
+            <SubmitBtn>
+              <Button
+                onClick={onFormSubmit}
+                type="primary"
+                label="Update"
+                height="40px"
+                width="100%"
+                loading={loading}
+              />
+            </SubmitBtn>
+            {err && <Error>All inputs are required</Error>}
+          </Form>
+        </EditSessionWrapper>
+      </>
     );
   }
 }

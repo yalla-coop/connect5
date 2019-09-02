@@ -36,10 +36,6 @@ export const BackContainer = styled.div`
   width: 90%;
   padding: 0 20px;
   align-self: center;
-  @media (min-width: 678px) {
-    width: 50%;
-    margin: 0 auto;
-  }
 `;
 
 export const ChangePasswordForm = styled.form`
