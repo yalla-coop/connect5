@@ -345,7 +345,7 @@ class SignUp extends Component {
 
               {role === 'trainer' && (
                 <Checkbox
-                  onChange={this.onChangeCheckboxPermission}
+                  onChange={onChangeCheckboxPermission}
                   style={{
                     textAlign: 'left',
                     padding: '0 20px',
