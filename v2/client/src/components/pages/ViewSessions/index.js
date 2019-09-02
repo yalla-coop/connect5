@@ -1,10 +1,13 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
+import { Empty } from 'antd';
 
 // COMMON COMPONENTS
 import SessionList from '../../common/List/SessionList';
 import Header from '../../common/Header';
+import Toggle from '../../common/Toggle';
 
 // ACTIONS
 import {
@@ -20,11 +23,13 @@ import {
   Span,
   SessionsCount,
   LinkBtn,
+  HeaderSection,
 } from './ViewSessions.Style';
 
 class ViewSessions extends Component {
   state = {
     headerTitle: null,
+    toggle: 'left',
   };
 
   componentDidMount() {
@@ -96,22 +101,53 @@ class ViewSessions extends Component {
     }
   };
 
+  clickToggle = direction => {
+    this.setState({ toggle: direction });
+  };
+
   render() {
-    const { headerTitle } = this.state;
+    const { headerTitle, toggle } = this.state;
 
     const { sessions } = this.props;
     if (!sessions) {
       return <div>loading</div>;
     }
+    const upcomingSessions = sessions.filter(item => {
+      return moment(item.date).diff(moment(), 'seconds') > 0;
+    });
+
+    const selectedSessions = toggle === 'left' ? sessions : upcomingSessions;
+
+    const sortedSessions = selectedSessions.sort(
+      (a, b) => moment(b.date).valueOf() - moment(a.date).valueOf()
+    );
+
     return (
       <ViewSessionsWrapper>
         <Header label={headerTitle} type="section" />
         <TotalSessions>
-          <Span>Total Sessions</Span>
-          <SessionsCount>{sessions && sessions.length}</SessionsCount>
-          <LinkBtn to="/create-session">Add New Session</LinkBtn>
+          <Span>
+            {toggle === 'left' ? 'All Sessions:' : 'Upcoming Sessions:'}
+          </Span>
+          <SessionsCount>
+            {selectedSessions && selectedSessions.length}
+          </SessionsCount>
         </TotalSessions>
-        <SessionList dataList={sessions} />
+        <HeaderSection>
+          <Toggle
+            large
+            leftText="All Sessions"
+            rightText="Upcoming sessions"
+            selected={toggle}
+            onClick={this.clickToggle}
+          />
+        </HeaderSection>
+        <LinkBtn to="/create-session">Add New Session</LinkBtn>
+        {selectedSessions && selectedSessions.length ? (
+          <SessionList dataList={sortedSessions} />
+        ) : (
+          <Empty description="No Sessions!" style={{ marginTop: '3rem' }} />
+        )}
       </ViewSessionsWrapper>
     );
   }
