@@ -108,7 +108,8 @@ class ExportButton extends Component {
           ref={this.clickBtn}
           onClick={this.fetchExportData}
           width="200px"
-          margin="1rem 0 1rem 0"
+          margin="1rem auto"
+          style={{ display: 'block' }}
         />
       </>
     );
