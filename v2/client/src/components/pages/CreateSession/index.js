@@ -741,6 +741,12 @@ class CreateSession extends Component {
           </div>
           <div style={{ color: 'red' }}>{err}</div>
 
+          <InputDiv>
+            <Checkbox onChange={this.onChangeCheckbox}>
+              Automatically send an invite to these emails
+            </Checkbox>
+          </InputDiv>
+
           <InputDiv
             style={{
               marginTop: '1rem',
@@ -777,12 +783,6 @@ class CreateSession extends Component {
               format="HH:mm"
               disabledHours={this.getDisabledEndTime}
             />
-          </InputDiv>
-
-          <InputDiv>
-            <Checkbox onChange={this.onChangeCheckbox}>
-              Automatically send an invite to these emails
-            </Checkbox>
           </InputDiv>
 
           <InputDiv
