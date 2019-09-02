@@ -264,7 +264,6 @@ class ManageAttendees extends Component {
       visible,
       drawerKey,
       confirmedAttendeesList,
-      addedAttendeesList,
       checkedEmails,
       isCheckAll,
       activeEmailIndex,
