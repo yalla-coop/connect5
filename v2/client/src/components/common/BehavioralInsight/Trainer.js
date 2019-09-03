@@ -3,8 +3,8 @@
 import React, { Component } from 'react';
 import { Chart, HorizontalBar } from 'react-chartjs-2';
 import { Alert, Spin } from 'antd';
-
 import { connect } from 'react-redux';
+import AntdModal from '../AntdModal';
 
 import { fetchTrainerBehavioral as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
 
@@ -58,9 +58,17 @@ class BehavioralTrainerResults extends Component {
 
   render() {
     const { data, loaded } = this.props;
+    const content =
+      'Behaviour is influenced by our perceptions of our capability, opportunity and motivation for that behaviour.';
 
     return (
       <Wrapper>
+        <AntdModal
+          title="About this section"
+          content={content}
+          btnStyle={{ margin: '1.5rem' }}
+          style={{ top: '20' }}
+        />
         <ContentWrapper>
           {loaded ? (
             <>

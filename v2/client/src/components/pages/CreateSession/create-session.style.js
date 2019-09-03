@@ -93,3 +93,23 @@ export const LabelDiv = styled.div`
   display: flex;
   justify-content: space-evenly;
 `;
+
+export const BackLink = styled.button`
+  border: none;
+  background: none;
+  color: ${colors.lightPrimary};
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+
+  :focus,
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
+export const BackContainer = styled.div`
+  width: 90%;
+  align-self: center;
+  margin-left: -60%;
+`;

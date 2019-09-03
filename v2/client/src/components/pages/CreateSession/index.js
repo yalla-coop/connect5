@@ -11,6 +11,9 @@ import {
   Icon,
   Divider,
   TimePicker,
+  Tooltip,
+  Button as AntButton,
+  message,
   Popover,
 } from 'antd';
 
@@ -18,6 +21,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
 import Header from '../../common/Header';
+import InfoPopUp from '../../common/InfoPopup';
 import { fetchAllTrainers } from '../../../actions/trainerAction';
 import {
   fetchLocalLeads,
@@ -41,9 +45,14 @@ import {
   Label,
   RequiredMark,
   LabelDiv,
+  BackContainer,
+  BackLink,
 } from './create-session.style';
 
-import { BackContainer, BackLink } from '../AddTrainer/AddTrainer.style';
+import {
+  SelecetWrapper,
+  IconsWrapper,
+} from '../SessionDetails/SessionDetails.Style';
 
 const { Option } = Select;
 
@@ -66,6 +75,7 @@ const initialState = {
   startTime: null,
   endTime: null,
   address: '',
+  stateEmails: [],
 };
 
 class CreateSession extends Component {
@@ -117,6 +127,35 @@ class CreateSession extends Component {
 
   onSelectFocus = () => {
     this.setState({ focused: true });
+  };
+
+  onCopy = () => {
+    const { stateEmails } = this.state;
+
+    if (stateEmails.length) {
+      const copyText = document.getElementById('emails');
+      let range;
+      let selection;
+      if (document.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(copyText);
+
+        range.select();
+      } else if (window.getSelection) {
+        selection = window.getSelection();
+        range = document.createRange();
+        range.selectNodeContents(copyText);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+
+      try {
+        document.execCommand('copy');
+        message.success('copied');
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   pasteEmails = event => {
@@ -203,7 +242,7 @@ class CreateSession extends Component {
         err = '*please enter valid email';
       }
     });
-
+    this.setState({ stateEmails: valuesToBeStored });
     this.props.storeInputData({
       emails: valuesToBeStored,
       err,
@@ -356,6 +395,7 @@ class CreateSession extends Component {
   };
 
   render() {
+    const { stateEmails } = this.state;
     const { role, inputData, loading } = this.props;
 
     const {
@@ -388,6 +428,8 @@ class CreateSession extends Component {
       onKeyPress,
     } = this;
 
+    const details =
+      'Email addresses of invitees can be either added one by one or copied from a list separated by commas, spaces etc. This list is not required to set up sessions. It can be created/updated in continuation.';
     const content = (
       <div style={{ maxWidth: '250px', margin: '0 auto' }}>
         <p>
@@ -660,65 +702,89 @@ class CreateSession extends Component {
           )}
 
           <InputDiv>
-            <Label htmlFor="EmailsToInvite">Emails To Invite:</Label>
-            <Select
-              id="EmailsToInvite"
-              mode="tags"
-              size="large"
-              placeholder="Enter emails for people to invite"
-              onChange={onEmailChange}
-              style={{ width: '100%', height: '100%' }}
-              value={emails}
-              onBlur={this.onSelectBlur}
-              onFocus={this.onSelectFocus}
-            />
-
-            <InputDiv>
-              <Checkbox onChange={this.onChangeCheckbox}>
-                Automatically send an invite to these emails
-              </Checkbox>
-            </InputDiv>
-
-            <InputDiv
-              style={{
-                marginTop: '1rem',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-              }}
-            >
-              <InputLabel>Session Start:</InputLabel>
-              <TimePicker
-                onChange={onStartTimeChange}
-                name="startTime"
-                defaultValue={startTime && moment(startTime, 'HH:mm')}
+            <SelecetWrapper>
+              <IconsWrapper>
+                <Tooltip placement="top" title="Copy">
+                  <AntButton
+                    type="primary"
+                    icon="copy"
+                    ghost
+                    onClick={this.onCopy}
+                  />
+                </Tooltip>
+                <InfoPopUp details={details} />
+              </IconsWrapper>
+              <Label htmlFor="EmailsToInvite">Emails To Invite:</Label>
+              <Select
+                id="EmailsToInvite"
+                mode="tags"
                 size="large"
-                format="HH:mm"
-                disabledHours={this.getDisabledStartTime}
+                placeholder="Enter emails for people to invite"
+                onChange={onEmailChange}
+                style={{ width: '100%', height: '100%' }}
+                value={emails}
+                onBlur={this.onSelectBlur}
+                onFocus={this.onSelectFocus}
               />
-            </InputDiv>
-
-            <InputDiv
-              style={{
-                marginTop: '1rem',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-              }}
-            >
-              <InputLabel>Session Finish:</InputLabel>
-              <TimePicker
-                onChange={onEndTimeChange}
-                name="startTime"
-                defaultValue={endTime && moment(endTime, 'HH:mm')}
-                size="large"
-                format="HH:mm"
-                disabledHours={this.getDisabledEndTime}
-              />
-            </InputDiv>
-
-            <div>{err}</div>
+            </SelecetWrapper>
           </InputDiv>
+          <div
+            id="emails"
+            style={{
+              opacity: '0',
+              position: 'absolute',
+              width: '0',
+              hieght: '0',
+            }}
+          >
+            {stateEmails && stateEmails.join(';')}
+          </div>
+          <div style={{ color: 'red' }}>{err}</div>
+
+          <InputDiv>
+            <Checkbox onChange={this.onChangeCheckbox}>
+              Automatically send an invite to these emails
+            </Checkbox>
+          </InputDiv>
+
+          <InputDiv
+            style={{
+              marginTop: '1rem',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+            }}
+          >
+            <InputLabel>Session Start:</InputLabel>
+            <TimePicker
+              onChange={onStartTimeChange}
+              name="startTime"
+              defaultValue={startTime && moment(startTime, 'HH:mm')}
+              size="large"
+              format="HH:mm"
+              disabledHours={this.getDisabledStartTime}
+            />
+          </InputDiv>
+
+          <InputDiv
+            style={{
+              marginTop: '1rem',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+            }}
+          >
+            <InputLabel>Session Finish:</InputLabel>
+            <TimePicker
+              onChange={onEndTimeChange}
+              name="startTime"
+              defaultValue={endTime && moment(endTime, 'HH:mm')}
+              size="large"
+              format="HH:mm"
+              disabledHours={this.getDisabledEndTime}
+            />
+          </InputDiv>
+          <div>{err}</div>
 
           <SubmitBtn>
             <Button

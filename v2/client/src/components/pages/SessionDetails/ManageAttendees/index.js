@@ -9,6 +9,8 @@ import {
   sendEmailReminder as sendEmailReminderAction,
 } from '../../../../actions/sessionAction';
 
+import AntdModal from '../../../common/AntdModal';
+
 import {
   SessionTopDetailsWrapper,
   SubDetails,
@@ -196,10 +198,6 @@ class ManageAttendees extends Component {
       emailsArray = splittedEmails.map(item => item.trim());
 
       switch (target) {
-        case 'add':
-          this.handleAddAttendees(emailsArray);
-          break;
-
         case 'update':
           this.handleUpdateAttendees(emailsArray);
           break;
@@ -208,58 +206,6 @@ class ManageAttendees extends Component {
           break;
       }
     }
-  };
-
-  handleAddAttendees = values => {
-    const { confirmedAttendeesList } = this.state;
-    const validEmails = [];
-    values.forEach(item => {
-      try {
-        const validEmail = email.validateSync(item);
-
-        if (validEmail) {
-          if (!confirmedAttendeesList.includes(item)) {
-            validEmails.push(item);
-          } else {
-            Modal.error({
-              title: 'Email already confirmed',
-              content: (
-                <p>
-                  This Email <span style={{ fontWeight: '700' }}>{item}</span>{' '}
-                  is already in the confirmed emails
-                </p>
-              ),
-            });
-          }
-        }
-      } catch (err) {
-        Modal.error({
-          title: 'Invalid!',
-          content: err.errors[0],
-        });
-      }
-    });
-    this.setState({ addedAttendeesList: validEmails });
-  };
-
-  submitAddAttendeesList = () => {
-    // add attendees
-    const { addedAttendeesList, confirmedAttendeesList } = this.state;
-
-    const { sessionDetails, updateSessionAttendeesList } = this.props;
-    const updatedList = [...confirmedAttendeesList, ...addedAttendeesList].map(
-      item => ({
-        email: item,
-        status: 'confirmed',
-      })
-    );
-
-    updateSessionAttendeesList({
-      sessionId: sessionDetails._id,
-      attendeesList: updatedList,
-      status: 'confirmed',
-      handleCloseDrawer: this.handleCloseDrawer,
-    });
   };
 
   changeSelectedEmails = checkedEmails => {
@@ -320,7 +266,6 @@ class ManageAttendees extends Component {
       visible,
       drawerKey,
       confirmedAttendeesList,
-      addedAttendeesList,
       checkedEmails,
       isCheckAll,
       activeEmailIndex,
@@ -335,8 +280,17 @@ class ManageAttendees extends Component {
     const activeEmailTemplate =
       reminderEmails && reminderEmails[activeEmailIndex];
 
+    const content =
+      'This section provides tools to manage email addresses of confirmed participants. You can edit current lists by clicking on "Manage Attendees", email out session reminders and view previously sent emails.';
+
     return (
       <SessionTopDetailsWrapper>
+        <AntdModal
+          title="About this section"
+          content={content}
+          btnStyle={{ margin: '1.5rem' }}
+          style={{ top: '20' }}
+        />
         <SubDetails>
           <DrawerLink>Confirmed attendees:</DrawerLink>
           <SubDetailsContent
@@ -356,17 +310,7 @@ class ManageAttendees extends Component {
             data-key="viewAttendeesList"
             data-target="update"
           >
-            <DrawerLink>View Attendees List</DrawerLink>
-            <Icon type="right" />
-          </Row>
-        </SubDetails>
-        <SubDetails>
-          <Row
-            onClick={this.handleDrawerOpen}
-            data-key="addAttendees"
-            data-target="add"
-          >
-            <DrawerLink>Add Attendees</DrawerLink>
+            <DrawerLink>Manage Attendees</DrawerLink>
             <Icon type="right" />
           </Row>
         </SubDetails>
@@ -447,12 +391,6 @@ class ManageAttendees extends Component {
                 handleSubmitUpdateAttendees={this.handleSubmitUpdateAttendees}
                 confirmedAttendeesList={confirmedAttendeesList}
                 handleUpdateAttendees={this.handleUpdateAttendees}
-                // add
-                handleAddAttendees={this.handleAddAttendees}
-                addedAttendeesList={addedAttendeesList}
-                submitAddAttendeesList={this.submitAddAttendeesList}
-                onCopy={this.onCopy}
-                onClear={this.onClear}
                 // sendEmails
                 changeSelectedEmails={this.changeSelectedEmails}
                 checkedEmails={checkedEmails}
