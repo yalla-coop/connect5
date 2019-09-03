@@ -47,8 +47,8 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
           <li>
             <EmailText>
               <BoldSpan>Addressline 1: </BoldSpan>{' '}
-              {(activeEmailTemplate.location &&
-                activeEmailTemplate.location.addressLine1) ||
+              {(activeEmailTemplate.address &&
+                activeEmailTemplate.address.addressLine1) ||
                 'N/A'}
             </EmailText>
           </li>
@@ -56,16 +56,16 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
           <li>
             <EmailText>
               <BoldSpan>Addressline 2: </BoldSpan>{' '}
-              {(activeEmailTemplate.location &&
-                activeEmailTemplate.location.addressLine2) ||
+              {(activeEmailTemplate.address &&
+                activeEmailTemplate.address.addressLine2) ||
                 'N/A'}
             </EmailText>
           </li>
           <li>
             <EmailText>
-              <BoldSpan>Location: </BoldSpan>{' '}
-              {(activeEmailTemplate.location &&
-                activeEmailTemplate.location.location) ||
+              <BoldSpan>Postcode: </BoldSpan>{' '}
+              {(activeEmailTemplate.address &&
+                activeEmailTemplate.address.postcode) ||
                 'N/A'}
             </EmailText>
           </li>
