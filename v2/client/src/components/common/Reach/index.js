@@ -53,7 +53,7 @@ const Head = styled.h3`
 `;
 
 const content =
-  'This section provides an overview of sessions and related surveys collected via the app. I you wish to export the results click on "Export as CSV" and it will export and download raw data (CSV format)';
+  'This section provides an overview of sessions and related surveys collected via the app. I you wish to export the results click on "Export as CSV" and it will export and do';
 
 const Reach = ({ data }) => {
   return (

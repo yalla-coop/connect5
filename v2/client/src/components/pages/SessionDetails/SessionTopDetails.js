@@ -46,7 +46,7 @@ class SessionTopDetails extends Component {
       ).length;
 
     const content =
-      'This section provides an overview about the basic session details. You can edit those details by clicking "Edit Session" or delete the session by clicking "Delete Session"';
+      'This section provides an overview about the basic session details. You can edit those details by clicking "Edit Session" or delete the session by clicking "Delete Session".';
 
     return (
       <SessionTopDetailsWrapper>

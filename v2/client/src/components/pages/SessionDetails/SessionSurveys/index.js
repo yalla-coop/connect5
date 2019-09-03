@@ -132,7 +132,7 @@ class SessionSurveys extends Component {
     );
 
     const content =
-      'To share the surveys for this session please share the link with your attendees. You can send it directly via email clicking on ‚Email surveys to attendees‘ or schedule emails using the ‚Schedule emails‘ option';
+      'To share the surveys for this session please share the link with your attendees. You can send it directly via email clicking on "Email surveys to attendees" or schedule emails using the "Schedule emails" option.';
     return (
       <SessionSurveysWrapper>
         <AntdInfoModal

@@ -310,7 +310,7 @@ class ManageAttendees extends Component {
             data-key="viewAttendeesList"
             data-target="update"
           >
-            <DrawerLink>View Attendees List</DrawerLink>
+            <DrawerLink>Manage Attendees</DrawerLink>
             <Icon type="right" />
           </Row>
         </SubDetails>
