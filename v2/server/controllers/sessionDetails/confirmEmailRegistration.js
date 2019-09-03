@@ -11,6 +11,7 @@ module.exports = async (req, res, next) => {
     sessionId,
     attendeesList: [{ email, status: 'confirmed' }],
     status,
+    isPartialList: true,
   };
 
   updateAttendeesList(data)

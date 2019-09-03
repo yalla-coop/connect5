@@ -32,8 +32,7 @@ class SpecialRequirements extends Component {
             <SubDetails
               key={specReq._id}
               style={{
-                padding: '1rem 0',
-                borderTop: '1px solid #80808059',
+                padding: '0.5rem 0',
               }}
             >
               <WhiteWrapper>
@@ -51,7 +50,7 @@ class SpecialRequirements extends Component {
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                   <BoldSpan black>Requirements / Message:&#32;</BoldSpan>
-                  <EmailText black>
+                  <EmailText black as="pre">
                     {activeIds[specReq._id]
                       ? specReq.message
                       : specReq.message.slice(0, 250)}
