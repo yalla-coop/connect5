@@ -20,8 +20,9 @@ export const confirmRegistration = ({ email, sessionId }) => dispatch => {
       email,
       status: 'confirmed',
     })
-    .then(() => {
+    .then(({ data }) => {
       dispatch({
+        payload: data.confirmedEmail,
         type: CONFIRM_REGISTRATION_SUCCESS,
       });
       dispatch({

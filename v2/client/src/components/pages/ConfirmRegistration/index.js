@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { message as AntdMessage } from 'antd';
+import { message as AntdMessage, Modal, Alert } from 'antd';
+import * as Yup from 'yup';
+
 import { getSessionDetails } from '../../../actions/sessionAction';
 import {
   confirmRegistration,
@@ -25,6 +27,10 @@ import {
 } from './ConfirmRegistration.style';
 
 const { TextArea } = Input;
+
+const emailSchema = Yup.string()
+  .email()
+  .required();
 
 class ConfirmRegistration extends Component {
   state = {
@@ -49,12 +55,30 @@ class ConfirmRegistration extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { sessionId, confimSuccess } = this.props;
+
     const { email, message } = this.state;
+    const { sessionId, confimSuccess, confirmedEmail } = this.props;
+
     if (confimSuccess) {
-      this.props.sendSpecialRequirements({ email, sessionId, message });
+      if (confirmedEmail && sessionId && message)
+        this.props.sendSpecialRequirements({
+          email: confirmedEmail,
+          sessionId,
+          message,
+        });
     } else {
-      this.props.confirmRegistration({ email, sessionId });
+      try {
+        const isEmailValid = emailSchema.validateSync(email);
+
+        if (isEmailValid) {
+          this.props.confirmRegistration({ email, sessionId });
+        }
+      } catch (err) {
+        Modal.error({
+          title: 'Invalid Email Format!',
+          content: err.errors[0],
+        });
+      }
     }
   };
 
@@ -122,12 +146,20 @@ class ConfirmRegistration extends Component {
               ) : (
                 <div>
                   <Details>
-                    Congratulations, you have successfully registered for the
-                    event on
-                    <BoldSpan>
-                      {date ? moment(date).format('DD-MM-YYYY') : 'N/A'}
-                    </BoldSpan>
-                    .
+                    <Alert
+                      message="Congratulations!"
+                      description={
+                        <>
+                          You have successfully registered for the event on{' '}
+                          <BoldSpan>
+                            {date ? moment(date).format('DD-MM-YYYY') : 'N/A'}
+                          </BoldSpan>
+                          .
+                        </>
+                      }
+                      type="success"
+                      // showIcon
+                    />
                   </Details>
                   <Details>
                     <BoldSpan>
@@ -144,6 +176,7 @@ class ConfirmRegistration extends Component {
                     onChange={this.handleChange}
                     value={message}
                     name="message"
+                    placeholder="Requirements / Message:"
                     required
                   />
                 </div>
@@ -182,6 +215,7 @@ const mapStateToProps = ({
     confirmLoading: _loading.confirmRegistrationLoading,
     requirementsLoading: _loading.sendSpecialRequirements,
     confimSuccess: _confirmRegistration.confimSuccess,
+    confirmedEmail: _confirmRegistration.confirmedEmail,
   };
 };
 

@@ -5,6 +5,7 @@ import {
 
 const initState = {
   confimSuccess: null,
+  confirmedEmail: null,
   error: null,
   message: null,
 };
@@ -14,7 +15,10 @@ const confirmRegistration = (state = initState, action) => {
   switch (type) {
     case CONFIRM_REGISTRATION_SUCCESS:
       return {
+        ...state,
+        error: null,
         confimSuccess: true,
+        confirmedEmail: payload,
       };
 
     case CONFIRM_REGISTRATION_ERROR:

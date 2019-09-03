@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
 
   updateAttendeesList(data)
     .then(result => {
-      return res.json({ success: true });
+      return res.json({ success: true, confirmedEmail: email });
     })
     .catch(err => {
       next(boom.badImplementation());
