@@ -27,6 +27,7 @@ module.exports = async (req, res, next) => {
       password,
       region,
       localLead,
+      givenPermission: true,
       organization,
       role,
     })
@@ -58,7 +59,6 @@ module.exports = async (req, res, next) => {
           });
       })
       .catch(err => {
-        console.log(err);
         next(boom.badImplementation());
       });
   }

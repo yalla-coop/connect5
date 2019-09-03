@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Checkbox } from 'antd';
+import { Checkbox, Modal } from 'antd';
+
 import { fetchLocalLeads } from '../../../actions/users';
 import { signUpTrainer, checkUniqeEmail } from '../../../actions/authAction';
 
@@ -40,6 +41,7 @@ const regions = [
 class SignUp extends Component {
   state = {
     confirmDirty: false,
+    givenPermission: true,
     role: 'trainer',
   };
 
@@ -78,7 +80,6 @@ class SignUp extends Component {
   onChangeCheckbox = e => {
     let role = '';
     if (e.target.checked) {
-      console.log(e.target.checked);
       role = 'localLead';
     } else {
       role = 'trainer';
@@ -87,13 +88,12 @@ class SignUp extends Component {
   };
 
   handleSubmit = e => {
-    const { role } = this.state;
-    console.log(role, 'rolllllllllle');
+    const { role, givenPermission } = this.state;
 
     const { form, signUpTrainer: signUpTrainerActionCreator } = this.props;
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
+      if (!err && givenPermission) {
         signUpTrainerActionCreator({ role, ...values });
       }
     });
@@ -129,8 +129,31 @@ class SignUp extends Component {
     callback();
   };
 
-  render() {
+  onChangeCheckboxPermission = e => {
     const { role } = this.state;
+    const { checked } = e.target;
+    this.setState({ givenPermission: checked }, () => {
+      if (!checked && role === 'trainer') {
+        Modal.warning({
+          content: (
+            <div>
+              <p>
+                To make sure Connect 5 succeeds as a mental health training
+                programme we depend on monitoring and feedback data related to
+                course participants and trainers. If you do not agree to giving
+                your local lead/ managing organisation permission to access
+                individual feedback data please contact them to discuss this
+                issue
+              </p>
+            </div>
+          ),
+        });
+      }
+    });
+  };
+
+  render() {
+    const { role, givenPermission } = this.state;
     const {
       form: { getFieldDecorator },
       localLeads,
@@ -140,7 +163,7 @@ class SignUp extends Component {
       loading,
     } = this.props;
 
-    const { onChangeCheckbox } = this;
+    const { onChangeCheckbox, onChangeCheckboxPermission } = this;
 
     if (isAuthenticated) {
       history.push('/dashboard');
@@ -264,11 +287,14 @@ class SignUp extends Component {
 
               <Checkbox
                 onChange={onChangeCheckbox}
-                style={{ padding: ' 0 0 .5rem 0', margin: '.3rem ' }}
+                style={{
+                  textAlign: 'left',
+                  padding: '0 20px',
+                  marginBottom: '24px',
+                }}
               >
                 <span style={{ fontSize: '.9rem' }}>
-                  {' '}
-                  I{"''"}m acting as local lead and/or I manage groups of
+                  I{"'"}m acting as local lead and/or I manage groups of
                   trainers
                 </span>
               </Checkbox>
@@ -317,6 +343,27 @@ class SignUp extends Component {
                 )}
               </Item>
 
+              {role === 'trainer' && (
+                <Checkbox
+                  onChange={onChangeCheckboxPermission}
+                  style={{
+                    textAlign: 'left',
+                    padding: '0 20px',
+                    marginBottom: '24px',
+                    fontSize: '16px',
+                  }}
+                  defaultChecked
+                  value={givenPermission}
+                >
+                  <span style={{ fontSize: '.9rem' }}>
+                    By signing up I confirm that my local lead can access
+                    individual profile data such as name, email and organisation
+                    as well as session results collected via the app after each
+                    session which I was assigned to as trainer{' '}
+                  </span>
+                </Checkbox>
+              )}
+
               <Item style={{ margin: '0 auto 20' }}>
                 <Button
                   type="primary"
@@ -326,6 +373,7 @@ class SignUp extends Component {
                   height="100%"
                   style={{ fontSize: '19px' }}
                   loading={loading}
+                  disabled={!givenPermission}
                 >
                   Sign Up
                 </Button>
