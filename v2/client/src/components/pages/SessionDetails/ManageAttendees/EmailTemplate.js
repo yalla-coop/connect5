@@ -43,10 +43,30 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
               {activeEmailTemplate.sessionType || 'N/A'}
             </EmailText>
           </li>
+
+          <li>
+            <EmailText>
+              <BoldSpan>Addressline 1: </BoldSpan>{' '}
+              {(activeEmailTemplate.location &&
+                activeEmailTemplate.location.addressLine1) ||
+                'N/A'}
+            </EmailText>
+          </li>
+
+          <li>
+            <EmailText>
+              <BoldSpan>Addressline 2: </BoldSpan>{' '}
+              {(activeEmailTemplate.location &&
+                activeEmailTemplate.location.addressLine2) ||
+                'N/A'}
+            </EmailText>
+          </li>
           <li>
             <EmailText>
               <BoldSpan>Location: </BoldSpan>{' '}
-              {activeEmailTemplate.location || 'N/A'}
+              {(activeEmailTemplate.location &&
+                activeEmailTemplate.location.location) ||
+                'N/A'}
             </EmailText>
           </li>
           <li>
