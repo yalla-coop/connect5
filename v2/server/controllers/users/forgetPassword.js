@@ -16,9 +16,9 @@ module.exports = async (req, res, next) => {
     const token = buffer.toString('hex');
     const user = await getUserByEmail(email);
     if (!user) {
-      // if (process.env.NODE_ENV === 'production') {
-      await sendSignUpLinkByEmail(email);
-      // }
+      if (process.env.NODE_ENV === 'production') {
+        await sendSignUpLinkByEmail(email);
+      }
       return res.json({ success: true });
     }
 
@@ -33,9 +33,9 @@ module.exports = async (req, res, next) => {
     await updateUserById(_id, data);
     // send the token via email
 
-    // if (process.env.NODE_ENV === 'production') {
-    await resetPasswordMailing(email, token, user.name);
-    // }
+    if (process.env.NODE_ENV === 'production') {
+      await resetPasswordMailing(email, token, user.name);
+    }
 
     //  send success message
     res.json({ success: true });
