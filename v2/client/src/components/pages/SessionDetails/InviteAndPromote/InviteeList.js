@@ -185,80 +185,82 @@ class InviteeList extends Component {
     }
 
     return (
-      <InviteSectionWrapper>
-        <Header type="view" label="Invitee List" />
+      <>
         <BackContainer>
           <BackLink onClick={onClose}>{`< Back`}</BackLink>
         </BackContainer>
-        <Form>
-          <InputDiv>
-            <SelecetWrapper>
-              <IconsWrapper>
-                <Tooltip placement="top" title="Copy">
-                  <AntButton
-                    type="primary"
-                    icon="copy"
-                    ghost
-                    onClick={this.onCopy}
-                    disabled={!emails.length}
-                  />
-                </Tooltip>
-                <Tooltip placement="top" title="Delete">
-                  <AntButton
-                    type="danger"
-                    icon="delete"
-                    ghost
-                    onClick={this.onClear}
-                    disabled={!emails.length}
-                  />
-                </Tooltip>
-              </IconsWrapper>
-              <Select
-                mode="tags"
-                size="large"
-                placeholder="emails"
-                onChange={onUpdateEmailsChange}
-                value={emails}
-                style={{ width: '100%', height: '100%' }}
-                onBlur={this.onSelectBlur}
-                onFocus={this.onSelectFocus}
+        <InviteSectionWrapper>
+          <Header type="view" label="Invitee List" />
+          <Form>
+            <InputDiv>
+              <SelecetWrapper>
+                <IconsWrapper>
+                  <Tooltip placement="top" title="Copy">
+                    <AntButton
+                      type="primary"
+                      icon="copy"
+                      ghost
+                      onClick={this.onCopy}
+                      disabled={!emails.length}
+                    />
+                  </Tooltip>
+                  <Tooltip placement="top" title="Delete">
+                    <AntButton
+                      type="danger"
+                      icon="delete"
+                      ghost
+                      onClick={this.onClear}
+                      disabled={!emails.length}
+                    />
+                  </Tooltip>
+                </IconsWrapper>
+                <Select
+                  mode="tags"
+                  size="large"
+                  placeholder="emails"
+                  onChange={onUpdateEmailsChange}
+                  value={emails}
+                  style={{ width: '100%', height: '100%' }}
+                  onBlur={this.onSelectBlur}
+                  onFocus={this.onSelectFocus}
+                >
+                  {inviteesEmailsList &&
+                    inviteesEmailsList.map(obj => (
+                      <Option key={obj.email} value={obj.email}>
+                        {obj.email}
+                      </Option>
+                    ))}
+                </Select>
+              </SelecetWrapper>
+            </InputDiv>
+            <div>{err}</div>
+            <InputDiv>
+              <Checkbox onChange={this.onCheckboxChange}>
+                Email invitation to new emails I have just added
+              </Checkbox>
+            </InputDiv>
+            <InputDiv>
+              <Button
+                type="primary"
+                style={{
+                  width: '100%',
+                  marginTop: '2rem',
+                  fontSize: '19px',
+                  fontWeight: 'bold',
+                  padding: '0.5rem 1rem',
+                  height: 'auto',
+                }}
+                onClick={onFormSubmit}
+                disabled={loading}
+                loading={loading}
+                label="Update"
               >
-                {inviteesEmailsList &&
-                  inviteesEmailsList.map(obj => (
-                    <Option key={obj.email} value={obj.email}>
-                      {obj.email}
-                    </Option>
-                  ))}
-              </Select>
-            </SelecetWrapper>
-          </InputDiv>
-          <div>{err}</div>
-          <InputDiv>
-            <Checkbox onChange={this.onCheckboxChange}>
-              Email invitation to new emails I have just added
-            </Checkbox>
-          </InputDiv>
-          <InputDiv>
-            <Button
-              type="primary"
-              style={{
-                width: '100%',
-                marginTop: '2rem',
-                fontSize: '19px',
-                fontWeight: 'bold',
-                padding: '0.5rem 1rem',
-                height: 'auto',
-              }}
-              onClick={onFormSubmit}
-              disabled={loading}
-              loading={loading}
-              label="Update"
-            >
-              Update
-            </Button>
-          </InputDiv>
-        </Form>
-      </InviteSectionWrapper>
+                Update
+              </Button>
+            </InputDiv>
+          </Form>
+        </InviteSectionWrapper>
+      </>
     );
   }
 }

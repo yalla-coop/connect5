@@ -11,7 +11,7 @@ const modalStyles = css`
   left: 50%;
   top: 45%;
   transform: translate(-50%, -50%);
-  z-index: 999;
+  z-index: 999999;
   background-color: #d7d7d7;
   padding: 10px 20px 40px;
   border-radius: 8px;
@@ -39,6 +39,7 @@ const TransWrapper = styled.div`
   height: 100vh;
   background-color: ${colors.backgroundWashOut};
   position: fixed;
+  z-index: 999999999;
   left: 0;
   top: 0;
 `;

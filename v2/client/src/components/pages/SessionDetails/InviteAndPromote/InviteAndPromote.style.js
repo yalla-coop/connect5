@@ -56,7 +56,7 @@ export const BackContainer = styled.div`
   padding: 0 20px;
   align-self: center;
   @media (min-width: 678px) {
-    width: 65%;
+    padding-top: 2rem;
   }
 `;
 
