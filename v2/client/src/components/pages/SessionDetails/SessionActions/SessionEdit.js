@@ -45,7 +45,7 @@ class EditSession extends Component {
     emails: [],
     startTime: null,
     endTime: null,
-    location: null,
+    postcode: null,
     addressLine1: null,
     addressLine2: null,
     err: null,
@@ -92,7 +92,7 @@ class EditSession extends Component {
         endTime,
         address,
       } = sessionDetails;
-      const { location, addressLine1, addressLine2 } = address;
+      const { postcode, addressLine1, addressLine2 } = address;
       if (sessionDetails) {
         this.setState({
           session: type,
@@ -103,7 +103,7 @@ class EditSession extends Component {
           emails: participantsEmails,
           startTime,
           endTime,
-          location,
+          postcode,
           addressLine1,
           addressLine2,
           stateLoaded: true,
@@ -279,7 +279,7 @@ class EditSession extends Component {
       emails,
       startTime,
       endTime,
-      location,
+      postcode,
       addressLine1,
       addressLine2,
     } = this.state;
@@ -294,7 +294,7 @@ class EditSession extends Component {
       emails,
       startTime,
       endTime,
-      location: location || 'N/A',
+      postcode: postcode || 'N/A',
       addressLine1: addressLine1 || 'N/A',
       addressLine2: addressLine2 || 'N/A',
     };
@@ -325,7 +325,7 @@ class EditSession extends Component {
       emails,
       session,
       partnerTrainer1,
-      location,
+      postcode,
       addressLine1,
       addressLine2,
     } = this.state;
@@ -448,9 +448,9 @@ class EditSession extends Component {
               id="addressLine1"
               type="text"
               placeholder="Address line1"
-              value={location}
+              value={addressLine1}
               onChange={onInputChange}
-              name="location"
+              name="addressLine1"
               size="large"
               onKeyPress={e => onKeyPress(e)}
             />
@@ -462,9 +462,9 @@ class EditSession extends Component {
               id="addressLine2"
               type="text"
               placeholder="address line2"
-              value={addressLine1}
+              value={addressLine2}
               onChange={onInputChange}
-              name="addressLine1"
+              name="addressLine2"
               size="large"
               onKeyPress={e => onKeyPress(e)}
             />
@@ -476,9 +476,9 @@ class EditSession extends Component {
               id="PostCode"
               type="text"
               placeholder="Post Code"
-              value={addressLine2}
+              value={postcode}
               onChange={onInputChange}
-              name="addressLine2"
+              name="postcode"
               size="large"
               onKeyPress={e => onKeyPress(e)}
             />

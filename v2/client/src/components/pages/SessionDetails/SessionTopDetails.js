@@ -31,9 +31,11 @@ class SessionTopDetails extends Component {
     let fullAddress = '';
 
     if (address) {
-      const { location, addressLine1, addressLine2 } = address;
-      if (location || addressLine1 || addressLine2) {
-        fullAddress = `${location}, ${addressLine1}, ${addressLine2}`;
+      const { postcode, addressLine1, addressLine2 } = address;
+      if (postcode || addressLine1 || addressLine2) {
+        fullAddress = [addressLine1, addressLine2, postcode]
+          .filter(item => !!item)
+          .join(', ');
       }
     }
 

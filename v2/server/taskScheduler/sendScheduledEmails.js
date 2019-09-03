@@ -65,7 +65,7 @@ const sendScheduledEmails = () =>
               trainers,
               sessionDate: moment(emailDetails.date).format('YYYY-MM-DD'),
               sessionType: emailDetails.type,
-              location: emailDetails.address,
+              address: emailDetails.address,
               startTime: emailDetails.startTime,
               endTime: emailDetails.endTime,
               recipients: emailDetails.participantsEmails.filter(

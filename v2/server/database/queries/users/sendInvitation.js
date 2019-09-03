@@ -28,7 +28,7 @@ module.exports.StoreSentEmailDataQuery = ({
     trainer: name,
     sessionDate: date,
     sessionType: type,
-    location: address,
+    address,
     trainers: trainerName,
     recipients: newEmails,
     startTime,

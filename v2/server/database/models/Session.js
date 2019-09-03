@@ -52,8 +52,8 @@ const sessionSchema = new Schema(
         trainer: String,
         sessionDate: String,
         sessionType: String,
-        location: {
-          location: String,
+        address: {
+          postcode: String,
           addressLine1: String,
           addressLine2: String,
         },

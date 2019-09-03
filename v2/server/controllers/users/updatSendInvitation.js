@@ -69,7 +69,7 @@ const updateSentInvitationEmails = async (req, res, next) => {
       await addSentEmail({
         sessionId,
         emailData: {
-          location: address,
+          address,
           startTime,
           endTime,
           trainers: trainerName,

@@ -296,7 +296,7 @@ class ManageAttendees extends Component {
       startTime: sessionDetails.startTime,
       endTime: sessionDetails.endTime,
       sessionType: sessionDetails.type,
-      location: sessionDetails.address,
+      address: sessionDetails.address,
       recipients: checkedEmails,
       type: 'reminder',
       sent: true,
