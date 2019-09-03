@@ -10,8 +10,8 @@ module.exports = to => {
       <img src="cid:connect5-logo" style="height: 60px; display: block; margin: 0 auto"/>
     </div>
       <p style="font-weight: 700; text-transform: capitalize; font-size: 1.3rem">Hi there,</p>
-      <p>We got a request to reset your connect5 account password.</p>
-      <p>The email you have sent is not found, we are happy to join us, you can register for new account by clicking the link below.</p>
+      <p>There was a request to reset your connect5 account password.</p>
+      <p>However the email you have selected was not found. If you are working with Connect 5 as a trainer/ local lead etc. you can register for new account by clicking the link below.</p>
 
       <div style="text-align: center;">
         <a href="${link}" style="display: inline-block; padding: 0.5rem 1rem; background: #787BB9; color: white; font-size: 16px; font-weight: 900; border-radius: 10px; box-shadow: 0px 5px 11px 1px #9e9e9e7d; text-decoration: none;">Join Us Now</a>

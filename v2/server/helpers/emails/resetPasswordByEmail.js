@@ -10,9 +10,9 @@ module.exports = (to, token, name) => {
       <img src="cid:connect5-logo" style="height: 60px; display: block; margin: 0 auto"/>
     </div>
       <p style="font-weight: 700; text-transform: capitalize; font-size: 1.3rem">Hi ${name}</p>
-      <p>We got a request to reset your connect5 account password.</p>
-      <p>To reset your password, click the link below or paste the following URL into your
-      browser. If you did not ask to reset your password, please let us know and ignore this
+      <p>A request was made to reset your connect5 account password.</p>
+      <p>To reset your password please click the link below or paste the following URL into your
+      browser. If you did not ask to reset your password please ignore this
       email.</p>
 
       <div style="text-align: center;">
