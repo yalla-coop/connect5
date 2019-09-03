@@ -63,11 +63,14 @@ const sessionSchema = new Schema(
         endTime: String,
         type: {
           type: String,
-          // registration === invitaion
-          enum: ['reminder', 'intial', 'registration', 'surveyLink'],
+          // registration === invitaion        "Trainer name> has invited you to"
+          // surveyLink ===  session Details   "We're looking forward to welcome you at"
+          // reminder ===  scheduled emails    "This is a friendly reminder related"
+          enum: ['reminder', 'surveyLink', 'registration'],
         },
         preServeyLink: String,
         surveyURL: String,
+        extraInformation: String,
       },
     ],
     // list of participants emails
