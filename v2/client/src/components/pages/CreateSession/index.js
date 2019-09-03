@@ -784,26 +784,6 @@ class CreateSession extends Component {
               disabledHours={this.getDisabledEndTime}
             />
           </InputDiv>
-
-          <InputDiv
-            style={{
-              marginTop: '1rem',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            }}
-          >
-            <InputLabel>Session Start:</InputLabel>
-            <TimePicker
-              onChange={onStartTimeChange}
-              name="startTime"
-              defaultValue={startTime && moment(startTime, 'HH:mm')}
-              size="large"
-              format="HH:mm"
-              disabledHours={this.getDisabledStartTime}
-            />
-          </InputDiv>
-
           <div>{err}</div>
 
           <SubmitBtn>
