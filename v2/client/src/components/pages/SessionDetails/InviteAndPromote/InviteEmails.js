@@ -27,7 +27,7 @@ class SendInvitation extends Component {
       trainers,
       trainer,
       sessionType,
-      location: address,
+      address,
       recipients,
     } = emailInfo;
 

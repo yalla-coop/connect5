@@ -5,7 +5,7 @@ const sendReminder = ({
   sessionDate,
   sessionType,
   trainers,
-  location,
+  address,
   startTime,
   endTime,
   shortId,
@@ -37,7 +37,7 @@ const sendReminder = ({
     <ul style={{listStyle: 'none'}}>
       <li> Session Date: ${sessionDate || 'N/A'}</li>
       <li> Session Type: ${sessionType || 'N/A'}</li>
-      <li> Location: ${location || 'N/A'}</li>
+      <li> Location: ${address || 'N/A'}</li>
       <li> time: ${startTime || 'N/A'} to ${endTime || 'N/A'}</li>
       <li> trainers: ${trainers || 'N/A'}</li>
     </ul>
