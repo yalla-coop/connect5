@@ -26,7 +26,7 @@ const sessionSchema = new Schema(
       lowercase: true,
     },
     address: {
-      location: String,
+      postcode: String,
       addressLine1: String,
       addressLine2: String,
     },

@@ -7,7 +7,6 @@ import {
   DatePicker,
   Select,
   Input,
-  Checkbox,
   Icon,
   Divider,
   TimePicker,
@@ -27,7 +26,7 @@ import {
   createSessionAction,
   storeInputData,
 } from '../../../actions/sessionAction';
-import { sessions, regions, pattern } from './options';
+import { sessions, regions } from './options';
 import history from '../../../history';
 
 import {
@@ -59,13 +58,12 @@ const initialState = {
   region: null,
   partnerTrainer1: { key: '', label: '' },
   partnerTrainer2: { key: '', label: '' },
-  emails: [],
-  sendByEmail: false,
   err: false,
   trainersNames: { partner1: '', partner2: '' },
   startTime: null,
   endTime: null,
   address: '',
+  postcode: null,
 };
 
 class CreateSession extends Component {
@@ -86,19 +84,6 @@ class CreateSession extends Component {
       this.props.fetchAllTrainers();
       this.props.fetchLocalLeads();
     }
-
-    let dT = null;
-    try {
-      dT = new DataTransfer();
-    } catch (e) {
-      // ignore the error
-    }
-    const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
-
-    document.addEventListener('paste', this.pasteEmails);
-
-    document.dispatchEvent(evt);
   }
 
   componentDidUpdate(prevProps) {
@@ -106,38 +91,6 @@ class CreateSession extends Component {
       this.fetchLocalLeadsAndTrainers();
     }
   }
-
-  componentWillUnmount() {
-    document.removeEventListener('paste', this.pasteEmails);
-  }
-
-  onSelectBlur = () => {
-    this.setState({ focused: false });
-  };
-
-  onSelectFocus = () => {
-    this.setState({ focused: true });
-  };
-
-  pasteEmails = event => {
-    const { focused, emails } = this.state;
-
-    let emailsArray;
-
-    if (focused) {
-      event.preventDefault();
-      const pastedString = event.clipboardData.getData('text/plain');
-      const splittedEmails = pastedString.split(';');
-      if (pastedString === splittedEmails) {
-        emailsArray = pastedString.split(';');
-      }
-      emailsArray = splittedEmails
-        .map(item => item.trim())
-        .filter(item => !emails.includes(item));
-
-      this.onEmailChange([...emails, ...emailsArray]);
-    }
-  };
 
   fetchLocalLeadsAndTrainers = () => {
     const { id, role } = this.props.currentUser;
@@ -147,10 +100,6 @@ class CreateSession extends Component {
       this.props.fetchAllTrainers();
       this.props.fetchLocalLeads();
     }
-  };
-
-  onChangeCheckbox = e => {
-    this.props.storeInputData({ sendByEmail: e.target.checked });
   };
 
   onDateChange = defaultValue => {
@@ -189,24 +138,6 @@ class CreateSession extends Component {
     this.props.storeInputData({
       partnerTrainer2: item,
       trainersNames: { ...trainersNames, partner2: item.label },
-    });
-  };
-
-  onEmailChange = value => {
-    let err = '';
-    const valuesToBeStored = [];
-    // check for email validation
-    value.forEach(item => {
-      if (pattern.test(item)) {
-        valuesToBeStored.push(item);
-      } else {
-        err = '*please enter valid email';
-      }
-    });
-
-    this.props.storeInputData({
-      emails: valuesToBeStored,
-      err,
     });
   };
 
@@ -258,12 +189,13 @@ class CreateSession extends Component {
       region,
       partnerTrainer1,
     } = inputData;
+
     const isError = !(
       !!startDate &&
       !!inviteesNumber &&
       !!session &&
       !!region &&
-      (role === 'localLead' && !!partnerTrainer1)
+      ((role === 'localLead' && !!partnerTrainer1) || role === 'trainer')
     );
 
     this.props.storeInputData({
@@ -282,14 +214,12 @@ class CreateSession extends Component {
       region,
       partnerTrainer1,
       partnerTrainer2,
-      emails,
-      sendByEmail,
       trainersNames,
       startTime,
       endTime,
-      location,
       addressLine1,
       addressLine2,
+      postcode,
     } = inputData;
 
     const trainersNamesArray = [];
@@ -308,14 +238,12 @@ class CreateSession extends Component {
       region,
       partnerTrainer1: partnerTrainer1 && partnerTrainer1.key,
       partnerTrainer2: partnerTrainer2 && partnerTrainer2.key,
-      emails,
-      sendByEmail,
       trainersNames: trainersNamesArray,
       startTime,
       endTime,
-      location: location || 'N/A',
       addressLine1: addressLine1 || 'N/A',
       addressLine2: addressLine2 || 'N/A',
+      postcode: postcode || 'N/A',
     };
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
     return !this.checkError() && this.props.createSessionAction(sessionData);
@@ -364,14 +292,13 @@ class CreateSession extends Component {
       session,
       partnerTrainer1,
       partnerTrainer2,
-      emails,
       startDate,
       region,
       endTime,
       startTime,
-      location,
       addressLine1,
       addressLine2,
+      postcode,
     } = inputData;
 
     const {
@@ -381,7 +308,6 @@ class CreateSession extends Component {
       onSelectRegionChange,
       onSelectPartner1Change,
       onSelectPartner2Change,
-      onEmailChange,
       onFormSubmit,
       onStartTimeChange,
       onEndTimeChange,
@@ -504,9 +430,9 @@ class CreateSession extends Component {
               id="addressLine1"
               type="text"
               placeholder="Address line1"
-              value={location}
+              value={addressLine1}
               onChange={onInputChange}
-              name="location"
+              name="addressLine1"
               size="large"
               onKeyPress={e => onKeyPress(e)}
             />
@@ -517,22 +443,22 @@ class CreateSession extends Component {
               id="addressLine2"
               type="text"
               placeholder="address line2"
-              value={addressLine1}
+              value={addressLine2}
               onChange={onInputChange}
-              name="AddressLine2"
+              name="addressLine2"
               size="large"
               onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
           <InputDiv>
-            <Label htmlFor="PostCode">Post Code:</Label>
+            <Label htmlFor="Postcode">Post Code:</Label>
             <Input
-              id="PostCode"
+              id="Postcode"
               type="text"
               placeholder="Post Code"
-              value={addressLine2}
+              value={postcode}
               onChange={onInputChange}
-              name="addressLine2"
+              name="postcode"
               size="large"
               onKeyPress={e => onKeyPress(e)}
             />
@@ -659,66 +585,45 @@ class CreateSession extends Component {
             </InputDiv>
           )}
 
-          <InputDiv>
-            <Label htmlFor="EmailsToInvite">Emails To Invite:</Label>
-            <Select
-              id="EmailsToInvite"
-              mode="tags"
+          <InputDiv
+            style={{
+              marginTop: '1rem',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+            }}
+          >
+            <InputLabel>Session Start:</InputLabel>
+            <TimePicker
+              onChange={onStartTimeChange}
+              name="startTime"
+              defaultValue={startTime && moment(startTime, 'HH:mm')}
               size="large"
-              placeholder="Enter emails for people to invite"
-              onChange={onEmailChange}
-              style={{ width: '100%', height: '100%' }}
-              value={emails}
-              onBlur={this.onSelectBlur}
-              onFocus={this.onSelectFocus}
+              format="HH:mm"
+              disabledHours={this.getDisabledStartTime}
             />
-
-            <InputDiv>
-              <Checkbox onChange={this.onChangeCheckbox}>
-                Automatically send an invite to these emails
-              </Checkbox>
-            </InputDiv>
-
-            <InputDiv
-              style={{
-                marginTop: '1rem',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-              }}
-            >
-              <InputLabel>Session Start:</InputLabel>
-              <TimePicker
-                onChange={onStartTimeChange}
-                name="startTime"
-                defaultValue={startTime && moment(startTime, 'HH:mm')}
-                size="large"
-                format="HH:mm"
-                disabledHours={this.getDisabledStartTime}
-              />
-            </InputDiv>
-
-            <InputDiv
-              style={{
-                marginTop: '1rem',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-              }}
-            >
-              <InputLabel>Session Finish:</InputLabel>
-              <TimePicker
-                onChange={onEndTimeChange}
-                name="startTime"
-                defaultValue={endTime && moment(endTime, 'HH:mm')}
-                size="large"
-                format="HH:mm"
-                disabledHours={this.getDisabledEndTime}
-              />
-            </InputDiv>
-
-            <div>{err}</div>
           </InputDiv>
+
+          <InputDiv
+            style={{
+              marginTop: '1rem',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+            }}
+          >
+            <InputLabel>Session Finish:</InputLabel>
+            <TimePicker
+              onChange={onEndTimeChange}
+              name="startTime"
+              defaultValue={endTime && moment(endTime, 'HH:mm')}
+              size="large"
+              format="HH:mm"
+              disabledHours={this.getDisabledEndTime}
+            />
+          </InputDiv>
+
+          <div>{err}</div>
 
           <SubmitBtn>
             <Button

@@ -12,11 +12,10 @@ const addSession = async (req, res, next) => {
     partnerTrainer1,
     partnerTrainer2,
     emails,
-    sendByEmail,
     trainersNames,
     startTime,
     endTime,
-    location,
+    postcode,
     addressLine1,
     addressLine2,
   } = req.body;
@@ -34,9 +33,9 @@ const addSession = async (req, res, next) => {
       }
 
       const address = {
-        location,
         addressLine1,
         addressLine2,
+        postcode,
       };
 
       const addedSession = await createNewsession({
@@ -51,31 +50,31 @@ const addSession = async (req, res, next) => {
         address,
       });
 
-      if (sendByEmail) {
-        if (process.env.NODE_ENV === 'production') {
-          // send invitation link to participant
+      // if (sendByEmail) {
+      //   if (process.env.NODE_ENV === 'production') {
+      //     // send invitation link to participant
 
-          const string =
-            trainersNames &&
-            trainersNames
-              .filter(item => !!item)
-              .map(name => `${name[0].toUpperCase()}${name.slice(1)}`)
-              .join(' & ');
+      //     const string =
+      //       trainersNames &&
+      //       trainersNames
+      //         .filter(item => !!item)
+      //         .map(name => `${name[0].toUpperCase()}${name.slice(1)}`)
+      //         .join(' & ');
 
-          await sendEmailInvitation({
-            name: user.name,
-            emails,
-            sessionDate: startDate,
-            type: session,
-            trainerName: string || 'N/A',
-            region,
-            startTime,
-            endTime,
-            shortId: addedSession.shortId,
-            address: address || 'N/A',
-          });
-        }
-      }
+      //     await sendEmailInvitation({
+      //       name: user.name,
+      //       emails,
+      //       sessionDate: startDate,
+      //       type: session,
+      //       trainerName: string || 'N/A',
+      //       region,
+      //       startTime,
+      //       endTime,
+      //       shortId: addedSession.shortId,
+      //       address: address || 'N/A',
+      //     });
+      //   }
+      // }
 
       return res.json(addedSession);
     }
