@@ -22,7 +22,7 @@ class EmailTemplate extends Component {
       trainers,
       startTime,
       endTime,
-      extraInfo,
+      extraInformation,
     } = this.props;
 
     let fullAddress = '';
@@ -63,7 +63,7 @@ class EmailTemplate extends Component {
         </List>
         <SecondPargraph />
 
-        <pre>{extraInfo}</pre>
+        <pre>{extraInformation}</pre>
 
         <p>Sincerely,</p>
 

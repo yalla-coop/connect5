@@ -258,6 +258,8 @@ class CreateSession extends Component {
   // callback to set a flage in the state to know if session created successfully
   done = err => {
     if (!err) this.setState({ sessionCreated: true });
+    // scroll the window to the top of the page
+    window.scrollBy(-100000, -100000);
   };
 
   onStartTimeChange = (time, timeString) => {
@@ -333,7 +335,8 @@ class CreateSession extends Component {
         </p>
       </div>
     );
-    if (true || sessionCreated) {
+
+    if (sessionCreated) {
       return (
         <EditEmail
           successMessage="Session created!"

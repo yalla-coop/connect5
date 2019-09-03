@@ -4,13 +4,13 @@ const sendEmailInvitation = ({
   trainer,
   recipients,
   sessionDate,
-  type,
+  sessionType,
   trainers,
   startTime,
   endTime,
   shortId,
   address,
-  region,
+  extraInformation,
 }) => {
   let fullAddress = '';
 
@@ -41,9 +41,8 @@ const sendEmailInvitation = ({
     <p><span style="text-transform: capitalize">${trainer}</span> has invited you to register for an upcoming Connect 5 training session.</p>
     <ul style="text-transfrom: capitalize">
       <li>Session Date: ${sessionDate}</li>
-      <li>Session Type: ${type}</li>
+      <li>Session Type: ${sessionType}</li>
       <li>Address: ${fullAddress}</li>
-      <li>Region: ${region}</li>
       <li>Time: ${startTime} to ${endTime}</li>
       <li>Trainers: ${trainers}</li>
     </ul>
@@ -51,6 +50,8 @@ const sendEmailInvitation = ({
     <p>To confirm your attendance please click this link here</p>
       <a href="${registrationURL}" style="display: inline-block; padding: 0.5rem 1rem; background: #787BB9; color: white; font-size: 16px; font-weight: 900; border-radius: 10px; box-shadow: 0px 5px 11px 1px #9e9e9e7d; text-decoration: none;">confirm our registration</a>
     </div>
+
+    <pre>${extraInformation}</pre>
 
     <p>Sincerely,</p>
 

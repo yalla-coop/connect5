@@ -11,7 +11,7 @@ import {
 
 import { fetchSessionDetails } from './groupSessionsAction';
 
-export const SendEmailInvitation = Data => async dispatch => {
+export const sendEmailInvitation = (Data, done) => async dispatch => {
   const { _id } = Data;
   dispatch({
     type: LOADING_START,
@@ -25,6 +25,9 @@ export const SendEmailInvitation = Data => async dispatch => {
       dispatch({
         type: LOADING_END,
       });
+      if (typeof done === 'function') {
+        done();
+      }
       return dispatch({
         type: SEND_INVITATION_SUCCESS,
         payload: res.data,

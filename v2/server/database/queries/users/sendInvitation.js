@@ -5,12 +5,13 @@ module.exports.StoreSentEmailDataQuery = ({
   trainer,
   recipients,
   sendDate,
-  date,
-  type,
+  sessionDate,
+  sessionType,
   trainers,
   startTime,
   endTime,
   address,
+  extraInformation,
   confirmedEmails,
 }) => {
   const newEmailsObj = recipients.map(email => {
@@ -26,13 +27,14 @@ module.exports.StoreSentEmailDataQuery = ({
   const data = {
     sendDate,
     trainer,
-    sessionDate: date,
-    sessionType: type,
+    sessionDate,
+    sessionType,
     address,
     trainers,
     recipients: newEmails,
     startTime,
     endTime,
+    extraInformation,
     type: 'registration',
   };
 

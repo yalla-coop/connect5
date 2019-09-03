@@ -60,6 +60,11 @@ class ConfirmRegistration extends Component {
     const { email } = this.state;
 
     const trainersNames = trainers.map(trainer => trainer.name).join(' & ');
+    const { addressLine1, addressLine2, postcode } = address;
+    const fullAddress = [addressLine1, addressLine2, postcode]
+      .filter(item => !!item)
+      .join(', ');
+
     return (
       <Wrapper>
         <ContentWrapper>
@@ -76,7 +81,7 @@ class ConfirmRegistration extends Component {
                 <CapitalizedSpan>{trainersNames || 'N/A'}</CapitalizedSpan>
               </Details>
               <Details>
-                <BoldSpan>Location:</BoldSpan> {address || 'N/A'}
+                <BoldSpan>Location:</BoldSpan> {fullAddress || 'N/A'}
               </Details>
               <Details center>
                 <BoldSpan>

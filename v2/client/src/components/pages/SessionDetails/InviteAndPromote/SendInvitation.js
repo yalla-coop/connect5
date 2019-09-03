@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SendEmailInvitation } from '../../../../actions/InviteAndPromoteAction';
+import { sendEmailInvitation } from '../../../../actions/InviteAndPromoteAction';
 
 // COMMON COMPONENTS
 import Header from '../../../common/Header';
@@ -41,7 +41,7 @@ class SendInvitation extends Component {
     const { emails, sendDate } = this.state;
     const {
       sessionDetails,
-      SendEmailInvitation: SendEmailInvitationActionCreator,
+      sendEmailInvitation: sendEmailInvitationActionCreator,
     } = this.props;
 
     const {
@@ -70,8 +70,8 @@ class SendInvitation extends Component {
       _id,
       recipients: emails,
       sendDate,
-      date,
-      type,
+      sessionDate: date,
+      sessionType: type,
       // string of trainers' names
       trainers,
       region,
@@ -81,7 +81,7 @@ class SendInvitation extends Component {
       address,
       confirmedEmails,
     };
-    SendEmailInvitationActionCreator(InviteData);
+    sendEmailInvitationActionCreator(InviteData);
   };
 
   render() {
@@ -127,5 +127,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { SendEmailInvitation }
+  { sendEmailInvitation }
 )(SendInvitation);

@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   font-family: Roboto;
   margin: 0 auto;
   max-width: 678px;
-  padding: 0 5%;
+  padding: 72px 5%;
 
   #participantEmails {
     .ant-select-selection.ant-select-selection--single {

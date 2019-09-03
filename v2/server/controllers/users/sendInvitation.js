@@ -10,17 +10,16 @@ const SendInvitation = async (req, res, next) => {
     _id,
     recipients,
     sendDate,
-    date,
-    type,
+    sessionDate,
+    sessionType,
     trainers,
-    region,
     startTime,
     endTime,
     shortId,
     address,
+    extraInformation,
     confirmedEmails,
   } = req.body;
-
   const { name } = req.user;
 
   try {
@@ -29,40 +28,39 @@ const SendInvitation = async (req, res, next) => {
       name &&
       recipients &&
       sendDate &&
-      date &&
-      type &&
-      trainers &&
-      region
+      sendDate &&
+      sessionType &&
+      trainers
     ) {
       const StoreSentEmailData = await StoreSentEmailDataQuery({
         _id,
         trainer: name,
         recipients,
         sendDate,
-        date,
-        type,
+        sessionDate,
+        sessionType,
         trainers,
         startTime: startTime || 'N/A',
         endTime: endTime || 'N/A',
         address,
+        extraInformation,
         confirmedEmails,
       });
-      const sessionDate = moment(date).format('DD/MMMM/YYYY');
 
-      if (process.env.NODE_ENV === 'production') {
-        sendEmailInvitation({
-          trainer: name,
-          recipients,
-          sessionDate,
-          type,
-          trainers,
-          address: address || 'TBC',
-          region,
-          startTime,
-          endTime,
-          shortId,
-        });
-      }
+      // if (process.env.NODE_ENV === 'production') {
+      await sendEmailInvitation({
+        trainer: name,
+        recipients,
+        sessionDate: sessionDate && moment(sessionDate).format('DD/MMMM/YYYY'),
+        sessionType,
+        trainers,
+        address: address || 'TBC',
+        startTime,
+        endTime,
+        shortId,
+        extraInformation,
+      });
+      // }
       return res.json(StoreSentEmailData);
     }
     return next(boom.badRequest('Some arguments are missed'));
