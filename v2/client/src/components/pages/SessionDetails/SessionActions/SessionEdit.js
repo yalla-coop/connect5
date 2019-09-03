@@ -7,7 +7,11 @@ import { connect } from 'react-redux';
 import history from '../../../../history';
 import Button from '../../../common/Button';
 import { fetchAllTrainers } from '../../../../actions/trainerAction';
-import { fetchLocalLeads } from '../../../../actions/users';
+import {
+  fetchLocalLeads,
+  fetchLocalLeadTrainersGroup,
+} from '../../../../actions/users';
+
 import {
   fetchSessionDetails,
   sessionUpdateAction,
@@ -55,6 +59,7 @@ class EditSession extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
+    const { role } = this.props;
 
     let dT = null;
     try {
@@ -72,8 +77,12 @@ class EditSession extends Component {
     // call action and pass it the id of session to fetch it's details
     this.props.fetchSessionDetails(id);
 
-    this.props.fetchAllTrainers();
-    this.props.fetchLocalLeads();
+    if (role === 'localLead') {
+      this.props.fetchLocalLeadTrainersGroup(id);
+    } else {
+      this.props.fetchAllTrainers();
+      this.props.fetchLocalLeads();
+    }
   }
 
   componentDidUpdate() {
@@ -303,7 +312,13 @@ class EditSession extends Component {
   };
 
   render() {
-    const { trainers, role, localLeads, sessionDetails, loading } = this.props;
+    const {
+      role,
+      sessionDetails,
+      loading,
+      leadsAndTrainers,
+      localLeadTrainersGroup,
+    } = this.props;
     if (!sessionDetails) {
       return null;
     }
@@ -489,6 +504,7 @@ class EditSession extends Component {
             ) : (
               <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
             )}
+
             <Select
               id="PartnerTrainer"
               showSearch
@@ -499,18 +515,17 @@ class EditSession extends Component {
               value={partnerTrainer1}
               size="large"
             >
-              {trainers &&
-                trainers.map(({ name, _id }) => (
-                  <Option key={_id} value={_id}>
-                    {name}
-                  </Option>
-                ))}
-              {role === 'localLead' &&
-                localLeads.map(({ name, _id }) => (
-                  <Option key={_id} value={_id}>
-                    {name}
-                  </Option>
-                ))}
+              {role === 'localLead'
+                ? localLeadTrainersGroup.map(({ name, _id }) => (
+                    <Option key={_id} value={_id}>
+                      {name}
+                    </Option>
+                  ))
+                : leadsAndTrainers.map(({ name, _id }) => (
+                    <Option key={_id} value={_id}>
+                      {name}
+                    </Option>
+                  ))}
             </Select>
           </InputDiv>
           {role === 'localLead' && (
@@ -525,18 +540,17 @@ class EditSession extends Component {
                 onChange={onSelectPartner2Change}
                 size="large"
               >
-                {trainers &&
-                  trainers.map(({ name, _id }) => (
-                    <Option key={_id} value={_id}>
-                      {name}
-                    </Option>
-                  ))}
-                {role === 'localLead' &&
-                  localLeads.map(({ name, _id }) => (
-                    <Option key={_id} value={_id}>
-                      {name}
-                    </Option>
-                  ))}
+                {role === 'localLead'
+                  ? localLeadTrainersGroup.map(({ name, _id }) => (
+                      <Option key={_id} value={_id}>
+                        {name}
+                      </Option>
+                    ))
+                  : leadsAndTrainers.map(({ name, _id }) => (
+                      <Option key={_id} value={_id}>
+                        {name}
+                      </Option>
+                    ))}
               </Select>
             </InputDiv>
           )}
@@ -617,15 +631,24 @@ class EditSession extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  trainers: state.trainers.trainers,
-  role: state.auth.role,
-  localLeads: state.fetchedData.localLeadsList,
-  sessionDetails: state.sessions.sessionDetails[0],
-  loaded: state.sessions.loaded,
-  msg: state.session.msg,
-  loading: state.loading.sessionEditLoading,
-});
+const mapStateToProps = state => {
+  const { trainers } = state.trainers;
+  const localLeads = state.fetchedData.localLeadsList;
+
+  const leadsAndTrainers = [...localLeads, ...trainers];
+
+  return {
+    trainers: state.trainers.trainers,
+    role: state.auth.role,
+    localLeads: state.fetchedData.localLeadsList,
+    sessionDetails: state.sessions.sessionDetails[0],
+    loaded: state.sessions.loaded,
+    msg: state.session.msg,
+    loading: state.loading.sessionEditLoading,
+    localLeadTrainersGroup: state.fetchedData.localLeadGroup,
+    leadsAndTrainers,
+  };
+};
 
 export default connect(
   mapStateToProps,
@@ -634,5 +657,6 @@ export default connect(
     fetchLocalLeads,
     fetchSessionDetails,
     sessionUpdateAction,
+    fetchLocalLeadTrainersGroup,
   }
 )(EditSession);
