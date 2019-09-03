@@ -19,16 +19,15 @@ class ExportButton extends Component {
   };
 
   componentDidMount() {
-    const { viewLevel, selectedUser, userId } = this.props;
-    console.log('role', selectedUser);
+    const { role, selectedUser, userId } = this.props;
     // check if there's a selectedUserRole
 
     // if trainer then just filter for that trainer
-    if (viewLevel === 'trainer') {
+    if (role === 'trainer') {
       this.setState({ filter: true, trainerIDs: [userId] });
     }
 
-    if (viewLevel === 'localLead') {
+    if (role === 'localLead') {
       // if locallead but wanting to export results for specific trainer
       if (selectedUser && selectedUser.role === 'trainer') {
         this.setState({ filter: true, trainerIDs: [selectedUser._id] });
@@ -38,7 +37,7 @@ class ExportButton extends Component {
       }
     }
 
-    if (viewLevel === 'admin') {
+    if (role === 'admin') {
       // if admin and looking at the results for a local lead
       if (selectedUser && selectedUser.role === 'localLead') {
         // get list of that localLeads trainers
@@ -109,7 +108,8 @@ class ExportButton extends Component {
           ref={this.clickBtn}
           onClick={this.fetchExportData}
           width="200px"
-          margin="1rem 0 1rem 0"
+          margin="1rem auto"
+          style={{ display: 'block' }}
         />
       </>
     );
@@ -119,7 +119,6 @@ class ExportButton extends Component {
 const mapStateToProps = state => ({
   csvData: state.exportData.data,
   userId: state.auth.id,
-  viewLevel: state.viewLevel.viewLevel,
 });
 
 export default connect(

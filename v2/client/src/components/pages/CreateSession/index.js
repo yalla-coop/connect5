@@ -11,6 +11,7 @@ import {
   Icon,
   Divider,
   TimePicker,
+  Popover,
 } from 'antd';
 
 import moment from 'moment';
@@ -37,6 +38,9 @@ import {
   Error,
   Warning,
   InputLabel,
+  Label,
+  RequiredMark,
+  LabelDiv,
 } from './create-session.style';
 
 import { BackContainer, BackLink } from '../AddTrainer/AddTrainer.style';
@@ -153,8 +157,13 @@ class CreateSession extends Component {
     this.props.storeInputData({ startDate: defaultValue });
   };
 
+  onKeyPress = e => {
+    return e.key === 'Enter' && e.preventDefault();
+  };
+
   onInputChange = ({ target: { value, name } }) => {
-    this.props.storeInputData({ [name]: value });
+    const newValue = value.replace(/^\s*\s*$/, '');
+    this.props.storeInputData({ [name]: newValue });
   };
 
   onSelectSessionChange = value => {
@@ -202,11 +211,20 @@ class CreateSession extends Component {
   };
 
   renderTrainersList = () => {
-    const { leadsAndTrainers, role, localLeadTrainersGroup, id } = this.props;
+    const {
+      leadsAndTrainers,
+      role,
+      localLeadTrainersGroup,
+      id,
+      name: loggedInName,
+    } = this.props;
     if (role && role === 'localLead') {
       if (localLeadTrainersGroup) {
-        return localLeadTrainersGroup
-          .filter(({ _id }) => _id !== id)
+        return [
+          { _id: id, name: loggedInName, keep: true },
+          ...localLeadTrainersGroup,
+        ]
+          .filter(({ _id, keep }) => _id !== id || keep === true)
           .map(({ name, _id }) => {
             return (
               <Option
@@ -232,13 +250,20 @@ class CreateSession extends Component {
   };
 
   checkError = () => {
-    const { inputData } = this.props;
-    const { startDate, inviteesNumber, session, region } = inputData; 
+    const { inputData, role } = this.props;
+    const {
+      startDate,
+      inviteesNumber,
+      session,
+      region,
+      partnerTrainer1,
+    } = inputData;
     const isError = !(
       !!startDate &&
       !!inviteesNumber &&
       !!session &&
-      !!region 
+      !!region &&
+      (role === 'localLead' && !!partnerTrainer1)
     );
 
     this.props.storeInputData({
@@ -288,9 +313,9 @@ class CreateSession extends Component {
       trainersNames: trainersNamesArray,
       startTime,
       endTime,
-      location,
-      addressLine1,
-      addressLine2,
+      location: location || 'N/A',
+      addressLine1: addressLine1 || 'N/A',
+      addressLine2: addressLine2 || 'N/A',
     };
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
     return !this.checkError() && this.props.createSessionAction(sessionData);
@@ -360,7 +385,17 @@ class CreateSession extends Component {
       onFormSubmit,
       onStartTimeChange,
       onEndTimeChange,
+      onKeyPress,
     } = this;
+
+    const content = (
+      <div style={{ maxWidth: '250px', margin: '0 auto' }}>
+        <p>
+          this is where you can store the expected maximum attendance. This
+          number can be changed later.
+        </p>
+      </div>
+    );
 
     return (
       <CreateSessionWrapper>
@@ -370,7 +405,11 @@ class CreateSession extends Component {
         </BackContainer>
         <Form onSubmit={onFormSubmit}>
           <InputDiv>
+            <Label htmlFor="DatePicker">
+              {!startDate && <RequiredMark>*</RequiredMark>}Session Date:
+            </Label>
             <DatePicker
+              id="DatePicker"
               onChange={onDateChange}
               name="startDate"
               size="large"
@@ -380,8 +419,12 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <Label htmlFor="sessionType">
+              {!session && <RequiredMark>*</RequiredMark>}Session Type:
+            </Label>
             <Select
               showSearch
+              id="sessionType"
               style={{ width: '100%' }}
               placeholder="Click to select session No."
               optionFilterProp="children"
@@ -399,20 +442,45 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <LabelDiv>
+              <Label htmlFor="sessionCapacity">
+                {!inviteesNumber && <RequiredMark>*</RequiredMark>}Session
+                Capacity:
+              </Label>
+
+              <Popover content={content} style={{ marginRight: '2rem' }}>
+                <button
+                  type="button"
+                  style={{ background: 'none', border: 'none' }}
+                >
+                  <i
+                    className="fas fa-question-circle"
+                    style={{ color: '#9FCE67' }}
+                  />
+                </button>
+              </Popover>
+            </LabelDiv>
+
             <Input
+              id="sessionCapacity"
               type="number"
-              placeholder="Number of attendees (this can be an estimate)"
+              placeholder="Session Capacity"
               value={inviteesNumber}
               onChange={onInputChange}
               name="inviteesNumber"
               size="large"
               min="0"
+              onKeyPress={e => onKeyPress(e)}
             />
             {inviteesNumber === null && <Warning>* required</Warning>}
           </InputDiv>
 
           <InputDiv>
+            <Label htmlFor="region">
+              {!region && <RequiredMark>*</RequiredMark>}Region:
+            </Label>
             <Select
+              id="region"
               showSearch
               style={{ width: '100%' }}
               placeholder="Region"
@@ -431,41 +499,59 @@ class CreateSession extends Component {
           </InputDiv>
 
           <InputDiv>
+            <Label htmlFor="addressLine1">Address Line1:</Label>
             <Input
+              id="addressLine1"
               type="text"
-              placeholder="Type the venue's address"
+              placeholder="Address line1"
               value={location}
               onChange={onInputChange}
               name="location"
               size="large"
+              onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
           <InputDiv>
+            <Label htmlFor="addressLine2">Address Line2:</Label>
             <Input
-              type="text"
-              placeholder="address line1"
-              value={addressLine1}
-              onChange={onInputChange}
-              name="addressLine1"
-              size="large"
-            />
-          </InputDiv>
-          <InputDiv>
-            <Input
+              id="addressLine2"
               type="text"
               placeholder="address line2"
+              value={addressLine1}
+              onChange={onInputChange}
+              name="AddressLine2"
+              size="large"
+              onKeyPress={e => onKeyPress(e)}
+            />
+          </InputDiv>
+          <InputDiv>
+            <Label htmlFor="PostCode">Post Code:</Label>
+            <Input
+              id="PostCode"
+              type="text"
+              placeholder="Post Code"
               value={addressLine2}
               onChange={onInputChange}
               name="addressLine2"
               size="large"
+              onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
 
           <InputDiv>
+            {role === 'localLead' ? (
+              <Label htmlFor="PartnerTrainer">
+                {!partnerTrainer1 && <RequiredMark>*</RequiredMark>}
+                Trainer:
+              </Label>
+            ) : (
+              <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
+            )}
             <Select
+              id="PartnerTrainer"
               showSearch
               style={{ width: '100%' }}
-              placeholder="Partner Trainer"
+              placeholder={role === 'localLead' ? 'Trainer' : 'Partner Trainer'}
               optionFilterProp="children"
               onChange={onSelectPartner1Change}
               labelInValue
@@ -514,10 +600,15 @@ class CreateSession extends Component {
             >
               {this.renderTrainersList()}
             </Select>
+            {role === 'localLead' && partnerTrainer1 === null && (
+              <Warning>* required</Warning>
+            )}
           </InputDiv>
           {role === 'localLead' && (
             <InputDiv>
+              <Label htmlFor="PartnerTrainer2">Second Partner Trainer:</Label>
               <Select
+                id="PartnerTrainer2"
                 placeholder="Second Partner Trainer"
                 optionFilterProp="children"
                 onChange={onSelectPartner2Change}
@@ -569,7 +660,9 @@ class CreateSession extends Component {
           )}
 
           <InputDiv>
+            <Label htmlFor="EmailsToInvite">Emails To Invite:</Label>
             <Select
+              id="EmailsToInvite"
               mode="tags"
               size="large"
               placeholder="Enter emails for people to invite"
@@ -579,6 +672,12 @@ class CreateSession extends Component {
               onBlur={this.onSelectBlur}
               onFocus={this.onSelectFocus}
             />
+
+            <InputDiv>
+              <Checkbox onChange={this.onChangeCheckbox}>
+                Automatically send an invite to these emails
+              </Checkbox>
+            </InputDiv>
 
             <InputDiv
               style={{
@@ -620,11 +719,6 @@ class CreateSession extends Component {
 
             <div>{err}</div>
           </InputDiv>
-          <InputDiv>
-            <Checkbox onChange={this.onChangeCheckbox}>
-              Send a session invite to potential participants by email
-            </Checkbox>
-          </InputDiv>
 
           <SubmitBtn>
             <Button
@@ -654,6 +748,7 @@ const mapStateToProps = state => {
     id: state.auth.id,
     role: state.auth.role,
     currentUser: state.auth,
+    name: state.auth.name,
     localLeadTrainersGroup: state.fetchedData.localLeadGroup,
     leadsAndTrainers,
     loading: state.session.loading,

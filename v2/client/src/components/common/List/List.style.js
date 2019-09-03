@@ -56,18 +56,21 @@ export const List = styled.div`
   flex-direction: column;
 `;
 
-export const Row = styled.div`
+export const Row = styled(Link)`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   padding: 0.5rem 0;
   margin-left: 0.55rem;
+  cursor: pointer;
+
   &:not(:last-child) {
     border-bottom: ${borders.inputBox};
   }
   @media (min-width: 768px) {
     margin-left: 2rem;
   }
+  color: black;
 `;
 
 const sharedItemStyles = css`

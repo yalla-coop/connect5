@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 
 import history from '../history';
 
 import * as types from '../constants/actionTypes';
 import { returnErrors } from './errorAction';
+import { checkAuth } from './authAction';
 
 export const fetchUserResults = (id, role) => async dispatch => {
   try {
@@ -14,18 +15,34 @@ export const fetchUserResults = (id, role) => async dispatch => {
       payload: res.data,
     });
   } catch (err) {
-    history.push('/404err');
+    if (err.response && err.response.status === 403) {
+      return Modal.error({
+        title: 'No access permission',
+        content:
+          "This trainer didn't give an access permission to his/her data",
+        onOk: () => history.goBack(),
+      });
+    }
+    if (err.response && err.response.status === 404) {
+      return Modal.error({
+        title: 'Trainer not found',
+        content: 'trainer data not found',
+        onOk: history.goBack(),
+      });
+    }
+    return history.push('/500err');
   }
 };
 
-export const fetchTrainerFeedback = (
+export const fetchTrainerFeedback = ({
   trainerId,
   sessionId,
-  surveyType
-) => async dispatch => {
+  surveyType,
+  role,
+}) => async dispatch => {
   try {
     const url = `/api/feedback/`;
-    const data = { trainerId, sessionId, surveyType };
+    const data = { trainerId, sessionId, surveyType, role };
 
     const res = await axios.post(url, data);
 
@@ -193,6 +210,36 @@ export const resetPassword = resetPasswordData => async dispatch => {
 
       dispatch({
         type: types.RESET_PASSWORD_FAIL,
+      });
+    });
+};
+
+export const updateUserInfo = (data, updateState) => async dispatch => {
+  dispatch({
+    type: types.LOADING_TRUE,
+    payload: 'updateUserLoading',
+  });
+
+  axios
+    .patch('/api/users', data)
+    .then(() => {
+      updateState({ visible: false });
+
+      dispatch({
+        type: types.LOADING_FALSE,
+        payload: 'updateUserLoading',
+      });
+      dispatch(checkAuth());
+    })
+    .then(() => message.success('Updated successfully'))
+    .catch(err => {
+      const error =
+        err.response && err.response.data && err.response.data.error;
+      message.error(error || 'Something went wrong');
+
+      dispatch({
+        type: types.LOADING_FALSE,
+        payload: 'updateUserLoading',
       });
     });
 };

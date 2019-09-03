@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import moment from 'moment';
 
 import { checkAuth } from '../actions/authAction';
-import { updateViewLevel } from '../actions/viewLevelAction';
 import { checkBrowserWidth } from '../actions/checkBrowserWidth';
 
 import { colors } from '../theme';
@@ -36,12 +35,13 @@ import ChangePassword from './pages/ChangePassword';
 import ParticipantProgress from './pages/ParticipantProgress';
 import Certificate from './pages/Certificate';
 import AdminDemographic from './pages/AdminDemographic';
-import DecideView from './pages/DecideView';
+// import DecideView from './pages/DecideView';
 import ThankYouPage from './pages/ThankYouPage';
 import ForgetPassword from './pages/ForgetPassword';
 import ResetPassword from './pages/ForgetPassword/ResetPassword';
 import SessionsFiles from './pages/SessionsFiles';
 import ConfirmRegistration from './pages/ConfirmRegistration';
+import MyProfile from './pages/MyProfile';
 
 // Error Pages
 import NotFound from './pages/ErrorPages/404';
@@ -64,10 +64,14 @@ import {
   GROUP_RESULTS_URL,
   TRAINER_SESSIONS_URL,
   GROUP_SESSIONS_URL,
-  DECIDE_VIEW_URL,
   SESSION_DETAILS_URL,
   FORGET_PASSWORD,
   TRAINER_VIEW_PARTICIPANT,
+  MY_PROFILE_URL,
+  MY_RESULTS_URL,
+  ALL_RESULTS_URL,
+  ALL_SESSIONS_URL,
+  MY_SESSIONS_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -111,16 +115,7 @@ class App extends Component {
   }
 
   componentDidUpdate() {
-    const {
-      updateViewLevel: updateViewLevelActionCreator,
-      checkBrowserWidth: checkBrowserWidthActionCreator,
-      role,
-      viewLevel,
-    } = this.props;
-
-    if (role && !viewLevel) {
-      updateViewLevelActionCreator(role);
-    }
+    const { checkBrowserWidth: checkBrowserWidthActionCreator } = this.props;
 
     const { width } = this.state;
     const isMobile = width <= 500;
@@ -176,6 +171,26 @@ class App extends Component {
               role={role}
               navbar
             />
+            <PrivateRoute
+              exact
+              path={MY_RESULTS_URL}
+              Component={UserResults}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['trainer', 'admin', 'localLead']}
+              role={role}
+              navbar
+            />
+            <PrivateRoute
+              exact
+              path={ALL_RESULTS_URL}
+              Component={UserResults}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin']}
+              role={role}
+              navbar
+            />
 
             <PrivateRoute
               exact
@@ -183,11 +198,11 @@ class App extends Component {
               Component={UserResults}
               isAuthenticated={isAuthenticated}
               loaded={loaded}
-              allowedRoles={['trainer', 'admin', 'localLead']}
+              allowedRoles={['admin', 'localLead']}
               role={role}
-              groupView
               navbar
             />
+
             <Route exact path={HOME_URL} component={Home} />
             <PrivateRoute
               exact
@@ -238,7 +253,7 @@ class App extends Component {
               role={role}
               navbar
             />
-            <PrivateRoute
+            {/* <PrivateRoute
               exact
               path={DECIDE_VIEW_URL}
               Component={DecideView}
@@ -248,6 +263,7 @@ class App extends Component {
               role={role}
               navbar
             />
+          */}
             <PrivateRoute
               exact
               path="/create-session"
@@ -279,15 +295,23 @@ class App extends Component {
               navbar
             />
 
+            <PrivateRoute
+              path={MY_PROFILE_URL}
+              Component={MyProfile}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
+
             <Route
               exact
               path={LOGIN_URL}
               render={() => {
                 if (loaded) {
                   return isAuthenticated ? (
-                    <Redirect
-                      to={role === 'trainer' ? DASHBOARD_URL : DECIDE_VIEW_URL}
-                    />
+                    <Redirect to={DASHBOARD_URL} />
                   ) : (
                     <Login />
                   );
@@ -296,7 +320,6 @@ class App extends Component {
               }}
             />
             <Route exact path={FORGET_PASSWORD} component={ForgetPassword} />
-
             <Route
               exact
               path={SIGN_UP_URL}
@@ -341,7 +364,6 @@ class App extends Component {
               loaded={loaded}
               isAuthenticated={isAuthenticated}
               allowedRoles={['participant']}
-              viewLevel="participant"
               role={role}
             />
             <PrivateRoute
@@ -351,7 +373,6 @@ class App extends Component {
               loaded={loaded}
               isAuthenticated={isAuthenticated}
               allowedRoles={['participant']}
-              viewLevel="participant"
               role={role}
               navbar
             />
@@ -362,12 +383,31 @@ class App extends Component {
               loaded={loaded}
               isAuthenticated={isAuthenticated}
               allowedRoles={['participant']}
-              viewLevel="participant"
               role={role}
               navbar
             />
-
             <Route path="/certificate/:sessionId" component={Certificate} />
+
+            <PrivateRoute
+              exact
+              path={ALL_SESSIONS_URL}
+              Component={ViewSessions}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['trainer', 'localLead', 'admin']}
+              role={role}
+              navbar
+            />
+            <PrivateRoute
+              exact
+              path={MY_SESSIONS_URL}
+              Component={ViewSessions}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              allowedRoles={['trainer', 'localLead', 'admin']}
+              role={role}
+              navbar
+            />
 
             <PrivateRoute
               exact
@@ -379,6 +419,7 @@ class App extends Component {
               role={role}
               navbar
             />
+
             <PrivateRoute
               exact
               path={GROUP_SESSIONS_URL}
@@ -389,7 +430,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path={TRAINER_VIEW_PARTICIPANT}
@@ -400,7 +440,6 @@ class App extends Component {
               role={role}
               navbar
             />
-
             <PrivateRoute
               exact
               path="/sessions-files"
@@ -408,21 +447,17 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               Component={SessionsFiles}
               allowedRoles={['participant']}
-              viewLevel="participant"
               role={role}
               navbar
             />
-
             <Route
               exact
               path="/confirm/:shortId"
               component={ConfirmRegistration}
             />
-
             <Route path="/404err" render={() => <NotFound />} />
             <Route path="/500err" render={() => <ServerError />} />
             <Route path="/unauthorized" render={() => <Unauthorized />} />
-
             <Route render={() => <NotFound />} />
           </Switch>
         </Router>
@@ -436,10 +471,12 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   role: state.auth.role,
   loaded: state.auth.loaded,
-  viewLevel: state.viewLevel.viewLevel,
 });
 
 export default connect(
   mapStateToProps,
-  { checkAuth, updateViewLevel, checkBrowserWidth }
+  {
+    checkAuth,
+    checkBrowserWidth,
+  }
 )(App);

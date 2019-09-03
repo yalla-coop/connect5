@@ -8,25 +8,34 @@ export const DASHBOARD_URL = '/dashboard';
 export const ADD_SESSION_URL = '/create-session';
 export const SURVEY_URL = '/survey/:id';
 export const SESSION_DETAILS_URL = '/session-details/:id';
+export const MY_PROFILE_URL = '/my-profile';
+export const MY_RESULTS_URL = '/my-results';
+export const MY_SESSIONS_URL = '/my-sessions';
+export const ALL_SESSIONS_URL = '/all-sessions';
 
 // trainer
-export const TRAINER_RESULTS_URL = '/trainer-results';
-export const TRAINER_SESSIONS_URL = '/trainer-sessions';
+export const TRAINER_RESULTS_URL = '/trainer-results/:trainerId?';
+export const TRAINER_SESSIONS_URL = '/trainer-sessions/trainerId?';
 export const TRAINER_FEEDBACK_URL = '/feedback';
 export const TRAINER_VIEW_PARTICIPANT = '/participant/:PIN';
 
 // local lead & admin
-export const GROUP_RESULTS_URL = '/group-results';
+// for menu & navbar
+export const MY_GROUP_RESULTS_URL = '/group-results';
+export const MY_GROUP_SESSIONS_URL = '/group-sessions';
+// for App react router
+export const GROUP_RESULTS_URL = `${MY_GROUP_RESULTS_URL}/:localLeadId?`;
+export const GROUP_SESSIONS_URL = `${MY_GROUP_SESSIONS_URL}/:localLeadId?`;
 export const TRAINERS_URL = '/trainers';
-export const GROUP_SESSIONS_URL = '/sessions';
 export const ADD_TRAINER_URL = '/add-trainer';
-export const DECIDE_VIEW_URL = '/welcome-back';
+// export const DECIDE_VIEW_URL = '/welcome-back';
 
 // local lead
 export const LOCAL_LEAD_SESSIONS_URL = '/localLead-sessions';
 
 // admin
 export const DEMOGRAPHICS_URL = '/demographics';
+export const ALL_RESULTS_URL = '/all-results';
 
 // user
 export const USER_INSIGHTS = '/my-insights';

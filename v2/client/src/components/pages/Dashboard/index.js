@@ -12,6 +12,7 @@ import {
   TopSection,
   Title,
   Role,
+  TotalReach,
   StatsWrapper,
   StatItem,
   Label,
@@ -26,11 +27,13 @@ import Header from '../../common/Header';
 
 // ROUTES
 import {
-  TRAINER_RESULTS_URL,
-  TRAINER_SESSIONS_URL,
-  GROUP_RESULTS_URL,
+  MY_RESULTS_URL,
+  MY_SESSIONS_URL,
+  MY_GROUP_RESULTS_URL,
+  MY_GROUP_SESSIONS_URL,
   TRAINERS_URL,
-  GROUP_SESSIONS_URL,
+  ALL_SESSIONS_URL,
+  ALL_RESULTS_URL,
 } from '../../../constants/navigationRoutes';
 
 class Dashboard extends Component {
@@ -39,26 +42,42 @@ class Dashboard extends Component {
     // it can then be removed from state
     // const { role, userName } = this.props;
     // const role = 'trainer';
-    const {
-      role,
-      fetchStatsData: fetchStatsDataActionCreator,
-      viewLevel,
-    } = this.props;
+    const { role, fetchStatsData: fetchStatsDataActionCreator } = this.props;
 
-    // if (viewLevel) role = viewLevel;
-
-    fetchStatsDataActionCreator(viewLevel || role);
+    fetchStatsDataActionCreator(role);
     // this.setState({ userType });
     // const { fetchStatsData: fetchStatsDataActionCreator } = this.props;
     // fetchStatsDataActionCreator(userType);
   }
 
   render() {
-    const { userName, stats, viewLevel, logout: logoutAction } = this.props;
-    // const { id } = auth;
+    const { userName, stats, logout: logoutAction, role } = this.props;
 
     const captalizesName =
       userName && userName[0].toUpperCase() + userName.substr(1);
+
+    let sessionURL;
+    let ResultsURL;
+
+    switch (role) {
+      case 'trainer':
+        sessionURL = MY_SESSIONS_URL;
+        ResultsURL = MY_RESULTS_URL;
+        break;
+
+      case 'localLead':
+        sessionURL = MY_GROUP_SESSIONS_URL;
+        ResultsURL = MY_GROUP_RESULTS_URL;
+        break;
+
+      case 'admin':
+        sessionURL = ALL_SESSIONS_URL;
+        ResultsURL = ALL_RESULTS_URL;
+        break;
+
+      default:
+        break;
+    }
 
     return (
       <Wrapper>
@@ -74,43 +93,26 @@ class Dashboard extends Component {
                 Welcome back, <br />
                 {captalizesName}
               </Title>
-              <Role>Role: {viewLevel}</Role>
+              <Role>Role: {role === 'localLead' ? 'Local Lead' : role}</Role>
             </TopSection>
+            <TotalReach>Your Total Reach</TotalReach>
             <StatsWrapper>
-              <StatItem
-                to={
-                  viewLevel === 'trainer'
-                    ? TRAINER_SESSIONS_URL
-                    : GROUP_SESSIONS_URL
-                }
-              >
+              <StatItem to={sessionURL}>
                 <Label>Sessions</Label>
                 <StatNumber>{stats.sessionCount}</StatNumber>
               </StatItem>
-              <StatItem
-                to={
-                  viewLevel === 'trainer'
-                    ? TRAINER_RESULTS_URL
-                    : GROUP_RESULTS_URL
-                }
-              >
+              <StatItem to={ResultsURL}>
                 <Label>Participants</Label>
                 <StatNumber>{stats.participantCount}</StatNumber>
               </StatItem>
-              <StatItem
-                to={
-                  viewLevel === 'trainer'
-                    ? TRAINER_RESULTS_URL
-                    : GROUP_RESULTS_URL
-                }
-              >
+              <StatItem to={ResultsURL}>
                 <Label>Responses</Label>
                 <StatNumber>{stats.responseCount}</StatNumber>
               </StatItem>
-              {viewLevel === 'trainer' ? (
-                <StatItem to={TRAINER_RESULTS_URL}>
+              {role === 'trainer' ? (
+                <StatItem to={MY_RESULTS_URL}>
                   <Label>Response Rate</Label>
-                  <StatNumber>{stats.responseRate}%</StatNumber>
+                  <StatNumber>{stats.responseRate || '0'}%</StatNumber>
                 </StatItem>
               ) : (
                 <StatItem to={TRAINERS_URL}>
@@ -134,7 +136,6 @@ const mapStateToProps = state => {
     stats: state.stats,
     userId: state.auth.id,
     role: state.auth.role,
-    viewLevel: state.viewLevel.viewLevel,
   };
 };
 

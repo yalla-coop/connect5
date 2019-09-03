@@ -19,7 +19,7 @@ export const WhiteWrapper = styled.div`
 export const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
-  padding-bottom: 30px;
+  padding: 30px 0;
   border-bottom: ${borders.inputBox};
 `;
 export const HeadlineDiv = styled.div`

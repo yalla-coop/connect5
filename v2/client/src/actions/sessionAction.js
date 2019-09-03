@@ -10,8 +10,9 @@ import {
   STORE_SESSION_DATA,
 } from '../constants/actionTypes';
 
+import { MY_SESSIONS_URL } from '../constants/navigationRoutes';
+
 import history from '../history';
-import store from '../store';
 
 import { fetchSessionDetails } from './groupSessionsAction';
 
@@ -29,13 +30,10 @@ export const createSessionAction = sessionData => dispatch => {
       });
     })
     .then(() => {
-      const { role } = store.getState().auth;
-
       Modal.success({
         title: 'Done!',
         content: 'Session created',
-        onOk: () =>
-          history.push(role === 'trainer' ? 'trainer-sessions' : '/sessions'),
+        onOk: () => history.push(MY_SESSIONS_URL),
       });
     })
     .catch(err => {

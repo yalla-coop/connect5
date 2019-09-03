@@ -6,135 +6,109 @@
 
 const mongoose = require('mongoose');
 const Response = require('../../models/Response');
+const User = require('./../../models/User');
 
-module.exports.feedback = async (trainerId, sessionId, surveyType) => {
-  let feedbackArray;
-  if (!sessionId && !surveyType) {
-    // for admin feedback
-    feedbackArray = await Response.aggregate([
-      // get all answers for responses
-      {
-        $lookup: {
-          from: 'answers',
-          localField: '_id',
-          foreignField: 'response',
-          as: 'answers',
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          answers: 1,
-          surveyType: 1,
-        },
-      },
-      { $unwind: '$answers' },
-      // get all questions for response answers
-      {
-        $lookup: {
-          from: 'questions',
-          localField: 'answers.question',
-          foreignField: '_id',
-          as: 'questions',
-        },
-      },
-      { $unwind: '$questions' },
-      {
-        $match: {
-          $and: [
-            {
-              $or: [
-                { 'questions.group.text': 'about your trainer' },
-                { 'questions.group.text': 'about your usual way of teaching' },
-              ],
-            },
-          ],
-        },
-      },
-      {
-        $project: {
-          surveyType: 1,
-          questionText: '$questions.text',
-          answer: '$answers.answer',
-        },
-      },
-    ]);
-  } else {
-    const match = () => {
-      // feedback for individ. survey
-      if (sessionId && surveyType) {
-        return {
-          $and: [
-            { session: mongoose.Types.ObjectId(sessionId) },
-            { surveyType },
-          ],
-        };
-      }
-      // feedback for indiv. session
-      if (sessionId) {
-        return {
-          session: mongoose.Types.ObjectId(sessionId),
-        };
-      }
-      // feedback for indiv. trainer
+module.exports.feedback = async ({
+  trainerId,
+  sessionId,
+  surveyType,
+  role,
+}) => {
+  // role == admin => all sessions
+  // role == trainer => trainer sessions  ... user id
+  // role == local leas => group sessions
+  // role == null  && sessionId && survey type => one session by id
+
+  // eslint-disable-next-line consistent-return
+  const match = async () => {
+    // get all responses
+    if (role === 'admin') {
+      return {
+        _id: { $exists: true },
+      };
+    }
+    if (role === 'trainer') {
       return {
         trainers: mongoose.Types.ObjectId(trainerId),
       };
-    };
+    }
+    if (role === 'localLead') {
+      // get the groups feedback
+      const localLead = await User.findOne(
+        { _id: trainerId },
+        { trainersGroup: 1 }
+      );
+      const { trainersGroup } = localLead;
+      return {
+        trainers: { $in: trainersGroup },
+      };
+    }
+    if (!role && sessionId && surveyType) {
+      // feedback for individ. survey
+      return {
+        $and: [{ session: mongoose.Types.ObjectId(sessionId) }, { surveyType }],
+      };
+    }
+    if (!role && sessionId) {
+      // feedback for indiv. session
+      return {
+        session: mongoose.Types.ObjectId(sessionId),
+      };
+    }
+  };
 
-    feedbackArray = await Response.aggregate([
-      {
-        $match: match(),
-      },
+  const feedbackArray = await Response.aggregate([
+    {
+      $match: await match(),
+    },
 
-      // get all answers for responses
-      {
-        $lookup: {
-          from: 'answers',
-          localField: '_id',
-          foreignField: 'response',
-          as: 'answers',
-        },
+    // get all answers for responses
+    {
+      $lookup: {
+        from: 'answers',
+        localField: '_id',
+        foreignField: 'response',
+        as: 'answers',
       },
-      {
-        $project: {
-          _id: 0,
-          answers: 1,
-          surveyType: 1,
-        },
+    },
+    {
+      $project: {
+        _id: 0,
+        answers: 1,
+        surveyType: 1,
       },
-      { $unwind: '$answers' },
-      // get all questions for response answers
-      {
-        $lookup: {
-          from: 'questions',
-          localField: 'answers.question',
-          foreignField: '_id',
-          as: 'questions',
-        },
+    },
+    { $unwind: '$answers' },
+    // get all questions for response answers
+    {
+      $lookup: {
+        from: 'questions',
+        localField: 'answers.question',
+        foreignField: '_id',
+        as: 'questions',
       },
-      { $unwind: '$questions' },
-      {
-        $match: {
-          $and: [
-            {
-              $or: [
-                { 'questions.group.text': 'about your trainer' },
-                { 'questions.group.text': 'about your usual way of teaching' },
-              ],
-            },
-          ],
-        },
+    },
+    { $unwind: '$questions' },
+    {
+      $match: {
+        $and: [
+          {
+            $or: [
+              { 'questions.group.text': 'about your trainer' },
+              { 'questions.group.text': 'about your usual way of teaching' },
+            ],
+          },
+        ],
       },
-      {
-        $project: {
-          surveyType: 1,
-          questionText: '$questions.text',
-          answer: '$answers.answer',
-        },
+    },
+    {
+      $project: {
+        surveyType: 1,
+        questionText: '$questions.text',
+        answer: '$answers.answer',
       },
-    ]);
-  }
+    },
+  ]);
 
   // group array by question text
   // {questionTxt: [{surveyType, questionTxt, answer}, ...], ...}

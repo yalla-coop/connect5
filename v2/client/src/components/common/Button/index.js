@@ -14,7 +14,7 @@ const sharedStyles = css`
   text-align: center;
   text-decoration: none;
   outline: none;
-  text-transform: uppercase;
+  // text-transform: capitalize;
   border: 0;
   color: ${colors.profileFontColor};
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};

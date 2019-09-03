@@ -72,7 +72,7 @@ const addSession = async (req, res, next) => {
             startTime,
             endTime,
             shortId: addedSession.shortId,
-            address,
+            address: address || 'N/A',
           });
         }
       }

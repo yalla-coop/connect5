@@ -49,6 +49,8 @@ class BehavioralTrainerResults extends Component {
     const { trainerId, fetchbehavioralInsight, role } = this.props;
     if (role === 'admin') {
       fetchbehavioralInsight('/api/behavioral-insight/admin');
+    } else if (role === 'localLead') {
+      fetchbehavioralInsight(`/api/behavioral-insight/local-lead/${trainerId}`);
     } else {
       fetchbehavioralInsight(`/api/behavioral-insight/trainer/${trainerId}`);
     }

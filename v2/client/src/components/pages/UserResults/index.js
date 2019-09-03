@@ -32,75 +32,125 @@ import {
 
 import TrainerBehavioralInsight from '../../common/BehavioralInsight/Trainer';
 import ExportButton from '../../common/ExportButton';
+import {
+  TRAINER_RESULTS_URL,
+  ALL_RESULTS_URL,
+  GROUP_RESULTS_URL,
+  MY_RESULTS_URL,
+} from '../../../constants/navigationRoutes';
 
 const { Panel } = Collapse;
 
 const panels = {
   reach: { text: 'Reach', render: props => <Reach data={props.results} /> },
-  behavior: {
-    text: 'Behavioural',
-    render: props => (
-      <TrainerBehavioralInsight trainerId={props.trainerId} {...props} />
-    ),
-  },
   feedback: {
     text: 'Trainer feedback',
-    render: props => <Feedback trainerId={props.trainerId} />,
+    render: ({ resultsFor, resultForRule }) => (
+      <Feedback trainerId={resultsFor} role={resultForRule} />
+    ),
+  },
+  behavior: {
+    text: 'Behavioural',
+    render: ({ resultsFor, resultForRule, ...props }) => {
+      return (
+        <TrainerBehavioralInsight
+          {...props}
+          trainerId={resultsFor}
+          role={resultForRule}
+        />
+      );
+    },
   },
 };
 
 class UserResults extends Component {
   state = {
-    selectedUserId: null,
+    resultsFor: null,
+    resultForRule: null,
     toggle: 'left',
   };
 
-  async componentDidMount() {
-    // show results based on the logged in user id and role
-    const { userId, history, viewLevel } = this.props;
-
-    // if trainer has been selected from trainer list and the logged in user is localLead then use the trainer's id and view them as a trainer
-    // else if selected from list use that trainer/local lead's role
-    // i.e. this would be for an admin viewing
-    // otherwise use logged in user's id and role
-    const { state } = history.location;
-
-    const { fetchUserResults } = this.props;
-    if (state && state.trainer && viewLevel === 'localLead') {
-      await fetchUserResults(state.trainer._id, 'trainer');
-      await this.fetchSessionsData('trainer', state.trainer._id);
-      this.setState({
-        selectedUserId: state.trainer._id,
-      });
-    } else if (state && state.trainer) {
-      await fetchUserResults(state.trainer._id, state.trainer.role);
-      await this.fetchSessionsData(state.trainer.role, state.trainer._id);
-      this.setState({
-        selectedUserId: state.trainer._id,
-      });
-    } else {
-      await fetchUserResults(userId, viewLevel);
-      this.setState({
-        selectedUserId: userId,
-      });
-    }
-
-    // check if localLead is in trainer or lead view and assign the role accordingly
-
-    // eslint-disable-next-line react/destructuring-assignment
+  componentDidMount() {
+    this.getData();
   }
 
-  fetchSessionsData = (role, id) => {
-    // const {
-    //   fetchTrainerSessions,
-    //   fetchLocalLeadSessions,
-    //   fetchALLSessions,
-    // } = this.props;
-    if (role === 'trainer') {
-      this.props.fetchTrainerSessions(id);
-    } else if (role === 'localLead') {
-      this.props.fetchLocalLeadSessions(id);
-    } else this.props.fetchALLSessions();
+  componentDidUpdate(prevProps) {
+    const { path: oldPath } = prevProps.match;
+    const { path } = this.props.match;
+    if (path !== oldPath) {
+      this.getData();
+    }
+  }
+
+  getData = () => {
+    const { userId, history, match, role } = this.props;
+    const { localLeadId, trainerId } = match.params;
+    const { state } = history.location;
+
+    // if a user has been passed on then store as the user
+    const user = state && state.trainer;
+    const viewdUserName =
+      user && user.name && user.name[0].toUpperCase() + user.name.slice(1);
+
+    let resultsFor;
+    let resultForRule;
+    let headerTitle;
+    if (match && match.path === MY_RESULTS_URL) {
+      // admin || local-lead || trainer viewing his own results as a trainer
+      resultsFor = userId;
+      resultForRule = 'trainer';
+      headerTitle = 'Your ';
+
+      this.props.fetchTrainerSessions(resultsFor);
+      this.props.fetchUserResults(resultsFor, resultForRule);
+    } else if (
+      match &&
+      match.path === GROUP_RESULTS_URL &&
+      (role === 'admin' || role === 'localLead')
+    ) {
+      if (localLeadId && role === 'admin') {
+        // admin is viewing local-lead's group results
+        resultsFor = localLeadId;
+        resultForRule = 'localLead';
+        headerTitle = `${viewdUserName} - Group `;
+
+        this.props.fetchLocalLeadSessions(resultsFor);
+        this.props.fetchUserResults(resultsFor, resultForRule);
+      } else {
+        // local-lead is viewing his group results
+        resultsFor = userId;
+        resultForRule = 'localLead';
+        headerTitle = "Your Group's ";
+
+        this.props.fetchLocalLeadSessions(resultsFor);
+        this.props.fetchUserResults(resultsFor, resultForRule);
+      }
+    } else if (
+      match &&
+      match.path === TRAINER_RESULTS_URL &&
+      (role === 'admin' || role === 'localLead')
+    ) {
+      // admin || local-lead viewing trainer || local-lead as a trainer result
+      if (trainerId) {
+        resultsFor = trainerId;
+        resultForRule = 'trainer';
+        headerTitle = `${viewdUserName} - `;
+
+        this.props.fetchTrainerSessions(resultsFor);
+        this.props.fetchUserResults(resultsFor, resultForRule);
+      }
+    } else if (match && match.path === ALL_RESULTS_URL && role === 'admin') {
+      // admin viewing all sessions results
+      resultsFor = userId;
+      resultForRule = 'admin';
+      headerTitle = 'All - ';
+
+      this.props.fetchALLSessions();
+      this.props.fetchUserResults(resultsFor, resultForRule);
+    } else {
+      history.push('/unauthorized');
+    }
+    this.setState({ resultsFor, resultForRule, headerTitle });
   };
 
   clickToggle = () => {
@@ -110,28 +160,23 @@ class UserResults extends Component {
   };
 
   render() {
-    const { results, role, history, groupView, sessions } = this.props;
+    const { results, role, history, sessions, userId } = this.props;
     const { state } = history.location;
-    const { toggle, selectedUserId } = this.state;
-
+    const { toggle, resultsFor, resultForRule, headerTitle } = this.state;
     // if a user has been passed on then store as the user
     const user = state && state.trainer;
 
-    const topLevelView = !groupView && ['admin', 'localLead'].includes(role);
     return (
-      <TrainerResultsWrapper nudge={topLevelView}>
-        {topLevelView && (
-          <Header
-            label={user ? `Viewing ${user.name}` : 'Individual View'}
-            type="view"
-          />
-        )}
+      <TrainerResultsWrapper>
         <Header
-          label={toggle === 'left' ? 'results' : 'sessions'}
+          label={
+            toggle === 'left'
+              ? `${headerTitle} Results`
+              : `${headerTitle} Sessions`
+          }
           type="section"
-          nudge={topLevelView}
         />
-        {user && (
+        {userId !== resultsFor && (
           <TopSection>
             <Registration>
               Data collected since registering on {results.registrationDate}
@@ -157,7 +202,8 @@ class UserResults extends Component {
                 <Panel header={panels[panel].text} key={panel}>
                   {panels[panel].render({
                     results,
-                    trainerId: selectedUserId,
+                    resultsFor,
+                    resultForRule,
                     role,
                   })}
                 </Panel>
@@ -186,7 +232,6 @@ const mapStateToProps = state => ({
   userId: state.auth.id,
   sessions: state.sessions.sessions,
   sessionsNum: state.sessions.sessionsCount,
-  viewLevel: state.viewLevel.viewLevel,
 });
 
 export default connect(

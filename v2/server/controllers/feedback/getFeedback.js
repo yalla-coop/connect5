@@ -6,9 +6,8 @@ const boom = require('boom');
 const { feedback } = require('../../database/queries/feedback/feedback');
 
 module.exports = (req, res, next) => {
-  const { trainerId, sessionId, surveyType } = req.body;
-
-  return feedback(trainerId, sessionId, surveyType)
+  const { trainerId, sessionId, surveyType, role } = req.body;
+  return feedback({ trainerId, sessionId, surveyType, role })
     .then(result => res.json(result))
     .catch(err => next(boom.badImplementation('trainer feedback error')));
 };

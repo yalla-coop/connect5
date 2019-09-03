@@ -32,10 +32,17 @@ const SessionList = ({ dataList }) => {
       <List>
         {dataList &&
           dataList.map(dataItem => (
-            <Row key={dataItem.id}>
+            <Row
+              key={dataItem.id}
+              href={dataItem.link || undefined}
+              to={dataItem.link || `/session-details/${dataItem._id}`}
+              target={dataItem.blank ? '_blank' : '_self'}
+            >
               <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
               <Type type={dataItem.type}>
-                <p>{dataItem.type.replace(/-/g, ' ')}</p>
+                <p>
+                  {dataItem.type ? dataItem.type.replace(/-/g, ' ') : 'N/A'}
+                </p>
               </Type>
               <StyledLink
                 as={dataItem.asLink ? 'a' : undefined}

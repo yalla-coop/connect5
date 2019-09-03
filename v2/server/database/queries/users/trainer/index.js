@@ -11,3 +11,23 @@ module.exports.getTrainerSessionsQuery = id => {
 
 module.exports.getPINsRespondedToTrainerSessions = id =>
   Response.find({ trainers: mongoose.Types.ObjectId(id) }, { PIN: 1, _id: 0 });
+
+module.exports.getPINsRespondedToGroupSessions = id =>
+  User.aggregate([
+    {
+      $match: { _id: mongoose.Types.ObjectId(id) },
+    },
+    {
+      $lookup: {
+        from: 'responses',
+        localField: 'trainersGroup',
+        foreignField: 'trainers',
+        as: 'trainersGroup',
+      },
+    },
+    {
+      $project: {
+        PIN: '$trainersGroup.PIN',
+      },
+    },
+  ]);

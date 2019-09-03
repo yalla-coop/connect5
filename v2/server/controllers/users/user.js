@@ -28,11 +28,10 @@ const getResponseRate = require('../../helpers/getResponseRate');
 
 // get the logged in user results
 const getUserResults = async (req, res, next) => {
-  // const { id } = req.params;
-
-  // const { id } = req.user;
   const { role, id } = req.body;
-
+  const {
+    user: { role: loggedInUserRole },
+  } = req;
   const isValidId = mongoose.Types.ObjectId.isValid(id);
 
   if (!isValidId) {
@@ -44,7 +43,8 @@ const getUserResults = async (req, res, next) => {
     if (!user) {
       return next(boom.notFound('User not found'));
     }
-    // const { role } = user;
+
+    const { givenPermission } = user;
 
     let sessions;
     let surveys;
@@ -54,12 +54,21 @@ const getUserResults = async (req, res, next) => {
         sessions = await getTrainerGroupSessions(id);
         surveys = await getTrainerGroupSurveys(id);
         break;
+
       case 'admin':
         sessions = await getAdminSessions(id);
         surveys = await getAdminSuerveys(id);
         break;
 
+      // trainer
       default:
+        if (loggedInUserRole === 'localLead' && !givenPermission) {
+          return next(
+            boom.forbidden(
+              "this trainer did'nt give permission to his/her results"
+            )
+          );
+        }
         sessions = await getTrianerSessions(id);
         surveys = await getTrainerSuerveys(id);
         break;

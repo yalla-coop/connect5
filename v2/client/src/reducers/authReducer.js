@@ -25,6 +25,7 @@ const initialState = {
   userLevel: null,
   viewLevel: null,
   PIN: null,
+  localLead: null,
 };
 
 export default function(state = initialState, action) {
@@ -50,6 +51,7 @@ export default function(state = initialState, action) {
         userLevel: null,
         id: null,
         organization: null,
+        localLead: null,
         region: null,
         token: null,
         user: null,

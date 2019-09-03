@@ -11,15 +11,25 @@ const {
 } = require('./../../../database/queries/users/localLead');
 
 module.exports = async (req, res, next) => {
-  const { name, email, password, localLead, region } = req.body;
-  if (name && email && password && localLead && region) {
+  const {
+    name,
+    email,
+    password,
+    localLead,
+    region,
+    organization,
+    role,
+  } = req.body;
+  if (name && email && password && region) {
     return createNewTrainer({
       name,
       email,
       password,
       region,
       localLead,
-      role: 'trainer',
+      givenPermission: true,
+      organization,
+      role,
     })
       .then(trainer => {
         const trainerInfo = {
@@ -29,6 +39,7 @@ module.exports = async (req, res, next) => {
           organization: trainer.organization,
           region: trainer.region,
           email: trainer.email,
+          localLead: trainer.localLead,
         };
         addTrainertoGroup(localLead, trainer._id)
           .then(result => {

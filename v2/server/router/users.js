@@ -33,10 +33,13 @@ const sendInvitation = require('../controllers/users/sendInvitation');
 const forgetPassword = require('../controllers/users/forgetPassword');
 const resetPassword = require('../controllers/users/resetPassword');
 const updateSentInvitationEmails = require('../controllers/users/updatSendInvitation');
+const deleteAccount = require('../controllers/users/deleteAccount');
+const editProfile = require('../controllers/users/editProfile');
 
 // check eamil route if the route doen't contain email query
 // then it will skip with next()
 router.get('/users', checkUniqueEmail);
+router.patch('/users', authentication(), editProfile);
 router.get('/users/forget-password', forgetPassword);
 router.post('/users/reset-password', resetPassword);
 
@@ -79,6 +82,8 @@ router.delete(
   authentication(),
   removeTrainerToGroup
 );
+
+router.delete('/users/:userId', authentication(), deleteAccount);
 router.get('/fetch-trainers', fetchAllTrainers);
 router.get('/users/admin/trainers-and-leads', getAllTrainersAndLeads);
 router.get('/users/trainer-sessions/:id', getTrainerSessions);
