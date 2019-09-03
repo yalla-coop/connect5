@@ -50,24 +50,6 @@ class AddTrainer extends Component {
     return fetchLocalLeadsActionCreator();
   }
 
-  componentDidUpdate() {
-    const { group } = this.props;
-    if (group.loaded && group.success) {
-      Modal.success({
-        title: 'Done!',
-        content: group.success,
-        onOk: this.handleSuccessOk,
-      });
-    }
-    if (group.loaded && group.error) {
-      Modal.error({
-        title: 'Error',
-        content: group.error,
-        onOk: this.handleSuccessOk,
-      });
-    }
-  }
-
   handleOk = e => {
     this.handleSubmit(e);
   };
@@ -90,12 +72,16 @@ class AddTrainer extends Component {
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        addTrainerToGroupAction({
-          ...values,
-          newUser: !allowAddUsedEmail,
-          localLead: values.localLead.key,
-          localLeadName: values.localLead.label,
-        }).then(() => history.push('/dashboard'));
+        addTrainerToGroupAction(
+          {
+            ...values,
+            newUser: !allowAddUsedEmail,
+            localLead: values.localLead.key,
+            localLeadName: values.localLead.label,
+          },
+          // callback function to be called when response come back
+          this.handleSuccessOk
+        );
       }
     });
   };

@@ -7,6 +7,8 @@ const sendNewTrainerLoginDetails = (
   localLeadName,
   localLeadRegion
 ) => {
+  const loginLink = `${process.env.DOMAIN}/login`;
+
   const html = `
   <div style="text-align: center;">
     <div style="width: 100%; height: 60px; background-color: #2C3192;">
@@ -21,6 +23,9 @@ const sendNewTrainerLoginDetails = (
       </p>
       <p>Here is your password, ${password}</p>
       <p>You can now log in using this email address and your password. Once logged in you can change your password.</p>
+
+      <a href="${loginLink}">Log in Now</a>
+      
        <p style="margin-bottom: 0;">Thanks,</p>
       <p style="margin-bottom: 0;">Connect 5</p>
     </div>

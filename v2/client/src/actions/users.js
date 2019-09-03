@@ -103,7 +103,7 @@ export const fetchStatsData = userType => async dispatch => {
   }
 };
 
-export const addTrainerToGroup = trianerInfo => async dispatch => {
+export const addTrainerToGroup = (trianerInfo, done) => async dispatch => {
   try {
     dispatch({
       type: types.LOADING_TRUE,
@@ -121,6 +121,14 @@ export const addTrainerToGroup = trianerInfo => async dispatch => {
       type: types.LOADING_FALSE,
       payload: 'addTrainerLoading',
     });
+
+    Modal.success({
+      title: 'Done!',
+      content: res.data.success,
+      onOk: done,
+    });
+
+    history.push('/dashboard');
   } catch (error) {
     dispatch({
       type: types.ADD_TRAINER_TO_GROUP_FAIL,
@@ -130,6 +138,12 @@ export const addTrainerToGroup = trianerInfo => async dispatch => {
     dispatch({
       type: types.LOADING_FALSE,
       payload: 'addTrainerLoading',
+    });
+
+    Modal.error({
+      title: 'Error',
+      content: 'Something went wrong',
+      onOk: done,
     });
   }
 };
