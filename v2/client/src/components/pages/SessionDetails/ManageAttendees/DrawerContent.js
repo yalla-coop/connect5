@@ -1,7 +1,6 @@
 import React from 'react';
 
 import UpdateAttendeesList from './UpdateAttendeesList';
-import AddAttendees from './AddAttendees';
 import SendReminderEmails from './SendReminderEmails';
 import ViewEmailsList from './ViewEmailsList';
 import EmailTemplate from './EmailTemplate';
@@ -9,18 +8,14 @@ import EmailTemplate from './EmailTemplate';
 const DrawerContent = ({
   loading,
   drawerKey,
-  // update
-  handleSubmitUpdateAttendees,
-  confirmedAttendeesList,
-  handleUpdateAttendees,
-  // add
-  handleAddAttendees,
-  addedAttendeesList,
-  submitAddAttendeesList,
   onSelectBlur,
   onSelectFocus,
   onCopy,
   onClear,
+  // update
+  handleSubmitUpdateAttendees,
+  confirmedAttendeesList,
+  handleUpdateAttendees,
   // send emails
   changeSelectedEmails,
   checkedEmails,
@@ -40,19 +35,6 @@ const DrawerContent = ({
           handleSubmitUpdateAttendees={handleSubmitUpdateAttendees}
           confirmedAttendeesList={confirmedAttendeesList}
           handleUpdateAttendees={handleUpdateAttendees}
-          onSelectBlur={onSelectBlur}
-          onSelectFocus={onSelectFocus}
-          onCopy={onCopy}
-          onClear={onClear}
-          loading={loading}
-        />
-      );
-    case 'addAttendees':
-      return (
-        <AddAttendees
-          addedAttendeesList={addedAttendeesList}
-          handleAddAttendees={handleAddAttendees}
-          submitAddAttendeesList={submitAddAttendeesList}
           onSelectBlur={onSelectBlur}
           onSelectFocus={onSelectFocus}
           onCopy={onCopy}

@@ -198,10 +198,6 @@ class ManageAttendees extends Component {
       emailsArray = splittedEmails.map(item => item.trim());
 
       switch (target) {
-        case 'add':
-          this.handleAddAttendees(emailsArray);
-          break;
-
         case 'update':
           this.handleUpdateAttendees(emailsArray);
           break;
@@ -210,58 +206,6 @@ class ManageAttendees extends Component {
           break;
       }
     }
-  };
-
-  handleAddAttendees = values => {
-    const { confirmedAttendeesList } = this.state;
-    const validEmails = [];
-    values.forEach(item => {
-      try {
-        const validEmail = email.validateSync(item);
-
-        if (validEmail) {
-          if (!confirmedAttendeesList.includes(item)) {
-            validEmails.push(item);
-          } else {
-            Modal.error({
-              title: 'Email already confirmed',
-              content: (
-                <p>
-                  This Email <span style={{ fontWeight: '700' }}>{item}</span>{' '}
-                  is already in the confirmed emails
-                </p>
-              ),
-            });
-          }
-        }
-      } catch (err) {
-        Modal.error({
-          title: 'Invalid!',
-          content: err.errors[0],
-        });
-      }
-    });
-    this.setState({ addedAttendeesList: validEmails });
-  };
-
-  submitAddAttendeesList = () => {
-    // add attendees
-    const { addedAttendeesList, confirmedAttendeesList } = this.state;
-
-    const { sessionDetails, updateSessionAttendeesList } = this.props;
-    const updatedList = [...confirmedAttendeesList, ...addedAttendeesList].map(
-      item => ({
-        email: item,
-        status: 'confirmed',
-      })
-    );
-
-    updateSessionAttendeesList({
-      sessionId: sessionDetails._id,
-      attendeesList: updatedList,
-      status: 'confirmed',
-      handleCloseDrawer: this.handleCloseDrawer,
-    });
   };
 
   changeSelectedEmails = checkedEmails => {
@@ -322,7 +266,6 @@ class ManageAttendees extends Component {
       visible,
       drawerKey,
       confirmedAttendeesList,
-      addedAttendeesList,
       checkedEmails,
       isCheckAll,
       activeEmailIndex,
@@ -368,16 +311,6 @@ class ManageAttendees extends Component {
             data-target="update"
           >
             <DrawerLink>View Attendees List</DrawerLink>
-            <Icon type="right" />
-          </Row>
-        </SubDetails>
-        <SubDetails>
-          <Row
-            onClick={this.handleDrawerOpen}
-            data-key="addAttendees"
-            data-target="add"
-          >
-            <DrawerLink>Add Attendees</DrawerLink>
             <Icon type="right" />
           </Row>
         </SubDetails>
@@ -446,12 +379,6 @@ class ManageAttendees extends Component {
                 handleSubmitUpdateAttendees={this.handleSubmitUpdateAttendees}
                 confirmedAttendeesList={confirmedAttendeesList}
                 handleUpdateAttendees={this.handleUpdateAttendees}
-                // add
-                handleAddAttendees={this.handleAddAttendees}
-                addedAttendeesList={addedAttendeesList}
-                submitAddAttendeesList={this.submitAddAttendeesList}
-                onCopy={this.onCopy}
-                onClear={this.onClear}
                 // sendEmails
                 changeSelectedEmails={this.changeSelectedEmails}
                 checkedEmails={checkedEmails}
