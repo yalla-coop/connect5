@@ -8,49 +8,38 @@ const {
 const resetPasswordMailing = require('../../helpers/emails/resetPasswordByEmail');
 const sendSignUpLinkByEmail = require('../../helpers/emails/sendSignUpLinkByEmail');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   const { email } = req.query;
+  try {
+    const buffer = crypto.randomBytes(32);
 
-  crypto.randomBytes(32, (err, buffer) => {
-    if (err) {
-      return next(boom.badImplimentation(err));
-    }
     const token = buffer.toString('hex');
+    const user = await getUserByEmail(email);
+    if (!user) {
+      // if (process.env.NODE_ENV === 'production') {
+      await sendSignUpLinkByEmail(email);
+      // }
+      return res.json({ success: true });
+    }
 
-    return getUserByEmail(email)
-      .then(user => {
-        if (!user) {
-          if (process.env.NODE_ENV === 'production') {
-            sendSignUpLinkByEmail(email);
-          }
-          return res.json({ success: true });
-        }
+    const { _id } = user;
 
-        const { _id } = user;
+    const data = {
+      resetToken: {
+        value: token,
+        expiresIn: Date.now() + resetTokenMaxAge,
+      },
+    };
+    await updateUserById(_id, data);
+    // send the token via email
 
-        const data = {
-          resetToken: {
-            value: token,
-            expiresIn: Date.now() + resetTokenMaxAge,
-          },
-        };
-        return (
-          updateUserById(_id, data)
-            // send the token via email
+    // if (process.env.NODE_ENV === 'production') {
+    await resetPasswordMailing(email, token, user.name);
+    // }
 
-            .then(() => {
-              if (process.env.NODE_ENV === 'production') {
-                resetPasswordMailing(email, token, user.name);
-              }
-            })
-            .then(() => {
-              //  send success message
-              res.json({ success: true });
-            })
-        );
-      })
-      .catch(error => {
-        next(boom.badImplementation(error));
-      });
-  });
+    //  send success message
+    res.json({ success: true });
+  } catch (error) {
+    next(boom.badImplementation(error));
+  }
 };
