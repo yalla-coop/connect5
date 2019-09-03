@@ -10,13 +10,11 @@ import {
   STORE_SESSION_DATA,
 } from '../constants/actionTypes';
 
-import { MY_SESSIONS_URL } from '../constants/navigationRoutes';
-
 import history from '../history';
 
 import { fetchSessionDetails } from './groupSessionsAction';
 
-export const createSessionAction = sessionData => dispatch => {
+export const createSessionAction = (sessionData, done) => dispatch => {
   dispatch({
     type: LOADING_START,
   });
@@ -30,13 +28,10 @@ export const createSessionAction = sessionData => dispatch => {
       });
     })
     .then(() => {
-      Modal.success({
-        title: 'Done!',
-        content: 'Session created',
-        onOk: () => history.push(MY_SESSIONS_URL),
-      });
+      done();
     })
     .catch(err => {
+      done(err);
       dispatch({
         type: LOADING_END,
       });

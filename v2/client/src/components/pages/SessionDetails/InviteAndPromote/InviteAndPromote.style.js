@@ -103,7 +103,7 @@ export const SessionInfoTitle = styled.span`
 
 export const List = styled.ul`
   padding-left: 1.5rem;
-  & > *
+  & > * {
     margin-left: 0.5rem;
     font-size: 16px;
   }

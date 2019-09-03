@@ -15,7 +15,6 @@ class EmailTemplate extends Component {
   render() {
     const {
       type,
-      emailDate,
       trainer,
       sessionDate,
       sessionType,
@@ -39,13 +38,6 @@ class EmailTemplate extends Component {
 
     return (
       <EmailInfo>
-        <InfoTitle>
-          Date:
-          <span style={{ marginLeft: '.5rem', color: '#4f4f4f' }}>
-            {moment(emailDate).format('DD/MM/YYYY')}
-          </span>
-        </InfoTitle>
-
         <InfoTitle>Message:</InfoTitle>
         <p>Dear course participants,</p>
         {<FirstPargraph type={type} trainer={trainer} />}
@@ -58,7 +50,7 @@ class EmailTemplate extends Component {
             <SessionInfoTitle>Session Type:</SessionInfoTitle> {sessionType}
           </li>
           <li>
-            <SessionInfoTitle> Location:</SessionInfoTitle>{' '}
+            <SessionInfoTitle>Location:</SessionInfoTitle>{' '}
             {fullAddress || 'Not entered'}
           </li>
           <li>

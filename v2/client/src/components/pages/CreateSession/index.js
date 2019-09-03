@@ -17,6 +17,8 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
 import Header from '../../common/Header';
+import EditEmail from '../../common/EditEmail';
+
 import { fetchAllTrainers } from '../../../actions/trainerAction';
 import {
   fetchLocalLeads,
@@ -64,6 +66,7 @@ const initialState = {
   endTime: null,
   address: '',
   postcode: null,
+  extraInfo: null,
 };
 
 class CreateSession extends Component {
@@ -246,7 +249,15 @@ class CreateSession extends Component {
       postcode: postcode || 'N/A',
     };
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
-    return !this.checkError() && this.props.createSessionAction(sessionData);
+    return (
+      !this.checkError() &&
+      this.props.createSessionAction(sessionData, this.done)
+    );
+  };
+
+  // callback to set a flage in the state to know if session created successfully
+  done = err => {
+    if (!err) this.setState({ sessionCreated: true });
   };
 
   onStartTimeChange = (time, timeString) => {
@@ -284,8 +295,8 @@ class CreateSession extends Component {
   };
 
   render() {
-    const { role, inputData, loading } = this.props;
-
+    const { sessionCreated, extraInfo } = this.state;
+    const { role, inputData, loading, createdSession, name } = this.props;
     const {
       inviteesNumber,
       err,
@@ -322,7 +333,24 @@ class CreateSession extends Component {
         </p>
       </div>
     );
-
+    if (true || sessionCreated) {
+      return (
+        <EditEmail
+          successMessage="Session created!"
+          participantEmails={createdSession.participantsEmails}
+          type="registration"
+          trainer={name}
+          sessionDate={createdSession.date}
+          sessionType={createdSession.type}
+          address={createdSession.address}
+          trainers={createdSession.trainers.map(item => item.name).join(' & ')}
+          startTime={createdSession.startTime}
+          endTime={createdSession.endTime}
+          shortId={createdSession.shortId}
+          extraInfo={extraInfo}
+        />
+      );
+    }
     return (
       <CreateSessionWrapper>
         <Header type="section" label="Create New Session" />
@@ -658,6 +686,7 @@ const mapStateToProps = state => {
     leadsAndTrainers,
     loading: state.session.loading,
     inputData,
+    createdSession: state.session,
   };
 };
 
