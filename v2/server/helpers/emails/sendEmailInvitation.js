@@ -1,11 +1,11 @@
 const mailer = require('./index');
 
 const sendEmailInvitation = ({
-  name,
-  emails,
+  trainer,
+  recipients,
   sessionDate,
   type,
-  trainerName,
+  trainers,
   startTime,
   endTime,
   shortId,
@@ -24,12 +24,12 @@ const sendEmailInvitation = ({
   }
 
   let emailsList = [];
-  if (typeof emails[0] === 'string') {
-    emailsList = emails;
+  if (typeof recipients[0] === 'string') {
+    emailsList = recipients;
   } else {
-    emailsList = emails.map(email => email.email);
+    emailsList = recipients.map(email => email.email);
   }
-  // const emailsList = emails.map(email => email.email);
+  // const emailsList = recipients.map(email => email.email);
   const registrationURL = `${process.env.DOMAIN}/confirm/${shortId}`;
   const html = `
   <div style="text-align: left;">
@@ -38,14 +38,14 @@ const sendEmailInvitation = ({
     </div>
     <p>Dear course participants,</p>
 
-    <p><span style="text-transform: capitalize">${name}</span> has invited you to register for an upcoming Connect 5 training session.</p>
+    <p><span style="text-transform: capitalize">${trainer}</span> has invited you to register for an upcoming Connect 5 training session.</p>
     <ul style="text-transfrom: capitalize">
       <li>Session Date: ${sessionDate}</li>
       <li>Session Type: ${type}</li>
       <li>Address: ${fullAddress}</li>
       <li>Region: ${region}</li>
       <li>Time: ${startTime} to ${endTime}</li>
-      <li>Trainers: ${trainerName}</li>
+      <li>Trainers: ${trainers}</li>
     </ul>
     <div style="text-align: center;">
     <p>To confirm your attendance please click this link here</p>

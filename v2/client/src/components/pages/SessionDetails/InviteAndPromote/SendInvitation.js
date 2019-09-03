@@ -19,7 +19,7 @@ import {
 class SendInvitation extends Component {
   state = {
     emails: [],
-    sendingDate: Date.now(),
+    sendDate: Date.now(),
   };
 
   componentDidMount() {
@@ -38,7 +38,7 @@ class SendInvitation extends Component {
 
   onFormSubmit = event => {
     event.preventDefault();
-    const { emails, sendingDate } = this.state;
+    const { emails, sendDate } = this.state;
     const {
       sessionDetails,
       SendEmailInvitation: SendEmailInvitationActionCreator,
@@ -47,7 +47,8 @@ class SendInvitation extends Component {
     const {
       date,
       type,
-      trainers,
+      // array of trainers object
+      trainers: trainersArray,
       region,
       _id,
       startTime,
@@ -58,7 +59,7 @@ class SendInvitation extends Component {
     const confirmedEmails = sessionDetails.participantsEmails.filter(
       item => item.status === 'confirmed'
     );
-    const trainerName = trainers
+    const trainers = trainersArray
       .map(trainer => {
         return trainer.name;
       })
@@ -67,11 +68,12 @@ class SendInvitation extends Component {
     // send participantsEmails + date.now +session details form props + registration link
     const InviteData = {
       _id,
-      emails,
-      sendingDate,
+      recipients: emails,
+      sendDate,
       date,
       type,
-      trainerName,
+      // string of trainers' names
+      trainers,
       region,
       startTime,
       endTime,

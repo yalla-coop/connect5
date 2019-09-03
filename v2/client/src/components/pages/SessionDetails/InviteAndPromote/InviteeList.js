@@ -28,7 +28,7 @@ const { Option } = Select;
 class InviteeList extends Component {
   state = {
     sendByEmail: false,
-    sendingDate: Date.now(),
+    sendDate: Date.now(),
     err: '',
     inviteesEmailsList: [],
     emails: [],

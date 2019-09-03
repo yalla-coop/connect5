@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { Alert, Select, Icon, Input } from 'antd';
+import { connect } from 'react-redux';
+
 import EmailTemplate from '../EmailTemplate';
 import Button from '../Button';
+
+import { SendEmailInvitation } from '../../../actions/InviteAndPromoteAction';
+
 import {
   Wrapper,
   SuccessMessageDiv,
@@ -189,4 +194,9 @@ class EditEmail extends Component {
   }
 }
 
-export default EditEmail;
+const mapStateToProps = state => ({});
+
+export default connect(
+  mapStateToProps,
+  { SendEmailInvitation }
+)(EditEmail);

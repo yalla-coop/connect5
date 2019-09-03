@@ -29,6 +29,7 @@ const updateSentInvitationEmails = async (req, res, next) => {
       region,
       startTime,
       endTime,
+      // must be string of trainers' names
       trainers,
       shortId,
       address,
@@ -43,19 +44,13 @@ const updateSentInvitationEmails = async (req, res, next) => {
       preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
     }
 
-    const trainerName = trainers
-      .map(trainer => {
-        return trainer.name;
-      })
-      .join(' & ');
-
     if (sendByEmail) {
       await sendEmailInvitation({
         name,
         emails: newEmails,
         sessionDate,
         type,
-        trainerName,
+        trainers,
         region,
         startTime,
         endTime,
@@ -72,10 +67,11 @@ const updateSentInvitationEmails = async (req, res, next) => {
           address,
           startTime,
           endTime,
-          trainers: trainerName,
+          trainers,
           shortId,
           sessionType: type,
-          trainerName,
+          // the name of logged in trainer
+          trainer: name,
           recipients: newEmails,
         },
         type: 'registration',

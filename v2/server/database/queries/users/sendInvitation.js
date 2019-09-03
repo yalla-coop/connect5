@@ -2,18 +2,18 @@ const Session = require('./../../models/Session');
 
 module.exports.StoreSentEmailDataQuery = ({
   _id,
-  name,
-  emails,
-  sendingDate,
+  trainer,
+  recipients,
+  sendDate,
   date,
   type,
-  trainerName,
+  trainers,
   startTime,
   endTime,
   address,
   confirmedEmails,
 }) => {
-  const newEmailsObj = emails.map(email => {
+  const newEmailsObj = recipients.map(email => {
     if (email.status === 'new') {
       // eslint-disable-next-line no-param-reassign
       email.status = 'sent';
@@ -24,12 +24,12 @@ module.exports.StoreSentEmailDataQuery = ({
   const newEmails = newEmailsObj.map(email => email.email);
 
   const data = {
-    sendDate: sendingDate,
-    trainer: name,
+    sendDate,
+    trainer,
     sessionDate: date,
     sessionType: type,
     address,
-    trainers: trainerName,
+    trainers,
     recipients: newEmails,
     startTime,
     endTime,

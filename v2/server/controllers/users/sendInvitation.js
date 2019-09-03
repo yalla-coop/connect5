@@ -8,11 +8,11 @@ const sendEmailInvitation = require('./../../helpers/emails/sendEmailInvitation'
 const SendInvitation = async (req, res, next) => {
   const {
     _id,
-    emails,
-    sendingDate,
+    recipients,
+    sendDate,
     date,
     type,
-    trainerName,
+    trainers,
     region,
     startTime,
     endTime,
@@ -27,21 +27,21 @@ const SendInvitation = async (req, res, next) => {
     if (
       _id &&
       name &&
-      emails &&
-      sendingDate &&
+      recipients &&
+      sendDate &&
       date &&
       type &&
-      trainerName &&
+      trainers &&
       region
     ) {
       const StoreSentEmailData = await StoreSentEmailDataQuery({
         _id,
-        name,
-        emails,
-        sendingDate,
+        trainer: name,
+        recipients,
+        sendDate,
         date,
         type,
-        trainerName,
+        trainers,
         startTime: startTime || 'N/A',
         endTime: endTime || 'N/A',
         address,
@@ -51,11 +51,11 @@ const SendInvitation = async (req, res, next) => {
 
       if (process.env.NODE_ENV === 'production') {
         sendEmailInvitation({
-          name,
-          emails,
+          trainer: name,
+          recipients,
           sessionDate,
           type,
-          trainerName,
+          trainers,
           address: address || 'TBC',
           region,
           startTime,
