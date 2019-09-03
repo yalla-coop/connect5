@@ -347,6 +347,7 @@ class CreateSession extends Component {
           startTime={createdSession.startTime}
           endTime={createdSession.endTime}
           shortId={createdSession.shortId}
+          sessionId={createdSession._id}
           extraInfo={extraInfo}
         />
       );
