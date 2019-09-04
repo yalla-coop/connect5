@@ -4,17 +4,21 @@ import {
 } from '../constants/actionTypes';
 
 const initState = {
-  success: null,
+  confimSuccess: null,
+  confirmedEmail: null,
   error: null,
   message: null,
 };
 
-const userResults = (state = initState, action) => {
+const confirmRegistration = (state = initState, action) => {
   const { type, payload } = action;
   switch (type) {
     case CONFIRM_REGISTRATION_SUCCESS:
       return {
-        success: true,
+        ...state,
+        error: null,
+        confimSuccess: true,
+        confirmedEmail: payload,
       };
 
     case CONFIRM_REGISTRATION_ERROR:
@@ -28,4 +32,4 @@ const userResults = (state = initState, action) => {
   }
 };
 
-export default userResults;
+export default confirmRegistration;

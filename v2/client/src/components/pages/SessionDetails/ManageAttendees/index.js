@@ -314,6 +314,18 @@ class ManageAttendees extends Component {
             <Icon type="right" />
           </Row>
         </SubDetails>
+
+        <SubDetails>
+          <Row
+            onClick={this.handleDrawerOpen}
+            data-key="specialRequirements"
+            data-target="specialRequirements"
+          >
+            <DrawerLink>View special requirements</DrawerLink>
+            <Icon type="right" />
+          </Row>
+        </SubDetails>
+
         {confirmedAttendeesList.length ? (
           <SubDetails>
             <Row
@@ -390,6 +402,8 @@ class ManageAttendees extends Component {
                 handleDrawerOpen={this.handleDrawerOpen}
                 // email template
                 activeEmailTemplate={activeEmailTemplate}
+                // special requirements
+                specialRequirements={sessionDetails.specialRequirements}
               />
             </>
           </Drawer>

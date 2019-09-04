@@ -4,6 +4,7 @@ import UpdateAttendeesList from './UpdateAttendeesList';
 import SendReminderEmails from './SendReminderEmails';
 import ViewEmailsList from './ViewEmailsList';
 import EmailTemplate from './EmailTemplate';
+import SpecialRequirements from './SpecialRequirements';
 
 const DrawerContent = ({
   loading,
@@ -27,6 +28,8 @@ const DrawerContent = ({
   handleDrawerOpen,
   // email template
   activeEmailTemplate,
+  // special requirements
+  specialRequirements,
 }) => {
   switch (drawerKey) {
     case 'viewAttendeesList':
@@ -67,6 +70,9 @@ const DrawerContent = ({
 
     case 'emailTemplate':
       return <EmailTemplate activeEmailTemplate={activeEmailTemplate} />;
+
+    case 'specialRequirements':
+      return <SpecialRequirements specialRequirements={specialRequirements} />;
 
     default:
       return null;
