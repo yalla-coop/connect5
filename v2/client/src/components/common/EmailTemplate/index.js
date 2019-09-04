@@ -23,6 +23,9 @@ class EmailTemplate extends Component {
       startTime,
       endTime,
       extraInformation,
+      confirmLink,
+      preSurveyLink,
+      postSurveyLink,
     } = this.props;
 
     let fullAddress = '';
@@ -61,7 +64,12 @@ class EmailTemplate extends Component {
             <SessionInfoTitle>Trainer(s):</SessionInfoTitle> {trainers}
           </li>
         </List>
-        <SecondPargraph />
+        <SecondPargraph
+          type={type}
+          confirmLink={confirmLink}
+          preSurveyLink={preSurveyLink}
+          postSurveyLink={postSurveyLink}
+        />
 
         <pre>{extraInformation}</pre>
 

@@ -373,6 +373,7 @@ class ManageAttendees extends Component {
                 // All
                 drawerKey={drawerKey}
                 loading={loading}
+                sessionDetails={sessionDetails}
                 onSelectBlur={this.onSelectBlur}
                 onSelectFocus={this.onSelectFocus}
                 // update

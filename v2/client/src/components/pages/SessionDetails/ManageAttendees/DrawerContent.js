@@ -6,6 +6,7 @@ import ViewEmailsList from './ViewEmailsList';
 import EmailTemplate from './EmailTemplate';
 
 const DrawerContent = ({
+  sessionDetails,
   loading,
   drawerKey,
   onSelectBlur,
@@ -52,6 +53,7 @@ const DrawerContent = ({
           isCheckAll={isCheckAll}
           onCheckAllChange={onCheckAllChange}
           submitSendReminderEmail={submitSendReminderEmail}
+          sessionDetails={sessionDetails}
           loading={loading}
         />
       );

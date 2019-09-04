@@ -228,6 +228,8 @@ class EditEmail extends Component {
       startTime,
       endTime,
       backCallback,
+      preSurveyLink,
+      postSurveyLink,
     } = this.props;
 
     const { isEditView, extraInformation, participantEmails } = this.state;
@@ -344,6 +346,8 @@ class EditEmail extends Component {
               startTime={startTime}
               endTime={endTime}
               extraInformation={extraInformation}
+              preSurveyLink={preSurveyLink}
+              postSurveyLink={postSurveyLink}
             />
           </>
           {isEditView ? (
