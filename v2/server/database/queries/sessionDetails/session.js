@@ -21,6 +21,14 @@ module.exports.getSessionDetails = ({ id, shortId }) => {
         as: 'trainers',
       },
     },
+    {
+      $lookup: {
+        from: 'specialrequirements',
+        localField: '_id',
+        foreignField: 'session',
+        as: 'specialRequirements',
+      },
+    },
   ]);
 };
 
@@ -91,7 +99,21 @@ module.exports.updateEmailStatus = async ({ sessionId, email, status }) => {
   );
 };
 
-module.exports.updateAttendeesList = ({ sessionId, attendeesList, status }) =>
+/**
+ *
+ * @param {Object} data - the data object
+ * @param {String} data.sessionId - the id of the session to be updated
+ * @param {Object[]} data.attendeesList - the attendees list to be updated
+ * @param {Object[]} data.attendeesList[].email - the attendee email
+ * @param {Object[]} data.attendeesList[].status - the attendee status
+ * @param {Boolean} data.isPartialList - boolean value to determin if all the attendees list must updated or not
+ */
+const updateAttendeesList = ({
+  sessionId,
+  attendeesList,
+  status,
+  isPartialList,
+}) =>
   Session.findById(sessionId).then(session => {
     const newEmails = {};
     attendeesList.forEach(item => {
@@ -105,7 +127,7 @@ module.exports.updateAttendeesList = ({ sessionId, attendeesList, status }) =>
         // eslint-disable-next-line no-param-reassign
         session.participantsEmails.id(participant._id).status = status;
         delete newEmails[participant.email];
-      } else if (participant.status === status) {
+      } else if (participant.status === status && !isPartialList) {
         // delete
         deletedEmailsIds.push(participant._id);
         delete newEmails[participant.email];
@@ -135,6 +157,8 @@ module.exports.addSentEmail = ({
     { upsert: true }
   );
 };
+
+module.exports.updateAttendeesList = updateAttendeesList;
 
 // update the emails list without send emails
 module.exports.updateInviteesList = ({

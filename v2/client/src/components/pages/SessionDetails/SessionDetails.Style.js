@@ -238,10 +238,12 @@ export const EmailText = styled.p`
   font-size: 16px;
   line-height: 26px;
   margin-bottom: 0rem;
+  color: ${({ black }) => (black ? 'black' : 'inherit')};
 `;
 
 export const BoldSpan = styled.span`
   font-weight: 500;
+  color: ${({ black }) => (black ? 'black' : 'inherit')};
 `;
 
 export const BackWrapper = styled.div`
@@ -280,4 +282,27 @@ export const IconsWrapper = styled.div`
   justify-content: space-around;
   min-width: 90px;
   margin-bottom: 5px;
+`;
+
+export const WhiteWrapper = styled.div`
+  display: flex;
+  background: #ffffff;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  flex-direction: column;
+`;
+
+export const ViewMore = styled.button`
+  background: none;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
+  align-items: center;
+  color: #000000;
+  margin: 0 auto;
+  display: block;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
 `;
