@@ -12,6 +12,9 @@ const sendRegisteredTranierEmail = (userEmail, name, localLeadName) => {
         </p>
         <p>
         You have been added to <span style="text-transform: capitalize">${localLeadName}'s</sapn> group.
+        <p>for now ${localLeadName} can't see your results,
+
+
         </p>
 
        <p style="margin-bottom: 0;">Thanks,</p>
@@ -22,7 +25,7 @@ const sendRegisteredTranierEmail = (userEmail, name, localLeadName) => {
 
   const user = process.env.EMAIL;
   const pass = process.env.EMAIL_PASSWORD;
-  const subject = 'your password';
+  const subject = 'You have been added to localLead group on connect5';
   const from = 'Connect 5';
 
   const attachments = [

@@ -24,7 +24,10 @@ module.exports = async (req, res, next) => {
 
   try {
     let trainer = await getUserByEmail(email);
-    if (trainer.localLead.toString() === localLead) {
+    // if (!trainer) {
+    //   return next(boom.notFound('This email is not used'));
+    // }
+    if (trainer && trainer.localLead.toString() === localLead) {
       return next(
         boom.conflict(
           `This trainer is already registered in ${localLeadName} group`
@@ -46,32 +49,28 @@ module.exports = async (req, res, next) => {
       });
     }
 
-    // if (!trainer) {
-    //   return next(boom.notFound('This email is not used'));
-    // }
     await removeTrainerFromGroup(localLead, trainer._id);
     await addTrainertoGroup(localLead, trainer._id);
 
     await update(trainer._id, { localLead, givenPermission: false });
     if (newUser) {
-      // if (process.env.NODE_ENV === 'production') {
-      await sendNewTrainerLoginDetails(
-        name,
-        email,
-        randomPassword,
-        localLeadName,
-        user.region
-      );
-      // }
+      if (process.env.NODE_ENV === 'production') {
+        await sendNewTrainerLoginDetails(
+          name,
+          email,
+          randomPassword,
+          localLeadName,
+          user.region
+        );
+      }
       return res.json({
         success: `${trainer.name} has been added to ${localLeadName}'s group and login details have been sent to his/her email`,
       });
     }
 
-    // if (process.env.NODE_ENV === 'production') {
-
-    await sendRegisteredTranierEmail(email, trainer.name, localLeadName);
-    // }
+    if (process.env.NODE_ENV === 'production') {
+      await sendRegisteredTranierEmail(email, trainer.name, localLeadName);
+    }
     return res.json({
       success: `${trainer.name} has been added to ${localLeadName}'s group`,
     });

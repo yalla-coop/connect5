@@ -16,7 +16,7 @@ const sendNewTrainerLoginDetails = (
     </div>
     <div style="text-align: left;">
       <p style="font-weight: 700;">Hi, <span style="font-weight: 900;  text-transform: capitalize;"> ${username}</span></p>
-      <p>${localLeadName} :${localLeadRegion} has added you to his/her group as a trainer,
+      <p><span style="text-transform: capitalize">${localLeadName}</span> :${localLeadRegion} has added you to his/her group as a trainer,
          By proceeding you confirm that your local lead can view your profile data
          as well as individual feedback data given by course participants.
          If you do not agree or if there appears to be an error please contact us directly.
@@ -25,7 +25,7 @@ const sendNewTrainerLoginDetails = (
       <p>You can now log in using this email address and your password. Once logged in you can change your password.</p>
 
       <a href="${loginLink}">Log in Now</a>
-      
+
        <p style="margin-bottom: 0;">Thanks,</p>
       <p style="margin-bottom: 0;">Connect 5</p>
     </div>
@@ -34,7 +34,7 @@ const sendNewTrainerLoginDetails = (
 
   const user = process.env.EMAIL;
   const pass = process.env.EMAIL_PASSWORD;
-  const subject = 'your password';
+  const subject = 'Your password';
   const from = 'Connect 5';
 
   const attachments = [
