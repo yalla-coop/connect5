@@ -92,30 +92,32 @@ class SendInvitation extends Component {
       return <h3>No emails to sent</h3>;
     }
     return (
-      <InviteSectionWrapper>
-        <Header type="view" label="Invite" />
+      <>
         <BackContainer>
           <BackLink onClick={onClose}>{`< Back`}</BackLink>
         </BackContainer>
-        <Form>
-          <EmailsList>
-            {emails &&
-              emails.map(email => <p key={email.email}>{email.email}</p>)}
-          </EmailsList>
+        <InviteSectionWrapper>
+          <Header type="view" label="Invite" />
+          <Form>
+            <EmailsList>
+              {emails &&
+                emails.map(email => <p key={email.email}>{email.email}</p>)}
+            </EmailsList>
 
-          <InputDiv>
-            <Button
-              onClick={onFormSubmit}
-              type="primary"
-              label="Send invitation"
-              height="40px"
-              width="100%"
-              loading={loading}
-              disabled={loading}
-            />
-          </InputDiv>
-        </Form>
-      </InviteSectionWrapper>
+            <InputDiv>
+              <Button
+                onClick={onFormSubmit}
+                type="primary"
+                label="Send invitation"
+                height="40px"
+                width="100%"
+                loading={loading}
+                disabled={loading}
+              />
+            </InputDiv>
+          </Form>
+        </InviteSectionWrapper>
+      </>
     );
   }
 }

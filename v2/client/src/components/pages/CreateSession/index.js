@@ -42,9 +42,9 @@ import {
   Label,
   RequiredMark,
   LabelDiv,
+  BackContainer,
+  BackLink,
 } from './CreateSession.style';
-
-import { BackContainer, BackLink } from '../AddTrainer/AddTrainer.style';
 
 const { Option } = Select;
 
@@ -299,6 +299,7 @@ class CreateSession extends Component {
   render() {
     const { sessionCreated, extraInfo } = this.state;
     const { role, inputData, loading, createdSession, name } = this.props;
+
     const {
       inviteesNumber,
       err,
@@ -654,6 +655,7 @@ class CreateSession extends Component {
               disabledHours={this.getDisabledEndTime}
             />
           </InputDiv>
+          <div>{err}</div>
 
           <div>{err}</div>
 

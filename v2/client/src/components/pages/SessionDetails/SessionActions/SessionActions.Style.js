@@ -68,9 +68,6 @@ export const BackContainer = styled.div`
   width: 90%;
   padding: 0 20px;
   align-self: center;
-  @media (min-width: 678px) {
-    width: 65%;
-  }
 `;
 
 export const EmailError = styled.div`

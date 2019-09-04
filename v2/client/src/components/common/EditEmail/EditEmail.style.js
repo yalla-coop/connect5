@@ -53,3 +53,18 @@ export const Label = styled.label`
   line-height: 19px;
   color: #000000;
 `;
+
+export const SelecetWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+`;
+
+export const IconsWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  min-width: 90px;
+  margin-bottom: 5px;
+`;
