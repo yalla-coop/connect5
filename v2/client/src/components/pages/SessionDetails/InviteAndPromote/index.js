@@ -148,7 +148,13 @@ export default connect(null)(InviteAndPromote);
 const DrawerContent = ({ drawerKey, id, sessionDetails, onClose }) => {
   switch (drawerKey) {
     case 'send-invitation':
-      return <SendInvitation onClose={onClose} id={id} />;
+      return (
+        <SendInvitation
+          onClose={onClose}
+          id={id}
+          sessionDetails={sessionDetails}
+        />
+      );
     case 'view-invitees':
       return <InviteeList onClose={onClose} dataList={sessionDetails} />;
     case 'view-emails':

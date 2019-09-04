@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import { sendEmailInvitation } from '../../../../actions/InviteAndPromoteAction';
 
 // COMMON COMPONENTS
-import Header from '../../../common/Header';
-import Button from '../../../common/Button';
+import EditEmail from '../../../common/EditEmail';
 
 // STYLE
-import {
-  InviteSectionWrapper,
-  BackLink,
-  BackContainer,
-  Form,
-  InputDiv,
-  EmailsList,
-} from './InviteAndPromote.style';
+import { BackLink, BackContainer } from './InviteAndPromote.style';
 
 class SendInvitation extends Component {
   state = {
@@ -86,8 +79,7 @@ class SendInvitation extends Component {
 
   render() {
     const { emails } = this.state;
-    const { onFormSubmit } = this;
-    const { onClose, loading } = this.props;
+    const { onClose, sessionDetails, name } = this.props;
     if (!emails) {
       return <h3>No emails to sent</h3>;
     }
@@ -96,27 +88,23 @@ class SendInvitation extends Component {
         <BackContainer>
           <BackLink onClick={onClose}>{`< Back`}</BackLink>
         </BackContainer>
-        <InviteSectionWrapper>
-          <Header type="view" label="Invite" />
-          <Form>
-            <EmailsList>
-              {emails &&
-                emails.map(email => <p key={email.email}>{email.email}</p>)}
-            </EmailsList>
 
-            <InputDiv>
-              <Button
-                onClick={onFormSubmit}
-                type="primary"
-                label="Send invitation"
-                height="40px"
-                width="100%"
-                loading={loading}
-                disabled={loading}
-              />
-            </InputDiv>
-          </Form>
-        </InviteSectionWrapper>
+        <EditEmail
+          participantEmails={sessionDetails.participantsEmails}
+          // registration == invitation
+          type="registration"
+          trainer={name}
+          sessionDate={sessionDetails.date}
+          sessionType={sessionDetails.type}
+          address={sessionDetails.address}
+          trainers={sessionDetails.trainers.map(item => item.name).join(' & ')}
+          startTime={sessionDetails.startTime}
+          endTime={sessionDetails.endTime}
+          shortId={sessionDetails.shortId}
+          sessionId={sessionDetails._id}
+          extraInfo="extraInfo"
+          backCallback={onClose}
+        />
       </>
     );
   }
@@ -125,6 +113,7 @@ class SendInvitation extends Component {
 const mapStateToProps = state => ({
   sessionDetails: state.sessions.sessionDetails[0],
   loading: state.session.loading,
+  name: state.auth.name,
 });
 
 export default connect(

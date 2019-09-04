@@ -12,18 +12,7 @@ module.exports.StoreSentEmailDataQuery = ({
   endTime,
   address,
   extraInformation,
-  confirmedEmails,
 }) => {
-  const newEmailsObj = recipients.map(email => {
-    if (email.status === 'new') {
-      // eslint-disable-next-line no-param-reassign
-      email.status = 'sent';
-    }
-    return email;
-  });
-
-  const newEmails = newEmailsObj.map(email => email.email);
-
   const data = {
     sendDate,
     trainer,
@@ -31,7 +20,7 @@ module.exports.StoreSentEmailDataQuery = ({
     sessionType,
     address,
     trainers,
-    recipients: newEmails,
+    recipients: recipients.map(item => item.email),
     startTime,
     endTime,
     extraInformation,
@@ -42,7 +31,6 @@ module.exports.StoreSentEmailDataQuery = ({
     { _id },
     {
       $push: { sentEmails: data },
-      $set: { participantsEmails: [...newEmailsObj, ...confirmedEmails] },
     }
   );
   return updateDoc;

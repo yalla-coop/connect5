@@ -51,7 +51,6 @@ class EditEmail extends Component {
   };
 
   componentDidMount() {
-    window.scrollBy(-1000, -1000);
     const { participantEmails } = this.props;
     this.setState({ participantEmails });
   }
@@ -71,24 +70,39 @@ class EditEmail extends Component {
 
   handleUpdateEmails = values => {
     const validEmails = [];
-    values.forEach(item => {
-      try {
-        const validEmail = emailSchema.validateSync(item);
 
-        if (validEmail) {
-          validEmails.push(item);
+    values.forEach(item => {
+      if (!validEmails.some(_item => _item.email === item)) {
+        try {
+          const validEmail = emailSchema.validateSync(item);
+
+          if (validEmail) {
+            validEmails.push({ email: item });
+          }
+        } catch (err) {
+          Modal.error({
+            title: 'Invalid!',
+            content: err.errors[0],
+          });
         }
-      } catch (err) {
-        Modal.error({
-          title: 'Invalid!',
-          content: err.errors[0],
-        });
       }
     });
+
     this.setState({ participantEmails: validEmails });
   };
 
   handleSendEmail = () => {
+    // type of email to be sent
+    const { type } = this.props;
+    switch (type) {
+      case 'registration':
+        return this.sendRegistrationEmail();
+
+      default:
+    }
+  };
+
+  sendRegistrationEmail = () => {
     const { participantEmails, extraInformation } = this.state;
     const {
       sessionId: _id,
@@ -103,7 +117,7 @@ class EditEmail extends Component {
     } = this.props;
 
     const recipients = participantEmails.map(email => {
-      return { email, status: 'new' };
+      return { ...email, status: 'sent' };
     });
 
     const InviteData = {
@@ -126,10 +140,15 @@ class EditEmail extends Component {
   };
 
   done = () => {
+    const { backCallback } = this.props;
+
     Modal.success({
       title: 'Done!',
       content: 'Invitation Email successfully sent',
-      onOk: () => history.push(MY_SESSIONS_URL),
+      onOk: () => {
+        if (typeof backCallback === 'function') return backCallback();
+        return history.push(MY_SESSIONS_URL);
+      },
     });
   };
 
@@ -142,10 +161,10 @@ class EditEmail extends Component {
   };
 
   onCopy = () => {
-    const { stateEmails } = this.state;
+    const { participantEmails } = this.state;
 
-    if (stateEmails.length) {
-      const copyText = document.getElementById('emails');
+    if (participantEmails.length) {
+      const copyText = document.getElementById('participantEmails');
       let range;
       let selection;
       if (document.body.createTextRange) {
@@ -208,6 +227,7 @@ class EditEmail extends Component {
       trainers,
       startTime,
       endTime,
+      backCallback,
     } = this.props;
 
     const { isEditView, extraInformation, participantEmails } = this.state;
@@ -228,6 +248,7 @@ class EditEmail extends Component {
                 autosize={{ minRows: 4, maxRows: 6 }}
                 style={{ marginBottom: '20px' }}
                 onChange={this.handleExtraInformation}
+                value={extraInformation}
               />
 
               <SubHeader>Core information:</SubHeader>
@@ -241,21 +262,23 @@ class EditEmail extends Component {
             </>
           ) : (
             <>
-              <SuccessMessageDiv>
-                <Alert
-                  message={
-                    <span>
-                      <Icon
-                        type="check-circle"
-                        theme="filled"
-                        style={{ color: '#52c41a', marginRight: '1rem' }}
-                      />
-                      {successMessage}
-                    </span>
-                  }
-                  type="success"
-                />
-              </SuccessMessageDiv>
+              {successMessage && (
+                <SuccessMessageDiv>
+                  <Alert
+                    message={
+                      <span>
+                        <Icon
+                          type="check-circle"
+                          theme="filled"
+                          style={{ color: '#52c41a', marginRight: '1rem' }}
+                        />
+                        {successMessage}
+                      </span>
+                    }
+                    type="success"
+                  />
+                </SuccessMessageDiv>
+              )}
               <>
                 <SubHeader>Registration Link:</SubHeader>
                 <StyledLink
@@ -290,11 +313,11 @@ class EditEmail extends Component {
                   </IconsWrapper>
 
                   <Label>Email addresses:</Label>
-
                   <Select
                     mode="tags"
                     id="participantEmails"
-                    value={participantEmails}
+                    // get emails string array
+                    value={participantEmails.map(item => item.email)}
                     placeholder="Type or paste the email addresses here"
                     onChange={this.handleUpdateEmails}
                     style={{ width: '100%' }}
@@ -303,9 +326,7 @@ class EditEmail extends Component {
                     onFocus={this.onSelectFocus}
                   >
                     {participantEmails.map(item => (
-                      <Option value={item} key={item}>
-                        {item}
-                      </Option>
+                      <Option value={item.email}>{item.email}</Option>
                     ))}
                   </Select>
                 </SelecetWrapper>
@@ -362,7 +383,8 @@ class EditEmail extends Component {
                   margin: '0 auto 2rem',
                 }}
                 onClick={() => {
-                  history.push(MY_SESSIONS_URL);
+                  if (typeof backCallback === 'function') return backCallback();
+                  return history.push(MY_SESSIONS_URL);
                 }}
               >
                 Skip and view my session

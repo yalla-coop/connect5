@@ -52,6 +52,7 @@ export const Label = styled.label`
   font-size: 16px;
   line-height: 19px;
   color: #000000;
+  margin-right: auto;
 `;
 
 export const SelecetWrapper = styled.div`

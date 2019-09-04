@@ -5,6 +5,10 @@ const {
 } = require('./../../database/queries/users/sendInvitation');
 const sendEmailInvitation = require('./../../helpers/emails/sendEmailInvitation');
 
+const {
+  updateAttendeesList,
+} = require('./../../database/queries/sessionDetails/session');
+
 const SendInvitation = async (req, res, next) => {
   const {
     _id,
@@ -30,7 +34,8 @@ const SendInvitation = async (req, res, next) => {
       sendDate &&
       sendDate &&
       sessionType &&
-      trainers
+      trainers &&
+      recipients.length > 0
     ) {
       const StoreSentEmailData = await StoreSentEmailDataQuery({
         _id,
@@ -47,20 +52,31 @@ const SendInvitation = async (req, res, next) => {
         confirmedEmails,
       });
 
-      // if (process.env.NODE_ENV === 'production') {
-      await sendEmailInvitation({
-        trainer: name,
-        recipients,
-        sessionDate: sessionDate && moment(sessionDate).format('DD/MMMM/YYYY'),
-        sessionType,
-        trainers,
-        address: address || 'TBC',
-        startTime,
-        endTime,
-        shortId,
-        extraInformation,
-      });
-      // }
+      if (process.env.NODE_ENV === 'production') {
+        await sendEmailInvitation({
+          trainer: name,
+          recipients,
+          sessionDate:
+            sessionDate && moment(sessionDate).format('DD/MMMM/YYYY'),
+          sessionType,
+          trainers,
+          address: address || 'TBC',
+          startTime,
+          endTime,
+          shortId,
+          extraInformation,
+        });
+      }
+
+      const data = {
+        sessionId: _id,
+        attendeesList: recipients,
+        status: 'sent',
+        isPartialList: true,
+      };
+
+      await updateAttendeesList(data);
+
       return res.json(StoreSentEmailData);
     }
     return next(boom.badRequest('Some arguments are missed'));
