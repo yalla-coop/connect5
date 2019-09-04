@@ -39,7 +39,7 @@ const regions = [
 ];
 
 class AddTrainer extends Component {
-  state = {};
+  state = { confirmLoading: false };
 
   componentDidMount() {
     const { isAuthenticated } = this.props;
@@ -51,6 +51,7 @@ class AddTrainer extends Component {
   }
 
   handleOk = e => {
+    this.setState({ confirmLoading: true });
     this.handleSubmit(e);
   };
 
@@ -67,15 +68,18 @@ class AddTrainer extends Component {
   };
 
   handleSubmit = e => {
-    const { allowAddUsedEmail } = this.state;
-    const { form, addTrainerToGroup: addTrainerToGroupAction } = this.props;
+    const {
+      form,
+      addTrainerToGroup: addTrainerToGroupAction,
+      isEmailUnique,
+    } = this.props;
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         addTrainerToGroupAction(
           {
             ...values,
-            newUser: !allowAddUsedEmail,
+            newUser: isEmailUnique,
             localLead: values.localLead.key,
             localLeadName: values.localLead.label,
           },
@@ -102,6 +106,8 @@ class AddTrainer extends Component {
         state: location.state,
       });
     }
+
+    this.setState({ confirmLoading: false });
     const {
       form,
       resetUniqueEmail: resetUniqueEmailAction,
@@ -114,6 +120,7 @@ class AddTrainer extends Component {
   };
 
   render() {
+    const { confirmLoading } = this.state;
     const {
       form: { getFieldDecorator },
       localLeads,
@@ -134,6 +141,7 @@ class AddTrainer extends Component {
             onOk={this.handleOk}
             onCancel={this.handleCancel}
             title="Account already exists"
+            confirmLoading={confirmLoading}
           >
             <Paragraph>
               Good news, <Bold>{checkedUserInfo.name}</Bold> (

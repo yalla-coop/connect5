@@ -142,7 +142,9 @@ export const addTrainerToGroup = (trianerInfo, done) => async dispatch => {
 
     Modal.error({
       title: 'Error',
-      content: 'Something went wrong',
+      content:
+        (error.response && error.response.data && error.response.data.error) ||
+        'something went wrong',
       onOk: done,
     });
   }
