@@ -15,6 +15,10 @@ export const Wrapper = styled.div`
       height: 100%;
     }
   }
+
+  #selectGroup .ant-checkbox-wrapper {
+    width: 100%;
+  }
 `;
 
 export const SuccessMessageDiv = styled.div`

@@ -8,7 +8,12 @@ import {
   message,
   Tooltip,
   Button as AntButton,
+  Collapse,
+  Checkbox,
+  Row,
+  Col,
 } from 'antd';
+
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
@@ -34,6 +39,20 @@ import {
   IconsWrapper,
 } from './EditEmail.style';
 
+const customPanelStyle = {
+  // background: '#f7f7f7',
+  background: '#fff',
+  borderRadius: 4,
+  // marginBottom: 24,
+  border: 0,
+  overflow: 'hidden',
+  padding: '0.5rem',
+};
+
+const { Panel } = Collapse;
+
+const defaultCheckedList = ['Apple', 'Orange'];
+
 const emailSchema = Yup.string()
   .email()
   .required();
@@ -48,11 +67,26 @@ class EditEmail extends Component {
   state = {
     isEditView: false,
     participantEmails: [],
+    isCollapsOpen: true,
+    checkedList: defaultCheckedList,
+    indeterminateAll: false,
+    isAllChecked: true,
+    isNewChecked: true,
   };
 
   componentDidMount() {
     const { participantEmails } = this.props;
-    this.setState({ participantEmails });
+    const plainAllEmails = participantEmails.map(item => item.email);
+    const plainNewEmails = participantEmails
+      .filter(item => item.status === 'new')
+      .map(item => item.email);
+
+    this.setState({
+      participantEmails,
+      plainAllEmails,
+      plainNewEmails,
+      checkedList: plainAllEmails,
+    });
   }
 
   componentWillUnmount() {
@@ -209,12 +243,57 @@ class EditEmail extends Component {
     }
   };
 
+  // to set a flag whether the collaps is opened or not
+  toggleOpenCollaps = activeKeys => {
+    this.setState({ isCollapsOpen: !!(activeKeys && activeKeys.length > 0) });
+  };
+
+  // to handle individual emails checkboxes changes
+  onChangeCheckbox = checkedList => {
+    const { participantEmails, plainNewEmails } = this.state;
+    const isAllChecked = checkedList.length === participantEmails.length;
+    const isNewChecked =
+      plainNewEmails.length > 0 &&
+      checkedList.length > 0 &&
+      checkedList.every(item => plainNewEmails.includes(item));
+
+    this.setState({
+      checkedList,
+      indeterminateAll:
+        !!checkedList.length && checkedList.length < participantEmails.length,
+      isAllChecked,
+      isNewChecked,
+    });
+  };
+
+  // to handle toggle the checkbox for "seslect all" checbox
+  onCheckAllChange = e => {
+    const { plainAllEmails } = this.state;
+    this.setState({
+      checkedList: e.target.checked ? plainAllEmails : [],
+      indeterminateAll: false,
+      isAllChecked: e.target.checked,
+      isNewChecked: e.target.checked,
+    });
+  };
+
+  // to handle toggle the checkbox for "seslect new" checbox
+  onCheckNewChange = e => {
+    const { plainNewEmails } = this.state;
+
+    this.setState({
+      checkedList: e.target.checked ? plainNewEmails : [],
+      isNewChecked: e.target.checked,
+      isAllChecked: false,
+    });
+  };
+
   render() {
-    window.scrollBy(-1000, -1000);
     const {
       successMessage,
       sessionId,
-
+      // Boolean
+      canAddParticipants,
       // registration
       shortId,
 
@@ -232,7 +311,16 @@ class EditEmail extends Component {
       postSurveyLink,
     } = this.props;
 
-    const { isEditView, extraInformation, participantEmails } = this.state;
+    const {
+      isEditView,
+      extraInformation,
+      participantEmails,
+      isCollapsOpen,
+      checkedList,
+      indeterminateAll,
+      isAllChecked,
+      isNewChecked,
+    } = this.state;
 
     return (
       <>
@@ -315,22 +403,93 @@ class EditEmail extends Component {
                   </IconsWrapper>
 
                   <Label>Email addresses:</Label>
-                  <Select
-                    mode="tags"
-                    id="participantEmails"
-                    // get emails string array
-                    value={participantEmails.map(item => item.email)}
-                    placeholder="Type or paste the email addresses here"
-                    onChange={this.handleUpdateEmails}
-                    style={{ width: '100%' }}
-                    size="large"
-                    onBlur={this.onSelectBlur}
-                    onFocus={this.onSelectFocus}
-                  >
-                    {participantEmails.map(item => (
-                      <Option value={item.email}>{item.email}</Option>
-                    ))}
-                  </Select>
+                  {canAddParticipants ? (
+                    <Select
+                      mode="tags"
+                      id="participantEmails"
+                      // get emails string array
+                      value={participantEmails.map(item => item.email)}
+                      placeholder="Type or paste the email addresses here"
+                      onChange={this.handleUpdateEmails}
+                      style={{ width: '100%' }}
+                      size="large"
+                      onBlur={this.onSelectBlur}
+                      onFocus={this.onSelectFocus}
+                    >
+                      {participantEmails.map(item => (
+                        <Option value={item.email}>{item.email}</Option>
+                      ))}
+                    </Select>
+                  ) : (
+                    <div style={{ width: '100%' }}>
+                      <Collapse
+                        bordered={false}
+                        defaultActiveKey={['1']}
+                        expandIcon={({ isActive }) => (
+                          <Icon type="caret-right" rotate={isActive ? 90 : 0} />
+                        )}
+                        style={{ border: '2px solid' }}
+                        onChange={this.toggleOpenCollaps}
+                        expandIconPosition="right"
+                      >
+                        <Panel
+                          header={<div>Select from your invite list</div>}
+                          key="1"
+                          style={customPanelStyle}
+                        >
+                          <div
+                            style={{
+                              borderBottom: '1px solid #E9E9E9',
+                              display: 'flex',
+                              width: '100%',
+                              justifyContent: 'space-between',
+                            }}
+                          >
+                            <Checkbox
+                              indeterminate={indeterminateAll}
+                              onChange={this.onCheckAllChange}
+                              checked={isAllChecked}
+                            >
+                              Select all
+                            </Checkbox>
+                            <Checkbox
+                              onChange={this.onCheckNewChange}
+                              checked={isNewChecked}
+                            >
+                              Select New
+                            </Checkbox>
+                          </div>
+                          <br />
+
+                          <Checkbox.Group
+                            style={{ width: '100%' }}
+                            onChange={this.onChangeCheckbox}
+                            value={checkedList}
+                          >
+                            <Row id="selectGroup">
+                              {participantEmails.map(item => (
+                                <Col span={24}>
+                                  <Checkbox value={item.email}>
+                                    <span
+                                      style={{
+                                        width: '80%',
+                                        display: 'inline-flex',
+                                        justifyContent: 'space-between',
+                                      }}
+                                    >
+                                      {item.email}
+                                      <span>{item.status}</span>
+                                    </span>
+                                  </Checkbox>
+                                </Col>
+                              ))}
+                            </Row>
+                          </Checkbox.Group>
+                          <div>d</div>
+                        </Panel>
+                      </Collapse>
+                    </div>
+                  )}
                 </SelecetWrapper>
               </>
             </>
