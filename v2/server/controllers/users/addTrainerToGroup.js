@@ -54,23 +54,23 @@ module.exports = async (req, res, next) => {
 
     await update(trainer._id, { localLead, givenPermission: false });
     if (newUser) {
-      // if (process.env.NODE_ENV === 'production') {
-      await sendNewTrainerLoginDetails(
-        name,
-        email,
-        randomPassword,
-        localLeadName,
-        user.region
-      );
-      // }
+      if (process.env.NODE_ENV === 'production') {
+        await sendNewTrainerLoginDetails(
+          name,
+          email,
+          randomPassword,
+          localLeadName,
+          user.region
+        );
+      }
       return res.json({
         success: `${trainer.name} has been added to ${localLeadName}'s group and login details have been sent to his/her email`,
       });
     }
 
-    // if (process.env.NODE_ENV === 'production') {
-    await sendRegisteredTranierEmail(email, trainer.name, localLeadName);
-    // }
+    if (process.env.NODE_ENV === 'production') {
+      await sendRegisteredTranierEmail(email, trainer.name, localLeadName);
+    }
     return res.json({
       success: `${trainer.name} has been added to ${localLeadName}'s group`,
     });
