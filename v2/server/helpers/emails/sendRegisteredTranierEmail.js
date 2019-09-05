@@ -1,6 +1,7 @@
 const mailer = require('./index');
 
 const sendRegisteredTranierEmail = (userEmail, name, localLeadName) => {
+  const email = process.env.EMAIL;
   const html = `
   <div style="text-align: center;">
     <div style="width: 100%; height: 60px; background-color: #2C3192;">
@@ -12,7 +13,9 @@ const sendRegisteredTranierEmail = (userEmail, name, localLeadName) => {
         </p>
         <p>
         This email is to notify you that you have been added to <span style="text-transform: capitalize">${localLeadName}'s</sapn> group.This means that they can set up Connect5 training sessions for you.
-        <p>At the moment they cannot see your results until you next use the Connect5 app.If any  of the information above looks incorrect then do not use the app and please contact us via
+        </p>
+        <p>
+        At the moment they cannot see your results until you next use the Connect5 app.If any  of the information above looks incorrect then do not use the app and please contact us via ${email}.
         </p>
 
        <p style="margin-bottom: 0;">Best wishes,</p>
@@ -21,7 +24,7 @@ const sendRegisteredTranierEmail = (userEmail, name, localLeadName) => {
   </div>
 `;
 
-  const user = process.env.EMAIL;
+  const user = email;
   const pass = process.env.EMAIL_PASSWORD;
   const subject = 'You have been added to localLead group on connect5';
   const from = 'Connect 5';
