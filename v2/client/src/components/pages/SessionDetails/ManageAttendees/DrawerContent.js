@@ -19,11 +19,7 @@ const DrawerContent = ({
   confirmedAttendeesList,
   handleUpdateAttendees,
   // send emails
-  changeSelectedEmails,
-  checkedEmails,
-  isCheckAll,
-  onCheckAllChange,
-  submitSendReminderEmail,
+  handleAddEmailsClick,
   // emails list
   reminderEmails,
   handleDrawerOpen,
@@ -50,14 +46,8 @@ const DrawerContent = ({
     case 'sendEmails':
       return (
         <SendReminderEmails
-          confirmedAttendeesList={confirmedAttendeesList}
-          changeSelectedEmails={changeSelectedEmails}
-          checkedEmails={checkedEmails}
-          isCheckAll={isCheckAll}
-          onCheckAllChange={onCheckAllChange}
-          submitSendReminderEmail={submitSendReminderEmail}
           sessionDetails={sessionDetails}
-          loading={loading}
+          handleAddEmailsClick={handleAddEmailsClick}
         />
       );
 

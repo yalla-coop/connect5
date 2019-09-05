@@ -1,57 +1,8 @@
 import React from 'react';
-import { Checkbox } from 'antd';
 
-import Button from '../../../common/Button';
 import EditEmail from '../../../common/EditEmail';
 
-import { DrawerContentWrapper, CheckboxWrapper } from '../SessionDetails.Style';
-
-const CheckboxGroup = Checkbox.Group;
-
-const SendReminderEmails = ({
-  confirmedAttendeesList,
-  changeSelectedEmails,
-  checkedEmails,
-  isCheckAll,
-  onCheckAllChange,
-  submitSendReminderEmail,
-  sessionDetails,
-  loading,
-}) => {
-  // <DrawerContentWrapper>
-  //   <h5>Send Reminder Email</h5>
-  //   <CheckboxWrapper>
-  //     <div style={{ borderBottom: '1px solid #8080804d', padding: '1rem 0' }}>
-  //       <Checkbox onChange={onCheckAllChange} checked={isCheckAll}>
-  //         Check all
-  //       </Checkbox>
-  //     </div>
-
-  //     <CheckboxGroup
-  //       options={confirmedAttendeesList}
-  //       value={checkedEmails}
-  //       onChange={changeSelectedEmails}
-  //     />
-  //   </CheckboxWrapper>
-  //   <Button
-  //     type="primary"
-  //     style={{
-  //       width: '100%',
-  //       marginTop: '2rem',
-  //       fontSize: '19px',
-  //       fontWeight: 'bold',
-  //       padding: '0.5rem 1rem',
-  //       height: 'auto',
-  //     }}
-  //     onClick={submitSendReminderEmail}
-  //     disabled={checkedEmails.length < 1}
-  //     loading={loading}
-  //     label="Send Reminder"
-  //     >
-  //     Send Reminder
-  //   </Button>
-  //     </DrawerContentWrapper>
-
+const SendReminderEmails = ({ sessionDetails, handleAddEmailsClick }) => {
   const surveyType = {
     1: ['pre-day-1', 'post-day-1'],
     2: ['post-day-2'],
@@ -74,10 +25,13 @@ const SendReminderEmails = ({
   const preSurveyLink = links.find(item => item.includes('pre'));
   const postSurveyLink = links.find(item => item.includes('post'));
 
+  const confirmedEmails = sessionDetails.participantsEmails.filter(
+    item => item.status === 'confirmed'
+  );
+
   return (
     <EditEmail
-      participantEmails={sessionDetails.participantsEmails}
-      // registration == invitation
+      participantEmails={confirmedEmails}
       type="reminder"
       trainer="name"
       sessionDate={sessionDetails.date}
@@ -92,6 +46,7 @@ const SendReminderEmails = ({
       backCallback="onClose"
       preSurveyLink={preSurveyLink}
       postSurveyLink={postSurveyLink}
+      handleAddEmailsClick={handleAddEmailsClick}
     />
   );
 };

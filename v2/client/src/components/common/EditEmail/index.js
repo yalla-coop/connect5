@@ -144,6 +144,9 @@ class EditEmail extends Component {
       case 'registration':
         return this.sendRegistrationEmail();
 
+      case 'reminder':
+        return this.sendRegistrationEmail();
+
       default:
     }
   };
@@ -405,17 +408,19 @@ class EditEmail extends Component {
               </>
               <>
                 <SelecetWrapper>
-                  <IconsWrapper>
-                    <Tooltip placement="top" title="Copy">
-                      <AntButton
-                        type="primary"
-                        icon="copy"
-                        ghost
-                        onClick={this.onCopy}
-                      />
-                    </Tooltip>
-                    <InfoPopUp details={details} />
-                  </IconsWrapper>
+                  {canAddParticipants && (
+                    <IconsWrapper>
+                      <Tooltip placement="top" title="Copy">
+                        <AntButton
+                          type="primary"
+                          icon="copy"
+                          ghost
+                          onClick={this.onCopy}
+                        />
+                      </Tooltip>
+                      <InfoPopUp details={details} />
+                    </IconsWrapper>
+                  )}
 
                   <Label>Email addresses:</Label>
                   {canAddParticipants ? (
@@ -467,12 +472,14 @@ class EditEmail extends Component {
                             >
                               Select all
                             </Checkbox>
-                            <Checkbox
-                              onChange={this.onCheckNewChange}
-                              checked={isNewChecked}
-                            >
-                              Select New
-                            </Checkbox>
+                            {type === 'registration' && (
+                              <Checkbox
+                                onChange={this.onCheckNewChange}
+                                checked={isNewChecked}
+                              >
+                                Select New
+                              </Checkbox>
+                            )}
                           </div>
                           <br />
 

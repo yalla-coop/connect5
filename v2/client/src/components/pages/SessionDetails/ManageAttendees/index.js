@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Drawer, Modal, Popover, message } from 'antd';
 import * as Yup from 'yup';
-import moment from 'moment';
 
-import {
-  updateSessionAttendeesList as updateSessionAttendeesListAction,
-  sendEmailReminder as sendEmailReminderAction,
-} from '../../../../actions/sessionAction';
+import { updateSessionAttendeesList as updateSessionAttendeesListAction } from '../../../../actions/sessionAction';
 
 import AntdModal from '../../../common/AntdModal';
 
@@ -34,8 +30,6 @@ class ManageAttendees extends Component {
     confirmedAttendeesList: [],
     addedAttendeesList: [],
     lastUpdate: null,
-    checkedEmails: [],
-    isCheckAll: true,
     activeEmailIndex: null,
     focused: false,
   };
@@ -99,14 +93,14 @@ class ManageAttendees extends Component {
   handleSubmitUpdateAttendees = () => {
     const { confirmedAttendeesList } = this.state;
     const { sessionDetails, updateSessionAttendeesList } = this.props;
-    const updatedList = confirmedAttendeesList.map(item => ({
+    const participantsEmails = confirmedAttendeesList.map(item => ({
       email: item,
       status: 'confirmed',
     }));
 
     updateSessionAttendeesList({
       sessionId: sessionDetails._id,
-      attendeesList: updatedList,
+      participantsEmails,
       status: 'confirmed',
       handleCloseDrawer: this.handleCloseDrawer,
     });
@@ -127,7 +121,6 @@ class ManageAttendees extends Component {
 
     this.setState({
       confirmedAttendeesList,
-      checkedEmails: confirmedAttendeesList,
       lastUpdate: sessionDetails.updatedAt,
     });
   };
@@ -208,49 +201,6 @@ class ManageAttendees extends Component {
     }
   };
 
-  changeSelectedEmails = checkedEmails => {
-    const { confirmedAttendeesList } = this.state;
-
-    this.setState({
-      checkedEmails,
-      isCheckAll: checkedEmails.length === confirmedAttendeesList.length,
-    });
-  };
-
-  onCheckAllChange = e => {
-    const { confirmedAttendeesList } = this.state;
-    this.setState({
-      checkedEmails: e.target.checked ? confirmedAttendeesList : [],
-      isCheckAll: e.target.checked,
-    });
-  };
-
-  submitSendReminderEmail = () => {
-    const { sessionDetails, sendEmailReminder } = this.props;
-    const { checkedEmails } = this.state;
-
-    const trainers = sessionDetails.trainers
-      .map(
-        trainer => `${trainer.name[0].toUpperCase()}${trainer.name.slice(1)}`
-      )
-      .join(' & ');
-
-    const emailData = {
-      sessionId: sessionDetails._id,
-      shortId: sessionDetails.shortId,
-      trainers,
-      startTime: sessionDetails.startTime,
-      endTime: sessionDetails.endTime,
-      sessionType: sessionDetails.type,
-      address: sessionDetails.address,
-      recipients: checkedEmails,
-      type: 'reminder',
-      sent: true,
-      sessionDate: moment(sessionDetails.date).format('YYYY-MM-DD'),
-    };
-    sendEmailReminder(emailData, this.handleCloseDrawer);
-  };
-
   handleCloseDrawer = () => {
     this.setState({
       visible: false,
@@ -261,13 +211,19 @@ class ManageAttendees extends Component {
     this.setListIntoState();
   };
 
+  handleAddEmailsClick = () => {
+    this.setState({
+      visible: true,
+      drawerKey: 'viewAttendeesList',
+      activeEmailIndex: null,
+    });
+  };
+
   render() {
     const {
       visible,
       drawerKey,
       confirmedAttendeesList,
-      checkedEmails,
-      isCheckAll,
       activeEmailIndex,
     } = this.state;
 
@@ -393,11 +349,7 @@ class ManageAttendees extends Component {
                 confirmedAttendeesList={confirmedAttendeesList}
                 handleUpdateAttendees={this.handleUpdateAttendees}
                 // sendEmails
-                changeSelectedEmails={this.changeSelectedEmails}
-                checkedEmails={checkedEmails}
-                isCheckAll={isCheckAll}
-                onCheckAllChange={this.onCheckAllChange}
-                submitSendReminderEmail={this.submitSendReminderEmail}
+                handleAddEmailsClick={this.handleAddEmailsClick}
                 // email list
                 reminderEmails={reminderEmails}
                 handleDrawerOpen={this.handleDrawerOpen}
@@ -424,6 +376,5 @@ export default connect(
   mapStateToProps,
   {
     updateSessionAttendeesList: updateSessionAttendeesListAction,
-    sendEmailReminder: sendEmailReminderAction,
   }
 )(ManageAttendees);
