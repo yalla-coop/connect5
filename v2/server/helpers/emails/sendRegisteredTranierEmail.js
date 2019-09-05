@@ -8,17 +8,15 @@ const sendRegisteredTranierEmail = (userEmail, name, localLeadName) => {
     </div>
     <div style="text-align: left;">
         <p>
-        Hi <span style="text-transform: capitalize">${name}</sapn>
+        Dear <span style="text-transform: capitalize">${name}</sapn>
         </p>
         <p>
-        You have been added to <span style="text-transform: capitalize">${localLeadName}'s</sapn> group.
-        <p>for now ${localLeadName} can't see your results,
-
-
+        This email is to notify you that you have been added to <span style="text-transform: capitalize">${localLeadName}'s</sapn> group.This means that they can set up Connect5 training sessions for you.
+        <p>At the moment they cannot see your results until you next use the Connect5 app.If any  of the information above looks incorrect then do not use the app and please contact us via
         </p>
 
-       <p style="margin-bottom: 0;">Thanks,</p>
-      <p style="margin-bottom: 0;">Connect 5</p>
+       <p style="margin-bottom: 0;">Best wishes,</p>
+      <p style="margin-bottom: 0;"> The Connect5 Team</p>
     </div>
   </div>
 `;
