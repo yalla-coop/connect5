@@ -93,9 +93,7 @@ class SendInvitation extends Component {
             <InfoTitle>Sent to</InfoTitle>
             <List>
               {recipients &&
-                recipients.map(recipient => (
-                  <li key={recipient._id}>{recipient}</li>
-                ))}
+                recipients.map(email => <li key={email}>{email}</li>)}
             </List>
           </div>
         </EmailInfo>

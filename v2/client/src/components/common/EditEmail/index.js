@@ -68,6 +68,8 @@ const details =
 class EditEmail extends Component {
   state = {
     isEditView: false,
+    // plain text if canAddParticipants = true
+    // {email, status} if canAddParticipants = false
     participantEmails: [],
     isCollapsOpen: true,
     checkedList: defaultCheckedList,
@@ -77,14 +79,23 @@ class EditEmail extends Component {
   };
 
   componentDidMount() {
-    const { participantEmails } = this.props;
+    const { participantEmails, canAddParticipants } = this.props;
+
     const plainAllEmails = participantEmails.map(item => item.email);
     const plainNewEmails = participantEmails
       .filter(item => item.status === 'new')
       .map(item => item.email);
+    // plain text if canAddParticipants = true
+    // {email, status} if canAddParticipants = false
+    let newParticipantEmails;
 
+    if (canAddParticipants) {
+      newParticipantEmails = plainAllEmails;
+    } else {
+      newParticipantEmails = participantEmails;
+    }
     this.setState({
-      participantEmails,
+      participantEmails: newParticipantEmails,
       plainAllEmails,
       plainNewEmails,
       checkedList: plainAllEmails,
@@ -107,13 +118,13 @@ class EditEmail extends Component {
   handleUpdateEmails = values => {
     const validEmails = [];
 
-    values.forEach(item => {
-      if (!validEmails.some(_item => _item.email === item)) {
+    values.forEach(email => {
+      if (!validEmails.some(_item => _item === email)) {
         try {
-          const validEmail = emailSchema.validateSync(item);
+          const validEmail = emailSchema.validateSync(email);
 
           if (validEmail) {
-            validEmails.push({ email: item });
+            validEmails.push(email);
           }
         } catch (err) {
           Modal.error({
@@ -139,9 +150,9 @@ class EditEmail extends Component {
   };
 
   sendRegistrationEmail = () => {
-    const { participantEmails, extraInformation } = this.state;
+    const { extraInformation, checkedList, participantEmails } = this.state;
     const {
-      sessionId: _id,
+      sessionId,
       sessionDate,
       sessionType,
       trainers,
@@ -151,15 +162,13 @@ class EditEmail extends Component {
       address,
       sendEmailReminder,
       type,
+      canAddParticipants,
     } = this.props;
 
-    const recipients = participantEmails.map(email => {
-      return { ...email, status: 'sent' };
-    });
-
     const emailData = {
-      _id,
-      recipients,
+      sessionId,
+      // should be sent plain
+      recipients: canAddParticipants ? participantEmails : checkedList,
       sendDate: new Date(),
       sessionDate,
       sessionType,
@@ -255,8 +264,8 @@ class EditEmail extends Component {
 
   // to handle individual emails checkboxes changes
   onChangeCheckbox = checkedList => {
-    const { participantEmails, plainNewEmails } = this.state;
-    const isAllChecked = checkedList.length === participantEmails.length;
+    const { plainAllEmails, plainNewEmails } = this.state;
+    const isAllChecked = checkedList.length === plainAllEmails.length;
     const isNewChecked =
       plainNewEmails.length > 0 &&
       checkedList.length > 0 &&
@@ -265,7 +274,7 @@ class EditEmail extends Component {
     this.setState({
       checkedList,
       indeterminateAll:
-        !!checkedList.length && checkedList.length < participantEmails.length,
+        !!checkedList.length && checkedList.length < plainAllEmails.length,
       isAllChecked,
       isNewChecked,
     });
@@ -415,7 +424,7 @@ class EditEmail extends Component {
                       mode="tags"
                       id="participantEmails"
                       // get emails string array
-                      value={participantEmails.map(item => item.email)}
+                      value={participantEmails}
                       placeholder="Type or paste the email addresses here"
                       onChange={this.handleUpdateEmails}
                       style={{ width: '100%' }}
@@ -423,8 +432,8 @@ class EditEmail extends Component {
                       onBlur={this.onSelectBlur}
                       onFocus={this.onSelectFocus}
                     >
-                      {participantEmails.map(item => (
-                        <Option value={item.email}>{item.email}</Option>
+                      {participantEmails.map(email => (
+                        <Option value={email}>{email}</Option>
                       ))}
                     </Select>
                   ) : (

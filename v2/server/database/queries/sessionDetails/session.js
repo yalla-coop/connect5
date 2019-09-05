@@ -135,7 +135,10 @@ const updateAttendeesList = ({
           session.participantsEmails.id(participant._id).status = status;
         }
         delete newEmails[participant.email];
-      } else if (participant.status === status && !isPartialList) {
+      } else if (
+        (participant.status === status && !isPartialList) ||
+        (participant.status === 'sent' && status === 'new' && !isPartialList)
+      ) {
         // delete
         deletedEmailsIds.push(participant._id);
         delete newEmails[participant.email];
