@@ -1,11 +1,12 @@
-/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Select, Checkbox, message, Tooltip, Button as AntButton } from 'antd';
-import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
-import { updateSentEmails } from '../../../../actions/InviteAndPromoteAction';
-// import { pattern } from '../../../../constants/regex';
+import * as Yup from 'yup';
+
 // ANTD COMPONENTS
+import { Select, message, Tooltip, Button as AntButton, Modal } from 'antd';
+// Actions
+import { fetchSessionDetails } from '../../../../actions/groupSessionsAction';
+import { updateSessionAttendeesList } from '../../../../actions/sessionAction';
 
 // COMMON COMPONENTS
 import Spin from '../../../common/Spin';
@@ -25,21 +26,21 @@ import {
 
 const { Option } = Select;
 
+const emailSchema = Yup.string()
+  .email()
+  .required();
+
 class InviteeList extends Component {
   state = {
-    sendByEmail: false,
-    sendDate: Date.now(),
     err: '',
-    inviteesEmailsList: [],
-    emails: [],
-    newEmails: [],
-    deletedEmails: [],
     focused: false,
   };
 
   componentDidMount() {
     const { inviteesEmailsList } = this.props;
-    const emailsString = inviteesEmailsList.map(emailObj => emailObj.email);
+    const participantsEmails = inviteesEmailsList.map(
+      emailObj => emailObj.email
+    );
 
     let dT = null;
     try {
@@ -55,8 +56,7 @@ class InviteeList extends Component {
     document.dispatchEvent(evt);
 
     this.setState({
-      inviteesEmailsList,
-      emails: emailsString,
+      participantsEmails,
     });
   }
 
@@ -65,7 +65,7 @@ class InviteeList extends Component {
   }
 
   pasteEmails = event => {
-    const { focused, emails } = this.state;
+    const { focused, participantsEmails } = this.state;
 
     let emailsArray;
 
@@ -78,23 +78,23 @@ class InviteeList extends Component {
       }
       emailsArray = splittedEmails
         .map(item => item.trim())
-        .filter(item => !emails.includes(item));
+        .filter(item => !participantsEmails.includes(item));
 
-      this.onUpdateEmailsChange([...emails, ...emailsArray]);
+      this.onUpdateEmailsChange([...participantsEmails, ...emailsArray]);
     }
   };
 
   onCopy = () => {
-    const { emails } = this.state;
+    const { participantsEmails } = this.state;
 
-    if (emails.length) {
-      navigator.clipboard.writeText(emails.join(';'));
+    if (participantsEmails.length) {
+      navigator.clipboard.writeText(participantsEmails.join(';'));
       message.success('Copied');
     }
   };
 
   onClear = () => {
-    this.setState({ emails: [] });
+    this.setState({ participantsEmails: [] });
     this.onUpdateEmailsChange([]);
   };
 
@@ -107,80 +107,59 @@ class InviteeList extends Component {
   };
 
   onUpdateEmailsChange = values => {
-    const {
-      emails,
-      deletedEmails: oldDeletedEmails,
-      newEmails: prevNewEmails,
-    } = this.state;
+    const validEmails = [];
 
-    const deletedEmails = [...oldDeletedEmails];
-    let newEmails = [...prevNewEmails];
-    if (values.length < emails.length) {
-      emails.forEach(email => {
-        if (!values.includes(email)) {
-          if (!newEmails.includes(email)) {
-            deletedEmails.push(email);
-          } else {
-            newEmails = newEmails.filter(newEmail => newEmail !== email);
+    values.forEach(item => {
+      if (!validEmails.some(_item => _item === item)) {
+        try {
+          const validEmail = emailSchema.validateSync(item);
+
+          if (validEmail) {
+            validEmails.push(item);
           }
+        } catch (err) {
+          Modal.error({
+            title: 'Invalid!',
+            content: err.errors[0],
+          });
         }
-      });
+      }
+    });
 
-      this.setState({ emails: values, deletedEmails, newEmails });
-    } else if (values.length > emails.length) {
-      values.forEach(val => {
-        if (!emails.includes(val)) {
-          newEmails.push(val);
-        }
-      });
-      this.setState({ emails: values, newEmails });
-    }
-  };
-
-  onCheckboxChange = e => {
-    this.setState({ sendByEmail: e.target.checked });
+    this.setState({ participantsEmails: validEmails });
   };
 
   onFormSubmit = e => {
     e.preventDefault();
-    const {
-      inviteesEmailsList,
-      sendByEmail,
-      newEmails,
-      deletedEmails,
-    } = this.state;
+    const { participantsEmails } = this.state;
 
     this.setState({ err: '' });
 
-    if (sendByEmail && newEmails.length === 0) {
-      return this.setState({
-        err: 'You must insert a new email to send a message',
-      });
-    }
     const {
-      updateSentEmails: updateSentEmailsActionCreator,
+      updateSessionAttendeesList: updateSessionAttendeesListAction,
       sessionDetails,
     } = this.props;
 
-    const { _id: sessionId, address } = sessionDetails;
+    const { _id: sessionId } = sessionDetails;
 
-    return updateSentEmailsActionCreator({
+    return updateSessionAttendeesListAction({
       sessionId,
-      inviteesEmailsList,
-      newEmails,
-      deletedEmails,
-      sendByEmail,
-      address,
+      participantsEmails: participantsEmails.map(item => ({
+        email: item,
+        status: 'new',
+      })),
+      status: 'new',
+      isPartial: false,
     });
   };
 
   render() {
     const { err } = this.state;
     const { onUpdateEmailsChange, onFormSubmit } = this;
-    const { inviteesEmailsList, emails } = this.state;
+    const { participantsEmails } = this.state;
     const { loading, onClose } = this.props;
 
-    if (!inviteesEmailsList) {
+    if (!participantsEmails) {
       return <Spin />;
     }
 
@@ -201,7 +180,7 @@ class InviteeList extends Component {
                       icon="copy"
                       ghost
                       onClick={this.onCopy}
-                      disabled={!emails.length}
+                      disabled={!participantsEmails.length}
                     />
                   </Tooltip>
                   <Tooltip placement="top" title="Delete">
@@ -210,7 +189,7 @@ class InviteeList extends Component {
                       icon="delete"
                       ghost
                       onClick={this.onClear}
-                      disabled={!emails.length}
+                      disabled={!participantsEmails.length}
                     />
                   </Tooltip>
                 </IconsWrapper>
@@ -219,26 +198,22 @@ class InviteeList extends Component {
                   size="large"
                   placeholder="emails"
                   onChange={onUpdateEmailsChange}
-                  value={emails}
+                  value={participantsEmails}
                   style={{ width: '100%', height: '100%' }}
                   onBlur={this.onSelectBlur}
                   onFocus={this.onSelectFocus}
                 >
-                  {inviteesEmailsList &&
-                    inviteesEmailsList.map(obj => (
-                      <Option key={obj.email} value={obj.email}>
-                        {obj.email}
+                  {participantsEmails &&
+                    participantsEmails.map(email => (
+                      <Option key={email} value={email}>
+                        {email}
                       </Option>
                     ))}
                 </Select>
               </SelecetWrapper>
             </InputDiv>
             <div>{err}</div>
-            <InputDiv>
-              <Checkbox onChange={this.onCheckboxChange}>
-                Email invitation to new emails I have just added
-              </Checkbox>
-            </InputDiv>
+
             <InputDiv>
               <Button
                 type="primary"
@@ -281,5 +256,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchSessionDetails, updateSentEmails }
+  { fetchSessionDetails, updateSessionAttendeesList }
 )(InviteeList);

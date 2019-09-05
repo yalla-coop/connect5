@@ -79,7 +79,7 @@ class SendInvitation extends Component {
 
   render() {
     const { emails } = this.state;
-    const { onClose, sessionDetails, name } = this.props;
+    const { onClose, sessionDetails, name, handleAddEmailsClick } = this.props;
     if (!emails) {
       return <h3>No emails to sent</h3>;
     }
@@ -104,6 +104,7 @@ class SendInvitation extends Component {
           sessionId={sessionDetails._id}
           extraInfo="extraInfo"
           backCallback={onClose}
+          handleAddEmailsClick={handleAddEmailsClick}
         />
       </>
     );

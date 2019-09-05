@@ -68,6 +68,11 @@ class InviteAndPromote extends Component {
     }
   };
 
+  handleAddEmailsClick = () => {
+    const key = 'view-invitees';
+    this.setState({ visible: true, drawerKey: key });
+  };
+
   render() {
     const { visible, drawerKey } = this.state;
     const { sessionDetails } = this.props;
@@ -136,6 +141,7 @@ class InviteAndPromote extends Component {
               id={id}
               sessionDetails={sessionDetails}
               onClose={this.onClose}
+              handleAddEmailsClick={this.handleAddEmailsClick}
             />
           </Drawer>
         </SessionTopDetailsWrapper>
@@ -145,7 +151,13 @@ class InviteAndPromote extends Component {
 }
 export default connect(null)(InviteAndPromote);
 
-const DrawerContent = ({ drawerKey, id, sessionDetails, onClose }) => {
+const DrawerContent = ({
+  drawerKey,
+  id,
+  sessionDetails,
+  onClose,
+  handleAddEmailsClick,
+}) => {
   switch (drawerKey) {
     case 'send-invitation':
       return (
@@ -153,6 +165,7 @@ const DrawerContent = ({ drawerKey, id, sessionDetails, onClose }) => {
           onClose={onClose}
           id={id}
           sessionDetails={sessionDetails}
+          handleAddEmailsClick={handleAddEmailsClick}
         />
       );
     case 'view-invitees':

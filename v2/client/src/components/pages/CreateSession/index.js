@@ -300,6 +300,12 @@ class CreateSession extends Component {
     const { sessionCreated, extraInfo } = this.state;
     const { role, inputData, loading, createdSession, name } = this.props;
 
+    const trainers = createdSession.trainers
+      .map(
+        trainer => `${trainer.name[0].toUpperCase()}${trainer.name.slice(1)}`
+      )
+      .join(' & ');
+
     const {
       inviteesNumber,
       err,
@@ -347,12 +353,13 @@ class CreateSession extends Component {
           sessionDate={createdSession.date}
           sessionType={createdSession.type}
           address={createdSession.address}
-          trainers={createdSession.trainers.map(item => item.name).join(' & ')}
+          trainers={trainers}
           startTime={createdSession.startTime}
           endTime={createdSession.endTime}
           shortId={createdSession.shortId}
           sessionId={createdSession._id}
           extraInfo={extraInfo}
+          canAddParticipants
         />
       );
     }

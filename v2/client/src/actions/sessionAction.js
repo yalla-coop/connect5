@@ -74,7 +74,7 @@ export const getSessionDetails = shortId => dispatch => {
 
 export const updateSessionAttendeesList = ({
   sessionId,
-  attendeesList,
+  participantsEmails,
   status,
   handleCloseDrawer,
 }) => dispatch => {
@@ -85,7 +85,7 @@ export const updateSessionAttendeesList = ({
 
   axios
     .patch(`/api/sessions/${sessionId}/attendeesList`, {
-      attendeesList,
+      participantsEmails,
       status,
     })
     .then(res => {
@@ -116,7 +116,7 @@ export const updateSessionAttendeesList = ({
 };
 
 export const sendEmailReminder = (
-  { sessionId, ...emailData },
+  { sessionId, type, ...emailData },
   handleCloseDrawer
 ) => dispatch => {
   // start loading
@@ -125,7 +125,10 @@ export const sendEmailReminder = (
   });
 
   axios
-    .post(`/api/sessions/${sessionId}/emails?type=reminder`, emailData)
+    .post(`/api/sessions/${sessionId}/emails?type=${type}`, {
+      ...emailData,
+      type,
+    })
     .then(res => {
       dispatch({
         type: UPDATE_ATTENDEES_SUCCESS,

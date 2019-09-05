@@ -103,20 +103,20 @@ module.exports.updateEmailStatus = async ({ sessionId, email, status }) => {
  *
  * @param {Object} data - the data object
  * @param {String} data.sessionId - the id of the session to be updated
- * @param {Object[]} data.attendeesList - the attendees list to be updated
- * @param {Object[]} data.attendeesList[].email - the attendee email
- * @param {Object[]} data.attendeesList[].status - the attendee status
+ * @param {Object[]} data.participantsEmails - the attendees list to be updated
+ * @param {Object[]} data.participantsEmails[].email - the attendee email
+ * @param {Object[]} data.participantsEmails[].status - the attendee status
  * @param {Boolean} data.isPartialList - boolean value to determin if all the attendees list must updated or not
  */
 const updateAttendeesList = ({
   sessionId,
-  attendeesList,
+  participantsEmails,
   status,
   isPartialList,
 }) =>
   Session.findById(sessionId).then(session => {
     const newEmails = {};
-    attendeesList.forEach(item => {
+    participantsEmails.forEach(item => {
       newEmails[item.email] = item.email;
     });
     const deletedEmailsIds = [];
@@ -124,8 +124,16 @@ const updateAttendeesList = ({
     session.participantsEmails.forEach(participant => {
       if (Object.keys(newEmails).includes(participant.email)) {
         // update
-        // eslint-disable-next-line no-param-reassign
-        session.participantsEmails.id(participant._id).status = status;
+        // if the new status is "new" and the old one is "sent" so keep the "sent"
+        if (
+          !(
+            status === 'new' &&
+            session.participantsEmails.id(participant._id).status === 'sent'
+          )
+        ) {
+          // eslint-disable-next-line no-param-reassign
+          session.participantsEmails.id(participant._id).status = status;
+        }
         delete newEmails[participant.email];
       } else if (participant.status === status && !isPartialList) {
         // delete
@@ -145,6 +153,8 @@ const updateAttendeesList = ({
     return session.save();
   });
 
+module.exports.updateAttendeesList = updateAttendeesList;
+
 module.exports.addSentEmail = ({
   sessionId,
   emailData,
@@ -157,8 +167,6 @@ module.exports.addSentEmail = ({
     { upsert: true }
   );
 };
-
-module.exports.updateAttendeesList = updateAttendeesList;
 
 // update the emails list without send emails
 module.exports.updateInviteesList = ({

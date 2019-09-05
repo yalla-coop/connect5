@@ -73,3 +73,16 @@ export const IconsWrapper = styled.div`
   min-width: 90px;
   margin-bottom: 5px;
 `;
+
+export const AddEmailsButton = styled.button`
+  width: 100%;
+  padding: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
+`;

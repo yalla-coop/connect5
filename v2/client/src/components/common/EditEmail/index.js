@@ -27,6 +27,7 @@ import EmailTemplate from '../EmailTemplate';
 import Button from '../Button';
 
 import { sendEmailInvitation as sendEmailInvitationAction } from '../../../actions/InviteAndPromoteAction';
+import { sendEmailReminder as sendEmailReminderAction } from '../../../actions/sessionAction';
 
 import {
   Wrapper,
@@ -37,6 +38,7 @@ import {
   Label,
   SelecetWrapper,
   IconsWrapper,
+  AddEmailsButton,
 } from './EditEmail.style';
 
 const customPanelStyle = {
@@ -147,14 +149,15 @@ class EditEmail extends Component {
       endTime,
       shortId,
       address,
-      sendEmailInvitation,
+      sendEmailReminder,
+      type,
     } = this.props;
 
     const recipients = participantEmails.map(email => {
       return { ...email, status: 'sent' };
     });
 
-    const InviteData = {
+    const emailData = {
       _id,
       recipients,
       sendDate: new Date(),
@@ -168,9 +171,11 @@ class EditEmail extends Component {
       address,
       extraInformation,
       confirmedEmails: [],
+      type,
     };
 
-    sendEmailInvitation(InviteData, this.done);
+    sendEmailReminder(emailData, this.done);
+    // sendEmailReminder(emailData, this.handleCloseDrawer);
   };
 
   done = () => {
@@ -255,7 +260,7 @@ class EditEmail extends Component {
     const isNewChecked =
       plainNewEmails.length > 0 &&
       checkedList.length > 0 &&
-      checkedList.every(item => plainNewEmails.includes(item));
+      plainNewEmails.every(item => checkedList.includes(item));
 
     this.setState({
       checkedList,
@@ -269,6 +274,7 @@ class EditEmail extends Component {
   // to handle toggle the checkbox for "seslect all" checbox
   onCheckAllChange = e => {
     const { plainAllEmails } = this.state;
+
     this.setState({
       checkedList: e.target.checked ? plainAllEmails : [],
       indeterminateAll: false,
@@ -309,6 +315,7 @@ class EditEmail extends Component {
       backCallback,
       preSurveyLink,
       postSurveyLink,
+      handleAddEmailsClick,
     } = this.props;
 
     const {
@@ -468,7 +475,10 @@ class EditEmail extends Component {
                           >
                             <Row id="selectGroup">
                               {participantEmails.map(item => (
-                                <Col span={24}>
+                                <Col
+                                  span={24}
+                                  style={{ marginBottom: '0.5rem' }}
+                                >
                                   <Checkbox value={item.email}>
                                     <span
                                       style={{
@@ -485,7 +495,17 @@ class EditEmail extends Component {
                               ))}
                             </Row>
                           </Checkbox.Group>
-                          <div>d</div>
+                          <div
+                            style={{
+                              width: '90%',
+                              borderTop: '1px solid #E9E9E9',
+                              margin: '0.5rem auto',
+                            }}
+                          >
+                            <AddEmailsButton onClick={handleAddEmailsClick}>
+                              Add new email(s)
+                            </AddEmailsButton>
+                          </div>
                         </Panel>
                       </Collapse>
                     </div>
@@ -562,5 +582,8 @@ class EditEmail extends Component {
 
 export default connect(
   null,
-  { sendEmailInvitation: sendEmailInvitationAction }
+  {
+    sendEmailInvitation: sendEmailInvitationAction,
+    sendEmailReminder: sendEmailReminderAction,
+  }
 )(EditEmail);
