@@ -26,7 +26,6 @@ import history from '../../../history';
 import EmailTemplate from '../EmailTemplate';
 import Button from '../Button';
 
-import { sendEmailInvitation as sendEmailInvitationAction } from '../../../actions/InviteAndPromoteAction';
 import { sendEmailReminder as sendEmailReminderAction } from '../../../actions/sessionAction';
 
 import {
@@ -592,7 +591,6 @@ class EditEmail extends Component {
 export default connect(
   null,
   {
-    sendEmailInvitation: sendEmailInvitationAction,
     sendEmailReminder: sendEmailReminderAction,
   }
 )(EditEmail);
