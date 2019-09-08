@@ -30,7 +30,7 @@ module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
       updateOne: {
         filter: { _id: trainerId },
         update: {
-          $unset: { localLead: '' },
+          $pullAll: { localLead: [mongoose.Types.ObjectId(localLeadId)] },
         },
       },
     },
@@ -44,7 +44,7 @@ module.exports.removeLocalLeadFromUser = localLeadId => {
       updateMany: {
         filter: { localLead: localLeadId },
         update: {
-          $unset: { localLead: '' },
+          $pullAll: { localLead: [mongoose.Types.ObjectId(localLeadId)] },
         },
       },
     },

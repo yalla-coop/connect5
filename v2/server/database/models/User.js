@@ -23,10 +23,12 @@ const userSchema = new Schema(
       expiresIn: Date,
     },
     //  the trainer's local lead
-    localLead: {
-      type: Schema.Types.ObjectId,
-      ref: 'users',
-    },
+    localLead: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+      },
+    ],
     // group of trainers that user is co-ordinating
     // list of trainers ID
     trainersGroup: [
@@ -54,10 +56,6 @@ const userSchema = new Schema(
     organization: {
       type: String,
       trim: true,
-    },
-    givenPermission: {
-      type: Boolean,
-      default: true,
     },
   },
   {

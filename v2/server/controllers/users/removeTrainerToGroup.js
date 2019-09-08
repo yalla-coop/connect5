@@ -13,7 +13,7 @@ module.exports = async (req, res, next) => {
       await removeTrainerFromGroup(id, trainerId);
       return res.send();
     } catch (err) {
-      return next(boom.badImplementation());
+      return next(boom.badImplementation(err));
     }
   } else {
     return next(boom.unauthorized());

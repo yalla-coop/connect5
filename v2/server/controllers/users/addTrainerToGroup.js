@@ -13,6 +13,8 @@ const { getUserByEmail, update } = require('./../../database/queries/users');
 module.exports = async (req, res, next) => {
   const { name, email, newUser, localLead, region, localLeadName } = req.body;
 
+  console.log('req.body', req.body, localLead);
+
   const { user } = req;
   if (user.role !== 'localLead') {
     return next(boom.unauthorized());
@@ -20,6 +22,7 @@ module.exports = async (req, res, next) => {
 
   try {
     let trainer = await getUserByEmail(email);
+    console.log('trainer', trainer);
     const randomPassword = shortid.generate();
 
     if (newUser && !trainer) {
@@ -28,19 +31,21 @@ module.exports = async (req, res, next) => {
         email,
         password: randomPassword,
         region,
-        localLead,
+        localLead: [localLead],
         role: 'trainer',
-        givenPermission: false,
       });
     }
 
-    if (!trainer) {
-      return next(boom.notFound('This email is not used'));
-    }
+    // if (!trainer) {
+    //   return next(boom.notFound('This email is not used'));
+    // }
+
+    console.log('trainer', trainer);
 
     await addTrainertoGroup(localLead, trainer._id);
 
-    await update(trainer._id, { localLead });
+    await update(trainer._id, { localLead: [] });
+
     if (process.env.NODE_ENV === 'production') {
       await sendNewTrainerLoginDetails(
         name,
