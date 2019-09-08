@@ -80,7 +80,7 @@ class EditEmail extends Component {
     isEditView: false,
     // plain text if canAddParticipants = true
     // {email, status} if canAddParticipants = false
-    participantEmails: [],
+    participantsEmails: [],
     isCollapsOpen: true,
     checkedList: defaultCheckedList,
     indeterminateAll: false,
@@ -90,13 +90,14 @@ class EditEmail extends Component {
 
   componentDidMount() {
     const {
-      participantEmails,
+      participantsEmails,
       canAddParticipants,
       sessionType,
       shortId,
       trainers: trainersArrayOfObject,
     } = this.props;
 
+    console.log(this.props);
     // get surveys links
     const surveyType = {
       1: ['pre-day-1', 'post-day-1'],
@@ -127,22 +128,22 @@ class EditEmail extends Component {
       .join(' & ');
 
     // set emails into state
-    const plainAllEmails = participantEmails.map(item => item.email);
-    const plainNewEmails = participantEmails
+    const plainAllEmails = participantsEmails.map(item => item.email);
+    const plainNewEmails = participantsEmails
       .filter(item => item.status === 'new')
       .map(item => item.email);
-
+    console.log({ participantsEmails });
     // plain text if canAddParticipants = true
     // {email, status} if canAddParticipants = false
-    let newParticipantEmails;
+    let newparticipantsEmails;
 
     if (canAddParticipants) {
-      newParticipantEmails = plainAllEmails;
+      newparticipantsEmails = plainAllEmails;
     } else {
-      newParticipantEmails = participantEmails;
+      newparticipantsEmails = participantsEmails;
     }
     this.setState({
-      participantEmails: newParticipantEmails,
+      participantsEmails: newparticipantsEmails,
       plainAllEmails,
       plainNewEmails,
       checkedList: plainAllEmails,
@@ -185,14 +186,14 @@ class EditEmail extends Component {
       }
     });
 
-    this.setState({ participantEmails: validEmails });
+    this.setState({ participantsEmails: validEmails });
   };
 
   sendRegistrationEmail = () => {
     const {
       extraInformation,
       checkedList,
-      participantEmails,
+      participantsEmails,
       trainers,
     } = this.state;
 
@@ -212,7 +213,7 @@ class EditEmail extends Component {
     const emailData = {
       sessionId,
       // should be sent plain
-      recipients: canAddParticipants ? participantEmails : checkedList,
+      recipients: canAddParticipants ? participantsEmails : checkedList,
       sendDate: new Date(),
       sessionDate,
       sessionType,
@@ -253,10 +254,10 @@ class EditEmail extends Component {
   };
 
   onCopy = () => {
-    const { participantEmails } = this.state;
+    const { participantsEmails } = this.state;
 
-    if (participantEmails.length) {
-      const copyText = document.getElementById('participantEmails');
+    if (participantsEmails.length) {
+      const copyText = document.getElementById('participantsEmails');
       let range;
       let selection;
       if (document.body.createTextRange) {
@@ -419,7 +420,7 @@ class EditEmail extends Component {
     const {
       isEditView,
       extraInformation,
-      participantEmails,
+      participantsEmails,
       isCollapsOpen,
       checkedList,
       indeterminateAll,
@@ -540,9 +541,9 @@ class EditEmail extends Component {
                   {canAddParticipants ? (
                     <Select
                       mode="tags"
-                      id="participantEmails"
+                      id="participantsEmails"
                       // get emails string array
-                      value={participantEmails}
+                      value={participantsEmails}
                       placeholder="Type or paste the email addresses here"
                       onChange={this.handleUpdateEmails}
                       style={{ width: '100%' }}
@@ -550,7 +551,7 @@ class EditEmail extends Component {
                       onBlur={this.onSelectBlur}
                       onFocus={this.onSelectFocus}
                     >
-                      {participantEmails.map(email => (
+                      {participantsEmails.map(email => (
                         <Option value={email} key={email}>
                           {email}
                         </Option>
@@ -609,7 +610,7 @@ class EditEmail extends Component {
                               value={checkedList}
                             >
                               <Row id="selectGroup">
-                                {participantEmails.map(item => (
+                                {participantsEmails.map(item => (
                                   <Col
                                     span={24}
                                     style={{ marginBottom: '0.5rem' }}

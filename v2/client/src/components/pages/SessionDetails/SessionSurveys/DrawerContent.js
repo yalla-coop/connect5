@@ -115,7 +115,7 @@ const DrawerContent = ({
     case 'sendSurveyLinkEmail':
       return (
         <EditEmail
-          participantEmails={[]}
+          participantsEmails={[]}
           type="surveyLink"
           trainer="name"
           sessionDate={sessionDetails.date}

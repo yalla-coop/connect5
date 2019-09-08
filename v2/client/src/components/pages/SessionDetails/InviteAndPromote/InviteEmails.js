@@ -15,7 +15,7 @@ import {
   List,
 } from './InviteAndPromote.style';
 
-class SendInvitation extends Component {
+class InviteEmails extends Component {
   render() {
     const { sessionDetails, emailInfo } = this.props;
     const { startTime, endTime } = sessionDetails;
@@ -100,4 +100,4 @@ class SendInvitation extends Component {
 export default connect(
   null,
   { fetchSessionDetails }
-)(SendInvitation);
+)(InviteEmails);

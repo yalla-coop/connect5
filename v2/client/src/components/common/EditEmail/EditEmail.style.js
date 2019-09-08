@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   max-width: 678px;
   padding: 72px 5%;
 
-  #participantEmails {
+  #participantsEmails {
     .ant-select-selection.ant-select-selection--single {
       height: 5rem;
     }

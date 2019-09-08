@@ -86,10 +86,12 @@ const DrawerContent = ({
     // Invite And Promote
     case 'send-invitation':
       return (
-        <SendInvitation
-          sessionDetails={sessionDetails}
-          handleAddEmailsClick={handleAddEmailsClick}
-        />
+        <>
+          <SendInvitation
+            sessionDetails={sessionDetails}
+            handleAddEmailsClick={handleAddEmailsClick}
+          />
+        </>
       );
     case 'view-invitees':
       return (

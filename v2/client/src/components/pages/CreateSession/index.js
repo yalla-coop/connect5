@@ -341,7 +341,7 @@ class CreateSession extends Component {
       return (
         <EditEmail
           successMessage="Session created!"
-          participantEmails={createdSession.participantsEmails}
+          participantsEmails={createdSession.participantsEmails}
           type="registration"
           trainer={name}
           sessionDate={createdSession.date}

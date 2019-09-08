@@ -9,7 +9,7 @@ const SendReminderEmails = ({ sessionDetails, handleAddEmailsClick, name }) => {
 
   return (
     <EditEmail
-      participantEmails={confirmedEmails}
+      participantsEmails={confirmedEmails}
       type="reminder"
       trainer={name}
       sessionDate={sessionDetails.date}

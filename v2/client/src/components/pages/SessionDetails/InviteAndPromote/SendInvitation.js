@@ -5,32 +5,22 @@ import { connect } from 'react-redux';
 import EditEmail from '../../../common/EditEmail';
 
 class SendInvitation extends Component {
-  state = {
-    participantsEmails: [],
-  };
+  state = {};
 
-  componentDidMount() {
-    const { sessionDetails } = this.props;
-    const { participantsEmails } = sessionDetails;
+  render() {
+    const { onClose, sessionDetails, name, handleAddEmailsClick } = this.props;
+
     const emails = [];
 
-    participantsEmails.forEach(email => {
+    sessionDetails.participantsEmails.forEach(email => {
       if (email.status === 'new' || email.status === 'sent') {
         emails.push({ email: email.email, status: email.status });
       }
     });
-
-    this.setState({ participantsEmails: emails });
-  }
-
-  render() {
-    const { participantsEmails } = this.state;
-    const { onClose, sessionDetails, name, handleAddEmailsClick } = this.props;
-
     return (
       <>
         <EditEmail
-          participantEmails={participantsEmails}
+          participantsEmails={emails}
           // registration == invitation
           type="registration"
           trainer={name}

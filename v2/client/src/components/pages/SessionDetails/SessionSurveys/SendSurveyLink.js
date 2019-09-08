@@ -17,7 +17,7 @@ const SendSurveyLink = ({
 
   return (
     <EditEmail
-      participantEmails={confirmedEmails}
+      participantsEmails={confirmedEmails}
       type="surveyLink"
       trainer={name}
       sessionDate={sessionDetails.date}
