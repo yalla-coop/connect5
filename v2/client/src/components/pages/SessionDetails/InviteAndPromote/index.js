@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Icon, Drawer } from 'antd';
+import { Icon } from 'antd';
 import Swal from 'sweetalert2';
 
-import SendInvitation from './SendInvitation';
-import InviteeList from './InviteeList';
-import EmailsList from '../../../common/List/EmailsList';
 import AntdModal from '../../../common/AntdModal';
 
 import {
@@ -20,17 +17,6 @@ import {
 } from '../SessionDetails.Style';
 
 class InviteAndPromote extends Component {
-  state = { visible: false, drawerKey: null };
-
-  onClose = () => {
-    this.setState({ visible: false, drawerKey: null });
-  };
-
-  DrawerOpen = e => {
-    const { key } = e.target.dataset;
-    this.setState({ visible: true, drawerKey: key });
-  };
-
   // Copy the link of the survey and fire pop up for success
   onCopyClick = () => {
     const copyText = document.getElementById('registration-link');
@@ -68,16 +54,10 @@ class InviteAndPromote extends Component {
     }
   };
 
-  handleAddEmailsClick = () => {
-    const key = 'view-invitees';
-    this.setState({ visible: true, drawerKey: key });
-  };
-
   render() {
-    const { visible, drawerKey } = this.state;
-    const { sessionDetails } = this.props;
+    const { sessionDetails, handleDrawerOpen } = this.props;
     const { onCopyClick } = this;
-    const { id, shortId } = sessionDetails;
+    const { shortId } = sessionDetails;
     const content =
       'This section lets you invite people to your session. To add invitees, please enter their email address below. This will let you automatically email them an invite with the link to register. You can also copy the link and share it manually on social media etc. Once someone registers they will appear in the manage attendees section.';
 
@@ -111,69 +91,26 @@ class InviteAndPromote extends Component {
             </RegistrationDiv>
           </SubDetails>
           <SubDetails>
-            <Row onClick={this.DrawerOpen} data-key="send-invitation">
+            <Row onClick={handleDrawerOpen} data-key="send-invitation">
               <DrawerLink>Send Email Invitation</DrawerLink>
               <Icon type="right" />
             </Row>
           </SubDetails>
           <SubDetails>
-            <Row onClick={this.DrawerOpen} data-key="view-invitees">
+            <Row onClick={handleDrawerOpen} data-key="view-invitees">
               <DrawerLink>Manage invitees</DrawerLink>
               <Icon type="right" />
             </Row>
           </SubDetails>
           <SubDetails>
-            <Row onClick={this.DrawerOpen} data-key="view-emails">
+            <Row onClick={handleDrawerOpen} data-key="view-emails">
               <DrawerLink>View emails you have sent</DrawerLink>
               <Icon type="right" />
             </Row>
           </SubDetails>
-          <Drawer
-            placement="left"
-            width="100%"
-            height="100%"
-            onClose={this.onClose}
-            visible={visible}
-            closable
-          >
-            <DrawerContent
-              drawerKey={drawerKey}
-              id={id}
-              sessionDetails={sessionDetails}
-              onClose={this.onClose}
-              handleAddEmailsClick={this.handleAddEmailsClick}
-            />
-          </Drawer>
         </SessionTopDetailsWrapper>
       </>
     );
   }
 }
 export default connect(null)(InviteAndPromote);
-
-const DrawerContent = ({
-  drawerKey,
-  id,
-  sessionDetails,
-  onClose,
-  handleAddEmailsClick,
-}) => {
-  switch (drawerKey) {
-    case 'send-invitation':
-      return (
-        <SendInvitation
-          onClose={onClose}
-          id={id}
-          sessionDetails={sessionDetails}
-          handleAddEmailsClick={handleAddEmailsClick}
-        />
-      );
-    case 'view-invitees':
-      return <InviteeList onClose={onClose} dataList={sessionDetails} />;
-    case 'view-emails':
-      return <EmailsList onClose={onClose} dataList={sessionDetails} />;
-
-    default:
-      return null;
-  }
-};

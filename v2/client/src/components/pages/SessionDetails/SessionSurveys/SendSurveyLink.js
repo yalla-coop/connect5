@@ -2,7 +2,15 @@ import React from 'react';
 
 import EditEmail from '../../../common/EditEmail';
 
-const SendReminderEmails = ({ sessionDetails, handleAddEmailsClick, name }) => {
+const SendSurveyLink = ({
+  sessionDetails,
+  handleAddEmailsClick,
+  name,
+  isSchedule,
+  surveyType,
+}) => {
+  console.log({ surveyType }, '222222222222');
+
   const confirmedEmails = sessionDetails.participantsEmails.filter(
     item => item.status === 'confirmed'
   );
@@ -10,7 +18,7 @@ const SendReminderEmails = ({ sessionDetails, handleAddEmailsClick, name }) => {
   return (
     <EditEmail
       participantEmails={confirmedEmails}
-      type="reminder"
+      type="surveyLink"
       trainer={name}
       sessionDate={sessionDetails.date}
       sessionType={sessionDetails.type}
@@ -21,8 +29,10 @@ const SendReminderEmails = ({ sessionDetails, handleAddEmailsClick, name }) => {
       shortId={sessionDetails.shortId}
       sessionId={sessionDetails._id}
       handleAddEmailsClick={handleAddEmailsClick}
+      isSchedule={isSchedule}
+      surveyType={surveyType}
     />
   );
 };
 
-export default SendReminderEmails;
+export default SendSurveyLink;

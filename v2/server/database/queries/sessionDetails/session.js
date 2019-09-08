@@ -114,7 +114,7 @@ const updateAttendeesList = ({
   status,
   isPartialList,
 }) =>
-  Session.findById(sessionId).then(session => {
+  Session.findById(sessionId).then(async session => {
     const newEmails = {};
     participantsEmails.forEach(item => {
       newEmails[item.email] = item.email;
@@ -153,7 +153,9 @@ const updateAttendeesList = ({
       session.participantsEmails.push({ email, status });
     });
 
-    return session.save();
+    // eslint-disable-next-line no-param-reassign
+    session.updatedAt = new Date();
+    await session.save();
   });
 
 module.exports.updateAttendeesList = updateAttendeesList;

@@ -9,8 +9,6 @@ import Header from '../../../common/Header';
 // STYLE
 import {
   EmailInfoWrapper,
-  BackLink,
-  BackContainer,
   EmailInfo,
   InfoTitle,
   SessionInfoTitle,
@@ -19,7 +17,7 @@ import {
 
 class SendInvitation extends Component {
   render() {
-    const { sessionDetails, onClose, emailInfo } = this.props;
+    const { sessionDetails, emailInfo } = this.props;
     const { startTime, endTime } = sessionDetails;
     const {
       date: emailDate,
@@ -45,9 +43,6 @@ class SendInvitation extends Component {
     return (
       <EmailInfoWrapper>
         <Header type="view" label="Invite Emails" />
-        <BackContainer>
-          <BackLink onClick={onClose}>{`< Back`}</BackLink>
-        </BackContainer>
         <EmailInfo>
           <InfoTitle>
             Date:

@@ -12,7 +12,11 @@ import {
   Checkbox,
   Row,
   Col,
+  DatePicker,
+  TimePicker,
 } from 'antd';
+import moment from 'moment';
+import 'moment-timezone';
 
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
@@ -26,7 +30,10 @@ import history from '../../../history';
 import EmailTemplate from '../EmailTemplate';
 import Button from '../Button';
 
-import { sendEmailReminder as sendEmailReminderAction } from '../../../actions/sessionAction';
+import {
+  sendEmailReminder as sendEmailReminderAction,
+  scheduleNewEmail as scheduleNewEmailAction,
+} from '../../../actions/sessionAction';
 
 import {
   Wrapper,
@@ -39,6 +46,10 @@ import {
   IconsWrapper,
   AddEmailsButton,
 } from './EditEmail.style';
+
+import('moment-timezone');
+
+const format = 'HH:mm';
 
 const customPanelStyle = {
   // background: '#f7f7f7',
@@ -78,8 +89,37 @@ class EditEmail extends Component {
   };
 
   componentDidMount() {
-    const { participantEmails, canAddParticipants } = this.props;
+    const {
+      participantEmails,
+      canAddParticipants,
+      sessionType,
+      shortId,
+    } = this.props;
 
+    // get surveys links
+    const surveyType = {
+      1: ['pre-day-1', 'post-day-1'],
+      2: ['post-day-2'],
+      3: ['post-day-3'],
+      'special-2-days': ['pre-special', 'post-special'],
+      'train-trainers': ['pre-train-trainers', 'post-train-trainers'],
+    };
+
+    const links = surveyType[sessionType].map(item => {
+      const surveyURL = `${window.location.host}/survey/${item}&${shortId}`;
+      let url = `https://${surveyURL}`;
+
+      if (process.env.NODE_ENV === 'development') {
+        url = `http://${surveyURL}`;
+      }
+
+      return url;
+    });
+
+    const preSurveyLink = links.find(item => item.includes('pre'));
+    const postSurveyLink = links.find(item => item.includes('post'));
+
+    // set emails into state
     const plainAllEmails = participantEmails.map(item => item.email);
     const plainNewEmails = participantEmails
       .filter(item => item.status === 'new')
@@ -98,6 +138,8 @@ class EditEmail extends Component {
       plainAllEmails,
       plainNewEmails,
       checkedList: plainAllEmails,
+      preSurveyLink,
+      postSurveyLink,
     });
   }
 
@@ -148,6 +190,7 @@ class EditEmail extends Component {
         return this.sendRegistrationEmail();
 
       default:
+        return null;
     }
   };
 
@@ -305,6 +348,32 @@ class EditEmail extends Component {
     });
   };
 
+  handleSelectDate = (date, dateString) => {
+    this.setState({ scheduledDate: dateString });
+  };
+
+  handleSelectTime = (time, timeString) => {
+    this.setState({ selectedTime: timeString });
+  };
+
+  handleSubmitSchedule = () => {
+    const { scheduledDate, selectedTime } = this.state;
+    const { scheduleNewEmail, sessionId, surveyType } = this.props;
+    if (scheduledDate && selectedTime) {
+      const date = moment(`${scheduledDate} ${selectedTime}`);
+      scheduleNewEmail(
+        {
+          date,
+          sessionId,
+          surveyType,
+        },
+        this.handleCloseDrawer
+      );
+    } else {
+      this.setState({ error: 'Select schedule date and time' });
+    }
+  };
+
   render() {
     const {
       successMessage,
@@ -324,9 +393,8 @@ class EditEmail extends Component {
       startTime,
       endTime,
       backCallback,
-      preSurveyLink,
-      postSurveyLink,
       handleAddEmailsClick,
+      isSchedule,
     } = this.props;
 
     const {
@@ -338,8 +406,10 @@ class EditEmail extends Component {
       indeterminateAll,
       isAllChecked,
       isNewChecked,
+      preSurveyLink,
+      postSurveyLink,
+      error,
     } = this.state;
-
     return (
       <>
         <Header label="Edit Session" type="view" />
@@ -437,93 +507,124 @@ class EditEmail extends Component {
                       onFocus={this.onSelectFocus}
                     >
                       {participantEmails.map(email => (
-                        <Option value={email}>{email}</Option>
+                        <Option value={email} key={email}>
+                          {email}
+                        </Option>
                       ))}
                     </Select>
                   ) : (
-                    <div style={{ width: '100%' }}>
-                      <Collapse
-                        bordered={false}
-                        defaultActiveKey={['1']}
-                        expandIcon={({ isActive }) => (
-                          <Icon type="caret-right" rotate={isActive ? 90 : 0} />
-                        )}
-                        style={{ border: '2px solid' }}
-                        onChange={this.toggleOpenCollaps}
-                        expandIconPosition="right"
-                      >
-                        <Panel
-                          header={<div>Select from your invite list</div>}
-                          key="1"
-                          style={customPanelStyle}
+                    <>
+                      {isSchedule && (
+                        <div
+                          style={{
+                            display: 'flex',
+                            width: '100%',
+                            justifyContent: 'space-between',
+                          }}
                         >
-                          <div
-                            style={{
-                              borderBottom: '1px solid #E9E9E9',
-                              display: 'flex',
-                              width: '100%',
-                              justifyContent: 'space-between',
-                            }}
+                          <DatePicker
+                            onChange={this.handleSelectDate}
+                            placeholder="Select date"
+                            size="large"
+                            style={{ width: '60%', marginBottom: '1rem' }}
+                          />
+                          <TimePicker
+                            onChange={this.handleSelectTime}
+                            style={{ width: '35%', marginBottom: '1rem' }}
+                            format={format}
+                            minuteStep="60"
+                            size="large"
+                          />
+                        </div>
+                      )}
+                      <div style={{ width: '100%' }}>
+                        <Collapse
+                          bordered={false}
+                          defaultActiveKey={['1']}
+                          expandIcon={({ isActive }) => (
+                            <Icon
+                              type="caret-right"
+                              rotate={isActive ? 90 : 0}
+                            />
+                          )}
+                          style={{ border: '2px solid' }}
+                          onChange={this.toggleOpenCollaps}
+                          expandIconPosition="right"
+                        >
+                          <Panel
+                            header={<div>Select from your invite list</div>}
+                            key="1"
+                            style={customPanelStyle}
                           >
-                            <Checkbox
-                              indeterminate={indeterminateAll}
-                              onChange={this.onCheckAllChange}
-                              checked={isAllChecked}
+                            <div
+                              style={{
+                                borderBottom: '1px solid #E9E9E9',
+                                display: 'flex',
+                                width: '100%',
+                                justifyContent: 'space-between',
+                              }}
                             >
-                              Select all
-                            </Checkbox>
-                            {type === 'registration' && (
                               <Checkbox
-                                onChange={this.onCheckNewChange}
-                                checked={isNewChecked}
+                                indeterminate={indeterminateAll}
+                                onChange={this.onCheckAllChange}
+                                checked={isAllChecked}
                               >
-                                Select New
+                                Select all
                               </Checkbox>
-                            )}
-                          </div>
-                          <br />
-
-                          <Checkbox.Group
-                            style={{ width: '100%' }}
-                            onChange={this.onChangeCheckbox}
-                            value={checkedList}
-                          >
-                            <Row id="selectGroup">
-                              {participantEmails.map(item => (
-                                <Col
-                                  span={24}
-                                  style={{ marginBottom: '0.5rem' }}
+                              {type === 'registration' && (
+                                <Checkbox
+                                  onChange={this.onCheckNewChange}
+                                  checked={isNewChecked}
                                 >
-                                  <Checkbox value={item.email}>
-                                    <span
-                                      style={{
-                                        width: '80%',
-                                        display: 'inline-flex',
-                                        justifyContent: 'space-between',
-                                      }}
-                                    >
-                                      {item.email}
-                                      <span>{item.status}</span>
-                                    </span>
-                                  </Checkbox>
-                                </Col>
-                              ))}
-                            </Row>
-                          </Checkbox.Group>
-                          <div
-                            style={{
-                              width: '90%',
-                              borderTop: '1px solid #E9E9E9',
-                              margin: '0.5rem auto',
-                            }}
-                          >
-                            <AddEmailsButton onClick={handleAddEmailsClick}>
-                              Add new email(s)
-                            </AddEmailsButton>
-                          </div>
-                        </Panel>
-                      </Collapse>
-                    </div>
+                                  Select New
+                                </Checkbox>
+                              )}
+                            </div>
+                            <br />
+
+                            <Checkbox.Group
+                              style={{ width: '100%' }}
+                              onChange={this.onChangeCheckbox}
+                              value={checkedList}
+                            >
+                              <Row id="selectGroup">
+                                {participantEmails.map(item => (
+                                  <Col
+                                    span={24}
+                                    style={{ marginBottom: '0.5rem' }}
+                                    key={item.email}
+                                  >
+                                    <Checkbox value={item.email}>
+                                      <span
+                                        style={{
+                                          width: '80%',
+                                          display: 'inline-flex',
+                                          justifyContent: 'space-between',
+                                        }}
+                                      >
+                                        {item.email}
+                                        <span>{item.status}</span>
+                                      </span>
+                                    </Checkbox>
+                                  </Col>
+                                ))}
+                              </Row>
+                            </Checkbox.Group>
+                            <div
+                              style={{
+                                width: '90%',
+                                borderTop: '1px solid #E9E9E9',
+                                margin: '0.5rem auto',
+                              }}
+                            >
+                              <AddEmailsButton onClick={handleAddEmailsClick}>
+                                Add new email(s)
+                              </AddEmailsButton>
+                            </div>
+                          </Panel>
+                        </Collapse>
+                      </div>
+                    </>
                   )}
                 </SelecetWrapper>
               </>
@@ -565,13 +666,16 @@ class EditEmail extends Component {
                 style={{ marginBottom: '1.5rem' }}
               />
               <Button
-                onClick={this.handleSendEmail}
+                onClick={
+                  isSchedule ? this.handleSubmitSchedule : this.handleSendEmail
+                }
                 type="primary"
-                label="Send email"
+                label={isSchedule ? 'Schedule Email' : 'Send Email'}
                 height="40px"
                 width="100%"
                 style={{ marginBottom: '1.5rem' }}
               />
+              {error}
               <SubHeader
                 as="button"
                 style={{
@@ -599,5 +703,6 @@ export default connect(
   null,
   {
     sendEmailReminder: sendEmailReminderAction,
+    scheduleNewEmail: scheduleNewEmailAction,
   }
 )(EditEmail);

@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 // COMMON COMPONENTS
 import EditEmail from '../../../common/EditEmail';
 
-// STYLE
-import { BackLink, BackContainer } from './InviteAndPromote.style';
-
 class SendInvitation extends Component {
+  state = {
+    participantsEmails: [],
+  };
+
   componentDidMount() {
     const { sessionDetails } = this.props;
     const { participantsEmails } = sessionDetails;
@@ -28,10 +29,6 @@ class SendInvitation extends Component {
 
     return (
       <>
-        <BackContainer>
-          <BackLink onClick={onClose}>{`< Back`}</BackLink>
-        </BackContainer>
-
         <EditEmail
           participantEmails={participantsEmails}
           // registration == invitation
@@ -45,7 +42,6 @@ class SendInvitation extends Component {
           endTime={sessionDetails.endTime}
           shortId={sessionDetails.shortId}
           sessionId={sessionDetails._id}
-          extraInfo="extraInfo"
           backCallback={onClose}
           handleAddEmailsClick={handleAddEmailsClick}
         />
