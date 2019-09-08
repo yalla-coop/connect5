@@ -15,7 +15,7 @@ const SendReminderEmails = ({ sessionDetails, handleAddEmailsClick, name }) => {
       sessionDate={sessionDetails.date}
       sessionType={sessionDetails.type}
       address={sessionDetails.address}
-      trainers={sessionDetails.trainers.map(item => item.name).join(' & ')}
+      trainers={sessionDetails.trainers}
       startTime={sessionDetails.startTime}
       endTime={sessionDetails.endTime}
       shortId={sessionDetails.shortId}

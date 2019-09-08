@@ -31,6 +31,7 @@ const sendEmailInvitation = ({
   }
   // const emailsList = recipients.map(email => email.email);
   const registrationURL = `${process.env.DOMAIN}/confirm/${shortId}`;
+
   const html = `
   <div style="text-align: left;">
     <div style="width: 100%; height: 60px; background-color: #2C3192;">
@@ -51,8 +52,9 @@ const sendEmailInvitation = ({
       <a href="${registrationURL}" style="display: inline-block; padding: 0.5rem 1rem; background: #787BB9; color: white; font-size: 16px; font-weight: 900; border-radius: 10px; box-shadow: 0px 5px 11px 1px #9e9e9e7d; text-decoration: none;">confirm our registration</a>
     </div>
 
-    <pre>${extraInformation}</pre>
+    ${extraInformation && `<pre>${extraInformation}</pre>`}
 
+    </br>
     <p>Sincerely,</p>
 
     <p>your Connect 5 team.</p>

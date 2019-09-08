@@ -5,8 +5,16 @@ const {
 
 module.exports = async (req, res, next) => {
   const { sessionId } = req.params;
-  const { surveyType, date } = req.body;
-  scheduleNewEmail({ sessionId, surveyType, date })
+  const { name } = req.user;
+  const { surveyType, date, extraInformation, recipients } = req.body;
+  scheduleNewEmail({
+    sessionId,
+    surveyType,
+    date,
+    extraInformation,
+    recipients, // array of plain emails,
+    trainer: name,
+  })
     .then(() => {
       res.json({});
     })

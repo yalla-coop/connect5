@@ -94,6 +94,7 @@ class EditEmail extends Component {
       canAddParticipants,
       sessionType,
       shortId,
+      trainers: trainersArrayOfObject,
     } = this.props;
 
     // get surveys links
@@ -119,11 +120,18 @@ class EditEmail extends Component {
     const preSurveyLink = links.find(item => item.includes('pre'));
     const postSurveyLink = links.find(item => item.includes('post'));
 
+    const trainers = trainersArrayOfObject
+      .map(
+        trainer => `${trainer.name[0].toUpperCase()}${trainer.name.slice(1)}`
+      )
+      .join(' & ');
+
     // set emails into state
     const plainAllEmails = participantEmails.map(item => item.email);
     const plainNewEmails = participantEmails
       .filter(item => item.status === 'new')
       .map(item => item.email);
+
     // plain text if canAddParticipants = true
     // {email, status} if canAddParticipants = false
     let newParticipantEmails;
@@ -140,6 +148,7 @@ class EditEmail extends Component {
       checkedList: plainAllEmails,
       preSurveyLink,
       postSurveyLink,
+      trainers,
     });
   }
 
@@ -179,28 +188,18 @@ class EditEmail extends Component {
     this.setState({ participantEmails: validEmails });
   };
 
-  handleSendEmail = () => {
-    // type of email to be sent
-    const { type } = this.props;
-    switch (type) {
-      case 'registration':
-        return this.sendRegistrationEmail();
-
-      case 'reminder':
-        return this.sendRegistrationEmail();
-
-      default:
-        return null;
-    }
-  };
-
   sendRegistrationEmail = () => {
-    const { extraInformation, checkedList, participantEmails } = this.state;
+    const {
+      extraInformation,
+      checkedList,
+      participantEmails,
+      trainers,
+    } = this.state;
+
     const {
       sessionId,
       sessionDate,
       sessionType,
-      trainers,
       startTime,
       endTime,
       shortId,
@@ -357,7 +356,12 @@ class EditEmail extends Component {
   };
 
   handleSubmitSchedule = () => {
-    const { scheduledDate, selectedTime } = this.state;
+    const {
+      scheduledDate,
+      selectedTime,
+      extraInformation,
+      checkedList,
+    } = this.state;
     const { scheduleNewEmail, sessionId, surveyType } = this.props;
     if (scheduledDate && selectedTime) {
       const date = moment(`${scheduledDate} ${selectedTime}`);
@@ -366,11 +370,28 @@ class EditEmail extends Component {
           date,
           sessionId,
           surveyType,
+          extraInformation,
+          recipients: checkedList,
         },
         this.handleCloseDrawer
       );
     } else {
       this.setState({ error: 'Select schedule date and time' });
+    }
+  };
+
+  handleAddEmailsClick = () => {
+    const { handleAddEmailsClick, type } = this.props;
+    switch (type) {
+      case 'registration':
+        return handleAddEmailsClick('view-invitees');
+
+      case 'reminder':
+      case 'surveyLink':
+        return handleAddEmailsClick('viewAttendeesList');
+
+      default:
+        return null;
     }
   };
 
@@ -389,11 +410,9 @@ class EditEmail extends Component {
       sessionDate,
       sessionType,
       address,
-      trainers,
       startTime,
       endTime,
       backCallback,
-      handleAddEmailsClick,
       isSchedule,
     } = this.props;
 
@@ -409,6 +428,7 @@ class EditEmail extends Component {
       preSurveyLink,
       postSurveyLink,
       error,
+      trainers,
     } = this.state;
     return (
       <>
@@ -492,6 +512,30 @@ class EditEmail extends Component {
                     </IconsWrapper>
                   )}
 
+                  {isSchedule && (
+                    <div
+                      style={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <DatePicker
+                        onChange={this.handleSelectDate}
+                        placeholder="Select date"
+                        size="large"
+                        style={{ width: '60%', marginBottom: '1rem' }}
+                      />
+                      <TimePicker
+                        onChange={this.handleSelectTime}
+                        style={{ width: '35%', marginBottom: '1rem' }}
+                        format={format}
+                        minuteStep="60"
+                        size="large"
+                      />
+                    </div>
+                  )}
+
                   <Label>Email addresses:</Label>
                   {canAddParticipants ? (
                     <Select
@@ -514,29 +558,6 @@ class EditEmail extends Component {
                     </Select>
                   ) : (
                     <>
-                      {isSchedule && (
-                        <div
-                          style={{
-                            display: 'flex',
-                            width: '100%',
-                            justifyContent: 'space-between',
-                          }}
-                        >
-                          <DatePicker
-                            onChange={this.handleSelectDate}
-                            placeholder="Select date"
-                            size="large"
-                            style={{ width: '60%', marginBottom: '1rem' }}
-                          />
-                          <TimePicker
-                            onChange={this.handleSelectTime}
-                            style={{ width: '35%', marginBottom: '1rem' }}
-                            format={format}
-                            minuteStep="60"
-                            size="large"
-                          />
-                        </div>
-                      )}
                       <div style={{ width: '100%' }}>
                         <Collapse
                           bordered={false}
@@ -617,7 +638,9 @@ class EditEmail extends Component {
                                 margin: '0.5rem auto',
                               }}
                             >
-                              <AddEmailsButton onClick={handleAddEmailsClick}>
+                              <AddEmailsButton
+                                onClick={this.handleAddEmailsClick}
+                              >
                                 Add new email(s)
                               </AddEmailsButton>
                             </div>
@@ -667,7 +690,9 @@ class EditEmail extends Component {
               />
               <Button
                 onClick={
-                  isSchedule ? this.handleSubmitSchedule : this.handleSendEmail
+                  isSchedule
+                    ? this.handleSubmitSchedule
+                    : this.sendRegistrationEmail
                 }
                 type="primary"
                 label={isSchedule ? 'Schedule Email' : 'Send Email'}

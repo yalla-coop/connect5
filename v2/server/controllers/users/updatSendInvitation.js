@@ -38,10 +38,10 @@ const updateSentInvitationEmails = async (req, res, next) => {
     const preSurvey = preSurveys[type];
     const sessionDate = moment(date).format('DD/MMMM/YYYY');
 
-    let preServeyLink = null;
+    let preSurveyLink = null;
 
     if (preSurvey !== undefined) {
-      preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
+      preSurveyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
     }
 
     if (sendByEmail) {
@@ -75,7 +75,7 @@ const updateSentInvitationEmails = async (req, res, next) => {
           recipients: newEmails,
         },
         type: 'registration',
-        preServeyLink,
+        preSurveyLink,
       });
     }
     // just update the db

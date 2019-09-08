@@ -164,11 +164,11 @@ module.exports.addSentEmail = ({
   sessionId,
   emailData,
   type,
-  preServeyLink,
+  preSurveyLink,
 }) => {
   return Session.updateOne(
     { _id: sessionId },
-    { $push: { sentEmails: { ...emailData, type, preServeyLink } } },
+    { $push: { sentEmails: { ...emailData, type } } },
     { upsert: true }
   );
 };

@@ -9,36 +9,39 @@ const {
   updateAttendeesList,
 } = require('./../../database/queries/sessionDetails/session');
 
-const preSurveys = {
-  1: 'pre-day-1',
-  'special-2-days': 'pre-special',
-  'train-trainers': 'pre-train-trainers',
-};
-
 module.exports = async (req, res, next) => {
   const { sessionId } = req.params;
   const { type } = req.query;
   const emailData = req.body;
 
-  const preSurvey = preSurveys[emailData.sessionType];
+  const surveyTypes = {
+    1: ['pre-day-1', 'post-day-1'],
+    2: ['post-day-2'],
+    3: ['post-day-3'],
+    'special-2-days': ['pre-special', 'post-special'],
+    'train-trainers': ['pre-train-trainers', 'post-train-trainers'],
+  };
 
-  let preServeyLink = null;
+  const links = surveyTypes[emailData.sessionType].map(item => {
+    return `${process.env.DOMAIN}/survey/${item}&${emailData.shortId}`;
+  });
 
-  if (preSurvey !== undefined) {
-    preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${emailData.shortId}`;
-  }
+  const preSurveyLink = links.find(item => item.includes('pre'));
+  const postSurveyLink = links.find(item => item.includes('post'));
 
   const sentEmailData = {
     sessionId,
     emailData,
     type,
-    preServeyLink,
+    preSurveyLink,
+    postSurveyLink,
   };
+
   let promises = [];
   if (type === 'reminder') {
     promises = [
       addSentEmail(sentEmailData),
-      sendSessionReminder({ ...emailData, preServeyLink }),
+      sendSessionReminder({ ...emailData, preSurveyLink, postSurveyLink }),
     ];
   } else if (type === 'registration') {
     const data = {
@@ -52,7 +55,7 @@ module.exports = async (req, res, next) => {
 
     promises = [
       addSentEmail(sentEmailData),
-      sendEmailInvitation({ ...emailData, preServeyLink }),
+      sendEmailInvitation(emailData),
       updateAttendeesList(data),
     ];
   }

@@ -9,19 +9,17 @@ const sendReminder = ({
   startTime,
   endTime,
   shortId,
-  preServeyLink,
+  preSurveyLink,
+  postSurveyLink,
 }) => {
   let extraParagraph;
 
-  if (preServeyLink) {
+  if (preSurveyLink) {
     extraParagraph = `
     <div>
       <p>
-        <b>Before starting the training session please follow this link and fill out the <a href="${preServeyLink}">pre-survey</a>.</b>
+        <b>Before starting the training session please follow this link and fill out the <a href="${preSurveyLink}">pre-survey</a>.</b>
       </p>
-      <div style="text-align: center;">
-        <a href="${preServeyLink}" style="display: inline-block; padding: 0.5rem 1rem; background-color: #2C3192; color: white; font-size: 20px; font-weight: 900; border-radius: 10px; box-shadow: 0px 5px 11px 1px #9e9e9e7d; text-decoration: none;">Fill the survey</a>
-      </div>
     </div>
     `;
   }
@@ -50,7 +48,15 @@ const sendReminder = ({
       certificates via the app. You will receive a link to the post-session survey  from your trainers.
     </p>
 
-    ${preServeyLink ? extraParagraph : ''}
+    ${preSurveyLink ? extraParagraph : ''}
+    </br>
+
+    <div>
+      <p>
+        <b>After the session please click this link and fill out the <a href="${postSurveyLink}">post-survey</a>.</b>
+      </p>
+    </div>
+
     </br>
     <p>Sincerely,</p>
 

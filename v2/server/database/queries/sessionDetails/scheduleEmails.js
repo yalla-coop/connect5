@@ -1,10 +1,20 @@
 const mongoose = require('mongoose');
 const Session = require('./../../models/Session');
 
-module.exports.scheduleNewEmail = ({ sessionId, surveyType, date }) =>
+module.exports.scheduleNewEmail = ({
+  sessionId,
+  surveyType,
+  date,
+  extraInformation,
+  recipients,
+}) =>
   Session.updateOne(
     { _id: sessionId },
-    { $push: { scheduledEmails: { surveyType, date } } }
+    {
+      $push: {
+        scheduledEmails: { surveyType, date, extraInformation, recipients },
+      },
+    }
   );
 
 module.exports.getScheduledEmails = () =>

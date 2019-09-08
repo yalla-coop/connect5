@@ -68,7 +68,7 @@ const sessionSchema = new Schema(
           // reminder ===  scheduled emails    "This is a friendly reminder related"
           enum: ['reminder', 'surveyLink', 'registration'],
         },
-        preServeyLink: String,
+        preSurveyLink: String,
         surveyURL: String,
         extraInformation: String,
       },
@@ -95,6 +95,9 @@ const sessionSchema = new Schema(
           type: String,
           enum: surveyTypes,
         },
+        extraInformation: String,
+        recipients: [String],
+        trainer: String,
       },
     ],
   },
