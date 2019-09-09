@@ -17,11 +17,8 @@ import {
   List,
   Row,
   Date,
+  BackWrapper,
 } from './List.style';
-import {
-  BackContainer,
-  BackLink,
-} from '../../pages/SessionDetails/SessionActions/SessionActions.Style';
 
 class EmailsList extends Component {
   state = {
@@ -43,7 +40,7 @@ class EmailsList extends Component {
   };
 
   render() {
-    const { dataList, onClose } = this.props;
+    const { dataList } = this.props;
     const { visible, emailId } = this.state;
     const { showDrawer, onDrawerClose } = this;
     const activeEmail =
@@ -61,11 +58,8 @@ class EmailsList extends Component {
       dataList.sentEmails.filter(item => item.type === 'registration');
 
     return (
-      <>
+      <div style={{ maxWidth: '34rem', margin: '0 auto' }}>
         <Header type="view" label="Invitee List" />
-        <BackContainer style={{ margin: '2rem 0' }}>
-          <BackLink onClick={onClose}>{`< Back`}</BackLink>
-        </BackContainer>
         {filteredEmails && filteredEmails.length > 0 ? (
           <Wrapper>
             <Heading>
@@ -100,11 +94,24 @@ class EmailsList extends Component {
                 visible={visible}
                 width="100%"
               >
-                <InviteEmails
-                  sessionDetails={dataList}
-                  emailInfo={activeEmail && activeEmail[0]}
-                  onClose={onDrawerClose}
-                />
+                <>
+                  <BackWrapper onClick={onDrawerClose}>
+                    <Icon type="left" />
+                    <p
+                      style={{
+                        marginLeft: '1rem',
+                        marginBottom: '0',
+                      }}
+                    >
+                      Back
+                    </p>
+                  </BackWrapper>
+                  <InviteEmails
+                    sessionDetails={dataList}
+                    emailInfo={activeEmail && activeEmail[0]}
+                    onClose={onDrawerClose}
+                  />
+                </>
               </Drawer>
             </List>
           </Wrapper>
@@ -114,7 +121,7 @@ class EmailsList extends Component {
             style={{ marginTop: '7rem' }}
           />
         )}
-      </>
+      </div>
     );
   }
 }

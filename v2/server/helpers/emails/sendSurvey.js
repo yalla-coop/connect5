@@ -1,6 +1,6 @@
 const mailer = require('./index');
 
-const sendSurvey = ({ surveyURLs, participantsList }) => {
+const sendSurvey = ({ surveyURLs, participantsList, extraInformation }) => {
   // convert the session type into capitalizesd words
   const uppercaseSurvey = surveyType =>
     surveyType
@@ -29,7 +29,7 @@ const sendSurvey = ({ surveyURLs, participantsList }) => {
         <p>or copy the link below into your browser to fill the survey</p>
         <p style="font-weight: 700;">${survey.surveyURL}</p>`;
       })}
-
+      ${extraInformation || ''}
       <p style="margin-bottom: 0;">Thanks,</p>
       <p style="margin-bottom: 0;">Connect 5</p>
     </div>  

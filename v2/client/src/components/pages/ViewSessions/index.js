@@ -112,9 +112,11 @@ class ViewSessions extends Component {
     if (!sessions) {
       return <div>loading</div>;
     }
-    const upcomingSessions = sessions.filter(item => {
-      return moment(item.date).diff(moment(), 'seconds') > 0;
-    });
+    const upcomingSessions =
+      sessions &&
+      sessions.filter(item => {
+        return moment(item.date).diff(moment(), 'seconds') > 0;
+      });
 
     const selectedSessions = toggle === 'left' ? sessions : upcomingSessions;
 

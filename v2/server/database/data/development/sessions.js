@@ -15,7 +15,7 @@ module.exports = async () => {
       numberOfAttendees: 10,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -35,7 +35,7 @@ module.exports = async () => {
       numberOfAttendees: 11,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -55,7 +55,7 @@ module.exports = async () => {
       numberOfAttendees: 10,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -77,7 +77,7 @@ module.exports = async () => {
       numberOfAttendees: 5,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -99,7 +99,7 @@ module.exports = async () => {
       numberOfAttendees: 7,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -121,7 +121,7 @@ module.exports = async () => {
       numberOfAttendees: 8,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -142,7 +142,7 @@ module.exports = async () => {
       numberOfAttendees: 33,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -163,7 +163,7 @@ module.exports = async () => {
       numberOfAttendees: 12,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -186,7 +186,7 @@ module.exports = async () => {
       numberOfAttendees: 5,
       region: 'North West',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -221,7 +221,7 @@ module.exports = async () => {
       numberOfAttendees: 7,
       region: 'North West',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -242,7 +242,7 @@ module.exports = async () => {
       numberOfAttendees: 40,
       region: 'North West',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },

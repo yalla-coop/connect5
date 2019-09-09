@@ -67,7 +67,6 @@ const generateCertificate = async (req, res, next) => {
       }
     );
   } catch (err) {
-    console.log('err', err);
     next(boom.badImplementation());
   }
 };
