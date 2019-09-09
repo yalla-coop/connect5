@@ -1,6 +1,8 @@
 import React from 'react';
+import { Icon } from 'antd';
 import rightQuote from '../../../assets/rightQuote.png';
 import leftQuote from '../../../assets/leftQuote.png';
+import Files from './FindOutMoreFiles';
 
 import {
   AboutUsWrapper,
@@ -16,6 +18,11 @@ import {
   Heading,
   H3,
   QuoteH3,
+  FilesWrapper,
+  FileCard,
+  FileImage,
+  FileTitleWrapper,
+  FileTitle,
 } from './LandingPage.style';
 
 const AboutUs = () => (
@@ -126,6 +133,30 @@ const AboutUs = () => (
         </Speaker>
       </Block>
     </Blockquote>
+    <FilesWrapper>
+      {Files.map(file => (
+        <FileCard>
+          <a href={file.driveLink} target="_blank" rel="noreferrer noopener">
+            <FileImage src={file.thumbnail} />
+            <FileTitleWrapper>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                {file.extension === 'pdf' ? (
+                  <Icon type="file-pdf" theme="twoTone" />
+                ) : (
+                  <Icon type="file-word" theme="twoTone" />
+                )}
+              </div>
+              <FileTitle>{file.fileName}</FileTitle>
+            </FileTitleWrapper>
+          </a>
+        </FileCard>
+      ))}
+    </FilesWrapper>
   </AboutUsWrapper>
 );
 

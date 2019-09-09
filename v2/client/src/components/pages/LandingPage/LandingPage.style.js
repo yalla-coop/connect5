@@ -73,25 +73,29 @@ export const ButtonDiv = styled.div`
     background-color: ${colors.lightGray};
     box-shadow: ${shadows.secondary};
   }
-  button: hover {
+
+  button:hover {
     opacity: 1;
     font-weight: 400;
     color: ${colors.white};
     background-color: ${colors.primary};
   }
+
   button:active {
-  transform: translateY(4px);
+    transform: translateY(4px);
+  }
 `;
 
 // Style for about us page
 
 export const AboutUsWrapper = styled.div`
-  display; flex;
+  display: flex;
   flex-direction: column;
-  padding: 2rem .3rem;
+  padding: 2rem 0.3rem;
   @media (min-width: 768px) {
-    width: 60%;
-    margin: 0 auto
+    width: 85%;
+    max-width: 850px;
+    margin: 0 auto;
   }
 `;
 
@@ -219,4 +223,44 @@ export const Speaker = styled.p`
   margin: 0 0 30px;
   line-height: 1.4;
   text-align: right;
+`;
+
+export const FilesWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+`;
+
+export const FileCard = styled.div`
+  height: 230px;
+  width: 45%;
+  max-width: 230px;
+  text-align: center;
+  overflow: hidden;
+  border: 1px solid #dadce0;
+  border-radius: 6px;
+  margin: 0.5rem;
+`;
+
+export const FileImage = styled.img`
+  height: 180px;
+  object-fit: cover;
+  width: 100%;
+`;
+
+export const FileTitleWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const FileTitle = styled.p`
+  display: inline-block;
+  margin: 0;
+  margin-left: 0.5rem;
+  padding: 0.5rem 0;
+  line-height: 2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 79%;
 `;
