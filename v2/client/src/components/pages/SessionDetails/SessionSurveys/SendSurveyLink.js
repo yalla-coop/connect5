@@ -8,9 +8,8 @@ const SendSurveyLink = ({
   name,
   isSchedule,
   surveyType,
+  drawerKey,
 }) => {
-  console.log({ surveyType }, '222222222222');
-
   const confirmedEmails = sessionDetails.participantsEmails.filter(
     item => item.status === 'confirmed'
   );
@@ -31,6 +30,7 @@ const SendSurveyLink = ({
       handleAddEmailsClick={handleAddEmailsClick}
       isSchedule={isSchedule}
       surveyType={surveyType}
+      drawerKey={drawerKey}
     />
   );
 };

@@ -54,7 +54,7 @@ class EmailTemplate extends Component {
           </li>
           <li>
             <SessionInfoTitle>Location:</SessionInfoTitle>{' '}
-            {fullAddress || 'Not entered'}
+            {fullAddress || 'TBC'}
           </li>
           <li>
             <SessionInfoTitle>time:</SessionInfoTitle>

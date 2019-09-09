@@ -1,6 +1,5 @@
 const boom = require('boom');
 const createNewsession = require('./../database/queries/addSession');
-const sendEmailInvitation = require('../helpers/emails/sendEmailInvitation');
 
 const addSession = async (req, res, next) => {
   const { user } = req;
@@ -49,32 +48,6 @@ const addSession = async (req, res, next) => {
         endTime,
         address,
       });
-
-      // if (sendByEmail) {
-      //   if (process.env.NODE_ENV === 'production') {
-      //     // send invitation link to participant
-
-      //     const string =
-      //       trainersNames &&
-      //       trainersNames
-      //         .filter(item => !!item)
-      //         .map(name => `${name[0].toUpperCase()}${name.slice(1)}`)
-      //         .join(' & ');
-
-      //     await sendEmailInvitation({
-      //       name: user.name,
-      //       emails,
-      //       sessionDate: startDate,
-      //       type: session,
-      //       trainerName: string || 'N/A',
-      //       region,
-      //       startTime,
-      //       endTime,
-      //       shortId: addedSession.shortId,
-      //       address: address || 'N/A',
-      //     });
-      //   }
-      // }
 
       return res.json(addedSession);
     }

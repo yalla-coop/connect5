@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const mailer = require('./index');
 
 const sendEmailInvitation = ({
@@ -41,10 +43,12 @@ const sendEmailInvitation = ({
 
     <p><span style="text-transform: capitalize">${trainer}</span> has invited you to register for an upcoming Connect 5 training session.</p>
     <ul style="text-transfrom: capitalize">
-      <li>Session Date: ${sessionDate}</li>
+    <li> Session Date: ${(sessionDate &&
+      moment(sessionDate).format('DD MMM YYYY')) ||
+      'N/A'}</li>
       <li>Session Type: ${sessionType}</li>
-      <li>Address: ${fullAddress}</li>
-      <li>Time: ${startTime} to ${endTime}</li>
+      <li>Address: ${fullAddress || 'TBC'}</li>
+      <li>Time: ${startTime || '-'} to ${endTime || '-'}</li>
       <li>Trainers: ${trainers}</li>
     </ul>
     <div style="text-align: center;">

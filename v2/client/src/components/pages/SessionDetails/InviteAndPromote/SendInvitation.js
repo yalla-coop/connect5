@@ -8,7 +8,13 @@ class SendInvitation extends Component {
   state = {};
 
   render() {
-    const { onClose, sessionDetails, name, handleAddEmailsClick } = this.props;
+    const {
+      onClose,
+      sessionDetails,
+      name,
+      handleAddEmailsClick,
+      drawerKey,
+    } = this.props;
 
     const emails = [];
 
@@ -17,6 +23,7 @@ class SendInvitation extends Component {
         emails.push({ email: email.email, status: email.status });
       }
     });
+
     return (
       <>
         <EditEmail
@@ -34,6 +41,7 @@ class SendInvitation extends Component {
           sessionId={sessionDetails._id}
           backCallback={onClose}
           handleAddEmailsClick={handleAddEmailsClick}
+          drawerKey={drawerKey}
         />
       </>
     );

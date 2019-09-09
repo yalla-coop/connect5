@@ -11,6 +11,7 @@ const initState = {
   signupLoading: false,
   updateUserLoading: false,
   deleteAccountLoading: false,
+  sendEmail: false,
 };
 
 export default (state = initState, action) => {

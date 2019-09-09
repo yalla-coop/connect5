@@ -58,7 +58,7 @@ class EmailsList extends Component {
       dataList.sentEmails.filter(item => item.type === 'registration');
 
     return (
-      <>
+      <div style={{ maxWidth: '34rem', margin: '0 auto' }}>
         <Header type="view" label="Invitee List" />
         {filteredEmails && filteredEmails.length > 0 ? (
           <Wrapper>
@@ -121,7 +121,7 @@ class EmailsList extends Component {
             style={{ marginTop: '7rem' }}
           />
         )}
-      </>
+      </div>
     );
   }
 }

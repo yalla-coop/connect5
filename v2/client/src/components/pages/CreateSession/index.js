@@ -244,9 +244,9 @@ class CreateSession extends Component {
       trainersNames: trainersNamesArray,
       startTime,
       endTime,
-      addressLine1: addressLine1 || 'N/A',
-      addressLine2: addressLine2 || 'N/A',
-      postcode: postcode || 'N/A',
+      addressLine1,
+      addressLine2,
+      postcode,
     };
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
     return (

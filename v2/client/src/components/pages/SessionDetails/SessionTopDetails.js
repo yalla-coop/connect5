@@ -83,7 +83,7 @@ class SessionTopDetails extends Component {
         </SubDetails>
         <SubDetails>
           <SubDetailsTitle>Address:</SubDetailsTitle>
-          <SubDetailsContent>{fullAddress || 'Not entered'}</SubDetailsContent>
+          <SubDetailsContent>{fullAddress || 'TBC'}</SubDetailsContent>
         </SubDetails>
         <SubDetails>
           <SubDetailsTitle>Times:</SubDetailsTitle>

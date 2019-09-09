@@ -39,10 +39,13 @@ module.exports = async (req, res, next) => {
 
   let promises = [];
   if (type === 'reminder') {
-    promises = [
-      addSentEmail(sentEmailData),
-      sendSessionReminder({ ...emailData, preSurveyLink, postSurveyLink }),
-    ];
+    promises = [addSentEmail(sentEmailData)];
+
+    if (process.env.NODE_ENV === 'production') {
+      promises.push(
+        sendSessionReminder({ ...emailData, preSurveyLink, postSurveyLink })
+      );
+    }
   } else if (type === 'registration') {
     const data = {
       sessionId,
@@ -53,11 +56,10 @@ module.exports = async (req, res, next) => {
       isPartialList: true,
     };
 
-    promises = [
-      addSentEmail(sentEmailData),
-      sendEmailInvitation(emailData),
-      updateAttendeesList(data),
-    ];
+    promises = [addSentEmail(sentEmailData), updateAttendeesList(data)];
+    if (process.env.NODE_ENV === 'production') {
+      promises.push(sendEmailInvitation(emailData));
+    }
   }
 
   return Promise.all(promises)

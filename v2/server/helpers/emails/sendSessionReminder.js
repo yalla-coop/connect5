@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const mailer = require('./index');
 
 const sendReminder = ({
@@ -33,7 +35,9 @@ const sendReminder = ({
 
     <p>This is a friendly reminder related to the following Connect 5 training session:</p>
     <ul style={{listStyle: 'none'}}>
-      <li> Session Date: ${sessionDate || 'N/A'}</li>
+      <li> Session Date: ${(sessionDate &&
+        moment(sessionDate).format('DD MMM YYYY')) ||
+        'N/A'}</li>
       <li> Session Type: ${sessionType || 'N/A'}</li>
       <li> Location: ${address || 'N/A'}</li>
       <li> time: ${startTime || 'N/A'} to ${endTime || 'N/A'}</li>

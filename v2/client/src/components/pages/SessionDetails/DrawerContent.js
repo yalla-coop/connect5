@@ -23,6 +23,7 @@ const DrawerContent = ({
   onCopy,
   onClear,
   name,
+  handleCloseDrawer,
   // update
   handleSubmitUpdateAttendees,
   confirmedAttendeesList,
@@ -65,6 +66,7 @@ const DrawerContent = ({
           sessionDetails={sessionDetails}
           handleAddEmailsClick={handleAddEmailsClick}
           name={name}
+          drawerKey={drawerKey}
         />
       );
 
@@ -90,6 +92,8 @@ const DrawerContent = ({
           <SendInvitation
             sessionDetails={sessionDetails}
             handleAddEmailsClick={handleAddEmailsClick}
+            drawerKey={drawerKey}
+            onClose={handleCloseDrawer}
           />
         </>
       );
@@ -116,6 +120,7 @@ const DrawerContent = ({
           sessionDetails={sessionDetails}
           handleAddEmailsClick={handleAddEmailsClick}
           name={name}
+          drawerKey={drawerKey}
         />
       );
 
@@ -141,6 +146,7 @@ const DrawerContent = ({
           surveyType={surveyType}
           handleDrawerOpen={handleDrawerOpen}
           handleAddEmailsClick={handleAddEmailsClick}
+          drawerKey={drawerKey}
           isSchedule
         />
       );

@@ -122,7 +122,7 @@ class SessionDetails extends Component {
 
   // submit the updated emails
   handleSubmitUpdateAttendees = status => {
-    const { confirmedEmails, newEmails } = this.state;
+    const { confirmedEmails, newEmails, nextKey } = this.state;
     const emailsArray = status === 'new' ? newEmails : confirmedEmails;
     const { sessionDetails, updateSessionAttendeesList } = this.props;
     const participantsEmails = emailsArray.map(item => ({
@@ -130,11 +130,22 @@ class SessionDetails extends Component {
       status,
     }));
 
+    const callback = nextKey ? this.openNextKey : this.handleCloseDrawer;
+
     updateSessionAttendeesList({
       sessionId: sessionDetails._id,
       participantsEmails,
       status,
-      handleCloseDrawer: this.handleCloseDrawer,
+      handleCloseDrawer: callback,
+    });
+  };
+
+  openNextKey = () => {
+    const { nextKey } = this.state;
+    this.setState({
+      visible: true,
+      drawerKey: nextKey,
+      surveyType: null,
     });
   };
 
@@ -200,15 +211,18 @@ class SessionDetails extends Component {
     this.setState({
       visible: false,
       drawerKey: null,
+      nextKey: null,
     });
     this.setListIntoState();
   };
 
   // to handle moving from the edit email page to add attendees page
-  handleAddEmailsClick = drawerKey => {
+
+  handleAddEmailsClick = (drawerKey, nextKey) => {
     this.setState({
       visible: true,
       drawerKey,
+      nextKey,
     });
   };
 
@@ -312,6 +326,7 @@ class SessionDetails extends Component {
                 name={name}
                 onCopy={this.onCopy}
                 onClear={this.onClear}
+                handleCloseDrawer={this.handleCloseDrawer}
                 // update
                 handleSubmitUpdateAttendees={this.handleSubmitUpdateAttendees}
                 confirmedAttendeesList={confirmedEmails}
@@ -321,8 +336,6 @@ class SessionDetails extends Component {
                 // email list
                 reminderEmails={reminderEmails}
                 handleDrawerOpen={this.handleDrawerOpen}
-                // email template
-                // activeEmailTemplate={activeEmailTemplate}
                 // special requirements
                 specialRequirements={sessionDetails.specialRequirements}
                 //

@@ -17,6 +17,7 @@ import {
 } from 'antd';
 import moment from 'moment';
 import 'moment-timezone';
+import Swal from 'sweetalert2';
 
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
@@ -81,7 +82,6 @@ class EditEmail extends Component {
     // plain text if canAddParticipants = true
     // {email, status} if canAddParticipants = false
     participantsEmails: [],
-    isCollapsOpen: true,
     checkedList: defaultCheckedList,
     indeterminateAll: false,
     isAllChecked: true,
@@ -97,7 +97,6 @@ class EditEmail extends Component {
       trainers: trainersArrayOfObject,
     } = this.props;
 
-    console.log(this.props);
     // get surveys links
     const surveyType = {
       1: ['pre-day-1', 'post-day-1'],
@@ -132,7 +131,7 @@ class EditEmail extends Component {
     const plainNewEmails = participantsEmails
       .filter(item => item.status === 'new')
       .map(item => item.email);
-    console.log({ participantsEmails });
+
     // plain text if canAddParticipants = true
     // {email, status} if canAddParticipants = false
     let newparticipantsEmails;
@@ -159,6 +158,7 @@ class EditEmail extends Component {
 
   toggleEditView = visible => {
     this.setState({ isEditView: visible });
+    if (visible) window.scrollBy(-100000, -100000);
   };
 
   handleExtraInformation = e => {
@@ -189,7 +189,7 @@ class EditEmail extends Component {
     this.setState({ participantsEmails: validEmails });
   };
 
-  sendRegistrationEmail = () => {
+  handleSendEmail = () => {
     const {
       extraInformation,
       checkedList,
@@ -208,12 +208,18 @@ class EditEmail extends Component {
       sendEmailReminder,
       type,
       canAddParticipants,
+      // trainer name
+      name,
     } = this.props;
 
+    const emailsToSend = canAddParticipants ? participantsEmails : checkedList;
+    if (emailsToSend.length < 1) {
+      return message.error('You should add recipients emails');
+    }
     const emailData = {
       sessionId,
       // should be sent plain
-      recipients: canAddParticipants ? participantsEmails : checkedList,
+      recipients: emailsToSend,
       sendDate: new Date(),
       sessionDate,
       sessionType,
@@ -224,12 +230,11 @@ class EditEmail extends Component {
       shortId,
       address,
       extraInformation,
-      confirmedEmails: [],
       type,
+      trainer: `${name[0].toUpperCase()}${name.slice(1)}`,
     };
 
-    sendEmailReminder(emailData, this.done);
-    // sendEmailReminder(emailData, this.handleCloseDrawer);
+    return sendEmailReminder(emailData, this.done);
   };
 
   done = () => {
@@ -237,7 +242,7 @@ class EditEmail extends Component {
 
     Modal.success({
       title: 'Done!',
-      content: 'Invitation Email successfully sent',
+      content: 'Emails have been sent successfully',
       onOk: () => {
         if (typeof backCallback === 'function') return backCallback();
         return history.push(MY_SESSIONS_URL);
@@ -300,11 +305,6 @@ class EditEmail extends Component {
 
       this.onEmailChange([...emails, ...emailsArray]);
     }
-  };
-
-  // to set a flag whether the collaps is opened or not
-  toggleOpenCollaps = activeKeys => {
-    this.setState({ isCollapsOpen: !!(activeKeys && activeKeys.length > 0) });
   };
 
   // to handle individual emails checkboxes changes
@@ -382,17 +382,53 @@ class EditEmail extends Component {
   };
 
   handleAddEmailsClick = () => {
-    const { handleAddEmailsClick, type } = this.props;
+    const { handleAddEmailsClick, type, drawerKey } = this.props;
     switch (type) {
       case 'registration':
-        return handleAddEmailsClick('view-invitees');
+        return handleAddEmailsClick('view-invitees', drawerKey);
 
       case 'reminder':
       case 'surveyLink':
-        return handleAddEmailsClick('viewAttendeesList');
+        return handleAddEmailsClick('viewAttendeesList', drawerKey);
 
       default:
         return null;
+    }
+  };
+
+  copyRegistrationLink = () => {
+    const copyText = document.getElementById('registration-link');
+    let range;
+    let selection;
+    if (document.body.createTextRange) {
+      range = document.body.createTextRange();
+      range.moveToElementText(copyText);
+      range.select();
+    } else if (window.getSelection) {
+      selection = window.getSelection();
+      range = document.createRange();
+      range.selectNodeContents(copyText);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+
+    try {
+      document.execCommand('copy');
+      Swal.fire({
+        title: 'Success',
+        text: 'Link copied!',
+        type: 'success',
+        timer: 2000,
+        confirmButtonText: 'Ok',
+      });
+    } catch (err) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Unable to cop the Link',
+        type: 'error',
+        timer: 2000,
+        confirmButtonText: 'Ok',
+      });
     }
   };
 
@@ -400,6 +436,7 @@ class EditEmail extends Component {
     const {
       successMessage,
       sessionId,
+      loading,
       // Boolean
       canAddParticipants,
       // registration
@@ -421,7 +458,6 @@ class EditEmail extends Component {
       isEditView,
       extraInformation,
       participantsEmails,
-      isCollapsOpen,
       checkedList,
       indeterminateAll,
       isAllChecked,
@@ -443,7 +479,7 @@ class EditEmail extends Component {
                 email before you send out
               </Paragraph>
               <TextArea
-                placeholder="Type here"
+                placeholder="Type here extra information to be sent in the email"
                 autosize={{ minRows: 4, maxRows: 6 }}
                 style={{ marginBottom: '20px' }}
                 onChange={this.handleExtraInformation}
@@ -478,17 +514,34 @@ class EditEmail extends Component {
                   />
                 </SuccessMessageDiv>
               )}
-              <>
-                <SubHeader>Registration Link:</SubHeader>
-                <StyledLink
-                  to={`/confirm/${shortId}`}
-                >{`${window.location.host}/confirm/${shortId}`}</StyledLink>
-                <Paragraph>
-                  Copy the link above to share with potential participants so
-                  they can register and let you know about any special
-                  requirements.
-                </Paragraph>
-              </>
+              {type === 'registration' && (
+                <>
+                  <SubHeader>Registration Link:</SubHeader>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <StyledLink
+                      id="registration-link"
+                      to={`/confirm/${shortId}`}
+                    >{`${window.location.host}/confirm/${shortId}`}</StyledLink>
+                    <div style={{ cursor: 'pointer' }}>
+                      <Icon
+                        type="copy"
+                        onClick={this.copyRegistrationLink}
+                        style={{ color: '#5965fe' }}
+                      />
+                    </div>
+                  </div>
+                  <Paragraph>
+                    Copy the link above to share with potential participants so
+                    they can register and let you know about any special
+                    requirements.
+                  </Paragraph>
+                </>
+              )}
               <>
                 <SubHeader>Invite Participants via email: </SubHeader>
                 <Paragraph>
@@ -570,11 +623,10 @@ class EditEmail extends Component {
                             />
                           )}
                           style={{ border: '2px solid' }}
-                          onChange={this.toggleOpenCollaps}
                           expandIconPosition="right"
                         >
                           <Panel
-                            header={<div>Select from your invite list</div>}
+                            header={<div>Select from your invitees list</div>}
                             key="1"
                             style={customPanelStyle}
                           >
@@ -667,6 +719,7 @@ class EditEmail extends Component {
               extraInformation={extraInformation}
               preSurveyLink={preSurveyLink}
               postSurveyLink={postSurveyLink}
+              confirmLink={`${window.location.host}/confirm/${shortId}`}
             />
           </>
           {isEditView ? (
@@ -691,32 +744,34 @@ class EditEmail extends Component {
               />
               <Button
                 onClick={
-                  isSchedule
-                    ? this.handleSubmitSchedule
-                    : this.sendRegistrationEmail
+                  isSchedule ? this.handleSubmitSchedule : this.handleSendEmail
                 }
                 type="primary"
                 label={isSchedule ? 'Schedule Email' : 'Send Email'}
                 height="40px"
                 width="100%"
                 style={{ marginBottom: '1.5rem' }}
+                loading={loading}
               />
               {error}
-              <SubHeader
-                as="button"
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  margin: '0 auto 2rem',
-                }}
-                onClick={() => {
-                  if (typeof backCallback === 'function') return backCallback();
-                  return history.push(MY_SESSIONS_URL);
-                }}
-              >
-                Skip and view my session
-              </SubHeader>
+              {isEditView && (
+                <SubHeader
+                  as="button"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    margin: '0 auto 2rem',
+                  }}
+                  onClick={() => {
+                    if (typeof backCallback === 'function')
+                      return backCallback();
+                    return history.push(MY_SESSIONS_URL);
+                  }}
+                >
+                  Skip and view my session
+                </SubHeader>
+              )}
             </div>
           )}
         </Wrapper>
@@ -725,8 +780,15 @@ class EditEmail extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    name: state.auth.name,
+    loading: state.loading.sendEmail,
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   {
     sendEmailReminder: sendEmailReminderAction,
     scheduleNewEmail: scheduleNewEmailAction,

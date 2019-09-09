@@ -68,7 +68,7 @@ class InviteEmails extends Component {
             </li>
             <li>
               <SessionInfoTitle> Location:</SessionInfoTitle>{' '}
-              {(fullAddress && fullAddress) || 'Not entered'}
+              {fullAddress || 'TBC'}
             </li>
             <li>
               <SessionInfoTitle>time:</SessionInfoTitle>

@@ -2,7 +2,12 @@ import React from 'react';
 
 import EditEmail from '../../../common/EditEmail';
 
-const SendReminderEmails = ({ sessionDetails, handleAddEmailsClick, name }) => {
+const SendReminderEmails = ({
+  sessionDetails,
+  handleAddEmailsClick,
+  name,
+  drawerKey,
+}) => {
   const confirmedEmails = sessionDetails.participantsEmails.filter(
     item => item.status === 'confirmed'
   );
@@ -21,6 +26,7 @@ const SendReminderEmails = ({ sessionDetails, handleAddEmailsClick, name }) => {
       shortId={sessionDetails.shortId}
       sessionId={sessionDetails._id}
       handleAddEmailsClick={handleAddEmailsClick}
+      drawerKey={drawerKey}
     />
   );
 };

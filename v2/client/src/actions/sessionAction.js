@@ -8,6 +8,8 @@ import {
   LOADING_END,
   EMAIL_SCHEDULE_SUCCESS,
   STORE_SESSION_DATA,
+  LOADING_TRUE,
+  LOADING_FALSE,
 } from '../constants/actionTypes';
 
 import history from '../history';
@@ -119,9 +121,9 @@ export const sendEmailReminder = (
   { sessionId, type, ...emailData },
   handleCloseDrawer
 ) => dispatch => {
-  // start loading
   dispatch({
-    type: LOADING_START,
+    type: LOADING_TRUE,
+    payload: 'sendEmail',
   });
 
   axios
@@ -134,25 +136,23 @@ export const sendEmailReminder = (
         type: UPDATE_ATTENDEES_SUCCESS,
         payload: res.data,
       });
-
-      Modal.success({
-        title: 'Done!',
-        content: 'Emails successfully have been sent',
-        onOk: handleCloseDrawer,
+      dispatch({
+        type: LOADING_FALSE,
+        payload: 'sendEmail',
       });
 
+      handleCloseDrawer();
       return dispatch(fetchSessionDetails(sessionId));
     })
     .catch(error => {
-      // end loading
       dispatch({
-        type: LOADING_END,
+        type: LOADING_FALSE,
+        payload: 'sendEmail',
       });
 
       return Modal.error({
         title: 'Error!',
         content: error.response.data.error,
-        onOk: handleCloseDrawer,
       });
     });
 };
@@ -160,7 +160,8 @@ export const sendEmailReminder = (
 export const scheduleNewEmail = emailData => dispatch => {
   // start loading
   dispatch({
-    type: LOADING_START,
+    type: LOADING_TRUE,
+    payload: 'sendEmail',
   });
 
   axios
@@ -169,6 +170,11 @@ export const scheduleNewEmail = emailData => dispatch => {
       dispatch({
         type: EMAIL_SCHEDULE_SUCCESS,
         payload: res.data,
+      });
+
+      dispatch({
+        type: LOADING_FALSE,
+        payload: 'sendEmail',
       });
 
       Modal.success({
@@ -181,7 +187,8 @@ export const scheduleNewEmail = emailData => dispatch => {
     .catch(error => {
       // end loading
       dispatch({
-        type: LOADING_END,
+        type: LOADING_FALSE,
+        payload: 'sendEmail',
       });
 
       return Modal.error({
