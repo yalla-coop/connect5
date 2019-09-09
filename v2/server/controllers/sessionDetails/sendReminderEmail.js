@@ -4,6 +4,7 @@ const {
 } = require('./../../database/queries/sessionDetails/session');
 const sendSessionReminder = require('./../../helpers/emails/sendSessionReminder');
 const sendEmailInvitation = require('./../../helpers/emails/sendEmailInvitation');
+const sendSurveyLink = require('./../../helpers/emails/sendSurveyLink');
 
 const {
   updateAttendeesList,
@@ -59,6 +60,11 @@ module.exports = async (req, res, next) => {
     promises = [addSentEmail(sentEmailData), updateAttendeesList(data)];
     if (process.env.NODE_ENV === 'production') {
       promises.push(sendEmailInvitation(emailData));
+    }
+  } else if (type === 'surveyLink') {
+    promises = [addSentEmail(sentEmailData)];
+    if (process.env.NODE_ENV === 'production') {
+      promises.push(sendSurveyLink(emailData));
     }
   }
 

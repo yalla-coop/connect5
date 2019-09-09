@@ -56,7 +56,7 @@ const sendEmailInvitation = ({
       <a href="${registrationURL}" style="display: inline-block; padding: 0.5rem 1rem; background: #787BB9; color: white; font-size: 16px; font-weight: 900; border-radius: 10px; box-shadow: 0px 5px 11px 1px #9e9e9e7d; text-decoration: none;">confirm our registration</a>
     </div>
 
-    ${extraInformation && `<pre>${extraInformation}</pre>`}
+    ${extraInformation ? `<pre>${extraInformation}</pre>` : ''}
 
     </br>
     <p>Sincerely,</p>
