@@ -13,8 +13,19 @@ const sendReminder = ({
   shortId,
   preSurveyLink,
   postSurveyLink,
+  extraInformation,
 }) => {
   let extraParagraph;
+  let fullAddress = '';
+
+  if (address) {
+    const { postcode, addressLine1, addressLine2 } = address;
+    if (postcode || addressLine1 || addressLine2) {
+      fullAddress = [addressLine1, addressLine2, postcode]
+        .filter(item => !!item)
+        .join(', ');
+    }
+  }
 
   if (preSurveyLink) {
     extraParagraph = `
@@ -39,8 +50,8 @@ const sendReminder = ({
         moment(sessionDate).format('DD MMM YYYY')) ||
         'N/A'}</li>
       <li> Session Type: ${sessionType || 'N/A'}</li>
-      <li> Location: ${address || 'N/A'}</li>
-      <li> time: ${startTime || 'N/A'} to ${endTime || 'N/A'}</li>
+      <li> Location:  ${fullAddress || 'TBC'}</li>
+      <li> time: ${startTime || '-'} to ${endTime || '-'}</li>
       <li> trainers: ${trainers || 'N/A'}</li>
     </ul>
     <p>
@@ -60,6 +71,8 @@ const sendReminder = ({
         <b>After the session please click this link and fill out the <a href="${postSurveyLink}">post-survey</a>.</b>
       </p>
     </div>
+
+    ${extraInformation && `<pre>${extraInformation}</pre>`}
 
     </br>
     <p>Sincerely,</p>

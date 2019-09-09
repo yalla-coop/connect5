@@ -27,6 +27,7 @@ class InviteEmails extends Component {
       sessionType,
       address,
       recipients,
+      extraInformation,
     } = emailInfo;
 
     let fullAddress = '';
@@ -72,7 +73,7 @@ class InviteEmails extends Component {
             </li>
             <li>
               <SessionInfoTitle>time:</SessionInfoTitle>
-              {startTime} to {endTime}{' '}
+              {startTime || '-'} to {endTime || '-'}{' '}
             </li>
             <li>
               <SessionInfoTitle>Trainer(s):</SessionInfoTitle> {trainers}
@@ -80,6 +81,9 @@ class InviteEmails extends Component {
           </List>
           <p>To confirm your attendance please click this link: </p>
 
+          {extraInformation && <p>{extraInformation}</p>}
+
+          <br />
           <p>Sincerely,</p>
 
           <p>your Connect 5 team.</p>

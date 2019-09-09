@@ -344,9 +344,9 @@ class EditSession extends Component {
       emails,
       startTime,
       endTime,
-      postcode: postcode || 'N/A',
-      addressLine1: addressLine1 || 'N/A',
-      addressLine2: addressLine2 || 'N/A',
+      postcode,
+      addressLine1,
+      addressLine2,
     };
 
     this.props.sessionUpdateAction(sessionData, id);

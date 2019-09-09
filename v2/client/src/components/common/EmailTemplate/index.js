@@ -58,7 +58,7 @@ class EmailTemplate extends Component {
           </li>
           <li>
             <SessionInfoTitle>time:</SessionInfoTitle>
-            {startTime} to {endTime}{' '}
+            {startTime || '-'} to {endTime || '-'}{' '}
           </li>
           <li>
             <SessionInfoTitle>Trainer(s):</SessionInfoTitle> {trainers}

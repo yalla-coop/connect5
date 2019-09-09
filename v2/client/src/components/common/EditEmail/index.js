@@ -88,6 +88,8 @@ class EditEmail extends Component {
     isNewChecked: true,
   };
 
+  topElementRef = React.createRef();
+
   componentDidMount() {
     const {
       participantsEmails,
@@ -158,7 +160,8 @@ class EditEmail extends Component {
 
   toggleEditView = visible => {
     this.setState({ isEditView: visible });
-    if (visible) window.scrollBy(-100000, -100000);
+    const drawerWrapper = document.querySelector('.ant-drawer-wrapper-body');
+    drawerWrapper.scrollBy(-1000, -1000);
   };
 
   handleExtraInformation = e => {
@@ -469,6 +472,7 @@ class EditEmail extends Component {
     } = this.state;
     return (
       <>
+        <div ref={this.myRef} />
         <Header label="Edit Session" type="view" />
         <Wrapper>
           {isEditView ? (

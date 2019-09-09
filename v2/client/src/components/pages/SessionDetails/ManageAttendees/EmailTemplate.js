@@ -34,7 +34,9 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
           <li>
             <EmailText>
               <BoldSpan>Session Date:</BoldSpan>{' '}
-              {activeEmailTemplate.sessionDate || 'N/A'}
+              {(activeEmailTemplate.sessionDate &&
+                activeEmailTemplate.sessionDate.format('DD MMM YYYY')) ||
+                'N/A'}
             </EmailText>
           </li>
           <li>
@@ -110,6 +112,13 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
             </EmailText>
           </>
         )}
+
+        <br />
+
+        {activeEmailTemplate.extraInformation && (
+          <EmailText as="pre">{activeEmailTemplate.extraInformation}</EmailText>
+        )}
+
         <br />
         <EmailText>Sincerely,</EmailText>
         <EmailText>Your Connect 5 team</EmailText>
