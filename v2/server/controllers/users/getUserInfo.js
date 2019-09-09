@@ -16,6 +16,7 @@ module.exports = (req, res) => {
       region: user.region,
       email: user.email,
       localLead: user.localLead,
+      officialLocalLead: user.officialLocalLead,
     };
   }
 

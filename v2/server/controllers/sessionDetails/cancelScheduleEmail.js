@@ -10,7 +10,6 @@ module.exports = async (req, res, next) => {
       res.json({});
     })
     .catch(err => {
-      console.log(err);
       next(boom.badImplementation());
     });
 };

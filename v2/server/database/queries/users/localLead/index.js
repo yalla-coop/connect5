@@ -67,5 +67,10 @@ module.exports.getLocalLeadTrainersGroup = id => {
         as: 'group',
       },
     },
+    {
+      $project: {
+        'group.password': 0,
+      },
+    },
   ]);
 };

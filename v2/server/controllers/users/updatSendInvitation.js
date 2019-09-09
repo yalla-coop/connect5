@@ -29,6 +29,7 @@ const updateSentInvitationEmails = async (req, res, next) => {
       region,
       startTime,
       endTime,
+      // must be string of trainers' names
       trainers,
       shortId,
       address,
@@ -37,17 +38,11 @@ const updateSentInvitationEmails = async (req, res, next) => {
     const preSurvey = preSurveys[type];
     const sessionDate = moment(date).format('DD/MMMM/YYYY');
 
-    let preServeyLink = null;
+    let preSurveyLink = null;
 
     if (preSurvey !== undefined) {
-      preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
+      preSurveyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
     }
-
-    const trainerName = trainers
-      .map(trainer => {
-        return trainer.name;
-      })
-      .join(' & ');
 
     if (sendByEmail) {
       await sendEmailInvitation({
@@ -55,7 +50,7 @@ const updateSentInvitationEmails = async (req, res, next) => {
         emails: newEmails,
         sessionDate,
         type,
-        trainerName,
+        trainers,
         region,
         startTime,
         endTime,
@@ -69,17 +64,18 @@ const updateSentInvitationEmails = async (req, res, next) => {
       await addSentEmail({
         sessionId,
         emailData: {
-          location: address,
+          address,
           startTime,
           endTime,
-          trainers: trainerName,
+          trainers,
           shortId,
           sessionType: type,
-          trainerName,
+          // the name of logged in trainer
+          trainer: name,
           recipients: newEmails,
         },
         type: 'registration',
-        preServeyLink,
+        preSurveyLink,
       });
     }
     // just update the db

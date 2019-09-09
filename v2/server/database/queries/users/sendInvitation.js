@@ -2,37 +2,28 @@ const Session = require('./../../models/Session');
 
 module.exports.StoreSentEmailDataQuery = ({
   _id,
-  name,
-  emails,
-  sendingDate,
-  date,
-  type,
-  trainerName,
+  trainer,
+  recipients,
+  sendDate,
+  sessionDate,
+  sessionType,
+  trainers,
   startTime,
   endTime,
   address,
-  confirmedEmails,
+  extraInformation,
 }) => {
-  const newEmailsObj = emails.map(email => {
-    if (email.status === 'new') {
-      // eslint-disable-next-line no-param-reassign
-      email.status = 'sent';
-    }
-    return email;
-  });
-
-  const newEmails = newEmailsObj.map(email => email.email);
-
   const data = {
-    sendDate: sendingDate,
-    trainer: name,
-    sessionDate: date,
-    sessionType: type,
-    location: address,
-    trainers: trainerName,
-    recipients: newEmails,
+    sendDate,
+    trainer,
+    sessionDate,
+    sessionType,
+    address,
+    trainers,
+    recipients: recipients.map(item => item.email),
     startTime,
     endTime,
+    extraInformation,
     type: 'registration',
   };
 
@@ -40,7 +31,6 @@ module.exports.StoreSentEmailDataQuery = ({
     { _id },
     {
       $push: { sentEmails: data },
-      $set: { participantsEmails: [...newEmailsObj, ...confirmedEmails] },
     }
   );
   return updateDoc;

@@ -99,6 +99,11 @@ class ConfirmRegistration extends Component {
     const { email, message } = this.state;
 
     const trainersNames = trainers.map(trainer => trainer.name).join(' & ');
+    const { addressLine1, addressLine2, postcode } = address;
+    const fullAddress = [addressLine1, addressLine2, postcode]
+      .filter(item => !!item)
+      .join(', ');
+
     return (
       <Wrapper>
         <ContentWrapper>
@@ -117,16 +122,7 @@ class ConfirmRegistration extends Component {
                     <CapitalizedSpan>{trainersNames || 'N/A'}</CapitalizedSpan>
                   </Details>
                   <Details>
-                    <BoldSpan>Location:</BoldSpan>{' '}
-                    {(address && address.location) || 'N/A'}
-                  </Details>
-                  <Details>
-                    <BoldSpan>Address Line 1:</BoldSpan>{' '}
-                    {(address && address.addressLine1) || 'N/A'}
-                  </Details>
-                  <Details>
-                    <BoldSpan>Address Line 2:</BoldSpan>{' '}
-                    {(address && address.Addressline2) || 'N/A'}
+                    <BoldSpan>Location:</BoldSpan> {fullAddress || 'N/A'}
                   </Details>
                   <Details center>
                     <BoldSpan>
@@ -158,7 +154,6 @@ class ConfirmRegistration extends Component {
                         </>
                       }
                       type="success"
-                      // showIcon
                     />
                   </Details>
                   <Details>

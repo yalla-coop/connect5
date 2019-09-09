@@ -26,7 +26,7 @@ const sessionSchema = new Schema(
       lowercase: true,
     },
     address: {
-      location: String,
+      postcode: String,
       addressLine1: String,
       addressLine2: String,
     },
@@ -52,8 +52,8 @@ const sessionSchema = new Schema(
         trainer: String,
         sessionDate: String,
         sessionType: String,
-        location: {
-          location: String,
+        address: {
+          postcode: String,
           addressLine1: String,
           addressLine2: String,
         },
@@ -63,11 +63,14 @@ const sessionSchema = new Schema(
         endTime: String,
         type: {
           type: String,
-          // registration === invitaion
-          enum: ['reminder', 'intial', 'registration', 'surveyLink'],
+          // registration === invitaion        "Trainer name> has invited you to"
+          // surveyLink ===  session Details   "We're looking forward to welcome you at"
+          // reminder ===  scheduled emails    "This is a friendly reminder related"
+          enum: ['reminder', 'surveyLink', 'registration'],
         },
-        preServeyLink: String,
+        preSurveyLink: String,
         surveyURL: String,
+        extraInformation: String,
       },
     ],
     // list of participants emails
@@ -92,6 +95,9 @@ const sessionSchema = new Schema(
           type: String,
           enum: surveyTypes,
         },
+        extraInformation: String,
+        recipients: [String],
+        trainer: String,
       },
     ],
   },

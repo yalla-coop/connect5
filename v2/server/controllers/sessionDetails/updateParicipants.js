@@ -5,10 +5,17 @@ const {
 
 module.exports = async (req, res, next) => {
   const { sessionId } = req.params;
-  const { participantsEmails, status, isPartial } = req.body;
+  const { attendeesList, status, isPartialList } = req.body;
 
-  updateAttendeesList({ sessionId, participantsEmails, status, isPartial })
-    .then(() => {
+  const data = {
+    sessionId,
+    attendeesList,
+    status,
+    isPartialList,
+  };
+
+  updateAttendeesList(data)
+    .then(result => {
       return res.json({});
     })
     .catch(err => {
