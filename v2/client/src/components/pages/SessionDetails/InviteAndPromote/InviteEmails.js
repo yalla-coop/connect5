@@ -9,17 +9,15 @@ import Header from '../../../common/Header';
 // STYLE
 import {
   EmailInfoWrapper,
-  BackLink,
-  BackContainer,
   EmailInfo,
   InfoTitle,
   SessionInfoTitle,
   List,
 } from './InviteAndPromote.style';
 
-class SendInvitation extends Component {
+class InviteEmails extends Component {
   render() {
-    const { sessionDetails, onClose, emailInfo } = this.props;
+    const { sessionDetails, emailInfo } = this.props;
     const { startTime, endTime } = sessionDetails;
     const {
       date: emailDate,
@@ -27,25 +25,25 @@ class SendInvitation extends Component {
       trainers,
       trainer,
       sessionType,
-      location: address,
+      address,
       recipients,
+      extraInformation,
     } = emailInfo;
 
     let fullAddress = '';
 
     if (address) {
-      const { location, addressLine1, addressLine2 } = address;
-      if (location || addressLine1 || addressLine2) {
-        fullAddress = `${location}, ${addressLine1}, ${addressLine2}`;
+      const { postcode, addressLine1, addressLine2 } = address;
+      if (postcode || addressLine1 || addressLine2) {
+        fullAddress = [addressLine1, addressLine2, postcode]
+          .filter(item => !!item)
+          .join(', ');
       }
     }
 
     return (
       <EmailInfoWrapper>
         <Header type="view" label="Invite Emails" />
-        <BackContainer>
-          <BackLink onClick={onClose}>{`< Back`}</BackLink>
-        </BackContainer>
         <EmailInfo>
           <InfoTitle>
             Date:
@@ -71,11 +69,11 @@ class SendInvitation extends Component {
             </li>
             <li>
               <SessionInfoTitle> Location:</SessionInfoTitle>{' '}
-              {(fullAddress && fullAddress) || 'Not entered'}
+              {fullAddress || 'TBC'}
             </li>
             <li>
               <SessionInfoTitle>time:</SessionInfoTitle>
-              {startTime} to {endTime}{' '}
+              {startTime || '-'} to {endTime || '-'}{' '}
             </li>
             <li>
               <SessionInfoTitle>Trainer(s):</SessionInfoTitle> {trainers}
@@ -83,6 +81,9 @@ class SendInvitation extends Component {
           </List>
           <p>To confirm your attendance please click this link: </p>
 
+          {extraInformation && <p>{extraInformation}</p>}
+
+          <br />
           <p>Sincerely,</p>
 
           <p>your Connect 5 team.</p>
@@ -91,9 +92,7 @@ class SendInvitation extends Component {
             <InfoTitle>Sent to</InfoTitle>
             <List>
               {recipients &&
-                recipients.map(recipient => (
-                  <li key={recipient._id}>{recipient}</li>
-                ))}
+                recipients.map(email => <li key={email}>{email}</li>)}
             </List>
           </div>
         </EmailInfo>
@@ -105,4 +104,4 @@ class SendInvitation extends Component {
 export default connect(
   null,
   { fetchSessionDetails }
-)(SendInvitation);
+)(InviteEmails);

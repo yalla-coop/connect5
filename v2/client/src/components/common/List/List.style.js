@@ -165,3 +165,16 @@ export const StyledLink = styled(Link)`
   text-align: center;
   margin-top: 1.75rem;
 `;
+
+export const BackWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80px;
+  padding-left: 5%;
+  cursor: pointer;
+  margin: 2rem 0;
+  font-weight: 500;
+  font-size: 18px;
+  cursor: pointer;
+`;

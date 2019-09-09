@@ -14,9 +14,20 @@ const initState = {
   msg: '',
   trainers: [],
   date: null,
-  address: null,
+  address: {
+    postcode: null,
+    addressLine1: null,
+    addressLine2: null,
+  },
   _id: null,
-  addendeesUpdatedSuccess: null,
+  type: null,
+  shortId: null,
+  numberOfAttendees: null,
+  region: null,
+  startTime: null,
+  endTime: null,
+  participantsEmails: [],
+  addAttendeesUpdatedSuccess: null,
   loading: false,
 };
 
@@ -46,14 +57,14 @@ export default function(state = initState, action) {
     case UPDATE_ATTENDEES_SUCCESS:
       return {
         ...state,
-        addendeesUpdatedSuccess: true,
+        addAttendeesUpdatedSuccess: true,
         loading: false,
       };
 
     case UPDATE_ATTENDEES_FAIL:
       return {
         ...state,
-        addendeesUpdatedSuccess: false,
+        addAttendeesUpdatedSuccess: false,
         loading: false,
       };
 
