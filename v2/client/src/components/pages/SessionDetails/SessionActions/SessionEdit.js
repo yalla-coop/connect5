@@ -13,11 +13,16 @@ import {
 } from 'antd';
 import moment from 'moment';
 import { connect } from 'react-redux';
+
 import history from '../../../../history';
 import Button from '../../../common/Button';
 import InfoPopUp from '../../../common/InfoPopup';
 import { fetchAllTrainers } from '../../../../actions/trainerAction';
-import { fetchLocalLeads } from '../../../../actions/users';
+import {
+  fetchLocalLeads,
+  fetchLocalLeadTrainersGroup,
+} from '../../../../actions/users';
+
 import {
   fetchSessionDetails,
   sessionUpdateAction,
@@ -28,7 +33,7 @@ import {
   InputDiv,
   SubmitBtn,
   Error,
-} from '../../CreateSession/create-session.style';
+} from '../../CreateSession/CreateSession.style';
 
 import { SelecetWrapper, IconsWrapper } from '../SessionDetails.Style';
 
@@ -57,16 +62,18 @@ class EditSession extends Component {
     emails: [],
     startTime: null,
     endTime: null,
-    location: null,
+    postcode: null,
     addressLine1: null,
     addressLine2: null,
     err: null,
     emailErr: null,
     stateLoaded: false,
+    responses: [],
   };
 
   componentDidMount() {
     const { id } = this.props.match.params;
+    const { role, userId } = this.props;
 
     let dT = null;
     try {
@@ -84,8 +91,12 @@ class EditSession extends Component {
     // call action and pass it the id of session to fetch it's details
     this.props.fetchSessionDetails(id);
 
-    this.props.fetchAllTrainers();
-    this.props.fetchLocalLeads();
+    if (role === 'localLead') {
+      this.props.fetchLocalLeadTrainersGroup(userId);
+    } else {
+      this.props.fetchAllTrainers();
+      this.props.fetchLocalLeads();
+    }
   }
 
   componentDidUpdate() {
@@ -103,8 +114,9 @@ class EditSession extends Component {
         startTime,
         endTime,
         address,
+        responses,
       } = sessionDetails;
-      const { location, addressLine1, addressLine2 } = address;
+      const { postcode, addressLine1, addressLine2 } = address;
       if (sessionDetails) {
         this.setState({
           session: type,
@@ -115,10 +127,11 @@ class EditSession extends Component {
           emails: participantsEmails,
           startTime,
           endTime,
-          location,
+          postcode,
           addressLine1,
           addressLine2,
           stateLoaded: true,
+          responses,
         });
 
         if (trainers[1]) {
@@ -320,7 +333,7 @@ class EditSession extends Component {
       emails,
       startTime,
       endTime,
-      location,
+      postcode,
       addressLine1,
       addressLine2,
     } = this.state;
@@ -335,16 +348,32 @@ class EditSession extends Component {
       emails,
       startTime,
       endTime,
-      location: location || 'N/A',
-      addressLine1: addressLine1 || 'N/A',
-      addressLine2: addressLine2 || 'N/A',
+      postcode,
+      addressLine1,
+      addressLine2,
     };
 
     this.props.sessionUpdateAction(sessionData, id);
   };
 
+  hide = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleVisibleChange = visible => {
+    this.setState({ visible });
+  };
+
   render() {
-    const { trainers, role, localLeads, sessionDetails, loading } = this.props;
+    const {
+      role,
+      sessionDetails,
+      loading,
+      leadsAndTrainers,
+      localLeadTrainersGroup,
+    } = this.props;
     if (!sessionDetails) {
       return null;
     }
@@ -366,9 +395,11 @@ class EditSession extends Component {
       emails,
       session,
       partnerTrainer1,
-      location,
+      partnerTrainer2,
+      postcode,
       addressLine1,
       addressLine2,
+      responses = [],
     } = this.state;
 
     const {
@@ -418,25 +449,36 @@ class EditSession extends Component {
               )}
             </InputDiv>
 
-            <InputDiv>
-              <Label htmlFor="sessionType">Session Type:</Label>
-              <Select
-                id="sessionType"
-                showSearch
-                style={{ width: '100%' }}
-                placeholder={type}
-                value={session}
-                optionFilterProp="children"
-                onChange={onSelectSessionChange}
-                size="large"
-              >
-                {sessions.map(({ value, label }) => (
-                  <Option key={value} value={value}>
-                    {label}
-                  </Option>
-                ))}
-              </Select>
-            </InputDiv>
+            <Popover
+              content={
+                <span style={{ width: '180px', display: 'block' }}>
+                  You can{"'"}t edit session type after getting responses to it.
+                </span>
+              }
+              visible={responses.length > 0 && this.state.visible}
+              onVisibleChange={this.handleVisibleChange}
+            >
+              <InputDiv>
+                <Label htmlFor="sessionType">Session Type:</Label>
+                <Select
+                  id="sessionType"
+                  showSearch
+                  style={{ width: '100%' }}
+                  placeholder={type}
+                  value={session}
+                  optionFilterProp="children"
+                  onChange={onSelectSessionChange}
+                  size="large"
+                  disabled={responses && responses.length > 0}
+                >
+                  {sessions.map(({ value, label }) => (
+                    <Option key={value} value={value}>
+                      {label}
+                    </Option>
+                  ))}
+                </Select>
+              </InputDiv>
+            </Popover>
 
             <InputDiv>
               <LabelDiv>
@@ -485,16 +527,15 @@ class EditSession extends Component {
                 ))}
               </Select>
             </InputDiv>
-
             <InputDiv>
               <Label htmlFor="addressLine1">Address Line1:</Label>
               <Input
                 id="addressLine1"
                 type="text"
                 placeholder="Address line1"
-                value={location}
+                value={addressLine1}
                 onChange={onInputChange}
-                name="location"
+                name="addressLine1"
                 size="large"
                 onKeyPress={e => onKeyPress(e)}
               />
@@ -506,9 +547,9 @@ class EditSession extends Component {
                 id="addressLine2"
                 type="text"
                 placeholder="address line2"
-                value={addressLine1}
+                value={addressLine2}
                 onChange={onInputChange}
-                name="addressLine1"
+                name="addressLine2"
                 size="large"
                 onKeyPress={e => onKeyPress(e)}
               />
@@ -520,13 +561,14 @@ class EditSession extends Component {
                 id="PostCode"
                 type="text"
                 placeholder="Post Code"
-                value={addressLine2}
+                value={postcode}
                 onChange={onInputChange}
-                name="addressLine2"
+                name="postcode"
                 size="large"
                 onKeyPress={e => onKeyPress(e)}
               />
             </InputDiv>
+
             <InputDiv>
               {role === 'localLead' ? (
                 <Label htmlFor="PartnerTrainer">Trainer:</Label>
@@ -545,18 +587,17 @@ class EditSession extends Component {
                 value={partnerTrainer1}
                 size="large"
               >
-                {trainers &&
-                  trainers.map(({ name, _id }) => (
-                    <Option key={_id} value={_id}>
-                      {name}
-                    </Option>
-                  ))}
-                {role === 'localLead' &&
-                  localLeads.map(({ name, _id }) => (
-                    <Option key={_id} value={_id}>
-                      {name}
-                    </Option>
-                  ))}
+                {role === 'localLead'
+                  ? localLeadTrainersGroup.map(({ name, _id }) => (
+                      <Option key={_id} value={_id}>
+                        {name}
+                      </Option>
+                    ))
+                  : leadsAndTrainers.map(({ name, _id }) => (
+                      <Option key={_id} value={_id}>
+                        {name}
+                      </Option>
+                    ))}
               </Select>
             </InputDiv>
             {role === 'localLead' && (
@@ -570,19 +611,19 @@ class EditSession extends Component {
                   optionFilterProp="children"
                   onChange={onSelectPartner2Change}
                   size="large"
+                  value={partnerTrainer2}
                 >
-                  {trainers &&
-                    trainers.map(({ name, _id }) => (
-                      <Option key={_id} value={_id}>
-                        {name}
-                      </Option>
-                    ))}
-                  {role === 'localLead' &&
-                    localLeads.map(({ name, _id }) => (
-                      <Option key={_id} value={_id}>
-                        {name}
-                      </Option>
-                    ))}
+                  {role === 'localLead'
+                    ? localLeadTrainersGroup.map(({ name, _id }) => (
+                        <Option key={_id} value={_id}>
+                          {name}
+                        </Option>
+                      ))
+                    : leadsAndTrainers.map(({ name, _id }) => (
+                        <Option key={_id} value={_id}>
+                          {name}
+                        </Option>
+                      ))}
                 </Select>
               </InputDiv>
             )}
@@ -627,6 +668,8 @@ class EditSession extends Component {
                 position: 'absolute',
                 width: '0',
                 hieght: '0',
+                // to prevent Y scroll
+                left: '-100000rem',
               }}
             >
               {emails && emails.map(email => email.email).join(';')}
@@ -688,15 +731,25 @@ class EditSession extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  trainers: state.trainers.trainers,
-  role: state.auth.role,
-  localLeads: state.fetchedData.localLeadsList,
-  sessionDetails: state.sessions.sessionDetails[0],
-  loaded: state.sessions.loaded,
-  msg: state.session.msg,
-  loading: state.loading.sessionEditLoading,
-});
+const mapStateToProps = state => {
+  const { trainers } = state.trainers;
+  const localLeads = state.fetchedData.localLeadsList;
+
+  const leadsAndTrainers = [...localLeads, ...trainers];
+
+  return {
+    trainers: state.trainers.trainers,
+    role: state.auth.role,
+    userId: state.auth.id,
+    localLeads: state.fetchedData.localLeadsList,
+    sessionDetails: state.sessions.sessionDetails[0],
+    loaded: state.sessions.loaded,
+    msg: state.session.msg,
+    loading: state.loading.sessionEditLoading,
+    localLeadTrainersGroup: state.fetchedData.localLeadGroup,
+    leadsAndTrainers,
+  };
+};
 
 export default connect(
   mapStateToProps,
@@ -705,5 +758,6 @@ export default connect(
     fetchLocalLeads,
     fetchSessionDetails,
     sessionUpdateAction,
+    fetchLocalLeadTrainersGroup,
   }
 )(EditSession);

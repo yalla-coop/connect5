@@ -34,7 +34,9 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
           <li>
             <EmailText>
               <BoldSpan>Session Date:</BoldSpan>{' '}
-              {activeEmailTemplate.sessionDate || 'N/A'}
+              {(activeEmailTemplate.sessionDate &&
+                activeEmailTemplate.sessionDate.format('DD MMM YYYY')) ||
+                'N/A'}
             </EmailText>
           </li>
           <li>
@@ -47,8 +49,8 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
           <li>
             <EmailText>
               <BoldSpan>Addressline 1: </BoldSpan>{' '}
-              {(activeEmailTemplate.location &&
-                activeEmailTemplate.location.addressLine1) ||
+              {(activeEmailTemplate.address &&
+                activeEmailTemplate.address.addressLine1) ||
                 'N/A'}
             </EmailText>
           </li>
@@ -56,16 +58,16 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
           <li>
             <EmailText>
               <BoldSpan>Addressline 2: </BoldSpan>{' '}
-              {(activeEmailTemplate.location &&
-                activeEmailTemplate.location.addressLine2) ||
+              {(activeEmailTemplate.address &&
+                activeEmailTemplate.address.addressLine2) ||
                 'N/A'}
             </EmailText>
           </li>
           <li>
             <EmailText>
-              <BoldSpan>Location: </BoldSpan>{' '}
-              {(activeEmailTemplate.location &&
-                activeEmailTemplate.location.location) ||
+              <BoldSpan>Postcode: </BoldSpan>{' '}
+              {(activeEmailTemplate.address &&
+                activeEmailTemplate.address.postcode) ||
                 'N/A'}
             </EmailText>
           </li>
@@ -91,7 +93,7 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
           app. You will receive a link to the post-session survey from your
           trainers.
         </EmailText>
-        {activeEmailTemplate.preServeyLink && (
+        {activeEmailTemplate.preSurveyLink && (
           <>
             <br />
             <EmailText>
@@ -99,7 +101,7 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
                 Before starting the training session please follow this link and
                 fill out the{' '}
                 <a
-                  href={activeEmailTemplate.preServeyLink}
+                  href={activeEmailTemplate.preSurveyLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -110,6 +112,13 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
             </EmailText>
           </>
         )}
+
+        <br />
+
+        {activeEmailTemplate.extraInformation && (
+          <EmailText as="pre">{activeEmailTemplate.extraInformation}</EmailText>
+        )}
+
         <br />
         <EmailText>Sincerely,</EmailText>
         <EmailText>Your Connect 5 team</EmailText>

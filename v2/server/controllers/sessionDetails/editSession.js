@@ -16,13 +16,13 @@ module.exports = async (req, res, next) => {
     emails,
     startTime,
     endTime,
-    location,
+    postcode,
     addressLine1,
     addressLine2,
   } = data;
 
   const address = {
-    location,
+    postcode,
     addressLine1,
     addressLine2,
   };

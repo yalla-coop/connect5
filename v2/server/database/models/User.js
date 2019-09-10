@@ -47,6 +47,10 @@ const userSchema = new Schema(
       enum: ['admin', 'localLead', 'trainer'],
       required: true,
     },
+    officialLocalLead: {
+      type: Boolean,
+      default: true,
+    },
     // name - to be showed in the dashboard
     name: {
       type: String,

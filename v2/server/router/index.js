@@ -34,6 +34,7 @@ const updateAttendeesList = require('../controllers/sessionDetails/updateAttende
 const sendReminderEmail = require('../controllers/sessionDetails/sendReminderEmail');
 const scheduleEmail = require('../controllers/sessionDetails/scheduleEmail');
 const cancelScheduleEmail = require('../controllers/sessionDetails/cancelScheduleEmail');
+const updateParicipants = require('../controllers/sessionDetails/updateParicipants');
 const createSpecialRequirements = require('../controllers/createSpecialRequirements');
 
 const getCSVData = require('../controllers/feedback/exportCSVData');
@@ -119,5 +120,9 @@ router.post(
   '/sessions/:sessionId/special-requirements',
   createSpecialRequirements
 );
+
+// update participant emails
+// sends emails if sendEmail option was added to req.body
+router.patch('/sessions/:sessionId/participants-emails', updateParicipants);
 
 module.exports = router;

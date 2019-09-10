@@ -2,10 +2,12 @@ import React from 'react';
 
 import EditEmail from '../../../common/EditEmail';
 
-const SendReminderEmails = ({
+const SendSurveyLink = ({
   sessionDetails,
   handleAddEmailsClick,
   name,
+  isSchedule,
+  surveyType,
   drawerKey,
 }) => {
   const confirmedEmails = sessionDetails.participantsEmails.filter(
@@ -15,7 +17,7 @@ const SendReminderEmails = ({
   return (
     <EditEmail
       participantsEmails={confirmedEmails}
-      type="reminder"
+      type="surveyLink"
       trainer={name}
       sessionDate={sessionDetails.date}
       sessionType={sessionDetails.type}
@@ -26,9 +28,11 @@ const SendReminderEmails = ({
       shortId={sessionDetails.shortId}
       sessionId={sessionDetails._id}
       handleAddEmailsClick={handleAddEmailsClick}
+      isSchedule={isSchedule}
+      surveyType={surveyType}
       drawerKey={drawerKey}
     />
   );
 };
 
-export default SendReminderEmails;
+export default SendSurveyLink;

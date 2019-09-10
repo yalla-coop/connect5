@@ -13,21 +13,15 @@ import {
   LoginForm,
 } from './Certificate.style';
 
-const name = Yup.string()
-  .min(3)
-  .required();
-
-const email = Yup.string()
-  .email()
-  .required();
-
-const nameSchema = Yup.object({
-  name,
-});
+const nameSchema = Yup.object({});
 
 const nameEmailSchema = Yup.object({
-  name,
-  email,
+  name: Yup.string()
+    .min(3)
+    .required(),
+  email: Yup.string()
+    .email()
+    .required(),
 });
 
 export default class NameForm extends Component {
@@ -55,9 +49,9 @@ export default class NameForm extends Component {
   };
 
   handleChange = e => {
-    const { name, value } = e.target;
+    const { name: fieldName, value } = e.target;
     this.setState({
-      [name]: value,
+      [fieldName]: value,
     });
   };
 

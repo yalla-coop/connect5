@@ -33,6 +33,7 @@ module.exports = (req, res, next) => {
           region: user.region,
           email: user.email,
           localLead: user.localLead,
+          officialLocalLead: user.officialLocalLead,
         };
 
         // create token for 25 day

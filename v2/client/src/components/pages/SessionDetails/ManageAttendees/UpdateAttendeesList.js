@@ -34,7 +34,7 @@ const UpdateAttendeesList = ({
               type="primary"
               icon="copy"
               ghost
-              onClick={onCopy}
+              onClick={() => onCopy('confirmed')}
               disabled={!confirmedAttendeesList.length}
             />
           </Tooltip>
@@ -43,7 +43,7 @@ const UpdateAttendeesList = ({
               type="danger"
               icon="delete"
               ghost
-              onClick={onClear}
+              onClick={() => onClear('confirmed')}
               disabled={!confirmedAttendeesList.length}
             />
           </Tooltip>
@@ -53,7 +53,7 @@ const UpdateAttendeesList = ({
           mode="tags"
           value={confirmedAttendeesList}
           placeholder="Select users"
-          onChange={handleUpdateAttendees}
+          onChange={values => handleUpdateAttendees(values, 'confirmed')}
           style={{ width: '100%' }}
           size="large"
           onBlur={onSelectBlur}
@@ -76,7 +76,7 @@ const UpdateAttendeesList = ({
           padding: '0.5rem 1rem',
           height: 'auto',
         }}
-        onClick={handleSubmitUpdateAttendees}
+        onClick={() => handleSubmitUpdateAttendees('confirmed')}
         loading={loading}
         label="Update"
       >
