@@ -39,7 +39,7 @@ const regions = [
 ];
 
 class AddTrainer extends Component {
-  state = {};
+  state = { confirmLoading: false };
 
   componentDidMount() {
     const { isAuthenticated } = this.props;
@@ -50,25 +50,8 @@ class AddTrainer extends Component {
     return fetchLocalLeadsActionCreator();
   }
 
-  componentDidUpdate() {
-    const { group } = this.props;
-    if (group.loaded && group.success) {
-      Modal.success({
-        title: 'Done!',
-        content: group.success,
-        onOk: this.handleSuccessOk,
-      });
-    }
-    if (group.loaded && group.error) {
-      Modal.error({
-        title: 'Error',
-        content: group.error,
-        onOk: this.handleSuccessOk,
-      });
-    }
-  }
-
   handleOk = e => {
+    this.setState({ confirmLoading: true });
     this.handleSubmit(e);
   };
 
@@ -85,17 +68,24 @@ class AddTrainer extends Component {
   };
 
   handleSubmit = e => {
-    const { allowAddUsedEmail } = this.state;
-    const { form, addTrainerToGroup: addTrainerToGroupAction } = this.props;
+    const {
+      form,
+      addTrainerToGroup: addTrainerToGroupAction,
+      isEmailUnique,
+    } = this.props;
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        addTrainerToGroupAction({
-          ...values,
-          newUser: !allowAddUsedEmail,
-          localLead: values.localLead.key,
-          localLeadName: values.localLead.label,
-        }).then(() => history.push('/dashboard'));
+        addTrainerToGroupAction(
+          {
+            ...values,
+            newUser: isEmailUnique,
+            localLead: values.localLead.key,
+            localLeadName: values.localLead.label,
+          },
+          // callback function to be called when response come back
+          this.handleSuccessOk
+        );
       }
     });
   };
@@ -116,6 +106,8 @@ class AddTrainer extends Component {
         state: location.state,
       });
     }
+
+    this.setState({ confirmLoading: false });
     const {
       form,
       resetUniqueEmail: resetUniqueEmailAction,
@@ -128,6 +120,7 @@ class AddTrainer extends Component {
   };
 
   render() {
+    const { confirmLoading } = this.state;
     const {
       form: { getFieldDecorator },
       localLeads,
@@ -148,6 +141,7 @@ class AddTrainer extends Component {
             onOk={this.handleOk}
             onCancel={this.handleCancel}
             title="Account already exists"
+            confirmLoading={confirmLoading}
           >
             <Paragraph>
               Good news, <Bold>{checkedUserInfo.name}</Bold> (
@@ -157,10 +151,12 @@ class AddTrainer extends Component {
             <Paragraph>
               Would you like to add this trainer to your group?
             </Paragraph>
-            <LocalLeadSelect
-              getFieldDecorator={getFieldDecorator}
-              localLeads={localLeads}
-            />
+            {localLeads && (
+              <LocalLeadSelect
+                getFieldDecorator={getFieldDecorator}
+                localLeads={localLeads}
+              />
+            )}
           </Modal>
 
           <Form onSubmit={this.handleSubmit} className="login-form">
@@ -229,7 +225,7 @@ class AddTrainer extends Component {
                 )}
               </Item>
             </div>
-            {(isEmailUnique || isEmailUnique === null) && (
+            {(isEmailUnique || isEmailUnique === null) && localLeads && (
               <LocalLeadSelect
                 getFieldDecorator={getFieldDecorator}
                 localLeads={localLeads}
