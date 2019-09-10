@@ -151,39 +151,42 @@ class CreateSession extends Component {
     });
   };
 
-  renderTrainersList = () => {
-    const {
-      leadsAndTrainers,
-      role,
-      localLeadTrainersGroup,
-      id,
-      name: loggedInName,
-    } = this.props;
+  // partnerTrainer is the trianer selected in the another select
+  // filer the trianers/local leads list to remove the trianer that has been selected
+  renderTrainersList = partnerTrainer => {
+    const { leadsAndTrainers, role, localLeadTrainersGroup, id } = this.props;
+
     if (role && role === 'localLead') {
       if (localLeadTrainersGroup) {
-        return [
-          { _id: id, name: loggedInName, keep: true },
-          ...localLeadTrainersGroup,
-        ]
-          .filter(({ _id, keep }) => _id !== id || keep === true)
-          .map(({ name, _id }) => {
-            return (
-              <Option
-                key={_id}
-                value={_id}
-                style={{ textTransform: 'capitalize' }}
-              >
-                {name}
-              </Option>
-            );
-          });
+        return (
+          localLeadTrainersGroup
+            .filter(item =>
+              partnerTrainer ? item._id !== partnerTrainer.key : true
+            )
+            // sort the the array to get the logged in user at the first of the array
+            .sort(({ _id }) => (_id === id ? -1 : 1))
+            .map(({ name, _id }) => {
+              return (
+                <Option
+                  key={_id}
+                  value={_id}
+                  style={{ textTransform: 'capitalize' }}
+                >
+                  {`${name[0].toUpperCase()}${name.slice(1)}`}
+                </Option>
+              );
+            })
+        );
       }
     } else if (leadsAndTrainers) {
       return leadsAndTrainers
-        .filter(({ _id }) => _id !== id)
+
+        .filter(({ _id }) =>
+          partnerTrainer ? _id !== partnerTrainer.key : _id !== id
+        )
         .map(({ name, _id }) => (
           <Option key={_id} value={_id} style={{ textTransform: 'capitalize' }}>
-            {name}
+            {`${name[0].toUpperCase()}${name.slice(1)}`}
           </Option>
         ));
     }
@@ -528,6 +531,7 @@ class CreateSession extends Component {
             ) : (
               <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
             )}
+
             <Select
               id="PartnerTrainer"
               showSearch
@@ -579,7 +583,7 @@ class CreateSession extends Component {
                 </div>
               )}
             >
-              {this.renderTrainersList()}
+              {this.renderTrainersList(partnerTrainer2)}
             </Select>
             {role === 'localLead' && partnerTrainer1 === null && (
               <Warning>* required</Warning>
@@ -635,7 +639,7 @@ class CreateSession extends Component {
                   </div>
                 )}
               >
-                {this.renderTrainersList()}
+                {this.renderTrainersList(partnerTrainer1)}
               </Select>
             </InputDiv>
           )}
