@@ -18,7 +18,9 @@ module.exports.sessionTypes = [
   '2',
   '3',
   'special-2-days',
-  'train-trainers',
+  'train-trainers-s1',
+  'train-trainers-s2',
+  'train-trainers-event',
 ];
 
 module.exports.surveyTypes = [
@@ -28,8 +30,11 @@ module.exports.surveyTypes = [
   'post-day-3',
   'pre-special',
   'post-special',
-  'pre-train-trainers',
-  'post-train-trainers',
+  'pre-train-trainers-s1',
+  'post-train-trainers-s1',
+  'post-train-trainers-s2',
+  'pre-train-trainers-event',
+  'post-train-trainers-event',
   'follow-up-3-month',
   'follow-up-6-month',
 ];
@@ -43,6 +48,10 @@ questionConstants.groups = {
   ABOUT_YOUR_USUAL_WAY_OF_TEACHING: {
     text: 'about your usual way of teaching',
     order: 4,
+  },
+  ABOUT_HOW_YOU_EXPECT_TO_TEACH: {
+    text: 'about how you expect to teach in the future',
+    order: 5,
   },
 };
 
