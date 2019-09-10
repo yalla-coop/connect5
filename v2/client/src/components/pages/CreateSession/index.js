@@ -31,6 +31,7 @@ import {
 import { sessions, regions } from './options';
 import history from '../../../history';
 
+import { validPostcode } from '../../../helpers';
 import {
   Form,
   CreateSessionWrapper,
@@ -224,7 +225,10 @@ class CreateSession extends Component {
       addressLine2,
       postcode,
     } = inputData;
-
+    const isPostcodeValid = validPostcode(postcode);
+    if (isPostcodeValid) {
+      return this.setState({ isPostcodeValid });
+    }
     const trainersNamesArray = [];
     if (partnerTrainer1) {
       trainersNamesArray.push(trainersNames.partner1);
@@ -297,7 +301,7 @@ class CreateSession extends Component {
   };
 
   render() {
-    const { sessionCreated, extraInfo } = this.state;
+    const { sessionCreated, extraInfo, isPostcodeValid } = this.state;
     const { role, inputData, loading, createdSession, name } = this.props;
 
     const {
@@ -498,6 +502,7 @@ class CreateSession extends Component {
             />
           </InputDiv>
 
+          {!isPostcodeValid && <Error>invalid postcode format</Error>}
           <InputDiv>
             {role === 'localLead' ? (
               <Label htmlFor="PartnerTrainer">
