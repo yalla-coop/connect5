@@ -47,7 +47,7 @@ const userSchema = new Schema(
     },
     officialLocalLead: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     // name - to be showed in the dashboard
     name: {
