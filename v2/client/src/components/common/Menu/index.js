@@ -31,6 +31,7 @@ class HumburgerMenu extends Component {
   state = {
     toggleShow: false,
     activeSub: null,
+    listOpen: false,
   };
 
   componentDidMount() {
@@ -78,12 +79,15 @@ class HumburgerMenu extends Component {
   };
 
   handleSubClick = target => {
-    this.setState({ activeSub: target });
+    this.setState({
+      listOpen: !this.state.listOpen,
+      activeSub: target,
+    });
   };
 
   render() {
     // console.log(this.state);
-    const { toggleShow, activeSub } = this.state;
+    const { toggleShow, activeSub, listOpen } = this.state;
     const { role, logout: logoutAction, dark } = this.props;
 
     return (
@@ -138,9 +142,13 @@ class HumburgerMenu extends Component {
                     onClick={() => this.handleSubClick('results')}
                     block
                   >
-                    <MenuIcon className="fas fa-poll-h" />
+                    {listOpen && activeSub === 'results' ? (
+                      <MenuIcon className="fas fa-angle-down" />
+                    ) : (
+                      <MenuIcon className="fas fa-angle-right" />
+                    )}
                     Results
-                    {activeSub === 'results' && (
+                    {listOpen && activeSub === 'results' && (
                       <>
                         <MenuItem to={MY_RESULTS_URL} block sub>
                           <MenuIcon className="fas fa-poll-h" />
@@ -159,9 +167,13 @@ class HumburgerMenu extends Component {
                     onClick={() => this.handleSubClick('sessions')}
                     block
                   >
-                    <MenuIcon className="far fa-calendar-alt" />
+                    {listOpen && activeSub === 'sessions' ? (
+                      <MenuIcon className="fas fa-angle-down" />
+                    ) : (
+                      <MenuIcon className="fas fa-angle-right" />
+                    )}
                     Sessions
-                    {activeSub === 'sessions' && (
+                    {listOpen && activeSub === 'sessions' && (
                       <>
                         <MenuItem to={MY_SESSIONS_URL} block sub>
                           <MenuIcon className="far fa-calendar-alt" />
@@ -209,9 +221,13 @@ class HumburgerMenu extends Component {
                     onClick={() => this.handleSubClick('results')}
                     block
                   >
-                    <MenuIcon className="fas fa-poll-h" />
+                    {listOpen && activeSub === 'results' ? (
+                      <MenuIcon className="fas fa-angle-down" />
+                    ) : (
+                      <MenuIcon className="fas fa-angle-right" />
+                    )}
                     Results
-                    {activeSub === 'results' && (
+                    {listOpen && activeSub === 'results' && (
                       <>
                         <MenuItem to={MY_RESULTS_URL} block sub>
                           <MenuIcon className="fas fa-poll-h" />
@@ -230,9 +246,13 @@ class HumburgerMenu extends Component {
                     onClick={() => this.handleSubClick('sessions')}
                     block
                   >
-                    <MenuIcon className="far fa-calendar-alt" />
+                    {listOpen && activeSub === 'sessions' ? (
+                      <MenuIcon className="fas fa-angle-down" />
+                    ) : (
+                      <MenuIcon className="fas fa-angle-right" />
+                    )}
                     Sessions
-                    {activeSub === 'sessions' && (
+                    {listOpen && activeSub === 'sessions' && (
                       <>
                         <MenuItem to={MY_SESSIONS_URL} block sub>
                           <MenuIcon className="far fa-calendar-alt" />

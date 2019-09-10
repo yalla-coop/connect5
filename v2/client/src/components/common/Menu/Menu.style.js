@@ -16,7 +16,7 @@ export const Menu = styled.div`
   left: 0;
   width: 250px;
   transition: all 1s ease;
-  padding: ${({ dark }) => (dark ? '3rem 0 0 .4rem' : '2rem 0 0 1rem')};
+  padding: ${({ dark }) => (dark ? '3rem 0 0 .4rem' : '1rem 0 2rem 1rem')};
   z-index: 2000;
   overflow: auto;
   @media ${breakpoints.mobileL} {
