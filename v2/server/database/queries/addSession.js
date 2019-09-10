@@ -1,7 +1,7 @@
 const shortid = require('shortid');
 const Session = require('./../models/Session');
 
-const createNewSession = ({
+const createNewSession = async ({
   startDate,
   session,
   inviteesNumber,
@@ -26,6 +26,7 @@ const createNewSession = ({
     address,
   });
   // Add new session
-  return newSession.save();
+  const createdSession = await newSession.save();
+  return Session.findById(createdSession._id).populate('trainers', 'name');
 };
 module.exports = createNewSession;

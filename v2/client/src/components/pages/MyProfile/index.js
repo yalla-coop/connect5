@@ -150,6 +150,7 @@ class MyProfile extends Component {
       localLead,
       organization,
       userId,
+      officialLocalLead,
     } = this.props;
 
     const {
@@ -194,7 +195,11 @@ class MyProfile extends Component {
           <Row>
             <Detail>
               <BoldSpan>Role: </BoldSpan>
-              {role}
+              {officialLocalLead && role === 'localLead'
+                ? 'Local Lead'
+                : !officialLocalLead && role === 'localLead'
+                ? 'Trainer Manager'
+                : role}
             </Detail>
           </Row>
           <Row>
@@ -286,6 +291,7 @@ const mapStateToProps = state => {
     localLeadsList: state.fetchedData.localLeadsList,
     updateUserLoading: state.loading.updateUserLoading,
     deleteAccountLoading: state.loading.deleteAccountLoading,
+    officialLocalLead: state.auth.officialLocalLead,
   };
 };
 

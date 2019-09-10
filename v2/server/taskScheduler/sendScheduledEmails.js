@@ -1,7 +1,7 @@
 const cron = require('node-cron');
 const moment = require('moment');
 
-const sendSurvey = require('./../helpers/emails/sendSurvey');
+const sendSessionReminder = require('./../helpers/emails/sendSessionReminder');
 
 const {
   addSentEmail,
@@ -39,38 +39,78 @@ const sendScheduledEmails = () =>
 
             // get last element
             const emailDetails = sheduledEmails[sheduledEmails.length - 1];
-            const recipients = emailDetails.participantsEmails
-              .filter(item => item.status === 'confirmed')
-              .map(item => item.email);
-
-            const surveyURL = {
-              surveyType: emailDetails.scheduledEmails.surveyType,
-              surveyURL: `${process.env.DOMAIN}/survey/${emailDetails.scheduledEmails.surveyType}&${emailDetails.shortId}`,
-            };
-
-            if (emailDetails.length) {
-              // send the survey by email
-              await sendSurvey({
-                surveyURLs: [surveyURL],
-                participantsList: recipients,
-              });
-            }
+            const {
+              recipients,
+              extraInformation,
+              surveyType,
+              // string
+              trainer,
+            } = emailDetails.scheduledEmails;
 
             const trainers = emailDetails.trainers
-              .map(item => item.name)
+              .map(
+                _trainer =>
+                  `${_trainer.name[0].toUpperCase()}${_trainer.name.slice(1)}`
+              )
               .join(' & ');
+
+            let fullAddress = '';
+
+            if (emailDetails.address) {
+              const {
+                postcode,
+                addressLine1,
+                addressLine2,
+              } = emailDetails.address;
+              if (postcode || addressLine1 || addressLine2) {
+                fullAddress = [addressLine1, addressLine2, postcode]
+                  .filter(item => !!item)
+                  .join(', ');
+              }
+            }
+
+            const surveyTypes = {
+              1: ['pre-day-1', 'post-day-1'],
+              2: ['post-day-2'],
+              3: ['post-day-3'],
+              'special-2-days': ['pre-special', 'post-special'],
+              'train-trainers': ['pre-train-trainers', 'post-train-trainers'],
+            };
+
+            const links = surveyTypes[surveyType].map(item => {
+              return `${process.env.DOMAIN}/survey/${item}&${emailDetails.shortId}`;
+            });
+
+            const preSurveyLink = links.find(item => item.includes('pre'));
+            const postSurveyLink = links.find(item => item.includes('post'));
+
+            await sendSessionReminder({
+              extraInformation,
+              recipients,
+              sessionDate: moment(emailDetails.date).format('YYYY-MM-DD'),
+              sessionType: emailDetails.type,
+              trainers,
+              trainer,
+              address: fullAddress || 'TBC',
+              startTime: emailDetails.startTime,
+              endTime: emailDetails.endTime,
+              shortId: emailDetails.shortId,
+              preSurveyLink,
+              postSurveyLink,
+            });
 
             const emailData = {
               sendDate: moment().format('YYYY-MM-DD'),
               trainers,
               sessionDate: moment(emailDetails.date).format('YYYY-MM-DD'),
               sessionType: emailDetails.type,
-              location: emailDetails.address,
+              address: emailDetails.address,
               startTime: emailDetails.startTime,
               endTime: emailDetails.endTime,
-              recipients: emailDetails.participantsEmails.filter(
-                item => item.status === 'confirmed'
-              ),
+              recipients,
+              preSurveyLink,
+              postSurveyLink,
+              trainer,
             };
 
             // add the sent email to the session email history
@@ -78,7 +118,6 @@ const sendScheduledEmails = () =>
               sessionId: emailDetails._id,
               emailData,
               type: 'surveyLink',
-              serveyLink: surveyURL,
             });
 
             // delete the sent email from the scheduled emails

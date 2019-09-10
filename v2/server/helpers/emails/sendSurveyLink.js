@@ -2,7 +2,7 @@ const moment = require('moment');
 
 const mailer = require('./index');
 
-const sendReminder = ({
+const sendSurveyLink = ({
   recipients,
   sessionDate,
   sessionType,
@@ -17,7 +17,6 @@ const sendReminder = ({
 }) => {
   let extraParagraph;
   let fullAddress = '';
-
   if (address) {
     const { postcode, addressLine1, addressLine2 } = address;
     if (postcode || addressLine1 || addressLine2) {
@@ -44,7 +43,7 @@ const sendReminder = ({
     </div>
     <p>Dear course participants,</p>
 
-    <p>This is a friendly reminder related to the following Connect 5 training session:</p>
+    <p>We're looking forward to welcome you at our upcoming Connect 5 training session:</p>
     <ul style={{listStyle: 'none'}}>
       <li> Session Date: ${(sessionDate &&
         moment(sessionDate).format('DD MMM YYYY')) ||
@@ -105,4 +104,4 @@ const sendReminder = ({
   });
 };
 
-module.exports = sendReminder;
+module.exports = sendSurveyLink;

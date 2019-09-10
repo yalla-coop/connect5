@@ -37,29 +37,6 @@ export const EmailsList = styled.div`
   box-shadow: ${shadows.secondary};
 `;
 
-export const BackLink = styled.button`
-  border: none;
-  background: none;
-  color: ${colors.lightPrimary};
-  font-weight: 500;
-  cursor: pointer;
-  outline: none;
-
-  :focus,
-  :hover {
-    text-decoration: underline;
-  }
-`;
-
-export const BackContainer = styled.div`
-  width: 90%;
-  padding: 0 20px;
-  align-self: center;
-  @media (min-width: 678px) {
-    padding-top: 2rem;
-  }
-`;
-
 export const InputDiv = styled.div`
   width: 100%;
   display: flex;
@@ -103,7 +80,7 @@ export const SessionInfoTitle = styled.span`
 
 export const List = styled.ul`
   padding-left: 1.5rem;
-  & > *
+  & > * {
     margin-left: 0.5rem;
     font-size: 16px;
   }
