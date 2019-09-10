@@ -481,7 +481,6 @@ class EditSession extends Component {
             >
               <InputDiv>
                 <Label htmlFor="sessionType">Session Type:</Label>
-
                 <Select
                   id="sessionType"
                   showSearch
@@ -491,6 +490,7 @@ class EditSession extends Component {
                   optionFilterProp="children"
                   onChange={onSelectSessionChange}
                   size="large"
+                  disabled={responses && responses.length > 0}
                 >
                   {sessions.map(({ value, label }) => (
                     <Option key={value} value={value}>
