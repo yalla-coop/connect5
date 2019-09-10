@@ -68,6 +68,7 @@ const initialState = {
   address: '',
   postcode: null,
   extraInfo: null,
+  isPostcodeValid: true,
 };
 
 class CreateSession extends Component {
@@ -117,6 +118,11 @@ class CreateSession extends Component {
   onInputChange = ({ target: { value, name } }) => {
     const newValue = value.replace(/^\s*\s*$/, '');
     this.props.storeInputData({ [name]: newValue });
+
+    if (name === 'postcode') {
+      const isPostcodeValid = validPostcode(value);
+      this.setState({ isPostcodeValid: !value || isPostcodeValid });
+    }
   };
 
   onSelectSessionChange = value => {
@@ -225,10 +231,15 @@ class CreateSession extends Component {
       addressLine2,
       postcode,
     } = inputData;
-    const isPostcodeValid = validPostcode(postcode);
-    if (isPostcodeValid) {
-      return this.setState({ isPostcodeValid });
+
+    if (postcode) {
+      const isPostcodeValid = validPostcode(postcode);
+      if (!isPostcodeValid) {
+        return this.setState({ isPostcodeValid: false });
+      }
+      this.setState({ isPostcodeValid: true });
     }
+
     const trainersNamesArray = [];
     if (partnerTrainer1) {
       trainersNamesArray.push(trainersNames.partner1);
@@ -502,7 +513,12 @@ class CreateSession extends Component {
             />
           </InputDiv>
 
-          {!isPostcodeValid && <Error>invalid postcode format</Error>}
+          {!isPostcodeValid && (
+            <Error style={{ margin: '-19px 0px 13px 24px' }}>
+              invalid postcode format
+            </Error>
+          )}
+
           <InputDiv>
             {role === 'localLead' ? (
               <Label htmlFor="PartnerTrainer">
