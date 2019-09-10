@@ -29,6 +29,14 @@ module.exports.getSessionDetails = ({ id, shortId }) => {
         as: 'specialRequirements',
       },
     },
+    {
+      $lookup: {
+        from: 'responses',
+        localField: '_id',
+        foreignField: 'session',
+        as: 'responses',
+      },
+    },
   ]);
 };
 

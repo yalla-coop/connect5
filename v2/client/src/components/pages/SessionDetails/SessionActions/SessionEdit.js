@@ -13,6 +13,7 @@ import {
 } from 'antd';
 import moment from 'moment';
 import { connect } from 'react-redux';
+
 import history from '../../../../history';
 import Button from '../../../common/Button';
 import InfoPopUp from '../../../common/InfoPopup';
@@ -67,6 +68,7 @@ class EditSession extends Component {
     err: null,
     emailErr: null,
     stateLoaded: false,
+    responses: [],
   };
 
   componentDidMount() {
@@ -112,6 +114,7 @@ class EditSession extends Component {
         startTime,
         endTime,
         address,
+        responses,
       } = sessionDetails;
       const { postcode, addressLine1, addressLine2 } = address;
       if (sessionDetails) {
@@ -128,6 +131,7 @@ class EditSession extends Component {
           addressLine1,
           addressLine2,
           stateLoaded: true,
+          responses,
         });
 
         if (trainers[1]) {
@@ -352,6 +356,16 @@ class EditSession extends Component {
     this.props.sessionUpdateAction(sessionData, id);
   };
 
+  hide = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleVisibleChange = visible => {
+    this.setState({ visible });
+  };
+
   render() {
     const {
       role,
@@ -385,6 +399,7 @@ class EditSession extends Component {
       postcode,
       addressLine1,
       addressLine2,
+      responses = [],
     } = this.state;
 
     const {
@@ -434,25 +449,37 @@ class EditSession extends Component {
               )}
             </InputDiv>
 
-            <InputDiv>
-              <Label htmlFor="sessionType">Session Type:</Label>
-              <Select
-                id="sessionType"
-                showSearch
-                style={{ width: '100%' }}
-                placeholder={type}
-                value={session}
-                optionFilterProp="children"
-                onChange={onSelectSessionChange}
-                size="large"
-              >
-                {sessions.map(({ value, label }) => (
-                  <Option key={value} value={value}>
-                    {label}
-                  </Option>
-                ))}
-              </Select>
-            </InputDiv>
+            <Popover
+              content={
+                <span style={{ width: '180px', display: 'block' }}>
+                  You can{"'"}t edit session type after getting responses to it.
+                </span>
+              }
+              visible={responses.length > 0 && this.state.visible}
+              onVisibleChange={this.handleVisibleChange}
+            >
+              <InputDiv>
+                <Label htmlFor="sessionType">Session Type:</Label>
+                <Select
+                  id="sessionType"
+                  showSearch
+                  style={{ width: '100%' }}
+                  placeholder={type}
+                  value={session}
+                  optionFilterProp="children"
+                  onChange={onSelectSessionChange}
+                  size="large"
+                  disabled={responses && responses.length > 0}
+                >
+                  {sessions.map(({ value, label }) => (
+                    <Option key={value} value={value}>
+                      {label}
+                    </Option>
+                  ))}
+                </Select>
+              </InputDiv>
+            </Popover>
+
             <InputDiv>
               <LabelDiv>
                 <Label htmlFor="sessionCapacity">Session Capacity:</Label>
