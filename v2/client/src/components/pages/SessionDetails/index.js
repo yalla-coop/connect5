@@ -44,6 +44,17 @@ class SessionDetails extends Component {
   };
 
   componentDidMount() {
+    let dT = null;
+    try {
+      dT = new DataTransfer();
+    } catch (e) {
+      // ignore the error
+    }
+    const evt = new ClipboardEvent('paste', { clipboardData: dT });
+    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+    document.addEventListener('paste', this.pasteEmails);
+    document.dispatchEvent(evt);
+
     const { id } = this.props.match.params;
     // call action and pass it the id of session to fetch it's details
     this.props.fetchSessionDetails(id);
@@ -55,6 +66,10 @@ class SessionDetails extends Component {
     if (lastUpdate !== sessionDetails.updatedAt) {
       this.setListIntoState();
     }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('paste', this.pasteEmails);
   }
 
   callback = key => {
@@ -167,8 +182,32 @@ class SessionDetails extends Component {
     }
 
     if (dataForCopy.length) {
-      navigator.clipboard.writeText(dataForCopy.join(';'));
-      message.success('Copied');
+      this.setState({ dataForCopy: dataForCopy.join(';') }, () => {
+        if (dataForCopy.length) {
+          const copyText = document.getElementById('dataForCopy');
+          let range;
+          let selection;
+          if (document.body.createTextRange) {
+            range = document.body.createTextRange();
+            range.moveToElementText(copyText);
+
+            range.select();
+          } else if (window.getSelection) {
+            selection = window.getSelection();
+            range = document.createRange();
+            range.selectNodeContents(copyText);
+            selection.removeAllRanges();
+            selection.addRange(range);
+          }
+
+          try {
+            document.execCommand('copy');
+            message.success('copied');
+          } catch (err) {
+            console.log(err);
+          }
+        }
+      });
     }
   };
 
@@ -188,21 +227,37 @@ class SessionDetails extends Component {
   };
 
   // when pasting list of emails in the Select component
-  pasteEmails = (event, status) => {
-    const { focused } = this.state;
+  pasteEmails = event => {
+    const { focused, drawerKey } = this.state;
+
+    let status = '';
+    switch (drawerKey) {
+      case 'view-invitees':
+        status = 'new';
+        break;
+
+      case 'viewAttendeesList':
+        status = 'confirmed';
+        break;
+
+      default:
+        break;
+    }
 
     let emailsArray;
 
     if (focused) {
       event.preventDefault();
       const pastedString = event.clipboardData.getData('text/plain');
-      const splittedEmails = pastedString.split(';');
-      if (pastedString === splittedEmails) {
-        emailsArray = pastedString.split(';');
-      }
-      emailsArray = splittedEmails.map(item => item.trim());
+      const splittedEmails = pastedString.split.split(/[, ;]/);
 
-      this.handleUpdateAttendees(emailsArray, status);
+      emailsArray = splittedEmails
+        .map(item => item.trim())
+        .filter(item => !!item);
+
+      const { [`${status}Emails`]: oldEmails } = this.state;
+
+      this.handleUpdateAttendees([...emailsArray, ...oldEmails], status);
     }
   };
 
@@ -217,7 +272,6 @@ class SessionDetails extends Component {
   };
 
   // to handle moving from the edit email page to add attendees page
-
   handleAddEmailsClick = (drawerKey, nextKey) => {
     this.setState({
       visible: true,
@@ -246,6 +300,7 @@ class SessionDetails extends Component {
       reminderEmails,
       newEmails,
       surveyType,
+      dataForCopy,
     } = this.state;
 
     if (!sessionDetails) {
@@ -347,6 +402,19 @@ class SessionDetails extends Component {
               />
             </>
           </Drawer>
+        </div>
+        <div
+          id="dataForCopy"
+          style={{
+            opacity: '0',
+            position: 'absolute',
+            width: '0',
+            hieght: '0',
+            // to prevent Y scroll
+            left: '-100000rem',
+          }}
+        >
+          {dataForCopy}
         </div>
       </SessionDetailsWrapper>
     );
