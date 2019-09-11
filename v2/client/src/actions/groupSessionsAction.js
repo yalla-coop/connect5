@@ -17,6 +17,7 @@ import {
   LOADING_TRUE,
 } from '../constants/actionTypes';
 
+import { MY_SESSIONS_URL } from '../constants/navigationRoutes';
 import history from '../history';
 
 export const fetchTrainerSessions = id => async dispatch => {
@@ -84,8 +85,7 @@ export const deleteSessionAction = id => async dispatch => {
       Modal.success({
         title: 'success',
         content: 'session has been successfully delete',
-        onOk: () =>
-          history.push(role === 'trainer' ? '/trainer-sessions' : '/sessions'),
+        onOk: () => history.push(MY_SESSIONS_URL),
       });
     })
     .catch(() => history.push('/404err'));
