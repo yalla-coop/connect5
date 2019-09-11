@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { message, Modal } from 'antd';
 import Swal from 'sweetalert2';
-import store from '../store';
 
 import {
   FETCH_ALL_SESSIONS,
