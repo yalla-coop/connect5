@@ -1,3 +1,5 @@
+const { plainSurveyTypes, plainSessionsType } = require('./../constants');
+
 /* eslint-disable no-use-before-define */
 const regions = [
   'North East',
@@ -13,31 +15,9 @@ const regions = [
 
 module.exports.regions = regions;
 
-module.exports.sessionTypes = [
-  '1',
-  '2',
-  '3',
-  'special-2-days',
-  'train-trainers-s1',
-  'train-trainers-s2',
-  'train-trainers-event',
-];
+module.exports.sessionTypes = plainSessionsType;
 
-module.exports.surveyTypes = [
-  'pre-day-1',
-  'post-day-1',
-  'post-day-2',
-  'post-day-3',
-  'pre-special',
-  'post-special',
-  'pre-train-trainers-s1',
-  'post-train-trainers-s1',
-  'post-train-trainers-s2',
-  'pre-train-trainers-event',
-  'post-train-trainers-event',
-  'follow-up-3-month',
-  'follow-up-6-month',
-];
+module.exports.surveyTypes = plainSurveyTypes;
 
 const questionConstants = {};
 

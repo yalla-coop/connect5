@@ -5,7 +5,7 @@ const {
 const sendSessionReminder = require('./../../helpers/emails/sendSessionReminder');
 const sendEmailInvitation = require('./../../helpers/emails/sendEmailInvitation');
 const sendSurveyLink = require('./../../helpers/emails/sendSurveyLink');
-
+const { getPreSurveyLink, getPostSurveyLink } = require('./../../helpers/');
 const {
   updateAttendeesList,
 } = require('./../../database/queries/sessionDetails/session');
@@ -15,20 +15,14 @@ module.exports = async (req, res, next) => {
   const { type } = req.query;
   const emailData = req.body;
 
-  const surveyTypes = {
-    1: ['pre-day-1', 'post-day-1'],
-    2: ['post-day-2'],
-    3: ['post-day-3'],
-    'special-2-days': ['pre-special', 'post-special'],
-    'train-trainers': ['pre-train-trainers', 'post-train-trainers'],
-  };
-
-  const links = surveyTypes[emailData.sessionType].map(item => {
-    return `${process.env.DOMAIN}/survey/${item}&${emailData.shortId}`;
-  });
-
-  const preSurveyLink = links.find(item => item.includes('pre'));
-  const postSurveyLink = links.find(item => item.includes('post'));
+  const preSurveyLink = getPreSurveyLink(
+    emailData.sessionType,
+    emailData.shortId
+  );
+  const postSurveyLink = getPostSurveyLink(
+    emailData.sessionType,
+    emailData.shortId
+  );
 
   const sentEmailData = {
     sessionId,

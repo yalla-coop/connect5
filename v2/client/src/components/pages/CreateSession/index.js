@@ -19,6 +19,8 @@ import Button from '../../common/Button';
 import Header from '../../common/Header';
 import EditEmail from '../../common/EditEmail';
 
+import { readableSessionNamePairs } from '../../../constants';
+
 import { fetchAllTrainers } from '../../../actions/trainerAction';
 import {
   fetchLocalLeads,
@@ -28,7 +30,7 @@ import {
   createSessionAction,
   storeInputData,
 } from '../../../actions/sessionAction';
-import { sessions, regions } from './options';
+import { regions } from './options';
 import history from '../../../history';
 
 import {
@@ -392,11 +394,13 @@ class CreateSession extends Component {
               size="large"
               value={session || undefined}
             >
-              {sessions.map(({ value, label }) => (
-                <Option key={value} value={value}>
-                  {label}
-                </Option>
-              ))}
+              {Object.entries(readableSessionNamePairs).map(
+                ([value, label]) => (
+                  <Option key={value} value={value}>
+                    {label}
+                  </Option>
+                )
+              )}
             </Select>
             {session === null && <Warning>* required</Warning>}
           </InputDiv>

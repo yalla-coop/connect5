@@ -27,7 +27,9 @@ import {
   fetchSessionDetails,
   sessionUpdateAction,
 } from '../../../../actions/groupSessionsAction';
-import { sessions, regions, pattern } from '../../CreateSession/options';
+import { regions, pattern } from '../../CreateSession/options';
+import { readableSessionNamePairs } from '../../../../constants';
+
 import {
   Form,
   InputDiv,
@@ -116,6 +118,7 @@ class EditSession extends Component {
         address,
         responses,
       } = sessionDetails;
+
       const { postcode, addressLine1, addressLine2 } = address;
       if (sessionDetails) {
         this.setState({
@@ -471,11 +474,13 @@ class EditSession extends Component {
                   size="large"
                   disabled={responses && responses.length > 0}
                 >
-                  {sessions.map(({ value, label }) => (
-                    <Option key={value} value={value}>
-                      {label}
-                    </Option>
-                  ))}
+                  {Object.entries(readableSessionNamePairs).map(
+                    ([value, label]) => (
+                      <Option key={value} value={value}>
+                        {label}
+                      </Option>
+                    )
+                  )}
                 </Select>
               </InputDiv>
             </Popover>

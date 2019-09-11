@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const User = require('../../models/User');
 const Session = require('../../models/Session');
 const Response = require('../../models/Response');
+const {
+  readableSurveysNamePairs,
+  readableSessionNamePairs,
+} = require('./../../../constants');
 
 const getTrainerGroupSurveys = async leadId => {
   const user = await User.findById(leadId);
@@ -40,6 +44,7 @@ const getTrainerGroupSurveys = async leadId => {
   const map = new Map();
 
   if (cleanedResponses.length > 0) {
+    // eslint-disable-next-line no-restricted-syntax
     for (const item of cleanedResponses) {
       if (!map.has(item._id.toString())) {
         map.set(item._id.toString(), true);
@@ -52,68 +57,15 @@ const getTrainerGroupSurveys = async leadId => {
     }
   }
 
-  const result = {
-    'pre-day-1': {
-      _id: 'pre-day-1',
+  const result = {};
+  Object.entries(readableSurveysNamePairs).forEach(pair => {
+    result[pair[0]] = {
+      _id: pair[0],
       responses: 0,
       participants: 0,
-      type: 'Pre-course',
-    },
-    'post-day-1': {
-      _id: 'post-day-1',
-      responses: 0,
-      participants: 0,
-      type: 'Post Session 1',
-    },
-    'post-day-2': {
-      _id: 'post-day-2',
-      responses: 0,
-      participants: 0,
-      type: 'Post Session 2',
-    },
-    'post-day-3': {
-      _id: 'post-day-3',
-      responses: 0,
-      participants: 0,
-      type: 'Post Session 3',
-    },
-    'pre-special': {
-      _id: 'pre-special',
-      responses: 0,
-      participants: 0,
-      type: 'Pre 2-day Intensive',
-    },
-    'post-special': {
-      _id: 'post-special',
-      responses: 0,
-      participants: 0,
-      type: 'Post 2-day Intensive',
-    },
-    'pre-train-trainers': {
-      _id: 'pre-train-trainers',
-      responses: 0,
-      participants: 0,
-      type: 'Pre train trainers',
-    },
-    'post-train-trainers': {
-      _id: 'post-train-trainers',
-      responses: 0,
-      participants: 0,
-      type: 'Post train trainers',
-    },
-    'follow-up-3-month': {
-      _id: 'follow-up-3-month',
-      responses: 0,
-      participants: 0,
-      type: '3 month follow-up',
-    },
-    'follow-up-6-month': {
-      _id: 'follow-up-6-month',
-      responses: 0,
-      participants: 0,
-      type: '6 month Follow-up',
-    },
-  };
+      type: pair[1],
+    };
+  });
 
   uniqueResponses.forEach(response => {
     result[response.surveyType]._id = response.surveyType;
@@ -150,6 +102,7 @@ const getTrainerGroupSessions = async leadId => {
   const map = new Map();
 
   if (cleanedSessions.length > 0) {
+    // eslint-disable-next-line no-restricted-syntax
     for (const item of cleanedSessions) {
       if (!map.has(item._id.toString())) {
         map.set(item._id.toString(), true);
@@ -162,23 +115,15 @@ const getTrainerGroupSessions = async leadId => {
     }
   }
 
-  const result = {
-    '1': { _id: '1', sessions: 0, participants: 0, type: 'Session 1' },
-    '2': { _id: '2', sessions: 0, participants: 0, type: 'Session 2' },
-    '3': { _id: '3', sessions: 0, participants: 0, type: 'Session 3' },
-    'special-2-days': {
-      _id: 'special-2-days',
+  const result = {};
+  Object.entries(readableSessionNamePairs).forEach(pair => {
+    result[pair[0]] = {
+      _id: pair[0],
       sessions: 0,
       participants: 0,
-      type: '2-day intensive',
-    },
-    'train-trainers': {
-      _id: 'train-trainers',
-      sessions: 0,
-      participants: 0,
-      type: 'Train trainers',
-    },
-  };
+      type: pair[1],
+    };
+  });
 
   uniqueSessions.forEach(session => {
     result[session.type]._id = session.type;

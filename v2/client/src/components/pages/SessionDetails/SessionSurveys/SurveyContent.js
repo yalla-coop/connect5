@@ -101,12 +101,6 @@ class SurveyContent extends Component {
         item => item.status === 'confirmed'
       ).length;
 
-    let url = `https://${surveyURL}`;
-
-    if (process.env.NODE_ENV === 'development') {
-      url = `http://${surveyURL}`;
-    }
-
     return (
       <SurveyContentWrapper>
         <SurveyLinkType to={`/survey/${id}/${type}/results`}>
@@ -119,12 +113,12 @@ class SurveyContent extends Component {
 
         <SurveyLinkWrapper>
           <SurveyLink
-            href={url}
+            href={surveyURL}
             target="_blank"
             rel="noopener noreferrer"
             id={`link${subId}`}
           >
-            {url}
+            {surveyURL}
           </SurveyLink>
           <CopyLink onClick={() => onCopyClick(subId)}>
             <CopyIcon className="far fa-copy"></CopyIcon>

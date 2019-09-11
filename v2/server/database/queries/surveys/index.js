@@ -2,6 +2,8 @@ const Response = require('../../models/Response');
 const Session = require('../../models/Session');
 const Answer = require('../../models/Answer');
 
+const { surveysTypes } = require('./../../../constants');
+
 module.exports.getSurveyPINs = (sessionId, surveyType) =>
   Response.find({ session: sessionId, surveyType }, { PIN: 1, _id: 0 });
 
@@ -16,23 +18,36 @@ module.exports.PINResponsesOnSurvey = ({ PIN, surveyType }) =>
 
 module.exports.PINfilledPreSurvey = async (PIN, sessionID) => {
   // get session info
-  const session = await Session.find({ _id: sessionID });
-  const { type } = session[0];
-  const relevantPreSurveys = ['pre-day-1', 'pre-train-trainers', 'pre-special'];
+  const session = await Session.findById(sessionID);
+  const { sessionType } = session;
+
+  // sessions that have -pre- survey
+  const sessionsHavePreSurvey = Object.entries(surveysTypes).reduce(
+    (prev, [_sessionType, surveysArray]) => {
+      let hasPreSurvey = false;
+      surveysArray.forEach(survey => {
+        if (survey.includes('pre')) {
+          hasPreSurvey = true;
+        }
+      });
+
+      if (hasPreSurvey) {
+        return [_sessionType, ...prev];
+      }
+      return prev;
+    }
+  );
 
   // check if session includes pre-survey
-  if (type === '1' || type === 'special-2-days' || type === 'train-trainers') {
-    const response = await Response.find({
+  if (sessionsHavePreSurvey.includes(sessionType)) {
+    const response = await Response.findOne({
       PIN,
       session: sessionID,
     });
 
     let preResponseExists;
 
-    if (
-      response.length > 0 &&
-      relevantPreSurveys.includes(response[0].surveyType)
-    ) {
+    if (response && response.surveyType.includes('pre')) {
       preResponseExists = true;
     } else {
       preResponseExists = false;
