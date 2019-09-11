@@ -8,7 +8,6 @@ const addNewTrainerToGroup = require('../../helpers/emails/addNewTrainerToGroup'
 
 const {
   addTrainertoGroup,
-  removeTrainerFromGroup,
 } = require('./../../database/queries/users/localLead');
 
 const { getUserByEmail, update } = require('./../../database/queries/users');
@@ -47,10 +46,10 @@ module.exports = async (req, res, next) => {
       });
     }
 
-    await removeTrainerFromGroup(localLead, trainer._id);
+    // await removeTrainerFromGroup(localLead, trainer._id);
     await addTrainertoGroup(localLead, trainer._id);
 
-    await update(trainer._id, { localLead, givenPermission: false });
+    await update(trainer._id, localLead);
     let isNew = false;
     if (newUser) {
       isNew = true;

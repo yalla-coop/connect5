@@ -11,7 +11,7 @@ const editProfile = async (req, res, next) => {
   const { user } = req;
   const {
     organization = user.organization,
-    localLead = user.localLead,
+    localLead = user.localLead[0],
   } = req.body;
   const data = {};
   if (organization) {
@@ -21,14 +21,14 @@ const editProfile = async (req, res, next) => {
     data.localLead = localLead;
   }
   try {
-    if (localLead !== user.localLead) {
+    if (localLead !== user.localLead[0]) {
       // remove from the old local lead group
-      await removeTrainerFromGroup(user.localLead, user._id);
+      await removeTrainerFromGroup(user.localLead[0], user._id);
       // add trainer to the new local lead group
       await addTrainertoGroup(localLead, user._id);
     }
 
-    data.localLead = localLead || user.localLead;
+    data.localLead = localLead || user.localLead[0];
     await update(user._id, data);
     return res.json({});
   } catch (err) {
