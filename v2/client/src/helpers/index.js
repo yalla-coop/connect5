@@ -61,7 +61,6 @@ export const getPostSurveyLink = (sessionType, shortId) => {
  * @param {String} shortId - session shortId
  */
 export const getAllSurveyLinks = (sessionType, shortId) => {
-  console.log(sessionType);
   return surveysTypes[sessionType].map(item => {
     const surveyURL = `${window.location.host}/survey/${item}&${shortId}`;
     let url = `https://${surveyURL}`;
