@@ -113,7 +113,7 @@ class EditSession extends Component {
         trainers,
         startTime,
         endTime,
-        address,
+        address = {},
         responses,
       } = sessionDetails;
       const { postcode, addressLine1, addressLine2 } = address;
