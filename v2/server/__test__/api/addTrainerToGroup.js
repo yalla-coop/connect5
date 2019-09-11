@@ -58,17 +58,14 @@ describe('Tesing for addTrainerToGroup route', () => {
             expect(createdTrainer.role).toBe('trainer');
 
             // new trainer must be belong to the local lead we sent
-            expect(createdTrainer.localLead).toEqual(localLead._id);
+            expect(createdTrainer.localLead[0]).toEqual(localLead._id);
 
             // local lead group must hove new additional trainer
             expect(localLead.trainersGroup).toHaveLength(4);
             expect(updatedLocalLead.trainersGroup).toHaveLength(5);
 
             // success message
-            expect(response.body.success).toBe(
-              `New has been added to ${localLead.name}'s group and login details have been sent to his/her email`
-            );
-
+            expect(response.body.success).toMatch(/New has been added/);
             done(error);
           });
       });
@@ -116,11 +113,12 @@ describe('Tesing for addTrainerToGroup route', () => {
             expect(updatedTrainer.role).toBe('trainer');
 
             // new trainer must be belong to the local lead we sent
-            expect(updatedTrainer.localLead).toEqual(localLead._id);
+            expect(updatedTrainer.localLead).toContainEqual(localLead._id);
 
             // local lead group must hove new additional trainer
-            expect(localLead.trainersGroup).toHaveLength(0);
-            expect(updatedLocalLead.trainersGroup).toHaveLength(1);
+            expect(updatedLocalLead.trainersGroup).toHaveLength(
+              localLead.trainersGroup.length + 1
+            );
 
             // success message
             expect(response.body.success).toBe(
