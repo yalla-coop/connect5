@@ -143,7 +143,7 @@ class EditEmail extends Component {
   toggleEditView = visible => {
     this.setState({ isEditView: visible });
     const drawerWrapper = document.querySelector('.ant-drawer-wrapper-body');
-    // drawerWrapper.scrollBy(-1000, -1000);
+    drawerWrapper.scrollBy(-1000, -1000);
   };
 
   handleExtraInformation = e => {
