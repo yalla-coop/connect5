@@ -80,8 +80,6 @@ export const deleteSessionAction = id => async dispatch => {
       })
     )
     .then(() => {
-      const { role } = store.getState().auth;
-
       Modal.success({
         title: 'success',
         content: 'session has been successfully delete',
