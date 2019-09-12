@@ -35,8 +35,8 @@ describe('Tesing for getTrainerFeedback route', () => {
   });
 
   test('test with valid session id', async done => {
-    const trainers = await User.find({ role: 'trainer' });
-    const sessions = await Session.find({ type: 2, trainers: trainers[0] });
+    const trainer = await User.findOne({ name: 'alex' });
+    const sessions = await Session.find({ type: 2, trainers: trainer._id });
     const data = { sessionId: sessions[0]._id };
     request(app)
       .post(`/api/feedback/`)
@@ -66,8 +66,8 @@ describe('Tesing for getTrainerFeedback route', () => {
   });
 
   test('test with invalid session id', async done => {
-    const trainers = await User.find({ role: 'trainer' });
-    const sessions = await Session.find({ type: 1, trainers: trainers[0] });
+    const trainer = await User.findOne({ name: 'alex' });
+    const sessions = await Session.find({ type: 1, trainers: trainer._id });
     const data = { sessionId: sessions[0]._id, surveyType: 'post-day-1' };
     request(app)
       .post(`/api/feedback/`)
