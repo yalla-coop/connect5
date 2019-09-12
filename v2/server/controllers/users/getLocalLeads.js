@@ -12,6 +12,6 @@ module.exports = async (req, res, next) => {
       return next(boom.notFound('No local leads founded'));
     })
     .catch(err => {
-      boom.badImplementation();
+      boom.badImplementation(err);
     });
 };

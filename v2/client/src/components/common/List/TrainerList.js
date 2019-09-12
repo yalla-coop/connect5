@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Button as AntButton, Alert } from 'antd';
+import { Button as AntButton } from 'antd';
 
 // COMMON COMPONENTS
 import Modal from '../modal';
@@ -142,16 +142,7 @@ export default class TrainerList extends Component {
               pathname: `/trainer-results/${selectedTrainer._id}`,
               state: { trainer: selectedTrainer },
             }}
-            disabled={!selectedTrainer.givenPermission && role !== 'admin'}
           >
-            {!selectedTrainer.givenPermission && role !== 'admin' && (
-              <Alert
-                message="This Trainer din't give you an access permission"
-                type="warning"
-                style={{ marginBottom: '2rem' }}
-              />
-            )}
-
             <Button
               style={{
                 height: 'auto',
@@ -165,7 +156,6 @@ export default class TrainerList extends Component {
               label={`view ${selectedTrainer.name}'s results`}
               type="outline"
               width="150px"
-              disabled={!selectedTrainer.givenPermission && role !== 'admin'}
             />
           </Link>
         )}

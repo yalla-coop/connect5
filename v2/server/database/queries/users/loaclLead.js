@@ -150,6 +150,7 @@ const getTrainerGroupSessions = async leadId => {
   const map = new Map();
 
   if (cleanedSessions.length > 0) {
+    // eslint-disable-next-line no-restricted-syntax
     for (const item of cleanedSessions) {
       if (!map.has(item._id.toString())) {
         map.set(item._id.toString(), true);
@@ -227,7 +228,6 @@ const getMyTrainers = async leadId => {
               region: 1,
               organization: 1,
               role: 1,
-              givenPermission: 1,
             },
           },
         ])

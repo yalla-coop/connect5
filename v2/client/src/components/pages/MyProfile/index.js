@@ -160,9 +160,9 @@ class MyProfile extends Component {
       organization: organizationState,
     } = this.state;
 
-    const [trainerLocalLead] = localLeadsList.filter(
-      item => item._id === localLead
-    );
+    const [trainerLocalLead] = localLeadsList.filter(item => {
+      return item._id === localLead;
+    });
 
     const groupedLocalLeads = {};
     localLeadsList.forEach(item => {
@@ -266,9 +266,11 @@ class MyProfile extends Component {
             >
               {Object.keys(groupedLocalLeads).map(item => (
                 <OptGroup label={item}>
-                  {groupedLocalLeads[item].map(_localLead => (
-                    <Option value={_localLead._id}>{_localLead.name}</Option>
-                  ))}
+                  {groupedLocalLeads[item].map(_localLead => {
+                    return (
+                      <Option value={_localLead._id}>{_localLead.name}</Option>
+                    );
+                  })}
                 </OptGroup>
               ))}
             </Select>
@@ -287,7 +289,7 @@ const mapStateToProps = state => {
     role: state.auth.role,
     organization: state.auth.organization,
     region: state.auth.region,
-    localLead: state.auth.localLead,
+    localLead: state.auth.localLead[0],
     localLeadsList: state.fetchedData.localLeadsList,
     updateUserLoading: state.loading.updateUserLoading,
     deleteAccountLoading: state.loading.deleteAccountLoading,

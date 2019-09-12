@@ -29,9 +29,6 @@ const getResponseRate = require('../../helpers/getResponseRate');
 // get the logged in user results
 const getUserResults = async (req, res, next) => {
   const { role, id } = req.body;
-  const {
-    user: { role: loggedInUserRole },
-  } = req;
   const isValidId = mongoose.Types.ObjectId.isValid(id);
 
   if (!isValidId) {
@@ -43,8 +40,6 @@ const getUserResults = async (req, res, next) => {
     if (!user) {
       return next(boom.notFound('User not found'));
     }
-
-    const { givenPermission } = user;
 
     let sessions;
     let surveys;
@@ -62,13 +57,6 @@ const getUserResults = async (req, res, next) => {
 
       // trainer
       default:
-        if (loggedInUserRole === 'localLead' && !givenPermission) {
-          return next(
-            boom.forbidden(
-              "this trainer did'nt give permission to his/her results"
-            )
-          );
-        }
         sessions = await getTrianerSessions(id);
         surveys = await getTrainerSuerveys(id);
         break;
@@ -83,14 +71,11 @@ const getUserResults = async (req, res, next) => {
     const results = { sessions, newSurveys, registrationDate };
     return res.json(results);
   } catch (err) {
-    return next(boom.badImplementation('Internal server error'));
+    return next(boom.badImplementation(err));
   }
 };
 
 const getListOfTrainers = async (req, res, next) => {
-  // this is temp until log in is in place
-  // const user = await User.findOne({ name: 'nisha' });
-
   const { user } = req;
 
   try {
@@ -100,7 +85,7 @@ const getListOfTrainers = async (req, res, next) => {
       .status(200)
       .json({ trainerCount: trainers.length, trainerList: cleanedTrainers });
   } catch (err) {
-    return next(boom.badImplementation('Internal server error'));
+    return next(boom.badImplementation(err));
   }
 };
 
@@ -114,7 +99,7 @@ const getLocalLeadsTrainerList = async (req, res, next) => {
       .status(200)
       .json({ trainerCount: trainers.length, trainerList: cleanedTrainers });
   } catch (err) {
-    return next(boom.badImplementation('Internal server error'));
+    return next(boom.badImplementation(err));
   }
 };
 
@@ -135,7 +120,7 @@ const getAllTrainersAndLeads = async (req, res, next) => {
       localLeadList: localLeads,
     });
   } catch (err) {
-    return next(boom.badImplementation('Internal server error'));
+    return next(boom.badImplementation(err));
   }
 };
 
