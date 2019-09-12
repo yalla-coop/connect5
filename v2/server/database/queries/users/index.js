@@ -8,7 +8,7 @@ module.exports.getUserByEmail = email => User.findOne({ email });
 module.exports.getUserById = id => User.findById(id);
 module.exports.getAllSessionsQuery = () => Session.find({});
 module.exports.update = (id, localLeadId) => {
-  return User.updateOne({ _id: id }, { $addToSet: { localLead: localLeadId } });
+  return User.updateOne({ _id: id }, { $addToSet: { managers: localLeadId } });
 };
 module.exports.getRegistrationDate = async id => {
   const user = await User.findById(id);

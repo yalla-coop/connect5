@@ -185,8 +185,6 @@ class SignUp extends Component {
       return null;
     }
 
-    console.log(this.state);
-
     return (
       <>
         {isDeskTop && <HumburgerMenu dark="dark" />}

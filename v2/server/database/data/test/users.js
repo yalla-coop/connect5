@@ -1,5 +1,4 @@
 const User = require('../../models/User');
-
 const { regions } = require('../../DBConstants');
 
 module.exports = async () => {
@@ -21,6 +20,7 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'PHE (public health england)',
       region: regions[7],
+      officialLocalLead: true,
     },
     {
       name: 'tez',
@@ -29,6 +29,7 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'Hampshire council',
       region: regions[7],
+      officialLocalLead: false,
     },
     {
       name: 'sara',
@@ -37,6 +38,7 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'Medway council',
       region: regions[7],
+      officialLocalLead: false,
     },
     {
       name: 'jane',
@@ -45,6 +47,7 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'Portsmouth council',
       region: regions[7],
+      officialLocalLead: true,
     },
     {
       name: 'deborah',
@@ -53,6 +56,7 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'HEE',
       region: regions[8],
+      officialLocalLead: false,
     },
     {
       name: 'martin',
@@ -61,6 +65,7 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'PHE',
       region: regions[8],
+      officialLocalLead: false,
     },
     {
       name: 'julie',
@@ -69,6 +74,7 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'PHE',
       region: regions[7],
+      officialLocalLead: false,
     },
     {
       name: 'clare',
@@ -77,6 +83,7 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'HEE',
       region: regions[0],
+      officialLocalLead: false,
     },
     {
       name: 'andra',
@@ -85,6 +92,7 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'HEE',
       region: regions[0],
+      officialLocalLead: true,
     },
   ];
 
@@ -99,6 +107,8 @@ module.exports = async () => {
       role: 'trainer',
       region: regions[0],
       localLead: storedLocalLeads[0],
+      managers: [storedLocalLeads[0], storedLocalLeads[1]],
+      officialLocalLead: false,
     },
     {
       name: 'mark',
@@ -107,6 +117,8 @@ module.exports = async () => {
       role: 'trainer',
       region: regions[0],
       localLead: storedLocalLeads[0],
+      managers: [storedLocalLeads[0], storedLocalLeads[1]],
+      officialLocalLead: false,
     },
     {
       name: 'john',
@@ -115,6 +127,8 @@ module.exports = async () => {
       role: 'trainer',
       region: regions[1],
       localLead: storedLocalLeads[0],
+      managers: [storedLocalLeads[0], storedLocalLeads[1]],
+      officialLocalLead: false,
     },
     {
       name: 'nadia',
@@ -123,6 +137,8 @@ module.exports = async () => {
       role: 'trainer',
       region: regions[1],
       localLead: storedLocalLeads[1],
+      managers: [storedLocalLeads[0], storedLocalLeads[1]],
+      officialLocalLead: false,
     },
     {
       name: 'sozan',
@@ -131,6 +147,7 @@ module.exports = async () => {
       role: 'trainer',
       region: regions[1],
       localLead: storedLocalLeads[1],
+      officialLocalLead: false,
     },
     {
       name: 'anne',
@@ -138,7 +155,9 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[2],
+
       localLead: storedLocalLeads[1],
+      officialLocalLead: false,
     },
     {
       name: 'max',
@@ -147,6 +166,7 @@ module.exports = async () => {
       role: 'trainer',
       region: regions[2],
       localLead: storedLocalLeads[2],
+      officialLocalLead: false,
     },
     {
       name: 'matt',
@@ -155,6 +175,7 @@ module.exports = async () => {
       role: 'trainer',
       region: regions[2],
       localLead: storedLocalLeads[2],
+      officialLocalLead: false,
     },
     {
       name: 'tom',
@@ -163,6 +184,7 @@ module.exports = async () => {
       role: 'trainer',
       region: regions[0],
       localLead: storedLocalLeads[2],
+      officialLocalLead: false,
     },
     {
       name: 'joncy',
@@ -171,6 +193,7 @@ module.exports = async () => {
       role: 'trainer',
       region: regions[0],
       localLead: storedLocalLeads[2],
+      officialLocalLead: false,
     },
   ];
 
