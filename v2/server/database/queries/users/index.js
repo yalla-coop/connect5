@@ -1,4 +1,5 @@
 const moment = require('moment');
+const mongoose = require('mongoose');
 
 const Participant = require('../../models/Participant');
 const User = require('./../../models/User');
@@ -40,3 +41,11 @@ module.exports.findUserByToken = token =>
   });
 
 module.exports.getAllPins = () => Participant.find({}, { PIN: 1 });
+
+module.exports.deleteTrainerFromAllSessions = trainerId =>
+  Session.updateMany(
+    {},
+    {
+      $pullAll: { trainers: [mongoose.Types.ObjectId(trainerId)] },
+    }
+  );

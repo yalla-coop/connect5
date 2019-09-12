@@ -2,6 +2,9 @@ const boom = require('boom');
 const {
   deleteAccount,
 } = require('./../../database/queries/users/deleteAccountQuery');
+const {
+  deleteTrainerFromAllSessions,
+} = require('./../../database/queries/users');
 
 module.exports = async (req, res, next) => {
   const { role, _id, id } = req.user;
@@ -17,10 +20,16 @@ module.exports = async (req, res, next) => {
   try {
     if (role === 'localLead') {
       const { trainersGroup } = req.user;
-      await deleteAccount(_id, trainersGroup, 'localLead');
+      await Promise.all([
+        deleteAccount(_id, trainersGroup, 'localLead'),
+        deleteTrainerFromAllSessions(_id),
+      ]);
     } else {
       const { localLead } = req.user;
-      await deleteAccount(_id, localLead, 'trainersGroup');
+      await Promise.all([
+        deleteAccount(_id, localLead, 'trainersGroup'),
+        deleteTrainerFromAllSessions(_id),
+      ]);
     }
     return res.send({ success: true });
   } catch (err) {
