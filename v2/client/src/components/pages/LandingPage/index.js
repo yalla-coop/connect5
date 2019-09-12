@@ -74,7 +74,7 @@ class LandingPage extends Component {
               />
             </ButtonDiv>
           </ButtonLink>
-          <ButtonLink to={`${ABOUT_URL}`}>
+          <ButtonLink to={`${ABOUT_URL}`} target="_blank">
             <ButtonDiv>
               <Button
                 label="I want to find out more"
