@@ -31,6 +31,7 @@ module.exports = async (req, res, next) => {
       organization,
       role,
       officialLocalLead,
+      managers: role === 'trainer' ? [localLead] : [],
     })
       .then(trainer => {
         const trainerInfo = {

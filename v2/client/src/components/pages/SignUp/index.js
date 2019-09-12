@@ -422,8 +422,15 @@ class SignUp extends Component {
 }
 
 const mapStateToProps = state => {
+  const officialLocalLeads =
+    (state.fetchedData.localLeadsList &&
+      state.fetchedData.localLeadsList.filter(
+        ({ officialLocalLead }) => officialLocalLead
+      )) ||
+    [];
+
   return {
-    localLeads: state.fetchedData.localLeadsList,
+    localLeads: officialLocalLeads,
     isAuthenticated: state.auth.isAuthenticated,
     isEmailUnique: state.auth.isEmailUnique,
     isDeskTop: state.checkBrowserWidth.isDeskTop,
