@@ -12,6 +12,7 @@ export const MY_PROFILE_URL = '/my-profile';
 export const MY_RESULTS_URL = '/my-results';
 export const MY_SESSIONS_URL = '/my-sessions';
 export const ALL_SESSIONS_URL = '/all-sessions';
+export const ABOUT_URL = '/about';
 
 // trainer
 export const TRAINER_RESULTS_URL = '/trainer-results/:trainerId?';
