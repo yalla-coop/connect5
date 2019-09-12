@@ -22,7 +22,7 @@ const userSchema = new Schema(
       value: 'String',
       expiresIn: Date,
     },
-    //  the trainer's local lead
+    //  List of trainer's local leads
     localLead: [
       {
         type: Schema.Types.ObjectId,
