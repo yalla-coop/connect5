@@ -50,7 +50,7 @@ export default [
           'https://lh3.googleusercontent.com/lQBWEpdxzoKCjFYnL0e0Ou4kkWrEh0zE-bYrVbbYxViToB2qdfTQFpn5ZypZRzPRsPDoqC1DjnHQFgs_PYeV-XwpRATGZXVpaxHo85liqfsVY9DMhQevPDK_nmqRyIgGvkBLnthOZ0HCruUL2tl0QPik9fI33KK_IQOH-1mO0sOANxVT58M9G55R4W0nYFM7bTOoJDZ1-3PEXH54OQfcBMC2xYKqkNl-iokGQ7F9VLD17dsT9mOBo9_CXxjrSEWS-SDb_S-1xsHUY6mlqrYjHFctQMiq2kiAmjT0u2q3tE-iycIrYQfMjkFKbk3jApUzYtD66btI8s_uzkG-v_RQx6Km_KZG7hK_lsK-QjDQeoU_p_6MN0649RT0f6GLRPxEYhQtNeAu0wTRnJjg-dK7lweNHtpZWUtSs6x43qPxrbkNywQQbT7CUtDPRUfzavu1kbc5r4QXhz8m1IAVCRA9yQJAudVywrI5jKRHOxlc6P0JI--f6d2ClHpTYblWbEZJ1yy9liQxYw3zb0brGoMrC5DX4kdlQcvmvqya8IClL_Lr1AWzgSmTGfaytc9RwZaEjSPbavlW4NJ0KL4UK_DYHo8_XtTD33SSvMYD0JC9ypeWDWTguxhRsaV8ib5lJeJDJnUuc51rlnWmYLohN84IoA=w200-h190-p-k-nu',
         fileName: 'Overview Connect 5 (Flyer, A5)',
         extension: 'pdf',
-        title: 'Download connect5 promotional resources ',
+        title: 'Download connect5 promotional resources',
       },
       {
         driveLink:

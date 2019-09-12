@@ -116,16 +116,16 @@ const AboutUs = () => (
       who work with people at risk of poor mental health. It uniquely optimises
       opportunities for building a culture of self-management, prevention and
       improved access to psychological approaches for mental health and
-      wellbeing
+      wellbeing.
     </Paragraph>
 
     <FilesWrapper>
       {files.map(fileArray => (
         <>
-          <p>{fileArray.sectionTitle}</p>
+          <p style={{ marginTop: '1.4rem' }}>{fileArray.sectionTitle}</p>
           <Resources>
-            {fileArray.files.map(file => (
-              <div>
+            <div style={{ display: 'flex' }}>
+              {fileArray.files.map(file => (
                 <FileCard>
                   <a
                     href={file.driveLink}
@@ -150,8 +150,8 @@ const AboutUs = () => (
                     </FileTitleWrapper>
                   </a>
                 </FileCard>
-              </div>
-            ))}
+              ))}
+            </div>
           </Resources>
         </>
       ))}
