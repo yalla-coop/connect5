@@ -151,7 +151,11 @@ export const P = styled.p`
   color: ${colors.blackSecondary};
 `;
 
-export const Mission = styled.div``;
+export const Mission = styled.div`
+  padding: 0.5rem;
+  width: 90%;
+  margin: 0 auto;
+`;
 
 export const About = styled.div`
   display: flex;
@@ -227,14 +231,23 @@ export const Speaker = styled.p`
 
 export const FilesWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   flex-wrap: wrap;
+`;
+
+export const Resources = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 `;
 
 export const FileCard = styled.div`
   height: 230px;
   width: 45%;
   max-width: 230px;
+  display: flex;
+  flex-direction: column;
   text-align: center;
   overflow: hidden;
   border: 1px solid #dadce0;
