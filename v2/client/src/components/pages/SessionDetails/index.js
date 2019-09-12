@@ -249,7 +249,7 @@ class SessionDetails extends Component {
     if (focused) {
       event.preventDefault();
       const pastedString = event.clipboardData.getData('text/plain');
-      const splittedEmails = pastedString.split.split(/[, ;]/);
+      const splittedEmails = pastedString.split(/[, ;]/);
 
       emailsArray = splittedEmails
         .map(item => item.trim())

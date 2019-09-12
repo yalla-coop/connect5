@@ -171,11 +171,12 @@ class EditSession extends Component {
     if (focused) {
       event.preventDefault();
       const pastedString = event.clipboardData.getData('text/plain');
-      const splittedEmails = pastedString.split(';');
-      if (pastedString === splittedEmails) {
-        emailsArray = pastedString.split(';');
-      }
+
+      // split on "," & ";" and " "
+      const splittedEmails = pastedString.split(/[, ;]/);
+
       emailsArray = splittedEmails
+        .filter(item => !!item)
         .map(item => item.trim())
         .filter(item => !emails.includes(item));
 
