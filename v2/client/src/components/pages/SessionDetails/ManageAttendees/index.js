@@ -18,23 +18,6 @@ import {
 class ManageAttendees extends Component {
   state = {};
 
-  componentDidMount() {
-    let dT = null;
-    try {
-      dT = new DataTransfer();
-    } catch (e) {
-      // ignore the error
-    }
-    const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
-    document.addEventListener('paste', this.pasteEmails);
-    document.dispatchEvent(evt);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('paste', this.pasteEmails);
-  }
-
   render() {
     const { handleDrawerOpen, confirmedAttendeesList } = this.props;
 

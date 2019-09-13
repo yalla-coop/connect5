@@ -33,6 +33,7 @@ import {
 import { regions } from './options';
 import history from '../../../history';
 
+import { validPostcode } from '../../../helpers';
 import {
   Form,
   CreateSessionWrapper,
@@ -69,6 +70,7 @@ const initialState = {
   address: '',
   postcode: null,
   extraInfo: null,
+  isPostcodeValid: true,
 };
 
 class CreateSession extends Component {
@@ -118,6 +120,11 @@ class CreateSession extends Component {
   onInputChange = ({ target: { value, name } }) => {
     const newValue = value.replace(/^\s*\s*$/, '');
     this.props.storeInputData({ [name]: newValue });
+
+    if (name === 'postcode') {
+      const isPostcodeValid = validPostcode(value);
+      this.setState({ isPostcodeValid: !value || isPostcodeValid });
+    }
   };
 
   onSelectSessionChange = value => {
@@ -146,39 +153,42 @@ class CreateSession extends Component {
     });
   };
 
-  renderTrainersList = () => {
-    const {
-      leadsAndTrainers,
-      role,
-      localLeadTrainersGroup,
-      id,
-      name: loggedInName,
-    } = this.props;
+  // partnerTrainer is the trianer selected in the another select
+  // filer the trianers/local leads list to remove the trianer that has been selected
+  renderTrainersList = partnerTrainer => {
+    const { leadsAndTrainers, role, localLeadTrainersGroup, id } = this.props;
+
     if (role && role === 'localLead') {
       if (localLeadTrainersGroup) {
-        return [
-          { _id: id, name: loggedInName, keep: true },
-          ...localLeadTrainersGroup,
-        ]
-          .filter(({ _id, keep }) => _id !== id || keep === true)
-          .map(({ name, _id }) => {
-            return (
-              <Option
-                key={_id}
-                value={_id}
-                style={{ textTransform: 'capitalize' }}
-              >
-                {name}
-              </Option>
-            );
-          });
+        return (
+          localLeadTrainersGroup
+            .filter(item =>
+              partnerTrainer ? item._id !== partnerTrainer.key : true
+            )
+            // sort the the array to get the logged in user at the first of the array
+            .sort(({ _id }) => (_id === id ? -1 : 1))
+            .map(({ name, _id }) => {
+              return (
+                <Option
+                  key={_id}
+                  value={_id}
+                  style={{ textTransform: 'capitalize' }}
+                >
+                  {`${name[0].toUpperCase()}${name.slice(1)}`}
+                </Option>
+              );
+            })
+        );
       }
     } else if (leadsAndTrainers) {
       return leadsAndTrainers
-        .filter(({ _id }) => _id !== id)
+
+        .filter(({ _id }) =>
+          partnerTrainer ? _id !== partnerTrainer.key : _id !== id
+        )
         .map(({ name, _id }) => (
           <Option key={_id} value={_id} style={{ textTransform: 'capitalize' }}>
-            {name}
+            {`${name[0].toUpperCase()}${name.slice(1)}`}
           </Option>
         ));
     }
@@ -226,6 +236,14 @@ class CreateSession extends Component {
       addressLine2,
       postcode,
     } = inputData;
+
+    if (postcode) {
+      const isPostcodeValid = validPostcode(postcode);
+      if (!isPostcodeValid) {
+        return this.setState({ isPostcodeValid: false });
+      }
+      this.setState({ isPostcodeValid: true });
+    }
 
     const trainersNamesArray = [];
     if (partnerTrainer1) {
@@ -299,7 +317,7 @@ class CreateSession extends Component {
   };
 
   render() {
-    const { sessionCreated, extraInfo } = this.state;
+    const { sessionCreated, extraInfo, isPostcodeValid } = this.state;
     const { role, inputData, loading, createdSession, name } = this.props;
 
     const {
@@ -502,6 +520,12 @@ class CreateSession extends Component {
             />
           </InputDiv>
 
+          {!isPostcodeValid && (
+            <Error style={{ margin: '-19px 0px 13px 24px' }}>
+              invalid postcode format
+            </Error>
+          )}
+
           <InputDiv>
             {role === 'localLead' ? (
               <Label htmlFor="PartnerTrainer">
@@ -511,6 +535,7 @@ class CreateSession extends Component {
             ) : (
               <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
             )}
+
             <Select
               id="PartnerTrainer"
               showSearch
@@ -562,7 +587,7 @@ class CreateSession extends Component {
                 </div>
               )}
             >
-              {this.renderTrainersList()}
+              {this.renderTrainersList(partnerTrainer2)}
             </Select>
             {role === 'localLead' && partnerTrainer1 === null && (
               <Warning>* required</Warning>
@@ -618,7 +643,7 @@ class CreateSession extends Component {
                   </div>
                 )}
               >
-                {this.renderTrainersList()}
+                {this.renderTrainersList(partnerTrainer1)}
               </Select>
             </InputDiv>
           )}

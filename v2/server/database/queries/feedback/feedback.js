@@ -16,7 +16,7 @@ module.exports.feedback = async ({
 }) => {
   // role == admin => all sessions
   // role == trainer => trainer sessions  ... user id
-  // role == local leas => group sessions
+  // role == local lead => group sessions
   // role == null  && sessionId && survey type => one session by id
 
   // eslint-disable-next-line consistent-return
@@ -27,6 +27,7 @@ module.exports.feedback = async ({
         _id: { $exists: true },
       };
     }
+
     if (role === 'trainer') {
       return {
         trainers: mongoose.Types.ObjectId(trainerId),

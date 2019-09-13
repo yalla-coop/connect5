@@ -14,6 +14,7 @@ import {
 import moment from 'moment';
 import { connect } from 'react-redux';
 
+import { validPostcode } from '../../../../helpers';
 import history from '../../../../history';
 import Button from '../../../common/Button';
 import InfoPopUp from '../../../common/InfoPopup';
@@ -115,12 +116,17 @@ class EditSession extends Component {
         trainers,
         startTime,
         endTime,
-        address,
+        address = {},
         responses,
       } = sessionDetails;
 
       const { postcode, addressLine1, addressLine2 } = address;
       if (sessionDetails) {
+        let isPostcodeValid = true;
+        if (postcode) {
+          isPostcodeValid = validPostcode(postcode);
+        }
+
         this.setState({
           session: type,
           startDate: date,
@@ -135,6 +141,7 @@ class EditSession extends Component {
           addressLine2,
           stateLoaded: true,
           responses,
+          isPostcodeValid: !postcode || isPostcodeValid,
         });
 
         if (trainers[1]) {
@@ -167,11 +174,12 @@ class EditSession extends Component {
     if (focused) {
       event.preventDefault();
       const pastedString = event.clipboardData.getData('text/plain');
-      const splittedEmails = pastedString.split(';');
-      if (pastedString === splittedEmails) {
-        emailsArray = pastedString.split(';');
-      }
+
+      // split on "," & ";" and " "
+      const splittedEmails = pastedString.split(/[, ;]/);
+
       emailsArray = splittedEmails
+        .filter(item => !!item)
         .map(item => item.trim())
         .filter(item => !emails.includes(item));
 
@@ -232,6 +240,11 @@ class EditSession extends Component {
     this.setState({
       [name]: newValue,
     });
+
+    if (name === 'postcode') {
+      const isPostcodeValid = validPostcode(value);
+      this.setState({ isPostcodeValid });
+    }
   };
 
   onSelectSessionChange = value => {
@@ -341,6 +354,14 @@ class EditSession extends Component {
       addressLine2,
     } = this.state;
 
+    if (postcode) {
+      const isPostcodeValid = validPostcode(postcode);
+      if (!isPostcodeValid) {
+        return this.setState({ isPostcodeValid });
+      }
+    }
+    this.setState({ isPostcodeValid: true });
+
     const sessionData = {
       session,
       startDate,
@@ -356,7 +377,7 @@ class EditSession extends Component {
       addressLine2,
     };
 
-    this.props.sessionUpdateAction(sessionData, id);
+    return this.props.sessionUpdateAction(sessionData, id);
   };
 
   hide = () => {
@@ -403,6 +424,7 @@ class EditSession extends Component {
       addressLine1,
       addressLine2,
       responses = [],
+      isPostcodeValid,
     } = this.state;
 
     const {
@@ -573,7 +595,11 @@ class EditSession extends Component {
                 onKeyPress={e => onKeyPress(e)}
               />
             </InputDiv>
-
+            {!isPostcodeValid && (
+              <Error style={{ margin: '-19px 0px 13px 24px' }}>
+                invalid postcode format
+              </Error>
+            )}
             <InputDiv>
               {role === 'localLead' ? (
                 <Label htmlFor="PartnerTrainer">Trainer:</Label>

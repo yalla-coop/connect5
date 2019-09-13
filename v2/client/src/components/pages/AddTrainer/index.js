@@ -151,10 +151,12 @@ class AddTrainer extends Component {
             <Paragraph>
               Would you like to add this trainer to your group?
             </Paragraph>
-            <LocalLeadSelect
-              getFieldDecorator={getFieldDecorator}
-              localLeads={localLeads}
-            />
+            {localLeads && (
+              <LocalLeadSelect
+                getFieldDecorator={getFieldDecorator}
+                localLeads={localLeads}
+              />
+            )}
           </Modal>
 
           <Form onSubmit={this.handleSubmit} className="login-form">
@@ -223,7 +225,7 @@ class AddTrainer extends Component {
                 )}
               </Item>
             </div>
-            {(isEmailUnique || isEmailUnique === null) && (
+            {(isEmailUnique || isEmailUnique === null) && localLeads && (
               <LocalLeadSelect
                 getFieldDecorator={getFieldDecorator}
                 localLeads={localLeads}

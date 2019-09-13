@@ -25,7 +25,7 @@ const getUserInfo = require('../controllers/users/getUserInfo');
 const getTrainerSessions = require('../controllers/users/trainer/getTrainerSessions');
 const getLocalLeadsSessions = require('../controllers/users/getLocalLeadSessions');
 const getAllSessions = require('../controllers/users/getAllSessions');
-const removeTrainerToGroup = require('../controllers/users/removeTrainerToGroup');
+const removeTrainerFromGroup = require('../controllers/users/removeTrainerFromGroup');
 const getLocalLeadGroup = require('../controllers/users/getLocalLeadGroup');
 const changePassword = require('../controllers/users/changePassword');
 const getParticipantsDemogrphics = require('../controllers/users/getParticipantsDemogrphics');
@@ -70,10 +70,11 @@ router.get(
 
 router.get('/local-lead/:id/group', getLocalLeadGroup);
 
+// delate trainer from a localLead group
 router.delete(
-  '/local-lead/:id/trainer',
+  '/local-lead/:localLeadId/trainer/:trainerId',
   authentication(),
-  removeTrainerToGroup
+  removeTrainerFromGroup
 );
 
 router.delete('/users/:userId', authentication(), deleteAccount);

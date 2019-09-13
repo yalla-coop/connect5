@@ -134,6 +134,17 @@ class EditEmail extends Component {
       postSurveyLink,
       trainers,
     });
+
+    let dT = null;
+    try {
+      dT = new DataTransfer();
+    } catch (e) {
+      // ignore the error
+    }
+    const evt = new ClipboardEvent('paste', { clipboardData: dT });
+    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+    document.addEventListener('paste', this.pasteEmails);
+    document.dispatchEvent(evt);
   }
 
   componentWillUnmount() {
@@ -143,7 +154,11 @@ class EditEmail extends Component {
   toggleEditView = visible => {
     this.setState({ isEditView: visible });
     const drawerWrapper = document.querySelector('.ant-drawer-wrapper-body');
-    drawerWrapper.scrollBy(-1000, -1000);
+    if (drawerWrapper) {
+      drawerWrapper.scrollBy(-1000, -1000);
+    } else {
+      window.scrollBy(-1000, -1000);
+    }
   };
 
   handleExtraInformation = e => {
@@ -158,7 +173,6 @@ class EditEmail extends Component {
       if (!validEmails.some(_item => _item === email)) {
         try {
           const validEmail = emailSchema.validateSync(email);
-
           if (validEmail) {
             validEmails.push(email);
           }
@@ -247,7 +261,7 @@ class EditEmail extends Component {
     const { participantsEmails } = this.state;
 
     if (participantsEmails.length) {
-      const copyText = document.getElementById('participantsEmails');
+      const copyText = document.getElementById('emails');
       let range;
       let selection;
       if (document.body.createTextRange) {
@@ -273,22 +287,21 @@ class EditEmail extends Component {
   };
 
   pasteEmails = event => {
-    const { focused, emails } = this.state;
+    const { focused, participantsEmails } = this.state;
 
     let emailsArray;
 
     if (focused) {
       event.preventDefault();
       const pastedString = event.clipboardData.getData('text/plain');
-      const splittedEmails = pastedString.split(';');
-      if (pastedString === splittedEmails) {
-        emailsArray = pastedString.split(';');
-      }
-      emailsArray = splittedEmails
-        .map(item => item.trim())
-        .filter(item => !emails.includes(item));
+      // split on "," & ";" and " "
+      const splittedEmails = pastedString.split(/[, ;]/);
 
-      this.onEmailChange([...emails, ...emailsArray]);
+      emailsArray = splittedEmails
+        .filter(item => !!item)
+        .map(item => item.trim());
+
+      this.handleUpdateEmails([...participantsEmails, ...emailsArray]);
     }
   };
 
@@ -578,24 +591,39 @@ class EditEmail extends Component {
 
                   <Label>Email addresses:</Label>
                   {canAddParticipants ? (
-                    <Select
-                      mode="tags"
-                      id="participantsEmails"
-                      // get emails string array
-                      value={participantsEmails}
-                      placeholder="Type or paste the email addresses here"
-                      onChange={this.handleUpdateEmails}
-                      style={{ width: '100%' }}
-                      size="large"
-                      onBlur={this.onSelectBlur}
-                      onFocus={this.onSelectFocus}
-                    >
-                      {participantsEmails.map(email => (
-                        <Option value={email} key={email}>
-                          {email}
-                        </Option>
-                      ))}
-                    </Select>
+                    <>
+                      <Select
+                        mode="tags"
+                        id="participantsEmails"
+                        // get emails string array
+                        value={participantsEmails}
+                        placeholder="Type or paste the email addresses here"
+                        onChange={this.handleUpdateEmails}
+                        style={{ width: '100%' }}
+                        size="large"
+                        onBlur={this.onSelectBlur}
+                        onFocus={this.onSelectFocus}
+                      >
+                        {participantsEmails.map(email => (
+                          <Option value={email} key={email}>
+                            {email}
+                          </Option>
+                        ))}
+                      </Select>
+                      <div
+                        id="emails"
+                        style={{
+                          opacity: '0',
+                          position: 'absolute',
+                          width: '0',
+                          hieght: '0',
+                          // to prevent Y scroll
+                          left: '-100000rem',
+                        }}
+                      >
+                        {participantsEmails && participantsEmails.join(';')}
+                      </div>
+                    </>
                   ) : (
                     <>
                       <div style={{ width: '100%' }}>

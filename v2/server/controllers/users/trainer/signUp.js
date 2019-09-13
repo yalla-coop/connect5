@@ -29,7 +29,6 @@ module.exports = async (req, res, next) => {
       password,
       region,
       localLead,
-      givenPermission: true,
       organization,
       role,
       officialLocalLead,
