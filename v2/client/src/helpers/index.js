@@ -74,7 +74,7 @@ export const getAllSurveyLinks = (sessionType, shortId) => {
 };
 
 /**
- * return array of surveys for the session base on the type
+ * return array of surveys for the session base on the survey type
  * @param {String} sessionType - session type ["1","2","3","special-2-days"...]
  */
 export const getSessionSurveys = sessionType => {
