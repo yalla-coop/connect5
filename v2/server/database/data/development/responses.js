@@ -69,7 +69,7 @@ module.exports = async () => {
       session: type2Session,
       participant: participants[4],
     },
-    // train-trainers session
+    // train-trainers-s1 session
     {
       PIN: 'PIV15',
       trainers: [trainers[0], localLead],

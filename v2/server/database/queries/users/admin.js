@@ -1,6 +1,16 @@
 const User = require('../../models/User');
+const {
+  readableSessionNamePairs,
+  readableSurveysNamePairs,
+} = require('./../../../constants');
 
 const getAdminSessions = () => {
+  // array of branches
+  // [ { case: { $eq: ['$type', '1'] }, then: 'Session 1' }, ... ]
+  const branches = Object.entries(readableSessionNamePairs).map(pair => {
+    return { case: { $eq: ['$type', pair[0]] }, then: pair[1] };
+  });
+
   return User.aggregate([
     {
       $lookup: {
@@ -34,19 +44,7 @@ const getAdminSessions = () => {
         type: {
           $first: {
             $switch: {
-              branches: [
-                { case: { $eq: ['$type', '1'] }, then: 'Session 1' },
-                { case: { $eq: ['$type', '2'] }, then: 'Session 2' },
-                { case: { $eq: ['$type', '3'] }, then: 'Session 3' },
-                {
-                  case: { $eq: ['$type', 'special-2-days'] },
-                  then: '2-day Intensive',
-                },
-                {
-                  case: { $eq: ['$type', 'train-trainers'] },
-                  then: 'Train trainers',
-                },
-              ],
+              branches,
               default: 'No match',
             },
           },
@@ -62,6 +60,26 @@ const getAdminSessions = () => {
 // Trainer responses number grouped by survery type
 
 const getAdminSuerveys = () => {
+  // array of branches
+  // { case: { $eq: ['$surveyType', 'post-day-1'] },    then: 'Post Session 1' },
+  const branches = Object.entries(readableSurveysNamePairs).map(pair => {
+    return {
+      case: { $eq: ['$surveyType', pair[0]] },
+      then: pair[1],
+    };
+  });
+
+  // array of branches
+  // { case: { $eq: ['$surveyType', 'post-day-1'] },    then: 1 },
+  const orderedBranch = Object.entries(readableSurveysNamePairs).map(
+    (pair, i) => {
+      return {
+        case: { $eq: ['$surveyType', pair[0]] },
+        then: i + 1,
+      };
+    }
+  );
+
   return User.aggregate([
     {
       $lookup: {
@@ -103,44 +121,7 @@ const getAdminSuerveys = () => {
         type: {
           $first: {
             $switch: {
-              branches: [
-                {
-                  case: { $eq: ['$surveyType', 'pre-day-1'] },
-                  then: 'Pre-course',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-day-1'] },
-                  then: 'Post Session 1',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-day-2'] },
-                  then: 'Post Session 2',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-day-3'] },
-                  then: 'Post Session 3',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-special'] },
-                  then: 'Post 2-day Intensive',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'pre-train-trainers'] },
-                  then: 'Pre train trainers',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-train-trainers'] },
-                  then: 'Post train trainers',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'follow-up-3-month'] },
-                  then: '3 month follow-up',
-                },
-                {
-                  case: { $eq: ['$surveyType', 'follow-up-6-month'] },
-                  then: '6 month Follow-up',
-                },
-              ],
+              branches,
               default: 'No match',
             },
           },
@@ -148,44 +129,7 @@ const getAdminSuerveys = () => {
         order: {
           $first: {
             $switch: {
-              branches: [
-                {
-                  case: { $eq: ['$surveyType', 'pre-day-1'] },
-                  then: 1,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-day-1'] },
-                  then: 2,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-day-2'] },
-                  then: 3,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-day-3'] },
-                  then: 4,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'pre-train-trainers'] },
-                  then: 5,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-train-trainers'] },
-                  then: 6,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'post-special'] },
-                  then: 7,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'follow-up-3-month'] },
-                  then: 8,
-                },
-                {
-                  case: { $eq: ['$surveyType', 'follow-up-6-month'] },
-                  then: 9,
-                },
-              ],
+              branches: orderedBranch,
               default: 'No match',
             },
           },

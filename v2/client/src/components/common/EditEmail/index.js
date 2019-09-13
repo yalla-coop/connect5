@@ -22,6 +22,8 @@ import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
+import { getPostSurveyLink, getPreSurveyLink } from '../../../helpers';
+
 import { MY_SESSIONS_URL } from '../../../constants/navigationRoutes';
 import Header from '../Header';
 import InfoPopUp from '../InfoPopup';
@@ -99,28 +101,8 @@ class EditEmail extends Component {
       trainers: trainersArrayOfObject,
     } = this.props;
 
-    // get surveys links
-    const surveyType = {
-      1: ['pre-day-1', 'post-day-1'],
-      2: ['post-day-2'],
-      3: ['post-day-3'],
-      'special-2-days': ['pre-special', 'post-special'],
-      'train-trainers': ['pre-train-trainers', 'post-train-trainers'],
-    };
-
-    const links = surveyType[sessionType].map(item => {
-      const surveyURL = `${window.location.host}/survey/${item}&${shortId}`;
-      let url = `https://${surveyURL}`;
-
-      if (process.env.NODE_ENV === 'development') {
-        url = `http://${surveyURL}`;
-      }
-
-      return url;
-    });
-
-    const preSurveyLink = links.find(item => item.includes('pre'));
-    const postSurveyLink = links.find(item => item.includes('post'));
+    const preSurveyLink = getPreSurveyLink(sessionType, shortId);
+    const postSurveyLink = getPostSurveyLink(sessionType, shortId);
 
     const trainers = trainersArrayOfObject
       .map(
@@ -172,7 +154,11 @@ class EditEmail extends Component {
   toggleEditView = visible => {
     this.setState({ isEditView: visible });
     const drawerWrapper = document.querySelector('.ant-drawer-wrapper-body');
-    drawerWrapper.scrollBy(-1000, -1000);
+    if (drawerWrapper) {
+      drawerWrapper.scrollBy(-1000, -1000);
+    } else {
+      window.scrollBy(-1000, -1000);
+    }
   };
 
   handleExtraInformation = e => {

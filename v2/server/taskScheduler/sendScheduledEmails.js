@@ -7,6 +7,8 @@ const {
   addSentEmail,
 } = require('./../database/queries/sessionDetails/session');
 
+const { getPreSurveyLink, getPostSurveyLink } = require('./../helpers');
+
 const {
   getScheduledEmails,
   removeScheduledEmail,
@@ -69,20 +71,14 @@ const sendScheduledEmails = () =>
               }
             }
 
-            const surveyTypes = {
-              1: ['pre-day-1', 'post-day-1'],
-              2: ['post-day-2'],
-              3: ['post-day-3'],
-              'special-2-days': ['pre-special', 'post-special'],
-              'train-trainers': ['pre-train-trainers', 'post-train-trainers'],
-            };
-
-            const links = surveyTypes[surveyType].map(item => {
-              return `${process.env.DOMAIN}/survey/${item}&${emailDetails.shortId}`;
-            });
-
-            const preSurveyLink = links.find(item => item.includes('pre'));
-            const postSurveyLink = links.find(item => item.includes('post'));
+            const preSurveyLink = getPreSurveyLink(
+              surveyType,
+              emailDetails.shortId
+            );
+            const postSurveyLink = getPostSurveyLink(
+              surveyType,
+              emailDetails.shortId
+            );
 
             await sendSessionReminder({
               extraInformation,

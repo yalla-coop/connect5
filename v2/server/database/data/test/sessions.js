@@ -132,10 +132,10 @@ module.exports = async () => {
       ],
     },
     // local lead only session
-    // train-trainers session => for trainers
+    // train-trainers-s1 session => for trainers
     {
       date: '2019-05-16',
-      type: 'train-trainers',
+      type: 'train-trainers-s1',
       shortId: shortid.generate(),
       numberOfAttendees: 5,
       region: 'North West',
@@ -149,7 +149,7 @@ module.exports = async () => {
     },
     {
       date: '2019-04-16',
-      type: 'train-trainers',
+      type: 'train-trainers-s1',
       shortId: shortid.generate(),
       numberOfAttendees: 9,
       region: 'North West',
