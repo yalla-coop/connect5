@@ -57,10 +57,11 @@ export default class NameForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    const { name, email } = this.state;
     const { location, getNameEmail, history, match } = this.props;
     this.validate()
-      .then(res => {
-        getNameEmail(res.name, res.email, location.state.sendEmail);
+      .then(() => {
+        getNameEmail(name, email, location.state.sendEmail);
         history.push(`/certificate/${match.params.sessionId}/claim`);
       })
       .catch(error => {
@@ -78,7 +79,6 @@ export default class NameForm extends Component {
     const { location } = this.props;
     const { sendEmail } = location && location.state && location.state;
     const { errors, name, email } = this.state;
-
     return (
       <Wrapper>
         <Header type="home" userRole="participent" />
