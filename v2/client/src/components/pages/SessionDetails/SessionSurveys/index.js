@@ -13,14 +13,7 @@ import {
   SessionSurveysWrapper,
   SessionSurveyContainer,
 } from './SessionSurveys.Style';
-
-const surveyType = {
-  1: ['pre-day-1', 'post-day-1'],
-  2: ['post-day-2'],
-  3: ['post-day-3'],
-  'special-2-days': ['pre-special', 'post-special'],
-  'train-trainers': ['pre-train-trainers', 'post-train-trainers'],
-};
+import { getAllSurveyLinks, getSessionSurveys } from '../../../../helpers';
 
 class SessionSurveys extends Component {
   state = {};
@@ -60,9 +53,8 @@ class SessionSurveys extends Component {
   render() {
     const { sessionDetails, handleDrawerOpen } = this.props;
     const { type, _id, shortId } = sessionDetails;
-    const links = surveyType[type].map(item => {
-      return `${window.location.host}/survey/${item}&${shortId}`;
-    });
+
+    const links = getAllSurveyLinks(type, shortId);
 
     const content =
       'To share the surveys for this session please share the link with your attendees. You can send it directly via email clicking on "Email surveys to attendees" or schedule emails using the "Schedule emails" option.';
@@ -75,7 +67,7 @@ class SessionSurveys extends Component {
           style={{ top: '20' }}
         />
         <SessionSurveyContainer>
-          {surveyType[type].map((survey, index) => {
+          {getSessionSurveys(type).map((survey, index) => {
             return (
               <SurveyContent
                 subId={survey}

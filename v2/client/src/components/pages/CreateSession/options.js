@@ -1,11 +1,3 @@
-export const sessions = [
-  { value: 1, label: 'Session 1' },
-  { value: 2, label: 'Session 2' },
-  { value: 3, label: 'Session 3' },
-  { value: 'special-2-days', label: 'special-2-days' },
-  { value: 'train-trainers', label: 'train-trainers' },
-];
-
 export const regions = [
   'North East',
   'North West',

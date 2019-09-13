@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import swal from 'sweetalert2';
 import { Alert, Modal } from 'antd';
+
 import Spin from '../../common/Spin';
+import { surveysTypes } from '../../../constants';
 
 // Styles
 import Header from '../../common/Header';
@@ -248,22 +250,37 @@ class Survey extends Component {
   // submits and validates PIN request
   submitPIN = () => {
     const { PINExist, surveyData, history } = this.props;
-    const { preSurveyResponses } = surveyData;
-    const { surveyType } = surveyData.surveyData;
-    // post surveys relevant to be checked if someone filled out pre-survey
-    const relevantPostSurveys = [
-      'post-day-1',
-      'post-special',
-      'post-train-trainers',
-    ];
+    const { preSurveyResponses, sessionType } = surveyData;
+
     // if someone needs to fill out pre-survey first -> take object value related to post-survey
-    const relevantSurveyCounterParts = {
-      'post-day-1': 'pre-day-1',
-      'post-special': 'pre-special',
-      'post-train-trainers': 'pre-train-trainers',
-    };
+    const relevantSurveyCounterParts = {};
+
+    // post surveys relevant to be checked if someone filled out pre-survey
+    // sessions that have -pre- survey
+    const sessionsHavePreSurvey = Object.entries(surveysTypes).reduce(
+      (prev, [_sessionType, surveysArray]) => {
+        let hasPreSurvey = false;
+
+        surveysArray.forEach(survey => {
+          if (survey.includes('pre')) {
+            hasPreSurvey = true;
+          }
+        });
+
+        const postSurvey = surveysArray.find(_item => _item.includes('post'));
+        const preSurvey = surveysArray.find(_item => _item.includes('pre'));
+        relevantSurveyCounterParts[postSurvey] = preSurvey;
+
+        if (hasPreSurvey) {
+          return [_sessionType, ...prev];
+        }
+        return prev;
+      }
+    );
+
     // set up pre-survey link for re-direction if pre-survey needs to get filled out
     const linkArr = history.location.pathname.split('/');
+    // surveyType
     const surveyPart = linkArr[2].split('&')[0];
     const shortId = linkArr[2].split('&')[1];
 
@@ -276,7 +293,7 @@ class Survey extends Component {
       });
     }
     // if relevant session check if PIN has already filled out pre survey
-    if (relevantPostSurveys.includes(surveyType)) {
+    if (sessionsHavePreSurvey.includes(sessionType)) {
       if (!PINExist && !preSurveyResponses.preResponseExists) {
         Modal.error({
           title: 'Please fill out the pre-survey for this session!',

@@ -5,5 +5,4 @@ const surveyTypes = {
   'special-2-days': ['pre-special', 'post-special'],
   'train-trainers': ['pre-train-trainers', 'post-train-trainers'],
 };
-
 export default surveyTypes;
