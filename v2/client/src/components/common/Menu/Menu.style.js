@@ -8,15 +8,15 @@ export const MenuDiv = styled.div`
 `;
 
 export const Menu = styled.div`
-  position: absolute;
+  position: fixed;
+  height: 100%;
   background: ${({ dark }) => (dark ? '#526192' : '#fff')};
   z-index: 100;
   top: ${({ dark }) => (dark ? '0' : '48px')};
   left: 0;
   width: 250px;
-  height: 100vh;
   transition: all 1s ease;
-  padding: ${({ dark }) => (dark ? '3rem 0 0 .4rem' : '2rem 0 0 1rem')};
+  padding: ${({ dark }) => (dark ? '3rem 0 0 .4rem' : '1rem 0 2rem 1rem')};
   z-index: 2000;
   overflow: auto;
   @media ${breakpoints.mobileL} {

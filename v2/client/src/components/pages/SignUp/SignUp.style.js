@@ -6,7 +6,9 @@ import { colors, breakpoints } from '../../../theme';
 
 const { Item: AntItem } = AntForm;
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+  padding-bottom: 1rem;
+`;
 
 export const ContentWrapper = styled.div`
   max-width: 25rem;
