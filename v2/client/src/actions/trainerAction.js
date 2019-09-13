@@ -8,12 +8,13 @@ import history from '../history';
 export const fetchAllTrainers = () => async dispatch => {
   axios
     .get(`/api/fetch-trainers`)
-    .then(res =>
-      dispatch({
+    .then(res => {
+      console.log('res.data', res.data);
+      return dispatch({
         type: FETCH_ALL_TRAINERS,
         payload: res.data,
-      })
-    )
+      });
+    })
     .catch(() => history.push('/404err'));
 };
 

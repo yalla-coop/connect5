@@ -2,21 +2,19 @@ const boom = require('boom');
 const shortid = require('shortid');
 
 const { createNewTrainer } = require('./../../database/queries/users/trainer');
-const sendNewTrainerLoginDetails = require('../../helpers/emails/emailNewTrainerLoginDetails');
-const sendRegisteredTranierEmail = require('../../helpers/emails/sendRegisteredTranierEmail');
+// const sendNewTrainerLoginDetails = require('../../helpers/emails/emailNewTrainerLoginDetails');
+// const sendRegisteredTranierEmail = require('../../helpers/emails/sendRegisteredTranierEmail');
+const addNewTrainerToGroup = require('../../helpers/emails/addNewTrainerToGroup');
 
 const {
   addTrainertoGroup,
-  removeTrainerFromGroup,
 } = require('./../../database/queries/users/localLead');
 
 const { getUserByEmail, update } = require('./../../database/queries/users');
 
 module.exports = async (req, res, next) => {
   const { name, email, newUser, localLead, region, localLeadName } = req.body;
-
   const { user } = req;
-  // console.log(user);
 
   if (user.role !== 'localLead') {
     return next(boom.unauthorized());
@@ -43,38 +41,38 @@ module.exports = async (req, res, next) => {
         email,
         password: randomPassword,
         region,
-        localLead,
+        localLead: [localLead],
         role: 'trainer',
-        givenPermission: false,
       });
     }
 
-    await removeTrainerFromGroup(localLead, trainer._id);
+    // await removeTrainerFromGroup(localLead, trainer._id);
     await addTrainertoGroup(localLead, trainer._id);
 
-    await update(trainer._id, { localLead, givenPermission: false });
+    await update(trainer._id, localLead);
+    let isNew = false;
     if (newUser) {
-      if (process.env.NODE_ENV === 'production') {
-        await sendNewTrainerLoginDetails(
-          name,
-          email,
-          randomPassword,
-          localLeadName,
-          user.region
-        );
-      }
-      return res.json({
-        success: `${trainer.name} has been added to ${localLeadName}'s group and login details have been sent to his/her email`,
-      });
+      isNew = true;
     }
 
+    const emailInfo = {
+      trainerName: trainer.name,
+      trainerEmail: email,
+      password: randomPassword,
+      localLeadName,
+      localLeadRegion: user.region,
+      isNew,
+      localLeadId: localLead,
+      trainerId: trainer._id,
+    };
+
     if (process.env.NODE_ENV === 'production') {
-      await sendRegisteredTranierEmail(email, trainer.name, localLeadName);
+      await addNewTrainerToGroup(emailInfo);
     }
     return res.json({
       success: `${trainer.name} has been added to ${localLeadName}'s group`,
     });
   } catch (error) {
-    return next(boom.badImplementation());
+    return next(boom.badImplementation(error));
   }
 };

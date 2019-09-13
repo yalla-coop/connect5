@@ -42,6 +42,7 @@ import ResetPassword from './pages/ForgetPassword/ResetPassword';
 import SessionsFiles from './pages/SessionsFiles';
 import ConfirmRegistration from './pages/ConfirmRegistration';
 import MyProfile from './pages/MyProfile';
+import AboutUs from './pages/LandingPage/AboutUs';
 
 // Error Pages
 import NotFound from './pages/ErrorPages/404';
@@ -72,6 +73,7 @@ import {
   ALL_RESULTS_URL,
   ALL_SESSIONS_URL,
   MY_SESSIONS_URL,
+  ABOUT_URL,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -455,6 +457,9 @@ class App extends Component {
               path="/confirm/:shortId"
               component={ConfirmRegistration}
             />
+
+            <Route exact path={ABOUT_URL} component={AboutUs} />
+
             <Route path="/404err" render={() => <NotFound />} />
             <Route path="/500err" render={() => <ServerError />} />
             <Route path="/unauthorized" render={() => <Unauthorized />} />

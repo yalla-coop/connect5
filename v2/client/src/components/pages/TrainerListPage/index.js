@@ -54,12 +54,12 @@ class TrainerListPage extends Component {
           loaded: true,
         });
       })
-      .catch(err =>
+      .catch(err => {
         Modal.error({
           title: 'Error',
           content: err.response.data.error,
-        })
-      );
+        });
+      });
   };
 
   adminFetchData = () => {
@@ -89,14 +89,12 @@ class TrainerListPage extends Component {
   deleteUser = async trainerId => {
     const { userId: localLeadId } = this.props;
     try {
-      await axios.delete(`/api/local-lead/${localLeadId}/trainer`, {
-        data: { trainerId },
-      });
+      await axios.delete(`/api/local-lead/${localLeadId}/trainer/${trainerId}`);
       this.localLeadFetchData();
     } catch (err) {
       Modal.error({
         title: 'Error',
-        content: err.response.data.error,
+        content: 'Internal server Error',
       });
     }
   };

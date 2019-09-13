@@ -7,8 +7,9 @@ const Session = require('./../../models/Session');
 module.exports.getUserByEmail = email => User.findOne({ email });
 module.exports.getUserById = id => User.findById(id);
 module.exports.getAllSessionsQuery = () => Session.find({});
-module.exports.update = (id, data) =>
-  User.updateOne({ _id: id }, { $set: data });
+module.exports.update = (id, localLeadId) => {
+  return User.updateOne({ _id: id }, { $addToSet: { localLead: localLeadId } });
+};
 module.exports.getRegistrationDate = async id => {
   const user = await User.findById(id);
   return moment(user.createdAt).format('Do MMM YYYY');

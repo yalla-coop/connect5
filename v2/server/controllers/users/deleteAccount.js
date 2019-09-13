@@ -3,30 +3,27 @@ const {
   deleteAccount,
 } = require('./../../database/queries/users/deleteAccountQuery');
 
-const {
-  removeTrainerFromGroup,
-  removeLocalLeadFromUser,
-} = require('./../../database/queries/users/localLead');
-
 module.exports = async (req, res, next) => {
-  const { role, localLead } = req.user;
+  const { role, _id, id } = req.user;
   const { userId } = req.params;
-
-  if (role === 'trainer' || role === 'localLead') {
-    try {
-      await deleteAccount(userId);
-      if (role === 'trainer' && localLead) {
-        await removeTrainerFromGroup(localLead, userId);
-      }
-      if (role === 'localLead') {
-        await removeLocalLeadFromUser(userId);
-      }
-
-      return res.send({ success: true });
-    } catch (err) {
-      return next(boom.badImplementation(err));
-    }
-  } else {
+  if (userId !== id) {
     return next(boom.unauthorized());
+  }
+
+  if (!(role === 'trainer' || role === 'localLead')) {
+    return next(boom.unauthorized());
+  }
+
+  try {
+    if (role === 'localLead') {
+      const { trainersGroup } = req.user;
+      await deleteAccount(_id, trainersGroup, 'localLead');
+    } else {
+      const { localLead } = req.user;
+      await deleteAccount(_id, localLead, 'trainersGroup');
+    }
+    return res.send({ success: true });
+  } catch (err) {
+    return next(boom.badImplementation(err));
   }
 };

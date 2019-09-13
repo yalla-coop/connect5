@@ -13,6 +13,8 @@ import {
 } from 'antd';
 import moment from 'moment';
 import { connect } from 'react-redux';
+
+import { validPostcode } from '../../../../helpers';
 import history from '../../../../history';
 import Button from '../../../common/Button';
 import InfoPopUp from '../../../common/InfoPopup';
@@ -67,6 +69,7 @@ class EditSession extends Component {
     err: null,
     emailErr: null,
     stateLoaded: false,
+    responses: [],
   };
 
   componentDidMount() {
@@ -112,9 +115,15 @@ class EditSession extends Component {
         startTime,
         endTime,
         address,
+        responses,
       } = sessionDetails;
       const { postcode, addressLine1, addressLine2 } = address;
       if (sessionDetails) {
+        let isPostcodeValid = true;
+        if (postcode) {
+          isPostcodeValid = validPostcode(postcode);
+        }
+
         this.setState({
           session: type,
           startDate: date,
@@ -128,6 +137,8 @@ class EditSession extends Component {
           addressLine1,
           addressLine2,
           stateLoaded: true,
+          responses,
+          isPostcodeValid: !postcode || isPostcodeValid,
         });
 
         if (trainers[1]) {
@@ -160,11 +171,12 @@ class EditSession extends Component {
     if (focused) {
       event.preventDefault();
       const pastedString = event.clipboardData.getData('text/plain');
-      const splittedEmails = pastedString.split(';');
-      if (pastedString === splittedEmails) {
-        emailsArray = pastedString.split(';');
-      }
+
+      // split on "," & ";" and " "
+      const splittedEmails = pastedString.split(/[, ;]/);
+
       emailsArray = splittedEmails
+        .filter(item => !!item)
         .map(item => item.trim())
         .filter(item => !emails.includes(item));
 
@@ -225,6 +237,11 @@ class EditSession extends Component {
     this.setState({
       [name]: newValue,
     });
+
+    if (name === 'postcode') {
+      const isPostcodeValid = validPostcode(value);
+      this.setState({ isPostcodeValid });
+    }
   };
 
   onSelectSessionChange = value => {
@@ -334,6 +351,14 @@ class EditSession extends Component {
       addressLine2,
     } = this.state;
 
+    if (postcode) {
+      const isPostcodeValid = validPostcode(postcode);
+      if (!isPostcodeValid) {
+        return this.setState({ isPostcodeValid });
+      }
+    }
+    this.setState({ isPostcodeValid: true });
+
     const sessionData = {
       session,
       startDate,
@@ -349,7 +374,17 @@ class EditSession extends Component {
       addressLine2,
     };
 
-    this.props.sessionUpdateAction(sessionData, id);
+    return this.props.sessionUpdateAction(sessionData, id);
+  };
+
+  hide = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleVisibleChange = visible => {
+    this.setState({ visible });
   };
 
   render() {
@@ -385,6 +420,8 @@ class EditSession extends Component {
       postcode,
       addressLine1,
       addressLine2,
+      responses = [],
+      isPostcodeValid,
     } = this.state;
 
     const {
@@ -434,25 +471,37 @@ class EditSession extends Component {
               )}
             </InputDiv>
 
-            <InputDiv>
-              <Label htmlFor="sessionType">Session Type:</Label>
-              <Select
-                id="sessionType"
-                showSearch
-                style={{ width: '100%' }}
-                placeholder={type}
-                value={session}
-                optionFilterProp="children"
-                onChange={onSelectSessionChange}
-                size="large"
-              >
-                {sessions.map(({ value, label }) => (
-                  <Option key={value} value={value}>
-                    {label}
-                  </Option>
-                ))}
-              </Select>
-            </InputDiv>
+            <Popover
+              content={
+                <span style={{ width: '180px', display: 'block' }}>
+                  You can{"'"}t edit session type after getting responses to it.
+                </span>
+              }
+              visible={responses.length > 0 && this.state.visible}
+              onVisibleChange={this.handleVisibleChange}
+            >
+              <InputDiv>
+                <Label htmlFor="sessionType">Session Type:</Label>
+                <Select
+                  id="sessionType"
+                  showSearch
+                  style={{ width: '100%' }}
+                  placeholder={type}
+                  value={session}
+                  optionFilterProp="children"
+                  onChange={onSelectSessionChange}
+                  size="large"
+                  disabled={responses && responses.length > 0}
+                >
+                  {sessions.map(({ value, label }) => (
+                    <Option key={value} value={value}>
+                      {label}
+                    </Option>
+                  ))}
+                </Select>
+              </InputDiv>
+            </Popover>
+
             <InputDiv>
               <LabelDiv>
                 <Label htmlFor="sessionCapacity">Session Capacity:</Label>
@@ -541,7 +590,11 @@ class EditSession extends Component {
                 onKeyPress={e => onKeyPress(e)}
               />
             </InputDiv>
-
+            {!isPostcodeValid && (
+              <Error style={{ margin: '-19px 0px 13px 24px' }}>
+                invalid postcode format
+              </Error>
+            )}
             <InputDiv>
               {role === 'localLead' ? (
                 <Label htmlFor="PartnerTrainer">Trainer:</Label>
