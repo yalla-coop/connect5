@@ -58,7 +58,7 @@ describe('Tesing for addTrainerToGroup route', () => {
             expect(createdTrainer.role).toBe('trainer');
 
             // new trainer must be belong to the local lead we sent
-            expect(createdTrainer.localLead[0]).toEqual(localLead._id);
+            expect(createdTrainer.localLead).toEqual(localLead._id);
 
             // local lead group must hove new additional trainer
             expect(localLead.trainersGroup).toHaveLength(4);
@@ -113,7 +113,9 @@ describe('Tesing for addTrainerToGroup route', () => {
             expect(updatedTrainer.role).toBe('trainer');
 
             // new trainer must be belong to the local lead we sent
-            expect(updatedTrainer.localLead).toContainEqual(localLead._id);
+            expect(updatedTrainer.localLead.toString()).toBe(
+              trainer.localLead.toString()
+            );
 
             // local lead group must hove new additional trainer
             expect(updatedLocalLead.trainersGroup).toHaveLength(

@@ -86,8 +86,8 @@ class HumburgerMenu extends Component {
   };
 
   render() {
-    // console.log(this.state);
     const { toggleShow, activeSub, listOpen } = this.state;
+
     const { role, logout: logoutAction, dark } = this.props;
 
     return (
