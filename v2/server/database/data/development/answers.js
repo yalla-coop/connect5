@@ -12,10 +12,10 @@ module.exports = async () => {
   const secondResponseDay1 = await Response.findOne({ PIN: 'RAM16' });
   const firstResponseDay2 = await Response.findOne({ PIN: 'RAM17' });
   const preTrainTheTrainersResponses = await Response.find({
-    surveyType: 'pre-train-trainers',
+    surveyType: 'pre-train-trainers-s1',
   });
   const preTrainTrainerQuestions = await Question.find({
-    surveyType: 'pre-train-trainers',
+    surveyType: 'pre-train-trainers-s1',
   });
 
   const preDay1Question = await Question.find({ surveyType: 'pre-day-1' });
@@ -1425,7 +1425,7 @@ module.exports = async () => {
       participant: participants[4],
     },
 
-    // pre-train-trainers responses
+    // pre-train-trainers-s1 responses
     // first response
     {
       question: preTrainTrainerQuestions[0],

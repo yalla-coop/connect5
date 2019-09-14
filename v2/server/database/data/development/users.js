@@ -106,7 +106,8 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[0],
-      localLead: [storedLocalLeads[0]],
+      localLead: storedLocalLeads[0],
+      managers: [storedLocalLeads[0], storedLocalLeads[1]],
       officialLocalLead: false,
     },
     {
@@ -115,7 +116,8 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[0],
-      localLead: [storedLocalLeads[0]],
+      localLead: storedLocalLeads[0],
+      managers: [storedLocalLeads[0], storedLocalLeads[1]],
       officialLocalLead: false,
     },
     {
@@ -124,7 +126,8 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[1],
-      localLead: [storedLocalLeads[0]],
+      localLead: storedLocalLeads[0],
+      managers: [storedLocalLeads[0], storedLocalLeads[1]],
       officialLocalLead: false,
     },
     {
@@ -133,7 +136,8 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[1],
-      localLead: [storedLocalLeads[1]],
+      localLead: storedLocalLeads[1],
+      managers: [storedLocalLeads[0], storedLocalLeads[1]],
       officialLocalLead: false,
     },
     {
@@ -142,7 +146,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[1],
-      localLead: [storedLocalLeads[1]],
+      localLead: storedLocalLeads[1],
       officialLocalLead: false,
     },
     {
@@ -152,7 +156,7 @@ module.exports = async () => {
       role: 'trainer',
       region: regions[2],
 
-      localLead: [storedLocalLeads[1]],
+      localLead: storedLocalLeads[1],
       officialLocalLead: false,
     },
     {
@@ -161,7 +165,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[2],
-      localLead: [storedLocalLeads[2]],
+      localLead: storedLocalLeads[2],
       officialLocalLead: false,
     },
     {
@@ -170,7 +174,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[2],
-      localLead: [storedLocalLeads[2]],
+      localLead: storedLocalLeads[2],
       officialLocalLead: false,
     },
     {
@@ -179,7 +183,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[0],
-      localLead: [storedLocalLeads[2]],
+      localLead: storedLocalLeads[2],
       officialLocalLead: false,
     },
     {
@@ -188,7 +192,7 @@ module.exports = async () => {
       password: '123456',
       role: 'trainer',
       region: regions[0],
-      localLead: [storedLocalLeads[2]],
+      localLead: storedLocalLeads[2],
       officialLocalLead: false,
     },
   ];

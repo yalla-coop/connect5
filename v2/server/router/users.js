@@ -31,7 +31,6 @@ const changePassword = require('../controllers/users/changePassword');
 const getParticipantsDemogrphics = require('../controllers/users/getParticipantsDemogrphics');
 const forgetPassword = require('../controllers/users/forgetPassword');
 const resetPassword = require('../controllers/users/resetPassword');
-const updateSentInvitationEmails = require('../controllers/users/updatSendInvitation');
 const deleteAccount = require('../controllers/users/deleteAccount');
 const editProfile = require('../controllers/users/editProfile');
 
@@ -53,11 +52,7 @@ router.post('/trainers', signUpTrainer);
 router.post('/users/local-leads/group', authentication(), addTrainerToGroup);
 
 router.post('/users/change-password', authentication(), changePassword);
-router.post(
-  '/users/update-sent-emails',
-  authentication(),
-  updateSentInvitationEmails
-);
+
 router.get('/local-leads', getLocalLeads);
 
 router.use('/users/:id/results', authentication(), getUserResults);

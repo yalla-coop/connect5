@@ -181,9 +181,7 @@ class UserDashboard extends Component {
           title={canGetCertivicate ? 'Congratulations: 🎉🎉' : 'Thank you!'}
           visible={popupVisible && !dismissed}
           onOk={this.handleOk}
-          okText={
-            canGetCertivicate ? 'Get it the cirtificate' : 'Fill the survey'
-          }
+          okText={canGetCertivicate ? 'Get the cirtificate' : 'Fill the survey'}
           cancelText="Skip"
           onCancel={this.handleCancel}
         >

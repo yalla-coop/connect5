@@ -58,7 +58,6 @@ class Dashboard extends Component {
       role,
       officialLocalLead,
     } = this.props;
-    console.log(officialLocalLead);
 
     const captalizesName =
       userName && userName[0].toUpperCase() + userName.substr(1);

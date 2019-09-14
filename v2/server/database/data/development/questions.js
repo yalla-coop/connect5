@@ -140,7 +140,7 @@ const behavioural2 = surveyType => [
     },
     surveyType,
     text:
-      'For 10 patients you saw who could benefit from some improvement in their mental health and wellbeing in how many would you expect to: Suggest ways they could take action on their own mental health or wellbeing ',
+      'For 10 patients you saw who could benefit from some improvement in their mental health and wellbeing in how many would you expect to: Suggest ways they could take action on their own mental health or wellbeing',
     questionType: questionConstants.questionTypes.fromZeroToTen,
   },
   {
@@ -925,6 +925,158 @@ const yourTeachingWay = surveyType => [
   },
 ];
 
+// post train trainer questions
+const aboutHowYouExpectToTeach = surveyType => [
+  {
+    code: 'TTHabitAtt1',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text: 'When I teach next time i expect i will  listening to the learners',
+  },
+  {
+    code: 'TTHabitAtt2',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach next time i expect i will respond positively to being asked question',
+  },
+  {
+    code: 'TTHabitAtt3',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach next time i expect i will celebrate learner contributions and successes',
+  },
+  {
+    code: 'TTHabitAtt4',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach next time  I am will  use language to praise, support and show positive regard to learners',
+  },
+  {
+    code: 'TTHabitAtt5',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach next time i expect to demonstrate my own lack of understanding (either current or previous)',
+  },
+  {
+    code: 'TTHabitAtt6',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach next time  I expect i will speak with an enthusiastic tone',
+  },
+  {
+    code: 'TTHabitAtt7',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach next time I expect to  make eye contact with multiple learners',
+  },
+  {
+    code: 'TTHabitAtt8',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach next time  I expect i will use  verbal and non-verbal communication to indicate that I am listening to the learners',
+  },
+  {
+    code: 'TTHabitAtt9',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach next time i expect i will use words to encourage the learner',
+  },
+  {
+    code: 'TTHabitAtt10',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach next time i expect i will use  the names of the learners',
+  },
+  {
+    code: 'TTHabitAtt11',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach nect time i expect i will demonstrate my own curiosity and interest in the topic',
+  },
+  {
+    code: 'TTCapability1',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach next time i expect i will be conscious of trying to develop what the learners know and / or know how to do (their capabilities)',
+  },
+  {
+    code: 'TTOpportunity1',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach next time i expect i will be conscious of trying to help the learners think about how they might put their learning into practice when they go back to work',
+  },
+  {
+    code: 'TTMotivation1',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      "When I teach next time  I expect i will be conscious of trying to increase the learners' motivation for putting their learning into practice when they go back to work",
+  },
+  {
+    code: 'TTOpportunity2',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach next time i expect to ask the learners about any barriers they might have when they try to put their learning into practice when they go back to work',
+  },
+  {
+    code: 'TTOpportunity3',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
+    questionType: questionConstants.questionTypes.fromZeroToTen,
+    text:
+      'When I teach, I ask the learners to think about how the people they work with might respond if they try to put their learning into practice when they go back to work',
+  },
+  {
+    code: 'TTSessionOverall1',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    options: ['not at all', 'a little', 'a lot', "I'm not sure"],
+    questionType: questionConstants.questionTypes.radio,
+    text: 'did the course content meet your expectations',
+  },
+  {
+    code: 'TTSessionOverall2',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    options: ['not at all', 'a little', 'a lot', "I'm not sure"],
+    questionType: questionConstants.questionTypes.radio,
+    text: 'was the course delivered at the right pace for you',
+  },
+  {
+    code: 'TTSessionOverall3',
+    group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    options: ['not at all', 'a little', 'a lot', "I'm not sure"],
+    questionType: questionConstants.questionTypes.radio,
+    text: 'did you enjoy the connect 5 train the triainer course',
+  },
+];
+
 module.exports = () => {
   const preCourseDay1Questions = [
     ...demographics('pre-day-1'),
@@ -973,12 +1125,31 @@ module.exports = () => {
     ...behavioural5('post-special'),
   ];
 
-  const preTrainTheTrainerQuestions = [
-    ...yourTeachingWay('pre-train-trainers'),
+  // TTT-Session-1
+  //  - pre -
+  const preTrainTheTrainerS1Questions = [
+    ...yourTeachingWay('pre-train-trainers-s1'),
+  ];
+  // - post -
+  const postTrainTheTrainerS1Questions = [
+    ...aboutHowYouExpectToTeach('post-train-trainers-s1'),
   ];
 
-  const postTrainTheTrainerQuestions = [
-    ...yourTeachingWay('post-train-trainers'),
+  // TTT-Session-2
+  // - post -
+  const postTrainTheTrainerS2Questions = [
+    ...aboutHowYouExpectToTeach('post-train-trainers-s2'),
+  ];
+
+  // event day -> TTT-1-Day-Event
+  // - pre -
+  const preTrainTheTrainerEventQuestions = [
+    ...yourTeachingWay('pre-train-trainers-event'),
+  ];
+
+  // - post -
+  const postTrainTheTrainerEventQuestions = [
+    ...aboutHowYouExpectToTeach('post-train-trainers-event'),
   ];
 
   const followUp3MonthsQuestions = [
@@ -1003,8 +1174,11 @@ module.exports = () => {
     ...postCourseDay2Questions,
     ...postCourseDay3Questions,
     ...postSpecial2DaysQuestions,
-    ...preTrainTheTrainerQuestions,
-    ...postTrainTheTrainerQuestions,
+    ...preTrainTheTrainerS1Questions,
+    ...postTrainTheTrainerS1Questions,
+    ...postTrainTheTrainerS2Questions,
+    ...preTrainTheTrainerEventQuestions,
+    ...postTrainTheTrainerEventQuestions,
     ...followUp3MonthsQuestions,
     ...followUp6MonthsQuestions,
     ...preSpecial2DaysQuestions,

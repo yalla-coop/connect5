@@ -62,7 +62,6 @@ describe('Testing get participant by PIN', () => {
         expect(res.body[0]).toBeDefined();
         expect(res.body[0].PIN).toBe(participant.PIN);
         expect(res.body[1]).toBeDefined();
-        expect(res.body[1].preResponseExists).toBe(true || false);
         done(err);
       });
   });

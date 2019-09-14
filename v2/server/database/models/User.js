@@ -22,6 +22,7 @@ const userSchema = new Schema(
       value: 'String',
       expiresIn: Date,
     },
+<<<<<<< HEAD
     //  List of trainer's local leads
     localLead: [
       {
@@ -29,6 +30,14 @@ const userSchema = new Schema(
         ref: 'users',
       },
     ],
+=======
+    //  the trainer's local lead
+    localLead: {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+    },
+
+>>>>>>> 8decccc14139573e1946f4730f398670b740fe86
     // group of trainers that user is co-ordinating
     // list of trainers ID
     trainersGroup: [
@@ -47,9 +56,11 @@ const userSchema = new Schema(
       enum: ['admin', 'localLead', 'trainer'],
       required: true,
     },
+    // true  -> official Local Lead
+    // false -> manager
     officialLocalLead: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     // name - to be showed in the dashboard
     name: {
@@ -61,6 +72,13 @@ const userSchema = new Schema(
       type: String,
       trim: true,
     },
+    // list of managers/local leads, that added this trainer to their groups
+    managers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+      },
+    ],
   },
   {
     timestamps: true,

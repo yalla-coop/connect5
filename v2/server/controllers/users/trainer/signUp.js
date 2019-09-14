@@ -21,7 +21,6 @@ module.exports = async (req, res, next) => {
     role,
     officialLocalLead,
   } = req.body;
-  console.log(req.body);
   if (name && email && password && region) {
     return createNewTrainer({
       name,
@@ -32,6 +31,7 @@ module.exports = async (req, res, next) => {
       organization,
       role,
       officialLocalLead,
+      managers: role === 'trainer' ? [localLead] : [],
     })
       .then(trainer => {
         const trainerInfo = {
