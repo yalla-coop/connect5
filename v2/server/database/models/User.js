@@ -22,22 +22,12 @@ const userSchema = new Schema(
       value: 'String',
       expiresIn: Date,
     },
-<<<<<<< HEAD
-    //  List of trainer's local leads
-    localLead: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'users',
-      },
-    ],
-=======
     //  the trainer's local lead
     localLead: {
       type: Schema.Types.ObjectId,
       ref: 'users',
     },
 
->>>>>>> 8decccc14139573e1946f4730f398670b740fe86
     // group of trainers that user is co-ordinating
     // list of trainers ID
     trainersGroup: [
