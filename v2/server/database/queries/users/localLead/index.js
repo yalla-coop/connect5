@@ -10,6 +10,7 @@ module.exports.addTrainertoGroup = (localLeadId, trainerId) => {
 };
 
 // remove trainer from a localLead group
+// remove trainer from a localLead group
 module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
   return User.bulkWrite([
     {
@@ -25,6 +26,14 @@ module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
         filter: { _id: trainerId },
         update: {
           $pullAll: { managers: [mongoose.Types.ObjectId(localLeadId)] },
+        },
+      },
+    },
+    {
+      updateOne: {
+        filter: { _id: trainerId },
+        update: {
+          $set: { localLead: mongoose.Types.ObjectId(localLeadId) },
         },
       },
     },

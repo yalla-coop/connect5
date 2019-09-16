@@ -38,7 +38,7 @@ const addNewTrainerToGroup = ({
 
       <a href="${removeFromGroup}">I don't want my trainer manager/ local lead to view my feedback data</a>
 
-      
+
       <p style="margin-bottom: 0;">Thanks,</p>
       <p style="margin-bottom: 0;">Connect 5</p>
     </div>
