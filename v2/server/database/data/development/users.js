@@ -211,9 +211,7 @@ module.exports = async () => {
     trainersGroup: [trainers[3], trainers[4], trainers[5]],
   });
 
-  await User.findByIdAndUpdate(storedLocalLeads[2].id, {
+  return User.findByIdAndUpdate(storedLocalLeads[2].id, {
     trainersGroup: [trainers[6], trainers[7], trainers[8]],
   });
-
-  return 'completed';
 };

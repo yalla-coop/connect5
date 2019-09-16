@@ -289,7 +289,7 @@ const mapStateToProps = state => {
     role: state.auth.role,
     organization: state.auth.organization,
     region: state.auth.region,
-    localLead: state.auth.localLead[0],
+    localLead: state.auth.localLead,
     localLeadsList: state.fetchedData.localLeadsList,
     updateUserLoading: state.loading.updateUserLoading,
     deleteAccountLoading: state.loading.deleteAccountLoading,

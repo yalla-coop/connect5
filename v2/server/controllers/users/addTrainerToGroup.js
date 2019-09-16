@@ -10,7 +10,10 @@ const {
   addTrainertoGroup,
 } = require('./../../database/queries/users/localLead');
 
-const { getUserByEmail, update } = require('./../../database/queries/users');
+const {
+  getUserByEmail,
+  addManagerToTrainer,
+} = require('./../../database/queries/users');
 
 module.exports = async (req, res, next) => {
   const { name, email, newUser, localLead, region, localLeadName } = req.body;
@@ -49,7 +52,7 @@ module.exports = async (req, res, next) => {
     // await removeTrainerFromGroup(localLead, trainer._id);
     await addTrainertoGroup(localLead, trainer._id);
 
-    await update(trainer._id, localLead);
+    await addManagerToTrainer(trainer._id, localLead);
     let isNew = false;
     if (newUser) {
       isNew = true;

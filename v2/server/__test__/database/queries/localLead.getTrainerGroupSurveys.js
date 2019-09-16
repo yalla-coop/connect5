@@ -27,7 +27,7 @@ describe('Test getTraineGroupSurveys query', () => {
     getTrainerGroupSurveys(lead.id).then(result => {
       expect(result).toBeDefined();
       expect(result[0].type).toBe('Pre-course');
-      expect(result[0].responses).toBe(2);
+      expect(result[0].responses).toBe(0);
       done();
     });
   });

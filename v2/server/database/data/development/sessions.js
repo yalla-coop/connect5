@@ -27,6 +27,7 @@ module.exports = async () => {
         { email: 'abdalsamad.y.m@gmail.com', status: 'new' },
         { email: 'a.shatat@hotmail.com', status: 'new' },
       ],
+      canAccessResults: [trainers[0].localLead],
     },
     {
       date: '2019-03-14',
