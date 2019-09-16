@@ -355,6 +355,13 @@ class Survey extends Component {
     });
   };
 
+  handleStarChange = (answer, question) => {
+    const { formState } = this.state;
+    this.setState({ formState: { ...formState, [question]: answer } }, () => {
+      this.trackAnswers();
+    })
+  }
+
   handleAntdDatePicker = (question, value, group, field) => {
     // const question = e.target.name;
     const { formState } = this.state;
@@ -504,6 +511,7 @@ class Survey extends Component {
                             key={group}
                             questions={questions}
                             onChange={this.handleChange}
+                            handleStarChange={this.handleStarChange}
                             handleOther={this.handleOther}
                             answers={formState}
                             selectCheckedItem={this.selectCheckedItem}

@@ -1,7 +1,7 @@
 // this is where we map through all the questions
 // and populate the Survey component
 import React from 'react';
-import { DatePicker, Progress } from 'antd';
+import { DatePicker, Progress, Rate } from 'antd';
 // please leave this inside for antd to style right
 import 'antd/dist/antd.css';
 import { colors } from '../../../theme';
@@ -37,7 +37,8 @@ const renderQuestionInputType = (
   errors,
   handleAntdDatePicker,
   group,
-  participantField
+  participantField,
+  handleStarChange
 ) => {
   if (inputType === 'text') {
     return (
@@ -141,13 +142,24 @@ const renderQuestionInputType = (
           )}
         </header>
         <NumberSliderDiv>
-          <Slider
+          {/* <Slider
             id={`sliderInput-${index}`}
             name={questionId}
             min="0"
             max="10"
             type="range"
             onChange={onChange}
+            unanswered={errorArray.includes(questionId) && !answers[questionId]}
+            data-group={group}
+            data-field={participantField}
+          /> */}
+          <Rate
+            id={`sliderInput-${index}`}
+            name={questionId}
+            count={6}
+            onChange={value =>
+              handleStarChange(value, questionId)
+            }
             unanswered={errorArray.includes(questionId) && !answers[questionId]}
             data-group={group}
             data-field={participantField}
@@ -246,7 +258,8 @@ const questionsRender = (
   onChange,
   handleOther,
   errors,
-  handleAntdDatePicker
+  handleAntdDatePicker,
+  handleStarChange
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group.text === 'demographic'
@@ -300,7 +313,8 @@ const questionsRender = (
                   errors,
                   handleAntdDatePicker,
                   group,
-                  participantField
+                  participantField,
+                  handleStarChange
                 )}
               </div>
             );
@@ -319,6 +333,7 @@ export default class Questions extends React.Component {
       answers,
       errors,
       handleAntdDatePicker,
+      handleStarChange,
       completionRate,
     } = this.props;
 
@@ -334,7 +349,8 @@ export default class Questions extends React.Component {
             onChange,
             handleOther,
             errors,
-            handleAntdDatePicker
+            handleAntdDatePicker,
+            handleStarChange
           )}
           {renderSkipButtons}
           <ProgressWrapper>
