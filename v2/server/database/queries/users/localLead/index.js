@@ -24,7 +24,7 @@ module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
       updateOne: {
         filter: { _id: trainerId },
         update: {
-          $pullAll: { localLead: [mongoose.Types.ObjectId(localLeadId)] },
+          $set: { localLead: mongoose.Types.ObjectId(localLeadId) },
         },
       },
     },
