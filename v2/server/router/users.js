@@ -15,6 +15,7 @@ const {
   getListOfTrainers,
   getLocalLeadsTrainerList,
   getAllTrainersAndLeads,
+  getLocalLeadDetails,
 } = require('../controllers/users/user');
 const getSessionsPerRegions = require('../controllers/users/SessionsPerRegions');
 
@@ -70,6 +71,9 @@ router.get(
 );
 
 router.get('/local-lead/:id/group', getLocalLeadGroup);
+
+// gets name and org of local lead
+router.get('/local-lead/:id', getLocalLeadDetails);
 
 // delate trainer from a localLead group
 router.delete(

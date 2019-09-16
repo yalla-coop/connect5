@@ -1,5 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Modal } from 'antd';
@@ -15,15 +16,25 @@ import {
 
 import logo from '../../../assets/logo.png';
 
-export default class ConfirmTrainerRemoval extends Component {
-  state = { localLeadId: null, trainerId: null, loading: true };
+class ConfirmTrainerRemoval extends Component {
+  state = {
+    localLeadId: null,
+    trainerId: null,
+    localLeadDetails: {},
+    loading: true,
+  };
 
   componentDidMount() {
-    this.setState({
-      localLeadId: window.location.href.split('/')[4],
-      trainerId: window.location.href.split('/')[5],
-      loading: false,
-    });
+    const { localLead, trainer } = this.props.match.params;
+
+    axios.get(`/api/local-lead/${localLead}`).then(({ data }) =>
+      this.setState({
+        localLeadId: localLead,
+        trainerId: trainer,
+        loading: false,
+        localLeadDetails: data,
+      })
+    );
   }
 
   handleSubmit = async e => {
@@ -50,7 +61,9 @@ export default class ConfirmTrainerRemoval extends Component {
   };
 
   render() {
-    const { loading } = this.state;
+    const { loading, localLeadDetails } = this.state;
+    const { name, organization } = localLeadDetails;
+
     if (loading) return <p>Loading...</p>;
     return (
       <div>
@@ -61,8 +74,15 @@ export default class ConfirmTrainerRemoval extends Component {
                 <Logo src={logo} alt="img" />
               </AnotherLink>
             </HeadlineDiv>
+            <p>
+              Clicking the button underneath will remove you from the group of
+              trainers managed by
+            </p>
+            <p>
+              {name && name} (working at {organization})
+            </p>
             <Button onClick={this.handleSubmit}>
-              Remove me from the group of trainers!
+              Remove me from the group!
             </Button>
           </ContentWrapper>
         </Wrapper>
@@ -70,3 +90,5 @@ export default class ConfirmTrainerRemoval extends Component {
     );
   }
 }
+
+export default connect()(ConfirmTrainerRemoval);

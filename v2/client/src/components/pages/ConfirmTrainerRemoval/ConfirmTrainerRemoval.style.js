@@ -39,7 +39,7 @@ export const Logo = styled.img`
 
 export const Button = styled.button`
   width: 250px;
-  margin-top: 1.5rem;
+
   padding: 4px;
   align-items: center;
   background: none;
