@@ -175,8 +175,9 @@ export const loginParticipant = PIN => dispatch => {
 
 export const logout = () => async dispatch => {
   try {
+    console.log('here');
     await axios.get('/api/logout');
-    history.push('/login');
+    history.push('/');
     dispatch({
       type: LOGOUT,
     });
