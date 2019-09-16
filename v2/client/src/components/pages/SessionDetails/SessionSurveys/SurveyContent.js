@@ -27,11 +27,9 @@ class SurveyContent extends Component {
     const { id, type } = this.props;
     const sessionId = id;
 
-    axios
-      .post('/api/feedback/responseCount', { sessionId, surveyType: type })
-      .then(res => {
-        this.setState({ responseCount: res.data });
-      });
+    axios.post('/api/feedback/responseCount', { sessionId, type }).then(res => {
+      this.setState({ responseCount: res.data });
+    });
   }
 
   // Fire Info pop up
@@ -104,7 +102,10 @@ class SurveyContent extends Component {
     return (
       <SurveyContentWrapper>
         <SurveyLinkType to={`/survey/${id}/${type}/results`}>
-          {type.includes('pre') ? 'Pre-Session' : 'Post-Session'} Survey
+          {type.includes('pre') && 'Pre-Session Survey'}
+          {type.includes('post') && 'Post-Session Survey'}
+          {type.includes('follow-up-3-month') && '3-month Follow Up Survey'}
+          {type.includes('follow-up-6-month') && '6-month Follow Up Survey'}
         </SurveyLinkType>
 
         <SurveyLinkInfo onClick={onInfoClick}>

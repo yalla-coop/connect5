@@ -5,15 +5,31 @@ export const uppercaseSurvey = surveyType =>
     .join(' ');
 
 const surveysTypes = {
-  1: ['pre-day-1', 'post-day-1'],
-  2: ['post-day-2'],
-  3: ['post-day-3'],
-  'special-2-days': ['pre-special', 'post-special'],
-  'train-trainers-s1': ['pre-train-trainers-s1', 'post-train-trainers-s1'],
-  'train-trainers-s2': ['post-train-trainers-s2'],
+  1: ['pre-day-1', 'post-day-1', 'follow-up-3-month', 'follow-up-6-month'],
+  2: ['post-day-2', 'follow-up-3-month', 'follow-up-6-month'],
+  3: ['post-day-3', 'follow-up-3-month', 'follow-up-6-month'],
+  'special-2-days': [
+    'pre-special',
+    'post-special',
+    'follow-up-3-month',
+    'follow-up-6-month',
+  ],
+  'train-trainers-s1': [
+    'pre-train-trainers-s1',
+    'post-train-trainers-s1',
+    'follow-up-3-month-train-trainers',
+    'follow-up-6-month-train-trainers',
+  ],
+  'train-trainers-s2': [
+    'post-train-trainers-s2',
+    'follow-up-3-month-train-trainers',
+    'follow-up-6-month-train-trainers',
+  ],
   'train-trainers-event': [
     'pre-train-trainers-event',
     'post-train-trainers-event',
+    'follow-up-3-month-train-trainers',
+    'follow-up-6-month-train-trainers',
   ],
 };
 /**

@@ -209,7 +209,7 @@ module.exports = async () => {
 
   const trainers = await User.find({ role: 'trainer' });
 
-  await User.findByIdAndUpdate(officialLocalLead.id, {
+  return User.findByIdAndUpdate(officialLocalLead.id, {
     trainersGroup: [trainers[0], trainers[1]],
   });
 

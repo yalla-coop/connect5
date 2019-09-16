@@ -49,9 +49,12 @@ export default class ConfirmSurvey extends Component {
           <DetailsDiv>
             <Paragraph strong>Survey Type: </Paragraph>
             <Paragraph>
-              {surveyType.includes('pre')
-                ? 'Pre-Session Survey'
-                : 'Post-Session Survey'}
+              {surveyType.includes('pre') && 'Pre-Session Survey'}
+              {surveyType.includes('post') && 'Post-Session Survey'}
+              {surveyType.includes('follow-up-3-month') &&
+                '3-month Follow Up Survey'}
+              {surveyType.includes('follow-up-6-month') &&
+                '6-month Follow Up Survey'}
             </Paragraph>
           </DetailsDiv>
           <DetailsDiv>
