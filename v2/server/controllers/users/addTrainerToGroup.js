@@ -16,6 +16,9 @@ module.exports = async (req, res, next) => {
   const { name, email, newUser, localLead, region, localLeadName } = req.body;
   const { user } = req;
 
+  console.log('llead', localLead);
+  console.log('lleadName', localLeadName);
+
   if (user.role !== 'localLead') {
     return next(boom.unauthorized());
   }
@@ -25,7 +28,7 @@ module.exports = async (req, res, next) => {
     // if (!trainer) {
     //   return next(boom.notFound('This email is not used'));
     // }
-    if (trainer && trainer.localLead.toString() === localLead) {
+    if (trainer && trainer.managers.includes(localLead)) {
       return next(
         boom.conflict(
           `This trainer is already registered in ${localLeadName} group`
