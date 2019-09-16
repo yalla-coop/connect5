@@ -5,31 +5,41 @@ const {
   addTrainertoGroup,
   removeTrainerFromGroup,
 } = require('./../../database/queries/users/localLead');
-const { update } = require('./../../database/queries/users');
+
+const {
+  update,
+  addManagerToTrainer,
+} = require('./../../database/queries/users');
 
 const editProfile = async (req, res, next) => {
   const { user } = req;
   const {
     organization = user.organization,
-    localLead = user.localLead[0],
+    localLead = user.localLead,
   } = req.body;
   const data = {};
+
   if (organization) {
     data.organization = organization;
   }
+
   if (localLead) {
     data.localLead = localLead;
   }
+
   try {
-    if (localLead !== user.localLead[0]) {
+    if (localLead !== user.localLead) {
       // remove from the old local lead group
-      await removeTrainerFromGroup(user.localLead[0], user._id);
+      await removeTrainerFromGroup(user.localLead, user._id);
       // add trainer to the new local lead group
       await addTrainertoGroup(localLead, user._id);
     }
 
-    data.localLead = localLead || user.localLead[0];
+    data.localLead = localLead || user.localLead;
     await update(user._id, data);
+    if (localLead) {
+      await addManagerToTrainer(user._id, localLead);
+    }
     return res.json({});
   } catch (err) {
     return next(boom.badImplementation(err));

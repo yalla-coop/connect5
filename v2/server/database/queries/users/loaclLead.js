@@ -9,53 +9,63 @@ const {
 } = require('./../../../constants');
 
 const getTrainerGroupSurveys = async leadId => {
-  const user = await User.findById(leadId);
-  const trainers = user.trainersGroup;
+  // array of branches
+  // { case: { $eq: ['$surveyType', 'post-day-1'] },    then: 'Post Session 1' },
+  const branches = Object.entries(readableSurveysNamePairs).map(pair => {
+    return {
+      case: { $eq: ['$surveyType', pair[0]] },
+      then: pair[1],
+    };
+  });
 
-  // get all responses that include at least one trainer in the group
-  const responses = await Promise.all(
-    trainers.map(async trainerID =>
-      Response.aggregate([
-        { $match: { trainers: mongoose.Types.ObjectId(trainerID) } },
-        {
-          $lookup: {
-            from: 'sessions',
-            localField: 'session',
-            foreignField: '_id',
-            as: 'session',
+  const responses = await Response.aggregate([
+    {
+      $lookup: {
+        from: 'sessions',
+        let: { sessionId: '$session' },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  { $eq: ['$_id', '$$sessionId'] },
+                  {
+                    $in: [mongoose.Types.ObjectId(leadId), '$canAccessResults'],
+                  },
+                ],
+              },
+            },
+          },
+        ],
+        as: 'session',
+      },
+    },
+    {
+      $unwind: '$session',
+    },
+    {
+      $project: {
+        _id: 1,
+        surveyType: 1,
+        participants: '$session.numberOfAttendees',
+      },
+    },
+    {
+      $group: {
+        _id: '$surveyType',
+        responses: { $sum: 1 },
+        participants: { $sum: '$participants' },
+        type: {
+          $first: {
+            $switch: {
+              branches,
+              default: 'No match',
+            },
           },
         },
-        {
-          $unwind: '$session',
-        },
-        {
-          $project: {
-            _id: 1,
-            surveyType: 1,
-            'session.numberOfAttendees': 1,
-          },
-        },
-      ])
-    )
-  );
-
-  const cleanedResponses = responses.reduce((a, b) => a.concat(b), []);
-  const uniqueResponses = [];
-  const map = new Map();
-
-  if (cleanedResponses.length > 0) {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const item of cleanedResponses) {
-      if (!map.has(item._id.toString())) {
-        map.set(item._id.toString(), true);
-        uniqueResponses.push({
-          _id: item._id,
-          surveyType: item.surveyType,
-          participants: item.session.numberOfAttendees,
-        });
-      }
-    }
-  }
+      },
+    },
+  ]);
 
   const result = {};
   Object.entries(readableSurveysNamePairs).forEach(pair => {
@@ -67,54 +77,49 @@ const getTrainerGroupSurveys = async leadId => {
     };
   });
 
-  uniqueResponses.forEach(response => {
-    result[response.surveyType]._id = response.surveyType;
-    result[response.surveyType].responses += 1;
-    result[response.surveyType].participants += response.participants;
+  responses.forEach(response => {
+    if (result[response.surveyType]) {
+      result[response.surveyType]._id = response.surveyType;
+      result[response.surveyType].responses = response.surveyType;
+      result[response.surveyType].participants = response.participants;
+    }
   });
 
   return Object.values(result);
 };
 
 const getTrainerGroupSessions = async leadId => {
-  const user = await User.findById(leadId);
-  const trainers = user.trainersGroup;
+  // array of branches
+  // [ { case: { $eq: ['$type', '1'] }, then: 'Session 1' }, ... ]
+  const branches = Object.entries(readableSessionNamePairs).map(pair => {
+    return { case: { $eq: ['$type', pair[0]] }, then: pair[1] };
+  });
 
-  // get all the sessions that include at least one trainer in the group
-  const sessions = await Promise.all(
-    trainers.map(async trainerId =>
-      Session.aggregate([
-        { $match: { trainers: mongoose.Types.ObjectId(trainerId) } },
-        {
-          $project: {
-            _id: 1,
-            numberOfAttendees: 1,
-            type: 1,
+  const sessions = await Session.aggregate([
+    { $match: { canAccessResults: mongoose.Types.ObjectId(leadId) } },
+    {
+      $project: {
+        _id: 1,
+        numberOfAttendees: 1,
+        type: 1,
+      },
+    },
+    {
+      $group: {
+        _id: '$type',
+        participants: { $sum: '$numberOfAttendees' },
+        sessions: { $sum: 1 },
+        type: {
+          $first: {
+            $switch: {
+              branches,
+              default: 'No match',
+            },
           },
         },
-      ])
-    )
-  );
-
-  const cleanedSessions = sessions.reduce((a, b) => a.concat(b), []);
-
-  const uniqueSessions = [];
-  const map = new Map();
-
-  if (cleanedSessions.length > 0) {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const item of cleanedSessions) {
-      if (!map.has(item._id.toString())) {
-        map.set(item._id.toString(), true);
-        uniqueSessions.push({
-          _id: item._id,
-          numberOfAttendees: item.numberOfAttendees,
-          type: item.type,
-        });
-      }
-    }
-  }
-
+      },
+    },
+  ]);
   const result = {};
   Object.entries(readableSessionNamePairs).forEach(pair => {
     result[pair[0]] = {
@@ -125,10 +130,12 @@ const getTrainerGroupSessions = async leadId => {
     };
   });
 
-  uniqueSessions.forEach(session => {
-    result[session.type]._id = session.type;
-    result[session.type].sessions += 1;
-    result[session.type].participants += session.numberOfAttendees;
+  sessions.forEach(session => {
+    if (result[session._id]) {
+      result[session._id]._id = session._id;
+      result[session._id].sessions = session.sessions;
+      result[session._id].participants = session.participants;
+    }
   });
 
   return Object.values(result);

@@ -9,8 +9,10 @@ const getResponseRate = (sessions, surveys) => {
   return surveys.map(survey => {
     const session = surveysSessionsPairs[survey._id];
     if (session) {
-      const responseRate = ((survey.responses / obj[session]) * 100).toFixed(1);
-      return { ...survey, responseRate: `${responseRate}%` };
+      const responseRate = survey.responses
+        ? `${((survey.responses / obj[session]) * 100).toFixed(1)}%`
+        : 'N.A';
+      return { ...survey, responseRate };
     }
     const responseRate = 'N.A';
     return { ...survey, responseRate };

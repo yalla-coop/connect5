@@ -11,6 +11,7 @@ const createNewSession = async ({
   startTime,
   endTime,
   address,
+  canAccessResults,
 }) => {
   const newSession = new Session({
     date: startDate,
@@ -24,6 +25,7 @@ const createNewSession = async ({
     startTime,
     endTime,
     address,
+    canAccessResults,
   });
   // Add new session
   const createdSession = await newSession.save();

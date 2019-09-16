@@ -100,6 +100,13 @@ const sessionSchema = new Schema(
         trainer: String,
       },
     ],
+    // list of local leads/ organizers that can see the results of this session
+    canAccessResults: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+      },
+    ],
   },
   {
     timestamps: true,
