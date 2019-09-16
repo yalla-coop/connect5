@@ -1,4 +1,5 @@
 const moment = require('moment');
+const mongoose = require('mongoose');
 
 const Participant = require('../../models/Participant');
 const User = require('./../../models/User');
@@ -7,9 +8,14 @@ const Session = require('./../../models/Session');
 module.exports.getUserByEmail = email => User.findOne({ email });
 module.exports.getUserById = id => User.findById(id);
 module.exports.getAllSessionsQuery = () => Session.find({});
-module.exports.update = (id, localLeadId) => {
+module.exports.update = (id, data) => {
+  return User.updateOne({ _id: id }, { $set: data });
+};
+
+module.exports.addManagerToTrainer = (id, localLeadId) => {
   return User.updateOne({ _id: id }, { $addToSet: { managers: localLeadId } });
 };
+
 module.exports.getRegistrationDate = async id => {
   const user = await User.findById(id);
   return moment(user.createdAt).format('Do MMM YYYY');
@@ -40,3 +46,11 @@ module.exports.findUserByToken = token =>
   });
 
 module.exports.getAllPins = () => Participant.find({}, { PIN: 1 });
+
+module.exports.deleteTrainerFromAllSessions = trainerId =>
+  Session.updateMany(
+    {},
+    {
+      $pullAll: { trainers: [mongoose.Types.ObjectId(trainerId)] },
+    }
+  );
