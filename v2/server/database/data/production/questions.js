@@ -1098,36 +1098,32 @@ module.exports = () => {
 
   const postCourseDay1Questions = [
     ...behavioural2('post-day-1'),
-    ...behavioural3('post-day-1'),
     ...yourTrainer1('post-day-1'),
     ...yourTrainer2('post-day-1'),
   ];
 
   const postCourseDay2Questions = [
     ...behavioural2('post-day-2'),
-    ...behavioural3('post-day-2'),
-    ...behavioural4('post-day-2'),
     ...yourTrainer1('post-day-2'),
     ...yourTrainer2('post-day-2'),
   ];
 
   const postCourseDay3Questions = [
     ...behavioural2('post-day-3'),
-    ...behavioural3('post-day-3'),
-    ...behavioural4('post-day-3'),
-    ...behavioural5('post-day-3'),
+    ...yourTrainer1('post-day-3'),
+    ...yourTrainer2('post-day-3'),
   ];
 
   const postSpecial2DaysQuestions = [
     ...behavioural2('post-special'),
-    ...behavioural3('post-special'),
-    ...behavioural4('post-special'),
-    ...behavioural5('post-special'),
+    ...yourTrainer1('post-special'),
+    ...yourTrainer2('post-special'),
   ];
 
   // TTT-Session-1
   //  - pre -
   const preTrainTheTrainerS1Questions = [
+    ...demographics('pre-train-trainers-s1'),
     ...yourTeachingWay('pre-train-trainers-s1'),
   ];
   // - post -
@@ -1144,6 +1140,7 @@ module.exports = () => {
   // event day -> TTT-1-Day-Event
   // - pre -
   const preTrainTheTrainerEventQuestions = [
+    ...demographics('pre-train-trainers-event'),
     ...yourTeachingWay('pre-train-trainers-event'),
   ];
 
@@ -1168,6 +1165,14 @@ module.exports = () => {
     ...behavioural5('follow-up-6-month'),
   ];
 
+  const followUpTrainTrainer3MonthsQuestions = [
+    ...aboutHowYouExpectToTeach('follow-up-3-month-train-trainers'),
+  ];
+
+  const followUpTrainTrainer6MonthsQuestions = [
+    ...aboutHowYouExpectToTeach('follow-up-6-month-train-trainers'),
+  ];
+
   return Question.create([
     ...preCourseDay1Questions,
     ...postCourseDay1Questions,
@@ -1182,5 +1187,7 @@ module.exports = () => {
     ...followUp3MonthsQuestions,
     ...followUp6MonthsQuestions,
     ...preSpecial2DaysQuestions,
+    ...followUpTrainTrainer3MonthsQuestions,
+    ...followUpTrainTrainer6MonthsQuestions,
   ]);
 };

@@ -20,6 +20,7 @@ module.exports = async () => {
       role: 'localLead',
       organization: 'Hampshire council',
       region: regions[7],
+      officialLocalLead: false,
     },
   ];
 
