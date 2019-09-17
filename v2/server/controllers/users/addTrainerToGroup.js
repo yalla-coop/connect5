@@ -16,10 +16,13 @@ const {
 } = require('./../../database/queries/users');
 
 module.exports = async (req, res, next) => {
-  console.log(req.body);
-  const { name, email, newUser, localLead, region, localLeadName } = req.body;
+  const { name, email, newUser, localLead, managers, region } = req.body;
   const { user } = req;
 
+  const localLeadId = localLead.key;
+  const localLeadName = localLead.label;
+
+  console.log(req.body);
   // check if user has management priveleges
   if (user.role !== 'localLead') {
     return next(boom.unauthorized());
@@ -29,7 +32,7 @@ module.exports = async (req, res, next) => {
     let trainer = await getUserByEmail(email);
 
     // check if trainer exists and if manager user is not yet assigned to trainer
-    if (trainer && trainer.managers.includes(localLead)) {
+    if (trainer && trainer.managers.includes(localLeadId)) {
       return next(
         boom.conflict(
           `This trainer is already registered in ${localLeadName}'s group`
@@ -46,15 +49,35 @@ module.exports = async (req, res, next) => {
         email,
         password: randomPassword,
         region,
-        localLead,
+        localLead: localLeadId,
         role: 'trainer',
       });
     }
 
-    // await removeTrainerFromGroup(localLead, trainer._id);
-    await addTrainertoGroup(localLead, trainer._id);
+    // add trainer to group of official local lead
+    await addTrainertoGroup(localLeadId, trainer._id);
 
-    await addManagerToTrainer(trainer._id, localLead);
+    // add to groups of additional managers
+    if (managers.length > 0) {
+      await managers.map(async manager => {
+        const addTrainer = await addTrainertoGroup(manager.key, trainer._id);
+
+        return addTrainer;
+      });
+    }
+
+    // add official local lead to group of managers of trainer
+    await addManagerToTrainer(trainer._id, localLeadId);
+
+    // add addtional managers to trainer's manager array
+    if (managers.length > 0) {
+      await managers.map(async manager => {
+        const addManager = await addManagerToTrainer(trainer._id, manager.key);
+
+        return addManager;
+      });
+    }
+
     let isNew = false;
     if (newUser) {
       isNew = true;
@@ -67,7 +90,7 @@ module.exports = async (req, res, next) => {
       localLeadName,
       localLeadRegion: user.region,
       isNew,
-      localLeadId: localLead,
+      localLead: localLeadId,
       trainerId: trainer._id,
     };
 

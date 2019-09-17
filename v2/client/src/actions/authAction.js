@@ -121,7 +121,6 @@ export const checkAuth = () => async dispatch => {
   try {
     const res = await axios.get(`/api/users/auth`);
     const { data } = res;
-    console.log('authssss', data);
 
     dispatch({
       type: USER_AUTHENTICATED,

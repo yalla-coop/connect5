@@ -12,6 +12,14 @@ export const ContentWrapper = styled.div`
   padding: 2rem 15px;
 `;
 
+export const CheckboxWrapper = styled.div`
+  max-width: 90%;
+`;
+
+export const H2 = styled.h2`
+  font-size: 1.2rem;
+`;
+
 export const Form = styled(AntForm)`
   border: 1px solid ${colors.transLightGray};
   box-sizing: border-box;
@@ -52,6 +60,7 @@ export const Bold = styled.span`
 
 export const Paragraph = styled.p`
   font-weight: 300;
+  font-size: 1rem;
 `;
 
 export const BackLink = styled.button`

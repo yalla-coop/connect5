@@ -22,6 +22,8 @@ import {
   Paragraph,
   BackContainer,
   BackLink,
+  CheckboxWrapper,
+  H2,
 } from './AddTrainer.style';
 
 const { Option } = Select;
@@ -68,10 +70,6 @@ class AddTrainer extends Component {
     return fetchLocalLeadsActionCreator();
   }
 
-  // componentDidUpdate() {
-  //   this.checkManager();
-  // }
-
   handleOk = e => {
     this.setState({ confirmLoading: true });
     this.handleSubmit(e);
@@ -104,9 +102,10 @@ class AddTrainer extends Component {
     // set up managers array and run addTrainertoGroup action on each element
     const managers = [];
 
-    if (officialLocalLead.key) {
-      managers.push(officialLocalLead);
-    }
+    // if (officialLocalLead.key) {
+    //   officialLocalLead.officialLocalLead = true;
+    //   managers.push(officialLocalLead);
+    // }
     if (userAsManager) {
       managers.push({ key: userInfo.id, label: userInfo.name });
     }
@@ -116,16 +115,13 @@ class AddTrainer extends Component {
 
     form.validateFieldsAndScroll((err, values) => {
       if (!err && managers.length > 0) {
-        managers.forEach(manager =>
-          addTrainerToGroupAction({
-            ...values,
-            newUser: isEmailUnique,
-            localLead: manager.key,
-            localLeadName: manager.label,
-          })
-        );
+        addTrainerToGroupAction({
+          ...values,
+          newUser: isEmailUnique,
+          managers,
+        });
         // callback function to be called when response come back
-        return this.handleSuccessOk;
+        this.handleSuccessOk();
       }
     });
   };
@@ -318,10 +314,14 @@ class AddTrainer extends Component {
               </Item>
             </div>
             {(isEmailUnique || isEmailUnique === null) && localLeads && (
-              <Fragment>
+              <CheckboxWrapper>
+                <H2>Adding a new trainer to groups</H2>
                 <Paragraph>
-                  Selecting the trainer's official local lead will add him/her
-                  to the respective group.
+                  <Bold> This is how it works:</Bold>
+                </Paragraph>
+                <Paragraph>
+                  <Bold>Step 1:</Bold> Select the official local lead managing
+                  this trainer (required).
                 </Paragraph>
                 <OfficialLocalLeadSelect
                   placeholder="Official Connect 5 Local Lead"
@@ -330,36 +330,45 @@ class AddTrainer extends Component {
                   localLeads={localLeads}
                   handleSelectChange={this.addOfficialLocalLead}
                 />
-              </Fragment>
+              </CheckboxWrapper>
             )}
             {!userInfo.officialLocalLead && (
+              <CheckboxWrapper>
+                <Paragraph>
+                  <Bold>Step 2:</Bold> Add the trainer to your own group of
+                  trainers to manage sessions and view results (optional).
+                </Paragraph>
+
+                <Checkbox
+                  onChange={this.addUserAsManager}
+                  style={{
+                    textAlign: 'left',
+                    marginBottom: '24px',
+                  }}
+                >
+                  <span style={{ fontSize: '.9rem' }}>
+                    Add trainer to my group
+                  </span>
+                </Checkbox>
+              </CheckboxWrapper>
+            )}
+            <CheckboxWrapper>
+              <Paragraph>
+                <Bold>Step 3:</Bold> Add trainer to a group managed by someone
+                else (optional).
+              </Paragraph>
               <Checkbox
-                onChange={this.addUserAsManager}
+                onChange={this.onChangeCheckbox}
                 style={{
                   textAlign: 'left',
                   marginBottom: '24px',
                 }}
               >
                 <span style={{ fontSize: '.9rem' }}>
-                  Add trainer to my group
+                  Add trainer to another group
                 </span>
               </Checkbox>
-            )}
-            <Paragraph>
-              Additionally you can add the trainer to another group (this group
-              can also be managed by management staff).
-            </Paragraph>
-            <Checkbox
-              onChange={this.onChangeCheckbox}
-              style={{
-                textAlign: 'left',
-                marginBottom: '24px',
-              }}
-            >
-              <span style={{ fontSize: '.9rem' }}>
-                Add trainer to another group
-              </span>
-            </Checkbox>
+            </CheckboxWrapper>
             {selectOtherGroup && (
               <Fragment>
                 <Paragraph>
