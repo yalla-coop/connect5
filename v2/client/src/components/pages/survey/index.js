@@ -166,7 +166,7 @@ class Survey extends Component {
                   currentStep === uniqueGroups.length + 1
                     ? uniqueGroups.length + 1
                     : currentStep + 1,
-              }, () => window.scrollTo(0 ,0));
+              });
               if (section === 'enterPIN') {
                 this.submitPIN(PIN, surveyParts);
               }
