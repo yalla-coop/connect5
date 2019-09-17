@@ -1,9 +1,9 @@
 // this is where we map through all the questions
 // and populate the Survey component
 import React from 'react';
-import { DatePicker, Progress, Rate } from 'antd';
-// please leave this inside for antd to style right
-import 'antd/dist/antd.css';
+import { DatePicker, Progress, Rate, Icon } from 'antd';
+// // please leave this inside for antd to style right
+// import 'antd/dist/antd.css';
 import { colors } from '../../../theme';
 import { Link, Element, animateScroll as scroll } from 'react-scroll'
 
@@ -17,7 +17,9 @@ import {
   SectionCategory,
   SubGroup,
   Warning,
-  StyledElement
+  StyledElement,
+  RateDiv,
+  QuestionGroup
 } from './Questions.style';
 
 import { ProgressWrapper } from './Survey.style';
@@ -149,7 +151,7 @@ const renderQuestionInputType = (
             <Warning>* this question must be answered</Warning>
           )}
         </header>
-        <NumberSliderDiv>
+        <RateDiv>
           {/* <Slider
             id={`sliderInput-${index}`}
             name={questionId}
@@ -175,11 +177,11 @@ const renderQuestionInputType = (
             data-field={participantField}
             onBlur={() => setCurrentQuestion(nextQuestionID)}
           />
-        </NumberSliderDiv>
-        <NumberOutput>
+        </RateDiv>
+        {/* <NumberOutput>
           Current Rating:{' '}
           {answers[questionId] ? answers[questionId].answer : '5'}
-        </NumberOutput>
+        </NumberOutput> */}
       </TextField>
     );
   }
@@ -215,8 +217,8 @@ const renderQuestionInputType = (
                       id={uniqueId}
                       name={questionId}
                       type="radio"
-                      onChange={() => { 
-                        onChange();
+                      onChange={e => { 
+                        onChange(e);
                         return setCurrentQuestion(nextQuestionID)
                       }
                       }
@@ -299,7 +301,7 @@ const questionsRender = (
     .filter(section => section.length > 0)
     .map((section, index) => (
       // map through each section
-      <QuestionWrapper key={section[0].group}>
+      <QuestionGroup key={section[0].group}>
         <SectionCategory>{section[0] && section[0].group.text}</SectionCategory>
         {section &&
           section.map((el, qIndex) => {
@@ -315,11 +317,11 @@ const questionsRender = (
             } = el;
             const inputType = el.questionType.desc;
             const nextQuestion = section[qIndex + 1];
-            const nextQuestionID = nextQuestion && nextQuestion._id;
+            const nextQuestionID = nextQuestion ? nextQuestion._id : "end";
             const prevQuestion = section[qIndex - 1];
             const prevQuestionID = prevQuestion && prevQuestion._id;
             return (
-              <StyledElement key={questionId} name={questionId} disabled={!answers[prevQuestionID] && qIndex !== 0} id={questionId} >
+              <QuestionWrapper key={questionId} name={questionId} disabled={!answers[prevQuestionID] && qIndex !== 0} id={questionId} >
                 {renderQuestionInputType(
                   inputType,
                   errorArray,
@@ -341,14 +343,10 @@ const questionsRender = (
                   setCurrentQuestion,
                   currentQuestion
                 )}
-                {/* find it's location in the array */}
-                {/* check if there's another item beyond it in the array */}
-                {/* if so render next button that links to next question */}
-                {nextQuestion && <Link to={nextQuestionID} smooth={true} duration={500}>Next Question</Link>}
-              </StyledElement>
+              </QuestionWrapper>
             );
           })}
-      </QuestionWrapper>
+      </QuestionGroup>
     ));
 };
 
@@ -359,9 +357,15 @@ export default class Questions extends React.Component {
   }
 
   componentDidUpdate() {
-    const element = document.getElementById(this.state.currentQuestion);
+    const { currentQuestion } = this.state
+
+    const element = document.getElementById(currentQuestion);
     console.log("reached", this.state.currentQuestion, element)
-    if (element) { setTimeout(() => {element.scrollIntoView({behavior: 'smooth', block: 'center'})}, 100 ) };
+    if (element && currentQuestion !== "end") { 
+      setTimeout(() => {element.scrollIntoView({behavior: 'smooth', block: 'center'})}, 100 ) 
+    } else if (currentQuestion === "end") {
+      setTimeout(() => { scroll.scrollToBottom() }, 100)
+    } 
     // scroll.scrollTo(this.state.currentQuestion)
 
   }
@@ -369,10 +373,6 @@ export default class Questions extends React.Component {
   // set the current question to focus on 
   setCurrentQuestion = questionId => {
     this.setState({ currentQuestion: questionId });
-    // this.refs[questionId].scrollIntoView({behaviour: 'smooth'})
-    // const element = document.getElementById(questionId);
-    // console.log("hey", element)
-    // element.scrollIntoView({behavior: 'smooth'});
   }
 
 
@@ -399,7 +399,7 @@ export default class Questions extends React.Component {
 
     return (
       <React.Fragment>
-        <QuestionWrapper>
+        <QuestionGroup>
           {questionsRender(
             questions,
             answers,
@@ -422,7 +422,7 @@ export default class Questions extends React.Component {
               style={{ color: 'white !important' }}
             />
           </ProgressWrapper>
-        </QuestionWrapper>
+        </QuestionGroup>
       </React.Fragment>
     );
   }

@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
+import { Link, Element } from 'react-scroll';
 import { colors, borders, shadows } from '../../../theme';
-
-import { Link, Element } from 'react-scroll'
 
 export const CommonStyles = styled.div`
   margin-bottom: 3rem;
@@ -37,6 +36,13 @@ export const QuestionWrapper = styled.div`
   margin: 1rem 0;
   padding: 1rem 1rem;
   box-shadow: ${shadows.primary};
+  opacity: ${props => props.disabled && '0.3'};
+  pointer-events: ${props => props.disabled && 'none'};
+`;
+
+export const QuestionGroup = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const RadioField = styled(CommonStyles)`
@@ -112,7 +118,7 @@ export const RadioField = styled(CommonStyles)`
 `;
 
 export const TextField = styled(CommonStyles)`
-  padding-top: 1rem;
+  padding: 1rem;
   input,
   .ant-calendar-picker {
     border-radius: 1rem;
@@ -166,6 +172,23 @@ export const Slider = styled.input`
   }
 `;
 
+export const RateDiv = styled.div`
+  display: flex;
+  justify-content: center;
+
+  .ant-rate {
+    font-size: 32px !important;
+  }
+
+  .anticon-star {
+    font-size: 32px !important;
+    svg {
+      width: 2em !important;
+      height: 2em !important;
+    }
+  }
+`;
+
 export const NumberOutput = styled.output`
   margin-top: 10px;
   font-size: 1rem;
@@ -185,6 +208,7 @@ export const SectionCategory = styled.h4`
   text-transform: capitalize;
   margin-bottom: 0.5rem;
   color: ${colors.primary};
+  padding: 2rem 1rem 0 1rem;
 `;
 
 export const StyledUL = styled.ul`
@@ -192,5 +216,6 @@ export const StyledUL = styled.ul`
 `;
 
 export const StyledElement = styled(Element)`
-  opacity: ${props => props.disabled && "0.1"};
-`
+  opacity: ${props => props.disabled && '0.3'};
+  pointer-events: ${props => props.disabled && 'none'};
+`;
