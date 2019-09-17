@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-import { Link, Element } from 'react-scroll';
-import { colors, borders, shadows } from '../../../theme';
+import { colors, borders, shadows, breakpointsMax } from '../../../theme';
 
 export const CommonStyles = styled.div`
   margin-bottom: 3rem;
@@ -34,10 +33,14 @@ export const QuestionWrapper = styled.div`
   flex-direction: column;
   background-color: ${colors.white};
   margin: 1rem 0;
-  padding: 1rem 1rem;
+  padding: 2rem 2rem 0 2rem;
   box-shadow: ${shadows.primary};
   opacity: ${props => props.disabled && '0.3'};
   pointer-events: ${props => props.disabled && 'none'};
+
+  @media ${breakpointsMax.tablet} {
+    padding: 1rem 1rem 0 1rem;
+  }
 `;
 
 export const QuestionGroup = styled.div`
@@ -147,6 +150,7 @@ export const Warning = styled.p`
   color: ${colors.errorRed};
   font-size: 14px;
   opacity: 0.6;
+  padding-top: 1rem;
 `;
 
 export const NumberSliderDiv = styled.div`
@@ -213,9 +217,4 @@ export const SectionCategory = styled.h4`
 
 export const StyledUL = styled.ul`
   margin-left: 1rem;
-`;
-
-export const StyledElement = styled(Element)`
-  opacity: ${props => props.disabled && '0.3'};
-  pointer-events: ${props => props.disabled && 'none'};
 `;
