@@ -64,6 +64,13 @@ const renderQuestionInputType = (
                 : ''
             }
             onBlur={() => setCurrentQuestion(nextQuestionID)}
+            onKeyDown={event => {
+              if (event.keyCode === 13) {
+                event.preventDefault();
+                return setCurrentQuestion(nextQuestionID);
+              }
+              return null;
+            }}
           />
         </div>
         <Warning>
@@ -122,6 +129,13 @@ const renderQuestionInputType = (
               : ''
           }
           onBlur={() => setCurrentQuestion(nextQuestionID)}
+          onKeyDown={event => {
+            if (event.keyCode === 13) {
+              event.preventDefault();
+              return setCurrentQuestion(nextQuestionID);
+            }
+            return null;
+          }}
         />
         {!answers[questionId] && (
           <Warning>* this question must be answered</Warning>
@@ -402,10 +416,10 @@ export default class Questions extends React.Component {
       }, 100);
     } else if (currentQuestion === 'end') {
       setTimeout(() => {
-        scroll.scrollToBottom();
+        // scroll.scrollToBottom();
+        this.setState({ currentQuestion: null });
       }, 100);
     }
-    // scroll.scrollTo(this.state.currentQuestion)
   }
 
   // set the current question to focus on

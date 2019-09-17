@@ -8,6 +8,8 @@ import {
   StyledUL,
 } from './Questions.style';
 
+import { handleEnterKey } from '../../../helpers';
+
 export default class EnterPIN extends Component {
   render() {
     const {
@@ -58,6 +60,9 @@ export default class EnterPIN extends Component {
             onFocus={onPINBlur}
             disabled={PINvalid && completionRate > 0}
             value={PIN.length > 0 ? PIN : ''}
+            onKeyDown={event =>
+              event.keyCode === 13 && handleEnterKey(event, onPINBlur)
+            }
           />
           {PINerror.length > 0 && <Warning>* {PINerror}</Warning>}
         </TextField>
