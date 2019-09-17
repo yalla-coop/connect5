@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('./../../../models/User');
 
-module.exports.getAllLocalLeads = () => User.find({ role: 'localLead' });
+module.exports.getAllLocalLeads = () => User.find({ role: 'localLead', officialLocalLead: true });
 
 module.exports.addTrainertoGroup = (localLeadId, trainerId) => {
   return User.findByIdAndUpdate(localLeadId, {

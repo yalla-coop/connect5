@@ -261,7 +261,11 @@ const LocalLeadSelect = ({ getFieldDecorator, localLeads }) => (
           },
         ],
       })(
-        <Select placeholder="Local Lead" size="large" labelInValue>
+        <Select
+          placeholder="Official Connect 5 Local Lead"
+          size="large"
+          labelInValue
+        >
           {localLeads &&
             localLeads.map(({ name, _id }) => (
               <Option value={_id} key={_id}>
