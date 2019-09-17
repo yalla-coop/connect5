@@ -122,13 +122,24 @@ export const RadioField = styled(CommonStyles)`
 
 export const TextField = styled(CommonStyles)`
   padding: 1rem;
-  input,
-  .ant-calendar-picker {
+  input {
     border-radius: 1rem;
     border: 1px solid ${colors.gray};
     width: 100% !important;
     padding: 0.5rem 1rem;
   }
+
+  .ant-calendar-picker {
+    border-radius: 1rem;
+    border: 1px solid ${colors.gray};
+    width: 100% !important;
+    /* padding: 0.5rem 1rem; */
+
+    input {
+      border: none;
+    }
+  }
+
   h4 {
     font-size: 1rem;
     ${({ unanswered }) => unanswered && ` color: ${colors.errorRed}`}

@@ -138,7 +138,8 @@ const renderQuestionInputType = (
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">
-            Please choose: 0 (strongly disagree) to 10 (strongly agree)
+            Please choose: 1 star (strongly disagree) to 6 stars (strongly
+            agree)
           </p>
           <p className="helpertext">{helperText}</p>
         </header>
@@ -311,7 +312,6 @@ const questionsRender = (
   handleAntdDatePicker,
   handleStarChange,
   setCurrentQuestion,
-  currentQuestion,
   handleDropdown
 ) => {
   const demographicQs = arrayOfQuestions.filter(

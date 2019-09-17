@@ -16,6 +16,10 @@ import {
 } from './Survey.style';
 
 export default class ConfirmSurvey extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   // function to create a list of names from an array...
   renderTrainerNames = array =>
     array.map((e, i) =>

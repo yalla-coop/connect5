@@ -129,7 +129,7 @@ export const ButtonLink = styled(Link)``;
 export const SectionHeadline = styled.h1`
   font-weight: 400;
   font-size: 2rem;
-  padding-top: 1rem;
+  padding-top: 2rem;
   color: ${colors.black};
 `;
 
@@ -174,12 +174,11 @@ export const DetailsDiv = styled.div`
 
 export const ImportantNote = styled.p`
   max-width: 800px;
-  width: 70%;
-  margin: 30px auto;
+  padding: 1rem;
   color: ${colors.black};
   font-weight: 600;
 
-  @media (max-width: 768px) {
-    max-width: 400px;
-  }
+  /* @media (max-width: 768px) {
+    padding: 
+  } */
 `;
