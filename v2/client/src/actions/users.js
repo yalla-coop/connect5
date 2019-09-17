@@ -103,14 +103,14 @@ export const fetchStatsData = userType => async dispatch => {
   }
 };
 
-export const addTrainerToGroup = (trianerInfo, done) => async dispatch => {
+export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
   try {
     dispatch({
       type: types.LOADING_TRUE,
       payload: 'addTrainerLoading',
     });
 
-    const res = await axios.post('/api/users/local-leads/group', trianerInfo);
+    const res = await axios.post('/api/users/local-leads/group', trainerInfo);
 
     dispatch({
       type: types.ADD_TRAINER_TO_GROUP_SUCCESS,
@@ -128,24 +128,24 @@ export const addTrainerToGroup = (trianerInfo, done) => async dispatch => {
       onOk: done,
     });
 
-    history.push('/dashboard');
+    history.push('/trainers');
   } catch (error) {
     dispatch({
       type: types.ADD_TRAINER_TO_GROUP_FAIL,
       payload: error.response.data.error,
     });
 
-    dispatch({
-      type: types.LOADING_FALSE,
-      payload: 'addTrainerLoading',
-    });
+    // dispatch({
+    //   type: types.LOADING_FALSE,
+    //   payload: 'addTrainerLoading',
+    // });
 
     Modal.error({
       title: 'Error',
       content:
         (error.response && error.response.data && error.response.data.error) ||
         'something went wrong',
-      onOk: done,
+      onOk: history.push('/trainers'),
     });
   }
 };

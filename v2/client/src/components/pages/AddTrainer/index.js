@@ -38,22 +38,33 @@ const regions = [
   'South West',
 ];
 
+const iniitialState = {
+  confirmLoading: false,
+  selectOtherGroup: false,
+  officialLocalLead: '',
+  userAsManager: false,
+  additionalManager: '',
+};
+
 class AddTrainer extends Component {
-  state = {
-    confirmLoading: false,
-    selectOtherGroup: false,
-    officialLocalLead: '',
-    userAsManager: false,
-    additionalManager: '',
-  };
+  state = iniitialState;
+
+  componentWillMount() {
+    const { group } = this.props;
+    // reload page if errors in state
+    if (group.error && group.error.length) {
+      window.location.reload();
+    }
+  }
 
   componentDidMount() {
     const { isAuthenticated } = this.props;
+
     if (!isAuthenticated) {
       return history.push('/');
     }
-    const { fetchLocalLeads: fetchLocalLeadsActionCreator } = this.props;
 
+    const { fetchLocalLeads: fetchLocalLeadsActionCreator } = this.props;
     return fetchLocalLeadsActionCreator();
   }
 
@@ -79,24 +90,42 @@ class AddTrainer extends Component {
   };
 
   handleSubmit = e => {
+    e.preventDefault();
+
     const {
       form,
       addTrainerToGroup: addTrainerToGroupAction,
       isEmailUnique,
+      userInfo,
     } = this.props;
-    e.preventDefault();
+
+    const { officialLocalLead, userAsManager, additionalManager } = this.state;
+
+    // set up managers array and run addTrainertoGroup action on each element
+    const managers = [];
+
+    if (officialLocalLead.key) {
+      managers.push(officialLocalLead);
+    }
+    if (userAsManager) {
+      managers.push({ key: userInfo.id, label: userInfo.name });
+    }
+    if (additionalManager.key) {
+      managers.push(additionalManager);
+    }
+
     form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        addTrainerToGroupAction(
-          {
+      if (!err && managers.length > 0) {
+        managers.forEach(manager =>
+          addTrainerToGroupAction({
             ...values,
             newUser: isEmailUnique,
-            localLead: values.localLead.key,
-            localLeadName: values.localLead.label,
-          },
-          // callback function to be called when response come back
-          this.handleSuccessOk
+            localLead: manager.key,
+            localLeadName: manager.label,
+          })
         );
+        // callback function to be called when response come back
+        return this.handleSuccessOk;
       }
     });
   };
@@ -159,8 +188,8 @@ class AddTrainer extends Component {
       checkedUserInfo,
       isEmailUnique,
       addTrainerLoading,
+      userInfo,
     } = this.props;
-    console.log(this.state);
 
     return (
       <Wrapper>
@@ -289,23 +318,37 @@ class AddTrainer extends Component {
               </Item>
             </div>
             {(isEmailUnique || isEmailUnique === null) && localLeads && (
-              <OfficialLocalLeadSelect
-                placeholder="Official Connect 5 Local Lead"
-                option="new-trainer"
-                getFieldDecorator={getFieldDecorator}
-                localLeads={localLeads}
-                handleSelectChange={this.addOfficialLocalLead}
-              />
+              <Fragment>
+                <Paragraph>
+                  Selecting the trainer's official local lead will add him/her
+                  to the respective group.
+                </Paragraph>
+                <OfficialLocalLeadSelect
+                  placeholder="Official Connect 5 Local Lead"
+                  option="new-trainer"
+                  getFieldDecorator={getFieldDecorator}
+                  localLeads={localLeads}
+                  handleSelectChange={this.addOfficialLocalLead}
+                />
+              </Fragment>
             )}
-            <Checkbox
-              onChange={this.addUserAsManager}
-              style={{
-                textAlign: 'left',
-                marginBottom: '24px',
-              }}
-            >
-              <span style={{ fontSize: '.9rem' }}>Add trainer to my group</span>
-            </Checkbox>
+            {!userInfo.officialLocalLead && (
+              <Checkbox
+                onChange={this.addUserAsManager}
+                style={{
+                  textAlign: 'left',
+                  marginBottom: '24px',
+                }}
+              >
+                <span style={{ fontSize: '.9rem' }}>
+                  Add trainer to my group
+                </span>
+              </Checkbox>
+            )}
+            <Paragraph>
+              Additionally you can add the trainer to another group (this group
+              can also be managed by management staff).
+            </Paragraph>
             <Checkbox
               onChange={this.onChangeCheckbox}
               style={{
@@ -409,7 +452,7 @@ const mapStateToProps = state => {
     localLeads: state.fetchedData.localLeadsList,
     isAuthenticated: state.auth.isAuthenticated,
     isEmailUnique: state.auth.isEmailUnique,
-    officialLocalLead: state.auth.officialLocalLead,
+    userInfo: state.auth,
     checkedUserInfo: state.auth.checkedUserInfo,
     group: state.groups,
     addTrainerLoading: state.loading.addTrainerLoading,

@@ -16,18 +16,19 @@ const {
 } = require('./../../database/queries/users');
 
 module.exports = async (req, res, next) => {
+  console.log(req.body);
   const { name, email, newUser, localLead, region, localLeadName } = req.body;
   const { user } = req;
 
+  // check if user has management priveleges
   if (user.role !== 'localLead') {
     return next(boom.unauthorized());
   }
 
   try {
     let trainer = await getUserByEmail(email);
-    // if (!trainer) {
-    //   return next(boom.notFound('This email is not used'));
-    // }
+
+    // check if trainer exists and if manager user is not yet assigned to trainer
     if (trainer && trainer.managers.includes(localLead)) {
       return next(
         boom.conflict(
@@ -38,13 +39,14 @@ module.exports = async (req, res, next) => {
 
     const randomPassword = shortid.generate();
 
+    // check if trainer is new user and create account
     if (newUser && !trainer) {
       trainer = await createNewTrainer({
         name,
         email,
         password: randomPassword,
         region,
-        localLead: [localLead],
+        localLead,
         role: 'trainer',
       });
     }
