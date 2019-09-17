@@ -30,21 +30,21 @@ export default class EnterPIN extends Component {
               you remain entirely anonymous.`}{' '}
               <br />
               <br /> {`In order to do that, please type in: `}
-              <StyledUL>
-                <li>
-                  <strong>the third letter of your first name</strong>
-                </li>
-                <li>
-                  <strong>
-                    the first two letters of your mother{"'"}s first name
-                  </strong>
-                </li>
-                <li>
-                  <strong>the day you were born</strong> (e.g., you would type
-                  01 if you were born on the 1st July)
-                </li>
-              </StyledUL>
             </p>
+            <StyledUL>
+              <li>
+                <strong>the third letter of your first name</strong>
+              </li>
+              <li>
+                <strong>
+                  the first two letters of your mother{"'"}s first name
+                </strong>
+              </li>
+              <li>
+                <strong>the day you were born</strong> (e.g., you would type 01
+                if you were born on the 1st July)
+              </li>
+            </StyledUL>
           </header>
           {/* {checkPINerror(errors)} */}
           <input

@@ -49,6 +49,7 @@ export const QuestionGroup = styled.div`
 `;
 
 export const RadioField = styled(CommonStyles)`
+  margin-bottom: 1rem;
   .other-div {
     justify-self: center;
     #other {
@@ -122,6 +123,7 @@ export const RadioField = styled(CommonStyles)`
 
 export const TextField = styled(CommonStyles)`
   padding: 1rem;
+  margin-bottom: 1rem;
   input {
     border-radius: 1rem;
     border: 1px solid ${colors.gray};
@@ -227,5 +229,6 @@ export const SectionCategory = styled.h4`
 `;
 
 export const StyledUL = styled.ul`
-  margin-left: 1rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
 `;

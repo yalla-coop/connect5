@@ -131,6 +131,7 @@ export const SectionHeadline = styled.h1`
   font-size: 2rem;
   padding-top: 2rem;
   color: ${colors.black};
+  margin-bottom: 0;
 `;
 
 export const SectionSubHeadline = styled.h2`
