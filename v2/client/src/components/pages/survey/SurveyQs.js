@@ -4,7 +4,6 @@ import React from 'react';
 import { DatePicker, Rate, Select } from 'antd';
 // // please leave this inside for antd to style right
 // import 'antd/dist/antd.css';
-import { animateScroll as scroll } from 'react-scroll';
 
 import {
   RadioField,
