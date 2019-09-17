@@ -1,7 +1,7 @@
 // this is where we map through all the questions
 // and populate the Survey component
 import React from 'react';
-import { DatePicker, Progress, Rate, Icon } from 'antd';
+import { DatePicker, Progress, Rate, Icon, Select } from 'antd';
 // // please leave this inside for antd to style right
 // import 'antd/dist/antd.css';
 import { colors } from '../../../theme';
@@ -25,6 +25,8 @@ import {
 import { ProgressWrapper } from './Survey.style';
 // checks if errors are present (renders error msg after submit)
 
+const { Option } = Select;
+
 // renders questions accordingly to their input type
 const renderQuestionInputType = (
   inputType,
@@ -45,7 +47,8 @@ const renderQuestionInputType = (
   handleStarChange,
   nextQuestionID,
   setCurrentQuestion,
-  currentQuestion
+  currentQuestion,
+  handleDropdown
 ) => {
   if (inputType === 'text') {
     return (
@@ -261,6 +264,86 @@ const renderQuestionInputType = (
       </RadioField>
     );
   }
+  if (inputType === 'dropdown') {
+    return (
+      <RadioField
+        unanswered={errorArray.includes(questionId) && !answers[questionId]}
+      >
+        <header>
+          {subGroup && <SubGroup>{subGroup}</SubGroup>}
+          <h4 id={index}>{questionText}</h4>
+          <p className="helpertext">{helperText}</p>
+          {!answers[questionId] && (
+            <Warning>* this question must be answered</Warning>
+          )}
+        </header>
+        <Select value={answers[questionId] && answers[questionId].answer} defaultActiveFirstOption={false} onChange={(value) => handleDropdown(value, questionId)} notFoundContent={null}>
+            {options.map(option => <Option key={option}>{option}</Option>)}
+        </Select>
+
+        {/* <div className="answers">
+          {options.map(e => {
+            const value = e;
+            const uniqueId = e + questionId;
+            return (
+              <div key={`${value}parent`}>
+                <div key={`${value}child`}>
+                  <label htmlFor={uniqueId}>
+                    <input
+                      value={value}
+                      checked={
+                        answers[questionId] &&
+                        answers[questionId].answer === value
+                          ? value
+                          : ''
+                      }
+                      id={uniqueId}
+                      name={questionId}
+                      type="radio"
+                      onChange={e => { 
+                        onChange(e);
+                        return setCurrentQuestion(nextQuestionID)
+                      }
+                      }
+                      data-group={group}
+                      data-field={participantField}
+                    />
+                    <span className="checkmark" />
+                    <p>{value}</p>
+                  </label>
+                </div>
+              </div>
+            );
+          })}
+        </div> */}
+        <div className="other-div">
+          {/* Load "Other" div */}
+          {answers[questionId] &&
+          answers[questionId].answer &&
+          answers[questionId].answer.includes('Other') ? (
+            <TextField
+              unanswered={
+                errorArray.includes(questionId) && !answers[questionId]
+              }
+            >
+              <p>Please specify:</p>
+              <input
+                id="other"
+                name={questionId}
+                type="text"
+                onChange={handleOther}
+                data-group={group}
+                data-field={participantField}
+                onBlur={() => setCurrentQuestion(nextQuestionID)}
+              />
+            </TextField>
+          ) : (
+            ''
+          )}
+        </div>
+      </RadioField>
+    );
+  }
   return null;
 };
 
@@ -279,7 +362,8 @@ const questionsRender = (
   handleAntdDatePicker,
   handleStarChange,
   setCurrentQuestion,
-  currentQuestion
+  currentQuestion,
+  handleDropdown
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group.text === 'demographic'
@@ -341,7 +425,8 @@ const questionsRender = (
                   handleStarChange,
                   nextQuestionID,
                   setCurrentQuestion,
-                  currentQuestion
+                  currentQuestion,
+                  handleDropdown
                 )}
               </QuestionWrapper>
             );
@@ -387,6 +472,7 @@ export default class Questions extends React.Component {
       handleAntdDatePicker,
       handleStarChange,
       completionRate,
+      handleDropdown
     } = this.props;
 
     const {
@@ -410,18 +496,18 @@ export default class Questions extends React.Component {
             handleAntdDatePicker,
             handleStarChange,
             setCurrentQuestion,
-            currentQuestion
+            currentQuestion,
+            handleDropdown
           )}
           {renderSkipButtons}
-          <ProgressWrapper>
+          {/* <ProgressWrapper>
             <Progress
-              type="circle"
               percent={completionRate}
               width={60}
               strokeColor={`${colors.green}`}
               style={{ color: 'white !important' }}
             />
-          </ProgressWrapper>
+          </ProgressWrapper> */}
         </QuestionGroup>
       </React.Fragment>
     );

@@ -93,7 +93,7 @@ questionConstants.questionTypes = {
   fromZeroToTen: {
     desc: 'numberZeroTen',
     min: 0,
-    max: 10,
+    max: 6,
   },
   radio: {
     desc: 'radio',
@@ -108,6 +108,9 @@ questionConstants.questionTypes = {
   date: {
     desc: 'date',
   },
+  dropdown: {
+    desc: 'dropdown',
+  }
 };
 
 module.exports.questionConstants = questionConstants;

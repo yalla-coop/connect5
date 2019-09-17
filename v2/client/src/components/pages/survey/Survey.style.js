@@ -62,24 +62,37 @@ export const FooterDiv = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   max-width: 900px;
+  padding: 0 1rem;
 `;
 
 export const StepProgress = styled.h3`
   font-weight: 300;
   margin-top: 10px;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: ${colors.white};
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 `;
+
+export const StepTitle = styled.span``;
 
 export const ProgressWrapper = styled.div`
   display: flex;
-  position: fixed;
+  /* position: fixed;
   top: 4rem;
-  right: 3rem;
+  right: 3rem; */
   color: ${colors.white};
+  width: 60%;
+  flex-direction: column;
+
+  .ant-progress-text {
+    color: ${colors.white} !important;
+  }
 `;
 
 export const SpinWrapper = styled.div`

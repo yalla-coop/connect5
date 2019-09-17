@@ -29,7 +29,7 @@ const demographics = surveyType => [
       'Choose one option that best describes your ethnic group or background',
     ],
     options: questionConstants.ethnics,
-    questionType: questionConstants.questionTypes.radio,
+    questionType: questionConstants.questionTypes.dropdown,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
     participantField: 'ethnic',
@@ -37,7 +37,7 @@ const demographics = surveyType => [
   {
     text: 'Please select your region:',
     options: questionConstants.regions,
-    questionType: questionConstants.questionTypes.radio,
+    questionType: questionConstants.questionTypes.dropdown,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
     participantField: 'region',
@@ -58,7 +58,7 @@ const demographics = surveyType => [
   },
   {
     text: 'Please select your workforce',
-    questionType: questionConstants.questionTypes.radio,
+    questionType: questionConstants.questionTypes.dropdown,
     options: [
       'Emergency services (including fire service, police, ambulance)',
       'Public health specialists and practitioners (e.g. public health consultants, health improvement managers, smoking cessation advisors)',
