@@ -343,7 +343,10 @@ class SignUp extends Component {
                       },
                     ],
                   })(
-                    <Select placeholder="Local Lead" size="large">
+                    <Select
+                      placeholder="Official Connect 5 Local Lead"
+                      size="large"
+                    >
                       {localLeads &&
                         localLeads.map(({ name, _id }) => (
                           <Option value={_id} key={_id}>
