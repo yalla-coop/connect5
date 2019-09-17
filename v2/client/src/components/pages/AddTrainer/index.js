@@ -39,7 +39,13 @@ const regions = [
 ];
 
 class AddTrainer extends Component {
-  state = { confirmLoading: false, selectOtherGroup: false };
+  state = {
+    confirmLoading: false,
+    selectOtherGroup: false,
+    officialLocalLead: '',
+    userAsManager: false,
+    additionalManager: '',
+  };
 
   componentDidMount() {
     const { isAuthenticated } = this.props;
@@ -47,8 +53,13 @@ class AddTrainer extends Component {
       return history.push('/');
     }
     const { fetchLocalLeads: fetchLocalLeadsActionCreator } = this.props;
+
     return fetchLocalLeadsActionCreator();
   }
+
+  // componentDidUpdate() {
+  //   this.checkManager();
+  // }
 
   handleOk = e => {
     this.setState({ confirmLoading: true });
@@ -119,8 +130,25 @@ class AddTrainer extends Component {
     resetgroupAction();
   };
 
+  // handles checkboxes to add trainer managers
+
   onChangeCheckbox = e => {
-    this.setState({ selectOtherGroup: e.target.checked });
+    this.setState({
+      selectOtherGroup: e.target.checked,
+      additionalManager: '',
+    });
+  };
+
+  addUserAsManager = e => {
+    this.setState({ userAsManager: e.target.checked });
+  };
+
+  addOfficialLocalLead = localLead => {
+    this.setState({ officialLocalLead: localLead });
+  };
+
+  addManager = manager => {
+    this.setState({ additionalManager: manager });
   };
 
   render() {
@@ -132,6 +160,7 @@ class AddTrainer extends Component {
       isEmailUnique,
       addTrainerLoading,
     } = this.props;
+    console.log(this.state);
 
     return (
       <Wrapper>
@@ -156,6 +185,7 @@ class AddTrainer extends Component {
               person as the trainer&apos;s manager.
             </Paragraph>
             <Checkbox
+              onChange={this.addUserAsManager}
               style={{
                 textAlign: 'left',
                 marginBottom: '24px',
@@ -181,11 +211,12 @@ class AddTrainer extends Component {
                 <Paragraph>
                   Please select a local lead or trainer manager
                 </Paragraph>
-                <LocalLeadSelect
+                <OtherGroupSelect
                   placeholder="Select trainer manager/ local lead"
                   option="existing-trainer"
                   getFieldDecorator={getFieldDecorator}
                   localLeads={localLeads}
+                  handleSelectChange={this.addManager}
                 />
               </Fragment>
             )}
@@ -258,14 +289,16 @@ class AddTrainer extends Component {
               </Item>
             </div>
             {(isEmailUnique || isEmailUnique === null) && localLeads && (
-              <LocalLeadSelect
+              <OfficialLocalLeadSelect
                 placeholder="Official Connect 5 Local Lead"
                 option="new-trainer"
                 getFieldDecorator={getFieldDecorator}
                 localLeads={localLeads}
+                handleSelectChange={this.addOfficialLocalLead}
               />
             )}
             <Checkbox
+              onChange={this.addUserAsManager}
               style={{
                 textAlign: 'left',
                 marginBottom: '24px',
@@ -289,11 +322,12 @@ class AddTrainer extends Component {
                 <Paragraph>
                   Please select a local lead or trainer manager
                 </Paragraph>
-                <LocalLeadSelect
+                <OtherGroupSelect
                   placeholder="Select trainer manager/ local lead"
                   option="existing-trainer"
                   getFieldDecorator={getFieldDecorator}
                   localLeads={localLeads}
+                  handleSelectChange={this.addManager}
                 />
               </Fragment>
             )}
@@ -315,11 +349,10 @@ class AddTrainer extends Component {
   }
 }
 
-const LocalLeadSelect = ({
-  option,
+const OfficialLocalLeadSelect = ({
   getFieldDecorator,
   localLeads,
-  placeholder,
+  handleSelectChange,
 }) => (
   <div className="add-trainer__select">
     <Item style={{ margin: '20px auto 40px', height: '50px' }}>
@@ -331,22 +364,42 @@ const LocalLeadSelect = ({
           },
         ],
       })(
-        <Select placeholder={placeholder} size="large" labelInValue>
-          {localLeads && option !== 'existing-trainer'
-            ? localLeads
-                .filter(({ officialLocalLead }) => officialLocalLead)
-                .map(({ name, _id }) => (
-                  <Option value={_id} key={_id}>
-                    {name}
-                  </Option>
-                ))
-            : localLeads.map(({ name, _id }) => (
+        <Select
+          placeholder="Please select the official local lead"
+          size="large"
+          labelInValue
+          onChange={handleSelectChange}
+        >
+          {localLeads &&
+            localLeads
+              .filter(({ officialLocalLead }) => officialLocalLead)
+              .map(({ name, _id }) => (
                 <Option value={_id} key={_id}>
                   {name}
                 </Option>
               ))}
         </Select>
       )}
+    </Item>
+  </div>
+);
+
+const OtherGroupSelect = ({ localLeads, handleSelectChange }) => (
+  <div className="add-trainer__select">
+    <Item style={{ margin: '20px auto 40px', height: '50px' }}>
+      <Select
+        placeholder="Select trainer manager/ local lead"
+        size="large"
+        labelInValue
+        onChange={handleSelectChange}
+      >
+        {localLeads &&
+          localLeads.map(({ name, _id }) => (
+            <Option value={_id} key={_id}>
+              {name}
+            </Option>
+          ))}
+      </Select>
     </Item>
   </div>
 );
