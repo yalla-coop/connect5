@@ -5,6 +5,7 @@ import { DatePicker, Progress, Rate } from 'antd';
 // please leave this inside for antd to style right
 import 'antd/dist/antd.css';
 import { colors } from '../../../theme';
+import { Link, Element, animateScroll as scroll } from 'react-scroll'
 
 import {
   RadioField,
@@ -16,6 +17,7 @@ import {
   SectionCategory,
   SubGroup,
   Warning,
+  StyledElement
 } from './Questions.style';
 
 import { ProgressWrapper } from './Survey.style';
@@ -38,7 +40,10 @@ const renderQuestionInputType = (
   handleAntdDatePicker,
   group,
   participantField,
-  handleStarChange
+  handleStarChange,
+  nextQuestionID,
+  setCurrentQuestion,
+  currentQuestion
 ) => {
   if (inputType === 'text') {
     return (
@@ -65,6 +70,7 @@ const renderQuestionInputType = (
                 ? answers[questionId].answer
                 : ''
             }
+            onBlur={() => setCurrentQuestion(nextQuestionID)}
           />
         </div>
       </TextField>
@@ -90,6 +96,7 @@ const renderQuestionInputType = (
             handleAntdDatePicker(questionId, value, group, participantField)
           }
           value={answers[questionId] && answers[questionId].answer}
+          onBlur={() => setCurrentQuestion(nextQuestionID)}
         />
       </TextField>
     );
@@ -121,6 +128,7 @@ const renderQuestionInputType = (
               ? answers[questionId].answer
               : ''
           }
+          onBlur={() => setCurrentQuestion(nextQuestionID)}
         />
       </TextField>
     );
@@ -157,12 +165,15 @@ const renderQuestionInputType = (
             id={`sliderInput-${index}`}
             name={questionId}
             count={6}
-            onChange={value =>
-              handleStarChange(value, questionId)
+            onChange={value => {
+              handleStarChange(value, questionId);
+              return setCurrentQuestion(nextQuestionID);
+            }
             }
             unanswered={errorArray.includes(questionId) && !answers[questionId]}
             data-group={group}
             data-field={participantField}
+            onBlur={() => setCurrentQuestion(nextQuestionID)}
           />
         </NumberSliderDiv>
         <NumberOutput>
@@ -204,7 +215,11 @@ const renderQuestionInputType = (
                       id={uniqueId}
                       name={questionId}
                       type="radio"
-                      onChange={onChange}
+                      onChange={() => { 
+                        onChange();
+                        return setCurrentQuestion(nextQuestionID)
+                      }
+                      }
                       data-group={group}
                       data-field={participantField}
                     />
@@ -234,6 +249,7 @@ const renderQuestionInputType = (
                 onChange={handleOther}
                 data-group={group}
                 data-field={participantField}
+                onBlur={() => setCurrentQuestion(nextQuestionID)}
               />
             </TextField>
           ) : (
@@ -259,7 +275,9 @@ const questionsRender = (
   handleOther,
   errors,
   handleAntdDatePicker,
-  handleStarChange
+  handleStarChange,
+  setCurrentQuestion,
+  currentQuestion
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group.text === 'demographic'
@@ -284,7 +302,7 @@ const questionsRender = (
       <QuestionWrapper key={section[0].group}>
         <SectionCategory>{section[0] && section[0].group.text}</SectionCategory>
         {section &&
-          section.map(el => {
+          section.map((el, qIndex) => {
             // map through all the questions
             // el is one question
             const {
@@ -296,8 +314,12 @@ const questionsRender = (
               participantField,
             } = el;
             const inputType = el.questionType.desc;
+            const nextQuestion = section[qIndex + 1];
+            const nextQuestionID = nextQuestion && nextQuestion._id;
+            const prevQuestion = section[qIndex - 1];
+            const prevQuestionID = prevQuestion && prevQuestion._id;
             return (
-              <div key={questionId}>
+              <StyledElement key={questionId} name={questionId} disabled={!answers[prevQuestionID] && qIndex !== 0} id={questionId} >
                 {renderQuestionInputType(
                   inputType,
                   errorArray,
@@ -314,9 +336,16 @@ const questionsRender = (
                   handleAntdDatePicker,
                   group,
                   participantField,
-                  handleStarChange
+                  handleStarChange,
+                  nextQuestionID,
+                  setCurrentQuestion,
+                  currentQuestion
                 )}
-              </div>
+                {/* find it's location in the array */}
+                {/* check if there's another item beyond it in the array */}
+                {/* if so render next button that links to next question */}
+                {nextQuestion && <Link to={nextQuestionID} smooth={true} duration={500}>Next Question</Link>}
+              </StyledElement>
             );
           })}
       </QuestionWrapper>
@@ -324,6 +353,29 @@ const questionsRender = (
 };
 
 export default class Questions extends React.Component {
+
+  state = {
+    currentQuestion: null
+  }
+
+  componentDidUpdate() {
+    const element = document.getElementById(this.state.currentQuestion);
+    console.log("reached", this.state.currentQuestion, element)
+    if (element) { setTimeout(() => {element.scrollIntoView({behavior: 'smooth', block: 'center'})}, 100 ) };
+    // scroll.scrollTo(this.state.currentQuestion)
+
+  }
+
+  // set the current question to focus on 
+  setCurrentQuestion = questionId => {
+    this.setState({ currentQuestion: questionId });
+    // this.refs[questionId].scrollIntoView({behaviour: 'smooth'})
+    // const element = document.getElementById(questionId);
+    // console.log("hey", element)
+    // element.scrollIntoView({behavior: 'smooth'});
+  }
+
+
   render() {
     const {
       onChange,
@@ -336,6 +388,12 @@ export default class Questions extends React.Component {
       handleStarChange,
       completionRate,
     } = this.props;
+
+    const {
+      currentQuestion
+    } = this.state;
+
+    const { setCurrentQuestion } = this;
 
     const errorArray = Object.keys(errors);
 
@@ -350,7 +408,9 @@ export default class Questions extends React.Component {
             handleOther,
             errors,
             handleAntdDatePicker,
-            handleStarChange
+            handleStarChange,
+            setCurrentQuestion,
+            currentQuestion
           )}
           {renderSkipButtons}
           <ProgressWrapper>

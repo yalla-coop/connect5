@@ -46,6 +46,7 @@ class Survey extends Component {
     section: 'confirmSurvey',
     completionRate: 0,
     currentStep: 1,
+    currentQuestion: null,
   };
 
   componentDidMount() {
@@ -409,6 +410,11 @@ class Survey extends Component {
       return uniqueGroups.includes(question.group.text);
     });
 
+    // // set the current question to focus on 
+    // setCurrentQuestion = questionId => {
+    //   this.setState({ currentQuestion: questionId })
+    // }
+
     const { formState, PIN, disagreedToResearch, completionRate } = this.state;
 
     const formSubmission = {
@@ -433,6 +439,7 @@ class Survey extends Component {
       completionRate,
       PIN,
       currentStep,
+      // currentQuestion
     } = this.state;
 
     const { surveyData, errors } = this.props;
@@ -527,6 +534,8 @@ class Survey extends Component {
                               completionRate
                             )}
                             completionRate={completionRate}
+                            // currentQuestion={currentQuestion}
+                            // setCurrentQuestion={this.setCurrentQuestion}
                           />
                         );
                       }

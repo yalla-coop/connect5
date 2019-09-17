@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import { colors, borders, shadows } from '../../../theme';
 
+import { Link, Element } from 'react-scroll'
+
 export const CommonStyles = styled.div`
   margin-bottom: 3rem;
 
@@ -188,3 +190,7 @@ export const SectionCategory = styled.h4`
 export const StyledUL = styled.ul`
   margin-left: 1rem;
 `;
+
+export const StyledElement = styled(Element)`
+  opacity: ${props => props.disabled && "0.1"};
+`
