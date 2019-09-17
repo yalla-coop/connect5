@@ -50,7 +50,9 @@ export const Bold = styled.span`
   text-transform: capitalize;
 `;
 
-export const Paragraph = styled.p``;
+export const Paragraph = styled.p`
+  font-weight: 300;
+`;
 
 export const BackLink = styled.button`
   border: none;

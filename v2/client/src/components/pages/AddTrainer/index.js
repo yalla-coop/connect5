@@ -1,7 +1,7 @@
 /* eslint-disable react/no-did-update-set-state */
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Modal } from 'antd';
+import { Checkbox, Modal } from 'antd';
 import history from '../../../history';
 
 import { fetchLocalLeads, addTrainerToGroup } from '../../../actions/users';
@@ -39,7 +39,7 @@ const regions = [
 ];
 
 class AddTrainer extends Component {
-  state = { confirmLoading: false };
+  state = { confirmLoading: false, selectOtherGroup: false };
 
   componentDidMount() {
     const { isAuthenticated } = this.props;
@@ -119,8 +119,12 @@ class AddTrainer extends Component {
     resetgroupAction();
   };
 
+  onChangeCheckbox = e => {
+    this.setState({ selectOtherGroup: e.target.checked });
+  };
+
   render() {
-    const { confirmLoading } = this.state;
+    const { confirmLoading, selectOtherGroup } = this.state;
     const {
       form: { getFieldDecorator },
       localLeads,
@@ -145,17 +149,45 @@ class AddTrainer extends Component {
           >
             <Paragraph>
               Good news, <Bold>{checkedUserInfo.name}</Bold> (
-              <Bold>{checkedUserInfo.email}</Bold>) has created an account for
-              themselves already.
+              {checkedUserInfo.email}) is already registered on the app!
             </Paragraph>
             <Paragraph>
-              Would you like to add this trainer to your group?
+              You can either add the trainer to your group or choose a different
+              person as the trainer&apos;s manager.
             </Paragraph>
-            {localLeads && (
-              <LocalLeadSelect
-                getFieldDecorator={getFieldDecorator}
-                localLeads={localLeads}
-              />
+            <Checkbox
+              style={{
+                textAlign: 'left',
+                marginBottom: '24px',
+              }}
+            >
+              <span style={{ fontSize: '.9rem' }}>
+                Add <Bold>{checkedUserInfo.name}</Bold> to my group
+              </span>
+            </Checkbox>
+            <Checkbox
+              onChange={this.onChangeCheckbox}
+              style={{
+                textAlign: 'left',
+                marginBottom: '24px',
+              }}
+            >
+              <span style={{ fontSize: '.9rem' }}>
+                Add <Bold>{checkedUserInfo.name}</Bold> to another group
+              </span>
+            </Checkbox>
+            {localLeads && selectOtherGroup && (
+              <Fragment>
+                <Paragraph>
+                  Please select a local lead or trainer manager
+                </Paragraph>
+                <LocalLeadSelect
+                  placeholder="Select trainer manager/ local lead"
+                  option="existing-trainer"
+                  getFieldDecorator={getFieldDecorator}
+                  localLeads={localLeads}
+                />
+              </Fragment>
             )}
           </Modal>
 
@@ -227,11 +259,44 @@ class AddTrainer extends Component {
             </div>
             {(isEmailUnique || isEmailUnique === null) && localLeads && (
               <LocalLeadSelect
+                placeholder="Official Connect 5 Local Lead"
+                option="new-trainer"
                 getFieldDecorator={getFieldDecorator}
                 localLeads={localLeads}
               />
             )}
-
+            <Checkbox
+              style={{
+                textAlign: 'left',
+                marginBottom: '24px',
+              }}
+            >
+              <span style={{ fontSize: '.9rem' }}>Add trainer to my group</span>
+            </Checkbox>
+            <Checkbox
+              onChange={this.onChangeCheckbox}
+              style={{
+                textAlign: 'left',
+                marginBottom: '24px',
+              }}
+            >
+              <span style={{ fontSize: '.9rem' }}>
+                Add trainer to another group
+              </span>
+            </Checkbox>
+            {selectOtherGroup && (
+              <Fragment>
+                <Paragraph>
+                  Please select a local lead or trainer manager
+                </Paragraph>
+                <LocalLeadSelect
+                  placeholder="Select trainer manager/ local lead"
+                  option="existing-trainer"
+                  getFieldDecorator={getFieldDecorator}
+                  localLeads={localLeads}
+                />
+              </Fragment>
+            )}
             <Item as="div" style={{ margin: '20px auto 40px', height: '50px' }}>
               <Button
                 type="primary"
@@ -250,7 +315,12 @@ class AddTrainer extends Component {
   }
 }
 
-const LocalLeadSelect = ({ getFieldDecorator, localLeads }) => (
+const LocalLeadSelect = ({
+  option,
+  getFieldDecorator,
+  localLeads,
+  placeholder,
+}) => (
   <div className="add-trainer__select">
     <Item style={{ margin: '20px auto 40px', height: '50px' }}>
       {getFieldDecorator('localLead', {
@@ -261,17 +331,20 @@ const LocalLeadSelect = ({ getFieldDecorator, localLeads }) => (
           },
         ],
       })(
-        <Select
-          placeholder="Official Connect 5 Local Lead"
-          size="large"
-          labelInValue
-        >
-          {localLeads &&
-            localLeads.map(({ name, _id }) => (
-              <Option value={_id} key={_id}>
-                {name}
-              </Option>
-            ))}
+        <Select placeholder={placeholder} size="large" labelInValue>
+          {localLeads && option !== 'existing-trainer'
+            ? localLeads
+                .filter(({ officialLocalLead }) => officialLocalLead)
+                .map(({ name, _id }) => (
+                  <Option value={_id} key={_id}>
+                    {name}
+                  </Option>
+                ))
+            : localLeads.map(({ name, _id }) => (
+                <Option value={_id} key={_id}>
+                  {name}
+                </Option>
+              ))}
         </Select>
       )}
     </Item>
@@ -283,6 +356,7 @@ const mapStateToProps = state => {
     localLeads: state.fetchedData.localLeadsList,
     isAuthenticated: state.auth.isAuthenticated,
     isEmailUnique: state.auth.isEmailUnique,
+    officialLocalLead: state.auth.officialLocalLead,
     checkedUserInfo: state.auth.checkedUserInfo,
     group: state.groups,
     addTrainerLoading: state.loading.addTrainerLoading,
