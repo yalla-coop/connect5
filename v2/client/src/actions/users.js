@@ -111,7 +111,7 @@ export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
     });
 
     const res = await axios.post('/api/users/local-leads/group', trainerInfo);
-
+    console.log('res', res);
     dispatch({
       type: types.ADD_TRAINER_TO_GROUP_SUCCESS,
       payload: res.data,
@@ -130,6 +130,7 @@ export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
 
     history.push('/trainers');
   } catch (error) {
+    console.log('error', error);
     dispatch({
       type: types.ADD_TRAINER_TO_GROUP_FAIL,
       payload: error.response.data.error,

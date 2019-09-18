@@ -18,28 +18,21 @@ const {
 module.exports = async (req, res, next) => {
   const { name, email, newUser, localLead, managers, region } = req.body;
   const { user } = req;
+  const errors = {};
+  const success = {};
+  const localLeadId = localLead && localLead.key;
+  const localLeadName = localLead && localLead.label;
 
-  const localLeadId = localLead.key;
-  const localLeadName = localLead.label;
-
-  console.log(req.body);
   // check if user has management priveleges
   if (user.role !== 'localLead') {
     return next(boom.unauthorized());
   }
 
   try {
+    // get trainer from incoming email
     let trainer = await getUserByEmail(email);
 
-    // check if trainer exists and if manager user is not yet assigned to trainer
-    if (trainer && trainer.managers.includes(localLeadId)) {
-      return next(
-        boom.conflict(
-          `This trainer is already registered in ${localLeadName}'s group`
-        )
-      );
-    }
-
+    // generate password to be sent to trainer
     const randomPassword = shortid.generate();
 
     // check if trainer is new user and create account
@@ -54,29 +47,57 @@ module.exports = async (req, res, next) => {
       });
     }
 
+    // ADDITIONAL MANAGER HANDLING
+
+    if (managers.length > 0) {
+      managers.map(async (manager, i) => {
+        // check if any of the additional managers is already assigned to trainer
+        if (trainer && trainer.managers.includes(manager.key)) {
+          errors[
+            `managerDuplicate-${i}`
+          ] = `This trainer is already registered in ${manager.label}'s group`;
+          // return next(
+          //   boom.conflict(
+          //     `This trainer is already registered in ${manager.label}'s group`
+          //   )
+          // );
+        }
+
+        // add to groups of additional managers
+        await addTrainertoGroup(manager.key, trainer._id).then(() => {
+          success[
+            `addTrainerToManager-${i}`
+          ] = `${trainer.name} has been added to ${manager.label}'s trainers group`;
+        });
+
+        // add addtional managers to trainer's manager array
+        await addManagerToTrainer(trainer._id, manager.key).then(() => {
+          success[
+            `addManagerToTrainer-${i}`
+          ] = `${manager.label} has been added to ${trainer.name}'s managers group`;
+        });
+      });
+    }
+
+    // OFFICIAL LOCAL LEAD HANDLING
+    // check if trainer exists and if managing user is not yet assigned to trainer
+    if (localLead && trainer && trainer.managers.includes(localLeadId)) {
+      errors.localLeadDuplicate = `This trainer is already registered in ${localLeadName}'s group`;
+      // return next(
+      //   boom.conflict(
+      //     `This trainer is already registered in ${localLeadName}'s group`
+      //   )
+      // );
+    }
     // add trainer to group of official local lead
-    await addTrainertoGroup(localLeadId, trainer._id);
+    await addTrainertoGroup(localLeadId, trainer._id).then(() => {
+      success.addTrainerToLocalLead = `${trainer.name} has been added to ${localLeadName}'s trainers group`;
+    });
 
-    // add to groups of additional managers
-    if (managers.length > 0) {
-      await managers.map(async manager => {
-        const addTrainer = await addTrainertoGroup(manager.key, trainer._id);
-
-        return addTrainer;
-      });
-    }
-
-    // add official local lead to group of managers of trainer
-    await addManagerToTrainer(trainer._id, localLeadId);
-
-    // add addtional managers to trainer's manager array
-    if (managers.length > 0) {
-      await managers.map(async manager => {
-        const addManager = await addManagerToTrainer(trainer._id, manager.key);
-
-        return addManager;
-      });
-    }
+    // add official local lead to group of managers
+    await addManagerToTrainer(trainer._id, localLeadId).then(() => {
+      success.addLocalLeadToTrainer = `${localLeadName} has been added to ${trainer.name}'s managers group`;
+    });
 
     let isNew = false;
     if (newUser) {
@@ -97,10 +118,14 @@ module.exports = async (req, res, next) => {
     if (process.env.NODE_ENV === 'production') {
       await addNewTrainerToGroup(emailInfo);
     }
-    return res.json({
-      success: `${trainer.name} has been added to ${localLeadName}'s group`,
-    });
+    // console.log('success', success);
+    console.log('errors', errors);
+    if (Object.keys(errors).length > 0) {
+      return next(errors);
+    }
+    return res.json(success);
   } catch (error) {
+    console.log(error);
     return next(boom.badImplementation(error));
   }
 };

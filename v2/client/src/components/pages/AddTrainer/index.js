@@ -89,7 +89,7 @@ class AddTrainer extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
+    console.log('here1');
     const {
       form,
       addTrainerToGroup: addTrainerToGroupAction,
@@ -97,29 +97,28 @@ class AddTrainer extends Component {
       userInfo,
     } = this.props;
 
-    const { officialLocalLead, userAsManager, additionalManager } = this.state;
+    const { userAsManager, additionalManager } = this.state;
 
     // set up managers array and run addTrainertoGroup action on each element
     const managers = [];
 
-    // if (officialLocalLead.key) {
-    //   officialLocalLead.officialLocalLead = true;
-    //   managers.push(officialLocalLead);
-    // }
     if (userAsManager) {
+      console.log('here2');
+
       managers.push({ key: userInfo.id, label: userInfo.name });
     }
     if (additionalManager.key) {
       managers.push(additionalManager);
     }
-
+    console.log(managers);
     form.validateFieldsAndScroll((err, values) => {
-      if (!err && managers.length > 0) {
+      if (!err) {
         addTrainerToGroupAction({
           ...values,
           newUser: isEmailUnique,
-          managers,
+          managers: managers.length > 0 && managers,
         });
+
         // callback function to be called when response come back
         this.handleSuccessOk();
       }
@@ -166,10 +165,6 @@ class AddTrainer extends Component {
 
   addUserAsManager = e => {
     this.setState({ userAsManager: e.target.checked });
-  };
-
-  addOfficialLocalLead = localLead => {
-    this.setState({ officialLocalLead: localLead });
   };
 
   addManager = manager => {
@@ -328,7 +323,6 @@ class AddTrainer extends Component {
                   option="new-trainer"
                   getFieldDecorator={getFieldDecorator}
                   localLeads={localLeads}
-                  handleSelectChange={this.addOfficialLocalLead}
                 />
               </CheckboxWrapper>
             )}
