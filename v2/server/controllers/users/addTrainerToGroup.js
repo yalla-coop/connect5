@@ -18,8 +18,8 @@ const {
 module.exports = async (req, res, next) => {
   const { name, email, newUser, localLead, managers, region } = req.body;
   const { user } = req;
-  const errors = {};
-  const success = {};
+  const errors = [];
+  const success = [];
   const localLeadId = localLead && localLead.key;
   const localLeadName = localLead && localLead.label;
 
@@ -53,28 +53,23 @@ module.exports = async (req, res, next) => {
       managers.map(async (manager, i) => {
         // check if any of the additional managers is already assigned to trainer
         if (trainer && trainer.managers.includes(manager.key)) {
-          errors[
-            `managerDuplicate-${i}`
-          ] = `This trainer is already registered in ${manager.label}'s group`;
-          // return next(
-          //   boom.conflict(
-          //     `This trainer is already registered in ${manager.label}'s group`
-          //   )
-          // );
+          errors.push(
+            `This trainer is already registered in ${manager.label}'s group`
+          );
         }
 
         // add to groups of additional managers
         await addTrainertoGroup(manager.key, trainer._id).then(() => {
-          success[
-            `addTrainerToManager-${i}`
-          ] = `${trainer.name} has been added to ${manager.label}'s trainers group`;
+          success.push(
+            `${trainer.name} has been added to ${manager.label}'s trainers group`
+          );
         });
 
         // add addtional managers to trainer's manager array
         await addManagerToTrainer(trainer._id, manager.key).then(() => {
-          success[
-            `addManagerToTrainer-${i}`
-          ] = `${manager.label} has been added to ${trainer.name}'s managers group`;
+          success.push(
+            `${manager.label} has been added to ${trainer.name}'s managers group`
+          );
         });
       });
     }
@@ -82,21 +77,22 @@ module.exports = async (req, res, next) => {
     // OFFICIAL LOCAL LEAD HANDLING
     // check if trainer exists and if managing user is not yet assigned to trainer
     if (localLead && trainer && trainer.managers.includes(localLeadId)) {
-      errors.localLeadDuplicate = `This trainer is already registered in ${localLeadName}'s group`;
-      // return next(
-      //   boom.conflict(
-      //     `This trainer is already registered in ${localLeadName}'s group`
-      //   )
-      // );
+      errors.push(
+        `This trainer is already registered in ${localLeadName}'s group`
+      );
     }
     // add trainer to group of official local lead
     await addTrainertoGroup(localLeadId, trainer._id).then(() => {
-      success.addTrainerToLocalLead = `${trainer.name} has been added to ${localLeadName}'s trainers group`;
+      success.push(
+        `${trainer.name} has been added to ${localLeadName}'s trainers group`
+      );
     });
 
     // add official local lead to group of managers
     await addManagerToTrainer(trainer._id, localLeadId).then(() => {
-      success.addLocalLeadToTrainer = `${localLeadName} has been added to ${trainer.name}'s managers group`;
+      success.push(
+        `${localLeadName} has been added to ${trainer.name}'s managers group`
+      );
     });
 
     let isNew = false;
@@ -118,10 +114,9 @@ module.exports = async (req, res, next) => {
     if (process.env.NODE_ENV === 'production') {
       await addNewTrainerToGroup(emailInfo);
     }
-    // console.log('success', success);
-    console.log('errors', errors);
-    if (Object.keys(errors).length > 0) {
-      return next(errors);
+
+    if (errors.length > 0) {
+      return next(boom.conflict(errors));
     }
     return res.json(success);
   } catch (error) {

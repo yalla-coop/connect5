@@ -105,13 +105,19 @@ export const fetchStatsData = userType => async dispatch => {
 
 export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
   try {
+    let successMessages;
+
     dispatch({
       type: types.LOADING_TRUE,
       payload: 'addTrainerLoading',
     });
 
     const res = await axios.post('/api/users/local-leads/group', trainerInfo);
-    console.log('res', res);
+
+    if (res.data && res.data.length) {
+      successMessages = res.data;
+    }
+
     dispatch({
       type: types.ADD_TRAINER_TO_GROUP_SUCCESS,
       payload: res.data,
@@ -122,32 +128,49 @@ export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
       payload: 'addTrainerLoading',
     });
 
-    Modal.success({
-      title: 'Done!',
-      content: res.data.success,
-      onOk: done,
-    });
+    if (successMessages.length) {
+      successMessages.map(msg =>
+        Modal.success({
+          title: 'Done!',
+          content: msg,
+          onOk: done,
+        })
+      );
+    }
 
     history.push('/trainers');
   } catch (error) {
-    console.log('error', error);
+    let errors;
+    if (error.response && error.response.data && error.response.data.error) {
+      errors = error.response.data.error.split(',');
+    }
+
     dispatch({
       type: types.ADD_TRAINER_TO_GROUP_FAIL,
       payload: error.response.data.error,
     });
 
-    // dispatch({
-    //   type: types.LOADING_FALSE,
-    //   payload: 'addTrainerLoading',
-    // });
-
-    Modal.error({
-      title: 'Error',
-      content:
-        (error.response && error.response.data && error.response.data.error) ||
-        'something went wrong',
-      onOk: history.push('/trainers'),
+    dispatch({
+      type: types.LOADING_FALSE,
+      payload: 'addTrainerLoading',
     });
+
+    if (errors.length > 0) {
+      return errors.map(err =>
+        Modal.error({
+          title: 'Error',
+          content: err || 'something went wrong',
+          onOk: history.push('/trainers'),
+        })
+      );
+    }
+    // Modal.error({
+    //   title: 'Error',
+    //   content:
+    //     (error.response && error.response.data && error.response.data.error) ||
+    //     'something went wrong',
+    //   onOk: history.push('/trainers'),
+    // });
   }
 };
 
