@@ -40,7 +40,7 @@ module.exports = async () => {
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
-      trainers: [trainers[3], trainers[4]],
+      trainers: [trainers[1]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
         { email: 'abd@gmail.com', status: 'new' },
@@ -62,7 +62,7 @@ module.exports = async () => {
       },
       startTime: '14:00',
       endTime: '17:00',
-      trainers: [trainers[0], trainers[2]],
+      trainers: [trainers[0]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
         { email: 'abd@gmail.com', status: 'new' },
@@ -106,7 +106,7 @@ module.exports = async () => {
       },
       startTime: '14:00',
       endTime: '17:00',
-      trainers: [trainers[0], trainers[2]],
+      trainers: [trainers[0], trainers[1]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
         { email: 'abd@gmail.com', status: 'new' },
@@ -149,7 +149,7 @@ module.exports = async () => {
       },
       startTime: '14:00',
       endTime: '17:00',
-      trainers: [trainers[5]],
+      trainers: [trainers[1]],
       participantsEmails: [
         { email: 'alex@gmail.com', status: 'new' },
         { email: 'nancy@gmail.com', status: 'new' },

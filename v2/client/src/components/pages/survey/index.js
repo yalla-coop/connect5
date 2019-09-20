@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import swal from 'sweetalert2';
-import { Alert, Modal } from 'antd';
+import { Alert, Modal, Progress } from 'antd';
 
 import Spin from '../../common/Spin';
 import { surveysTypes } from '../../../constants';
@@ -17,7 +17,11 @@ import {
   FooterDiv,
   SubmitBtn,
   StepProgress,
+  ProgressWrapper,
+  StepTitle
 } from './Survey.style';
+
+import { colors } from '../../../theme';
 
 // Actions
 import {
@@ -46,6 +50,7 @@ class Survey extends Component {
     section: 'confirmSurvey',
     completionRate: 0,
     currentStep: 1,
+    currentQuestion: null,
   };
 
   componentDidMount() {
@@ -355,6 +360,23 @@ class Survey extends Component {
     });
   };
 
+  handleStarChange = (answer, question) => {
+    const { formState } = this.state;
+    // remove 1 from the answer so it's 0 to 5 not 1 to 6
+    const fixedAnswer = { answer: answer - 1, question }
+    this.setState({ formState: { ...formState, [question]: fixedAnswer } }, () => {
+      this.trackAnswers();
+    })
+  }
+
+  handleDropdown = (answer, question) => {
+    const { formState } = this.state;
+    const answerObj = { answer, question }
+    this.setState({ formState: { ...formState, [question]: answerObj } }, () => {
+      this.trackAnswers();
+    })
+  }
+
   handleAntdDatePicker = (question, value, group, field) => {
     // const question = e.target.name;
     const { formState } = this.state;
@@ -400,6 +422,11 @@ class Survey extends Component {
       return uniqueGroups.includes(question.group.text);
     });
 
+    // // set the current question to focus on 
+    // setCurrentQuestion = questionId => {
+    //   this.setState({ currentQuestion: questionId })
+    // }
+
     const { formState, PIN, disagreedToResearch, completionRate } = this.state;
 
     const formSubmission = {
@@ -424,6 +451,7 @@ class Survey extends Component {
       completionRate,
       PIN,
       currentStep,
+      // currentQuestion
     } = this.state;
 
     const { surveyData, errors } = this.props;
@@ -504,6 +532,8 @@ class Survey extends Component {
                             key={group}
                             questions={questions}
                             onChange={this.handleChange}
+                            handleStarChange={this.handleStarChange}
+                            handleDropdown={this.handleDropdown}
                             handleOther={this.handleOther}
                             answers={formState}
                             selectCheckedItem={this.selectCheckedItem}
@@ -517,6 +547,8 @@ class Survey extends Component {
                               completionRate
                             )}
                             completionRate={completionRate}
+                            // currentQuestion={currentQuestion}
+                            // setCurrentQuestion={this.setCurrentQuestion}
                           />
                         );
                       }
@@ -529,8 +561,17 @@ class Survey extends Component {
                 {/* footer rendering */}
                 {section !== 'confirmSurvey' && (
                   <FooterDiv colorChange={readyForSubmission}>
+                    <ProgressWrapper>
+                      <span>Your progress</span>
+                      <Progress
+                        percent={completionRate}
+                        strokeColor={`${colors.green}`}
+                        style={{ color: 'white !important' }}
+                      />
+                    </ProgressWrapper>
                     <StepProgress>
-                      Step {section === 'enterPIN' ? 1 : currentStep}/
+                      <StepTitle>Step</StepTitle> 
+                      {section === 'enterPIN' ? 1 : currentStep}/
                       {uniqueGroups.length + 1}
                     </StepProgress>
                   </FooterDiv>
