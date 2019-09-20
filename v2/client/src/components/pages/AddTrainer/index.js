@@ -89,7 +89,7 @@ class AddTrainer extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log('here1');
+
     const {
       form,
       addTrainerToGroup: addTrainerToGroupAction,
@@ -103,14 +103,12 @@ class AddTrainer extends Component {
     const managers = [];
 
     if (userAsManager) {
-      console.log('here2');
-
       managers.push({ key: userInfo.id, label: userInfo.name });
     }
     if (additionalManager.key) {
       managers.push(additionalManager);
     }
-    console.log(managers);
+
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         addTrainerToGroupAction({
@@ -348,8 +346,8 @@ class AddTrainer extends Component {
             )}
             <CheckboxWrapper>
               <Paragraph>
-                <Bold>Step 3:</Bold> Add trainer to a group managed by someone
-                else (optional).
+                <Bold>Step {userInfo.officialLocalLead ? '2' : '3'}:</Bold> Add
+                trainer to a group managed by someone else (optional).
               </Paragraph>
               <Checkbox
                 onChange={this.onChangeCheckbox}
