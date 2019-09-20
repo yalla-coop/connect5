@@ -8,6 +8,8 @@ import {
   StyledUL,
 } from './Questions.style';
 
+import { handleEnterKey } from '../../../helpers';
+
 export default class EnterPIN extends Component {
   render() {
     const {
@@ -30,21 +32,21 @@ export default class EnterPIN extends Component {
               you remain entirely anonymous.`}{' '}
               <br />
               <br /> {`In order to do that, please type in: `}
-              <StyledUL>
-                <li>
-                  <strong>the third letter of your first name</strong>
-                </li>
-                <li>
-                  <strong>
-                    the first two letters of your mother{"'"}s first name
-                  </strong>
-                </li>
-                <li>
-                  <strong>the day you were born</strong> (e.g., you would type
-                  01 if you were born on the 1st July)
-                </li>
-              </StyledUL>
             </p>
+            <StyledUL>
+              <li>
+                <strong>the third letter of your first name</strong>
+              </li>
+              <li>
+                <strong>
+                  the first two letters of your mother{"'"}s first name
+                </strong>
+              </li>
+              <li>
+                <strong>the day you were born</strong> (e.g., you would type 01
+                if you were born on the 1st July)
+              </li>
+            </StyledUL>
           </header>
           {/* {checkPINerror(errors)} */}
           <input
@@ -58,6 +60,9 @@ export default class EnterPIN extends Component {
             onFocus={onPINBlur}
             disabled={PINvalid && completionRate > 0}
             value={PIN.length > 0 ? PIN : ''}
+            onKeyDown={event =>
+              event.keyCode === 13 && handleEnterKey(event, onPINBlur)
+            }
           />
           {PINerror.length > 0 && <Warning>* {PINerror}</Warning>}
         </TextField>

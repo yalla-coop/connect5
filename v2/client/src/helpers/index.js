@@ -5,15 +5,31 @@ export const uppercaseSurvey = surveyType =>
     .join(' ');
 
 const surveysTypes = {
-  1: ['pre-day-1', 'post-day-1'],
-  2: ['post-day-2'],
-  3: ['post-day-3'],
-  'special-2-days': ['pre-special', 'post-special'],
-  'train-trainers-s1': ['pre-train-trainers-s1', 'post-train-trainers-s1'],
-  'train-trainers-s2': ['post-train-trainers-s2'],
+  1: ['pre-day-1', 'post-day-1', 'follow-up-3-month', 'follow-up-6-month'],
+  2: ['post-day-2', 'follow-up-3-month', 'follow-up-6-month'],
+  3: ['post-day-3', 'follow-up-3-month', 'follow-up-6-month'],
+  'special-2-days': [
+    'pre-special',
+    'post-special',
+    'follow-up-3-month',
+    'follow-up-6-month',
+  ],
+  'train-trainers-s1': [
+    'pre-train-trainers-s1',
+    'post-train-trainers-s1',
+    'follow-up-3-month-train-trainers',
+    'follow-up-6-month-train-trainers',
+  ],
+  'train-trainers-s2': [
+    'post-train-trainers-s2',
+    'follow-up-3-month-train-trainers',
+    'follow-up-6-month-train-trainers',
+  ],
   'train-trainers-event': [
     'pre-train-trainers-event',
     'post-train-trainers-event',
+    'follow-up-3-month-train-trainers',
+    'follow-up-6-month-train-trainers',
   ],
 };
 /**
@@ -85,4 +101,9 @@ export const validPostcode = postcode => {
   postcode.replace(/\s/g, '');
   const regex = /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})/;
   return regex.test(postcode);
+};
+
+export const handleEnterKey = (event, cb) => {
+  event.preventDefault();
+  return cb(event);
 };
