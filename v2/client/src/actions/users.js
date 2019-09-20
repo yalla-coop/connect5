@@ -105,18 +105,12 @@ export const fetchStatsData = userType => async dispatch => {
 
 export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
   try {
-    let successMessages;
-
     dispatch({
       type: types.LOADING_TRUE,
       payload: 'addTrainerLoading',
     });
 
     const res = await axios.post('/api/users/local-leads/group', trainerInfo);
-
-    if (res.data && res.data.length) {
-      successMessages = res.data;
-    }
 
     dispatch({
       type: types.ADD_TRAINER_TO_GROUP_SUCCESS,
@@ -128,26 +122,17 @@ export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
       payload: 'addTrainerLoading',
     });
 
-    if (successMessages.length) {
-      successMessages.map(msg =>
-        Modal.success({
-          title: 'Done!',
-          content: msg,
-          onOk: done,
-        })
-      );
-    }
+    Modal.success({
+      title: 'Done!',
+      content: `Trainer added to the following groups: ${res.data}`,
+      onOk: done,
+    });
 
     history.push('/trainers');
   } catch (error) {
-    let errors;
-    if (error.response && error.response.data && error.response.data.error) {
-      errors = error.response.data.error.split(',');
-    }
-
     dispatch({
       type: types.ADD_TRAINER_TO_GROUP_FAIL,
-      payload: error.response.data.error,
+      payload: error.response.data,
     });
 
     dispatch({
@@ -155,22 +140,13 @@ export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
       payload: 'addTrainerLoading',
     });
 
-    if (errors.length > 0) {
-      return errors.map(err =>
-        Modal.error({
-          title: 'Error',
-          content: err || 'something went wrong',
-          onOk: history.push('/trainers'),
-        })
-      );
-    }
-    // Modal.error({
-    //   title: 'Error',
-    //   content:
-    //     (error.response && error.response.data && error.response.data.error) ||
-    //     'something went wrong',
-    //   onOk: history.push('/trainers'),
-    // });
+    Modal.error({
+      title: 'Error',
+      content:
+        (error.response && error.response.data && error.response.data.error) ||
+        'something went wrong',
+      onOk: history.push('/trainers'),
+    });
   }
 };
 
