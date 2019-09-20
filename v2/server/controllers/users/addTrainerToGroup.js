@@ -38,27 +38,52 @@ module.exports = async (req, res, next) => {
       });
     }
 
+    const errors = [];
+    const unique = [];
     // Groups handling
     if (trainer && managers.length > 0) {
       // check for duplicates
       managers.map(manager => {
-        // check if any of the additional managers is already assigned to trainer
         if (trainer && trainer.managers.includes(manager.key)) {
-          next(
-            boom.badImplementation(
-              `This trainer is already registered in ${manager.label}'s group`
-            )
-          );
+          errors.push(manager);
+          // next(boom.badRequest(errors.map(({ label }) => label)));
+          return errors;
         }
+        return null;
       });
+      // check for duplicate values in error and manager arrays and only pass unique values to functions
+      const duplicates = managers.concat(errors);
 
-      return Promise.all([
-        addTrainerToGroups(managers, trainer._id),
-        addManagersToTrainer(managers, trainer._id),
-      ]).then(result =>
-        res.status(200).json(managers.map(({ label }) => label))
-      );
+      for (let i = 0; i < duplicates.length; i++) {
+        if (
+          duplicates.indexOf(
+            duplicates[i].key,
+            duplicates.indexOf(duplicates[i].key) + 1
+          ) === -1
+        ) {
+          unique.push(duplicates[i]);
+        }
+
+        return unique;
+      }
     }
+
+    if (unique.length > 0) {
+      return Promise.all([
+        addTrainerToGroups(unique, trainer._id),
+        addManagersToTrainer(unique, trainer._id),
+      ]).then(() => res.status(200).json({ success: unique, errors }));
+    }
+
+    // return errors.length > 0
+    //   ? next(boom.badRequest(errors))
+    //   : Promise.all([
+    //       addTrainerToGroups(managers, trainer._id),
+    //       addManagersToTrainer(managers, trainer._id),
+    //     ]).then(result =>
+    //       res.status(200).json(managers.map(({ label }) => label))
+    //     );
+    // }
 
     // let isNew = false;
     // if (newUser) {
