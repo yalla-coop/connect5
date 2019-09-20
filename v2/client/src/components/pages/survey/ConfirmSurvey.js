@@ -16,6 +16,10 @@ import {
 } from './Survey.style';
 
 export default class ConfirmSurvey extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   // function to create a list of names from an array...
   renderTrainerNames = array =>
     array.map((e, i) =>
@@ -49,9 +53,12 @@ export default class ConfirmSurvey extends Component {
           <DetailsDiv>
             <Paragraph strong>Survey Type: </Paragraph>
             <Paragraph>
-              {surveyType.includes('pre')
-                ? 'Pre-Session Survey'
-                : 'Post-Session Survey'}
+              {surveyType.includes('pre') && 'Pre-Session Survey'}
+              {surveyType.includes('post') && 'Post-Session Survey'}
+              {surveyType.includes('follow-up-3-month') &&
+                '3-month Follow Up Survey'}
+              {surveyType.includes('follow-up-6-month') &&
+                '6-month Follow Up Survey'}
             </Paragraph>
           </DetailsDiv>
           <DetailsDiv>

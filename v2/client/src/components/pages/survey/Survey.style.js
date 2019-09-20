@@ -62,24 +62,37 @@ export const FooterDiv = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   max-width: 900px;
+  padding: 0 1rem;
 `;
 
 export const StepProgress = styled.h3`
   font-weight: 300;
   margin-top: 10px;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: ${colors.white};
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 `;
+
+export const StepTitle = styled.span``;
 
 export const ProgressWrapper = styled.div`
   display: flex;
-  position: fixed;
+  /* position: fixed;
   top: 4rem;
-  right: 3rem;
+  right: 3rem; */
   color: ${colors.white};
+  width: 60%;
+  flex-direction: column;
+
+  .ant-progress-text {
+    color: ${colors.white} !important;
+  }
 `;
 
 export const SpinWrapper = styled.div`
@@ -116,8 +129,9 @@ export const ButtonLink = styled(Link)``;
 export const SectionHeadline = styled.h1`
   font-weight: 400;
   font-size: 2rem;
-  padding-top: 1rem;
+  padding-top: 2rem;
   color: ${colors.black};
+  margin-bottom: 0;
 `;
 
 export const SectionSubHeadline = styled.h2`
@@ -161,12 +175,11 @@ export const DetailsDiv = styled.div`
 
 export const ImportantNote = styled.p`
   max-width: 800px;
-  width: 70%;
-  margin: 30px auto;
+  padding: 1rem;
   color: ${colors.black};
   font-weight: 600;
 
-  @media (max-width: 768px) {
-    max-width: 400px;
-  }
+  /* @media (max-width: 768px) {
+    padding: 
+  } */
 `;
