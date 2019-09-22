@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 //  ANTD COMPONENTS
 import Collapse from 'antd/lib/collapse';
 import Icon from 'antd/lib/icon';
+import Modal from 'antd/lib/modal';
 
 //  COMMON COMPOENTS
 import Reach from '../../common/Reach';
@@ -41,6 +42,14 @@ import {
 
 const { Panel } = Collapse;
 
+const showModal = () => {
+  Modal.info({
+    content:
+      'We all know that changing what we do is not as simple as knowing what to do. Just because we CAN do something doesn’t mean that we WILL do it. We will be asking you some questions about what you do in practice, about what you expect you will do when you return to work and about some of the thoughts and feelings you have that make up your capability, opportunity and motivation. This will help you and us understand about experiences of doing the behaviours promoted in Connect 5 as you go about your work.',
+    style: { top: 20 },
+    icon: false,
+  });
+};
 const panels = {
   reach: { text: 'Reach', render: props => <Reach data={props.results} /> },
   feedback: {
@@ -50,7 +59,19 @@ const panels = {
     ),
   },
   behavior: {
-    text: 'Behavioural',
+    text: (
+      <span>
+        Behavioural
+        <Icon
+          onClick={e => {
+            e.stopPropagation();
+            showModal();
+          }}
+          type="info-circle"
+          style={{ marginLeft: '1rem', color: '#1890ff' }}
+        />
+      </span>
+    ),
     render: ({ resultsFor, resultForRule, ...props }) => {
       return (
         <TrainerBehavioralInsight
