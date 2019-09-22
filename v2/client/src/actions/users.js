@@ -111,7 +111,7 @@ export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
     });
 
     const res = await axios.post('/api/users/local-leads/group', trainerInfo);
-    console.log('dattaaaa', res.data);
+
     dispatch({
       type: types.ADD_TRAINER_TO_GROUP_SUCCESS,
       payload: res.data,
@@ -143,9 +143,8 @@ export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
     Modal.error({
       title: 'Error',
       content:
-        `This trainer is already registered in the following group(s): ${error.response &&
-          error.response.data &&
-          error.response.data.error}` || 'something went wrong',
+        (error.response && error.response.data && error.response.data.error) ||
+        'something went wrong',
       onOk: history.push('/trainers'),
     });
   }

@@ -8,7 +8,7 @@ module.exports.addTrainerToGroups = async (managers, trainer) => {
     return {
       updateOne: {
         filter: { _id: mongoose.Types.ObjectId(key) },
-        update: { $push: { trainersGroup: trainer } },
+        update: { $addToSet: { trainersGroup: trainer } },
         upsert: true,
       },
     };
@@ -22,7 +22,7 @@ module.exports.addManagersToTrainer = (managers, trainerId) => {
     return {
       updateOne: {
         filter: { _id: mongoose.Types.ObjectId(trainerId) },
-        update: { $push: { managers: mongoose.Types.ObjectId(key) } },
+        update: { $addToSet: { managers: mongoose.Types.ObjectId(key) } },
       },
     };
   });

@@ -12,6 +12,7 @@ const {
 const { getUserByEmail } = require('./../../database/queries/users');
 
 module.exports = async (req, res, next) => {
+  // console.log('req', req.body);
   const { name, email, newUser, localLead, managers, region } = req.body;
   const { user } = req;
   const localLeadId = localLead && localLead.key;
@@ -38,52 +39,15 @@ module.exports = async (req, res, next) => {
       });
     }
 
-    const errors = [];
-    const unique = [];
     // Groups handling
     if (trainer && managers.length > 0) {
-      // check for duplicates
-      managers.map(manager => {
-        if (trainer && trainer.managers.includes(manager.key)) {
-          errors.push(manager);
-          // next(boom.badRequest(errors.map(({ label }) => label)));
-          return errors;
-        }
-        return null;
-      });
-      // check for duplicate values in error and manager arrays and only pass unique values to functions
-      const duplicates = managers.concat(errors);
-
-      for (let i = 0; i < duplicates.length; i++) {
-        if (
-          duplicates.indexOf(
-            duplicates[i].key,
-            duplicates.indexOf(duplicates[i].key) + 1
-          ) === -1
-        ) {
-          unique.push(duplicates[i]);
-        }
-
-        return unique;
-      }
-    }
-
-    if (unique.length > 0) {
       return Promise.all([
-        addTrainerToGroups(unique, trainer._id),
-        addManagersToTrainer(unique, trainer._id),
-      ]).then(() => res.status(200).json({ success: unique, errors }));
+        addTrainerToGroups(managers, trainer._id),
+        addManagersToTrainer(managers, trainer._id),
+      ]).then(() => {
+        res.status(200).json(managers.map(e => e.label));
+      });
     }
-
-    // return errors.length > 0
-    //   ? next(boom.badRequest(errors))
-    //   : Promise.all([
-    //       addTrainerToGroups(managers, trainer._id),
-    //       addManagersToTrainer(managers, trainer._id),
-    //     ]).then(result =>
-    //       res.status(200).json(managers.map(({ label }) => label))
-    //     );
-    // }
 
     // let isNew = false;
     // if (newUser) {

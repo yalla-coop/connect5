@@ -182,11 +182,7 @@ class AddTrainer extends Component {
   };
 
   render() {
-    const {
-      confirmLoading,
-      selectOtherGroup,
-      officialLocalLeadSelect,
-    } = this.state;
+    const { confirmLoading, selectOtherGroup } = this.state;
     const {
       form: { getFieldDecorator },
       localLeads,
@@ -195,8 +191,6 @@ class AddTrainer extends Component {
       addTrainerLoading,
       userInfo,
     } = this.props;
-
-    console.log('official', officialLocalLeadSelect);
 
     return (
       <Wrapper>
