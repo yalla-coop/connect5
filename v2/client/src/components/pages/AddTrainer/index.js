@@ -50,7 +50,6 @@ const iniitialState = {
   userAsManager: false,
   additionalManager: '',
 };
-const captalizesName = name => name && name[0].toUpperCase() + name.substr(1);
 
 class AddTrainer extends Component {
   state = iniitialState;
@@ -196,7 +195,6 @@ class AddTrainer extends Component {
     } = this.props;
 
     const groupedLocalLeads = createGroupedLocalLeads(localLeads);
-    console.log(groupedLocalLeads);
 
     return (
       <Wrapper>

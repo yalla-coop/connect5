@@ -7,6 +7,8 @@ import * as types from '../constants/actionTypes';
 import { returnErrors } from './errorAction';
 import { checkAuth } from './authAction';
 
+import { captalizesName } from '../helpers/createGroupedLocalLeads';
+
 export const fetchUserResults = (id, role) => async dispatch => {
   try {
     const res = await axios.post(`/api/users/${id}/results`, { id, role });
@@ -124,7 +126,15 @@ export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
 
     Modal.success({
       title: 'Done!',
-      content: `Trainer added to the following groups: ${res.data}`,
+      content: `Trainer added to the following groups: ${res.data.managers.map(
+        el => captalizesName(el)
+      )}. ${
+        res.data.errors.length > 0
+          ? `The trainer was already registered in the following groups: ${res.data.errors.map(
+              el => captalizesName(el)
+            )}.`
+          : ''
+      }. We've emailed the trainer to inform him/ her about this update.`,
       onOk: done,
     });
 

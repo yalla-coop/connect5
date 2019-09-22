@@ -12,10 +12,11 @@ const {
 const { getUserByEmail } = require('./../../database/queries/users');
 
 module.exports = async (req, res, next) => {
-  // console.log('req', req.body);
   const { name, email, newUser, localLead, managers, region } = req.body;
   const { user } = req;
   const localLeadId = localLead && localLead.key;
+  const managerNames = managers && managers.map(e => e.label);
+  const errors = [];
 
   // check if user has management priveleges
   if (user.role !== 'localLead') {
@@ -41,35 +42,41 @@ module.exports = async (req, res, next) => {
 
     // Groups handling
     if (trainer && managers.length > 0) {
-      return Promise.all([
+      // check for duplicates
+      managers.map(el => {
+        if (trainer.managers.includes(el.key.toString())) {
+          errors.push(el.label);
+        }
+      });
+
+      // run functions
+      Promise.all([
         addTrainerToGroups(managers, trainer._id),
         addManagersToTrainer(managers, trainer._id),
-      ]).then(() => {
-        res.status(200).json(managers.map(e => e.label));
-      });
+      ]);
     }
 
-    // let isNew = false;
-    // if (newUser) {
-    //   isNew = true;
-    // }
+    let isNew = false;
+    if (newUser) {
+      isNew = true;
+    }
 
-    // const emailInfo = {
-    //   trainerName: trainer.name,
-    //   trainerEmail: email,
-    //   password: randomPassword,
-    //   localLeadName,
-    //   localLeadRegion: user.region,
-    //   isNew,
-    //   localLead: localLeadId,
-    //   trainerId: trainer._id,
-    // };
+    const emailInfo = {
+      trainerName: trainer.name,
+      trainerEmail: email,
+      password: randomPassword,
+      managers: managerNames,
+      isNew,
+      localLead: localLeadId,
+      trainerId: trainer._id,
+    };
 
-    // if (process.env.NODE_ENV === 'production') {
-    //   await addNewTrainerToGroup(emailInfo);
-    // }
+    if (process.env.NODE_ENV === 'production') {
+      await addNewTrainerToGroup(emailInfo);
+    }
+
+    return res.json({ managers: managerNames, errors });
   } catch (error) {
-    console.log('err', error);
     next(boom.badRequest(error));
   }
 };
