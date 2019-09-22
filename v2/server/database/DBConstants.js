@@ -1,3 +1,5 @@
+const { plainSurveyTypes, plainSessionsType } = require('./../constants');
+
 /* eslint-disable no-use-before-define */
 const regions = [
   'North East',
@@ -13,26 +15,9 @@ const regions = [
 
 module.exports.regions = regions;
 
-module.exports.sessionTypes = [
-  '1',
-  '2',
-  '3',
-  'special-2-days',
-  'train-trainers',
-];
+module.exports.sessionTypes = plainSessionsType;
 
-module.exports.surveyTypes = [
-  'pre-day-1',
-  'post-day-1',
-  'post-day-2',
-  'post-day-3',
-  'pre-special',
-  'post-special',
-  'pre-train-trainers',
-  'post-train-trainers',
-  'follow-up-3-month',
-  'follow-up-6-month',
-];
+module.exports.surveyTypes = plainSurveyTypes;
 
 const questionConstants = {};
 
@@ -43,6 +28,10 @@ questionConstants.groups = {
   ABOUT_YOUR_USUAL_WAY_OF_TEACHING: {
     text: 'about your usual way of teaching',
     order: 4,
+  },
+  ABOUT_HOW_YOU_EXPECT_TO_TEACH: {
+    text: 'about how you expect to teach in the future',
+    order: 5,
   },
 };
 
@@ -104,7 +93,7 @@ questionConstants.questionTypes = {
   fromZeroToTen: {
     desc: 'numberZeroTen',
     min: 0,
-    max: 10,
+    max: 6,
   },
   radio: {
     desc: 'radio',
@@ -119,6 +108,9 @@ questionConstants.questionTypes = {
   date: {
     desc: 'date',
   },
+  dropdown: {
+    desc: 'dropdown',
+  }
 };
 
 module.exports.questionConstants = questionConstants;

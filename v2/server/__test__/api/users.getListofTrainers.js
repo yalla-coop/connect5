@@ -31,7 +31,6 @@ describe('Testing get trainerList API', () => {
           .set('Cookie', [token])
           .expect(200)
           .end(async (err, res) => {
-            expect(1).toBe(1);
             expect(res.body).toBeDefined();
             expect(res.body.trainerCount).toBe(4);
             done(err);

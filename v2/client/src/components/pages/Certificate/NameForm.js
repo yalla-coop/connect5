@@ -13,21 +13,15 @@ import {
   LoginForm,
 } from './Certificate.style';
 
-const name = Yup.string()
-  .min(3)
-  .required();
-
-const email = Yup.string()
-  .email()
-  .required();
-
-const nameSchema = Yup.object({
-  name,
-});
+const nameSchema = Yup.object({});
 
 const nameEmailSchema = Yup.object({
-  name,
-  email,
+  name: Yup.string()
+    .min(3)
+    .required(),
+  email: Yup.string()
+    .email()
+    .required(),
 });
 
 export default class NameForm extends Component {
@@ -55,18 +49,19 @@ export default class NameForm extends Component {
   };
 
   handleChange = e => {
-    const { name, value } = e.target;
+    const { name: fieldName, value } = e.target;
     this.setState({
-      [name]: value,
+      [fieldName]: value,
     });
   };
 
   handleSubmit = e => {
     e.preventDefault();
+    const { name, email } = this.state;
     const { location, getNameEmail, history, match } = this.props;
     this.validate()
-      .then(res => {
-        getNameEmail(res.name, res.email, location.state.sendEmail);
+      .then(() => {
+        getNameEmail(name, email, location.state.sendEmail);
         history.push(`/certificate/${match.params.sessionId}/claim`);
       })
       .catch(error => {
@@ -84,7 +79,6 @@ export default class NameForm extends Component {
     const { location } = this.props;
     const { sendEmail } = location && location.state && location.state;
     const { errors, name, email } = this.state;
-
     return (
       <Wrapper>
         <Header type="home" userRole="participent" />

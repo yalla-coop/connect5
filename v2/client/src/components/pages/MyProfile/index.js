@@ -150,6 +150,7 @@ class MyProfile extends Component {
       localLead,
       organization,
       userId,
+      officialLocalLead,
     } = this.props;
 
     const {
@@ -159,9 +160,9 @@ class MyProfile extends Component {
       organization: organizationState,
     } = this.state;
 
-    const [trainerLocalLead] = localLeadsList.filter(
-      item => item._id === localLead
-    );
+    const [trainerLocalLead] = localLeadsList.filter(item => {
+      return item._id === localLead;
+    });
 
     const groupedLocalLeads = {};
     localLeadsList.forEach(item => {
@@ -194,7 +195,11 @@ class MyProfile extends Component {
           <Row>
             <Detail>
               <BoldSpan>Role: </BoldSpan>
-              {role}
+              {officialLocalLead && role === 'localLead'
+                ? 'Local Lead'
+                : !officialLocalLead && role === 'localLead'
+                ? 'Trainer Manager'
+                : role}
             </Detail>
           </Row>
           <Row>
@@ -261,9 +266,11 @@ class MyProfile extends Component {
             >
               {Object.keys(groupedLocalLeads).map(item => (
                 <OptGroup label={item}>
-                  {groupedLocalLeads[item].map(_localLead => (
-                    <Option value={_localLead._id}>{_localLead.name}</Option>
-                  ))}
+                  {groupedLocalLeads[item].map(_localLead => {
+                    return (
+                      <Option value={_localLead._id}>{_localLead.name}</Option>
+                    );
+                  })}
                 </OptGroup>
               ))}
             </Select>
@@ -286,6 +293,7 @@ const mapStateToProps = state => {
     localLeadsList: state.fetchedData.localLeadsList,
     updateUserLoading: state.loading.updateUserLoading,
     deleteAccountLoading: state.loading.deleteAccountLoading,
+    officialLocalLead: state.auth.officialLocalLead,
   };
 };
 

@@ -29,6 +29,14 @@ module.exports.getSessionDetails = ({ id, shortId }) => {
         as: 'specialRequirements',
       },
     },
+    {
+      $lookup: {
+        from: 'responses',
+        localField: '_id',
+        foreignField: 'session',
+        as: 'responses',
+      },
+    },
   ]);
 };
 
@@ -103,20 +111,20 @@ module.exports.updateEmailStatus = async ({ sessionId, email, status }) => {
  *
  * @param {Object} data - the data object
  * @param {String} data.sessionId - the id of the session to be updated
- * @param {Object[]} data.attendeesList - the attendees list to be updated
- * @param {Object[]} data.attendeesList[].email - the attendee email
- * @param {Object[]} data.attendeesList[].status - the attendee status
+ * @param {Object[]} data.participantsEmails - the attendees list to be updated
+ * @param {Object[]} data.participantsEmails[].email - the attendee email
+ * @param {Object[]} data.participantsEmails[].status - the attendee status
  * @param {Boolean} data.isPartialList - boolean value to determin if all the attendees list must updated or not
  */
 const updateAttendeesList = ({
   sessionId,
-  attendeesList,
+  participantsEmails,
   status,
   isPartialList,
 }) =>
-  Session.findById(sessionId).then(session => {
+  Session.findById(sessionId).then(async session => {
     const newEmails = {};
-    attendeesList.forEach(item => {
+    participantsEmails.forEach(item => {
       newEmails[item.email] = item.email;
     });
     const deletedEmailsIds = [];
@@ -124,10 +132,21 @@ const updateAttendeesList = ({
     session.participantsEmails.forEach(participant => {
       if (Object.keys(newEmails).includes(participant.email)) {
         // update
-        // eslint-disable-next-line no-param-reassign
-        session.participantsEmails.id(participant._id).status = status;
+        // if the new status is "new" and the old one is "sent" so keep the "sent"
+        if (
+          !(
+            status === 'new' &&
+            session.participantsEmails.id(participant._id).status === 'sent'
+          )
+        ) {
+          // eslint-disable-next-line no-param-reassign
+          session.participantsEmails.id(participant._id).status = status;
+        }
         delete newEmails[participant.email];
-      } else if (participant.status === status && !isPartialList) {
+      } else if (
+        (participant.status === status && !isPartialList) ||
+        (participant.status === 'sent' && status === 'new' && !isPartialList)
+      ) {
         // delete
         deletedEmailsIds.push(participant._id);
         delete newEmails[participant.email];
@@ -142,45 +161,22 @@ const updateAttendeesList = ({
       session.participantsEmails.push({ email, status });
     });
 
-    return session.save();
+    // eslint-disable-next-line no-param-reassign
+    session.updatedAt = new Date();
+    await session.save();
   });
+
+module.exports.updateAttendeesList = updateAttendeesList;
 
 module.exports.addSentEmail = ({
   sessionId,
   emailData,
   type,
-  preServeyLink,
+  preSurveyLink,
 }) => {
   return Session.updateOne(
     { _id: sessionId },
-    { $push: { sentEmails: { ...emailData, type, preServeyLink } } },
+    { $push: { sentEmails: { ...emailData, type } } },
     { upsert: true }
   );
 };
-
-module.exports.updateAttendeesList = updateAttendeesList;
-
-// update the emails list without send emails
-module.exports.updateInviteesList = ({
-  sessionId,
-  newEmailsObj,
-  deletedEmails,
-}) =>
-  Session.findById(sessionId).then(session => {
-    session.participantsEmails.forEach((participant, index) => {
-      if (deletedEmails.length && deletedEmails.includes(participant.email)) {
-        // eslint-disable-next-line no-param-reassign
-        session.participantsEmails = session.participantsEmails.filter(
-          item => item.email !== participant.email
-        );
-      }
-    });
-
-    if (newEmailsObj && newEmailsObj.length) {
-      newEmailsObj.forEach(email => {
-        session.participantsEmails.push(email);
-      });
-    }
-
-    return session.save();
-  });

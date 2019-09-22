@@ -1,25 +1,22 @@
 // this is where we map through all the questions
 // and populate the Survey component
 import React from 'react';
-import { DatePicker, Progress } from 'antd';
-// please leave this inside for antd to style right
-import 'antd/dist/antd.css';
-import { colors } from '../../../theme';
+import { DatePicker, Rate, Select } from 'antd';
+// // please leave this inside for antd to style right
+// import 'antd/dist/antd.css';
 
 import {
   RadioField,
   TextField,
-  Slider,
-  NumberSliderDiv,
-  NumberOutput,
   QuestionWrapper,
   SectionCategory,
   SubGroup,
   Warning,
+  RateDiv,
+  QuestionGroup,
 } from './Questions.style';
 
-import { ProgressWrapper } from './Survey.style';
-// checks if errors are present (renders error msg after submit)
+const { Option } = Select;
 
 // renders questions accordingly to their input type
 const renderQuestionInputType = (
@@ -37,7 +34,11 @@ const renderQuestionInputType = (
   errors,
   handleAntdDatePicker,
   group,
-  participantField
+  participantField,
+  handleStarChange,
+  nextQuestionID,
+  setCurrentQuestion,
+  handleDropdown
 ) => {
   if (inputType === 'text') {
     return (
@@ -49,9 +50,6 @@ const renderQuestionInputType = (
         </header>
 
         <div>
-          <Warning>
-            {!answers[questionId] && '* this question must be answered'}
-          </Warning>
           <input
             id={index}
             name={questionId}
@@ -64,8 +62,19 @@ const renderQuestionInputType = (
                 ? answers[questionId].answer
                 : ''
             }
+            onBlur={() => setCurrentQuestion(nextQuestionID)}
+            onKeyDown={event => {
+              if (event.keyCode === 13) {
+                event.preventDefault();
+                return setCurrentQuestion(nextQuestionID);
+              }
+              return null;
+            }}
           />
         </div>
+        <Warning>
+          {!answers[questionId] && '* this question must be answered'}
+        </Warning>
       </TextField>
     );
   }
@@ -78,9 +87,6 @@ const renderQuestionInputType = (
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
-          {!answers[questionId] && (
-            <Warning>* this question must be answered</Warning>
-          )}
         </header>
         <DatePicker
           id={index}
@@ -89,7 +95,11 @@ const renderQuestionInputType = (
             handleAntdDatePicker(questionId, value, group, participantField)
           }
           value={answers[questionId] && answers[questionId].answer}
+          onBlur={() => setCurrentQuestion(nextQuestionID)}
         />
+        {!answers[questionId] && (
+          <Warning>* this question must be answered</Warning>
+        )}
       </TextField>
     );
   }
@@ -103,9 +113,6 @@ const renderQuestionInputType = (
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">Please specify number</p>
           <p className="helpertext">{helperText}</p>
-          {!answers[questionId] && (
-            <Warning>* this question must be answered</Warning>
-          )}
         </header>
         <input
           id={index}
@@ -120,7 +127,18 @@ const renderQuestionInputType = (
               ? answers[questionId].answer
               : ''
           }
+          onBlur={() => setCurrentQuestion(nextQuestionID)}
+          onKeyDown={event => {
+            if (event.keyCode === 13) {
+              event.preventDefault();
+              return setCurrentQuestion(nextQuestionID);
+            }
+            return null;
+          }}
         />
+        {!answers[questionId] && (
+          <Warning>* this question must be answered</Warning>
+        )}
       </TextField>
     );
   }
@@ -133,30 +151,30 @@ const renderQuestionInputType = (
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">
-            Please choose: 0 (strongly disagree) to 10 (strongly agree)
+            Please choose: 1 star (strongly disagree) to 6 stars (strongly
+            agree)
           </p>
           <p className="helpertext">{helperText}</p>
-          {!answers[questionId] && (
-            <Warning>* this question must be answered</Warning>
-          )}
         </header>
-        <NumberSliderDiv>
-          <Slider
+        <RateDiv>
+          <Rate
             id={`sliderInput-${index}`}
             name={questionId}
-            min="0"
-            max="10"
-            type="range"
-            onChange={onChange}
+            count={6}
+            onChange={value => {
+              handleStarChange(value, questionId);
+              return setCurrentQuestion(nextQuestionID);
+            }}
             unanswered={errorArray.includes(questionId) && !answers[questionId]}
             data-group={group}
             data-field={participantField}
+            onBlur={() => setCurrentQuestion(nextQuestionID)}
+            value={answers[questionId] && answers[questionId].answer + 1}
           />
-        </NumberSliderDiv>
-        <NumberOutput>
-          Current Rating:{' '}
-          {answers[questionId] ? answers[questionId].answer : '5'}
-        </NumberOutput>
+        </RateDiv>
+        {!answers[questionId] && (
+          <Warning>* this question must be answered</Warning>
+        )}
       </TextField>
     );
   }
@@ -169,9 +187,6 @@ const renderQuestionInputType = (
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <h4 id={index}>{questionText}</h4>
           <p className="helpertext">{helperText}</p>
-          {!answers[questionId] && (
-            <Warning>* this question must be answered</Warning>
-          )}
         </header>
         <div className="answers">
           {options.map(e => {
@@ -192,7 +207,10 @@ const renderQuestionInputType = (
                       id={uniqueId}
                       name={questionId}
                       type="radio"
-                      onChange={onChange}
+                      onChange={radioE => {
+                        onChange(radioE);
+                        return setCurrentQuestion(nextQuestionID);
+                      }}
                       data-group={group}
                       data-field={participantField}
                     />
@@ -222,12 +240,71 @@ const renderQuestionInputType = (
                 onChange={handleOther}
                 data-group={group}
                 data-field={participantField}
+                onBlur={() => setCurrentQuestion(nextQuestionID)}
               />
             </TextField>
           ) : (
             ''
           )}
         </div>
+        {!answers[questionId] && (
+          <Warning>* this question must be answered</Warning>
+        )}
+      </RadioField>
+    );
+  }
+  if (inputType === 'dropdown') {
+    return (
+      <RadioField
+        unanswered={errorArray.includes(questionId) && !answers[questionId]}
+      >
+        <header>
+          {subGroup && <SubGroup>{subGroup}</SubGroup>}
+          <h4 id={index}>{questionText}</h4>
+          <p className="helpertext">{helperText}</p>
+        </header>
+        <Select
+          value={answers[questionId] && answers[questionId].answer}
+          defaultActiveFirstOption={false}
+          onChange={value => {
+            handleDropdown(value, questionId);
+            return setCurrentQuestion(nextQuestionID);
+          }}
+          notFoundContent={null}
+          onBlur={() => setCurrentQuestion(nextQuestionID)}
+        >
+          {options.map(option => (
+            <Option key={option}>{option}</Option>
+          ))}
+        </Select>
+        <div className="other-div">
+          {/* Load "Other" div */}
+          {answers[questionId] &&
+          answers[questionId].answer &&
+          answers[questionId].answer.includes('Other') ? (
+            <TextField
+              unanswered={
+                errorArray.includes(questionId) && !answers[questionId]
+              }
+            >
+              <p>Please specify:</p>
+              <input
+                id="other"
+                name={questionId}
+                type="text"
+                onChange={handleOther}
+                data-group={group}
+                data-field={participantField}
+                onBlur={() => setCurrentQuestion(nextQuestionID)}
+              />
+            </TextField>
+          ) : (
+            ''
+          )}
+        </div>
+        {!answers[questionId] && (
+          <Warning>* this question must be answered</Warning>
+        )}
       </RadioField>
     );
   }
@@ -246,7 +323,10 @@ const questionsRender = (
   onChange,
   handleOther,
   errors,
-  handleAntdDatePicker
+  handleAntdDatePicker,
+  handleStarChange,
+  setCurrentQuestion,
+  handleDropdown
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group.text === 'demographic'
@@ -268,10 +348,10 @@ const questionsRender = (
     .filter(section => section.length > 0)
     .map((section, index) => (
       // map through each section
-      <QuestionWrapper key={section[0].group}>
+      <QuestionGroup key={section[0].group}>
         <SectionCategory>{section[0] && section[0].group.text}</SectionCategory>
         {section &&
-          section.map(el => {
+          section.map((el, qIndex) => {
             // map through all the questions
             // el is one question
             const {
@@ -283,8 +363,17 @@ const questionsRender = (
               participantField,
             } = el;
             const inputType = el.questionType.desc;
+            const nextQuestion = section[qIndex + 1];
+            const nextQuestionID = nextQuestion ? nextQuestion._id : 'end';
+            const prevQuestion = section[qIndex - 1];
+            const prevQuestionID = prevQuestion && prevQuestion._id;
             return (
-              <div key={questionId}>
+              <QuestionWrapper
+                key={questionId}
+                name={questionId}
+                disabled={!answers[prevQuestionID] && qIndex !== 0}
+                id={questionId}
+              >
                 {renderQuestionInputType(
                   inputType,
                   errorArray,
@@ -300,16 +389,44 @@ const questionsRender = (
                   errors,
                   handleAntdDatePicker,
                   group,
-                  participantField
+                  participantField,
+                  handleStarChange,
+                  nextQuestionID,
+                  setCurrentQuestion,
+                  handleDropdown
                 )}
-              </div>
+              </QuestionWrapper>
             );
           })}
-      </QuestionWrapper>
+      </QuestionGroup>
     ));
 };
 
 export default class Questions extends React.Component {
+  state = {
+    currentQuestion: null,
+  };
+
+  componentDidUpdate() {
+    const { currentQuestion } = this.state;
+    const element = document.getElementById(currentQuestion);
+    if (element && currentQuestion !== 'end') {
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    } else if (currentQuestion === 'end') {
+      setTimeout(() => {
+        // scroll.scrollToBottom();
+        this.setState({ currentQuestion: null });
+      }, 100);
+    }
+  }
+
+  // set the current question to focus on
+  setCurrentQuestion = questionId => {
+    this.setState({ currentQuestion: questionId });
+  };
+
   render() {
     const {
       onChange,
@@ -319,14 +436,17 @@ export default class Questions extends React.Component {
       answers,
       errors,
       handleAntdDatePicker,
-      completionRate,
+      handleStarChange,
+      handleDropdown,
     } = this.props;
+
+    const { setCurrentQuestion } = this;
 
     const errorArray = Object.keys(errors);
 
     return (
       <React.Fragment>
-        <QuestionWrapper>
+        <QuestionGroup>
           {questionsRender(
             questions,
             answers,
@@ -334,19 +454,13 @@ export default class Questions extends React.Component {
             onChange,
             handleOther,
             errors,
-            handleAntdDatePicker
+            handleAntdDatePicker,
+            handleStarChange,
+            setCurrentQuestion,
+            handleDropdown
           )}
           {renderSkipButtons}
-          <ProgressWrapper>
-            <Progress
-              type="circle"
-              percent={completionRate}
-              width={60}
-              strokeColor={`${colors.green}`}
-              style={{ color: 'white !important' }}
-            />
-          </ProgressWrapper>
-        </QuestionWrapper>
+        </QuestionGroup>
       </React.Fragment>
     );
   }

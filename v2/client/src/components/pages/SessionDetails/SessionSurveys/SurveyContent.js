@@ -2,14 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { Icon, Drawer } from 'antd';
-import moment from 'moment';
-import DrawerContent from './DrawerContent';
-
-import {
-  scheduleNewEmail as scheduleNewEmailAction,
-  cancelScheduledEmail as cancelScheduledEmailAction,
-} from '../../../../actions/sessionAction';
+import { Icon } from 'antd';
 
 import {
   SurveyContentWrapper,
@@ -22,28 +15,21 @@ import {
   FeedbackAction,
   CopyIcon,
 } from './SessionSurveys.Style';
-import { BackWrapper } from '../SessionDetails.Style';
 
 import('moment-timezone');
 
 class SurveyContent extends Component {
   state = {
     responseCount: 0,
-    visible: false,
-    drawerKey: '',
-    scheduledDate: null,
-    selectedTime: null,
   };
 
   componentDidMount() {
     const { id, type } = this.props;
     const sessionId = id;
 
-    axios
-      .post('/api/feedback/responseCount', { sessionId, surveyType: type })
-      .then(res => {
-        this.setState({ responseCount: res.data });
-      });
+    axios.post('/api/feedback/responseCount', { sessionId, type }).then(res => {
+      this.setState({ responseCount: res.data });
+    });
   }
 
   // Fire Info pop up
@@ -94,74 +80,18 @@ class SurveyContent extends Component {
     }
   };
 
-  handleCloseDrawer = () => {
-    this.setState({
-      visible: false,
-      drawerKey: null,
-    });
-  };
-
-  handleDrawerOpen = e => {
-    const { key } = e.target.dataset;
-    this.setState({
-      visible: true,
-      drawerKey: key,
-    });
-  };
-
-  handleSelectDate = (date, dateString) => {
-    this.setState({ scheduledDate: dateString });
-  };
-
-  handleSelectTime = (time, timeString) => {
-    this.setState({ selectedTime: timeString });
-  };
-
-  handleSubmitSchedule = () => {
-    const { scheduledDate, selectedTime } = this.state;
-    const { scheduleNewEmail, sessionDetails, type } = this.props;
-    if (scheduledDate && selectedTime) {
-      const date = moment(`${scheduledDate} ${selectedTime}`);
-      scheduleNewEmail(
-        {
-          date: date.tz('Europe/London'),
-          sessionId: sessionDetails._id,
-          surveyType: type,
-        },
-        this.handleCloseDrawer
-      );
-    }
-  };
-
-  handleCancelEmail = emailId => {
-    const { cancelScheduledEmail, sessionDetails } = this.props;
-
-    cancelScheduledEmail({
-      sessionId: sessionDetails._id,
-      scheduledEmailId: emailId,
-    });
-  };
-
   render() {
-    const {
-      onInfoClick,
-      onCopyClick,
-      handleSelectDate,
-      handleSubmitSchedule,
-      handleCancelEmail,
-      handleSelectTime,
-    } = this;
+    const { onInfoClick, onCopyClick } = this;
+
     const {
       type,
       surveyURL,
       subId,
       id,
-      handleEmailing,
       sessionDetails,
-      loading,
+      handleDrawerOpen,
     } = this.props;
-    const { responseCount, drawerKey, visible } = this.state;
-    const { scheduledEmails } = sessionDetails;
+    const { responseCount } = this.state;
 
     const confirmedAttendeesNumber =
       sessionDetails &&
@@ -169,16 +99,13 @@ class SurveyContent extends Component {
         item => item.status === 'confirmed'
       ).length;
 
-    let url = `https://${surveyURL}`;
-
-    if (process.env.NODE_ENV === 'development') {
-      url = `http://${surveyURL}`;
-    }
-
     return (
       <SurveyContentWrapper>
         <SurveyLinkType to={`/survey/${id}/${type}/results`}>
-          {type.includes('pre') ? 'Pre-Session' : 'Post-Session'} Survey
+          {type.includes('pre') && 'Pre-Session Survey'}
+          {type.includes('post') && 'Post-Session Survey'}
+          {type.includes('follow-up-3-month') && '3-month Follow Up Survey'}
+          {type.includes('follow-up-6-month') && '6-month Follow Up Survey'}
         </SurveyLinkType>
 
         <SurveyLinkInfo onClick={onInfoClick}>
@@ -187,12 +114,12 @@ class SurveyContent extends Component {
 
         <SurveyLinkWrapper>
           <SurveyLink
-            href={url}
+            href={surveyURL}
             target="_blank"
             rel="noopener noreferrer"
             id={`link${subId}`}
           >
-            {url}
+            {surveyURL}
           </SurveyLink>
           <CopyLink onClick={() => onCopyClick(subId)}>
             <CopyIcon className="far fa-copy"></CopyIcon>
@@ -204,14 +131,22 @@ class SurveyContent extends Component {
             <b>{confirmedAttendeesNumber}</b> attendees
           </p>
         </ResponseWrapper>
-        <FeedbackAction to="#" onClick={() => handleEmailing(url, type)}>
+
+        <FeedbackAction
+          as="div"
+          onClick={handleDrawerOpen}
+          data-key="sendSurveyLinkEmail"
+          style={{ cursor: 'pointer' }}
+        >
           <p>Email survey to attendees</p>
           <Icon type="right" />
         </FeedbackAction>
+
         <FeedbackAction
           as="div"
-          onClick={this.handleDrawerOpen}
+          onClick={handleDrawerOpen}
           data-key="scheduleTable"
+          data-survey-type={type}
           style={{ cursor: 'pointer' }}
         >
           <p>Schedule emails</p>
@@ -221,45 +156,6 @@ class SurveyContent extends Component {
           <p>View survey results</p>
           <Icon type="right" />
         </FeedbackAction>
-
-        <div
-          style={{ width: '100%', position: 'absolute', left: 0 }}
-          id="parentDiv"
-        >
-          <Drawer
-            placement="left"
-            width="100%"
-            height="100%"
-            onClose={this.handleCloseDrawer}
-            visible={visible}
-            closable
-            bodyStyle={{ background: '#f7f8f9', minHeight: '100%' }}
-          >
-            <>
-              <BackWrapper onClick={this.handleCloseDrawer}>
-                <Icon type="left" />
-                <p
-                  style={{
-                    marginLeft: '1rem',
-                    marginBottom: '0',
-                  }}
-                >
-                  Back
-                </p>
-              </BackWrapper>
-              <DrawerContent
-                loading={loading}
-                type={type}
-                drawerKey={drawerKey}
-                scheduledEmails={scheduledEmails}
-                handleSelectDate={handleSelectDate}
-                handleSubmitSchedule={handleSubmitSchedule}
-                handleCancelEmail={handleCancelEmail}
-                handleSelectTime={handleSelectTime}
-              />
-            </>
-          </Drawer>
-        </div>
       </SurveyContentWrapper>
     );
   }
@@ -273,8 +169,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  {
-    scheduleNewEmail: scheduleNewEmailAction,
-    cancelScheduledEmail: cancelScheduledEmailAction,
-  }
+  {}
 )(SurveyContent);

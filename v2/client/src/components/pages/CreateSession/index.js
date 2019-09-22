@@ -7,13 +7,9 @@ import {
   DatePicker,
   Select,
   Input,
-  Checkbox,
   Icon,
   Divider,
   TimePicker,
-  Tooltip,
-  Button as AntButton,
-  message,
   Popover,
 } from 'antd';
 
@@ -21,7 +17,10 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
 import Header from '../../common/Header';
-import InfoPopUp from '../../common/InfoPopup';
+import EditEmail from '../../common/EditEmail';
+
+import { readableSessionNamePairs } from '../../../constants';
+
 import { fetchAllTrainers } from '../../../actions/trainerAction';
 import {
   fetchLocalLeads,
@@ -31,9 +30,10 @@ import {
   createSessionAction,
   storeInputData,
 } from '../../../actions/sessionAction';
-import { sessions, regions, pattern } from './options';
+import { regions } from './options';
 import history from '../../../history';
 
+import { validPostcode } from '../../../helpers';
 import {
   Form,
   CreateSessionWrapper,
@@ -47,12 +47,7 @@ import {
   LabelDiv,
   BackContainer,
   BackLink,
-} from './create-session.style';
-
-import {
-  SelecetWrapper,
-  IconsWrapper,
-} from '../SessionDetails/SessionDetails.Style';
+} from './CreateSession.style';
 
 const { Option } = Select;
 
@@ -68,14 +63,14 @@ const initialState = {
   region: null,
   partnerTrainer1: { key: '', label: '' },
   partnerTrainer2: { key: '', label: '' },
-  emails: [],
-  sendByEmail: false,
   err: false,
   trainersNames: { partner1: '', partner2: '' },
   startTime: null,
   endTime: null,
   address: '',
-  stateEmails: [],
+  postcode: null,
+  extraInfo: null,
+  isPostcodeValid: true,
 };
 
 class CreateSession extends Component {
@@ -96,19 +91,6 @@ class CreateSession extends Component {
       this.props.fetchAllTrainers();
       this.props.fetchLocalLeads();
     }
-
-    let dT = null;
-    try {
-      dT = new DataTransfer();
-    } catch (e) {
-      // ignore the error
-    }
-    const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
-
-    document.addEventListener('paste', this.pasteEmails);
-
-    document.dispatchEvent(evt);
   }
 
   componentDidUpdate(prevProps) {
@@ -116,67 +98,6 @@ class CreateSession extends Component {
       this.fetchLocalLeadsAndTrainers();
     }
   }
-
-  componentWillUnmount() {
-    document.removeEventListener('paste', this.pasteEmails);
-  }
-
-  onSelectBlur = () => {
-    this.setState({ focused: false });
-  };
-
-  onSelectFocus = () => {
-    this.setState({ focused: true });
-  };
-
-  onCopy = () => {
-    const { stateEmails } = this.state;
-
-    if (stateEmails.length) {
-      const copyText = document.getElementById('emails');
-      let range;
-      let selection;
-      if (document.body.createTextRange) {
-        range = document.body.createTextRange();
-        range.moveToElementText(copyText);
-
-        range.select();
-      } else if (window.getSelection) {
-        selection = window.getSelection();
-        range = document.createRange();
-        range.selectNodeContents(copyText);
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }
-
-      try {
-        document.execCommand('copy');
-        message.success('copied');
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-
-  pasteEmails = event => {
-    const { focused, emails } = this.state;
-
-    let emailsArray;
-
-    if (focused) {
-      event.preventDefault();
-      const pastedString = event.clipboardData.getData('text/plain');
-      const splittedEmails = pastedString.split(';');
-      if (pastedString === splittedEmails) {
-        emailsArray = pastedString.split(';');
-      }
-      emailsArray = splittedEmails
-        .map(item => item.trim())
-        .filter(item => !emails.includes(item));
-
-      this.onEmailChange([...emails, ...emailsArray]);
-    }
-  };
 
   fetchLocalLeadsAndTrainers = () => {
     const { id, role } = this.props.currentUser;
@@ -186,10 +107,6 @@ class CreateSession extends Component {
       this.props.fetchAllTrainers();
       this.props.fetchLocalLeads();
     }
-  };
-
-  onChangeCheckbox = e => {
-    this.props.storeInputData({ sendByEmail: e.target.checked });
   };
 
   onDateChange = defaultValue => {
@@ -203,6 +120,11 @@ class CreateSession extends Component {
   onInputChange = ({ target: { value, name } }) => {
     const newValue = value.replace(/^\s*\s*$/, '');
     this.props.storeInputData({ [name]: newValue });
+
+    if (name === 'postcode') {
+      const isPostcodeValid = validPostcode(value);
+      this.setState({ isPostcodeValid: !value || isPostcodeValid });
+    }
   };
 
   onSelectSessionChange = value => {
@@ -231,57 +153,42 @@ class CreateSession extends Component {
     });
   };
 
-  onEmailChange = value => {
-    let err = '';
-    const valuesToBeStored = [];
-    // check for email validation
-    value.forEach(item => {
-      if (pattern.test(item)) {
-        valuesToBeStored.push(item);
-      } else {
-        err = '*please enter valid email';
-      }
-    });
-    this.setState({ stateEmails: valuesToBeStored });
-    this.props.storeInputData({
-      emails: valuesToBeStored,
-      err,
-    });
-  };
+  // partnerTrainer is the trianer selected in the another select
+  // filer the trianers/local leads list to remove the trianer that has been selected
+  renderTrainersList = partnerTrainer => {
+    const { leadsAndTrainers, role, localLeadTrainersGroup, id } = this.props;
 
-  renderTrainersList = () => {
-    const {
-      leadsAndTrainers,
-      role,
-      localLeadTrainersGroup,
-      id,
-      name: loggedInName,
-    } = this.props;
     if (role && role === 'localLead') {
       if (localLeadTrainersGroup) {
-        return [
-          { _id: id, name: loggedInName, keep: true },
-          ...localLeadTrainersGroup,
-        ]
-          .filter(({ _id, keep }) => _id !== id || keep === true)
-          .map(({ name, _id }) => {
-            return (
-              <Option
-                key={_id}
-                value={_id}
-                style={{ textTransform: 'capitalize' }}
-              >
-                {name}
-              </Option>
-            );
-          });
+        return (
+          localLeadTrainersGroup
+            .filter(item =>
+              partnerTrainer ? item._id !== partnerTrainer.key : true
+            )
+            // sort the the array to get the logged in user at the first of the array
+            .sort(({ _id }) => (_id === id ? -1 : 1))
+            .map(({ name, _id }) => {
+              return (
+                <Option
+                  key={_id}
+                  value={_id}
+                  style={{ textTransform: 'capitalize' }}
+                >
+                  {`${name[0].toUpperCase()}${name.slice(1)}`}
+                </Option>
+              );
+            })
+        );
       }
     } else if (leadsAndTrainers) {
       return leadsAndTrainers
-        .filter(({ _id }) => _id !== id)
+
+        .filter(({ _id }) =>
+          partnerTrainer ? _id !== partnerTrainer.key : _id !== id
+        )
         .map(({ name, _id }) => (
           <Option key={_id} value={_id} style={{ textTransform: 'capitalize' }}>
-            {name}
+            {`${name[0].toUpperCase()}${name.slice(1)}`}
           </Option>
         ));
     }
@@ -297,12 +204,13 @@ class CreateSession extends Component {
       region,
       partnerTrainer1,
     } = inputData;
+
     const isError = !(
       !!startDate &&
       !!inviteesNumber &&
       !!session &&
       !!region &&
-      (role === 'localLead' && !!partnerTrainer1)
+      ((role === 'localLead' && !!partnerTrainer1) || role === 'trainer')
     );
 
     this.props.storeInputData({
@@ -321,15 +229,21 @@ class CreateSession extends Component {
       region,
       partnerTrainer1,
       partnerTrainer2,
-      emails,
-      sendByEmail,
       trainersNames,
       startTime,
       endTime,
-      location,
       addressLine1,
       addressLine2,
+      postcode,
     } = inputData;
+
+    if (postcode) {
+      const isPostcodeValid = validPostcode(postcode);
+      if (!isPostcodeValid) {
+        return this.setState({ isPostcodeValid: false });
+      }
+      this.setState({ isPostcodeValid: true });
+    }
 
     const trainersNamesArray = [];
     if (partnerTrainer1) {
@@ -347,17 +261,25 @@ class CreateSession extends Component {
       region,
       partnerTrainer1: partnerTrainer1 && partnerTrainer1.key,
       partnerTrainer2: partnerTrainer2 && partnerTrainer2.key,
-      emails,
-      sendByEmail,
       trainersNames: trainersNamesArray,
       startTime,
       endTime,
-      location: location || 'N/A',
-      addressLine1: addressLine1 || 'N/A',
-      addressLine2: addressLine2 || 'N/A',
+      addressLine1,
+      addressLine2,
+      postcode,
     };
     // CHECK FOR ERRORS IF NOT THEN CALL ACTION CREATOR AND GIVE IT sessionData
-    return !this.checkError() && this.props.createSessionAction(sessionData);
+    return (
+      !this.checkError() &&
+      this.props.createSessionAction(sessionData, this.done)
+    );
+  };
+
+  // callback to set a flage in the state to know if session created successfully
+  done = err => {
+    if (!err) this.setState({ sessionCreated: true });
+    // scroll the window to the top of the page
+    window.scrollBy(-100000, -100000);
   };
 
   onStartTimeChange = (time, timeString) => {
@@ -395,8 +317,8 @@ class CreateSession extends Component {
   };
 
   render() {
-    const { stateEmails } = this.state;
-    const { role, inputData, loading } = this.props;
+    const { sessionCreated, extraInfo, isPostcodeValid } = this.state;
+    const { role, inputData, loading, createdSession, name } = this.props;
 
     const {
       inviteesNumber,
@@ -404,14 +326,13 @@ class CreateSession extends Component {
       session,
       partnerTrainer1,
       partnerTrainer2,
-      emails,
       startDate,
       region,
       endTime,
       startTime,
-      location,
       addressLine1,
       addressLine2,
+      postcode,
     } = inputData;
 
     const {
@@ -421,15 +342,12 @@ class CreateSession extends Component {
       onSelectRegionChange,
       onSelectPartner1Change,
       onSelectPartner2Change,
-      onEmailChange,
       onFormSubmit,
       onStartTimeChange,
       onEndTimeChange,
       onKeyPress,
     } = this;
 
-    const details =
-      'Email addresses of invitees can be either added one by one or copied from a list separated by commas, spaces etc. This list is not required to set up sessions. It can be created/updated in continuation.';
     const content = (
       <div style={{ maxWidth: '250px', margin: '0 auto' }}>
         <p>
@@ -439,6 +357,26 @@ class CreateSession extends Component {
       </div>
     );
 
+    if (sessionCreated) {
+      return (
+        <EditEmail
+          successMessage="Session created!"
+          participantsEmails={createdSession.participantsEmails}
+          type="registration"
+          trainer={name}
+          sessionDate={createdSession.date}
+          sessionType={createdSession.type}
+          address={createdSession.address}
+          trainers={createdSession.trainers}
+          startTime={createdSession.startTime}
+          endTime={createdSession.endTime}
+          shortId={createdSession.shortId}
+          sessionId={createdSession._id}
+          extraInfo={extraInfo}
+          canAddParticipants
+        />
+      );
+    }
     return (
       <CreateSessionWrapper>
         <Header type="section" label="Create New Session" />
@@ -474,11 +412,13 @@ class CreateSession extends Component {
               size="large"
               value={session || undefined}
             >
-              {sessions.map(({ value, label }) => (
-                <Option key={value} value={value}>
-                  {label}
-                </Option>
-              ))}
+              {Object.entries(readableSessionNamePairs).map(
+                ([value, label]) => (
+                  <Option key={value} value={value}>
+                    {label}
+                  </Option>
+                )
+              )}
             </Select>
             {session === null && <Warning>* required</Warning>}
           </InputDiv>
@@ -546,9 +486,9 @@ class CreateSession extends Component {
               id="addressLine1"
               type="text"
               placeholder="Address line1"
-              value={location}
+              value={addressLine1}
               onChange={onInputChange}
-              name="location"
+              name="addressLine1"
               size="large"
               onKeyPress={e => onKeyPress(e)}
             />
@@ -559,19 +499,6 @@ class CreateSession extends Component {
               id="addressLine2"
               type="text"
               placeholder="address line2"
-              value={addressLine1}
-              onChange={onInputChange}
-              name="AddressLine2"
-              size="large"
-              onKeyPress={e => onKeyPress(e)}
-            />
-          </InputDiv>
-          <InputDiv>
-            <Label htmlFor="PostCode">Post Code:</Label>
-            <Input
-              id="PostCode"
-              type="text"
-              placeholder="Post Code"
               value={addressLine2}
               onChange={onInputChange}
               name="addressLine2"
@@ -579,6 +506,25 @@ class CreateSession extends Component {
               onKeyPress={e => onKeyPress(e)}
             />
           </InputDiv>
+          <InputDiv>
+            <Label htmlFor="Postcode">Post Code:</Label>
+            <Input
+              id="Postcode"
+              type="text"
+              placeholder="Post Code"
+              value={postcode}
+              onChange={onInputChange}
+              name="postcode"
+              size="large"
+              onKeyPress={e => onKeyPress(e)}
+            />
+          </InputDiv>
+
+          {!isPostcodeValid && (
+            <Error style={{ margin: '-19px 0px 13px 24px' }}>
+              invalid postcode format
+            </Error>
+          )}
 
           <InputDiv>
             {role === 'localLead' ? (
@@ -589,6 +535,7 @@ class CreateSession extends Component {
             ) : (
               <Label htmlFor="PartnerTrainer">Partner Trainer:</Label>
             )}
+
             <Select
               id="PartnerTrainer"
               showSearch
@@ -640,7 +587,7 @@ class CreateSession extends Component {
                 </div>
               )}
             >
-              {this.renderTrainersList()}
+              {this.renderTrainersList(partnerTrainer2)}
             </Select>
             {role === 'localLead' && partnerTrainer1 === null && (
               <Warning>* required</Warning>
@@ -696,56 +643,10 @@ class CreateSession extends Component {
                   </div>
                 )}
               >
-                {this.renderTrainersList()}
+                {this.renderTrainersList(partnerTrainer1)}
               </Select>
             </InputDiv>
           )}
-
-          <InputDiv>
-            <SelecetWrapper>
-              <IconsWrapper>
-                <Tooltip placement="top" title="Copy">
-                  <AntButton
-                    type="primary"
-                    icon="copy"
-                    ghost
-                    onClick={this.onCopy}
-                  />
-                </Tooltip>
-                <InfoPopUp details={details} />
-              </IconsWrapper>
-              <Label htmlFor="EmailsToInvite">Emails To Invite:</Label>
-              <Select
-                id="EmailsToInvite"
-                mode="tags"
-                size="large"
-                placeholder="Enter emails for people to invite"
-                onChange={onEmailChange}
-                style={{ width: '100%', height: '100%' }}
-                value={emails}
-                onBlur={this.onSelectBlur}
-                onFocus={this.onSelectFocus}
-              />
-            </SelecetWrapper>
-          </InputDiv>
-          <div
-            id="emails"
-            style={{
-              opacity: '0',
-              position: 'absolute',
-              width: '0',
-              hieght: '0',
-            }}
-          >
-            {stateEmails && stateEmails.join(';')}
-          </div>
-          <div style={{ color: 'red' }}>{err}</div>
-
-          <InputDiv>
-            <Checkbox onChange={this.onChangeCheckbox}>
-              Automatically send an invite to these emails
-            </Checkbox>
-          </InputDiv>
 
           <InputDiv
             style={{
@@ -786,6 +687,8 @@ class CreateSession extends Component {
           </InputDiv>
           <div>{err}</div>
 
+          <div>{err}</div>
+
           <SubmitBtn>
             <Button
               onClick={onFormSubmit}
@@ -819,6 +722,7 @@ const mapStateToProps = state => {
     leadsAndTrainers,
     loading: state.session.loading,
     inputData,
+    createdSession: state.session,
   };
 };
 

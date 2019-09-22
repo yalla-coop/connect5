@@ -51,7 +51,13 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { userName, stats, logout: logoutAction, role } = this.props;
+    const {
+      userName,
+      stats,
+      logout: logoutAction,
+      role,
+      officialLocalLead,
+    } = this.props;
 
     const captalizesName =
       userName && userName[0].toUpperCase() + userName.substr(1);
@@ -93,7 +99,14 @@ class Dashboard extends Component {
                 Welcome back, <br />
                 {captalizesName}
               </Title>
-              <Role>Role: {role === 'localLead' ? 'Local Lead' : role}</Role>
+              <Role>
+                Role:{' '}
+                {officialLocalLead && role === 'localLead'
+                  ? 'Local Lead'
+                  : !officialLocalLead && role === 'localLead'
+                  ? 'Trainer Manager'
+                  : role}
+              </Role>
             </TopSection>
             <TotalReach>Your Total Reach</TotalReach>
             <StatsWrapper>
@@ -136,6 +149,7 @@ const mapStateToProps = state => {
     stats: state.stats,
     userId: state.auth.id,
     role: state.auth.role,
+    officialLocalLead: state.auth.officialLocalLead,
   };
 };
 

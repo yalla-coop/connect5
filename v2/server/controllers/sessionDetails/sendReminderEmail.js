@@ -3,34 +3,65 @@ const {
   addSentEmail,
 } = require('./../../database/queries/sessionDetails/session');
 const sendSessionReminder = require('./../../helpers/emails/sendSessionReminder');
-
-const preSurveys = {
-  1: 'pre-day-1',
-  'special-2-days': 'pre-special',
-  'train-trainers': 'pre-train-trainers',
-};
+const sendEmailInvitation = require('./../../helpers/emails/sendEmailInvitation');
+const sendSurveyLink = require('./../../helpers/emails/sendSurveyLink');
+const { getPreSurveyLink, getPostSurveyLink } = require('./../../helpers/');
+const {
+  updateAttendeesList,
+} = require('./../../database/queries/sessionDetails/session');
 
 module.exports = async (req, res, next) => {
   const { sessionId } = req.params;
   const { type } = req.query;
-  const { shortId, ...emailData } = req.body;
+  const emailData = req.body;
 
-  if (type !== 'reminder') {
-    return next();
+  const preSurveyLink = getPreSurveyLink(
+    emailData.sessionType,
+    emailData.shortId
+  );
+  const postSurveyLink = getPostSurveyLink(
+    emailData.sessionType,
+    emailData.shortId
+  );
+
+  const sentEmailData = {
+    sessionId,
+    emailData,
+    type,
+    preSurveyLink,
+    postSurveyLink,
+  };
+
+  let promises = [];
+  if (type === 'reminder') {
+    promises = [addSentEmail(sentEmailData)];
+
+    if (process.env.NODE_ENV === 'production') {
+      promises.push(
+        sendSessionReminder({ ...emailData, preSurveyLink, postSurveyLink })
+      );
+    }
+  } else if (type === 'registration') {
+    const data = {
+      sessionId,
+      participantsEmails:
+        emailData.recipients &&
+        emailData.recipients.map(item => ({ email: item, status: 'sent' })),
+      status: 'sent',
+      isPartialList: true,
+    };
+
+    promises = [addSentEmail(sentEmailData), updateAttendeesList(data)];
+    if (process.env.NODE_ENV === 'production') {
+      promises.push(sendEmailInvitation(emailData));
+    }
+  } else if (type === 'surveyLink') {
+    promises = [addSentEmail(sentEmailData)];
+    if (process.env.NODE_ENV === 'production') {
+      promises.push(sendSurveyLink(emailData));
+    }
   }
 
-  const preSurvey = preSurveys[emailData.sessionType];
-
-  let preServeyLink = null;
-
-  if (preSurvey !== undefined) {
-    preServeyLink = `${process.env.DOMAIN}/survey/${preSurvey}&${shortId}`;
-  }
-
-  const promises = [
-    addSentEmail({ sessionId, emailData, type, preServeyLink }),
-    sendSessionReminder({ shortId, ...emailData, preServeyLink }),
-  ];
   return Promise.all(promises)
     .then(() => {
       return res.json({});

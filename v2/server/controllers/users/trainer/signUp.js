@@ -19,6 +19,7 @@ module.exports = async (req, res, next) => {
     region,
     organization,
     role,
+    officialLocalLead,
   } = req.body;
   if (name && email && password && region) {
     return createNewTrainer({
@@ -27,9 +28,10 @@ module.exports = async (req, res, next) => {
       password,
       region,
       localLead,
-      givenPermission: true,
       organization,
       role,
+      officialLocalLead,
+      managers: role === 'trainer' ? [localLead] : [],
     })
       .then(trainer => {
         const trainerInfo = {
@@ -40,6 +42,7 @@ module.exports = async (req, res, next) => {
           region: trainer.region,
           email: trainer.email,
           localLead: trainer.localLead,
+          officialLocalLead: trainer.officialLocalLead,
         };
         addTrainertoGroup(localLead, trainer._id)
           .then(result => {

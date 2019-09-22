@@ -1,18 +1,12 @@
 const mongoose = require('mongoose');
 const User = require('./../../../models/User');
-const Session = require('./../../../models/Session');
 
 module.exports.getAllLocalLeads = () => User.find({ role: 'localLead' });
 
-module.exports.addTrainertoGroup = (localLeadId, trainerId) =>
-  User.findByIdAndUpdate(localLeadId, { $push: { trainersGroup: trainerId } });
-
-module.exports.getLocalLeadSessionsQuery = id => {
-  return Session.find({ trainers: mongoose.Types.ObjectId(id) });
-};
-
-module.exports.getAdminSessionsQuery = () => {
-  return Session.find({});
+module.exports.addTrainertoGroup = (localLeadId, trainerId) => {
+  return User.findByIdAndUpdate(localLeadId, {
+    $push: { trainersGroup: trainerId },
+  });
 };
 
 // remove trainer from a localLead group
@@ -30,7 +24,7 @@ module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
       updateOne: {
         filter: { _id: trainerId },
         update: {
-          $unset: { localLead: '' },
+          $set: { localLead: mongoose.Types.ObjectId(localLeadId) },
         },
       },
     },
@@ -44,7 +38,7 @@ module.exports.removeLocalLeadFromUser = localLeadId => {
       updateMany: {
         filter: { localLead: localLeadId },
         update: {
-          $unset: { localLead: '' },
+          $pullAll: { localLead: [mongoose.Types.ObjectId(localLeadId)] },
         },
       },
     },
@@ -65,6 +59,11 @@ module.exports.getLocalLeadTrainersGroup = id => {
         foreignField: '_id',
         localField: 'trainersGroup',
         as: 'group',
+      },
+    },
+    {
+      $project: {
+        'group.password': 0,
       },
     },
   ]);

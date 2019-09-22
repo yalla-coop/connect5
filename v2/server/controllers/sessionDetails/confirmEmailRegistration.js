@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
 
   const data = {
     sessionId,
-    attendeesList: [{ email, status: 'confirmed' }],
+    participantsEmails: [{ email, status: 'confirmed' }],
     status,
     isPartialList: true,
   };

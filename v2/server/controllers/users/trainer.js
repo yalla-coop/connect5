@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 const boom = require('boom');
+const { surveysSessionsPairs } = require('./../../constants');
 
 const {
   getTrianerSessions,
@@ -18,17 +19,11 @@ exports.getTrianerReachData = async (req, res, next) => {
     });
 
     surveys.forEach(survey => {
-      if (survey._id === 'pre-day-1' || survey._id === 'post-day-1') {
-        survey.participants = obj['1'];
-        survey.responseRate = Math.ceil((survey.responses / obj['1']) * 100);
-      }
-      if (survey._id === 'post-day-2') {
-        survey.participants = obj['2'];
-        survey.responseRate = Math.ceil((survey.responses / obj['2']) * 100);
-      } else if (survey._id === 'post-day-3') {
-        survey.participants = obj['3'];
-        survey.responseRate = Math.ceil((survey.responses / obj['3']) * 100);
-      }
+      const sessionType = surveysSessionsPairs[survey._id];
+      survey.participants = obj[sessionType];
+      survey.responseRate = Math.ceil(
+        (survey.responses / obj[sessionType]) * 100
+      );
     });
     const results = { sessions, surveys };
     return res.json(results);

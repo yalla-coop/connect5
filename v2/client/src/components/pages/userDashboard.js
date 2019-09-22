@@ -12,7 +12,7 @@ import { logout } from '../../actions/authAction';
 import { uppercaseSurvey } from '../../helpers';
 
 import { colors } from '../../theme';
-import surveyTypes from '../../constants/surveyTypes';
+import { surveysTypes } from '../../constants';
 
 import Header from '../common/Header';
 
@@ -127,7 +127,7 @@ class UserDashboard extends Component {
           session => session.sessions._id === sessionId
         );
 
-        const [remainedSession] = surveyTypes[
+        const [remainedSession] = surveysTypes[
           sessionDetails.sessions.type
         ].filter(type => !sessionDetails.surveyType.includes(type));
 
@@ -181,9 +181,7 @@ class UserDashboard extends Component {
           title={canGetCertivicate ? 'Congratulations: 🎉🎉' : 'Thank you!'}
           visible={popupVisible && !dismissed}
           onOk={this.handleOk}
-          okText={
-            canGetCertivicate ? 'Get it the cirtificate' : 'Fill the survey'
-          }
+          okText={canGetCertivicate ? 'Get the cirtificate' : 'Fill the survey'}
           cancelText="Skip"
           onCancel={this.handleCancel}
         >

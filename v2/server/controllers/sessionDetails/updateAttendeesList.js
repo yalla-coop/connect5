@@ -5,9 +5,9 @@ const {
 
 module.exports = async (req, res, next) => {
   const { sessionId } = req.params;
-  const { attendeesList, status } = req.body;
+  const { participantsEmails, status, isPartial } = req.body;
 
-  updateAttendeesList({ sessionId, attendeesList, status })
+  updateAttendeesList({ sessionId, participantsEmails, status, isPartial })
     .then(() => {
       return res.json({});
     })

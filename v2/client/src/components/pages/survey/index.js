@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import swal from 'sweetalert2';
-import { Alert, Modal } from 'antd';
+import { Alert, Modal, Progress } from 'antd';
+
 import Spin from '../../common/Spin';
+import { surveysTypes } from '../../../constants';
 
 // Styles
 import Header from '../../common/Header';
@@ -15,7 +17,11 @@ import {
   FooterDiv,
   SubmitBtn,
   StepProgress,
+  ProgressWrapper,
+  StepTitle
 } from './Survey.style';
+
+import { colors } from '../../../theme';
 
 // Actions
 import {
@@ -44,6 +50,7 @@ class Survey extends Component {
     section: 'confirmSurvey',
     completionRate: 0,
     currentStep: 1,
+    currentQuestion: null,
   };
 
   componentDidMount() {
@@ -248,22 +255,37 @@ class Survey extends Component {
   // submits and validates PIN request
   submitPIN = () => {
     const { PINExist, surveyData, history } = this.props;
-    const { preSurveyResponses } = surveyData;
-    const { surveyType } = surveyData.surveyData;
-    // post surveys relevant to be checked if someone filled out pre-survey
-    const relevantPostSurveys = [
-      'post-day-1',
-      'post-special',
-      'post-train-trainers',
-    ];
+    const { preSurveyResponses, sessionType } = surveyData;
+
     // if someone needs to fill out pre-survey first -> take object value related to post-survey
-    const relevantSurveyCounterParts = {
-      'post-day-1': 'pre-day-1',
-      'post-special': 'pre-special',
-      'post-train-trainers': 'pre-train-trainers',
-    };
+    const relevantSurveyCounterParts = {};
+
+    // post surveys relevant to be checked if someone filled out pre-survey
+    // sessions that have -pre- survey
+    const sessionsHavePreSurvey = Object.entries(surveysTypes).reduce(
+      (prev, [_sessionType, surveysArray]) => {
+        let hasPreSurvey = false;
+
+        surveysArray.forEach(survey => {
+          if (survey.includes('pre')) {
+            hasPreSurvey = true;
+          }
+        });
+
+        const postSurvey = surveysArray.find(_item => _item.includes('post'));
+        const preSurvey = surveysArray.find(_item => _item.includes('pre'));
+        relevantSurveyCounterParts[postSurvey] = preSurvey;
+
+        if (hasPreSurvey) {
+          return [_sessionType, ...prev];
+        }
+        return prev;
+      }
+    );
+
     // set up pre-survey link for re-direction if pre-survey needs to get filled out
     const linkArr = history.location.pathname.split('/');
+    // surveyType
     const surveyPart = linkArr[2].split('&')[0];
     const shortId = linkArr[2].split('&')[1];
 
@@ -276,7 +298,7 @@ class Survey extends Component {
       });
     }
     // if relevant session check if PIN has already filled out pre survey
-    if (relevantPostSurveys.includes(surveyType)) {
+    if (sessionsHavePreSurvey.includes(sessionType)) {
       if (!PINExist && !preSurveyResponses.preResponseExists) {
         Modal.error({
           title: 'Please fill out the pre-survey for this session!',
@@ -338,6 +360,23 @@ class Survey extends Component {
     });
   };
 
+  handleStarChange = (answer, question) => {
+    const { formState } = this.state;
+    // remove 1 from the answer so it's 0 to 5 not 1 to 6
+    const fixedAnswer = { answer: answer - 1, question }
+    this.setState({ formState: { ...formState, [question]: fixedAnswer } }, () => {
+      this.trackAnswers();
+    })
+  }
+
+  handleDropdown = (answer, question) => {
+    const { formState } = this.state;
+    const answerObj = { answer, question }
+    this.setState({ formState: { ...formState, [question]: answerObj } }, () => {
+      this.trackAnswers();
+    })
+  }
+
   handleAntdDatePicker = (question, value, group, field) => {
     // const question = e.target.name;
     const { formState } = this.state;
@@ -383,6 +422,11 @@ class Survey extends Component {
       return uniqueGroups.includes(question.group.text);
     });
 
+    // // set the current question to focus on 
+    // setCurrentQuestion = questionId => {
+    //   this.setState({ currentQuestion: questionId })
+    // }
+
     const { formState, PIN, disagreedToResearch, completionRate } = this.state;
 
     const formSubmission = {
@@ -407,6 +451,7 @@ class Survey extends Component {
       completionRate,
       PIN,
       currentStep,
+      // currentQuestion
     } = this.state;
 
     const { surveyData, errors } = this.props;
@@ -487,6 +532,8 @@ class Survey extends Component {
                             key={group}
                             questions={questions}
                             onChange={this.handleChange}
+                            handleStarChange={this.handleStarChange}
+                            handleDropdown={this.handleDropdown}
                             handleOther={this.handleOther}
                             answers={formState}
                             selectCheckedItem={this.selectCheckedItem}
@@ -500,6 +547,8 @@ class Survey extends Component {
                               completionRate
                             )}
                             completionRate={completionRate}
+                            // currentQuestion={currentQuestion}
+                            // setCurrentQuestion={this.setCurrentQuestion}
                           />
                         );
                       }
@@ -512,8 +561,17 @@ class Survey extends Component {
                 {/* footer rendering */}
                 {section !== 'confirmSurvey' && (
                   <FooterDiv colorChange={readyForSubmission}>
+                    <ProgressWrapper>
+                      <span>Your progress</span>
+                      <Progress
+                        percent={completionRate}
+                        strokeColor={`${colors.green}`}
+                        style={{ color: 'white !important' }}
+                      />
+                    </ProgressWrapper>
                     <StepProgress>
-                      Step {section === 'enterPIN' ? 1 : currentStep}/
+                      <StepTitle>Step</StepTitle> 
+                      {section === 'enterPIN' ? 1 : currentStep}/
                       {uniqueGroups.length + 1}
                     </StepProgress>
                   </FooterDiv>

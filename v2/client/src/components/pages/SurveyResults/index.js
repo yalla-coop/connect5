@@ -25,17 +25,9 @@ import TrainerFeedback from '../../common/Feedback';
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 import ExportButton from '../../common/ExportButton';
+import { surveysHaveBehavQuestions } from '../../../constants';
 
 const { Panel } = Collapse;
-
-const behavioralSurveys = [
-  'pre-day-1',
-  'post-day-1',
-  'post-day-2',
-  'post-day-3',
-  'pre-special',
-  'post-special',
-];
 
 class SurveyResults extends Component {
   state = {
@@ -126,10 +118,12 @@ class SurveyResults extends Component {
                 )}
                 defaultActiveKey={['1']}
               >
-                {behavioralSurveys.includes(params.surveyType) ? (
+                {surveysHaveBehavQuestions.includes(params.surveyType) ? (
                   <Panel
                     key={
-                      behavioralSurveys.includes(params.surveyType) ? '1' : '0'
+                      surveysHaveBehavQuestions.includes(params.surveyType)
+                        ? '1'
+                        : '0'
                     }
                     header="Behavioural Analysis"
                     style={{
@@ -148,7 +142,9 @@ class SurveyResults extends Component {
                 <Panel
                   header="Trainer feedback"
                   key={
-                    behavioralSurveys.includes(params.surveyType) ? '0' : '1'
+                    surveysHaveBehavQuestions.includes(params.surveyType)
+                      ? '0'
+                      : '1'
                   }
                   style={{
                     background: '#f7f7f7',

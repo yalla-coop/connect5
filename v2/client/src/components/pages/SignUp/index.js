@@ -43,6 +43,8 @@ class SignUp extends Component {
     confirmDirty: false,
     givenPermission: true,
     role: 'trainer',
+    checkLocalLead: false,
+    officialLocalLead: false,
   };
 
   componentDidMount() {
@@ -79,22 +81,31 @@ class SignUp extends Component {
 
   onChangeCheckbox = e => {
     let role = '';
+    const { officialLocalLead } = this.state;
     if (e.target.checked) {
       role = 'localLead';
     } else {
       role = 'trainer';
     }
-    this.setState({ role });
+    this.setState({
+      role,
+      checkLocalLead: e.target.checked,
+      officialLocalLead: officialLocalLead && e.target.checked,
+    });
+  };
+
+  onChangeCheckboxOfficialLocalLead = e => {
+    this.setState({ officialLocalLead: e.target.checked });
   };
 
   handleSubmit = e => {
-    const { role, givenPermission } = this.state;
+    const { role, givenPermission, officialLocalLead } = this.state;
 
     const { form, signUpTrainer: signUpTrainerActionCreator } = this.props;
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
       if (!err && givenPermission) {
-        signUpTrainerActionCreator({ role, ...values });
+        signUpTrainerActionCreator({ role, officialLocalLead, ...values });
       }
     });
   };
@@ -153,7 +164,7 @@ class SignUp extends Component {
   };
 
   render() {
-    const { role, givenPermission } = this.state;
+    const { role, givenPermission, checkLocalLead } = this.state;
     const {
       form: { getFieldDecorator },
       localLeads,
@@ -163,7 +174,11 @@ class SignUp extends Component {
       loading,
     } = this.props;
 
-    const { onChangeCheckbox, onChangeCheckboxPermission } = this;
+    const {
+      onChangeCheckbox,
+      onChangeCheckboxPermission,
+      onChangeCheckboxOfficialLocalLead,
+    } = this;
 
     if (isAuthenticated) {
       history.push('/dashboard');
@@ -298,6 +313,21 @@ class SignUp extends Component {
                   trainers
                 </span>
               </Checkbox>
+
+              {checkLocalLead && (
+                <Checkbox
+                  onChange={onChangeCheckboxOfficialLocalLead}
+                  style={{
+                    textAlign: 'left',
+                    marginBottom: '24px',
+                  }}
+                >
+                  <span style={{ fontSize: '.9rem' }}>
+                    I{"'"}m an official Connect 5 Local Lead
+                  </span>
+                </Checkbox>
+              )}
+
               {role !== 'localLead' && (
                 <Item style={{ margin: '0 auto 20' }}>
                   {getFieldDecorator('localLead', {
@@ -392,8 +422,15 @@ class SignUp extends Component {
 }
 
 const mapStateToProps = state => {
+  const officialLocalLeads =
+    (state.fetchedData.localLeadsList &&
+      state.fetchedData.localLeadsList.filter(
+        ({ officialLocalLead }) => officialLocalLead
+      )) ||
+    [];
+
   return {
-    localLeads: state.fetchedData.localLeadsList,
+    localLeads: officialLocalLeads,
     isAuthenticated: state.auth.isAuthenticated,
     isEmailUnique: state.auth.isEmailUnique,
     isDeskTop: state.checkBrowserWidth.isDeskTop,

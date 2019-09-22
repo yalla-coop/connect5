@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Drawer } from 'antd';
-import AboutUs from './AboutUs';
 
 import {
   Wrapper,
@@ -20,6 +18,7 @@ import {
 import {
   LOGIN_URL,
   PARTICIPANT_LOGIN,
+  ABOUT_URL,
 } from '../../../constants/navigationRoutes';
 
 import Connect5Logo from '../../../assets/connect-5-white.png';
@@ -27,19 +26,7 @@ import Connect5Logo from '../../../assets/connect-5-white.png';
 import Button from '../../common/Button';
 
 class LandingPage extends Component {
-  state = { visible: false };
-
-  onClose = () => {
-    this.setState({ visible: false });
-  };
-
-  DrawerOpen = () => {
-    this.setState({ visible: true });
-  };
-
   render() {
-    const { visible } = this.state;
-    const { onClose, DrawerOpen } = this;
     const { isAuthenticated, role } = this.props;
 
     if (isAuthenticated) {
@@ -58,7 +45,6 @@ class LandingPage extends Component {
     return (
       <Wrapper>
         <LogoContainer>
-          {' '}
           <Logo src={Connect5Logo} alt="logo" />
         </LogoContainer>
         <DescriptionContainer>
@@ -88,25 +74,16 @@ class LandingPage extends Component {
               />
             </ButtonDiv>
           </ButtonLink>
-          <ButtonDiv>
-            <Button
-              label="I want to find out more"
-              width="100%"
-              height="100%"
-              type="primary"
-              onClick={DrawerOpen}
-            />
-            <Drawer
-              placement="left"
-              width="100%"
-              height="100%"
-              onClose={onClose}
-              visible={visible}
-              closable
-            >
-              <AboutUs />
-            </Drawer>
-          </ButtonDiv>
+          <ButtonLink to={`${ABOUT_URL}`} target="_blank">
+            <ButtonDiv>
+              <Button
+                label="I want to find out more"
+                width="100%"
+                height="100%"
+                type="primary"
+              />
+            </ButtonDiv>
+          </ButtonLink>
           <ButtonDiv style={{ padding: '0.4rem .5rem' }}>
             <a
               target="_blank"

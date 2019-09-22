@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const boom = require('boom');
 const { findByEmail } = require('./../database/queries/user');
 const { tokenMaxAge } = require('./../constants');
-const { updateUserById } = require('./../database/queries/users');
 
 module.exports = (req, res, next) => {
   const { email, password } = req.body;
@@ -15,8 +14,6 @@ module.exports = (req, res, next) => {
       );
     }
 
-    const { givenPermission } = user;
-
     // check password
     return user
       .isCorrectPassword(password)
@@ -25,12 +22,6 @@ module.exports = (req, res, next) => {
           return next(
             boom.unauthorized('login failed, email and password not match')
           );
-        }
-
-        // check if the trainer is logged in for first time then update the givenPermission
-        // to be true
-        if (user.role === 'trainer' && !givenPermission) {
-          await updateUserById(user._id, { givenPermission: true });
         }
 
         // data to be sent in the response
@@ -42,6 +33,7 @@ module.exports = (req, res, next) => {
           region: user.region,
           email: user.email,
           localLead: user.localLead,
+          officialLocalLead: user.officialLocalLead,
         };
 
         // create token for 25 day
@@ -60,6 +52,6 @@ module.exports = (req, res, next) => {
         // send the user info
         return res.json(userInfo);
       })
-      .catch(err => next(boom.badImplementation()));
+      .catch(err => next(boom.badImplementation(err)));
   });
 };

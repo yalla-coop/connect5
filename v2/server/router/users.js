@@ -25,14 +25,12 @@ const getUserInfo = require('../controllers/users/getUserInfo');
 const getTrainerSessions = require('../controllers/users/trainer/getTrainerSessions');
 const getLocalLeadsSessions = require('../controllers/users/getLocalLeadSessions');
 const getAllSessions = require('../controllers/users/getAllSessions');
-const removeTrainerToGroup = require('../controllers/users/removeTrainerToGroup');
+const removeTrainerFromGroup = require('../controllers/users/removeTrainerFromGroup');
 const getLocalLeadGroup = require('../controllers/users/getLocalLeadGroup');
 const changePassword = require('../controllers/users/changePassword');
 const getParticipantsDemogrphics = require('../controllers/users/getParticipantsDemogrphics');
-const sendInvitation = require('../controllers/users/sendInvitation');
 const forgetPassword = require('../controllers/users/forgetPassword');
 const resetPassword = require('../controllers/users/resetPassword');
-const updateSentInvitationEmails = require('../controllers/users/updatSendInvitation');
 const deleteAccount = require('../controllers/users/deleteAccount');
 const editProfile = require('../controllers/users/editProfile');
 
@@ -54,12 +52,7 @@ router.post('/trainers', signUpTrainer);
 router.post('/users/local-leads/group', authentication(), addTrainerToGroup);
 
 router.post('/users/change-password', authentication(), changePassword);
-router.post('/users/send-invitation', authentication(), sendInvitation);
-router.post(
-  '/users/update-sent-emails',
-  authentication(),
-  updateSentInvitationEmails
-);
+
 router.get('/local-leads', getLocalLeads);
 
 router.use('/users/:id/results', authentication(), getUserResults);
@@ -77,10 +70,11 @@ router.get(
 
 router.get('/local-lead/:id/group', getLocalLeadGroup);
 
+// delate trainer from a localLead group
 router.delete(
-  '/local-lead/:id/trainer',
+  '/local-lead/:localLeadId/trainer/:trainerId',
   authentication(),
-  removeTrainerToGroup
+  removeTrainerFromGroup
 );
 
 router.delete('/users/:userId', authentication(), deleteAccount);

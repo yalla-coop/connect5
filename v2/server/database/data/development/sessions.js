@@ -15,7 +15,7 @@ module.exports = async () => {
       numberOfAttendees: 10,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -27,6 +27,7 @@ module.exports = async () => {
         { email: 'abdalsamad.y.m@gmail.com', status: 'new' },
         { email: 'a.shatat@hotmail.com', status: 'new' },
       ],
+      canAccessResults: [trainers[0].localLead],
     },
     {
       date: '2019-03-14',
@@ -35,11 +36,11 @@ module.exports = async () => {
       numberOfAttendees: 11,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
-      trainers: [trainers[3], trainers[4]],
+      trainers: [trainers[1]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
         { email: 'abd@gmail.com', status: 'new' },
@@ -55,13 +56,13 @@ module.exports = async () => {
       numberOfAttendees: 10,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
       startTime: '14:00',
       endTime: '17:00',
-      trainers: [trainers[0], trainers[2]],
+      trainers: [trainers[0]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
         { email: 'abd@gmail.com', status: 'new' },
@@ -77,7 +78,7 @@ module.exports = async () => {
       numberOfAttendees: 5,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -99,13 +100,13 @@ module.exports = async () => {
       numberOfAttendees: 7,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
       startTime: '14:00',
       endTime: '17:00',
-      trainers: [trainers[0], trainers[2]],
+      trainers: [trainers[0], trainers[1]],
       participantsEmails: [
         { email: 'ramy@gmail.com', status: 'new' },
         { email: 'abd@gmail.com', status: 'new' },
@@ -121,7 +122,7 @@ module.exports = async () => {
       numberOfAttendees: 8,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -142,13 +143,13 @@ module.exports = async () => {
       numberOfAttendees: 33,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
       startTime: '14:00',
       endTime: '17:00',
-      trainers: [trainers[5]],
+      trainers: [trainers[1]],
       participantsEmails: [
         { email: 'alex@gmail.com', status: 'new' },
         { email: 'nancy@gmail.com', status: 'new' },
@@ -163,7 +164,7 @@ module.exports = async () => {
       numberOfAttendees: 12,
       region: 'North East',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -178,15 +179,15 @@ module.exports = async () => {
       ],
     },
     // local lead only session
-    // train-trainers session => for trainers
+    // train-trainers-s1 session => for trainers
     {
       date: '2019-05-16',
-      type: 'train-trainers',
+      type: 'train-trainers-s1',
       shortId: shortid.generate(),
       numberOfAttendees: 5,
       region: 'North West',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -202,7 +203,7 @@ module.exports = async () => {
     },
     // {
     //   date: '2019-04-16',
-    //   type: 'train-trainers',
+    //   type: 'train-trainers-s1',
     //   numberOfAttendees: 9,
     //   region: 'North West',
     //   trainers: [localLeads[1]],
@@ -221,7 +222,7 @@ module.exports = async () => {
       numberOfAttendees: 7,
       region: 'North West',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },
@@ -242,7 +243,7 @@ module.exports = async () => {
       numberOfAttendees: 40,
       region: 'North West',
       address: {
-        location: '1 Test Street',
+        postcode: '1 Test Street',
         addressLine1: 'Test City',
         addressLine2: 'TE 5TT',
       },

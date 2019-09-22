@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colors, borders, shadows } from '../../../theme';
+import { colors, borders, shadows, breakpointsMax } from '../../../theme';
 
 export const CommonStyles = styled.div`
   margin-bottom: 3rem;
@@ -33,11 +33,23 @@ export const QuestionWrapper = styled.div`
   flex-direction: column;
   background-color: ${colors.white};
   margin: 1rem 0;
-  padding: 1rem 1rem;
+  padding: 2rem 2rem 0 2rem;
   box-shadow: ${shadows.primary};
+  opacity: ${props => props.disabled && '0.3'};
+  pointer-events: ${props => props.disabled && 'none'};
+
+  @media ${breakpointsMax.tablet} {
+    padding: 1rem 1rem 0 1rem;
+  }
+`;
+
+export const QuestionGroup = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const RadioField = styled(CommonStyles)`
+  margin-bottom: 1rem;
   .other-div {
     justify-self: center;
     #other {
@@ -110,14 +122,26 @@ export const RadioField = styled(CommonStyles)`
 `;
 
 export const TextField = styled(CommonStyles)`
-  padding-top: 1rem;
-  input,
-  .ant-calendar-picker {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  input {
     border-radius: 1rem;
     border: 1px solid ${colors.gray};
     width: 100% !important;
     padding: 0.5rem 1rem;
   }
+
+  .ant-calendar-picker {
+    border-radius: 1rem;
+    border: 1px solid ${colors.gray};
+    width: 100% !important;
+    /* padding: 0.5rem 1rem; */
+
+    input {
+      border: none;
+    }
+  }
+
   h4 {
     font-size: 1rem;
     ${({ unanswered }) => unanswered && ` color: ${colors.errorRed}`}
@@ -139,6 +163,7 @@ export const Warning = styled.p`
   color: ${colors.errorRed};
   font-size: 14px;
   opacity: 0.6;
+  padding-top: 1rem;
 `;
 
 export const NumberSliderDiv = styled.div`
@@ -164,6 +189,23 @@ export const Slider = styled.input`
   }
 `;
 
+export const RateDiv = styled.div`
+  display: flex;
+  justify-content: center;
+
+  .ant-rate {
+    font-size: 32px !important;
+  }
+
+  .anticon-star {
+    font-size: 32px !important;
+    svg {
+      width: 2em !important;
+      height: 2em !important;
+    }
+  }
+`;
+
 export const NumberOutput = styled.output`
   margin-top: 10px;
   font-size: 1rem;
@@ -183,8 +225,10 @@ export const SectionCategory = styled.h4`
   text-transform: capitalize;
   margin-bottom: 0.5rem;
   color: ${colors.primary};
+  padding: 2rem 1rem 0 1rem;
 `;
 
 export const StyledUL = styled.ul`
-  margin-left: 1rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
 `;

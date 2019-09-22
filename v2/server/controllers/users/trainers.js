@@ -10,6 +10,6 @@ module.exports = (req, res, next) => {
       return res.json(trainers);
     })
     .catch(err => {
-      boom.badImplementation();
+      boom.badImplementation(err);
     });
 };
