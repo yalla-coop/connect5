@@ -8,6 +8,8 @@ import { fetchLocalLeads, addTrainerToGroup } from '../../../actions/users';
 import { checkUniqeEmail } from '../../../actions/authAction';
 import { resetgroup, resetUniqueEmail } from '../../../actions/reset';
 
+import { createGroupedLocalLeads } from '../../../helpers/createGroupedLocalLeads';
+
 import Button from '../../common/Button';
 import Header from '../../common/Header';
 
@@ -26,7 +28,7 @@ import {
   H2,
 } from './AddTrainer.style';
 
-const { Option } = Select;
+const { Option, OptGroup } = Select;
 
 const regions = [
   'North East',
@@ -48,6 +50,7 @@ const iniitialState = {
   userAsManager: false,
   additionalManager: '',
 };
+const captalizesName = name => name && name[0].toUpperCase() + name.substr(1);
 
 class AddTrainer extends Component {
   state = iniitialState;
@@ -192,6 +195,9 @@ class AddTrainer extends Component {
       userInfo,
     } = this.props;
 
+    const groupedLocalLeads = createGroupedLocalLeads(localLeads);
+    console.log(groupedLocalLeads);
+
     return (
       <Wrapper>
         <Header type="view" label="Add new trainer" />
@@ -245,7 +251,7 @@ class AddTrainer extends Component {
                   placeholder="Select trainer manager/ local lead"
                   option="existing-trainer"
                   getFieldDecorator={getFieldDecorator}
-                  localLeads={localLeads}
+                  localLeads={groupedLocalLeads}
                   handleSelectChange={this.addManager}
                 />
               </Fragment>
@@ -332,7 +338,7 @@ class AddTrainer extends Component {
                   placeholder="Official Connect 5 Local Lead"
                   option="new-trainer"
                   getFieldDecorator={getFieldDecorator}
-                  localLeads={localLeads}
+                  localLeads={groupedLocalLeads}
                   handleSelectChange={this.addOfficialLocalLead}
                 />
               </CheckboxWrapper>
@@ -383,7 +389,7 @@ class AddTrainer extends Component {
                   placeholder="Select trainer manager/ local lead"
                   option="existing-trainer"
                   getFieldDecorator={getFieldDecorator}
-                  localLeads={localLeads}
+                  localLeads={groupedLocalLeads}
                   handleSelectChange={this.addManager}
                 />
               </Fragment>
@@ -427,14 +433,17 @@ const OfficialLocalLeadSelect = ({
           labelInValue
           onChange={handleSelectChange}
         >
-          {localLeads &&
-            localLeads
-              .filter(({ officialLocalLead }) => officialLocalLead)
-              .map(({ name, _id }) => (
-                <Option value={_id} key={_id}>
-                  {name}
-                </Option>
-              ))}
+          {Object.keys(localLeads).map(item => (
+            <OptGroup label={item}>
+              {localLeads[item]
+                .filter(el => el.officialLocalLead === true)
+                .map(_localLead => {
+                  return (
+                    <Option value={_localLead._id}>{_localLead.name}</Option>
+                  );
+                })}
+            </OptGroup>
+          ))}
         </Select>
       )}
     </Item>
@@ -450,12 +459,13 @@ const OtherGroupSelect = ({ localLeads, handleSelectChange }) => (
         labelInValue
         onChange={handleSelectChange}
       >
-        {localLeads &&
-          localLeads.map(({ name, _id }) => (
-            <Option value={_id} key={_id}>
-              {name}
-            </Option>
-          ))}
+        {Object.keys(localLeads).map(item => (
+          <OptGroup label={item}>
+            {localLeads[item].map(_localLead => {
+              return <Option value={_localLead._id}>{_localLead.name}</Option>;
+            })}
+          </OptGroup>
+        ))}
       </Select>
     </Item>
   </div>

@@ -11,6 +11,11 @@ import {
 import { logout } from '../../../actions/authAction';
 import { deleteAccountAction } from '../../../actions/deleteAccountAction';
 
+import {
+  createGroupedLocalLeads,
+  captalizesName,
+} from '../../../helpers/createGroupedLocalLeads';
+
 // STYLING
 import {
   Wrapper,
@@ -26,8 +31,6 @@ import {
 import Header from '../../common/Header';
 
 const { confirm } = Modal;
-
-const captalizesName = name => name && name[0].toUpperCase() + name.substr(1);
 
 const { Option, OptGroup } = Select;
 
@@ -164,17 +167,7 @@ class MyProfile extends Component {
       return item._id === localLead;
     });
 
-    const groupedLocalLeads = {};
-    localLeadsList.forEach(item => {
-      groupedLocalLeads[item.region] = groupedLocalLeads[item.region]
-        ? groupedLocalLeads[item.region.toLowerCase()]
-        : [];
-
-      groupedLocalLeads[item.region].push({
-        name: captalizesName(item.name),
-        _id: item._id,
-      });
-    });
+    const groupedLocalLeads = createGroupedLocalLeads(localLeadsList);
 
     return (
       <Wrapper>
