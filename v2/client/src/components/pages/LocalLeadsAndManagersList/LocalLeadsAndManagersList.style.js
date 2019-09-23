@@ -70,4 +70,5 @@ export const LeaveBtn = styled.button`
   display: block;
   color: #eb5757;
   padding-top: 1rem;
+  cursor: pointer;
 `;
