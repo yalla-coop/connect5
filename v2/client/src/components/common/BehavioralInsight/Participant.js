@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Alert } from 'antd';
 
 import Spin from '../Spin';
-
+import Explanation from './Explanation';
 import { fetchParticipantBehavioral as fetchbehavioralAction } from '../../../actions/behavioralInsight';
 
 import { Wrapper, ChartWrapper, Description } from './BehavioralInsight.style';
@@ -52,6 +52,9 @@ class BehavioralInsight extends Component {
 
     return (
       <Wrapper backgroundColor={backgroundColor}>
+        <div style={{ paddingBottom: '3rem', background: '#f7f8f9' }}>
+          <Explanation />
+        </div>
         {loaded ? (
           chartsData.map((dataA, index) => (
             <div key={texts[index]}>
