@@ -10,6 +10,7 @@ import {
 
 import { logout } from '../../../actions/authAction';
 import { deleteAccountAction } from '../../../actions/deleteAccountAction';
+import { LOCAL_LEADS_AND_MANAGERS } from '../../../constants/navigationRoutes';
 
 // STYLING
 import {
@@ -235,6 +236,19 @@ class MyProfile extends Component {
               </Detail>
             </Row>
           )}
+
+          {role === 'trainer' && (
+            <Row>
+              <Detail>
+                <BoldSpan>Groups I belong to: </BoldSpan>
+              </Detail>
+              <Detail>
+                <StyledLink to={LOCAL_LEADS_AND_MANAGERS}>
+                  <span style={{ fontWeight: 'bold' }}>View</span>
+                </StyledLink>
+              </Detail>
+            </Row>
+          )}
         </DetailsContent>
         <StyledLink to="/change-password">Change My Password</StyledLink>
 
@@ -294,6 +308,7 @@ const mapStateToProps = state => {
     updateUserLoading: state.loading.updateUserLoading,
     deleteAccountLoading: state.loading.deleteAccountLoading,
     officialLocalLead: state.auth.officialLocalLead,
+    managers: state.auth.managers,
   };
 };
 

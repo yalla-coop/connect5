@@ -42,6 +42,7 @@ import ResetPassword from './pages/ForgetPassword/ResetPassword';
 import SessionsFiles from './pages/SessionsFiles';
 import ConfirmRegistration from './pages/ConfirmRegistration';
 import MyProfile from './pages/MyProfile';
+import LocalLeadsAndManagersList from './pages/LocalLeadsAndManagersList';
 import AboutUs from './pages/LandingPage/AboutUs';
 
 // Error Pages
@@ -74,6 +75,7 @@ import {
   ALL_SESSIONS_URL,
   MY_SESSIONS_URL,
   ABOUT_URL,
+  LOCAL_LEADS_AND_MANAGERS,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -303,6 +305,16 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               loaded={loaded}
               allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
+
+            <PrivateRoute
+              path={LOCAL_LEADS_AND_MANAGERS}
+              Component={LocalLeadsAndManagersList}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['trainer']}
               role={role}
               navbar
             />
