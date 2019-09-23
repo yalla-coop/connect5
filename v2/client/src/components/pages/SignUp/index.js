@@ -189,13 +189,18 @@ class SignUp extends Component {
 
     const content = (
       <div style={{ maxWidth: '250px', margin: '0 auto' }}>
+        <h3 style={{ 'font-weight': '400', 'font-size': '1.2rem' }}>
+          Are you a trainer, trainer manager or official local lead?
+        </h3>
         <p>
-          In case you are managing groups of trainers (e.g. organising their
-          sessions) please select the option "I'm managing groups of trainers".
-          If you are acting as an official Connect 5 local lead, please also
-          check the follow up box "I'm an official Connect 5 Local Lead". Once
-          you've selected one or both of the options you can create groups of
-          trainers and manage sessions for them.
+          In case <strong>you are managing groups of trainers</strong> (e.g.
+          organising their sessions) please select the option "I'm managing
+          groups of trainers". If you are acting as{' '}
+          <strong>an official Connect 5 local lead</strong>, please also check
+          the follow up box "I'm an official Connect 5 Local Lead". If you're
+          registering as a <strong>Connect 5 Trainer</strong> please don't check
+          any of the boxes and select your official Connect 5 local lead from
+          the dropdown below.
         </p>
       </div>
     );

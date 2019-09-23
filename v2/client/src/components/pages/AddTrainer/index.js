@@ -1,7 +1,7 @@
 /* eslint-disable react/no-did-update-set-state */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Checkbox, Modal } from 'antd';
+import { Checkbox, Modal, Popover } from 'antd';
 import history from '../../../history';
 
 import { fetchLocalLeads, addTrainerToGroup } from '../../../actions/users';
@@ -26,6 +26,7 @@ import {
   BackLink,
   CheckboxWrapper,
   H2,
+  LabelDiv,
 } from './AddTrainer.style';
 
 const { Option, OptGroup } = Select;
@@ -194,6 +195,51 @@ class AddTrainer extends Component {
       userInfo,
     } = this.props;
 
+    const content = (
+      <div style={{ maxWidth: '250px', margin: '0 auto' }}>
+        <h3 style={{ 'font-weight': '400', 'font-size': '1.2rem' }}>
+          This is how it works:
+        </h3>
+        <p>
+          You can choose to{' '}
+          <strong>
+            register a new trainer and add him/ her to several groups
+          </strong>
+          . In case the <strong>trainer is already registered</strong> on the
+          app and/ or is already part of respective groups you will get a
+          notfication. <strong>You can add trainers to multiple groups</strong>.
+          You can then set up sessions for this trainer and view related session
+          feedback. Once you've added a trainer he/ she will get an{' '}
+          <strong>
+            email with login details and a notification to what group(s) he/ she
+            was added to
+          </strong>
+          .
+        </p>{' '}
+        <p>
+          <strong>Note:</strong> Trainers can always login and remove themselves
+          from groups.
+        </p>
+      </div>
+    );
+    const addingTrainerPopover = (
+      <LabelDiv>
+        <H2>Adding a trainer to groups</H2>
+        <Popover content={content} style={{ marginRight: '2rem' }}>
+          <button type="button" style={{ background: 'none', border: 'none' }}>
+            <i
+              className="fas fa-question-circle"
+              style={{
+                color: '#9FCE67',
+                marginLeft: '1rem',
+                marginBottom: '0.7rem',
+              }}
+            />
+          </button>
+        </Popover>
+      </LabelDiv>
+    );
+
     const groupedLocalLeads = createGroupedLocalLeads(localLeads);
 
     return (
@@ -214,32 +260,36 @@ class AddTrainer extends Component {
               Good news, <Bold>{checkedUserInfo.name}</Bold> (
               {checkedUserInfo.email}) is already registered on the app!
             </Paragraph>
+            {addingTrainerPopover}
+
             <Paragraph>
               You can either add the trainer to your group or choose a different
               person as the trainer&apos;s manager.
             </Paragraph>
-            <Checkbox
-              onChange={this.addUserAsManager}
-              style={{
-                textAlign: 'left',
-                marginBottom: '24px',
-              }}
-            >
-              <span style={{ fontSize: '.9rem' }}>
-                Add <Bold>{checkedUserInfo.name}</Bold> to my group
-              </span>
-            </Checkbox>
-            <Checkbox
-              onChange={this.onChangeCheckbox}
-              style={{
-                textAlign: 'left',
-                marginBottom: '24px',
-              }}
-            >
-              <span style={{ fontSize: '.9rem' }}>
-                Add <Bold>{checkedUserInfo.name}</Bold> to another group
-              </span>
-            </Checkbox>
+            <CheckboxWrapper>
+              <Checkbox
+                onChange={this.addUserAsManager}
+                style={{
+                  textAlign: 'center',
+                  marginBottom: '24px',
+                }}
+              >
+                <span style={{ fontSize: '1rem', fontWeight: '700' }}>
+                  Add <Bold>{checkedUserInfo.name}</Bold> to my group
+                </span>
+              </Checkbox>
+              <Checkbox
+                onChange={this.onChangeCheckbox}
+                style={{
+                  textAlign: 'center',
+                  marginBottom: '24px',
+                }}
+              >
+                <span style={{ fontSize: '1rem', fontWeight: '700' }}>
+                  Add <Bold>{checkedUserInfo.name}</Bold> to another group
+                </span>
+              </Checkbox>
+            </CheckboxWrapper>
             {localLeads && selectOtherGroup && (
               <Fragment>
                 <Paragraph>
@@ -324,10 +374,7 @@ class AddTrainer extends Component {
             </div>
             {(isEmailUnique || isEmailUnique === null) && localLeads && (
               <CheckboxWrapper>
-                <H2>Adding a new trainer to groups</H2>
-                <Paragraph>
-                  <Bold> This is how it works:</Bold>
-                </Paragraph>
+                {addingTrainerPopover}
                 <Paragraph>
                   <Bold>Step 1:</Bold> Select the official local lead managing
                   this trainer (required).
@@ -351,11 +398,11 @@ class AddTrainer extends Component {
                 <Checkbox
                   onChange={this.addUserAsManager}
                   style={{
-                    textAlign: 'left',
+                    textAlign: 'center',
                     marginBottom: '24px',
                   }}
                 >
-                  <span style={{ fontSize: '.9rem' }}>
+                  <span style={{ fontSize: '1rem', fontWeight: '700' }}>
                     Add trainer to my group
                   </span>
                 </Checkbox>
@@ -369,11 +416,11 @@ class AddTrainer extends Component {
               <Checkbox
                 onChange={this.onChangeCheckbox}
                 style={{
-                  textAlign: 'left',
+                  textAlign: 'center',
                   marginBottom: '24px',
                 }}
               >
-                <span style={{ fontSize: '.9rem' }}>
+                <span style={{ fontSize: '1rem', fontWeight: '700' }}>
                   Add trainer to another group
                 </span>
               </Checkbox>

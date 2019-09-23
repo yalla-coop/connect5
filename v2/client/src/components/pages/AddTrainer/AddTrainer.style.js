@@ -13,11 +13,13 @@ export const ContentWrapper = styled.div`
 `;
 
 export const CheckboxWrapper = styled.div`
-  max-width: 90%;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const H2 = styled.h2`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  text-align: center;
 `;
 
 export const Form = styled(AntForm)`
@@ -61,6 +63,8 @@ export const Bold = styled.span`
 export const Paragraph = styled.p`
   font-weight: 300;
   font-size: 1rem;
+  text-align: left;
+  padding-left: 0.3rem;
 `;
 
 export const BackLink = styled.button`
@@ -82,4 +86,10 @@ export const BackContainer = styled.div`
   padding: 0 20px;
   align-self: center;
   padding: 3rem 1rem 1rem;
+`;
+
+export const LabelDiv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
