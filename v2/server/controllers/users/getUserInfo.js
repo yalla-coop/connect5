@@ -17,6 +17,7 @@ module.exports = (req, res) => {
       email: user.email,
       localLead: user.localLead,
       officialLocalLead: user.officialLocalLead,
+      managers: user.managers,
     };
   }
 
