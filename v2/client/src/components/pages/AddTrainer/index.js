@@ -197,7 +197,7 @@ class AddTrainer extends Component {
 
     const content = (
       <div style={{ maxWidth: '250px', margin: '0 auto' }}>
-        <h3 style={{ 'font-weight': '400', 'font-size': '1.2rem' }}>
+        <h3 style={{ fontWeight: '400', fontSize: '1.2rem' }}>
           This is how it works:
         </h3>
         <p>
@@ -479,12 +479,14 @@ const OfficialLocalLeadSelect = ({
           onChange={handleSelectChange}
         >
           {Object.keys(localLeads).map(item => (
-            <OptGroup label={item}>
+            <OptGroup key={`OptGroup${item.region}`} label={item}>
               {localLeads[item]
                 .filter(el => el.officialLocalLead === true)
                 .map(_localLead => {
                   return (
-                    <Option value={_localLead._id}>{_localLead.name}</Option>
+                    <Option key={_localLead._id} value={_localLead._id}>
+                      {_localLead.name}
+                    </Option>
                   );
                 })}
             </OptGroup>
@@ -505,9 +507,13 @@ const OtherGroupSelect = ({ localLeads, handleSelectChange }) => (
         onChange={handleSelectChange}
       >
         {Object.keys(localLeads).map(item => (
-          <OptGroup label={item}>
+          <OptGroup key={`OptGroup2${item.region}`} label={item}>
             {localLeads[item].map(_localLead => {
-              return <Option value={_localLead._id}>{_localLead.name}</Option>;
+              return (
+                <Option key={_localLead._id} value={_localLead._id}>
+                  {_localLead.name}
+                </Option>
+              );
             })}
           </OptGroup>
         ))}
