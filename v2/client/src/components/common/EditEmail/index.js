@@ -207,7 +207,6 @@ class EditEmail extends Component {
       sendEmailReminder,
       type,
       canAddParticipants,
-      // trainer name
       name,
     } = this.props;
 
@@ -452,6 +451,35 @@ class EditEmail extends Component {
       isSchedule,
     } = this.props;
 
+    let title = '';
+    let paragraph = '';
+    let panelTitle = '';
+    switch (type) {
+      case 'registration':
+        title = 'Invite participants via email: ';
+        paragraph = `Send a session invitation to participants via email, providing
+        them a link to register and let you know about any special
+        requirements.`;
+        panelTitle = 'Select from your invitees list';
+        break;
+
+      case 'reminder':
+        title = 'Remind participants via email: ';
+        paragraph = `Send a session reminder to the participants who confirmed their attendance,
+        reminding them with the session date and it's details and surveys links.`;
+        panelTitle = 'Select from confirmed emails';
+        break;
+
+      case 'surveyLink':
+        title = 'Send survey link to participants via email: ';
+        paragraph = `Send a survey links to the participants who confirmed their attendance,
+        reminding them with the session date and it's details.`;
+        panelTitle = 'Select from confirmed emails';
+        break;
+
+      default:
+        break;
+    }
     const {
       isEditView,
       extraInformation,
@@ -542,12 +570,8 @@ class EditEmail extends Component {
                 </>
               )}
               <>
-                <SubHeader>Invite Participants via email: </SubHeader>
-                <Paragraph>
-                  Send a session invite to participants via email, providing
-                  them a link to register and let you know about any special
-                  requirements.
-                </Paragraph>
+                <SubHeader>{title}</SubHeader>
+                <Paragraph>{paragraph}</Paragraph>
               </>
               <>
                 <SelecetWrapper>
@@ -640,7 +664,7 @@ class EditEmail extends Component {
                           expandIconPosition="right"
                         >
                           <Panel
-                            header={<div>Select from your invitees list</div>}
+                            header={<div>{panelTitle}</div>}
                             key="1"
                             style={customPanelStyle}
                           >
