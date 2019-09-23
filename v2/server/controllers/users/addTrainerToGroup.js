@@ -71,9 +71,9 @@ module.exports = async (req, res, next) => {
       trainerId: trainer._id,
     };
 
-    if (process.env.NODE_ENV === 'production') {
-      await addNewTrainerToGroup(emailInfo);
-    }
+    // if (process.env.NODE_ENV === 'production') {
+    await addNewTrainerToGroup(emailInfo);
+    // }
 
     return res.json({ managers: managerNames, errors });
   } catch (error) {

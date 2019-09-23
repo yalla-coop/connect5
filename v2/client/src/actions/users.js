@@ -126,15 +126,15 @@ export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
 
     Modal.success({
       title: 'Done!',
-      content: `Trainer added to the following groups: ${res.data.managers.map(
-        el => captalizesName(el)
-      )}. ${
+      type: 'info',
+      content:
         res.data.errors.length > 0
-          ? `The trainer was already registered in the following groups: ${res.data.errors.map(
+          ? `The trainer is already part of the following groups: ${res.data.errors.map(
               el => captalizesName(el)
-            )}.`
-          : ''
-      }. We've emailed the trainer to inform him/ her about this update.`,
+            )}. We've emailed the trainer to inform him/ her about this update.`
+          : `Trainer added to the following groups: ${res.data.managers.map(
+              el => captalizesName(el)
+            )}. We've emailed the trainer to inform him/ her about this update.`,
       onOk: done,
     });
 

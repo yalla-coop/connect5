@@ -3,6 +3,12 @@ const User = require('./../../../models/User');
 
 module.exports.getAllLocalLeads = () => User.find({ role: 'localLead' });
 
+module.exports.addTrainertoLocalLeadGroup = (localLeadId, trainerId) => {
+  return User.findByIdAndUpdate(localLeadId, {
+    $push: { trainersGroup: trainerId },
+  });
+};
+
 module.exports.addTrainerToGroups = async (managers, trainer) => {
   const bulkOp = managers.map(({ key }) => {
     return {
