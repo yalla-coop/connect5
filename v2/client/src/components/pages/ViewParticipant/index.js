@@ -55,10 +55,6 @@ class ViewParticipant extends Component {
         <>
           {toggle === 'left' ? (
             <ContentWrapper>
-              <p>
-                Behaviour is influenced by our perceptions of our capability,
-                opportunity and motivation for that behaviour
-              </p>
               <ParticipantBehavioralInsight
                 backgroundColor="#fff"
                 userRole="participant"
