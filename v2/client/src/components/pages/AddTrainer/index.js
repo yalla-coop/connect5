@@ -1,7 +1,7 @@
 /* eslint-disable react/no-did-update-set-state */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Checkbox, Modal, Popover } from 'antd';
+import { Checkbox, Modal, Popover, Button as AntdButton } from 'antd';
 import history from '../../../history';
 
 import { fetchLocalLeads, addTrainerToGroup } from '../../../actions/users';
@@ -27,6 +27,7 @@ import {
   CheckboxWrapper,
   H2,
   LabelDiv,
+  Ol,
 } from './AddTrainer.style';
 
 const { Option, OptGroup } = Select;
@@ -185,7 +186,13 @@ class AddTrainer extends Component {
   };
 
   render() {
-    const { confirmLoading, selectOtherGroup } = this.state;
+    const {
+      confirmLoading,
+      selectOtherGroup,
+      userAsManager,
+      additionalManager,
+    } = this.state;
+
     const {
       form: { getFieldDecorator },
       localLeads,
@@ -194,6 +201,40 @@ class AddTrainer extends Component {
       addTrainerLoading,
       userInfo,
     } = this.props;
+
+    const trainersManagers =
+      localLeads &&
+      localLeads
+        .map(({ _id, name }) =>
+          checkedUserInfo.managers && checkedUserInfo.managers.includes(_id)
+            ? { _id, name }
+            : null
+        )
+        .filter(el => el !== null);
+
+    const trainerManagersIds = trainersManagers.map(({ _id }) => _id);
+
+    const availableManagers =
+      localLeads &&
+      localLeads
+        .map(el => {
+          // check if user selected 'add to my group' and take id out of array
+          if (userAsManager && el._id === userInfo.id) {
+            return null;
+          }
+          // check if current el is inside trainer's managers array and take id out of array
+          if (
+            checkedUserInfo.managers &&
+            checkedUserInfo.managers.includes(el._id)
+          ) {
+            return null;
+          }
+          return el;
+        })
+        .filter(el => el !== null);
+
+    console.log('avvvv', availableManagers);
+    console.log(this.state);
 
     const content = (
       <div style={{ maxWidth: '250px', margin: '0 auto' }}>
@@ -241,6 +282,7 @@ class AddTrainer extends Component {
     );
 
     const groupedLocalLeads = createGroupedLocalLeads(localLeads);
+    const groupedAvailabelManagers = createGroupedLocalLeads(availableManagers);
 
     return (
       <Wrapper>
@@ -253,21 +295,49 @@ class AddTrainer extends Component {
             visible={isEmailUnique === false}
             onOk={this.handleOk}
             onCancel={this.handleCancel}
-            title="Account already exists"
+            title="Trainer account already exists"
             confirmLoading={confirmLoading}
+            footer={[
+              <AntdButton key="back" onClick={this.handleCancel}>
+                Return
+              </AntdButton>,
+              <AntdButton
+                key="submit"
+                type="primary"
+                loading={confirmLoading}
+                onClick={this.handleOk}
+                disabled={
+                  !userAsManager && !Object.keys(additionalManager).length
+                }
+              >
+                Add
+              </AntdButton>,
+            ]}
           >
             <Paragraph>
               Good news, <Bold>{checkedUserInfo.name}</Bold> (
               {checkedUserInfo.email}) is already registered on the app!
             </Paragraph>
             {addingTrainerPopover}
-
             <Paragraph>
               You can either add the trainer to your group or choose a different
               person as the trainer&apos;s manager.
             </Paragraph>
+            <Paragraph>
+              <Bold style={{ color: 'red' }}>Important:</Bold>{' '}
+              <Bold>{checkedUserInfo.name}</Bold> is already registered in the
+              following groups:{' '}
+              <Ol>
+                {trainersManagers.map(({ name }) => (
+                  <li>
+                    <Bold>{name}</Bold>
+                  </li>
+                ))}
+              </Ol>
+            </Paragraph>
             <CheckboxWrapper>
               <Checkbox
+                disabled={trainerManagersIds.includes(userInfo.id)}
                 onChange={this.addUserAsManager}
                 style={{
                   textAlign: 'center',
@@ -279,6 +349,7 @@ class AddTrainer extends Component {
                 </span>
               </Checkbox>
               <Checkbox
+                disabled={!availableManagers.length}
                 onChange={this.onChangeCheckbox}
                 style={{
                   textAlign: 'center',
@@ -299,7 +370,7 @@ class AddTrainer extends Component {
                   placeholder="Select trainer manager/ local lead"
                   option="existing-trainer"
                   getFieldDecorator={getFieldDecorator}
-                  localLeads={groupedLocalLeads}
+                  localLeads={groupedAvailabelManagers}
                   handleSelectChange={this.addManager}
                 />
               </Fragment>

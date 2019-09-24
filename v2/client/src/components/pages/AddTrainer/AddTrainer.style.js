@@ -15,6 +15,7 @@ export const ContentWrapper = styled.div`
 export const CheckboxWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: space-between;
 `;
 
 export const H2 = styled.h2`
@@ -92,4 +93,8 @@ export const LabelDiv = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+`;
+
+export const Ol = styled.ol`
+  padding-left: 1.5rem;
 `;
