@@ -111,7 +111,7 @@ class AddTrainer extends Component {
     // set up managers array and run addTrainertoGroup action on each element
     const managers = [];
 
-    if (userAsManager) {
+    if (userAsManager && userInfo.id !== additionalManager.key) {
       managers.push({ key: userInfo.id, label: userInfo.name });
     }
     if (additionalManager.key) {
@@ -136,15 +136,37 @@ class AddTrainer extends Component {
   };
 
   handleEmailBlur = e => {
-    const { checkUniqeEmail: checkUniqeEmailActionCreator } = this.props;
+    const {
+      checkUniqeEmail: checkUniqeEmailActionCreator,
+      userInfo,
+    } = this.props;
+
     const { value } = e.target;
-    if (value) {
+
+    if (value && value.trim() !== userInfo.email) {
       checkUniqeEmailActionCreator(value);
     }
   };
 
+  validateEmailDupl = (rule, value, cb) => {
+    const { form, userInfo } = this.props;
+
+    if (userInfo.email === form.getFieldValue('email')) {
+      cb('You cannot select your own email!');
+    } else {
+      cb();
+    }
+  };
+
   handleSuccessOk = () => {
-    const { location } = this.props;
+    const {
+      location,
+      form,
+      resetUniqueEmail: resetUniqueEmailAction,
+      resetgroup: resetgroupAction,
+    } = this.props;
+
+    const { resetFields } = form;
     if (location.state) {
       history.push({
         pathname: '/create-session',
@@ -153,12 +175,7 @@ class AddTrainer extends Component {
     }
 
     this.setState({ confirmLoading: false });
-    const {
-      form,
-      resetUniqueEmail: resetUniqueEmailAction,
-      resetgroup: resetgroupAction,
-    } = this.props;
-    const { resetFields } = form;
+
     resetFields();
     resetUniqueEmailAction();
     resetgroupAction();
@@ -202,6 +219,7 @@ class AddTrainer extends Component {
       userInfo,
     } = this.props;
 
+    // gets all managers of a trainer
     const trainersManagers =
       localLeads &&
       localLeads
@@ -214,6 +232,8 @@ class AddTrainer extends Component {
 
     const trainerManagersIds = trainersManagers.map(({ _id }) => _id);
 
+    // gets all available managers of a trainer
+
     const availableManagers =
       localLeads &&
       localLeads
@@ -222,7 +242,7 @@ class AddTrainer extends Component {
           if (userAsManager && el._id === userInfo.id) {
             return null;
           }
-          // check if current el is inside trainer's managers array and take id out of array
+          // check if current manager is inside trainer's managers array and take id out of array
           if (
             checkedUserInfo.managers &&
             checkedUserInfo.managers.includes(el._id)
@@ -232,9 +252,6 @@ class AddTrainer extends Component {
           return el;
         })
         .filter(el => el !== null);
-
-    console.log('avvvv', availableManagers);
-    console.log(this.state);
 
     const content = (
       <div style={{ maxWidth: '250px', margin: '0 auto' }}>
@@ -383,11 +400,14 @@ class AddTrainer extends Component {
                 rules: [
                   {
                     type: 'email',
-                    message: 'The input is not valid E-mail!',
+                    message: 'The input is not valid email!',
                   },
                   {
                     required: true,
-                    message: 'Please input your E-mail!',
+                    message: 'Please input your email!',
+                  },
+                  {
+                    validator: this.validateEmailDupl,
                   },
                 ],
               })(
@@ -399,6 +419,7 @@ class AddTrainer extends Component {
                 />
               )}
             </Item>
+
             <Item hasFeedback style={{ margin: '20px auto 40px' }}>
               {getFieldDecorator('name', {
                 rules: [
