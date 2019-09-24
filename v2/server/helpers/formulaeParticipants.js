@@ -84,7 +84,7 @@ const checkAnswer = (...paths) => {
   return undefined;
 };
 
-const output = {
+const calculatedAnswersByCode = {
   FeedbackUserCapabilityB1: survey => {
     // (KnowB1+SkillB1)*5
     return (
@@ -172,6 +172,31 @@ const output = {
         5 || null
     );
   },
+  // for "in last week"
+  FeedbackUserB1: survey => {
+    // (B1/people)*100
+    return (
+      (checkAnswer(survey, 'B1', 'answer') +
+        checkAnswer(survey, 'people', 'answer')) *
+        100 || null
+    );
+  },
+  FeedbackUserB2: survey => {
+    // (B2/people)*100
+    return (
+      (checkAnswer(survey, 'B2', 'answer') +
+        checkAnswer(survey, 'people', 'answer')) *
+        100 || null
+    );
+  },
+  FeedbackUserB3: survey => {
+    // (B3/people)*100
+    return (
+      (checkAnswer(survey, 'B3', 'answer') +
+        checkAnswer(survey, 'people', 'answer')) *
+        100 || null
+    );
+  },
 };
 
 const calculateAverage = array => {
@@ -219,12 +244,12 @@ const calculator = (answers, allAnswers) => {
           categories: [
             {
               category: 'Capability',
-              value: output.FeedbackUserCapabilityB1(
+              value: calculatedAnswersByCode.FeedbackUserCapabilityB1(
                 answersBaseOnSurveyType[surveyType]
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
-                  output.FeedbackUserCapabilityB1(
+                  calculatedAnswersByCode.FeedbackUserCapabilityB1(
                     checkAnswer(otherUserAnswers, surveyType)
                   )
                 )
@@ -232,12 +257,12 @@ const calculator = (answers, allAnswers) => {
             },
             {
               category: 'Opportunity',
-              value: output.FeedbackUserOpportunityB1(
+              value: calculatedAnswersByCode.FeedbackUserOpportunityB1(
                 answersBaseOnSurveyType[surveyType]
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
-                  output.FeedbackUserOpportunityB1(
+                  calculatedAnswersByCode.FeedbackUserOpportunityB1(
                     checkAnswer(otherUserAnswers, surveyType)
                   )
                 )
@@ -245,12 +270,12 @@ const calculator = (answers, allAnswers) => {
             },
             {
               category: 'Opportunity',
-              value: output.FeedbackUserMotivationB1(
+              value: calculatedAnswersByCode.FeedbackUserMotivationB1(
                 answersBaseOnSurveyType[surveyType]
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
-                  output.FeedbackUserMotivationB1(
+                  calculatedAnswersByCode.FeedbackUserMotivationB1(
                     checkAnswer(otherUserAnswers, surveyType)
                   )
                 )
@@ -274,12 +299,12 @@ const calculator = (answers, allAnswers) => {
           categories: [
             {
               category: 'Capability',
-              value: output.FeedbackUserCapabilityB2(
+              value: calculatedAnswersByCode.FeedbackUserCapabilityB2(
                 answersBaseOnSurveyType[surveyType]
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
-                  output.FeedbackUserCapabilityB2(
+                  calculatedAnswersByCode.FeedbackUserCapabilityB2(
                     checkAnswer(otherUserAnswers, surveyType)
                   )
                 )
@@ -287,12 +312,12 @@ const calculator = (answers, allAnswers) => {
             },
             {
               category: 'Opportunity',
-              value: output.FeedbackUserOpportunityB2(
+              value: calculatedAnswersByCode.FeedbackUserOpportunityB2(
                 answersBaseOnSurveyType[surveyType]
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
-                  output.FeedbackUserOpportunityB2(
+                  calculatedAnswersByCode.FeedbackUserOpportunityB2(
                     checkAnswer(otherUserAnswers, surveyType)
                   )
                 )
@@ -300,12 +325,12 @@ const calculator = (answers, allAnswers) => {
             },
             {
               category: 'Opportunity',
-              value: output.FeedbackUserMotivationB2(
+              value: calculatedAnswersByCode.FeedbackUserMotivationB2(
                 answersBaseOnSurveyType[surveyType]
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
-                  output.FeedbackUserMotivationB2(
+                  calculatedAnswersByCode.FeedbackUserMotivationB2(
                     checkAnswer(otherUserAnswers, surveyType)
                   )
                 )
@@ -329,12 +354,12 @@ const calculator = (answers, allAnswers) => {
           categories: [
             {
               category: 'Capability',
-              value: output.FeedbackUserCapabilityB2(
+              value: calculatedAnswersByCode.FeedbackUserCapabilityB3(
                 answersBaseOnSurveyType[surveyType]
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
-                  output.FeedbackUserCapabilityB2(
+                  calculatedAnswersByCode.FeedbackUserCapabilityB3(
                     checkAnswer(otherUserAnswers, surveyType)
                   )
                 )
@@ -342,12 +367,12 @@ const calculator = (answers, allAnswers) => {
             },
             {
               category: 'Opportunity',
-              value: output.FeedbackUserOpportunityB2(
+              value: calculatedAnswersByCode.FeedbackUserOpportunityB3(
                 answersBaseOnSurveyType[surveyType]
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
-                  output.FeedbackUserOpportunityB2(
+                  calculatedAnswersByCode.FeedbackUserOpportunityB3(
                     checkAnswer(otherUserAnswers, surveyType)
                   )
                 )
@@ -355,12 +380,12 @@ const calculator = (answers, allAnswers) => {
             },
             {
               category: 'Opportunity',
-              value: output.FeedbackUserMotivationB2(
+              value: calculatedAnswersByCode.FeedbackUserMotivationB3(
                 answersBaseOnSurveyType[surveyType]
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
-                  output.FeedbackUserMotivationB2(
+                  calculatedAnswersByCode.FeedbackUserMotivationB3(
                     checkAnswer(otherUserAnswers, surveyType)
                   )
                 )
@@ -370,5 +395,69 @@ const calculator = (answers, allAnswers) => {
         })),
       },
     ],
+    nonCategorized: [
+      {
+        text:
+          'You suggested to people who needed it,  ways they could take action on their own mental health or wellbeing',
+        surveys: ['pre-day-1', 'follow-up-3-month', 'follow-up-6-month'].map(
+          surveyType => ({
+            surveyType: readableSurveysNamePairs[surveyType],
+
+            value: calculatedAnswersByCode.FeedbackUserB1(
+              answersBaseOnSurveyType[surveyType]
+            ),
+            average: calculateAverage(
+              allAnswers.map(otherUserAnswers =>
+                calculatedAnswersByCode.FeedbackUserB1(
+                  checkAnswer(otherUserAnswers, surveyType)
+                )
+              )
+            ),
+          })
+        ),
+      },
+      {
+        text:
+          'You had a conversation with people who needed it,  in which you developed a shared understanding of their mental health and wellbeing needs',
+        surveys: ['pre-day-1', 'follow-up-3-month', 'follow-up-6-month'].map(
+          surveyType => ({
+            surveyType: readableSurveysNamePairs[surveyType],
+
+            value: calculatedAnswersByCode.FeedbackUserB2(
+              answersBaseOnSurveyType[surveyType]
+            ),
+            average: calculateAverage(
+              allAnswers.map(otherUserAnswers =>
+                calculatedAnswersByCode.FeedbackUserB2(
+                  checkAnswer(otherUserAnswers, surveyType)
+                )
+              )
+            ),
+          })
+        ),
+      },
+      {
+        text:
+          'You used appropriate conversational methods to empower people who needed it, to make a change that addresses their mental health and wellbeing needs',
+        surveys: ['pre-day-1', 'follow-up-3-month', 'follow-up-6-month'].map(
+          surveyType => ({
+            surveyType: readableSurveysNamePairs[surveyType],
+
+            value: calculatedAnswersByCode.FeedbackUserB3(
+              answersBaseOnSurveyType[surveyType]
+            ),
+            average: calculateAverage(
+              allAnswers.map(otherUserAnswers =>
+                calculatedAnswersByCode.FeedbackUserB3(
+                  checkAnswer(otherUserAnswers, surveyType)
+                )
+              )
+            ),
+          })
+        ),
+      },
+    ],
   };
 };
+
+module.exports = calculator;
