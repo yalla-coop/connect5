@@ -344,14 +344,14 @@ class AddTrainer extends Component {
               <Bold style={{ color: 'red' }}>Important:</Bold>{' '}
               <Bold>{checkedUserInfo.name}</Bold> is already registered in the
               following groups:{' '}
-              <Ol>
-                {trainersManagers.map(({ name }) => (
-                  <li>
-                    <Bold>{name}</Bold>
-                  </li>
-                ))}
-              </Ol>
             </Paragraph>
+            <Ol>
+              {trainersManagers.map(({ _id, name }) => (
+                <li key={_id}>
+                  <Bold>{name}</Bold>
+                </li>
+              ))}
+            </Ol>
             <CheckboxWrapper>
               <Checkbox
                 disabled={trainerManagersIds.includes(userInfo.id)}

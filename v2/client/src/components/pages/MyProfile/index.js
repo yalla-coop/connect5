@@ -258,12 +258,16 @@ class MyProfile extends Component {
               onChange={this.handleChangeLocalLead}
             >
               {Object.keys(groupedLocalLeads).map(item => (
-                <OptGroup label={item}>
-                  {groupedLocalLeads[item].map(_localLead => {
-                    return (
-                      <Option value={_localLead._id}>{_localLead.name}</Option>
-                    );
-                  })}
+                <OptGroup key={`OptGroup${item.region}`} label={item}>
+                  {groupedLocalLeads[item]
+                    .filter(el => el.officialLocalLead === true)
+                    .map(_localLead => {
+                      return (
+                        <Option key={_localLead._id} value={_localLead._id}>
+                          {_localLead.name}
+                        </Option>
+                      );
+                    })}
                 </OptGroup>
               ))}
             </Select>

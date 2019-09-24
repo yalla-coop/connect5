@@ -59,6 +59,12 @@ module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
   ]);
 };
 
+module.exports.addTrainertoGroup = (localLeadId, trainerId) => {
+  return User.findByIdAndUpdate(localLeadId, {
+    $push: { trainersGroup: trainerId },
+  });
+};
+
 // remove trainer from a localLead group
 module.exports.removeLocalLeadFromUser = localLeadId => {
   return User.bulkWrite([

@@ -171,7 +171,7 @@ export default class TrainerList extends Component {
         <List>
           {dataList &&
             dataList.map(dataItem => (
-              <Row key={dataItem._id} to="">
+              <Row key={dataItem._id}>
                 <Name>{dataItem.name}</Name>
                 <ArrowWrapper onClick={() => this.toggleModal(dataItem)}>
                   <AntButton
