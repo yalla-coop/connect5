@@ -33,3 +33,9 @@ export const Registration = styled.p`
   font-weight: 300;
   margin-bottom: 1.5rem;
 `;
+
+export const HeaderDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 5px 0 0;
+`;
