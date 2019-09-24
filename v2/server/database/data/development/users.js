@@ -41,15 +41,15 @@ module.exports = async () => {
     //   region: regions[7],
     //   officialLocalLead: false,
     // },
-    // {
-    //   name: 'jane',
-    //   email: 'jane.Leech@portsmouthcc.gov.uk',
-    //   password: '123456',
-    //   role: 'localLead',
-    //   organization: 'Portsmouth council',
-    //   region: regions[7],
-    //   officialLocalLead: true,
-    // },
+    {
+      name: 'jane',
+      email: 'jane.Leech@portsmouthcc.gov.uk',
+      password: '123456',
+      role: 'localLead',
+      organization: 'Portsmouth council',
+      region: regions[7],
+      officialLocalLead: true,
+    },
     // {
     //   name: 'deborah',
     //   email: 'deborah.Lear@phe.gov.uk',
@@ -86,15 +86,15 @@ module.exports = async () => {
     //   region: regions[0],
     //   officialLocalLead: false,
     // },
-    // {
-    //   name: 'andra',
-    //   email: 'Andra.Chiscop@hee.nhs.uk',
-    //   password: '123456',
-    //   role: 'localLead',
-    //   organization: 'HEE',
-    //   region: regions[0],
-    //   officialLocalLead: true,
-    // },
+    {
+      name: 'andra',
+      email: 'Andra.Chiscop@hee.nhs.uk',
+      password: '123456',
+      role: 'localLead',
+      organization: 'HEE',
+      region: regions[0],
+      officialLocalLead: true,
+    },
   ];
 
   const storedLocalLeads = await User.create(localLeads);

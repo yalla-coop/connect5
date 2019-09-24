@@ -166,16 +166,18 @@ class MyProfile extends Component {
     });
 
     const groupedLocalLeads = {};
-    localLeadsList.forEach(item => {
-      groupedLocalLeads[item.region] = groupedLocalLeads[item.region]
-        ? groupedLocalLeads[item.region.toLowerCase()]
-        : [];
+    localLeadsList
+      .filter(item => item.officialLocalLead === true)
+      .forEach(item => {
+        groupedLocalLeads[item.region] = groupedLocalLeads[item.region]
+          ? groupedLocalLeads[item.region.toLowerCase()]
+          : [];
 
-      groupedLocalLeads[item.region].push({
-        name: captalizesName(item.name),
-        _id: item._id,
+        groupedLocalLeads[item.region].push({
+          name: captalizesName(item.name),
+          _id: item._id,
+        });
       });
-    });
 
     return (
       <Wrapper>

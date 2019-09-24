@@ -46,11 +46,11 @@ class LocalLeadsAndManagersList extends Component {
       return manager._id !== localLead;
     });
 
-    const officialLocalLead = trainerManagers.filter(manager => {
+    const [officialLocalLead] = trainerManagers.filter(manager => {
       return manager._id === localLead;
     });
 
-    if (!filterOfficalLocalLead.length && !officialLocalLead.length) {
+    if (!filterOfficalLocalLead.length && !officialLocalLead) {
       return <Spin />;
     }
     return (
@@ -66,12 +66,12 @@ class LocalLeadsAndManagersList extends Component {
         </TopInfo>
         <DetailsContent>
           <Detail>Local Lead Group</Detail>
-          <Owner>Owner: {officialLocalLead && officialLocalLead[0].name}</Owner>
+          <Owner>Owner: {officialLocalLead && officialLocalLead.name}</Owner>
           <Hint>
             It is required that you are part of your Local Lead’s group. If they
             are not your Local Lead any more, please edit your Local Lead in
             your{' '}
-            <StyledLink to={MY_PROFILE_URL} target="_balnk">
+            <StyledLink to={MY_PROFILE_URL} target="_blank">
               <span style={{ fontWeight: 'bold', textDecoration: 'underline' }}>
                 {' '}
                 Profile
