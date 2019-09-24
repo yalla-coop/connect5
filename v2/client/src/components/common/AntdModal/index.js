@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import styled from 'styled-components';
 import Icon from 'antd/lib/icon';
 import { borders } from '../../../theme';

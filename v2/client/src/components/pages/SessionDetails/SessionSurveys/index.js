@@ -8,7 +8,6 @@ import {
   updateEmails,
   sendEmails,
 } from '../../../../actions/groupSessionsAction';
-import AntdInfoModal from '../../../common/AntdModal';
 import {
   SessionSurveysWrapper,
   SessionSurveyContainer,

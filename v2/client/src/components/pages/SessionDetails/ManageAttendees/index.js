@@ -4,8 +4,6 @@ import { Icon } from 'antd';
 
 import { updateSessionAttendeesList as updateSessionAttendeesListAction } from '../../../../actions/sessionAction';
 
-import AntdModal from '../../../common/AntdModal';
-
 import {
   SessionTopDetailsWrapper,
   SubDetails,

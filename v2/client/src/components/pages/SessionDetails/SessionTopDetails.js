@@ -13,8 +13,6 @@ import {
   SubDetailsTitle,
 } from './SessionDetails.Style';
 
-import AntdModal from '../../common/AntdModal';
-
 class SessionTopDetails extends Component {
   render() {
     const { sessionDetails } = this.props;
