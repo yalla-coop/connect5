@@ -7,12 +7,12 @@ import { Alert, Spin } from 'antd';
 import { connect } from 'react-redux';
 
 import { fetchSurveyBehavioral as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
+import Explanation from './Explanation';
 
 import {
   Wrapper,
   ChartWrapper,
   Description,
-  Title,
   ContentWrapper,
   WhiteWrapper,
 } from './BehavioralInsight.style';
@@ -58,13 +58,10 @@ class BehavioralSurveyResults extends Component {
 
     return (
       <Wrapper>
+        <Explanation />
         <ContentWrapper>
           {loaded ? (
             <>
-              <Title>
-                Behaviour is influenced by our perceptions of our capability,
-                opportunity and motivation for that behaviour
-              </Title>
               {Object.keys(data).length ? (
                 Object.entries(data).map(pairOfArray => (
                   <ChartWrapper key={pairOfArray[0]}>

@@ -12,8 +12,10 @@ module.exports.update = (id, data) => {
   return User.updateOne({ _id: id }, { $set: data });
 };
 
-module.exports.addManagerToTrainer = (id, localLeadId) => {
-  return User.updateOne({ _id: id }, { $addToSet: { managers: localLeadId } });
+module.exports.addManagerToTrainer = (trainerId, localLeadId) => {
+  return User.findByIdAndUpdate(trainerId, {
+    $push: { managers: localLeadId },
+  });
 };
 
 module.exports.getRegistrationDate = async id => {

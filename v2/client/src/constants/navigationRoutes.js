@@ -19,7 +19,8 @@ export const TRAINER_RESULTS_URL = '/trainer-results/:trainerId?';
 export const TRAINER_SESSIONS_URL = '/trainer-sessions/trainerId?';
 export const TRAINER_FEEDBACK_URL = '/feedback';
 export const TRAINER_VIEW_PARTICIPANT = '/participant/:PIN';
-export const LOCAL_LEADS_AND_MANAGERS = '/localLeads-and-managers';
+export const TRAINER_MANAGERS_GROUPS = '/trainer-managers-groups';
+export const REMOVE_TRAINER_FROM_GROUP = '/remove/:localLead/:trainer';
 
 // local lead & admin
 // for menu & navbar

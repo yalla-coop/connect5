@@ -10,7 +10,12 @@ import {
 
 import { logout } from '../../../actions/authAction';
 import { deleteAccountAction } from '../../../actions/deleteAccountAction';
-import { LOCAL_LEADS_AND_MANAGERS } from '../../../constants/navigationRoutes';
+import { TRAINER_MANAGERS_GROUPS } from '../../../constants/navigationRoutes';
+
+import {
+  createGroupedLocalLeads,
+  captalizesName,
+} from '../../../helpers/createGroupedLocalLeads';
 
 // STYLING
 import {
@@ -27,8 +32,6 @@ import {
 import Header from '../../common/Header';
 
 const { confirm } = Modal;
-
-const captalizesName = name => name && name[0].toUpperCase() + name.substr(1);
 
 const { Option, OptGroup } = Select;
 
@@ -165,19 +168,7 @@ class MyProfile extends Component {
       return item._id === localLead;
     });
 
-    const groupedLocalLeads = {};
-    localLeadsList
-      .filter(item => item.officialLocalLead === true)
-      .forEach(item => {
-        groupedLocalLeads[item.region] = groupedLocalLeads[item.region]
-          ? groupedLocalLeads[item.region.toLowerCase()]
-          : [];
-
-        groupedLocalLeads[item.region].push({
-          name: captalizesName(item.name),
-          _id: item._id,
-        });
-      });
+    const groupedLocalLeads = createGroupedLocalLeads(localLeadsList);
 
     return (
       <Wrapper>
@@ -245,7 +236,7 @@ class MyProfile extends Component {
                 <BoldSpan>Groups I belong to: </BoldSpan>
               </Detail>
               <Detail>
-                <StyledLink to={LOCAL_LEADS_AND_MANAGERS}>
+                <StyledLink to={TRAINER_MANAGERS_GROUPS}>
                   <span style={{ fontWeight: 'bold' }}>View</span>
                 </StyledLink>
               </Detail>
@@ -281,12 +272,16 @@ class MyProfile extends Component {
               onChange={this.handleChangeLocalLead}
             >
               {Object.keys(groupedLocalLeads).map(item => (
-                <OptGroup label={item}>
-                  {groupedLocalLeads[item].map(_localLead => {
-                    return (
-                      <Option value={_localLead._id}>{_localLead.name}</Option>
-                    );
-                  })}
+                <OptGroup key={`OptGroup${item.region}`} label={item}>
+                  {groupedLocalLeads[item]
+                    .filter(el => el.officialLocalLead === true)
+                    .map(_localLead => {
+                      return (
+                        <Option key={_localLead._id} value={_localLead._id}>
+                          {_localLead.name}
+                        </Option>
+                      );
+                    })}
                 </OptGroup>
               ))}
             </Select>

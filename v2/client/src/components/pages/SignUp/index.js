@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Checkbox, Modal } from 'antd';
+import { Checkbox, Modal, Popover } from 'antd';
 
 import { fetchLocalLeads } from '../../../actions/users';
 import { signUpTrainer, checkUniqeEmail } from '../../../actions/authAction';
+
+import { createGroupedLocalLeads } from '../../../helpers/createGroupedLocalLeads';
 
 import Button from '../../common/Button';
 import HumburgerMenu from '../../common/Menu';
@@ -24,7 +26,7 @@ import {
   AnotherLink,
 } from './SignUp.style';
 
-const { Option } = Select;
+const { Option, OptGroup } = Select;
 
 const regions = [
   'North East',
@@ -185,6 +187,26 @@ class SignUp extends Component {
       return null;
     }
 
+    const content = (
+      <div style={{ maxWidth: '250px', margin: '0 auto' }}>
+        <h3 style={{ 'font-weight': '400', 'font-size': '1.2rem' }}>
+          Are you a trainer, trainer manager or official local lead?
+        </h3>
+        <p>
+          In case <strong>you are managing groups of trainers</strong> (e.g.
+          organising their sessions) please select the option "I'm managing
+          groups of trainers". If you are acting as{' '}
+          <strong>an official Connect 5 local lead</strong>, please also check
+          the follow up box "I'm an official Connect 5 Local Lead". If you're
+          registering as a <strong>Connect 5 Trainer</strong> please don't check
+          any of the boxes and select your official Connect 5 local lead from
+          the dropdown below.
+        </p>
+      </div>
+    );
+
+    const groupedLocalLeads = createGroupedLocalLeads(localLeads);
+
     return (
       <>
         {isDeskTop && <HumburgerMenu dark="dark" />}
@@ -300,6 +322,18 @@ class SignUp extends Component {
                 )}
               </Item>
 
+              <Popover content={content} style={{ marginRight: '2rem' }}>
+                <button
+                  type="button"
+                  style={{ background: 'none', border: 'none' }}
+                >
+                  <i
+                    className="fas fa-question-circle"
+                    style={{ color: '#9FCE67' }}
+                  />
+                </button>
+              </Popover>
+
               <Checkbox
                 onChange={onChangeCheckbox}
                 style={{
@@ -309,8 +343,7 @@ class SignUp extends Component {
                 }}
               >
                 <span style={{ fontSize: '.9rem' }}>
-                  I{"'"}m acting as local lead and/or I manage groups of
-                  trainers
+                  <strong>I'm managing groups of trainers</strong>
                 </span>
               </Checkbox>
 
@@ -323,7 +356,7 @@ class SignUp extends Component {
                   }}
                 >
                   <span style={{ fontSize: '.9rem' }}>
-                    I{"'"}m an official Connect 5 Local Lead
+                    <strong>I{"'"}m an official Connect 5 Local Lead</strong>
                   </span>
                 </Checkbox>
               )}
@@ -343,12 +376,21 @@ class SignUp extends Component {
                       },
                     ],
                   })(
-                    <Select placeholder="Local Lead" size="large">
-                      {localLeads &&
-                        localLeads.map(({ name, _id }) => (
-                          <Option value={_id} key={_id}>
-                            {name}
-                          </Option>
+                    <Select
+                      placeholder="Official Connect 5 Local Lead"
+                      size="large"
+                    >
+                      {groupedLocalLeads &&
+                        Object.keys(groupedLocalLeads).map(item => (
+                          <OptGroup label={item}>
+                            {groupedLocalLeads[item].map(_localLead => {
+                              return (
+                                <Option value={_localLead._id}>
+                                  {_localLead.name}
+                                </Option>
+                              );
+                            })}
+                          </OptGroup>
                         ))}
                     </Select>
                   )}

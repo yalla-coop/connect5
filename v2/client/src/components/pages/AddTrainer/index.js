@@ -1,12 +1,14 @@
 /* eslint-disable react/no-did-update-set-state */
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Modal } from 'antd';
+import { Checkbox, Modal, Popover, Button as AntdButton } from 'antd';
 import history from '../../../history';
 
 import { fetchLocalLeads, addTrainerToGroup } from '../../../actions/users';
 import { checkUniqeEmail } from '../../../actions/authAction';
 import { resetgroup, resetUniqueEmail } from '../../../actions/reset';
+
+import { createGroupedLocalLeads } from '../../../helpers/createGroupedLocalLeads';
 
 import Button from '../../common/Button';
 import Header from '../../common/Header';
@@ -22,9 +24,13 @@ import {
   Paragraph,
   BackContainer,
   BackLink,
+  CheckboxWrapper,
+  H2,
+  LabelDiv,
+  Ol,
 } from './AddTrainer.style';
 
-const { Option } = Select;
+const { Option, OptGroup } = Select;
 
 const regions = [
   'North East',
@@ -38,14 +44,33 @@ const regions = [
   'South West',
 ];
 
+const iniitialState = {
+  confirmLoading: false,
+  selectOtherGroup: false,
+  officialLocalLead: '',
+  officialLocalLeadSelect: '',
+  userAsManager: false,
+  additionalManager: '',
+};
+
 class AddTrainer extends Component {
-  state = { confirmLoading: false };
+  state = iniitialState;
+
+  componentWillMount() {
+    const { group } = this.props;
+    // reload page if errors in state
+    if (group.error && group.error.length) {
+      window.location.reload();
+    }
+  }
 
   componentDidMount() {
     const { isAuthenticated } = this.props;
+
     if (!isAuthenticated) {
       return history.push('/');
     }
+
     const { fetchLocalLeads: fetchLocalLeadsActionCreator } = this.props;
     return fetchLocalLeadsActionCreator();
   }
@@ -68,38 +93,80 @@ class AddTrainer extends Component {
   };
 
   handleSubmit = e => {
+    e.preventDefault();
+
     const {
       form,
       addTrainerToGroup: addTrainerToGroupAction,
       isEmailUnique,
+      userInfo,
     } = this.props;
-    e.preventDefault();
+
+    const {
+      userAsManager,
+      additionalManager,
+      officialLocalLeadSelect,
+    } = this.state;
+
+    // set up managers array and run addTrainertoGroup action on each element
+    const managers = [];
+
+    if (userAsManager && userInfo.id !== additionalManager.key) {
+      managers.push({ key: userInfo.id, label: userInfo.name });
+    }
+    if (additionalManager.key) {
+      managers.push(additionalManager);
+    }
+    if (officialLocalLeadSelect) {
+      managers.push(officialLocalLeadSelect);
+    }
+
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        addTrainerToGroupAction(
-          {
-            ...values,
-            newUser: isEmailUnique,
-            localLead: values.localLead.key,
-            localLeadName: values.localLead.label,
-          },
-          // callback function to be called when response come back
-          this.handleSuccessOk
-        );
+        addTrainerToGroupAction({
+          ...values,
+          newUser: isEmailUnique,
+          managers: managers.length > 0 && managers,
+        });
+
+        // callback function to be called when response come back
+        this.handleSuccessOk();
       }
     });
   };
 
   handleEmailBlur = e => {
-    const { checkUniqeEmail: checkUniqeEmailActionCreator } = this.props;
+    const {
+      checkUniqeEmail: checkUniqeEmailActionCreator,
+      userInfo,
+    } = this.props;
+
     const { value } = e.target;
-    if (value) {
+
+    if (value && value.trim() !== userInfo.email) {
       checkUniqeEmailActionCreator(value);
     }
   };
 
+  validateEmailDupl = (rule, value, cb) => {
+    const { form, userInfo } = this.props;
+
+    if (userInfo.email === form.getFieldValue('email')) {
+      cb('You cannot select your own email!');
+    } else {
+      cb();
+    }
+  };
+
   handleSuccessOk = () => {
-    const { location } = this.props;
+    const {
+      location,
+      form,
+      resetUniqueEmail: resetUniqueEmailAction,
+      resetgroup: resetgroupAction,
+    } = this.props;
+
+    const { resetFields } = form;
     if (location.state) {
       history.push({
         pathname: '/create-session',
@@ -108,26 +175,131 @@ class AddTrainer extends Component {
     }
 
     this.setState({ confirmLoading: false });
-    const {
-      form,
-      resetUniqueEmail: resetUniqueEmailAction,
-      resetgroup: resetgroupAction,
-    } = this.props;
-    const { resetFields } = form;
+
     resetFields();
     resetUniqueEmailAction();
     resetgroupAction();
   };
 
+  // handles checkboxes to add trainer managers
+
+  onChangeCheckbox = e => {
+    this.setState({
+      selectOtherGroup: e.target.checked,
+      additionalManager: '',
+    });
+  };
+
+  addUserAsManager = e => {
+    this.setState({ userAsManager: e.target.checked });
+  };
+
+  addManager = manager => {
+    this.setState({ additionalManager: manager });
+  };
+
+  addOfficialLocalLead = localLead => {
+    this.setState({ officialLocalLeadSelect: localLead });
+  };
+
   render() {
-    const { confirmLoading } = this.state;
+    const {
+      confirmLoading,
+      selectOtherGroup,
+      userAsManager,
+      additionalManager,
+    } = this.state;
+
     const {
       form: { getFieldDecorator },
       localLeads,
       checkedUserInfo,
       isEmailUnique,
       addTrainerLoading,
+      userInfo,
     } = this.props;
+
+    // gets all managers of a trainer
+    const trainersManagers =
+      localLeads &&
+      localLeads
+        .map(({ _id, name }) =>
+          checkedUserInfo.managers && checkedUserInfo.managers.includes(_id)
+            ? { _id, name }
+            : null
+        )
+        .filter(el => el !== null);
+
+    const trainerManagersIds = trainersManagers.map(({ _id }) => _id);
+
+    // gets all available managers of a trainer
+
+    const availableManagers =
+      localLeads &&
+      localLeads
+        .map(el => {
+          // check if user selected 'add to my group' and take id out of array
+          if (userAsManager && el._id === userInfo.id) {
+            return null;
+          }
+          // check if current manager is inside trainer's managers array and take id out of array
+          if (
+            checkedUserInfo.managers &&
+            checkedUserInfo.managers.includes(el._id)
+          ) {
+            return null;
+          }
+          return el;
+        })
+        .filter(el => el !== null);
+
+    const content = (
+      <div style={{ maxWidth: '250px', margin: '0 auto' }}>
+        <h3 style={{ fontWeight: '400', fontSize: '1.2rem' }}>
+          This is how it works:
+        </h3>
+        <p>
+          You can choose to{' '}
+          <strong>
+            register a new trainer and add him/ her to several groups
+          </strong>
+          . In case the <strong>trainer is already registered</strong> on the
+          app and/ or is already part of respective groups you will get a
+          notfication. <strong>You can add trainers to multiple groups</strong>.
+          You can then set up sessions for this trainer and view related session
+          feedback. Once you've added a trainer he/ she will get an{' '}
+          <strong>
+            email with login details and a notification to what group(s) he/ she
+            was added to
+          </strong>
+          .
+        </p>{' '}
+        <p>
+          <strong>Note:</strong> Trainers can always login and remove themselves
+          from groups.
+        </p>
+      </div>
+    );
+    const addingTrainerPopover = (
+      <LabelDiv>
+        <H2>Adding a trainer to groups</H2>
+        <Popover content={content} style={{ marginRight: '2rem' }}>
+          <button type="button" style={{ background: 'none', border: 'none' }}>
+            <i
+              className="fas fa-question-circle"
+              style={{
+                color: '#9FCE67',
+                marginLeft: '1rem',
+                marginBottom: '0.7rem',
+              }}
+            />
+          </button>
+        </Popover>
+      </LabelDiv>
+    );
+
+    const groupedLocalLeads = createGroupedLocalLeads(localLeads);
+    const groupedAvailabelManagers = createGroupedLocalLeads(availableManagers);
 
     return (
       <Wrapper>
@@ -140,22 +312,85 @@ class AddTrainer extends Component {
             visible={isEmailUnique === false}
             onOk={this.handleOk}
             onCancel={this.handleCancel}
-            title="Account already exists"
+            title="Trainer account already exists"
             confirmLoading={confirmLoading}
+            footer={[
+              <AntdButton key="back" onClick={this.handleCancel}>
+                Return
+              </AntdButton>,
+              <AntdButton
+                key="submit"
+                type="primary"
+                loading={confirmLoading}
+                onClick={this.handleOk}
+                disabled={
+                  !userAsManager && !Object.keys(additionalManager).length
+                }
+              >
+                Add
+              </AntdButton>,
+            ]}
           >
             <Paragraph>
               Good news, <Bold>{checkedUserInfo.name}</Bold> (
-              <Bold>{checkedUserInfo.email}</Bold>) has created an account for
-              themselves already.
+              {checkedUserInfo.email}) is already registered on the app!
+            </Paragraph>
+            {addingTrainerPopover}
+            <Paragraph>
+              You can either add the trainer to your group or choose a different
+              person as the trainer&apos;s manager.
             </Paragraph>
             <Paragraph>
-              Would you like to add this trainer to your group?
+              <Bold style={{ color: 'red' }}>Important:</Bold>{' '}
+              <Bold>{checkedUserInfo.name}</Bold> is already registered in the
+              following groups:{' '}
             </Paragraph>
-            {localLeads && (
-              <LocalLeadSelect
-                getFieldDecorator={getFieldDecorator}
-                localLeads={localLeads}
-              />
+            <Ol>
+              {trainersManagers.map(({ _id, name }) => (
+                <li key={_id}>
+                  <Bold>{name}</Bold>
+                </li>
+              ))}
+            </Ol>
+            <CheckboxWrapper>
+              <Checkbox
+                disabled={trainerManagersIds.includes(userInfo.id)}
+                onChange={this.addUserAsManager}
+                style={{
+                  textAlign: 'center',
+                  marginBottom: '24px',
+                }}
+              >
+                <span style={{ fontSize: '1rem', fontWeight: '700' }}>
+                  Add <Bold>{checkedUserInfo.name}</Bold> to my group
+                </span>
+              </Checkbox>
+              <Checkbox
+                disabled={!availableManagers.length}
+                onChange={this.onChangeCheckbox}
+                style={{
+                  textAlign: 'center',
+                  marginBottom: '24px',
+                }}
+              >
+                <span style={{ fontSize: '1rem', fontWeight: '700' }}>
+                  Add <Bold>{checkedUserInfo.name}</Bold> to another group
+                </span>
+              </Checkbox>
+            </CheckboxWrapper>
+            {localLeads && selectOtherGroup && (
+              <Fragment>
+                <Paragraph>
+                  Please select a local lead or trainer manager
+                </Paragraph>
+                <OtherGroupSelect
+                  placeholder="Select trainer manager/ local lead"
+                  option="existing-trainer"
+                  getFieldDecorator={getFieldDecorator}
+                  localLeads={groupedAvailabelManagers}
+                  handleSelectChange={this.addManager}
+                />
+              </Fragment>
             )}
           </Modal>
 
@@ -165,11 +400,14 @@ class AddTrainer extends Component {
                 rules: [
                   {
                     type: 'email',
-                    message: 'The input is not valid E-mail!',
+                    message: 'The input is not valid email!',
                   },
                   {
                     required: true,
-                    message: 'Please input your E-mail!',
+                    message: 'Please input your email!',
+                  },
+                  {
+                    validator: this.validateEmailDupl,
                   },
                 ],
               })(
@@ -181,6 +419,7 @@ class AddTrainer extends Component {
                 />
               )}
             </Item>
+
             <Item hasFeedback style={{ margin: '20px auto 40px' }}>
               {getFieldDecorator('name', {
                 rules: [
@@ -226,12 +465,72 @@ class AddTrainer extends Component {
               </Item>
             </div>
             {(isEmailUnique || isEmailUnique === null) && localLeads && (
-              <LocalLeadSelect
-                getFieldDecorator={getFieldDecorator}
-                localLeads={localLeads}
-              />
+              <CheckboxWrapper>
+                {addingTrainerPopover}
+                <Paragraph>
+                  <Bold>Step 1:</Bold> Select the official local lead managing
+                  this trainer (required).
+                </Paragraph>
+                <OfficialLocalLeadSelect
+                  placeholder="Official Connect 5 Local Lead"
+                  option="new-trainer"
+                  getFieldDecorator={getFieldDecorator}
+                  localLeads={groupedLocalLeads}
+                  handleSelectChange={this.addOfficialLocalLead}
+                />
+              </CheckboxWrapper>
             )}
+            {!userInfo.officialLocalLead && (
+              <CheckboxWrapper>
+                <Paragraph>
+                  <Bold>Step 2:</Bold> Add the trainer to your own group of
+                  trainers to manage sessions and view results (optional).
+                </Paragraph>
 
+                <Checkbox
+                  onChange={this.addUserAsManager}
+                  style={{
+                    textAlign: 'center',
+                    marginBottom: '24px',
+                  }}
+                >
+                  <span style={{ fontSize: '1rem', fontWeight: '700' }}>
+                    Add trainer to my group
+                  </span>
+                </Checkbox>
+              </CheckboxWrapper>
+            )}
+            <CheckboxWrapper>
+              <Paragraph>
+                <Bold>Step {userInfo.officialLocalLead ? '2' : '3'}:</Bold> Add
+                trainer to a group managed by someone else (optional).
+              </Paragraph>
+              <Checkbox
+                onChange={this.onChangeCheckbox}
+                style={{
+                  textAlign: 'center',
+                  marginBottom: '24px',
+                }}
+              >
+                <span style={{ fontSize: '1rem', fontWeight: '700' }}>
+                  Add trainer to another group
+                </span>
+              </Checkbox>
+            </CheckboxWrapper>
+            {selectOtherGroup && (
+              <Fragment>
+                <Paragraph>
+                  Please select a local lead or trainer manager
+                </Paragraph>
+                <OtherGroupSelect
+                  placeholder="Select trainer manager/ local lead"
+                  option="existing-trainer"
+                  getFieldDecorator={getFieldDecorator}
+                  localLeads={groupedLocalLeads}
+                  handleSelectChange={this.addManager}
+                />
+              </Fragment>
+            )}
             <Item as="div" style={{ margin: '20px auto 40px', height: '50px' }}>
               <Button
                 type="primary"
@@ -250,7 +549,11 @@ class AddTrainer extends Component {
   }
 }
 
-const LocalLeadSelect = ({ getFieldDecorator, localLeads }) => (
+const OfficialLocalLeadSelect = ({
+  getFieldDecorator,
+  localLeads,
+  handleSelectChange,
+}) => (
   <div className="add-trainer__select">
     <Item style={{ margin: '20px auto 40px', height: '50px' }}>
       {getFieldDecorator('localLead', {
@@ -261,15 +564,52 @@ const LocalLeadSelect = ({ getFieldDecorator, localLeads }) => (
           },
         ],
       })(
-        <Select placeholder="Local Lead" size="large" labelInValue>
-          {localLeads &&
-            localLeads.map(({ name, _id }) => (
-              <Option value={_id} key={_id}>
-                {name}
-              </Option>
-            ))}
+        <Select
+          placeholder="Please select the official local lead"
+          size="large"
+          labelInValue
+          onChange={handleSelectChange}
+        >
+          {Object.keys(localLeads).map(item => (
+            <OptGroup key={`OptGroup${item.region}`} label={item}>
+              {localLeads[item]
+                .filter(el => el.officialLocalLead === true)
+                .map(_localLead => {
+                  return (
+                    <Option key={_localLead._id} value={_localLead._id}>
+                      {_localLead.name}
+                    </Option>
+                  );
+                })}
+            </OptGroup>
+          ))}
         </Select>
       )}
+    </Item>
+  </div>
+);
+
+const OtherGroupSelect = ({ localLeads, handleSelectChange }) => (
+  <div className="add-trainer__select">
+    <Item style={{ margin: '20px auto 40px', height: '50px' }}>
+      <Select
+        placeholder="Select trainer manager/ local lead"
+        size="large"
+        labelInValue
+        onChange={handleSelectChange}
+      >
+        {Object.keys(localLeads).map(item => (
+          <OptGroup key={`OptGroup2${item.region}`} label={item}>
+            {localLeads[item].map(_localLead => {
+              return (
+                <Option key={_localLead._id} value={_localLead._id}>
+                  {_localLead.name}
+                </Option>
+              );
+            })}
+          </OptGroup>
+        ))}
+      </Select>
     </Item>
   </div>
 );
@@ -279,6 +619,7 @@ const mapStateToProps = state => {
     localLeads: state.fetchedData.localLeadsList,
     isAuthenticated: state.auth.isAuthenticated,
     isEmailUnique: state.auth.isEmailUnique,
+    userInfo: state.auth,
     checkedUserInfo: state.auth.checkedUserInfo,
     group: state.groups,
     addTrainerLoading: state.loading.addTrainerLoading,

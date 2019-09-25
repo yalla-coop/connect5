@@ -3,7 +3,7 @@ const User = require('./../../../models/User');
 
 module.exports.getAllLocalLeads = () => User.find({ role: 'localLead' });
 
-module.exports.addTrainertoGroup = (localLeadId, trainerId) => {
+module.exports.addTrainertoLocalLeadGroup = (localLeadId, trainerId) => {
   return User.findByIdAndUpdate(localLeadId, {
     $push: { trainersGroup: trainerId },
   });
@@ -14,6 +14,35 @@ module.exports.getLocalLeadsNames = (oldLocalLeadId, newLocalLeadId) => {
 
   return User.find({ _id: { $in: ids } });
 };
+
+module.exports.addTrainerToGroups = async (managers, trainer) => {
+  const bulkOp = managers.map(({ key }) => {
+    return {
+      updateOne: {
+        filter: { _id: mongoose.Types.ObjectId(key) },
+        update: { $addToSet: { trainersGroup: trainer } },
+        upsert: true,
+      },
+    };
+  });
+
+  return User.bulkWrite(bulkOp);
+};
+
+module.exports.addManagersToTrainer = (managers, trainerId) => {
+  const bulkOp = managers.map(({ key }) => {
+    return {
+      updateOne: {
+        filter: { _id: mongoose.Types.ObjectId(trainerId) },
+        update: { $addToSet: { managers: mongoose.Types.ObjectId(key) } },
+      },
+    };
+  });
+
+  return User.bulkWrite(bulkOp);
+};
+
+// remove trainer from a localLead group
 
 // remove trainer from a localLead group
 module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
@@ -30,11 +59,17 @@ module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
       updateOne: {
         filter: { _id: trainerId },
         update: {
-          $set: { localLead: mongoose.Types.ObjectId(localLeadId) },
+          $pullAll: { managers: [mongoose.Types.ObjectId(localLeadId)] },
         },
       },
     },
   ]);
+};
+
+module.exports.addTrainertoGroup = (localLeadId, trainerId) => {
+  return User.findByIdAndUpdate(localLeadId, {
+    $push: { trainersGroup: trainerId },
+  });
 };
 
 // remove trainer from a localLead group

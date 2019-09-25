@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { colors } from '../../../theme';
 
 export const Wrapper = styled.div`
   font-family: Roboto;
@@ -85,4 +86,18 @@ export const AddEmailsButton = styled.button`
   font-weight: bold;
   font-size: 16px;
   line-height: 19px;
+`;
+
+export const BackLink = styled.button`
+  border: none;
+  background: none;
+  color: ${colors.lightPrimary};
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+
+  :focus,
+  :hover {
+    text-decoration: underline;
+  }
 `;

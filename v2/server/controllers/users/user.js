@@ -103,6 +103,21 @@ const getLocalLeadsTrainerList = async (req, res, next) => {
   }
 };
 
+const getLocalLeadDetails = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const localLead = await User.findById(id);
+    const localLeadDetails = {
+      name: localLead.name,
+      organization: localLead.organization,
+    };
+    return res.status(200).json(localLeadDetails);
+  } catch (err) {
+    return next(boom.badImplementation(err));
+  }
+};
+
 const getAllTrainersAndLeads = async (req, res, next) => {
   // NEED TO MAKE SURE WE PUT THIS THROUGH AUTH SO ONLY ADMIN CAN ACCESS
   const { user } = req;
@@ -129,4 +144,5 @@ module.exports = {
   getListOfTrainers,
   getLocalLeadsTrainerList,
   getAllTrainersAndLeads,
+  getLocalLeadDetails,
 };

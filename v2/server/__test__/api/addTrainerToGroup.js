@@ -16,7 +16,7 @@ describe('Tesing for addTrainerToGroup route', () => {
     await mongoose.disconnect();
   });
 
-  test('test with adding new trainer', async done => {
+  test('test with adding new trainer to official local lead', async done => {
     const localLead = await User.findOne({ email: 'nisha.sharma@phe.gov.uk' });
 
     const localLeadLoginData = {
@@ -26,11 +26,11 @@ describe('Tesing for addTrainerToGroup route', () => {
 
     const data = {
       email: 'new-trainer@connnect5.com',
-      name: 'New',
+      name: 'New Trainer',
       region: 'North East',
-      localLead: localLead._id,
-      localLeadName: localLead.name,
+      localLead: { key: localLead._id, label: localLead.name },
       newUser: true,
+      managers: [{ key: localLead._id, label: localLead.name }],
     };
 
     request(app)
@@ -46,6 +46,9 @@ describe('Tesing for addTrainerToGroup route', () => {
           .send(data)
           .expect(200)
           .end(async (error, response) => {
+            expect(response.body).toBeDefined();
+            expect(response.body.errors.length).toBe(0);
+            expect(response.body.managers[0]).toBe(localLead.name);
             const updatedLocalLead = await User.findOne({
               email: 'nisha.sharma@phe.gov.uk',
             });
@@ -56,6 +59,9 @@ describe('Tesing for addTrainerToGroup route', () => {
 
             // new trainer must be stored in DB
             expect(createdTrainer.role).toBe('trainer');
+            expect(createdTrainer.managers[0].toString()).toBe(
+              localLead._id.toString()
+            );
 
             // new trainer must be belong to the local lead we sent
             expect(createdTrainer.localLead).toEqual(localLead._id);
@@ -64,28 +70,36 @@ describe('Tesing for addTrainerToGroup route', () => {
             expect(localLead.trainersGroup).toHaveLength(4);
             expect(updatedLocalLead.trainersGroup).toHaveLength(5);
 
-            // success message
-            expect(response.body.success).toMatch(/New has been added/);
             done(error);
           });
       });
   });
 
-  test('test with exists trainer', async done => {
-    const localLead = await User.findOne({ email: 'clare.baguley@hee.nhs.uk' });
+  test('test with adding new trainer to 3 groups', async done => {
+    const trainerManagerOne = await User.findOne({
+      email: 'tez.cook@hants.gov.uk',
+    });
+    const trainerManagerTwo = await User.findOne({
+      email: 'sara.moreland@medway.gov.uk',
+    });
+    const localLead = await User.findOne({ email: 'nisha.sharma@phe.gov.uk' });
 
     const localLeadLoginData = {
-      email: 'clare.baguley@hee.nhs.uk',
+      email: 'tez.cook@hants.gov.uk',
       password: '123456',
     };
 
-    const trainer = await User.findOne({ role: 'trainer' });
-
     const data = {
-      email: trainer.email,
-      localLead: localLead._id,
-      localLeadName: localLead.name,
-      newUser: false,
+      email: 'newer-trainer@connnect5.com',
+      name: 'New Trainer',
+      region: 'North East',
+      localLead: { key: localLead._id, label: localLead.name },
+      newUser: true,
+      managers: [
+        { key: localLead._id, label: localLead.name },
+        { key: trainerManagerOne._id, label: trainerManagerOne.name },
+        { key: trainerManagerTwo._id, label: trainerManagerTwo.name },
+      ],
     };
 
     request(app)
@@ -101,30 +115,96 @@ describe('Tesing for addTrainerToGroup route', () => {
           .send(data)
           .expect(200)
           .end(async (error, response) => {
+            expect(response.body).toBeDefined();
+            expect(response.body.errors.length).toBe(0);
+            expect(response.body.managers[2].toString()).toBe(
+              trainerManagerTwo.name.toString()
+            );
             const updatedLocalLead = await User.findOne({
-              email: 'clare.baguley@hee.nhs.uk',
+              email: 'nisha.sharma@phe.gov.uk',
             });
 
-            const updatedTrainer = await User.findOne({
-              email: trainer.email,
+            const updatedTrainerManagerOne = await User.findOne({
+              email: 'tez.cook@hants.gov.uk',
+            });
+            const updatedTrainerManagerTwo = await User.findOne({
+              email: 'sara.moreland@medway.gov.uk',
+            });
+
+            const createdTrainer = await User.findOne({
+              email: 'newer-trainer@connnect5.com',
             });
 
             // new trainer must be stored in DB
-            expect(updatedTrainer.role).toBe('trainer');
+            expect(createdTrainer.role).toBe('trainer');
 
             // new trainer must be belong to the local lead we sent
-            expect(updatedTrainer.localLead.toString()).toBe(
-              trainer.localLead.toString()
-            );
+            expect(createdTrainer.localLead).toEqual(localLead._id);
 
             // local lead group must hove new additional trainer
-            expect(updatedLocalLead.trainersGroup).toHaveLength(
-              localLead.trainersGroup.length + 1
-            );
+            expect(
+              updatedLocalLead.trainersGroup.includes(createdTrainer._id)
+            ).toBeTruthy();
+            expect(
+              updatedTrainerManagerOne.trainersGroup.includes(
+                createdTrainer._id
+              )
+            ).toBeTruthy();
+            expect(
+              updatedTrainerManagerTwo.trainersGroup.includes(
+                createdTrainer._id
+              )
+            ).toBeTruthy();
+            expect(createdTrainer.managers).toHaveLength(3);
 
-            // success message
-            expect(response.body.success).toBe(
-              `${trainer.name} has been added to ${localLead.name}'s group`
+            done(error);
+          });
+      });
+  });
+
+  test('test with adding new trainer to 3 groups with duplicates', async done => {
+    const trainerManagerOne = await User.findOne({
+      email: 'tez.cook@hants.gov.uk',
+    });
+    const trainerManagerTwo = await User.findOne({
+      email: 'sara.moreland@medway.gov.uk',
+    });
+    const localLead = await User.findOne({ email: 'nisha.sharma@phe.gov.uk' });
+
+    const localLeadLoginData = {
+      email: 'tez.cook@hants.gov.uk',
+      password: '123456',
+    };
+
+    const data = {
+      email: 'alex@connect5.uk',
+      name: 'Alex',
+      region: 'North East',
+      newUser: false,
+      managers: [
+        { key: localLead._id, label: localLead.name },
+        { key: trainerManagerOne._id, label: trainerManagerOne.name },
+        { key: trainerManagerTwo._id, label: trainerManagerTwo.name },
+      ],
+    };
+
+    request(app)
+      .post('/api/login')
+      .send(localLeadLoginData)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, result) => {
+        const token = result.headers['set-cookie'][0].split(';')[0];
+        request(app)
+          .post('/api/users/local-leads/group')
+          .set('Cookie', [token])
+          .send(data)
+          .expect(200)
+          .end(async (error, response) => {
+            expect(response.body).toBeDefined();
+            expect(response.body.errors.length).toBe(2);
+            expect(response.body.errors[0].toString()).toBe(
+              localLead.name.toString()
             );
 
             done(error);

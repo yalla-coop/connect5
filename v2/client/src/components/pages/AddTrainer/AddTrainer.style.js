@@ -12,6 +12,17 @@ export const ContentWrapper = styled.div`
   padding: 2rem 15px;
 `;
 
+export const CheckboxWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+`;
+
+export const H2 = styled.h2`
+  font-size: 1.1rem;
+  text-align: center;
+`;
+
 export const Form = styled(AntForm)`
   border: 1px solid ${colors.transLightGray};
   box-sizing: border-box;
@@ -50,7 +61,12 @@ export const Bold = styled.span`
   text-transform: capitalize;
 `;
 
-export const Paragraph = styled.p``;
+export const Paragraph = styled.p`
+  font-weight: 300;
+  font-size: 1rem;
+  text-align: left;
+  padding-left: 0.3rem;
+`;
 
 export const BackLink = styled.button`
   border: none;
@@ -71,4 +87,14 @@ export const BackContainer = styled.div`
   padding: 0 20px;
   align-self: center;
   padding: 3rem 1rem 1rem;
+`;
+
+export const LabelDiv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+export const Ol = styled.ol`
+  padding-left: 1.5rem;
 `;
