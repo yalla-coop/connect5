@@ -1,20 +1,23 @@
 const boom = require('boom');
 const getParticipantBehavioralInsight = require('./../../database/queries/behavioralInsight/participant');
-const participantBehavioralFormulae = require('./../../helpers/participantBehavioral');
+const getAllBehavioralInsight = require('./../../database/queries/behavioralInsight/allAnswers');
+const behavioralCalculator = require('../../helpers/formulaeParticipants');
 
-module.exports = (req, res, next) => {
-  const { PIN } = req.params;
-  if (!PIN) {
-    return next(boom.badRequest('no PIN provided'));
+module.exports = async (req, res, next) => {
+  try {
+    const { PIN } = req.params;
+    if (!PIN) {
+      return next(boom.badRequest('no PIN provided'));
+    }
+
+    const [userAnswers, allAnswers] = await Promise.all([
+      getParticipantBehavioralInsight(PIN),
+      getAllBehavioralInsight(),
+    ]);
+
+    const results = behavioralCalculator(userAnswers, allAnswers);
+    return res.json(results);
+  } catch (error) {
+    return next(boom.badImplementation());
   }
-
-  return getParticipantBehavioralInsight(PIN)
-    .then(results => {
-      const calculatedValues = participantBehavioralFormulae(results);
-
-      res.json({ ...calculatedValues });
-    })
-    .catch(err => {
-      next(boom.badImplementation());
-    });
 };

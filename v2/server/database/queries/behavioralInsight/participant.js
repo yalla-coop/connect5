@@ -3,8 +3,8 @@ const { questionConstants } = require('./../../DBConstants');
 
 const behaviouralInsightsGroup = questionConstants.groups.BEHAVIOURAL;
 
-module.exports = PIN => {
-  return Question.aggregate([
+module.exports = async PIN => {
+  const results = await Question.aggregate([
     {
       $match: { group: behaviouralInsightsGroup },
     },
@@ -48,27 +48,16 @@ module.exports = PIN => {
         surveyType: 1,
       },
     },
-    {
-      $group: {
-        _id: { code: '$code', surveyType: '$surveyType' },
-        avg: { $first: '$answer' },
-      },
-    },
-    {
-      $group: {
-        _id: '$_id.surveyType',
-        answers: { $push: '$$ROOT' },
-      },
-    },
-    {
-      $unwind: '$answers',
-    },
-    {
-      $project: {
-        code: '$answers._id.code',
-        avg: '$answers.avg',
-      },
-    },
-    { $group: { _id: '$_id', answers: { $push: '$$ROOT' } } },
   ]);
+  const formedData = [];
+  results.forEach(question => {
+    const { answer, surveyType, code } = question;
+
+    if (formedData[surveyType]) {
+      formedData[surveyType][code] = Number(answer);
+    } else {
+      formedData[surveyType] = {};
+    }
+  });
+  return formedData;
 };
