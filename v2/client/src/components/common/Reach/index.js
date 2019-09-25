@@ -1,7 +1,6 @@
 import React from 'react';
 import { Table } from 'antd';
 import styled from 'styled-components';
-import AntdModal from '../AntdModal';
 
 const sessionsColumns = [
   {
@@ -52,18 +51,9 @@ const Head = styled.h3`
   color: rgba(0, 0, 0, 0.8);
 `;
 
-const content =
-  'This section provides an overview of sessions and related surveys collected via the app. I you wish to export the results click on "Export as CSV" and it will export and do';
-
 const Reach = ({ data }) => {
   return (
     <div>
-      <AntdModal
-        title="About this section"
-        content={content}
-        btnStyle={{ margin: '1.5rem' }}
-        style={{ top: '20' }}
-      />
       <Head>Sessions</Head>
       <Table
         columns={sessionsColumns}

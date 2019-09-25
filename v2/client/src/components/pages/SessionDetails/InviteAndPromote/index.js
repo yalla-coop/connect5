@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Icon } from 'antd';
 import Swal from 'sweetalert2';
 
-import AntdModal from '../../../common/AntdModal';
-
 import {
   SessionTopDetailsWrapper,
   SubDetails,
@@ -58,17 +56,9 @@ class InviteAndPromote extends Component {
     const { sessionDetails, handleDrawerOpen } = this.props;
     const { onCopyClick } = this;
     const { shortId } = sessionDetails;
-    const content =
-      'This section lets you invite people to your session. To add invitees, please enter their email address below. This will let you automatically email them an invite with the link to register. You can also copy the link and share it manually on social media etc. Once someone registers they will appear in the manage attendees section.';
 
     return (
       <>
-        <AntdModal
-          title="About this section"
-          content={content}
-          btnStyle={{ margin: '1.5rem' }}
-          style={{ top: '20' }}
-        />
         <SessionTopDetailsWrapper>
           <SubDetails style={{ display: 'flex', flexDirection: 'column' }}>
             <DrawerLink>Registration Link</DrawerLink>

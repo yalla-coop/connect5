@@ -56,13 +56,12 @@ export const List = styled.div`
   flex-direction: column;
 `;
 
-export const Row = styled(Link)`
+export const Row = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   padding: 0.5rem 0;
   margin-left: 0.55rem;
-  cursor: pointer;
 
   &:not(:last-child) {
     border-bottom: ${borders.inputBox};

@@ -17,6 +17,7 @@ module.exports = (req, res, next) => {
           role: user.role,
           name: user.name,
           email: user.email,
+          managers: user.managers,
         });
       } else {
         res.json({ isUnique: true });

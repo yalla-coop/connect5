@@ -14,6 +14,7 @@ import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 import SessionList from '../../common/List/SessionList';
 import Feedback from '../../common/Feedback';
+
 // ACTIONS
 import { fetchUserResults as fetchUserResultsAction } from '../../../actions/users';
 
@@ -29,6 +30,7 @@ import {
   ContentWrapper,
   TopSection,
   Registration,
+  HeaderDiv,
 } from './UserResults.style';
 
 import TrainerBehavioralInsight from '../../common/BehavioralInsight/Trainer';
@@ -42,35 +44,69 @@ import {
 
 const { Panel } = Collapse;
 
-const showModal = () => {
+const showModal = content => {
   Modal.info({
-    content:
-      'We all know that changing what we do is not as simple as knowing what to do. Just because we CAN do something doesn’t mean that we WILL do it. We will be asking you some questions about what you do in practice, about what you expect you will do when you return to work and about some of the thoughts and feelings you have that make up your capability, opportunity and motivation. This will help you and us understand about experiences of doing the behaviours promoted in Connect 5 as you go about your work.',
+    content,
     style: { top: 20 },
     icon: false,
   });
 };
+const content = {
+  cont1:
+    'This section provides an overview of sessions and related surveys collected via the app. I you wish to export the results click on "Export as CSV" and it will export and do',
+  cont2:
+    'This section shows a break down of answers given by your course participants stemming from surveys responses (categories: about your way of teaching (train the trainer) and about your trainer(other session types). The numbers show the count of each answerrelated to a particular survey type).',
+  cont3:
+    'We all know that changing what we do is not as simple as knowing what to do. Just because we CAN do something doesn’t mean that we WILL do it. We will be asking you some questions about what you do in practice, about what you expect you will do when you return to work and about some of the thoughts and feelings you have that make up your capability, opportunity and motivation. This will help you and us understand about experiences of doing the behaviours promoted in Connect 5 as you go about your work.',
+};
 const panels = {
-  reach: { text: 'Reach', render: props => <Reach data={props.results} /> },
+  reach: {
+    text: (
+      <HeaderDiv>
+        Reach
+        <Icon
+          onClick={e => {
+            e.stopPropagation();
+            showModal(content.cont1);
+          }}
+          type="info-circle"
+          style={{ marginLeft: '1rem', color: '#1890ff' }}
+        />
+      </HeaderDiv>
+    ),
+    render: props => <Reach data={props.results} />,
+  },
   feedback: {
-    text: 'Trainer feedback',
+    text: (
+      <HeaderDiv>
+        Trainer feedback
+        <Icon
+          onClick={e => {
+            e.stopPropagation();
+            showModal(content.cont2);
+          }}
+          type="info-circle"
+          style={{ marginLeft: '1rem', color: '#1890ff' }}
+        />
+      </HeaderDiv>
+    ),
     render: ({ resultsFor, resultForRule }) => (
       <Feedback trainerId={resultsFor} role={resultForRule} />
     ),
   },
   behavior: {
     text: (
-      <span>
+      <HeaderDiv>
         Behavioural
         <Icon
           onClick={e => {
             e.stopPropagation();
-            showModal();
+            showModal(content.cont3);
           }}
           type="info-circle"
           style={{ marginLeft: '1rem', color: '#1890ff' }}
         />
-      </span>
+      </HeaderDiv>
     ),
     render: ({ resultsFor, resultForRule, ...props }) => {
       return (

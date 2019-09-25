@@ -13,8 +13,6 @@ import {
   SubDetailsTitle,
 } from './SessionDetails.Style';
 
-import AntdModal from '../../common/AntdModal';
-
 class SessionTopDetails extends Component {
   render() {
     const { sessionDetails } = this.props;
@@ -47,17 +45,8 @@ class SessionTopDetails extends Component {
         item => item.status === 'confirmed'
       ).length;
 
-    const content =
-      'This section provides an overview about the basic session details. You can edit those details by clicking "Edit Session" or delete the session by clicking "Delete Session".';
-
     return (
       <SessionTopDetailsWrapper>
-        <AntdModal
-          title="About this section"
-          content={content}
-          btnStyle={{ margin: '1.5rem' }}
-          style={{ top: '20' }}
-        />
         <Statistic>
           <StatisticItems>
             <StatisticName>Date</StatisticName>

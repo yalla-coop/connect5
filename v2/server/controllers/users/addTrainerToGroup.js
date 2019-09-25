@@ -2,57 +2,60 @@ const boom = require('boom');
 const shortid = require('shortid');
 
 const { createNewTrainer } = require('./../../database/queries/users/trainer');
-// const sendNewTrainerLoginDetails = require('../../helpers/emails/emailNewTrainerLoginDetails');
-// const sendRegisteredTranierEmail = require('../../helpers/emails/sendRegisteredTranierEmail');
 const addNewTrainerToGroup = require('../../helpers/emails/addNewTrainerToGroup');
 
 const {
-  addTrainertoGroup,
+  addTrainerToGroups,
+  addManagersToTrainer,
 } = require('./../../database/queries/users/localLead');
 
-const {
-  getUserByEmail,
-  addManagerToTrainer,
-} = require('./../../database/queries/users');
+const { getUserByEmail } = require('./../../database/queries/users');
 
 module.exports = async (req, res, next) => {
-  const { name, email, newUser, localLead, region, localLeadName } = req.body;
+  const { name, email, newUser, localLead, managers, region } = req.body;
   const { user } = req;
+  const localLeadId = localLead && localLead.key;
+  const managerNames = managers && managers.map(e => e.label);
+  const errors = [];
 
+  // check if user has management priveleges
   if (user.role !== 'localLead') {
     return next(boom.unauthorized());
   }
-
   try {
+    // check if trainer already exists
     let trainer = await getUserByEmail(email);
-    // if (!trainer) {
-    //   return next(boom.notFound('This email is not used'));
-    // }
-    if (trainer && trainer.localLead.toString() === localLead) {
-      return next(
-        boom.conflict(
-          `This trainer is already registered in ${localLeadName} group`
-        )
-      );
-    }
-
+    // generate password to be sent to new trainer
     const randomPassword = shortid.generate();
 
+    // check if trainer is new user and create account
     if (newUser && !trainer) {
       trainer = await createNewTrainer({
         name,
         email,
         password: randomPassword,
         region,
-        localLead: [localLead],
+        localLead: localLeadId,
         role: 'trainer',
       });
     }
 
-    // await removeTrainerFromGroup(localLead, trainer._id);
-    await addTrainertoGroup(localLead, trainer._id);
+    // Groups handling
+    if (trainer && managers.length > 0) {
+      // check for duplicates
+      managers.map(el => {
+        if (trainer.managers.includes(el.key.toString())) {
+          errors.push(el.label);
+        }
+      });
 
-    await addManagerToTrainer(trainer._id, localLead);
+      // run functions
+      await Promise.all([
+        addTrainerToGroups(managers, trainer._id),
+        addManagersToTrainer(managers, trainer._id),
+      ]);
+    }
+
     let isNew = false;
     if (newUser) {
       isNew = true;
@@ -62,20 +65,18 @@ module.exports = async (req, res, next) => {
       trainerName: trainer.name,
       trainerEmail: email,
       password: randomPassword,
-      localLeadName,
-      localLeadRegion: user.region,
+      managers: managerNames,
       isNew,
-      localLeadId: localLead,
+      localLead: localLeadId,
       trainerId: trainer._id,
     };
 
     if (process.env.NODE_ENV === 'production') {
       await addNewTrainerToGroup(emailInfo);
     }
-    return res.json({
-      success: `${trainer.name} has been added to ${localLeadName}'s group`,
-    });
+
+    return res.json({ managers: managerNames, errors });
   } catch (error) {
-    return next(boom.badImplementation(error));
+    next(boom.badRequest(error));
   }
 };

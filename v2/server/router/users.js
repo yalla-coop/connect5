@@ -15,6 +15,7 @@ const {
   getListOfTrainers,
   getLocalLeadsTrainerList,
   getAllTrainersAndLeads,
+  getLocalLeadDetails,
 } = require('../controllers/users/user');
 const getSessionsPerRegions = require('../controllers/users/SessionsPerRegions');
 
@@ -26,6 +27,7 @@ const getTrainerSessions = require('../controllers/users/trainer/getTrainerSessi
 const getLocalLeadsSessions = require('../controllers/users/getLocalLeadSessions');
 const getAllSessions = require('../controllers/users/getAllSessions');
 const removeTrainerFromGroup = require('../controllers/users/removeTrainerFromGroup');
+const removeTrainerFromGroupEmail = require('../controllers/users/removeTrainerFromGroupEmail');
 const getLocalLeadGroup = require('../controllers/users/getLocalLeadGroup');
 const changePassword = require('../controllers/users/changePassword');
 const getParticipantsDemogrphics = require('../controllers/users/getParticipantsDemogrphics');
@@ -70,12 +72,18 @@ router.get(
 
 router.get('/local-lead/:id/group', getLocalLeadGroup);
 
+// gets name and org of local lead
+router.get('/local-lead/:id', getLocalLeadDetails);
+
 // delate trainer from a localLead group
 router.delete(
   '/local-lead/:localLeadId/trainer/:trainerId',
   authentication(),
   removeTrainerFromGroup
 );
+
+// delete trainer from group following link from email
+router.delete('/remove/:localLeadId/:trainerId', removeTrainerFromGroupEmail);
 
 router.delete('/users/:userId', authentication(), deleteAccount);
 router.get('/fetch-trainers', fetchAllTrainers);

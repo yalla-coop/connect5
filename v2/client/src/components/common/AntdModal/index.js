@@ -1,13 +1,15 @@
 import React from 'react';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import styled from 'styled-components';
+import Icon from 'antd/lib/icon';
 import { borders } from '../../../theme';
 
 export const ButtonDiv = styled.div`
   display: flex;
   justify-content: center;
-  padding: 30px 0;
+  display: inline;
   border-bottom: ${borders.inputBox};
+  margin-right: 0.5rem;
 `;
 
 function info(content, title) {
@@ -19,12 +21,17 @@ function info(content, title) {
   });
 }
 
-const AntdModal = ({ content, title, btnStyle, btnText }) => {
+const AntdModal = ({ content, title }) => {
   return (
     <ButtonDiv>
-      <Button onClick={() => info(content, title)} style={btnStyle}>
-        {btnText || 'Find out more about this section'}
-      </Button>
+      <Icon
+        type="info-circle"
+        style={{ color: '#1890ff' }}
+        onClick={e => {
+          e.stopPropagation();
+          info(content, title);
+        }}
+      />
     </ButtonDiv>
   );
 };

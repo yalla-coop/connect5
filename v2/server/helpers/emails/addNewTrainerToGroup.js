@@ -4,17 +4,17 @@ const addNewTrainerToGroup = ({
   trainerName,
   trainerEmail,
   password,
-  localLeadName,
-  localLeadRegion,
+  managers,
   isNew,
-  localLeadId,
-  trainerId,
 }) => {
   const loginLink = `${process.env.DOMAIN}/login`;
-  const removeFromGroup = `${process.env.DOMAIN}/remove/${localLeadId}/${trainerId}`;
-  const capLocalLeadName = `${localLeadName[0].toUpperCase()}${localLeadName.slice(
-    1
-  )}`;
+
+  const capitalManagerNames = managers.map(
+    el => `${el[0].toUpperCase()}${el.slice(1)}`
+  );
+  // const capLocalLeadName = `${localLeadName[0].toUpperCase()}${localLeadName.slice(
+  //   1
+  // )}`;
 
   const html = `
   <div style="text-align: center;">
@@ -23,8 +23,7 @@ const addNewTrainerToGroup = ({
     </div>
     <div style="text-align: left;">
       <p style="font-weight: 700;">Hi, <span style="font-weight: 900;  text-transform: capitalize;"> ${trainerName}</span></p>
-      <p><span style="text-transform: capitalize">${capLocalLeadName}</span> (${localLeadRegion}): has added you to his/her group as a trainer</p>
-
+      <p>This is to inform you that you were added as a trainer to a group/ group(s) managed by the following Connect5 managers/ local leads: <span style="text-transform: capitalize"><strong>${capitalManagerNames}</strong></span></p>
       ${
         isNew
           ? `<p>You can now log in at ${loginLink} using the following credentials:</p>
@@ -34,11 +33,8 @@ const addNewTrainerToGroup = ({
           : ''
       }
 
-      <p>Note: If you do not agree that <strong>${capLocalLeadName}</strong> can view your individual feedback data given by course participants please click the button underneath. If there appears to be an error please contact us directly.</p>
+      <p>Note: If you do not agree that <strong>${capitalManagerNames}</strong> can view your individual feedback data given by course participants please go to the edit profile section and update your group settings.</p>
 
-      <a href="${removeFromGroup}">I don't want my trainer manager/ local lead to view my feedback data</a>
-
-      
       <p style="margin-bottom: 0;">Thanks,</p>
       <p style="margin-bottom: 0;">Connect 5</p>
     </div>

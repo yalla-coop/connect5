@@ -69,6 +69,11 @@ export const StatisticValue = styled.span`
   }
 `;
 
+export const HeaderDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const TrainersName = styled(Link)`
   color: ${colors.black};
   font-weight: 400;
