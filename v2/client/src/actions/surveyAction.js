@@ -124,6 +124,7 @@ export const getParticipantByPIN = (PIN, sessionId) => dispatch => {
   axios
     .post(`/api/participant/${PIN}`, { sessionId })
     .then(({ data }) => {
+      console.log(data, 'payloaddddddddd');
       dispatch({ type: GET_PARTICIPANT_BY_PIN_SUCCESS, payload: data });
     })
     .catch(err => {

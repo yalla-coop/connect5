@@ -18,7 +18,7 @@ import {
   SubmitBtn,
   StepProgress,
   ProgressWrapper,
-  StepTitle
+  StepTitle,
 } from './Survey.style';
 
 import { colors } from '../../../theme';
@@ -223,6 +223,7 @@ class Survey extends Component {
       getParticipantByPIN: getParticipantByPINAction,
       surveyData,
     } = this.props;
+    console.log(surveyData, 'sssssssssssssssss');
     const { sessionId } = surveyData.surveyData;
 
     const { surveyParts, PIN } = this.state;
@@ -255,7 +256,15 @@ class Survey extends Component {
   // submits and validates PIN request
   submitPIN = () => {
     const { PINExist, surveyData, history } = this.props;
-    const { preSurveyResponses, sessionType } = surveyData;
+    const { preSurveyResponses } = surveyData;
+    const { sessionType } = surveyData.surveyData;
+    console.log(
+      PINExist,
+      surveyData,
+      preSurveyResponses,
+      sessionType,
+      'daatttttttttta'
+    );
 
     // if someone needs to fill out pre-survey first -> take object value related to post-survey
     const relevantSurveyCounterParts = {};
@@ -285,8 +294,10 @@ class Survey extends Component {
 
     // set up pre-survey link for re-direction if pre-survey needs to get filled out
     const linkArr = history.location.pathname.split('/');
+    console.log(linkArr, 'linnnnnnnk');
     // surveyType
     const surveyPart = linkArr[2].split('&')[0];
+    console.log(surveyPart, 'ppart');
     const shortId = linkArr[2].split('&')[1];
 
     // check if PIN alrady submitted survey
@@ -308,7 +319,7 @@ class Survey extends Component {
             history.push(
               `/survey/${relevantSurveyCounterParts[surveyPart]}&${shortId}`
             );
-            window.location.reload();
+            // window.location.reload();
           },
         });
       }
@@ -363,19 +374,25 @@ class Survey extends Component {
   handleStarChange = (answer, question) => {
     const { formState } = this.state;
     // remove 1 from the answer so it's 0 to 5 not 1 to 6
-    const fixedAnswer = { answer: answer - 1, question }
-    this.setState({ formState: { ...formState, [question]: fixedAnswer } }, () => {
-      this.trackAnswers();
-    })
-  }
+    const fixedAnswer = { answer: answer - 1, question };
+    this.setState(
+      { formState: { ...formState, [question]: fixedAnswer } },
+      () => {
+        this.trackAnswers();
+      }
+    );
+  };
 
   handleDropdown = (answer, question) => {
     const { formState } = this.state;
-    const answerObj = { answer, question }
-    this.setState({ formState: { ...formState, [question]: answerObj } }, () => {
-      this.trackAnswers();
-    })
-  }
+    const answerObj = { answer, question };
+    this.setState(
+      { formState: { ...formState, [question]: answerObj } },
+      () => {
+        this.trackAnswers();
+      }
+    );
+  };
 
   handleAntdDatePicker = (question, value, group, field) => {
     // const question = e.target.name;
@@ -422,7 +439,7 @@ class Survey extends Component {
       return uniqueGroups.includes(question.group.text);
     });
 
-    // // set the current question to focus on 
+    // // set the current question to focus on
     // setCurrentQuestion = questionId => {
     //   this.setState({ currentQuestion: questionId })
     // }
@@ -570,7 +587,7 @@ class Survey extends Component {
                       />
                     </ProgressWrapper>
                     <StepProgress>
-                      <StepTitle>Step</StepTitle> 
+                      <StepTitle>Step</StepTitle>
                       {section === 'enterPIN' ? 1 : currentStep}/
                       {uniqueGroups.length + 1}
                     </StepProgress>
