@@ -7,6 +7,8 @@ import * as types from '../constants/actionTypes';
 import { returnErrors } from './errorAction';
 import { checkAuth } from './authAction';
 
+import { captalizesName } from '../helpers/createGroupedLocalLeads';
+
 export const fetchUserResults = (id, role) => async dispatch => {
   try {
     const res = await axios.post(`/api/users/${id}/results`, { id, role });
@@ -103,14 +105,14 @@ export const fetchStatsData = userType => async dispatch => {
   }
 };
 
-export const addTrainerToGroup = (trianerInfo, done) => async dispatch => {
+export const addTrainerToGroup = (trainerInfo, done) => async dispatch => {
   try {
     dispatch({
       type: types.LOADING_TRUE,
       payload: 'addTrainerLoading',
     });
 
-    const res = await axios.post('/api/users/local-leads/group', trianerInfo);
+    const res = await axios.post('/api/users/local-leads/group', trainerInfo);
 
     dispatch({
       type: types.ADD_TRAINER_TO_GROUP_SUCCESS,
@@ -124,15 +126,23 @@ export const addTrainerToGroup = (trianerInfo, done) => async dispatch => {
 
     Modal.success({
       title: 'Done!',
-      content: res.data.success,
+      type: 'info',
+      content:
+        res.data.errors.length > 0
+          ? `The trainer is already part of the following groups: ${res.data.errors.map(
+              el => captalizesName(el)
+            )}. We've emailed the trainer to inform him/ her about this update.`
+          : `Trainer added to the following groups: ${res.data.managers.map(
+              el => captalizesName(el)
+            )}. We've emailed the trainer to inform him/ her about this update.`,
       onOk: done,
     });
 
-    history.push('/dashboard');
+    history.push('/trainers');
   } catch (error) {
     dispatch({
       type: types.ADD_TRAINER_TO_GROUP_FAIL,
-      payload: error.response.data.error,
+      payload: error.response.data,
     });
 
     dispatch({
@@ -145,7 +155,7 @@ export const addTrainerToGroup = (trianerInfo, done) => async dispatch => {
       content:
         (error.response && error.response.data && error.response.data.error) ||
         'something went wrong',
-      onOk: done,
+      onOk: history.push('/trainers'),
     });
   }
 };

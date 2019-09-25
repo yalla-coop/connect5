@@ -7,7 +7,7 @@ const {
 } = require('./../../../database/queries/users/trainer');
 
 const {
-  addTrainertoGroup,
+  addTrainertoLocalLeadGroup,
 } = require('./../../../database/queries/users/localLead');
 
 module.exports = async (req, res, next) => {
@@ -21,19 +21,20 @@ module.exports = async (req, res, next) => {
     role,
     officialLocalLead,
   } = req.body;
-  if (name && email && password && region) {
-    return createNewTrainer({
-      name,
-      email,
-      password,
-      region,
-      localLead,
-      organization,
-      role,
-      officialLocalLead,
-      managers: role === 'trainer' ? [localLead] : [],
-    })
-      .then(trainer => {
+
+  try {
+    if (name && email && password && region) {
+      return createNewTrainer({
+        name,
+        email,
+        password,
+        region,
+        localLead,
+        organization,
+        role,
+        officialLocalLead,
+        managers: role === 'trainer' ? [localLead] : [],
+      }).then(async trainer => {
         const trainerInfo = {
           id: trainer._id,
           name: trainer.name,
@@ -44,26 +45,27 @@ module.exports = async (req, res, next) => {
           localLead: trainer.localLead,
           officialLocalLead: trainer.officialLocalLead,
         };
-        addTrainertoGroup(localLead, trainer._id)
-          .then(result => {
-            // create token for 25 day
-            const token = jwt.sign({ id: trainer._id }, process.env.SECRET, {
-              expiresIn: tokenMaxAge.string,
-            });
+        // create token for 25 day
+        const token = jwt.sign({ id: trainer._id }, process.env.SECRET, {
+          expiresIn: tokenMaxAge.string,
+        });
 
-            res.cookie('token', token, {
-              maxAge: tokenMaxAge.number,
-              httpOnly: true,
-            });
-            return res.json(trainerInfo);
-          })
-          .catch(err => {
-            next(boom.badImplementation());
-          });
-      })
-      .catch(err => {
-        next(boom.badImplementation());
+        if (trainerInfo.role === 'trainer') {
+          await addTrainertoLocalLeadGroup(localLead, trainer._id).catch(
+            err => {
+              next(boom.badImplementation(err));
+            }
+          );
+        }
+
+        res.cookie('token', token, {
+          maxAge: tokenMaxAge.number,
+          httpOnly: true,
+        });
+        return res.json(trainerInfo);
       });
+    }
+  } catch (error) {
+    return next(boom.badRequest(error));
   }
-  return next(boom.badRequest('Some arguments are missed'));
 };

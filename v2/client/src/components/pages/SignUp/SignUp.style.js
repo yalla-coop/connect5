@@ -19,6 +19,17 @@ export const ContentWrapper = styled.div`
   }
 `;
 
+export const H2 = styled.h2`
+  position: relative;
+  text-align: center;
+  color: #526192;
+  left: -15%;
+  top: -29px;
+  @media ${breakpoints.mobileL} {
+    left: -5%;
+  }
+`;
+
 export const H4 = styled.h4`
   position: relative;
   text-align: center;
