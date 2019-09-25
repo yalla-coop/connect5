@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Collapse from 'antd/lib/collapse';
 import * as Yup from 'yup';
 import { Icon, Drawer, Modal, message } from 'antd';
+import AntdModal from '../../common/AntdModal';
 
 import { fetchSessionDetails } from '../../../actions/groupSessionsAction';
 import {
@@ -19,7 +20,11 @@ import Spin from '../../common/Spin';
 import Header from '../../common/Header';
 
 // STYLING
-import { SessionDetailsWrapper, BackWrapper } from './SessionDetails.Style';
+import {
+  SessionDetailsWrapper,
+  BackWrapper,
+  HeaderDiv,
+} from './SessionDetails.Style';
 
 // SUB COMPONENTS
 import SessionTopDetails from './SessionTopDetails';
@@ -307,6 +312,17 @@ class SessionDetails extends Component {
       return Spin;
     }
 
+    const content = {
+      cont1:
+        'This section provides an overview about the basic session details. You can edit those details by clicking "Edit Session" or delete the session by clicking "Delete Session".',
+      cont2:
+        'This section lets you invite people to your session. To add invitees, please enter their email address below. This will let you automatically email them an invite with the link to register. You can also copy the link and share it manually on social media etc. Once someone registers they will appear in the manage attendees section.',
+      cont3:
+        'This section provides tools to manage email addresses of confirmed participants. You can edit current lists by clicking on "Manage Attendees", email out session reminders and view previously sent emails.',
+      cont4:
+        'To share the surveys for this session please share the link with your attendees. You can send it directly via email clicking on "Email surveys to attendees" or schedule emails using the "Schedule emails" option.',
+    };
+
     return (
       <SessionDetailsWrapper>
         <Header type="section" label="Manage Session" />
@@ -319,24 +335,56 @@ class SessionDetails extends Component {
           defaultActiveKey={[openSection]}
           onChange={this.callback}
         >
-          <Panel header="Event Details" key="1">
+          <Panel
+            header={
+              <HeaderDiv>
+                Event Details
+                <AntdModal title="About this section" content={content.cont1} />
+              </HeaderDiv>
+            }
+            key="1"
+          >
             <SessionTopDetails sessionDetails={sessionDetails} />
             <SessionActions sessionDetails={sessionDetails} />
           </Panel>
-          <Panel header="Invite & Promote" key="2">
+          <Panel
+            header={
+              <HeaderDiv>
+                Invite & Promote
+                <AntdModal title="About this section" content={content.cont2} />
+              </HeaderDiv>
+            }
+            key="2"
+          >
             <InviteAndPromote
               sessionDetails={sessionDetails}
               handleDrawerOpen={this.handleDrawerOpen}
             />
           </Panel>
-          <Panel header="Manage Attendees" key="3">
+          <Panel
+            header={
+              <HeaderDiv>
+                Manage Attendees
+                <AntdModal title="About this section" content={content.cont3} />
+              </HeaderDiv>
+            }
+            key="3"
+          >
             <ManageAttendees
               sessionDetails={sessionDetails}
               handleDrawerOpen={this.handleDrawerOpen}
               confirmedAttendeesList={confirmedEmails}
             />
           </Panel>
-          <Panel header="Get Feedback" key="4">
+          <Panel
+            header={
+              <HeaderDiv>
+                Get Feedback
+                <AntdModal title="About this section" content={content.cont4} />
+              </HeaderDiv>
+            }
+            key="4"
+          >
             <SessionSurveys
               sessionDetails={sessionDetails}
               handleDrawerOpen={this.handleDrawerOpen}
