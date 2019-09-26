@@ -149,7 +149,7 @@ class FilterResults extends Component {
 
     return (
       <FilterWrapper>
-        <Form onFormSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit}>
           <InputDiv>
             <Label htmlFor="sessionType">Session Type(s):</Label>
             <Select
@@ -337,6 +337,7 @@ class FilterResults extends Component {
 
           <InputDiv>
             <Button
+              onClick={this.handleSubmit}
               type="primary"
               label="Apply filters"
               height="40px"
