@@ -4,10 +4,7 @@ const addSessionController = require('./../controllers/addSession');
 const ParticipantLoginController = require('./../controllers/participantLogin');
 const usersRouter = require('./users');
 const getParticipantBehavioralInsight = require('./../controllers/behavioralInsight/getParticipantBehavioralInsight');
-const getSessionBehavioralInsight = require('./../controllers/behavioralInsight/getSessionBehavioralInsight');
 const getTrainerBehavioralInsight = require('./../controllers/behavioralInsight/getTrainerBehavioralInsight');
-const getLocalLeadBehavioralInsight = require('./../controllers/behavioralInsight/getLocalLeadBehavioralInsight');
-const getAdminBehavioralInsight = require('./../controllers/behavioralInsight/getAdminBehavioralInsight');
 const getFeedback = require('../controllers/feedback/getFeedback');
 const logoutController = require('../controllers/logout');
 
@@ -64,19 +61,8 @@ router.get('/session-details/:id', getSessionDetails);
 router.delete('/session-delete/:id', deleteSession);
 router.patch('/session-edit/:id', editSession);
 router.patch('/emails-update/:id', updateEmails);
-router.get(
-  '/behavioral-insight/survey/:sessionId/:surveyType',
-  getSessionBehavioralInsight
-);
 
-router.get('/behavioral-insight/trainer/:id', getTrainerBehavioralInsight);
-router.get('/behavioral-insight/local-lead/:id', getLocalLeadBehavioralInsight);
-
-router.get(
-  '/behavioral-insight/admin',
-  authentication(),
-  getAdminBehavioralInsight
-);
+router.post('/behavioral-insight', getTrainerBehavioralInsight);
 
 router.post('/feedback/', getFeedback);
 

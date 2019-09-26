@@ -32,9 +32,13 @@ export const fetchSurveyBehavioral = (url, role) => async dispatch => {
   }
 };
 
-export const fetchTrainerBehavioral = (url, role) => async dispatch => {
+export const fetchTrainerBehavioral = (
+  url,
+  role,
+  filters
+) => async dispatch => {
   try {
-    const res = await axios.get(url);
+    const res = await axios.post(url, { filters });
 
     dispatch({
       type: types.FETCH_TRAINER_BEHAVIORAL,

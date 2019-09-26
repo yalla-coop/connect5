@@ -45,14 +45,9 @@ function drawBarValues() {
 
 class BehavioralTrainerResults extends Component {
   componentDidMount() {
-    const { trainerId, fetchbehavioralInsight, role } = this.props;
-    if (role === 'admin') {
-      fetchbehavioralInsight('/api/behavioral-insight/admin');
-    } else if (role === 'localLead') {
-      fetchbehavioralInsight(`/api/behavioral-insight/local-lead/${trainerId}`);
-    } else {
-      fetchbehavioralInsight(`/api/behavioral-insight/trainer/${trainerId}`);
-    }
+    const { fetchbehavioralInsight, role } = this.props;
+    const filters = {};
+    fetchbehavioralInsight('/api/behavioral-insight', role, filters);
   }
 
   render() {

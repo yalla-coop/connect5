@@ -1,31 +1,20 @@
 const boom = require('boom');
-const getTrainerBehavioral = require('./../../database/queries/behavioralInsight/trainer');
-const {
-  getPINsRespondedToTrainerSessions,
-} = require('../../database/queries/users/trainer');
-const trainerBehavioralFormulae = require('./../../helpers/trainerBehavioral');
+
+const filtereData = require('./../../database/queries/behavioralInsight/filtereData');
+const getAllBehavioralInsight = require('./../../database/queries/behavioralInsight/allAnswers');
+const behavioralCalculator = require('../../helpers/formulaeTrainers');
 
 module.exports = async (req, res, next) => {
-  const { id } = req.params;
-  if (!id) {
-    return next(boom.badRequest('no trainer id provided'));
-  }
+  const { filters } = req.body;
+
   try {
-    const results = await getPINsRespondedToTrainerSessions(id);
+    const [filteredBehavioralInsight, allAnswers] = await Promise.all([
+      filtereData(filters),
+      getAllBehavioralInsight(),
+    ]);
 
-    const PINs = results.reduce((prev, curr) => {
-      prev.push(curr.PIN);
-      return prev;
-    }, []);
-
-    return getTrainerBehavioral(PINs)
-      .then(result => {
-        const calculatedFormulae = trainerBehavioralFormulae(result);
-        res.json({ ...calculatedFormulae });
-      })
-      .catch(err => {
-        return next(boom.badImplementation('error in getting the data'));
-      });
+    const results = behavioralCalculator(filteredBehavioralInsight, allAnswers);
+    return res.json(results);
   } catch (error) {
     return next(boom.badImplementation());
   }

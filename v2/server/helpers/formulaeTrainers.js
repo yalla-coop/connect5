@@ -4,12 +4,14 @@ const behavioralFormulae = require('./behavioralFormulae');
 
 /** ------------------------input shape--------------------------
  * input shape
- * userAnswers
- * {
-      '<survey-type>': {
-        '<code>': Number, // the answer value, Null for not answered questions
-      },
-    };
+ * subGroupAnswers - sup group responses to calculate the bahavioral insight for them
+    [
+      {
+        '<survey-type>': {
+          '<code>':  Number, // the answer value, Null for not answered questions
+        },
+      };
+    ]
 
   * allAnswers
     [
@@ -67,14 +69,14 @@ const behavioralFormulae = require('./behavioralFormulae');
 }
  */
 
-const calculator = (answers, allAnswers) => {
-  const preDay1Answers = checkAnswer(answers, 'pre-day-1');
-  const postDay1Answers = checkAnswer(answers, 'post-day-1');
-  const postDay2Answers = checkAnswer(answers, 'post-day-2');
-  const postDay3Answers = checkAnswer(answers, 'post-day-3');
-  const postSpecialAnswers = checkAnswer(answers, 'post-special');
-  const followup3Months = checkAnswer(answers, 'follow-up-3-month');
-  const followup6Months = checkAnswer(answers, 'follow-up-6-month');
+const calculator = (subGroupAnswers, allAnswers) => {
+  const preDay1Answers = checkAnswer(subGroupAnswers, 'pre-day-1');
+  const postDay1Answers = checkAnswer(subGroupAnswers, 'post-day-1');
+  const postDay2Answers = checkAnswer(subGroupAnswers, 'post-day-2');
+  const postDay3Answers = checkAnswer(subGroupAnswers, 'post-day-3');
+  const postSpecialAnswers = checkAnswer(subGroupAnswers, 'post-special');
+  const followup3Months = checkAnswer(subGroupAnswers, 'follow-up-3-month');
+  const followup6Months = checkAnswer(subGroupAnswers, 'follow-up-6-month');
 
   const answersBaseOnSurveyType = {
     'pre-day-1': preDay1Answers,
@@ -91,7 +93,7 @@ const calculator = (answers, allAnswers) => {
       // ---------------------------- first chart ------------------
       {
         text:
-          'When you think about suggesting to people ways in which they could take action on their own mental health or wellbeing, you perceive your capability/opportunity/motivation to be:',
+          'When they think about suggesting to people ways in which they could take action on their own mental health or wellbeing, you perceive your capability/opportunity/motivation to be:',
         surveys: [
           'pre-day-1',
           'post-day-1',
@@ -103,8 +105,12 @@ const calculator = (answers, allAnswers) => {
           categories: [
             {
               category: 'Capability',
-              value: behavioralFormulae.FeedbackUserCapabilityB1(
-                answersBaseOnSurveyType[surveyType]
+              value: calculateAverage(
+                allAnswers.map(otherUserAnswers =>
+                  behavioralFormulae.FeedbackUserCapabilityB1(
+                    answersBaseOnSurveyType[surveyType]
+                  )
+                )
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
@@ -116,8 +122,12 @@ const calculator = (answers, allAnswers) => {
             },
             {
               category: 'Opportunity',
-              value: behavioralFormulae.FeedbackUserOpportunityB1(
-                answersBaseOnSurveyType[surveyType]
+              value: calculateAverage(
+                allAnswers.map(otherUserAnswers =>
+                  behavioralFormulae.FeedbackUserOpportunityB1(
+                    answersBaseOnSurveyType[surveyType]
+                  )
+                )
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
@@ -129,8 +139,12 @@ const calculator = (answers, allAnswers) => {
             },
             {
               category: 'Opportunity',
-              value: behavioralFormulae.FeedbackUserMotivationB1(
-                answersBaseOnSurveyType[surveyType]
+              value: calculateAverage(
+                allAnswers.map(otherUserAnswers =>
+                  behavioralFormulae.FeedbackUserMotivationB1(
+                    answersBaseOnSurveyType[surveyType]
+                  )
+                )
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
@@ -146,7 +160,7 @@ const calculator = (answers, allAnswers) => {
       // ----------------------------- second chart ---------------
       {
         text:
-          'When you think about having a conversation with people in which you develop a shared understanding of their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
+          'When they think about having a conversation with people in which they develop a shared understanding of their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
         surveys: [
           'pre-day-1',
           'post-day-2',
@@ -158,8 +172,12 @@ const calculator = (answers, allAnswers) => {
           categories: [
             {
               category: 'Capability',
-              value: behavioralFormulae.FeedbackUserCapabilityB2(
-                answersBaseOnSurveyType[surveyType]
+              value: calculateAverage(
+                allAnswers.map(otherUserAnswers =>
+                  behavioralFormulae.FeedbackUserCapabilityB2(
+                    answersBaseOnSurveyType[surveyType]
+                  )
+                )
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
@@ -171,8 +189,12 @@ const calculator = (answers, allAnswers) => {
             },
             {
               category: 'Opportunity',
-              value: behavioralFormulae.FeedbackUserOpportunityB2(
-                answersBaseOnSurveyType[surveyType]
+              value: calculateAverage(
+                allAnswers.map(otherUserAnswers =>
+                  behavioralFormulae.FeedbackUserOpportunityB2(
+                    answersBaseOnSurveyType[surveyType]
+                  )
+                )
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
@@ -184,8 +206,12 @@ const calculator = (answers, allAnswers) => {
             },
             {
               category: 'Opportunity',
-              value: behavioralFormulae.FeedbackUserMotivationB2(
-                answersBaseOnSurveyType[surveyType]
+              value: calculateAverage(
+                allAnswers.map(otherUserAnswers =>
+                  behavioralFormulae.FeedbackUserMotivationB2(
+                    answersBaseOnSurveyType[surveyType]
+                  )
+                )
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
@@ -201,7 +227,7 @@ const calculator = (answers, allAnswers) => {
       // ----------------------------  third chart ---------------------
       {
         text:
-          'When you think about using appropriate conversational methods to empower poeple to make a change that addresses their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
+          'When they think about using appropriate conversational methods to empower poeple to make a change that addresses their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
         surveys: [
           'pre-day-1',
           'post-day-3',
@@ -213,8 +239,12 @@ const calculator = (answers, allAnswers) => {
           categories: [
             {
               category: 'Capability',
-              value: behavioralFormulae.FeedbackUserCapabilityB3(
-                answersBaseOnSurveyType[surveyType]
+              value: calculateAverage(
+                allAnswers.map(otherUserAnswers =>
+                  behavioralFormulae.FeedbackUserCapabilityB3(
+                    answersBaseOnSurveyType[surveyType]
+                  )
+                )
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
@@ -226,8 +256,12 @@ const calculator = (answers, allAnswers) => {
             },
             {
               category: 'Opportunity',
-              value: behavioralFormulae.FeedbackUserOpportunityB3(
-                answersBaseOnSurveyType[surveyType]
+              value: calculateAverage(
+                allAnswers.map(otherUserAnswers =>
+                  behavioralFormulae.FeedbackUserOpportunityB3(
+                    answersBaseOnSurveyType[surveyType]
+                  )
+                )
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
@@ -239,8 +273,12 @@ const calculator = (answers, allAnswers) => {
             },
             {
               category: 'Opportunity',
-              value: behavioralFormulae.FeedbackUserMotivationB3(
-                answersBaseOnSurveyType[surveyType]
+              value: calculateAverage(
+                allAnswers.map(otherUserAnswers =>
+                  behavioralFormulae.FeedbackUserMotivationB3(
+                    answersBaseOnSurveyType[surveyType]
+                  )
+                )
               ),
               average: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
@@ -258,12 +296,16 @@ const calculator = (answers, allAnswers) => {
     nonCategorized: [
       {
         text:
-          'You suggested to people who needed it,  ways they could take action on their own mental health or wellbeing',
+          'They suggested to people who needed it,  ways they could take action on their own mental health or wellbeing',
         surveys: ['pre-day-1', 'follow-up-3-month', 'follow-up-6-month'].map(
           surveyType => ({
             surveyType: readableSurveysNamePairs[surveyType],
-            value: behavioralFormulae.FeedbackUserB1(
-              answersBaseOnSurveyType[surveyType]
+            value: calculateAverage(
+              allAnswers.map(otherUserAnswers =>
+                behavioralFormulae.FeedbackUserB1(
+                  answersBaseOnSurveyType[surveyType]
+                )
+              )
             ),
             average: calculateAverage(
               allAnswers.map(otherUserAnswers =>
@@ -277,12 +319,16 @@ const calculator = (answers, allAnswers) => {
       },
       {
         text:
-          'You had a conversation with people who needed it,  in which you developed a shared understanding of their mental health and wellbeing needs',
+          'They had a conversation with people who needed it,  in which you developed a shared understanding of their mental health and wellbeing needs',
         surveys: ['pre-day-1', 'follow-up-3-month', 'follow-up-6-month'].map(
           surveyType => ({
             surveyType: readableSurveysNamePairs[surveyType],
-            value: behavioralFormulae.FeedbackUserB2(
-              answersBaseOnSurveyType[surveyType]
+            value: calculateAverage(
+              allAnswers.map(otherUserAnswers =>
+                behavioralFormulae.FeedbackUserB2(
+                  answersBaseOnSurveyType[surveyType]
+                )
+              )
             ),
             average: calculateAverage(
               allAnswers.map(otherUserAnswers =>
@@ -296,12 +342,16 @@ const calculator = (answers, allAnswers) => {
       },
       {
         text:
-          'You used appropriate conversational methods to empower people who needed it, to make a change that addresses their mental health and wellbeing needs',
+          'They used appropriate conversational methods to empower people who needed it, to make a change that addresses their mental health and wellbeing needs',
         surveys: ['pre-day-1', 'follow-up-3-month', 'follow-up-6-month'].map(
           surveyType => ({
             surveyType: readableSurveysNamePairs[surveyType],
-            value: behavioralFormulae.FeedbackUserB3(
-              answersBaseOnSurveyType[surveyType]
+            value: calculateAverage(
+              allAnswers.map(otherUserAnswers =>
+                behavioralFormulae.FeedbackUserB3(
+                  answersBaseOnSurveyType[surveyType]
+                )
+              )
             ),
             average: calculateAverage(
               allAnswers.map(otherUserAnswers =>
