@@ -403,6 +403,7 @@ class CreateSession extends Component {
               {!session && <RequiredMark>*</RequiredMark>}Session Type:
             </Label>
             <Select
+              mode="multiple"
               showSearch
               id="sessionType"
               style={{ width: '100%' }}

@@ -53,6 +53,7 @@ export const Category = styled.p`
   margin-bottom: 20px;
   opacity: 0.7;
 `;
+
 export const Options = styled(Category)`
   text-align: left;
 `;
