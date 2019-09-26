@@ -32,6 +32,7 @@ const surveysTypes = {
     'follow-up-6-month-train-trainers',
   ],
 };
+
 /**
  *  return the pre survey link
  * @param {String} sessionType - session type ["1","2","3","special-2-days"...]

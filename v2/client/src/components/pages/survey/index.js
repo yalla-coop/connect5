@@ -223,7 +223,6 @@ class Survey extends Component {
       getParticipantByPIN: getParticipantByPINAction,
       surveyData,
     } = this.props;
-    console.log(surveyData, 'sssssssssssssssss');
     const { sessionId } = surveyData.surveyData;
 
     const { surveyParts, PIN } = this.state;
@@ -258,13 +257,6 @@ class Survey extends Component {
     const { PINExist, surveyData, history } = this.props;
     const { preSurveyResponses } = surveyData;
     const { sessionType } = surveyData.surveyData;
-    console.log(
-      PINExist,
-      surveyData,
-      preSurveyResponses,
-      sessionType,
-      'daatttttttttta'
-    );
 
     // if someone needs to fill out pre-survey first -> take object value related to post-survey
     const relevantSurveyCounterParts = {};
@@ -283,6 +275,7 @@ class Survey extends Component {
 
         const postSurvey = surveysArray.find(_item => _item.includes('post'));
         const preSurvey = surveysArray.find(_item => _item.includes('pre'));
+        // console.log({ postSurvey, preSurvey });
         relevantSurveyCounterParts[postSurvey] = preSurvey;
 
         if (hasPreSurvey) {
@@ -294,10 +287,8 @@ class Survey extends Component {
 
     // set up pre-survey link for re-direction if pre-survey needs to get filled out
     const linkArr = history.location.pathname.split('/');
-    console.log(linkArr, 'linnnnnnnk');
     // surveyType
     const surveyPart = linkArr[2].split('&')[0];
-    console.log(surveyPart, 'ppart');
     const shortId = linkArr[2].split('&')[1];
 
     // check if PIN alrady submitted survey
@@ -310,6 +301,13 @@ class Survey extends Component {
     }
     // if relevant session check if PIN has already filled out pre survey
     if (sessionsHavePreSurvey.includes(sessionType)) {
+      console.log({
+        sessionsHavePreSurvey,
+        sessionType,
+        PINExist,
+        preSurveyResponses: preSurveyResponses.preResponseExists,
+      });
+
       if (!PINExist && !preSurveyResponses.preResponseExists) {
         Modal.error({
           title: 'Please fill out the pre-survey for this session!',

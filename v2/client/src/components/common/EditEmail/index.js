@@ -499,7 +499,6 @@ class EditEmail extends Component {
         <div ref={this.myRef} />
         <Header label="Edit Session" type="view" />
         <Wrapper>
-          <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
           {isEditView ? (
             <>
               <SubHeader>Extra information:</SubHeader>
@@ -794,7 +793,7 @@ class EditEmail extends Component {
                 loading={loading}
               />
               <BackLink onClick={() => history.push(MY_SESSIONS_URL)}>
-              Invite people later and go back to session overview
+                Invite people later and go back to session overview
               </BackLink>
               {error}
               {isEditView && (
