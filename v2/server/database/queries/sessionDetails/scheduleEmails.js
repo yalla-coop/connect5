@@ -41,3 +41,14 @@ module.exports.removeScheduledEmail = ({ sessionId, scheduledEmailId }) =>
       },
     }
   );
+
+  module.exports.removeEmailBySurveyType = ({ sessionId, surveyType }) => 
+    Session.updateOne(
+      { _id: sessionId },
+      {
+        $pull: {
+          scheduledEmails: { surveyType },
+        },
+      },
+    )
+  
