@@ -38,4 +38,16 @@ describe('Test 3and6month schedule emails query', () => {
     expect(updatedSession2.scheduledEmails.length).toBe(0);
     done();
   });
+
+  test('doesnt throw error removing email if its not there', async done => {
+    const foundSession = await Session.findOne();
+
+    await removeEmailBySurveyType({ sessionId: foundSession._id, surveyType: "follow-up-3-month"})
+
+    const updatedSession = await Session.findById(foundSession._id)
+
+    expect(updatedSession.scheduledEmails.length).toBe(0);
+    done();
+
+  })
 });
