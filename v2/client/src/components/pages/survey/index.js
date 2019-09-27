@@ -18,7 +18,7 @@ import {
   SubmitBtn,
   StepProgress,
   ProgressWrapper,
-  StepTitle
+  StepTitle,
 } from './Survey.style';
 
 import { colors } from '../../../theme';
@@ -255,15 +255,16 @@ class Survey extends Component {
   // submits and validates PIN request
   submitPIN = () => {
     const { PINExist, surveyData, history } = this.props;
-    const { preSurveyResponses, sessionType } = surveyData;
+    const { preSurveyResponses, surveyData: surveyInfo } = surveyData;
+    const { sessionType, surveyType } = surveyInfo;
 
     // if someone needs to fill out pre-survey first -> take object value related to post-survey
     const relevantSurveyCounterParts = {};
 
     // post surveys relevant to be checked if someone filled out pre-survey
     // sessions that have -pre- survey
-    const sessionsHavePreSurvey = Object.entries(surveysTypes).reduce(
-      (prev, [_sessionType, surveysArray]) => {
+    const sessionsHavePreSurvey = Object.entries(surveysTypes)
+      .filter(([_sessionType, surveysArray]) => {
         let hasPreSurvey = false;
 
         surveysArray.forEach(survey => {
@@ -276,18 +277,23 @@ class Survey extends Component {
         const preSurvey = surveysArray.find(_item => _item.includes('pre'));
         relevantSurveyCounterParts[postSurvey] = preSurvey;
 
-        if (hasPreSurvey) {
-          return [_sessionType, ...prev];
-        }
-        return prev;
-      }
-    );
+        return hasPreSurvey === true;
+
+        // if (hasPreSurvey) {
+        //   return _sessionType;
+        // }
+      })
+      .map(([_sessionType, surveysArray]) => _sessionType);
 
     // set up pre-survey link for re-direction if pre-survey needs to get filled out
     const linkArr = history.location.pathname.split('/');
     // surveyType
     const surveyPart = linkArr[2].split('&')[0];
     const shortId = linkArr[2].split('&')[1];
+
+    // check if current survey is pre
+    const isPreSurvey = surveyType.includes('pre');
+
 
     // check if PIN alrady submitted survey
     if (PINExist) {
@@ -297,9 +303,9 @@ class Survey extends Component {
         onOk: this.sectionChange('back'),
       });
     }
-    // if relevant session check if PIN has already filled out pre survey
+    // if relevant session check if PIN has already filled out pre survey and if this is a pre or post survey 
     if (sessionsHavePreSurvey.includes(sessionType)) {
-      if (!PINExist && !preSurveyResponses.preResponseExists) {
+      if (!PINExist && !preSurveyResponses.preResponseExists && !isPreSurvey) {
         Modal.error({
           title: 'Please fill out the pre-survey for this session!',
           content:
@@ -363,19 +369,25 @@ class Survey extends Component {
   handleStarChange = (answer, question) => {
     const { formState } = this.state;
     // remove 1 from the answer so it's 0 to 5 not 1 to 6
-    const fixedAnswer = { answer: answer - 1, question }
-    this.setState({ formState: { ...formState, [question]: fixedAnswer } }, () => {
-      this.trackAnswers();
-    })
-  }
+    const fixedAnswer = { answer: answer - 1, question };
+    this.setState(
+      { formState: { ...formState, [question]: fixedAnswer } },
+      () => {
+        this.trackAnswers();
+      }
+    );
+  };
 
   handleDropdown = (answer, question) => {
     const { formState } = this.state;
-    const answerObj = { answer, question }
-    this.setState({ formState: { ...formState, [question]: answerObj } }, () => {
-      this.trackAnswers();
-    })
-  }
+    const answerObj = { answer, question };
+    this.setState(
+      { formState: { ...formState, [question]: answerObj } },
+      () => {
+        this.trackAnswers();
+      }
+    );
+  };
 
   handleAntdDatePicker = (question, value, group, field) => {
     // const question = e.target.name;
@@ -422,7 +434,7 @@ class Survey extends Component {
       return uniqueGroups.includes(question.group.text);
     });
 
-    // // set the current question to focus on 
+    // // set the current question to focus on
     // setCurrentQuestion = questionId => {
     //   this.setState({ currentQuestion: questionId })
     // }
@@ -570,7 +582,7 @@ class Survey extends Component {
                       />
                     </ProgressWrapper>
                     <StepProgress>
-                      <StepTitle>Step</StepTitle> 
+                      <StepTitle>Step</StepTitle>
                       {section === 'enterPIN' ? 1 : currentStep}/
                       {uniqueGroups.length + 1}
                     </StepProgress>
