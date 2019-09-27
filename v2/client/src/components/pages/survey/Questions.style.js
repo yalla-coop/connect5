@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { colors, borders, shadows, breakpointsMax } from '../../../theme';
 
@@ -231,4 +232,17 @@ export const SectionCategory = styled.h4`
 export const StyledUL = styled.ul`
   padding-left: 1rem;
   padding-bottom: 1rem;
+`;
+
+export const InfoHeader = styled(Link)`
+  font-size: 14px;
+  font-weight: 300;
+  color: ${colors.black};
+  text-decoration: italic;
+  margin: 0;
+  padding: 0.5rem 1rem;
+
+  :hover {
+    color: ${colors.primary};
+  }
 `;
