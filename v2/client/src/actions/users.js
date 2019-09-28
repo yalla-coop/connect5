@@ -48,10 +48,10 @@ export const fetchTrainerFeedback = ({
 
     const res = await axios.post(url, data);
 
-    dispatch({
-      type: types.FETCH_OVERALL_TRAINER_FEEDBACK,
-      payload: { data: res.data },
-    });
+    // dispatch({
+    //   type: types.FETCH_OVERALL_TRAINER_FEEDBACK,
+    //   payload: { data: res.data },
+    // });
   } catch (err) {
     dispatch(
       returnErrors(

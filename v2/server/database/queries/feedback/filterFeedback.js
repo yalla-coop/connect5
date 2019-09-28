@@ -18,7 +18,7 @@ module.exports = async filters => {
   } = filters;
 
   const ageMatch = age ? { $in: ['$age', age] } : true;
-  const genderMatch = gender ? { $in: ['$gender', gender] } : true;
+  const genderMatch = gender ? { $in: ['$gender', [gender]] } : true;
   const ethnicMatch = ethnic ? { $in: ['$ethnic', ethnic] } : true;
   const regionMatch = region ? { $in: ['$region', region] } : true;
   const workforceMatch = workforce ? { $in: ['$workforce', workforce] } : true;
@@ -123,177 +123,211 @@ module.exports = async filters => {
       },
     },
     {
-      $match: match,
-    },
-    {
-      $lookup: {
-        from: 'answers',
-        localField: 'participant',
-        foreignField: 'participant',
-        as: 'answers',
-      },
-    },
-    {
-      $unwind: '$answers',
-    },
-    {
-      $lookup: {
-        from: 'questions',
-        localField: 'answers.question',
-        foreignField: '_id',
-        as: 'question',
-      },
-    },
-    {
-      $project: {
-        answer: '$answers.answer',
-        PIN: 1,
-        code: {
-          $arrayElemAt: ['$question.code', 0],
-        },
-        feedbackText: {
-          $arrayElemAt: ['$question.feedbackText', 0],
-        },
-        options: {
-          $ifNull: [
-            { $arrayElemAt: ['$question.options', 0] },
-            [0, 1, 2, 3, 4, 5], // for stars
-          ],
-        },
-        surveyType: 1,
-      },
-    },
-    {
-      $match: {
-        feedbackText: {
-          $exists: true,
-        },
-      },
-    },
-    {
-      $group: {
-        _id: {
-          text: '$feedbackText',
-          answer: '$answer',
-          surveyType: '$surveyType',
-        },
-        options: { $first: '$options' },
-        count: { $sum: 1 },
-      },
-    },
-    {
-      $project: {
-        text: '$_id.text',
-        answer: '$_id.answer',
-        surveyType: '$_id.surveyType',
-        count: 1, // the count of answer on question in survey
-        options: 1,
-      },
-    },
-    {
-      $group: {
-        _id: {
-          text: '$text',
-          surveyType: '$surveyType',
-        },
-        categories: { $push: { category: '$answer', count: '$count' } },
-        totalCount: { $sum: '$count' }, // total replies on each survey
-        options: { $first: '$options' },
-      },
-    },
-    {
-      $project: {
-        _id: 0,
-        text: '$_id.text',
-        surveyType: '$_id.surveyType',
-        categories: 1,
-        totalCount: 1,
-        options: 1,
+      $facet: {
+        filterdResults: [
+          {
+            // filter the responses, returns all responses if there are no filters
+            $match: match,
+          },
+          {
+            // join respones with answers
+            $lookup: {
+              from: 'answers',
+              localField: 'participant',
+              foreignField: 'participant',
+              as: 'answers',
+            },
+          },
+          {
+            $unwind: '$answers',
+          },
+          {
+            // join answers with related question
+            $lookup: {
+              from: 'questions',
+              localField: 'answers.question',
+              foreignField: '_id',
+              as: 'question',
+            },
+          },
+          {
+            // re-form data shape
+            $project: {
+              answer: '$answers.answer',
+              PIN: 1,
+              code: {
+                $arrayElemAt: ['$question.code', 0],
+              },
+              feedbackText: {
+                $arrayElemAt: ['$question.feedbackText', 0],
+              },
+              options: {
+                $ifNull: [
+                  { $arrayElemAt: ['$question.options', 0] },
+                  [0, 1, 2, 3, 4, 5], // for stars questions that has no option
+                ],
+              },
+              sessionType: 1,
+            },
+          },
+          {
+            // get the feedback questions only
+            $match: {
+              feedbackText: {
+                $exists: true,
+              },
+            },
+          },
+          {
+            // gruop answers with question feed back text and session type
+            // then find the count for each answer
+            // we need this step to get the count for each answer
+            $group: {
+              _id: {
+                text: '$feedbackText',
+                answer: '$answer',
+                sessionType: '$sessionType',
+              },
+              options: { $first: '$options' },
+              count: { $sum: 1 },
+            },
+          },
+          {
+            // make data shape shallow again
+            $project: {
+              text: '$_id.text',
+              answer: '$_id.answer',
+              sessionType: '$_id.sessionType',
+              count: 1, // the count of answer on question in survey
+              options: 1,
+            },
+          },
+          {
+            // group questions with sessions
+            $group: {
+              _id: {
+                text: '$text',
+                sessionType: '$sessionType',
+              },
+              // append the categories and the count for each group
+              categories: { $push: { category: '$answer', count: '$count' } },
+              totalCount: { $sum: '$count' }, // total replies on each survey
+              options: { $first: '$options' },
+            },
+          },
+          {
+            // make data shallow again
+            $project: {
+              _id: 0,
+              text: '$_id.text',
+              sessionType: '$_id.sessionType',
+              categories: 1,
+              totalCount: 1,
+              options: 1,
+            },
+          },
+        ],
+        allResults: [
+          {
+            // join respones with answers
+            $lookup: {
+              from: 'answers',
+              localField: 'participant',
+              foreignField: 'participant',
+              as: 'answers',
+            },
+          },
+          {
+            $unwind: '$answers',
+          },
+          {
+            // join answers with related question
+            $lookup: {
+              from: 'questions',
+              localField: 'answers.question',
+              foreignField: '_id',
+              as: 'question',
+            },
+          },
+          {
+            // re-form data shape
+            $project: {
+              answer: '$answers.answer',
+              PIN: 1,
+              code: {
+                $arrayElemAt: ['$question.code', 0],
+              },
+              feedbackText: {
+                $arrayElemAt: ['$question.feedbackText', 0],
+              },
+              options: {
+                $ifNull: [
+                  { $arrayElemAt: ['$question.options', 0] },
+                  [0, 1, 2, 3, 4, 5], // for stars questions that has no option
+                ],
+              },
+              sessionType: 1,
+            },
+          },
+          {
+            // get the feedback questions only
+            $match: {
+              feedbackText: {
+                $exists: true,
+              },
+            },
+          },
+          {
+            // gruop answers with question feed back text and session type
+            // then find the count for each answer
+            // we need this step to get the count for each answer
+            $group: {
+              _id: {
+                text: '$feedbackText',
+                answer: '$answer',
+                sessionType: '$sessionType',
+              },
+              options: { $first: '$options' },
+              count: { $sum: 1 },
+            },
+          },
+          {
+            // make data shape shallow again
+            $project: {
+              text: '$_id.text',
+              answer: '$_id.answer',
+              sessionType: '$_id.sessionType',
+              count: 1, // the count of answer on question in survey
+              options: 1,
+            },
+          },
+          {
+            // group questions with sessions
+            $group: {
+              _id: {
+                text: '$text',
+                sessionType: '$sessionType',
+              },
+              // append the categories and the count for each group
+              categories: { $push: { category: '$answer', count: '$count' } },
+              totalCount: { $sum: '$count' }, // total replies on each survey
+              options: { $first: '$options' },
+            },
+          },
+          {
+            // make data shallow again
+            $project: {
+              _id: 0,
+              text: '$_id.text',
+              sessionType: '$_id.sessionType',
+              categories: 1,
+              totalCount: 1,
+              options: 1,
+            },
+          },
+        ],
       },
     },
   ]);
-
-  const formedData = {};
-  // const overAll = {};
-  results.forEach(question => {
-    const {
-      options,
-      text,
-      surveyType: _surveyType,
-      categories,
-      totalCount,
-    } = question;
-
-    // calculate the average for each bar
-    const categoriesWithAverage = {};
-    options.forEach(option => {
-      categoriesWithAverage[option] = 0;
-    });
-    categories.forEach(({ category, count }) => {
-      categoriesWithAverage[category] = (count / totalCount) * 100;
-    });
-
-    if (formedData[text]) {
-      // push the session data to the question
-      formedData[text].sessions.push({
-        surveyType: _surveyType,
-        categories: categoriesWithAverage,
-        totalCount,
-      });
-
-      formedData[text].overall.totalCount += totalCount;
-      categories.forEach(({ category, count }) => {
-        formedData[text].overall.categories[category] += count;
-      });
-    } else {
-      // for new overall
-      const categoriesWithCount = {};
-      options.forEach(option => {
-        categoriesWithCount[option] = 0;
-      });
-      categories.forEach(({ category, count }) => {
-        categoriesWithCount[category] = count;
-      });
-
-      //
-      formedData[text] = {
-        text,
-        // set overall session at first time
-        overall: {
-          categories: categoriesWithCount,
-          totalCount, // the total count on a question
-        },
-
-        sessions: [
-          {
-            surveyType: _surveyType,
-            categories: categoriesWithAverage,
-            totalCount,
-          },
-        ],
-      };
-    }
-  });
-
-  const arrayData = Object.values(formedData);
-  arrayData.forEach(feedback => {
-    // calculate the average for each bar
-    const categoriesWithAverage = {};
-
-    Object.entries(feedback.overall.categories).forEach(([category, count]) => {
-      categoriesWithAverage[category] =
-        (count / feedback.overall.totalCount) * 100;
-    });
-
-    const overallSession = {
-      surveyType: 'Overall',
-      categories: categoriesWithAverage,
-      totalCount: feedback.overall.totalCount,
-    };
-
-    feedback.sessions.unshift(overallSession);
-    // eslint-disable-next-line no-param-reassign
-    delete feedback.overall;
-  });
-  return arrayData;
+  return results[0];
 };
