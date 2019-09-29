@@ -258,9 +258,6 @@ class Survey extends Component {
     const { preSurveyResponses, surveyData: surveyInfo } = surveyData;
     const { sessionType, surveyType } = surveyInfo;
 
-    // if someone needs to fill out pre-survey first -> take object value related to post-survey
-    const relevantSurveyCounterParts = {};
-
     // post surveys relevant to be checked if someone filled out pre-survey
     // sessions that have -pre- survey
     const sessionsHavePreSurvey = Object.entries(surveysTypes)
@@ -273,10 +270,6 @@ class Survey extends Component {
           }
         });
 
-        const postSurvey = surveysArray.find(_item => _item.includes('post'));
-        const preSurvey = surveysArray.find(_item => _item.includes('pre'));
-        relevantSurveyCounterParts[postSurvey] = preSurvey;
-
         return hasPreSurvey === true;
 
         // if (hasPreSurvey) {
@@ -288,12 +281,11 @@ class Survey extends Component {
     // set up pre-survey link for re-direction if pre-survey needs to get filled out
     const linkArr = history.location.pathname.split('/');
     // surveyType
-    const surveyPart = linkArr[2].split('&')[0];
+    const preSurveyTitle = surveysTypes[sessionType][0];
     const shortId = linkArr[2].split('&')[1];
 
     // check if current survey is pre
     const isPreSurvey = surveyType.includes('pre');
-
 
     // check if PIN alrady submitted survey
     if (PINExist) {
@@ -303,7 +295,7 @@ class Survey extends Component {
         onOk: this.sectionChange('back'),
       });
     }
-    // if relevant session check if PIN has already filled out pre survey and if this is a pre or post survey 
+    // if relevant session check if PIN has already filled out pre survey and if this is a pre or post survey
     if (sessionsHavePreSurvey.includes(sessionType)) {
       if (!PINExist && !preSurveyResponses.preResponseExists && !isPreSurvey) {
         Modal.error({
@@ -311,9 +303,7 @@ class Survey extends Component {
           content:
             'Before filling out this Post Session Survey please submit the Pre Session Survey. Clicking OK will bring you to the right survey.',
           onOk: () => {
-            history.push(
-              `/survey/${relevantSurveyCounterParts[surveyPart]}&${shortId}`
-            );
+            history.push(`/survey/${preSurveyTitle}&${shortId}`);
             window.location.reload();
           },
         });
