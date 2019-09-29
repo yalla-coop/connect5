@@ -2,15 +2,24 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Icon } from 'antd';
 import Spin from '../Spin';
 import { Wrapper, Description, Container } from './Feedback.style';
 
 import HorizontalBarComponent from './HorizontalBarComponent';
+import FilterResults from '../FilterResults';
 
 import { fetchTrainerFeedback as fetchTrainerFeedbackAction } from '../../../actions/users';
-import { WhiteWrapper } from '../BehavioralInsight/BehavioralInsight.style';
+import {
+  WhiteWrapper,
+  FilterHeader,
+} from '../BehavioralInsight/BehavioralInsight.style';
 
 class TrainerFeedbackOverall extends Component {
+  state = {
+    showFilter: false,
+  };
+
   componentDidMount() {
     this.getData();
   }
@@ -22,6 +31,35 @@ class TrainerFeedbackOverall extends Component {
       this.getData();
     }
   }
+
+  isFilterActive = () => {
+    this.setState({ showFilter: !this.state.showFilter });
+  };
+
+  renderData = () => {
+    const { showFilter } = this.state;
+    const { loaded, feedbackData } = this.props;
+    if (feedbackData.length === 0) {
+      return <Description>no data collected yet :( </Description>;
+    }
+    if (loaded) {
+      if (showFilter) {
+        return (
+          <Container>
+            <FilterResults />
+          </Container>
+        );
+      }
+      return (
+        <Container>
+          <WhiteWrapper>
+            <HorizontalBarComponent feedbackData={feedbackData} />
+          </WhiteWrapper>
+        </Container>
+      );
+    }
+    return <Spin />;
+  };
 
   getData = () => {
     const {
@@ -35,23 +73,17 @@ class TrainerFeedbackOverall extends Component {
   };
 
   render() {
-    const { feedbackData, loaded } = this.props;
-
+    const { showFilter } = this.state;
     return (
       <Wrapper>
-        {loaded ? (
-          <Container>
-            {feedbackData.length === 0 ? (
-              <Description>no data collected yet :( </Description>
-            ) : (
-              <WhiteWrapper>
-                <HorizontalBarComponent feedbackData={feedbackData} />
-              </WhiteWrapper>
-            )}
-          </Container>
-        ) : (
-          <Spin />
-        )}
+        <FilterHeader onClick={this.isFilterActive}>
+          FILTER RESULTS
+          <Icon
+            type={`caret-${showFilter ? 'up' : 'down'}`}
+            style={{ color: '#fff', fontSize: '25px', paddingLeft: '5px' }}
+          />
+        </FilterHeader>
+        {this.renderData()}
       </Wrapper>
     );
   }

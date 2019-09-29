@@ -270,3 +270,32 @@ export const updateUserInfo = (data, updateState) => async dispatch => {
       });
     });
 };
+
+export const fetchManagersNames = () => async dispatch => {
+  axios
+    .get('/api/users/managers')
+    .then(res => {
+      dispatch({
+        type: types.FETCH_ALL_MANAGERS,
+        payload: res.data,
+      });
+    })
+    .catch(() => {
+      history.push('/404err');
+    });
+};
+
+export const removeTrainerFromGroupAction = managerId => async dispatch => {
+  axios
+    .delete(`/api/users/remove-trainer/${managerId}`)
+    .then(res => {
+      dispatch({
+        type: types.LOADING_FALSE,
+        payload: 'updateUserLoading',
+      });
+      dispatch(fetchManagersNames());
+    })
+    .catch(() => {
+      history.push('/404err');
+    });
+};

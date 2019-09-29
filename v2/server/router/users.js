@@ -27,6 +27,7 @@ const getTrainerSessions = require('../controllers/users/trainer/getTrainerSessi
 const getLocalLeadsSessions = require('../controllers/users/getLocalLeadSessions');
 const getAllSessions = require('../controllers/users/getAllSessions');
 const removeTrainerFromGroup = require('../controllers/users/removeTrainerFromGroup');
+const trainerLeaveGroup = require('../controllers/users/trainerLeaveGroup');
 const removeTrainerFromGroupEmail = require('../controllers/users/removeTrainerFromGroupEmail');
 const getLocalLeadGroup = require('../controllers/users/getLocalLeadGroup');
 const changePassword = require('../controllers/users/changePassword');
@@ -35,6 +36,7 @@ const forgetPassword = require('../controllers/users/forgetPassword');
 const resetPassword = require('../controllers/users/resetPassword');
 const deleteAccount = require('../controllers/users/deleteAccount');
 const editProfile = require('../controllers/users/editProfile');
+const getAllManagers = require('../controllers/users/getAllManagers');
 
 // check eamil route if the route doen't contain email query
 // then it will skip with next()
@@ -86,11 +88,17 @@ router.delete(
 router.delete('/remove/:localLeadId/:trainerId', removeTrainerFromGroupEmail);
 
 router.delete('/users/:userId', authentication(), deleteAccount);
+router.delete(
+  '/users/remove-trainer/:managerId',
+  authentication(),
+  trainerLeaveGroup
+);
 router.get('/fetch-trainers', fetchAllTrainers);
 router.get('/users/admin/trainers-and-leads', getAllTrainersAndLeads);
 router.get('/users/trainer-sessions/:id', getTrainerSessions);
 router.get('/users/sessions/:id', authentication(), getLocalLeadsSessions);
 router.get('/users/sessions', getAllSessions);
+router.get('/users/managers', authentication(), getAllManagers);
 router.get('/users/admin/all-sessions-per-region', getSessionsPerRegions);
 router.get(
   '/users/admin/demographics/participant',

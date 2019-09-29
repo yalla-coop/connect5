@@ -42,6 +42,7 @@ import ResetPassword from './pages/ForgetPassword/ResetPassword';
 import SessionsFiles from './pages/SessionsFiles';
 import ConfirmRegistration from './pages/ConfirmRegistration';
 import MyProfile from './pages/MyProfile';
+import LocalLeadsAndManagersList from './pages/LocalLeadsAndManagersList';
 import AboutUs from './pages/LandingPage/AboutUs';
 import ConfirmTrainerRemoval from './pages/ConfirmTrainerRemoval/index';
 
@@ -75,6 +76,7 @@ import {
   ALL_SESSIONS_URL,
   MY_SESSIONS_URL,
   ABOUT_URL,
+  TRAINER_MANAGERS_GROUPS,
   REMOVE_TRAINER_FROM_GROUP,
 } from '../constants/navigationRoutes';
 
@@ -305,6 +307,16 @@ class App extends Component {
               isAuthenticated={isAuthenticated}
               loaded={loaded}
               allowedRoles={['admin', 'localLead', 'trainer']}
+              role={role}
+              navbar
+            />
+
+            <PrivateRoute
+              path={TRAINER_MANAGERS_GROUPS}
+              Component={LocalLeadsAndManagersList}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['trainer']}
               role={role}
               navbar
             />
