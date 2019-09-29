@@ -27,8 +27,7 @@ describe('Tesing for getTrainerFeedback route', () => {
       .expect(200)
       .end((err, result) => {
         expect(result.body).toBeDefined();
-        expect(result.body[0].counter[0].surveyTypes.length).toBeDefined();
-        expect(result.body[0]).toBeDefined();
+        expect(result.body.feedback).toBeDefined();
         done();
       });
     done();
@@ -45,8 +44,7 @@ describe('Tesing for getTrainerFeedback route', () => {
       .expect(200)
       .end((err, result) => {
         expect(result.body).toBeDefined();
-        expect(result.body[0].counter[0].surveyTypes.length).toBe(1);
-        expect(result.body[0]).toBeDefined();
+        expect(result.body.feedback).toBeDefined();
         done();
       });
     done();
