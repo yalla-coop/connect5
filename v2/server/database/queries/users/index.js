@@ -56,3 +56,6 @@ module.exports.deleteTrainerFromAllSessions = trainerId =>
       $pullAll: { trainers: [mongoose.Types.ObjectId(trainerId)] },
     }
   );
+
+module.exports.getAllManagersQuery = managersIds =>
+  User.find({ _id: { $in: managersIds } });

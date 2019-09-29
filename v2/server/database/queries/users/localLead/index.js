@@ -9,6 +9,12 @@ module.exports.addTrainertoLocalLeadGroup = (localLeadId, trainerId) => {
   });
 };
 
+module.exports.getLocalLeadsNames = (oldLocalLeadId, newLocalLeadId) => {
+  const ids = [oldLocalLeadId, newLocalLeadId];
+
+  return User.find({ _id: { $in: ids } });
+};
+
 module.exports.addTrainerToGroups = async (managers, trainer) => {
   const bulkOp = managers.map(({ key }) => {
     return {
@@ -37,6 +43,7 @@ module.exports.addManagersToTrainer = (managers, trainerId) => {
 };
 
 // remove trainer from a localLead group
+
 // remove trainer from a localLead group
 module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
   return User.bulkWrite([
@@ -61,7 +68,7 @@ module.exports.removeTrainerFromGroup = (localLeadId, trainerId) => {
 
 module.exports.addTrainertoGroup = (localLeadId, trainerId) => {
   return User.findByIdAndUpdate(localLeadId, {
-    $push: { trainersGroup: trainerId },
+    $addToSet: { trainersGroup: trainerId },
   });
 };
 
