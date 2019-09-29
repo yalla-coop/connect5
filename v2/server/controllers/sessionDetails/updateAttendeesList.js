@@ -22,31 +22,43 @@ module.exports = (req, res, next) => {
     .then(async () => {
       // get session Details
       const sessionDetails = await getSessionById(sessionId);
-      const sessionDate = sessionDetails.date.toString();
+      const { date, type } = sessionDetails;
+      const sessionDate = date.toString();
       const confirmedEmails = participantsEmails.map(
         participant => participant.email
       );
+      const trainTrainerSessions = [
+        'train-trainers-s1',
+        'train-trainers-s2',
+        'train-trainers-event',
+      ];
+      const ThreeMonthSurvey = trainTrainerSessions.includes(type)
+        ? 'follow-up-3-month-train-trainers'
+        : 'follow-up-3-month';
+      const SixMonthSurvey = trainTrainerSessions.includes(type)
+        ? 'follow-up-6-month-train-trainers'
+        : 'follow-up-6-month';
 
       // now the event has confirmed emails schedule 3 and 6 month surveys
       // remove existing emails
       await removeEmailBySurveyType({
         sessionId,
-        surveyType: 'follow-up-3-month',
+        surveyType: ThreeMonthSurvey,
       });
       await removeEmailBySurveyType({
         sessionId,
-        surveyType: 'follow-up-6-month',
+        surveyType: SixMonthSurvey,
       });
       // add new ones
       await scheduleNewEmail({
         sessionId,
-        surveyType: 'follow-up-3-month',
+        surveyType: ThreeMonthSurvey,
         recipients: confirmedEmails,
         date: getScheduleDates(sessionDate, 3),
       });
       await scheduleNewEmail({
         sessionId,
-        surveyType: 'follow-up-6-month',
+        surveyType: SixMonthSurvey,
         recipients: confirmedEmails,
         date: getScheduleDates(sessionDate, 6),
       });
