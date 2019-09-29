@@ -49,14 +49,14 @@ const editProfile = async (req, res, next) => {
       });
 
       if (process.env.NODE_ENV === 'production') {
-        sendLocalLeadEmail(
+        await sendLocalLeadEmail(
           oldLocalLead[0].name,
           oldLocalLead[0].email,
           user.name,
           'old'
         );
 
-        sendLocalLeadEmail(
+        await sendLocalLeadEmail(
           newLocalLead[0].name,
           newLocalLead[0].email,
           user.name,

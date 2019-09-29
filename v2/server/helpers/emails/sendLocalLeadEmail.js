@@ -22,7 +22,7 @@ const sendLocalLeadEmail = (localLeadName, email, trainerName, status) => {
 
   const user = process.env.EMAIL;
   const pass = process.env.EMAIL_PASSWORD;
-  const subject = '';
+  const subject = 'Your Trainers group has been updated';
   const from = 'Connect 5';
 
   const attachments = [
