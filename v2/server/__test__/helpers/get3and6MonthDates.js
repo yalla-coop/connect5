@@ -5,17 +5,23 @@ describe('Test get3and6MonthDates helper', () => {
     // const trainer = await User.find({ role: 'admin' });
     const newDates = getScheduleDates('02/02/2019', 3);
 
-    expect(newDates).toBe(
-      'Thu May 02 2019 00:00:00 GMT+0100 (British Summer Time)'
-    );
+    const newDateArr = newDates.split(' ');
+
+    expect(newDateArr[0]).toBe('Thu');
+    expect(newDateArr[1]).toBe('May');
+    expect(newDateArr[2]).toBe('02');
+    expect(newDateArr[3]).toBe('2019');
   });
 
   test('increases date by 6 months', () => {
     // const trainer = await User.find({ role: 'admin' });
     const newDates = getScheduleDates('02/02/2019', 6);
 
-    expect(newDates).toBe(
-      'Fri Aug 02 2019 00:00:00 GMT+0100 (British Summer Time)'
-    );
+    const newDateArr = newDates.split(' ');
+
+    expect(newDateArr[0]).toBe('Fri');
+    expect(newDateArr[1]).toBe('Aug');
+    expect(newDateArr[2]).toBe('02');
+    expect(newDateArr[3]).toBe('2019');
   });
 });
