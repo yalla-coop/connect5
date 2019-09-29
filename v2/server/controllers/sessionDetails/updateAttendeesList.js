@@ -39,6 +39,7 @@ module.exports = (req, res, next) => {
         ? 'follow-up-6-month-train-trainers'
         : 'follow-up-6-month';
 
+      console.log('conf', confirmedEmails);
       // now the event has confirmed emails schedule 3 and 6 month surveys
       // remove existing emails
       await removeEmailBySurveyType({
