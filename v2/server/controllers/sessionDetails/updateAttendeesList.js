@@ -1,4 +1,6 @@
 const boom = require('boom');
+
+// import db queries
 const {
   updateAttendeesList,
   getSessionById,
@@ -9,6 +11,9 @@ const {
   scheduleNewEmail,
 } = require('./../../database/queries/sessionDetails/scheduleEmails');
 
+// import helpers
+const { getScheduleDates } = require('./../../helpers/get3and6MonthDates');
+
 module.exports = (req, res, next) => {
   const { sessionId } = req.params;
   const { participantsEmails, status, isPartial } = req.body;
@@ -17,6 +22,10 @@ module.exports = (req, res, next) => {
     .then(async () => {
       // get session Details
       const sessionDetails = await getSessionById(sessionId);
+      const sessionDate = sessionDetails.date.toString();
+      const confirmedEmails = participantsEmails.map(
+        participant => participant.email
+      );
 
       // now the event has confirmed emails schedule 3 and 6 month surveys
       // remove existing emails
@@ -26,14 +35,20 @@ module.exports = (req, res, next) => {
       });
       await removeEmailBySurveyType({
         sessionId,
-        surveyTypr: 'follow-up-6-month',
+        surveyType: 'follow-up-6-month',
       });
       // add new ones
       await scheduleNewEmail({
         sessionId,
         surveyType: 'follow-up-3-month',
-        recipients: participantsEmails,
-        date: '01/01/2019',
+        recipients: confirmedEmails,
+        date: getScheduleDates(sessionDate, 3),
+      });
+      await scheduleNewEmail({
+        sessionId,
+        surveyType: 'follow-up-6-month',
+        recipients: confirmedEmails,
+        date: getScheduleDates(sessionDate, 6),
       });
 
       return res.json({});
