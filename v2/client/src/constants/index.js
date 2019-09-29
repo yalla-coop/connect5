@@ -48,3 +48,57 @@ export const readableSessionNamePairs = {
   'train-trainers-s2': 'Train Trainers Session 2',
   'train-trainers-event': 'Train Trainers Day Event',
 };
+
+export const regions = [
+  'North East',
+  'North West',
+  'Yorkshire and the Humber',
+  'East Midlands',
+  'West Midlands',
+  'East of England',
+  'London',
+  'South East',
+  'South West',
+];
+
+export const ages = [
+  'Under 18',
+  '18-24 years old',
+  '25-34 years old',
+  '35-44 years old',
+  '45-54 years old',
+  '55-64',
+  'Over 64',
+];
+
+export const genders = ['Male', 'Female'];
+
+export const ethnics = [
+  'English/Welsh/Scottish/Northern Irish/British',
+  'Irish',
+  'Gypsy or Irish Traveller',
+  'White and Black Caribbean',
+  'White and Black African',
+  'White and Asian',
+  'Indian',
+  'Pakistani',
+  'Bangladeshi',
+  'Chinese',
+  'African',
+  'Caribbean',
+  'Arab',
+  'Other (please specify)',
+];
+
+export const workforces = [
+  'Emergency services (including fire service, police, ambulance)',
+  'Public health specialists and practitioners (e.g. public health consultants, health improvement managers, smoking cessation advisors)',
+  'Welfare (e.g. employment advisers, benefits case workers, advisers working on a voluntary basis)',
+  'Community health promotion workers/volunteers (e.g. health trainers, health champions, health and wellbeing advisors, breastfeeding volunteers)',
+  'Health Professionals (e.g. GPs, nurses, Allied Health Professionals)',
+  'Social care and housing professionals (housing officers, social workers, youth workers and other social care professions)',
+  'Teaching and educational professionals (e.g. headteachers, teachers, teaching assistants, admin staff working in education settings)',
+  'Childcare related professions (e.g. nursery staff, childminders)',
+  'Sports and fitness occupations (e.g. sports coaches, fitness instructors and leisure centre employees)',
+  'Other (please specify)',
+];
