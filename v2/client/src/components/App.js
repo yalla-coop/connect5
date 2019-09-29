@@ -53,6 +53,7 @@ import Unauthorized from './pages/ErrorPages/403';
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
 import Spin from './common/Spin';
+import BarChart from './common/BarChartD';
 
 // ROUTES
 import {
@@ -159,6 +160,7 @@ class App extends Component {
               navbar
             />
             <Route exact path="/" component={Home} />
+            <Route exact path="/bar" component={BarChart} />
             <Route exact path="/thank-you" component={ThankYouPage} />
             <Route
               exact
