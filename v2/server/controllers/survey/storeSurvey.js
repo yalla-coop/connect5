@@ -46,7 +46,8 @@ module.exports = async (req, res, next) => {
       PIN,
       sessionId,
       surveyType,
-      agreedToResearch
+      agreedToResearch,
+      storedParticipantDetails._id
     );
 
     const storableAnswers = getStorableAnswers({
