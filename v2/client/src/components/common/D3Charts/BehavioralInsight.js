@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import GroupChart from './GroupChart';
+import CategorizedGroupChart from './CategorizedGroupChart';
+import NCategorizedGroupChart from './NCategorizedGroupChart';
 
 class BehaviralInsightChart extends Component {
   render() {
@@ -9,7 +10,19 @@ class BehaviralInsightChart extends Component {
         {categorized.map((question, i) => (
           <>
             <p>{question.text}</p>
-            <GroupChart
+            <CategorizedGroupChart
+              groups={question.surveys}
+              i={i}
+              legends={['Capability', 'Opportunity', 'Motivation']}
+            />
+          </>
+        ))}
+
+        {nonCategorized.map((question, i) => (
+          <>
+            {console.log(question)}
+            <p>{question.text}</p>
+            <NCategorizedGroupChart
               groups={question.surveys}
               i={i}
               legends={['Capability', 'Opportunity', 'Motivation']}

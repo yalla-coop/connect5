@@ -4,7 +4,7 @@ import Legends from './Legends';
 
 import SubGroupChart from './SubGroupChart';
 
-class GroupChart extends Component {
+class CategorizedGroupChart extends Component {
   componentDidMount() {}
 
   render() {
@@ -24,6 +24,8 @@ class GroupChart extends Component {
                 i={i}
                 legends={legends}
                 title={group.surveyType}
+                dataset={group.categories}
+                j="c"
               />
             </>
           ))}
@@ -33,4 +35,4 @@ class GroupChart extends Component {
   }
 }
 
-export default GroupChart;
+export default CategorizedGroupChart;
