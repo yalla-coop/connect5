@@ -36,16 +36,10 @@ export const fetchUserResults = (id, role) => async dispatch => {
   }
 };
 
-export const fetchTrainerFeedback = ({
-  trainerId,
-  sessionId,
-  surveyType,
-  role,
-  filters,
-}) => async dispatch => {
+export const fetchTrainerFeedback = filters => async dispatch => {
   try {
     const url = `/api/feedback/`;
-    const body = { trainerId, sessionId, surveyType, role, filters };
+    const body = { filters };
 
     const { data } = await axios.post(url, body);
     dispatch({

@@ -6,15 +6,15 @@ import { Alert } from 'antd';
 
 import Spin from '../Spin';
 import Explanation from './Explanation';
-import { fetchParticipantBehavioral as fetchbehavioralAction } from '../../../actions/behavioralInsight';
+import { fetchTrainerBehavioral as fetchTrainerBehavioralAction } from '../../../actions/behavioralInsight';
 
 import { Wrapper, ChartWrapper, Description } from './BehavioralInsight.style';
 
 class BehavioralInsight extends Component {
   componentDidMount() {
-    const { fetchbehavioralInsight, userRole, idOrPIN } = this.props;
+    const { fetchTrainerBehavioral, userRole, idOrPIN } = this.props;
     const url = `/api/behavioral-insight/${userRole}/${idOrPIN}`;
-    fetchbehavioralInsight(url, userRole);
+    fetchTrainerBehavioral(url, userRole);
   }
 
   render() {
@@ -114,5 +114,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchbehavioralInsight: fetchbehavioralAction }
+  { fetchTrainerBehavioral: fetchTrainerBehavioralAction }
 )(BehavioralInsight);

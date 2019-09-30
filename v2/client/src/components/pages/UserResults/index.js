@@ -91,7 +91,7 @@ const panels = {
       </HeaderDiv>
     ),
     render: ({ resultsFor, resultForRule }) => (
-      <Feedback trainerId={resultsFor} role={resultForRule} />
+      <Feedback role={resultForRule} filters={{ trainer: [resultsFor] }} />
     ),
   },
   behavior: {

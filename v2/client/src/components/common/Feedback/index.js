@@ -3,13 +3,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon } from 'antd';
-import { object } from 'prop-types';
 import Spin from '../Spin';
 import { Wrapper, Description, Container } from './Feedback.style';
 
 import Feedback from '../D3Charts/Feedback';
 
-import HorizontalBarComponent from './HorizontalBarComponent';
 import FilterResults from '../FilterResults';
 
 import { fetchTrainerFeedback as fetchTrainerFeedbackAction } from '../../../actions/users';
@@ -36,7 +34,8 @@ class TrainerFeedbackOverall extends Component {
   }
 
   isFilterActive = () => {
-    this.setState({ showFilter: !this.state.showFilter });
+    const { showFilter } = this.state;
+    this.setState({ showFilter: !showFilter });
   };
 
   renderData = () => {
@@ -57,7 +56,6 @@ class TrainerFeedbackOverall extends Component {
         <Container>
           <WhiteWrapper>
             <Feedback feedback={feedbackData} />
-            {/* <HorizontalBarComponent feedbackData={feedbackData} /> */}
           </WhiteWrapper>
         </Container>
       );
@@ -66,14 +64,9 @@ class TrainerFeedbackOverall extends Component {
   };
 
   getData = () => {
-    const {
-      fetchTrainerFeedback,
-      trainerId,
-      sessionId,
-      surveyType,
-      role,
-    } = this.props;
-    fetchTrainerFeedback({ trainerId, sessionId, surveyType, role });
+    const { fetchTrainerFeedback, filters } = this.props;
+
+    fetchTrainerFeedback(filters);
   };
 
   render() {

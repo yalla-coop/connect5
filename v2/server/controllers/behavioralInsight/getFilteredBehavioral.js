@@ -5,8 +5,7 @@ const getAllBehavioralInsight = require('./../../database/queries/behavioralInsi
 const behavioralCalculator = require('../../helpers/formulaeTrainers');
 
 module.exports = async (req, res, next) => {
-  const { filters } = req.body;
-
+  const { filters = {} } = req.body;
   try {
     const [filteredBehavioralInsight, allAnswers] = await Promise.all([
       filtereData(filters),

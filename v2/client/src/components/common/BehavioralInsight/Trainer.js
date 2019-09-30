@@ -13,8 +13,8 @@ import { Wrapper, ContentWrapper } from './BehavioralInsight.style';
 
 class BehavioralTrainerResults extends Component {
   componentDidMount() {
-    const { fetchbehavioralInsight, role, filters = {} } = this.props;
-    fetchbehavioralInsight('/api/behavioral-insight', role, filters);
+    const { fetchTrainerBehavioral, filters = {} } = this.props;
+    fetchTrainerBehavioral('/api/behavioral-insight', filters);
   }
 
   render() {
@@ -47,5 +47,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchbehavioralInsight: fetchbehavioralInsightAction }
+  { fetchTrainerBehavioral: fetchbehavioralInsightAction }
 )(BehavioralTrainerResults);

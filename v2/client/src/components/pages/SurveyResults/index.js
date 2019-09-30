@@ -154,8 +154,10 @@ class SurveyResults extends Component {
                   }}
                 >
                   <TrainerFeedback
-                    sessionId={params.sessionId}
-                    surveyType={params.surveyType}
+                    filters={{
+                      sessionId: params.sessionId,
+                      surveyType: [params.surveyType],
+                    }}
                   />
                 </Panel>
               </Collapse>

@@ -49,6 +49,7 @@ module.exports = async filters => {
         workforceMatch,
         sessionTypeMatch,
         sessionIdMatch,
+        surveyTypeMatch,
         PINMatch,
       ],
     },
@@ -67,13 +68,6 @@ module.exports = async filters => {
   }
 
   const results = await Response.aggregate([
-    {
-      $match: {
-        $expr: {
-          $and: [surveyTypeMatch],
-        },
-      },
-    },
     {
       $lookup: {
         from: 'sessions',
@@ -124,6 +118,9 @@ module.exports = async filters => {
         },
         sessionId: {
           $arrayElemAt: ['$session._id', 0],
+        },
+        surveyType: {
+          $arrayElemAt: ['$session.surveyType', 0],
         },
       },
     },
