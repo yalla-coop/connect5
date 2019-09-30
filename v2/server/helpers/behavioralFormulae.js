@@ -92,21 +92,21 @@ const calculatedAnswersByCode = {
   },
   // for "in last week"
   FeedbackUserB1: survey => {
-    // (B1/people)*100
+    // (B1/People)*100
     return (
-      (checkAnswer(survey, 'B1') + checkAnswer(survey, 'people')) * 100 || null
+      (checkAnswer(survey, 'B1') + checkAnswer(survey, 'People')) * 100 || null
     );
   },
   FeedbackUserB2: survey => {
-    // (B2/people)*100
+    // (B2/People)*100
     return (
-      (checkAnswer(survey, 'B2') + checkAnswer(survey, 'people')) * 100 || null
+      (checkAnswer(survey, 'B2') + checkAnswer(survey, 'People')) * 100 || null
     );
   },
   FeedbackUserB3: survey => {
-    // (B3/people)*100
+    // (B3/People)*100
     return (
-      (checkAnswer(survey, 'B3') + checkAnswer(survey, 'people')) * 100 || null
+      (checkAnswer(survey, 'B3') + checkAnswer(survey, 'People')) * 100 || null
     );
   },
 };

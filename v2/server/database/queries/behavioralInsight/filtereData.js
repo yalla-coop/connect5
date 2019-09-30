@@ -159,7 +159,6 @@ module.exports = async filters => {
   const formedData = [];
   results.forEach(question => {
     const { PIN, answer, surveyType: _surveyType, code } = question;
-
     if (PIN) {
       if (formedData[PIN]) {
         if (formedData[PIN][_surveyType]) {
@@ -173,5 +172,5 @@ module.exports = async filters => {
     }
   });
 
-  return Object.values(formedData);
+  return Object.values(formedData)[0];
 };

@@ -138,7 +138,7 @@ const calculator = (subGroupAnswers, allAnswers) => {
               ),
             },
             {
-              category: 'Opportunity',
+              category: 'Motivation',
               value: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
                   behavioralFormulae.FeedbackUserMotivationB1(
@@ -205,7 +205,7 @@ const calculator = (subGroupAnswers, allAnswers) => {
               ),
             },
             {
-              category: 'Opportunity',
+              category: 'Motivation',
               value: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
                   behavioralFormulae.FeedbackUserMotivationB2(
@@ -272,7 +272,7 @@ const calculator = (subGroupAnswers, allAnswers) => {
               ),
             },
             {
-              category: 'Opportunity',
+              category: 'Motivation',
               value: calculateAverage(
                 allAnswers.map(otherUserAnswers =>
                   behavioralFormulae.FeedbackUserMotivationB3(
