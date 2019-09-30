@@ -37,11 +37,11 @@ questionConstants.groups = {
 
 questionConstants.subGroupText = {
   BEHAVIOURAL_3:
-    'Thinking about suggesting ways that people could take action on their own mental health and wellbeing, please indicate your agreement with the following statements:',
+    'Thinking about having conversations in which you suggest ways a person can take action to improve mental wellbeing, please indicate your level of agreement with the following statements:',
   BEHAVIOURAL_4:
-    'Thinking about having a conversation with a person in which you develop a shared understanding of their mental health and wellbeing needs, please indicate your agreement with the following statements:',
+    'Thinking about conversations in which you and the person you are talking to develop a shared understanding of that person’s mental wellbeing needs, please indicate your level of agreement with the following statements:',
   BEHAVIOURAL_5:
-    'Thinking about using an appropriate conversational methods to empower a person to make a change that addresses their mental health and wellbeing needs, please indicate your level of agreement with the following statements:',
+    'Thinking about conversations that empower a person to make changes that address their mental wellbeing needs, please indicate your level of agreement with the following statements:',
   ABOUT_YOUR_TRAINER_1: 'Did your trainer ask questions...',
   ABOUT_YOUR_TRAINER_2: 'Did your trainer...',
 };
@@ -110,7 +110,7 @@ questionConstants.questionTypes = {
   },
   dropdown: {
     desc: 'dropdown',
-  }
+  },
 };
 
 module.exports.questionConstants = questionConstants;

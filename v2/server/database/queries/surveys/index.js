@@ -19,7 +19,7 @@ module.exports.PINResponsesOnSurvey = ({ PIN, surveyType }) =>
 module.exports.PINfilledPreSurvey = async (PIN, sessionID) => {
   // get session info
   const session = await Session.findById(sessionID);
-  const { sessionType } = session;
+  const { type } = session;
 
   // sessions that have -pre- survey
   const sessionsHavePreSurvey = Object.entries(surveysTypes).reduce(
@@ -39,7 +39,7 @@ module.exports.PINfilledPreSurvey = async (PIN, sessionID) => {
   );
 
   // check if session includes pre-survey
-  if (sessionsHavePreSurvey.includes(sessionType)) {
+  if (sessionsHavePreSurvey.includes(type)) {
     const response = await Response.findOne({
       PIN,
       session: sessionID,
