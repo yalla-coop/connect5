@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CategorizedGroupChart from './CategorizedGroupChart';
 import NCategorizedGroupChart from './NCategorizedGroupChart';
 
-class BehaviralInsightChart extends Component {
+class BehavioralInsight extends Component {
   render() {
     const { categorized, nonCategorized } = this.props;
     return (
@@ -20,7 +20,6 @@ class BehaviralInsightChart extends Component {
 
         {nonCategorized.map((question, i) => (
           <>
-            {console.log(question)}
             <p>{question.text}</p>
             <NCategorizedGroupChart
               groups={question.surveys}
@@ -34,4 +33,4 @@ class BehaviralInsightChart extends Component {
   }
 }
 
-export default BehaviralInsightChart;
+export default BehavioralInsight;

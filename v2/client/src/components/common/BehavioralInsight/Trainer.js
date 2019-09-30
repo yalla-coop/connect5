@@ -13,15 +13,13 @@ import { Wrapper, ContentWrapper } from './BehavioralInsight.style';
 
 class BehavioralTrainerResults extends Component {
   componentDidMount() {
-    const { fetchbehavioralInsight, role } = this.props;
-    const filters = {};
+    const { fetchbehavioralInsight, role, filters = {} } = this.props;
     fetchbehavioralInsight('/api/behavioral-insight', role, filters);
   }
 
   render() {
     const { data, loaded } = this.props;
     const { categorized, nonCategorized } = data;
-
     return (
       <Wrapper>
         <Explanation />
@@ -43,8 +41,8 @@ class BehavioralTrainerResults extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.behavioralInsight.trainer.data,
-  loaded: state.behavioralInsight.trainer.loaded,
+  data: state.behavioralInsight.data,
+  loaded: state.behavioralInsight.loaded,
 });
 
 export default connect(

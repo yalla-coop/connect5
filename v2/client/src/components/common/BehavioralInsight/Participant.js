@@ -108,8 +108,8 @@ class BehavioralInsight extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.behavioralInsight.participant.data,
-  loaded: state.behavioralInsight.participant.loaded,
+  data: state.behavioralInsight.data,
+  loaded: state.behavioralInsight.loaded,
 });
 
 export default connect(

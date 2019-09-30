@@ -9,7 +9,7 @@ export const fetchParticipantBehavioral = (url, role) => async dispatch => {
     const res = await axios.get(url);
 
     dispatch({
-      type: types.FETCH_PARTICIPANT_BEHAVIORAL,
+      type: types.FETCH_BEHAVIORAL,
       payload: { data: res.data, role },
     });
   } catch (error) {
@@ -23,7 +23,7 @@ export const fetchSurveyBehavioral = (url, role) => async dispatch => {
     const res = await axios.get(url);
 
     dispatch({
-      type: types.FETCH_SURVEY_BEHAVIORAL,
+      type: types.FETCH_BEHAVIORAL,
       payload: { data: res.data, role },
     });
   } catch (error) {
@@ -41,7 +41,7 @@ export const fetchTrainerBehavioral = (
     const res = await axios.post(url, { filters });
 
     dispatch({
-      type: types.FETCH_TRAINER_BEHAVIORAL,
+      type: types.FETCH_BEHAVIORAL,
       payload: { data: res.data, role },
     });
   } catch (error) {

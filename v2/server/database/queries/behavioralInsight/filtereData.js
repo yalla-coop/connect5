@@ -163,7 +163,7 @@ module.exports = async filters => {
 
   const formedData = [];
   results.forEach(question => {
-    const { _PIN, answer, surveyType: _surveyType, code } = question;
+    const { PIN: _PIN, answer, surveyType: _surveyType, code } = question;
     if (_PIN) {
       if (formedData[_PIN]) {
         if (formedData[_PIN][_surveyType]) {
