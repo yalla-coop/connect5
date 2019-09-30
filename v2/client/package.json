@@ -6,12 +6,15 @@
     "antd": "^3.20.3",
     "axios": "^0.18.0",
     "chart.js": "^2.8.0",
+    "core-js": "^3.2.1",
+    "detect-browser": "^4.7.0",
     "downloadjs": "^1.4.7",
     "history": "^4.9.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-app-polyfill": "^1.0.3",
     "react-chartjs-2": "^2.7.6",
     "react-csv": "^1.1.1",
     "react-dom": "^16.8.6",
@@ -42,12 +45,18 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "ie 10",
+      "ie 9",
+      "ie 11"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "ie 10",
+      "ie 9",
+      "ie 11"
     ]
   },
   "proxy": "http://localhost:4000"
