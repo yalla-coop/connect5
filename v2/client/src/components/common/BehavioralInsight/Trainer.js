@@ -1,8 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable func-names */
 import React, { Component } from 'react';
-import { Chart, HorizontalBar } from 'react-chartjs-2';
-import { Alert, Spin } from 'antd';
+import { Spin } from 'antd';
 import { connect } from 'react-redux';
 
 import { fetchTrainerBehavioral as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
@@ -10,13 +9,7 @@ import Explanation from './Explanation';
 
 import BehavioralInsight from '../D3Charts/BehavioralInsight';
 
-import {
-  Wrapper,
-  ChartWrapper,
-  Description,
-  ContentWrapper,
-  WhiteWrapper,
-} from './BehavioralInsight.style';
+import { Wrapper, ContentWrapper } from './BehavioralInsight.style';
 
 class BehavioralTrainerResults extends Component {
   componentDidMount() {

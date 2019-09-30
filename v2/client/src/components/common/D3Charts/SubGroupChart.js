@@ -5,16 +5,7 @@ import { wrapText } from './helpers';
 
 class SubGroupChart extends Component {
   componentDidMount() {
-    const {
-      title,
-      subtitile,
-      subGroup,
-      i,
-      k,
-      j,
-      legends,
-      dataset,
-    } = this.props;
+    const { title, i, k, j, legends, dataset } = this.props;
     const barWidth = 30;
     const chartWidth = dataset.length * barWidth;
     const margin = { top: 40, right: 10, bottom: 0, left: 10 };
@@ -108,7 +99,7 @@ class SubGroupChart extends Component {
             2})`
       );
 
-    const rates = svg
+    svg
       .selectAll(`.chart-sub-groups-${k}-${i}-text`)
       .data(dataset)
       .enter()
@@ -138,7 +129,7 @@ class SubGroupChart extends Component {
       .attr('height', 50)
       .attr('style', 'display: block; margin: 0 auto');
 
-    const chartTitle = svg2
+    svg2
       .selectAll(`.chart-sub-groups-${k}-${i}-title`)
       .data([title])
       .enter()
@@ -153,7 +144,7 @@ class SubGroupChart extends Component {
   }
 
   render() {
-    const { subGroup, i, k, j } = this.props;
+    const { i, k, j } = this.props;
 
     return (
       <>
