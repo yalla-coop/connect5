@@ -4,7 +4,7 @@ const addSessionController = require('./../controllers/addSession');
 const ParticipantLoginController = require('./../controllers/participantLogin');
 const usersRouter = require('./users');
 const getParticipantBehavioralInsight = require('./../controllers/behavioralInsight/getParticipantBehavioralInsight');
-const getTrainerBehavioralInsight = require('./../controllers/behavioralInsight/getTrainerBehavioralInsight');
+const getFilteredBehavioral = require('./../controllers/behavioralInsight/getFilteredBehavioral');
 const getFeedback = require('../controllers/feedback/getFeedback');
 const logoutController = require('../controllers/logout');
 
@@ -62,7 +62,7 @@ router.delete('/session-delete/:id', deleteSession);
 router.patch('/session-edit/:id', editSession);
 router.patch('/emails-update/:id', updateEmails);
 
-router.post('/behavioral-insight', getTrainerBehavioralInsight);
+router.post('/behavioral-insight', getFilteredBehavioral);
 
 router.post('/feedback/', getFeedback);
 

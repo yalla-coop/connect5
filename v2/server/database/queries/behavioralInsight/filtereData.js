@@ -15,6 +15,8 @@ module.exports = async filters => {
     surveyType,
     // for specific session
     sessionId,
+    // for specific participant
+    PIN,
   } = filters;
 
   const ageMatch = age ? { $in: ['$age', age] } : true;
@@ -35,6 +37,8 @@ module.exports = async filters => {
     ? { $eq: ['$sessionId', mongoose.Types.ObjectId(sessionId)] }
     : true;
 
+  const PINMatch = PIN ? { $eq: ['$PIN', PIN] } : true;
+
   const match = {
     $expr: {
       $and: [
@@ -45,6 +49,7 @@ module.exports = async filters => {
         workforceMatch,
         sessionTypeMatch,
         sessionIdMatch,
+        PINMatch,
       ],
     },
   };
@@ -158,16 +163,16 @@ module.exports = async filters => {
 
   const formedData = [];
   results.forEach(question => {
-    const { PIN, answer, surveyType: _surveyType, code } = question;
-    if (PIN) {
-      if (formedData[PIN]) {
-        if (formedData[PIN][_surveyType]) {
-          formedData[PIN][_surveyType][code] = Number(answer);
+    const { _PIN, answer, surveyType: _surveyType, code } = question;
+    if (_PIN) {
+      if (formedData[_PIN]) {
+        if (formedData[_PIN][_surveyType]) {
+          formedData[_PIN][_surveyType][code] = Number(answer);
         } else {
-          formedData[PIN][_surveyType] = {};
+          formedData[_PIN][_surveyType] = {};
         }
       } else {
-        formedData[PIN] = {};
+        formedData[_PIN] = {};
       }
     }
   });
