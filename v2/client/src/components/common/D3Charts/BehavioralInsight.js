@@ -12,7 +12,7 @@ class BehavioralInsight extends Component {
             <p>{question.text}</p>
             <CategorizedGroupChart
               groups={question.surveys}
-              i={i}
+              i={`B-C-${i}`}
               legends={['Capability', 'Opportunity', 'Motivation']}
             />
           </>
@@ -23,7 +23,7 @@ class BehavioralInsight extends Component {
             <p>{question.text}</p>
             <NCategorizedGroupChart
               groups={question.surveys}
-              i={i}
+              i={`B-NC-${i}`}
               legends={['Capability', 'Opportunity', 'Motivation']}
             />
           </>

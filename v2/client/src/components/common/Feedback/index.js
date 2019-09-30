@@ -3,8 +3,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon } from 'antd';
+import { object } from 'prop-types';
 import Spin from '../Spin';
 import { Wrapper, Description, Container } from './Feedback.style';
+
+import Feedback from '../D3Charts/Feedback';
 
 import HorizontalBarComponent from './HorizontalBarComponent';
 import FilterResults from '../FilterResults';
@@ -39,7 +42,7 @@ class TrainerFeedbackOverall extends Component {
   renderData = () => {
     const { showFilter } = this.state;
     const { loaded, feedbackData } = this.props;
-    if (feedbackData.length === 0) {
+    if (!feedbackData || !Object.keys(feedbackData).length) {
       return <Description>no data collected yet :( </Description>;
     }
     if (loaded) {
@@ -53,7 +56,8 @@ class TrainerFeedbackOverall extends Component {
       return (
         <Container>
           <WhiteWrapper>
-            <HorizontalBarComponent feedbackData={feedbackData} />
+            <Feedback feedback={feedbackData} />
+            {/* <HorizontalBarComponent feedbackData={feedbackData} /> */}
           </WhiteWrapper>
         </Container>
       );
@@ -90,8 +94,8 @@ class TrainerFeedbackOverall extends Component {
 }
 
 const mapStateToProps = state => ({
-  feedbackData: state.trainerFeedback.trainer.data,
-  loaded: state.trainerFeedback.trainer.loaded,
+  feedbackData: state.trainerFeedback.feedback,
+  loaded: state.trainerFeedback.loaded,
   isAuthenticated: state.auth.isAuthenticated,
 });
 

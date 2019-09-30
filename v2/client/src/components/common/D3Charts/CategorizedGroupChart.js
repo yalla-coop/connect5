@@ -11,7 +11,7 @@ class CategorizedGroupChart extends Component {
     const { groups, i, legends } = this.props;
     return (
       <div>
-        <Legends legends={['Capability', 'Opportunity', 'Motivation']} i={i} />
+        <Legends legends={legends} i={i} />
         <div
           id={`chart-groups-${i}`}
           style={{ display: 'flex', flexWrap: 'wrap' }}
@@ -20,12 +20,10 @@ class CategorizedGroupChart extends Component {
             <>
               <SubGroupChart
                 subGroup={group}
-                k={k}
-                i={i}
+                i={`${i}-${k}`}
                 legends={legends}
                 title={group.surveyType}
                 dataset={group.categories}
-                j="c"
               />
             </>
           ))}

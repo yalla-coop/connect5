@@ -24,25 +24,20 @@ const categoriesRaw = (_categories, _totalCount, _output) => {
   return clonedOutput;
 };
 
-const feedbackFormulae = (filterdResults, allResults) => {
+const feedbackFormulae = (filterdResults, average) => {
   const questions = {};
-  allResults.forEach(
-    ({ categories, options, sessionType, text, totalCount }) => {
-      const readableSession = readableSessionNamePairs[sessionType];
+  average.forEach(
+    ({ categories, options, sessionType: surveyType, text, totalCount }) => {
+      const readableSession = readableSessionNamePairs[surveyType];
       const sessionDetails = {
-        sessionType: readableSession,
-        categories: categoriesPercintage(
-          categories,
-          totalCount,
-          {},
-          'allResults'
-        ),
+        surveyType: readableSession,
+        categories: categoriesPercintage(categories, totalCount, {}, 'average'),
         allResponses: totalCount,
       };
 
-      // add sessions
+      // add surveys
       if (questions[text]) {
-        questions[text].sessions[readableSession] = sessionDetails;
+        questions[text].surveys[readableSession] = sessionDetails;
 
         // update overall values
         const { totalResponses, categoriesCount } = questions[text].overall.all;
@@ -59,7 +54,7 @@ const feedbackFormulae = (filterdResults, allResults) => {
       } else {
         questions[text] = {
           text,
-          sessions: {
+          surveys: {
             Overall: {},
             [readableSession]: sessionDetails,
           },
@@ -81,15 +76,15 @@ const feedbackFormulae = (filterdResults, allResults) => {
   );
 
   filterdResults.forEach(
-    ({ categories, options, sessionType, text, totalCount }) => {
-      const readableSession = readableSessionNamePairs[sessionType];
+    ({ categories, options, sessionType: surveyType, text, totalCount }) => {
+      const readableSession = readableSessionNamePairs[surveyType];
 
-      const { categories: output, allResponses } = questions[text].sessions[
+      const { categories: output, allResponses } = questions[text].surveys[
         readableSession
       ];
 
       const sessionDetails = {
-        sessionType: readableSession,
+        surveyType: readableSession,
         categories: categoriesPercintage(
           categories,
           totalCount,
@@ -100,9 +95,9 @@ const feedbackFormulae = (filterdResults, allResults) => {
         allResponses,
       };
 
-      // add sessions
+      // add surveys
       if (questions[text]) {
-        questions[text].sessions[readableSession] = sessionDetails;
+        questions[text].surveys[readableSession] = sessionDetails;
 
         // update overall values
         const { totalResponses, categoriesCount } = questions[
@@ -124,7 +119,7 @@ const feedbackFormulae = (filterdResults, allResults) => {
     }
   );
 
-  // calculate overall for allresults for each question
+  // calculate overall for average for each question
   Object.values(questions).forEach(({ text, overall }) => {
     const { all, filtered } = overall;
     const allCategories = Object.entries(all.categoriesCount).map(
@@ -140,11 +135,11 @@ const feedbackFormulae = (filterdResults, allResults) => {
       allCategories,
       all.totalResponses,
       {},
-      'allResults'
+      'average'
     );
 
     const sessionDetails = {
-      sessionType: 'Overall',
+      surveyType: 'Overall',
       allResponses: all.totalResponses,
     };
 
@@ -167,9 +162,41 @@ const feedbackFormulae = (filterdResults, allResults) => {
     sessionDetails.filterdResonses = filtered.totalResponses;
 
     delete questions[text].overall;
-    questions[text].sessions.Overall = sessionDetails;
+    questions[text].surveys.Overall = sessionDetails;
   });
 
+  const questionArray = Object.values(questions);
+
+  // change surveys to array
+  questionArray.forEach(question => {
+    const { surveys } = question;
+
+    const surveysArray = Object.values(surveys);
+    question.surveys = surveysArray;
+  });
+
+  questionArray.forEach(question => {
+    const { surveys, options } = question;
+
+    surveys.forEach(survey => {
+      const { categories } = survey;
+      options.forEach(option => {
+        if (!categories[option]) {
+          categories[option] = {
+            value: null,
+            average: null,
+          };
+        }
+      });
+      const categoriesArray = Object.entries(categories).map(([key, value]) => {
+        return {
+          category: key,
+          ...value,
+        };
+      });
+      survey.categories = categoriesArray;
+    });
+  });
   return questions;
 };
 

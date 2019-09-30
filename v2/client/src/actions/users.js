@@ -41,18 +41,17 @@ export const fetchTrainerFeedback = ({
   sessionId,
   surveyType,
   role,
+  filters,
 }) => async dispatch => {
   try {
     const url = `/api/feedback/`;
-    const data = { trainerId, sessionId, surveyType, role };
+    const body = { trainerId, sessionId, surveyType, role, filters };
 
-    const res = await axios.post(url, data);
-
-    console.log(res);
-    // dispatch({
-    //   type: types.FETCH_OVERALL_TRAINER_FEEDBACK,
-    //   payload: { data: res.data },
-    // });
+    const { data } = await axios.post(url, body);
+    dispatch({
+      type: types.FETCH_FEEDBACK,
+      payload: { data: data.feedback },
+    });
   } catch (err) {
     dispatch(
       returnErrors(
@@ -288,7 +287,7 @@ export const fetchManagersNames = () => async dispatch => {
 export const removeTrainerFromGroupAction = managerId => async dispatch => {
   axios
     .delete(`/api/users/remove-trainer/${managerId}`)
-    .then(res => {
+    .then(() => {
       dispatch({
         type: types.LOADING_FALSE,
         payload: 'updateUserLoading',

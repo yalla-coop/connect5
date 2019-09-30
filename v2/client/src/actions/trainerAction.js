@@ -1,8 +1,5 @@
 import axios from 'axios';
-import {
-  FETCH_ALL_TRAINERS,
-  PARTICIPANT_FEEDBACK_SUCCESS,
-} from '../constants/actionTypes';
+import { FETCH_ALL_TRAINERS, FETCH_FEEDBACK } from '../constants/actionTypes';
 import history from '../history';
 
 export const fetchAllTrainers = () => async dispatch => {
@@ -22,7 +19,7 @@ export const fetchParticipantFeedBack = PIN => async dispatch => {
     .get(`/api/feedback/participant/${PIN}`)
     .then(res =>
       dispatch({
-        type: PARTICIPANT_FEEDBACK_SUCCESS,
+        type: FETCH_FEEDBACK,
         payload: res.data,
       })
     )
