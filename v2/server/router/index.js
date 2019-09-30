@@ -3,7 +3,6 @@ const loginController = require('./../controllers/login');
 const addSessionController = require('./../controllers/addSession');
 const ParticipantLoginController = require('./../controllers/participantLogin');
 const usersRouter = require('./users');
-const getParticipantBehavioralInsight = require('./../controllers/behavioralInsight/getParticipantBehavioralInsight');
 const getFilteredBehavioral = require('./../controllers/behavioralInsight/getFilteredBehavioral');
 const getFeedback = require('../controllers/feedback/getFeedback');
 const logoutController = require('../controllers/logout');
@@ -47,11 +46,6 @@ router.post('/certificate/:sessionId', generateCertificate);
 router.post('/login', loginController);
 router.get('/logout', logoutController);
 router.post('/add-session', authentication(), addSessionController);
-
-router.get(
-  '/behavioral-insight/participant/:PIN',
-  getParticipantBehavioralInsight
-);
 
 // Route = "/session?shortId=:shortId"
 router.get('/sessions', getSessionByShortId);
