@@ -127,7 +127,7 @@ class SubGroupChart extends Component {
       .select(`#chart-sub-groups-${i}`)
       .append('svg')
       .attr('width', 150)
-      .attr('height', 50)
+      .attr('height', 75)
       .attr('style', 'display: block; margin: 0 auto');
 
     svg2
@@ -140,8 +140,8 @@ class SubGroupChart extends Component {
       .attr('x', 150 / 2)
       .attr('y', 25)
       .attr('width', 150)
-      .attr('height', 25)
-      .call(wrapText, 150);
+      .attr('height', 75)
+      .call(wrapText, chartWidth);
   }
 
   render() {
@@ -151,7 +151,7 @@ class SubGroupChart extends Component {
       <>
         <div
           id={`chart-sub-groups-${i}`}
-          style={{ minWidth: '220px', margin: '0 auto' }}
+          style={{ minWidth: '100px', margin: '0 auto' }}
         ></div>
       </>
     );
