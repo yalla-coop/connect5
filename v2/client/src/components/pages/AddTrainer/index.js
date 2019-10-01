@@ -208,6 +208,7 @@ class AddTrainer extends Component {
       selectOtherGroup,
       userAsManager,
       additionalManager,
+      officialLocalLeadSelect,
     } = this.state;
 
     const {
@@ -478,9 +479,19 @@ class AddTrainer extends Component {
                   localLeads={groupedLocalLeads}
                   handleSelectChange={this.addOfficialLocalLead}
                 />
+                {officialLocalLeadSelect &&
+                  userInfo.id === officialLocalLeadSelect.key && (
+                    <Paragraph
+                      style={{ fontStyle: 'italic', textAlign: 'center' }}
+                    >
+                      As their official Local Lead, the trainer will be
+                      automatically added to your group of trainers.
+                    </Paragraph>
+                  )}
               </CheckboxWrapper>
             )}
-            {!userInfo.officialLocalLead && (
+            {(!userInfo.officialLocalLead ||
+              userInfo.id !== officialLocalLeadSelect.key) && (
               <CheckboxWrapper>
                 <Paragraph>
                   <Bold>Step 2:</Bold> Add the trainer to your own group of
@@ -502,8 +513,11 @@ class AddTrainer extends Component {
             )}
             <CheckboxWrapper>
               <Paragraph>
-                <Bold>Step {userInfo.officialLocalLead ? '2' : '3'}:</Bold> Add
-                trainer to a group managed by someone else (optional).
+                <Bold>
+                  Step {userInfo.id === officialLocalLeadSelect.key ? '2' : '3'}
+                  :
+                </Bold>{' '}
+                Add trainer to a group managed by someone else (optional).
               </Paragraph>
               <Checkbox
                 onChange={this.onChangeCheckbox}
@@ -555,7 +569,7 @@ const OfficialLocalLeadSelect = ({
   handleSelectChange,
 }) => (
   <div className="add-trainer__select">
-    <Item style={{ margin: '20px auto 40px', height: '50px' }}>
+    <Item style={{ margin: '8px auto 16px', height: '50px' }}>
       {getFieldDecorator('localLead', {
         rules: [
           {
