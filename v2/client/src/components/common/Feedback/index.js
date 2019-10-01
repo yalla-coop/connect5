@@ -2,87 +2,67 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Icon } from 'antd';
 import Spin from '../Spin';
-import { Wrapper, Description, Container } from './Feedback.style';
+import { Container } from './Feedback.style';
 
 import Feedback from '../D3Charts/Feedback';
 
 import FilterResults from '../FilterResults';
 
 import { fetchTrainerFeedback as fetchTrainerFeedbackAction } from '../../../actions/users';
-import {
-  WhiteWrapper,
-  FilterHeader,
-} from '../BehavioralInsight/BehavioralInsight.style';
+import { WhiteWrapper } from '../BehavioralInsight/BehavioralInsight.style';
 
 class TrainerFeedbackOverall extends Component {
-  state = {
-    showFilter: false,
-  };
-
   componentDidMount() {
-    this.getData();
+    const { defaultFilters } = this.props;
+    this.getData(defaultFilters);
   }
 
   componentDidUpdate(prevProps) {
     const { role: oldRole } = prevProps;
-    const { role } = this.props;
+    const { role, defaultFilters } = this.props;
     if (role !== oldRole) {
-      this.getData();
+      this.getData(defaultFilters);
     }
   }
 
-  isFilterActive = () => {
-    const { showFilter } = this.state;
-    this.setState({ showFilter: !showFilter });
+  handleFilteredData = filters => {
+    this.getData(filters);
   };
 
-  renderData = () => {
-    const { showFilter } = this.state;
-    const { loaded, feedbackData } = this.props;
-    if (!feedbackData || !Object.keys(feedbackData).length) {
-      return <Description>no data collected yet :( </Description>;
-    }
+  getData = filters => {
+    const { fetchTrainerFeedback } = this.props;
+    fetchTrainerFeedback(filters);
+  };
+
+  render() {
+    const {
+      loaded,
+      feedbackData,
+      showFilters,
+      role,
+      defaultFilters,
+      hiddenFields,
+    } = this.props;
+
     if (loaded) {
-      if (showFilter) {
-        return (
-          <Container>
-            <FilterResults />
-          </Container>
-        );
-      }
       return (
         <Container>
           <WhiteWrapper>
+            {showFilters && (
+              <FilterResults
+                role={role}
+                handleFilteredData={this.handleFilteredData}
+                defaultFilters={defaultFilters}
+                hiddenFields={hiddenFields}
+              />
+            )}
             <Feedback feedback={feedbackData} />
           </WhiteWrapper>
         </Container>
       );
     }
     return <Spin />;
-  };
-
-  getData = () => {
-    const { fetchTrainerFeedback, filters } = this.props;
-
-    fetchTrainerFeedback(filters);
-  };
-
-  render() {
-    const { showFilter } = this.state;
-    return (
-      <Wrapper>
-        <FilterHeader onClick={this.isFilterActive}>
-          FILTER RESULTS
-          <Icon
-            type={`caret-${showFilter ? 'up' : 'down'}`}
-            style={{ color: '#fff', fontSize: '25px', paddingLeft: '5px' }}
-          />
-        </FilterHeader>
-        {this.renderData()}
-      </Wrapper>
-    );
   }
 }
 

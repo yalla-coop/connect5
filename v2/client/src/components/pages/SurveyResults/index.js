@@ -21,7 +21,7 @@ import {
   QuestionSpan,
   Answer,
 } from './SurveyResults.style';
-import TrainerFeedback from '../../common/Feedback';
+import Feedback from '../../common/Feedback';
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 import ExportButton from '../../common/ExportButton';
@@ -72,6 +72,7 @@ class SurveyResults extends Component {
   render() {
     const {
       match: { params },
+      role,
     } = this.props;
     const {
       toggle,
@@ -153,11 +154,14 @@ class SurveyResults extends Component {
                     padding: 0,
                   }}
                 >
-                  <TrainerFeedback
-                    filters={{
+                  <Feedback
+                    showFilters
+                    role={role}
+                    defaultFilters={{
                       sessionId: params.sessionId,
                       surveyType: [params.surveyType],
                     }}
+                    hiddenFields={['session', 'localLead', 'trainer']}
                   />
                 </Panel>
               </Collapse>
@@ -217,6 +221,7 @@ class SurveyResults extends Component {
 
 const mapStateToProps = state => ({
   results: state.results,
+  role: state.auth.role,
 });
 
 export default connect(

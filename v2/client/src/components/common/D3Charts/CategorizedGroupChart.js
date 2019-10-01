@@ -17,7 +17,7 @@ class CategorizedGroupChart extends Component {
           style={{ display: 'flex', flexWrap: 'wrap' }}
         >
           {groups.map((group, k) => (
-            <>
+            <div key={group.surveyType}>
               <SubGroupChart
                 subGroup={group}
                 i={`${i}-${k}`}
@@ -25,7 +25,7 @@ class CategorizedGroupChart extends Component {
                 title={group.surveyType}
                 dataset={group.categories}
               />
-            </>
+            </div>
           ))}
         </div>
       </div>

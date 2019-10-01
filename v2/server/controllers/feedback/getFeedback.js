@@ -4,6 +4,7 @@ const filterFeedback = require('./../../database/queries/feedback/filterFeedback
 
 module.exports = async (req, res, next) => {
   const { filters = {} } = req.body;
+
   try {
     const { filterdResults, allResults } = await filterFeedback(filters);
 
