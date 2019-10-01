@@ -128,6 +128,7 @@ class CreateSession extends Component {
   };
 
   onSelectSessionChange = value => {
+    console.log("VAL", value)
     this.props.storeInputData({ session: value });
   };
 
@@ -403,7 +404,6 @@ class CreateSession extends Component {
               {!session && <RequiredMark>*</RequiredMark>}Session Type:
             </Label>
             <Select
-              mode="multiple"
               showSearch
               id="sessionType"
               style={{ width: '100%' }}
