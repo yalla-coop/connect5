@@ -29,6 +29,7 @@ import {
 import {
   createSessionAction,
   storeInputData,
+  clearInputData,
 } from '../../../actions/sessionAction';
 import { regions } from './options';
 import history from '../../../history';
@@ -91,12 +92,17 @@ class CreateSession extends Component {
       this.props.fetchAllTrainers();
       this.props.fetchLocalLeads();
     }
+    this.setState(initialState);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.id !== prevProps.id) {
       this.fetchLocalLeadsAndTrainers();
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearInputData();
   }
 
   fetchLocalLeadsAndTrainers = () => {
@@ -128,7 +134,6 @@ class CreateSession extends Component {
   };
 
   onSelectSessionChange = value => {
-    console.log("VAL", value)
     this.props.storeInputData({ session: value });
   };
 
@@ -316,6 +321,7 @@ class CreateSession extends Component {
     }
     return null;
   };
+
 
   render() {
     const { sessionCreated, extraInfo, isPostcodeValid } = this.state;
@@ -735,5 +741,6 @@ export default connect(
     fetchLocalLeads,
     fetchLocalLeadTrainersGroup,
     storeInputData,
+    clearInputData,
   }
 )(CreateSession);
