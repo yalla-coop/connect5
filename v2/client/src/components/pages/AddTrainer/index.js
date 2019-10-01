@@ -200,7 +200,7 @@ class AddTrainer extends Component {
 
   addOfficialLocalLead = localLead => {
     const { additionalManager } = this.state;
-    this.setState({ officialLocalLeadSelect: localLead });
+    this.setState({ officialLocalLeadSelect: localLead, userAsManager: true });
     // if select themselves as local lead, remove from someone else group if selected
     if (additionalManager && additionalManager.key === localLead.key) {
       this.setState({ selectOtherGroup: false, additionalManager: '' });
@@ -252,10 +252,6 @@ class AddTrainer extends Component {
             officialLocalLeadSelect &&
             el._id === officialLocalLeadSelect.key
           ) {
-            return null;
-          }
-          // check if user selected 'add to my group' and take id out of array
-          if (userAsManager && el._id === userInfo.id) {
             return null;
           }
           // check if current manager is inside trainer's managers array and take id out of array
