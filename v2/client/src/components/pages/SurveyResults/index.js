@@ -7,7 +7,7 @@ import Collapse from 'antd/lib/collapse';
 import Icon from 'antd/lib/icon';
 
 import { fetchUserResults } from '../../../actions/users';
-import BehavioralSurveyResults from '../../common/BehavioralInsight/Survey';
+import BehavioralInsight from '../../common/BehavioralInsight/Trainer';
 import {
   TrainerResultsWrapper,
   StatsDiv,
@@ -134,9 +134,16 @@ class SurveyResults extends Component {
                       padding: 0,
                     }}
                   >
-                    <BehavioralSurveyResults
+                    <BehavioralInsight
                       sessionId={params.sessionId}
                       surveyType={params.surveyType}
+                      showFilters
+                      role={role}
+                      defaultFilters={{
+                        sessionId: params.sessionId,
+                        surveyType: [params.surveyType],
+                      }}
+                      hiddenFields={['session', 'localLead', 'trainer']}
                     />
                   </Panel>
                 ) : null}

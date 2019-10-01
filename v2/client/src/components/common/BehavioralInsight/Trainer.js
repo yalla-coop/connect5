@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Spin } from 'antd';
 import { connect } from 'react-redux';
+import FilterResults from '../FilterResults';
 
 import { fetchTrainerBehavioral as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
 import Explanation from './Explanation';
@@ -13,19 +14,45 @@ import { Wrapper, ContentWrapper } from './BehavioralInsight.style';
 
 class BehavioralTrainerResults extends Component {
   componentDidMount() {
-    const { fetchTrainerBehavioral, filters = {} } = this.props;
-    fetchTrainerBehavioral('/api/behavioral-insight', filters);
+    const { defaultFilters = {} } = this.props;
+    this.getData(defaultFilters);
   }
 
+  getData = filters => {
+    const { fetchTrainerBehavioral } = this.props;
+    fetchTrainerBehavioral('/api/behavioral-insight', filters);
+  };
+
+  handleFilteredData = filters => {
+    this.getData(filters);
+  };
+
   render() {
-    const { data, loaded } = this.props;
+    const {
+      data,
+      loaded,
+      defaultFilters,
+      hiddenFields,
+      role,
+      showFilters,
+    } = this.props;
     const { categorized, nonCategorized } = data;
+
     return (
       <Wrapper>
-        <Explanation />
         <ContentWrapper>
           {loaded ? (
             <>
+              {showFilters && (
+                <FilterResults
+                  role={role}
+                  handleFilteredData={this.handleFilteredData}
+                  defaultFilters={defaultFilters}
+                  hiddenFields={hiddenFields}
+                />
+              )}
+              <Explanation />
+
               <BehavioralInsight
                 categorized={categorized}
                 nonCategorized={nonCategorized}
@@ -43,6 +70,7 @@ class BehavioralTrainerResults extends Component {
 const mapStateToProps = state => ({
   data: state.behavioralInsight.data,
   loaded: state.behavioralInsight.loaded,
+  role: state.auth.role,
 });
 
 export default connect(

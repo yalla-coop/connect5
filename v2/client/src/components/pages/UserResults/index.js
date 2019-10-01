@@ -115,12 +115,21 @@ const panels = {
         />
       </HeaderDiv>
     ),
-    render: ({ resultsFor, resultForRule, ...props }) => {
+    render: ({
+      resultsFor,
+      resultForRule,
+      filters,
+      hiddenFields,
+      ...props
+    }) => {
       return (
         <TrainerBehavioralInsight
           {...props}
           trainerId={resultsFor}
           role={resultForRule}
+          defaultFilters={filters}
+          hiddenFields={hiddenFields}
+          showFilters
         />
       );
     },

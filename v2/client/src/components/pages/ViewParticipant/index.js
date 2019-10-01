@@ -7,7 +7,7 @@ import { Alert } from 'antd';
 // // COMMON COMPONENTS
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
-import ParticipantBehavioralInsight from '../../common/BehavioralInsight/Participant';
+import BehavioralInsight from '../../common/BehavioralInsight/Trainer';
 
 // ACTIONS
 import { fetchParticipantFeedBack } from '../../../actions/trainerAction';
@@ -55,10 +55,13 @@ class ViewParticipant extends Component {
         <>
           {toggle === 'left' ? (
             <ContentWrapper>
-              <ParticipantBehavioralInsight
+              <BehavioralInsight
                 backgroundColor="#fff"
                 userRole="participant"
                 idOrPIN={match.params.PIN}
+                defaultFilters={{
+                  PIN: match.params.PIN,
+                }}
               />
             </ContentWrapper>
           ) : (
