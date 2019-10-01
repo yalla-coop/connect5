@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Question = require('./../../models/Question');
+const Response = require('./../../models/Response');
 
 module.exports = async filters => {
   const {
@@ -67,61 +67,25 @@ module.exports = async filters => {
     };
   }
 
-  const results = await Question.aggregate([
+  const results = await Response.aggregate([
     {
-      // join questions with answers
-      $lookup: {
-        from: 'answers',
-        localField: '_id',
-        foreignField: 'question',
-        as: 'answer',
-      },
-    },
-    // break down the answers
-    {
-      $unwind: {
-        path: '$answer',
-        preserveNullAndEmptyArrays: true,
-      },
-    },
-    {
-      // join reponses with answers
-      $lookup: {
-        from: 'responses',
-        localField: 'answer.response',
-        foreignField: '_id',
-        as: 'response',
-      },
-    },
-    {
-      // flatten the reponses array
-      $addFields: {
-        response: {
-          $arrayElemAt: ['$response', 0],
-        },
-      },
-    },
-    {
-      // join reponses with sessions
       $lookup: {
         from: 'sessions',
-        localField: 'response.session',
+        localField: 'session',
         foreignField: '_id',
         as: 'session',
       },
     },
     {
-      // join reponses with participant
       $lookup: {
         from: 'participants',
-        localField: 'response.participant',
+        localField: 'participant',
         foreignField: '_id',
         as: 'participant',
       },
     },
     {
       $addFields: {
-        answer: '$answer.answer',
         participant: {
           $arrayElemAt: ['$participant._id', 0],
         },
@@ -155,6 +119,9 @@ module.exports = async filters => {
         sessionId: {
           $arrayElemAt: ['$session._id', 0],
         },
+        surveyType: {
+          $arrayElemAt: ['$session.surveyType', 0],
+        },
       },
     },
     {
@@ -165,20 +132,44 @@ module.exports = async filters => {
             $match: match,
           },
           {
+            // join respones with answers
+            $lookup: {
+              from: 'answers',
+              localField: 'participant',
+              foreignField: 'participant',
+              as: 'answers',
+            },
+          },
+          {
+            $unwind: '$answers',
+          },
+          {
+            // join answers with related question
+            $lookup: {
+              from: 'questions',
+              localField: 'answers.question',
+              foreignField: '_id',
+              as: 'question',
+            },
+          },
+          {
             // re-form data shape
             $project: {
-              answer: 1,
+              answer: '$answers.answer',
               PIN: 1,
-              code: 1,
-              feedbackText: 1,
+              code: {
+                $arrayElemAt: ['$question.code', 0],
+              },
+              feedbackText: {
+                $arrayElemAt: ['$question.feedbackText', 0],
+              },
               options: {
                 $ifNull: [
-                  '$options',
+                  { $arrayElemAt: ['$question.options', 0] },
                   [0, 1, 2, 3, 4, 5], // for stars questions that has no option
                 ],
               },
               sessionType: 1,
-              surveyType: 1,
             },
           },
           {
@@ -190,14 +181,14 @@ module.exports = async filters => {
             },
           },
           {
-            // gruop answers with question feedback text and session type
+            // gruop answers with question feed back text and session type
             // then find the count for each answer
             // we need this step to get the count for each answer
             $group: {
               _id: {
                 text: '$feedbackText',
                 answer: '$answer',
-                surveyType: '$surveyType',
+                sessionType: '$sessionType',
               },
               options: { $first: '$options' },
               count: { $sum: 1 },
@@ -208,7 +199,7 @@ module.exports = async filters => {
             $project: {
               text: '$_id.text',
               answer: '$_id.answer',
-              surveyType: '$_id.surveyType',
+              sessionType: '$_id.sessionType',
               count: 1, // the count of answer on question in survey
               options: 1,
             },
@@ -218,7 +209,7 @@ module.exports = async filters => {
             $group: {
               _id: {
                 text: '$text',
-                surveyType: '$surveyType',
+                sessionType: '$sessionType',
               },
               // append the categories and the count for each group
               categories: { $push: { category: '$answer', count: '$count' } },
@@ -231,7 +222,7 @@ module.exports = async filters => {
             $project: {
               _id: 0,
               text: '$_id.text',
-              surveyType: '$_id.surveyType',
+              sessionType: '$_id.sessionType',
               categories: 1,
               totalCount: 1,
               options: 1,
@@ -240,20 +231,44 @@ module.exports = async filters => {
         ],
         allResults: [
           {
+            // join respones with answers
+            $lookup: {
+              from: 'answers',
+              localField: 'participant',
+              foreignField: 'participant',
+              as: 'answers',
+            },
+          },
+          {
+            $unwind: '$answers',
+          },
+          {
+            // join answers with related question
+            $lookup: {
+              from: 'questions',
+              localField: 'answers.question',
+              foreignField: '_id',
+              as: 'question',
+            },
+          },
+          {
             // re-form data shape
             $project: {
-              answer: 1,
+              answer: '$answers.answer',
               PIN: 1,
-              code: 1,
-              feedbackText: 1,
+              code: {
+                $arrayElemAt: ['$question.code', 0],
+              },
+              feedbackText: {
+                $arrayElemAt: ['$question.feedbackText', 0],
+              },
               options: {
                 $ifNull: [
-                  '$options',
+                  { $arrayElemAt: ['$question.options', 0] },
                   [0, 1, 2, 3, 4, 5], // for stars questions that has no option
                 ],
               },
               sessionType: 1,
-              surveyType: 1,
             },
           },
           {
@@ -265,14 +280,14 @@ module.exports = async filters => {
             },
           },
           {
-            // gruop answers with question feedback text and session type
+            // gruop answers with question feed back text and session type
             // then find the count for each answer
             // we need this step to get the count for each answer
             $group: {
               _id: {
                 text: '$feedbackText',
                 answer: '$answer',
-                surveyType: '$surveyType',
+                sessionType: '$sessionType',
               },
               options: { $first: '$options' },
               count: { $sum: 1 },
@@ -283,7 +298,7 @@ module.exports = async filters => {
             $project: {
               text: '$_id.text',
               answer: '$_id.answer',
-              surveyType: '$_id.surveyType',
+              sessionType: '$_id.sessionType',
               count: 1, // the count of answer on question in survey
               options: 1,
             },
@@ -293,7 +308,7 @@ module.exports = async filters => {
             $group: {
               _id: {
                 text: '$text',
-                surveyType: '$surveyType',
+                sessionType: '$sessionType',
               },
               // append the categories and the count for each group
               categories: { $push: { category: '$answer', count: '$count' } },
@@ -306,7 +321,7 @@ module.exports = async filters => {
             $project: {
               _id: 0,
               text: '$_id.text',
-              surveyType: '$_id.surveyType',
+              sessionType: '$_id.sessionType',
               categories: 1,
               totalCount: 1,
               options: 1,

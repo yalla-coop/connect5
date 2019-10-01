@@ -1,98 +1,104 @@
 /* eslint-disable no-param-reassign */
-const { readableSessionNamePairs } = require('./../constants');
+const {
+  relevantSessionsForSurveys,
+  readableSessionNamePairs,
+} = require('./../constants');
 
 const categoriesPercintage = (_categories, _totalCount, _output, _key) => {
   const clonedOutput = { ..._output };
+  let totalCount = 0;
   _categories.forEach(({ category, count }) => {
-    clonedOutput[category] = {
-      ...clonedOutput[category],
-      [_key]: (count / _totalCount) * 100,
-    };
-  });
-  return clonedOutput;
-};
-
-const categoriesRaw = (_categories, _totalCount, _output) => {
-  const clonedOutput = { ..._output };
-  _categories.forEach(({ category, count }) => {
-    if (clonedOutput[category]) {
-      clonedOutput[category] += count;
-    } else {
-      clonedOutput[category] = count;
+    if (category && category !== 'null') {
+      totalCount += count;
+      clonedOutput[category] = {
+        ...clonedOutput[category],
+        [_key]: (count / _totalCount) * 100,
+      };
     }
   });
-  return clonedOutput;
+  return {
+    categories: clonedOutput,
+    allResponses: totalCount,
+  };
+};
+
+const categoriesRaw = (_categories, _totalCount, _output, _totalResponses) => {
+  const clonedOutput = { ..._output };
+  let totalResponses = _totalResponses || 0;
+  _categories.forEach(({ category, count }) => {
+    if (category && category !== 'null') {
+      totalResponses += count;
+      if (clonedOutput[category]) {
+        clonedOutput[category] += count;
+      } else {
+        clonedOutput[category] = count;
+      }
+    }
+  });
+
+  return {
+    totalResponses,
+    categoriesCount: clonedOutput,
+  };
 };
 
 const feedbackFormulae = (filterdResults, average) => {
   const questions = {};
-  average.forEach(
-    ({ categories, options, sessionType: surveyType, text, totalCount }) => {
-      const readableSession = readableSessionNamePairs[surveyType];
-      const sessionDetails = {
-        surveyType: readableSession,
-        categories: categoriesPercintage(categories, totalCount, {}, 'average'),
-        allResponses: totalCount,
+  average.forEach(({ categories, options, surveyType, text, totalCount }) => {
+    const sessionType = relevantSessionsForSurveys[surveyType];
+
+    const readableSession = readableSessionNamePairs[sessionType];
+    const sessionDetails = {
+      surveyType: readableSession,
+      ...categoriesPercintage(categories, totalCount, {}, 'average'),
+    };
+
+    // add surveys
+    if (questions[text]) {
+      questions[text].surveys[readableSession] = sessionDetails;
+
+      // update overall values
+      const { totalResponses, categoriesCount } = questions[text].overall.all;
+
+      questions[text].overall.all = categoriesRaw(
+        categories,
+        totalCount,
+        categoriesCount,
+        totalResponses
+      );
+
+      // add first session
+    } else {
+      questions[text] = {
+        text,
+        surveys: {
+          Overall: {},
+          [readableSession]: sessionDetails,
+        },
+        options,
+        overall: {
+          all: categoriesRaw(categories, totalCount, {}),
+
+          // no filtered data yet
+          filtered: {
+            totalResponses: 0,
+            categoriesCount: {},
+          },
+        },
       };
-
-      // add surveys
-      if (questions[text]) {
-        questions[text].surveys[readableSession] = sessionDetails;
-
-        // update overall values
-        const { totalResponses, categoriesCount } = questions[text].overall.all;
-        questions[text].overall.all = {
-          totalResponses: totalResponses + totalCount,
-          categoriesCount: categoriesRaw(
-            categories,
-            totalCount,
-            categoriesCount
-          ),
-        };
-
-        // add first session
-      } else {
-        questions[text] = {
-          text,
-          surveys: {
-            Overall: {},
-            [readableSession]: sessionDetails,
-          },
-          options,
-          overall: {
-            all: {
-              totalResponses: totalCount,
-              categoriesCount: categoriesRaw(categories, totalCount, {}),
-            },
-            // no filtered data yet
-            filtered: {
-              totalResponses: 0,
-              categoriesCount: {},
-            },
-          },
-        };
-      }
     }
-  );
+  });
 
   filterdResults.forEach(
-    ({ categories, options, sessionType: surveyType, text, totalCount }) => {
-      const readableSession = readableSessionNamePairs[surveyType];
-
-      const { categories: output, allResponses } = questions[text].surveys[
-        readableSession
-      ];
+    ({ categories, options, surveyType, text, totalCount }) => {
+      const sessionType = relevantSessionsForSurveys[surveyType];
+      const readableSession = readableSessionNamePairs[sessionType];
+      const { categories: output } = questions[text].surveys[readableSession];
 
       const sessionDetails = {
         surveyType: readableSession,
-        categories: categoriesPercintage(
-          categories,
-          totalCount,
-          output,
-          'value'
-        ),
+        ...categoriesPercintage(categories, totalCount, output, 'value'),
         filterdResonses: totalCount,
-        allResponses,
       };
 
       // add surveys
@@ -103,14 +109,12 @@ const feedbackFormulae = (filterdResults, average) => {
         const { totalResponses, categoriesCount } = questions[
           text
         ].overall.filtered;
-        questions[text].overall.filtered = {
-          totalResponses: totalResponses + totalCount,
-          categoriesCount: categoriesRaw(
-            categories,
-            totalCount,
-            categoriesCount
-          ),
-        };
+        questions[text].overall.filtered = categoriesRaw(
+          categories,
+          totalCount,
+          categoriesCount,
+          totalResponses
+        );
 
         // add first session
       } else {
@@ -119,7 +123,7 @@ const feedbackFormulae = (filterdResults, average) => {
     }
   );
 
-  // calculate overall for average for each question
+  // // calculate overall for average for each question
   Object.values(questions).forEach(({ text, overall }) => {
     const { all, filtered } = overall;
     const allCategories = Object.entries(all.categoriesCount).map(
@@ -131,7 +135,7 @@ const feedbackFormulae = (filterdResults, average) => {
       }
     );
 
-    const categories = categoriesPercintage(
+    const { categories } = categoriesPercintage(
       allCategories,
       all.totalResponses,
       {},
@@ -157,11 +161,12 @@ const feedbackFormulae = (filterdResults, average) => {
       filtered.totalResponses,
       categories,
       'value'
-    );
+    ).categories;
+
     sessionDetails.categories = categories;
     sessionDetails.filterdResonses = filtered.totalResponses;
 
-    delete questions[text].overall;
+    // delete questions[text].overall;
     questions[text].surveys.Overall = sessionDetails;
   });
 
@@ -175,6 +180,8 @@ const feedbackFormulae = (filterdResults, average) => {
     question.surveys = surveysArray;
   });
 
+  //   /**
+  //  *
   questionArray.forEach(question => {
     const { surveys, options } = question;
 
@@ -197,6 +204,7 @@ const feedbackFormulae = (filterdResults, average) => {
       survey.categories = categoriesArray;
     });
   });
+
   return questions;
 };
 

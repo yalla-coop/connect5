@@ -100,15 +100,16 @@ class SubGroupChart extends Component {
             2})`
       );
 
+    // value texts
     svg
       .selectAll(`.chart-sub-groups-${i}-text`)
       .data(dataset)
       .enter()
       .append('text')
-      .text(d => `${Math.round(d.value)}%`)
+      .text(d => `${Math.round(d.value || 0)}%`)
       .attr('class', `chart-sub-groups-${i}-text`)
       .attr('text-anchor', 'middle')
-      .attr('opacity', d => (d.value * 0.8) / 100 + 0.2)
+      .attr('opacity', d => ((d.value || 0) * 0.8) / 100 + 0.2)
       .attr(
         'x',
         d => bandScale(d.category || d.surveyType) + bandScale.bandwidth() / 2

@@ -74,13 +74,32 @@ const readableSurveysNamePairs = {
  * an object with { "session-type" : "Session Name"}
  */
 const readableSessionNamePairs = {
-  1: 'Session 1',
-  2: 'Session 2',
-  3: 'Session 3',
+  '1': 'Session 1',
+  '2': 'Session 2',
+  '3': 'Session 3',
   'special-2-days': '2-day Intensive',
   'train-trainers-s1': 'Train Trainers Session 1',
   'train-trainers-s2': 'Train Trainers Session 2',
   'train-trainers-event': 'Train Trainers Day Event',
+};
+
+const relevantSessionsForSurveys = {
+  /** survey    :   session */
+  'pre-day-1': '1',
+  'post-day-1': '1',
+  'post-day-2': '2',
+  'post-day-3': '3',
+  'pre-special': 'special-2-days',
+  'post-special': 'special-2-days',
+  'pre-train-trainers-s1': 'train-trainers-s1',
+  'post-train-trainers-s1': 'train-trainers-s1',
+  'post-train-trainers-s2': 'train-trainers-s2',
+  'pre-train-trainers-event': 'train-trainers-event',
+  'post-train-trainers-event': 'train-trainers-event',
+  'follow-up-3-month': 'follow-up-3-month',
+  'follow-up-6-month': 'follow-up-6-month',
+  'follow-up-3-month-train-trainers': 'follow-up-3-month-train-trainers',
+  'follow-up-6-month-train-trainers': 'follow-up-6-month-train-trainers',
 };
 
 module.exports = {
@@ -92,4 +111,5 @@ module.exports = {
   plainSessionsType,
   readableSessionNamePairs,
   readableSurveysNamePairs,
+  relevantSessionsForSurveys,
 };
