@@ -162,6 +162,7 @@ const renderQuestionInputType = (
           <Rate
             id={`sliderInput-${index}`}
             name={questionId}
+            allowClear={false}
             count={6}
             onChange={value => {
               handleStarChange(value, questionId);
