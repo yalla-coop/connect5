@@ -10,6 +10,7 @@ class BehavioralInsight extends Component {
         {categorized.map((question, i) => (
           <>
             <p>{question.text}</p>
+            <p>The red line indicates the average across all participants</p>
             <CategorizedGroupChart
               groups={question.surveys}
               i={`B-C-${i}`}

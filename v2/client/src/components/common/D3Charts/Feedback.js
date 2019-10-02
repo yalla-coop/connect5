@@ -10,6 +10,8 @@ class Feedback extends Component {
         {feedbackArray.map((question, i) => (
           <div key={question.text}>
             <p>{question.text}</p>
+            <p>The red line indicates the average across all participants</p>
+
             <CategorizedGroupChart
               groups={Object.values(question.surveys)}
               i={`F-C-${i}`}
