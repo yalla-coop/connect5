@@ -82,7 +82,7 @@ class SubGroupChart extends Component {
       .append('text')
       .text('No data yet')
       .attr('fill', '#828282')
-      .attr('opacity', d => (d.value || d.value === 0 ? 0 : 0.7))
+      .attr('opacity', d => (d.value ? 0 : 0.7))
       .attr(
         'x',
         d => bandScale(d.category || d.surveyType) + bandScale.bandwidth() / 2
