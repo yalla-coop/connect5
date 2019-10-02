@@ -31,7 +31,7 @@ import {
 const { Option } = Select;
 
 const initialState = {
-  session: [],
+  sessionType: [],
   region: [],
   localLead: [],
   trainer: [],
@@ -80,7 +80,7 @@ class FilterResults extends Component {
 
   getData = () => {
     const {
-      session,
+      sessionType,
       region,
       localLead,
       trainer,
@@ -92,7 +92,7 @@ class FilterResults extends Component {
     } = this.state;
 
     const filteredData = {
-      session,
+      sessionType,
       region,
       localLead,
       trainer,
@@ -120,7 +120,7 @@ class FilterResults extends Component {
 
   render() {
     const {
-      session,
+      sessionType,
       region,
       localLead,
       trainer,
@@ -151,7 +151,7 @@ class FilterResults extends Component {
 
         {showFilter && (
           <Form onSubmit={this.handleSubmit}>
-            {!hiddenFields.includes('session') && (
+            {!hiddenFields.includes('sessionType') && (
               <InputDiv>
                 <Label htmlFor="sessionType">Session Type(s):</Label>
                 <Select
@@ -160,9 +160,11 @@ class FilterResults extends Component {
                   style={{ width: '100%' }}
                   placeholder="Click to select session No."
                   optionFilterProp="children"
-                  onChange={values => this.onSelectChange(values, 'session')}
+                  onChange={values =>
+                    this.onSelectChange(values, 'sessionType')
+                  }
                   size="large"
-                  value={session}
+                  value={sessionType}
                 >
                   {Object.entries(readableSessionNamePairs).map(
                     ([value, label]) => (
