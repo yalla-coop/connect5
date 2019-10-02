@@ -7,7 +7,7 @@ import Collapse from 'antd/lib/collapse';
 import Icon from 'antd/lib/icon';
 
 import { fetchUserResults } from '../../../actions/users';
-import BehavioralInsight from '../../common/BehavioralInsight/Trainer';
+import BehavioralInsight from '../../common/BehavioralInsight';
 import {
   TrainerResultsWrapper,
   StatsDiv,

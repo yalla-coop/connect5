@@ -33,7 +33,7 @@ import {
   HeaderDiv,
 } from './UserResults.style';
 
-import TrainerBehavioralInsight from '../../common/BehavioralInsight/Trainer';
+import TrainerBehavioralInsight from '../../common/BehavioralInsight';
 import ExportButton from '../../common/ExportButton';
 import {
   TRAINER_RESULTS_URL,

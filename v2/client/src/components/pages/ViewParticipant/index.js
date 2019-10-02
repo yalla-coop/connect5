@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 // // COMMON COMPONENTS
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
-import BehavioralInsight from '../../common/BehavioralInsight/Trainer';
+import BehavioralInsight from '../../common/BehavioralInsight';
 import Feedback from '../../common/Feedback';
 import { fetchParticipentSessions } from '../../../actions/groupSessionsAction';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import ParticipantBehavioralInsight from '../../common/BehavioralInsight/Trainer';
+import ParticipantBehavioralInsight from '../../common/BehavioralInsight';
 import { Wrapper } from './ParticipantBehavioral.style';
 import Header from '../../common/Header';
 
