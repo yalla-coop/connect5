@@ -13,6 +13,10 @@ import { fetchTrainerFeedback as fetchTrainerFeedbackAction } from '../../../act
 import { WhiteWrapper } from '../BehavioralInsight/BehavioralInsight.style';
 
 class TrainerFeedbackOverall extends Component {
+  state = {
+    showCharts: true,
+  };
+
   componentDidMount() {
     const { defaultFilters } = this.props;
     this.getData(defaultFilters);
@@ -32,7 +36,13 @@ class TrainerFeedbackOverall extends Component {
 
   getData = filters => {
     const { fetchTrainerFeedback } = this.props;
-    fetchTrainerFeedback(filters);
+    this.setState({ showCharts: false }, () => {
+      fetchTrainerFeedback(filters, this.setShowCharts);
+    });
+  };
+
+  setShowCharts = () => {
+    this.setState({ showCharts: true });
   };
 
   render() {
@@ -44,6 +54,8 @@ class TrainerFeedbackOverall extends Component {
       defaultFilters,
       hiddenFields,
     } = this.props;
+
+    const { showCharts } = this.state;
 
     if (loaded) {
       return (
@@ -57,7 +69,11 @@ class TrainerFeedbackOverall extends Component {
                 hiddenFields={hiddenFields}
               />
             )}
-            <Feedback feedback={feedbackData} />
+            {showCharts ? (
+              <Feedback feedback={feedbackData} />
+            ) : (
+              <Spin style={{ width: '100%', padding: '40px' }} />
+            )}
           </WhiteWrapper>
         </Container>
       );

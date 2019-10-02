@@ -20,7 +20,6 @@ const sendSurveyByEmail = require('../controllers/survey/emailSurvey');
 
 const authentication = require('./../middlewares/authentication');
 
-const feedbackFromParticipant = require('./../controllers/feedback/feedbackFromParticipant');
 const getParticipantSessions = require('../controllers/users/getParticipantSessions');
 const participantSurveyStatus = require('../controllers/users/participantSurveyStatus');
 const generateCertificate = require('../controllers/users/generateCertificate');
@@ -59,8 +58,6 @@ router.patch('/emails-update/:id', updateEmails);
 router.post('/behavioral-insight', getFilteredBehavioral);
 
 router.post('/feedback/', getFeedback);
-
-router.get('/feedback/participant/:PIN', feedbackFromParticipant);
 
 router.post('/feedback/responseCount', getResponseCount);
 

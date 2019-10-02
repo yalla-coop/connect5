@@ -33,7 +33,9 @@ export const readableSurveysNamePairs = {
   'pre-train-trainers': 'Pre train trainers',
   'post-train-trainers': 'Post train trainers',
   'follow-up-3-month': '3 month follow-up',
-  'follow-up-6-month': '6 month Follow-up',
+  'follow-up-6-month': '6 month follow-up',
+  'follow-up-3-month-train-trainers': '3 month Train the Trainer follow-up',
+  'follow-up-6-month-train-trainers': '6 month Train the Trainer follow-up',
 };
 
 /**

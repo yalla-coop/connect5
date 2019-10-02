@@ -5,14 +5,10 @@ import { borders, colors, breakpoints } from '../../../theme';
 export const SessionDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   max-width: 650px;
   margin: 0 auto;
   padding: 5rem 0.3rem;
-  @media ${breakpoints.mobileL} {
-    width: 90%;
-    padding: 6rem 0.5rem;
-  }
 `;
 
 export const SessionTopDetailsWrapper = styled.div`

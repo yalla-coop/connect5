@@ -36,7 +36,7 @@ export const fetchUserResults = (id, role) => async dispatch => {
   }
 };
 
-export const fetchTrainerFeedback = filters => async dispatch => {
+export const fetchTrainerFeedback = (filters, cb) => async dispatch => {
   try {
     const url = `/api/feedback/`;
     const body = { filters };
@@ -46,6 +46,7 @@ export const fetchTrainerFeedback = filters => async dispatch => {
       type: types.FETCH_FEEDBACK,
       payload: { data: data.feedback },
     });
+    cb();
   } catch (err) {
     dispatch(
       returnErrors(

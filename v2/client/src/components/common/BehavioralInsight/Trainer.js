@@ -13,6 +13,10 @@ import BehavioralInsight from '../D3Charts/BehavioralInsight';
 import { Wrapper, ContentWrapper } from './BehavioralInsight.style';
 
 class BehavioralTrainerResults extends Component {
+  state = {
+    showCharts: true,
+  };
+
   componentDidMount() {
     const { defaultFilters = {} } = this.props;
     this.getData(defaultFilters);
@@ -20,11 +24,17 @@ class BehavioralTrainerResults extends Component {
 
   getData = filters => {
     const { fetchTrainerBehavioral } = this.props;
-    fetchTrainerBehavioral('/api/behavioral-insight', filters);
+    this.setState({ showCharts: false }, () => {
+      fetchTrainerBehavioral(filters, this.setShowCharts);
+    });
   };
 
   handleFilteredData = filters => {
     this.getData(filters);
+  };
+
+  setShowCharts = () => {
+    this.setState({ showCharts: true });
   };
 
   render() {
@@ -36,6 +46,9 @@ class BehavioralTrainerResults extends Component {
       role,
       showFilters,
     } = this.props;
+
+    const { showCharts } = this.state;
+
     const { categorized, nonCategorized } = data;
 
     return (
@@ -53,10 +66,14 @@ class BehavioralTrainerResults extends Component {
               )}
               <Explanation />
 
-              <BehavioralInsight
-                categorized={categorized}
-                nonCategorized={nonCategorized}
-              />
+              {showCharts ? (
+                <BehavioralInsight
+                  categorized={categorized}
+                  nonCategorized={nonCategorized}
+                />
+              ) : (
+                <Spin style={{ width: '100%', padding: '40px' }} />
+              )}
             </>
           ) : (
             <Spin style={{ width: '100%', padding: '40px' }} />

@@ -64,7 +64,9 @@ class FilterResults extends Component {
   }
 
   clearAllFilter = () => {
-    this.setState(initialState);
+    this.setState(initialState, () => {
+      this.getData();
+    });
   };
 
   onSelectChange = (value, name) => {
@@ -73,6 +75,10 @@ class FilterResults extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    this.getData();
+  };
+
+  getData = () => {
     const {
       session,
       region,
@@ -130,7 +136,7 @@ class FilterResults extends Component {
       trainers,
       localLeadTrainersGroup,
       role,
-      hiddenFields,
+      hiddenFields = [],
     } = this.props;
 
     return (
