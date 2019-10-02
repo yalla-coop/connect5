@@ -16,6 +16,7 @@ class Feedback extends Component {
               groups={Object.values(question.surveys)}
               i={`F-C-${i}`}
               legends={question.options}
+              showRepliesCount
             />
           </div>
         ))}

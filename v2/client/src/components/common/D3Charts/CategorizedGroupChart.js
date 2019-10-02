@@ -8,7 +8,7 @@ class CategorizedGroupChart extends Component {
   componentDidMount() {}
 
   render() {
-    const { groups, i, legends } = this.props;
+    const { groups, i, legends, showRepliesCount } = this.props;
     return (
       <div style={{ margin: '0 auto' }}>
         <Legends legends={legends} i={i} />
@@ -24,8 +24,10 @@ class CategorizedGroupChart extends Component {
                 legends={legends}
                 title={group.surveyType}
                 dataset={group.categories}
+                replies={
+                  showRepliesCount ? group.filterdResonses || '0' : undefined
+                }
               />
-              filterdResonses={group.filterdResonses}
             </div>
           ))}
         </div>

@@ -9,6 +9,8 @@ export function wrapText(text, width) {
     const words = text
       .text()
       .split(/\s+/)
+      // to keep the (12 replies)
+      .map(i=> i.replace("+"," "))
       .reverse();
     let word;
     let line = [];
