@@ -25,6 +25,7 @@ class CategorizedGroupChart extends Component {
                 title={group.surveyType}
                 dataset={group.categories}
               />
+              filterdResonses={group.filterdResonses}
             </div>
           ))}
         </div>

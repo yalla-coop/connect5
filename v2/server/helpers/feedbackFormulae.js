@@ -163,7 +163,6 @@ const feedbackFormulae = (filterdResults, average) => {
       'value'
     ).categories;
 
-    sessionDetails.categories = categories;
     sessionDetails.filterdResonses = filtered.totalResponses;
 
     // delete questions[text].overall;
@@ -180,8 +179,6 @@ const feedbackFormulae = (filterdResults, average) => {
     question.surveys = surveysArray;
   });
 
-  //   /**
-  //  *
   questionArray.forEach(question => {
     const { surveys, options } = question;
 
