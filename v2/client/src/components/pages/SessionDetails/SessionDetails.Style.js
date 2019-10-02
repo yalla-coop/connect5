@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { borders, colors, breakpoints } from '../../../theme';
+import { borders, colors } from '../../../theme';
 
 export const SessionDetailsWrapper = styled.div`
   display: flex;
