@@ -1119,7 +1119,7 @@ module.exports = () => {
   const preCourseDay1Questions = [
     ...demographics('pre-day-1'),
     ...behavioural1('pre-day-1'),
-    // ...behavioural2('pre-day-1'),
+    ...behavioural2('pre-day-1'),
     ...behavioural3('pre-day-1'),
     ...behavioural4('pre-day-1'),
     ...behavioural5('pre-day-1'),
@@ -1128,7 +1128,7 @@ module.exports = () => {
   const preSpecial2DaysQuestions = [
     ...demographics('pre-special'),
     ...behavioural1('pre-special'),
-    // ...behavioural2('pre-special'),
+    ...behavioural2('pre-special'),
     ...behavioural3('pre-special'),
     ...behavioural4('pre-special'),
     ...behavioural5('pre-special'),

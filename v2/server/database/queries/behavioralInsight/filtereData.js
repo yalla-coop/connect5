@@ -150,6 +150,11 @@ module.exports = async filters => {
       },
     },
     {
+      $match: {
+        'question.code': { $exists: true },
+      },
+    },
+    {
       $project: {
         answer: '$answers.answer',
         PIN: 1,
@@ -161,21 +166,21 @@ module.exports = async filters => {
     },
   ]);
 
-  const formedData = [];
+  const formedData = {};
   results.forEach(question => {
     const { PIN: _PIN, answer, surveyType: _surveyType, code } = question;
     if (_PIN) {
-      if (formedData[_PIN]) {
-        if (formedData[_PIN][_surveyType]) {
-          formedData[_PIN][_surveyType][code] = Number(answer);
-        } else {
-          formedData[_PIN][_surveyType] = {};
-        }
-      } else {
+      if (!formedData[_PIN]) {
         formedData[_PIN] = {};
+      }
+      if (!formedData[_PIN][_surveyType]) {
+        formedData[_PIN][_surveyType] = {};
+      }
+      if (code && (Number(answer) || Number(answer) === 0)) {
+        formedData[_PIN][_surveyType][code] = Number(answer);
       }
     }
   });
 
-  return Object.values(formedData)[0];
+  return Object.values(formedData);
 };

@@ -94,19 +94,19 @@ const calculatedAnswersByCode = {
   FeedbackUserB1: survey => {
     // (B1/People)*100
     return (
-      (checkAnswer(survey, 'B1') + checkAnswer(survey, 'People')) * 100 || null
+      (checkAnswer(survey, 'B1') / checkAnswer(survey, 'People')) * 100 || null
     );
   },
   FeedbackUserB2: survey => {
     // (B2/People)*100
     return (
-      (checkAnswer(survey, 'B2') + checkAnswer(survey, 'People')) * 100 || null
+      (checkAnswer(survey, 'B2') / checkAnswer(survey, 'People')) * 100 || null
     );
   },
   FeedbackUserB3: survey => {
     // (B3/People)*100
     return (
-      (checkAnswer(survey, 'B3') + checkAnswer(survey, 'People')) * 100 || null
+      (checkAnswer(survey, 'B3') / checkAnswer(survey, 'People')) * 100 || null
     );
   },
 };

@@ -33,14 +33,15 @@ module.exports = async () => {
     const { PIN, answer, surveyType, code } = question;
 
     if (PIN) {
-      if (formedData[PIN]) {
-        if (formedData[PIN][surveyType]) {
-          formedData[PIN][surveyType][code] = Number(answer);
-        } else {
-          formedData[PIN][surveyType] = {};
-        }
-      } else {
+      if (!formedData[PIN]) {
         formedData[PIN] = {};
+      }
+      if (!formedData[PIN][surveyType]) {
+        formedData[PIN][surveyType] = {};
+      }
+
+      if (code && (Number(answer) || Number(answer) === 0)) {
+        formedData[PIN][surveyType][code] = Number(answer);
       }
     }
   });

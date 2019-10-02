@@ -1,5 +1,5 @@
 const { readableSurveysNamePairs } = require('../constants');
-const { checkAnswer, calculateAverage } = require('./index');
+const { calculateAverage } = require('./index');
 const behavioralFormulae = require('./behavioralFormulae');
 
 /** ------------------------input shape--------------------------
@@ -70,23 +70,36 @@ const behavioralFormulae = require('./behavioralFormulae');
  */
 
 const calculator = (subGroupAnswers, allAnswers) => {
-  const preDay1Answers = checkAnswer(subGroupAnswers, 'pre-day-1');
-  const postDay1Answers = checkAnswer(subGroupAnswers, 'post-day-1');
-  const postDay2Answers = checkAnswer(subGroupAnswers, 'post-day-2');
-  const postDay3Answers = checkAnswer(subGroupAnswers, 'post-day-3');
-  const postSpecialAnswers = checkAnswer(subGroupAnswers, 'post-special');
-  const followup3Months = checkAnswer(subGroupAnswers, 'follow-up-3-month');
-  const followup6Months = checkAnswer(subGroupAnswers, 'follow-up-6-month');
-
-  const answersBaseOnSurveyType = {
-    'pre-day-1': preDay1Answers,
-    'post-day-1': postDay1Answers,
-    'post-day-2': postDay2Answers,
-    'post-day-3': postDay3Answers,
-    'post-special': postSpecialAnswers,
-    'follow-up-3-month': followup3Months,
-    'follow-up-6-month': followup6Months,
+  const answersPerSurvey = {
+    'pre-day-1': [],
+    'post-day-1': [],
+    'post-day-2': [],
+    'post-day-3': [],
+    'post-special': [],
+    'follow-up-3-month': [],
+    'follow-up-6-month': [],
   };
+
+  subGroupAnswers.forEach(PINsSurvey => {
+    Object.entries(PINsSurvey).forEach(([surveyType, answersObject]) => {
+      answersPerSurvey[surveyType].push(answersObject);
+    });
+  });
+
+  const answersPerSurveyAll = {
+    'pre-day-1': [],
+    'post-day-1': [],
+    'post-day-2': [],
+    'post-day-3': [],
+    'post-special': [],
+    'follow-up-3-month': [],
+    'follow-up-6-month': [],
+  };
+  allAnswers.forEach(PINsSurvey => {
+    Object.entries(PINsSurvey).forEach(([surveyType, answersObject]) => {
+      answersPerSurveyAll[surveyType].push(answersObject);
+    });
+  });
 
   return {
     categorized: [
@@ -106,51 +119,39 @@ const calculator = (subGroupAnswers, allAnswers) => {
             {
               category: 'Capability',
               value: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserCapabilityB1(
-                    answersBaseOnSurveyType[surveyType]
-                  )
+                answersPerSurvey[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserCapabilityB1(answersObject)
                 )
               ),
               average: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserCapabilityB1(
-                    checkAnswer(otherUserAnswers, surveyType)
-                  )
+                answersPerSurveyAll[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserCapabilityB1(answersObject)
                 )
               ),
             },
             {
               category: 'Opportunity',
               value: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserOpportunityB1(
-                    answersBaseOnSurveyType[surveyType]
-                  )
+                answersPerSurvey[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserOpportunityB1(answersObject)
                 )
               ),
               average: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserOpportunityB1(
-                    checkAnswer(otherUserAnswers, surveyType)
-                  )
+                answersPerSurveyAll[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserOpportunityB1(answersObject)
                 )
               ),
             },
             {
               category: 'Motivation',
               value: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserMotivationB1(
-                    answersBaseOnSurveyType[surveyType]
-                  )
+                answersPerSurvey[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserMotivationB1(answersObject)
                 )
               ),
               average: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserMotivationB1(
-                    checkAnswer(otherUserAnswers, surveyType)
-                  )
+                answersPerSurveyAll[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserMotivationB1(answersObject)
                 )
               ),
             },
@@ -173,51 +174,39 @@ const calculator = (subGroupAnswers, allAnswers) => {
             {
               category: 'Capability',
               value: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserCapabilityB2(
-                    answersBaseOnSurveyType[surveyType]
-                  )
+                answersPerSurvey[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserCapabilityB2(answersObject)
                 )
               ),
               average: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserCapabilityB2(
-                    checkAnswer(otherUserAnswers, surveyType)
-                  )
+                answersPerSurveyAll[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserCapabilityB2(answersObject)
                 )
               ),
             },
             {
               category: 'Opportunity',
               value: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserOpportunityB2(
-                    answersBaseOnSurveyType[surveyType]
-                  )
+                answersPerSurvey[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserOpportunityB2(answersObject)
                 )
               ),
               average: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserOpportunityB2(
-                    checkAnswer(otherUserAnswers, surveyType)
-                  )
+                answersPerSurveyAll[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserOpportunityB2(answersObject)
                 )
               ),
             },
             {
               category: 'Motivation',
               value: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserMotivationB2(
-                    answersBaseOnSurveyType[surveyType]
-                  )
+                answersPerSurvey[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserMotivationB2(answersObject)
                 )
               ),
               average: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserMotivationB2(
-                    checkAnswer(otherUserAnswers, surveyType)
-                  )
+                answersPerSurveyAll[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserMotivationB2(answersObject)
                 )
               ),
             },
@@ -240,51 +229,39 @@ const calculator = (subGroupAnswers, allAnswers) => {
             {
               category: 'Capability',
               value: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserCapabilityB3(
-                    answersBaseOnSurveyType[surveyType]
-                  )
+                answersPerSurvey[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserCapabilityB3(answersObject)
                 )
               ),
               average: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserCapabilityB3(
-                    checkAnswer(otherUserAnswers, surveyType)
-                  )
+                answersPerSurveyAll[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserCapabilityB3(answersObject)
                 )
               ),
             },
             {
               category: 'Opportunity',
               value: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserOpportunityB3(
-                    answersBaseOnSurveyType[surveyType]
-                  )
+                answersPerSurvey[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserOpportunityB3(answersObject)
                 )
               ),
               average: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserOpportunityB3(
-                    checkAnswer(otherUserAnswers, surveyType)
-                  )
+                answersPerSurveyAll[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserOpportunityB3(answersObject)
                 )
               ),
             },
             {
               category: 'Motivation',
               value: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserMotivationB3(
-                    answersBaseOnSurveyType[surveyType]
-                  )
+                answersPerSurvey[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserMotivationB3(answersObject)
                 )
               ),
               average: calculateAverage(
-                allAnswers.map(otherUserAnswers =>
-                  behavioralFormulae.FeedbackUserMotivationB3(
-                    checkAnswer(otherUserAnswers, surveyType)
-                  )
+                answersPerSurveyAll[surveyType].map(answersObject =>
+                  behavioralFormulae.FeedbackUserMotivationB3(answersObject)
                 )
               ),
             },
@@ -301,17 +278,13 @@ const calculator = (subGroupAnswers, allAnswers) => {
           surveyType => ({
             surveyType: readableSurveysNamePairs[surveyType],
             value: calculateAverage(
-              allAnswers.map(otherUserAnswers =>
-                behavioralFormulae.FeedbackUserB1(
-                  answersBaseOnSurveyType[surveyType]
-                )
+              answersPerSurvey[surveyType].map(answersObject =>
+                behavioralFormulae.FeedbackUserB1(answersObject)
               )
             ),
             average: calculateAverage(
-              allAnswers.map(otherUserAnswers =>
-                behavioralFormulae.FeedbackUserB1(
-                  checkAnswer(otherUserAnswers, surveyType)
-                )
+              answersPerSurveyAll[surveyType].map(answersObject =>
+                behavioralFormulae.FeedbackUserB1(answersObject)
               )
             ),
           })
@@ -324,17 +297,13 @@ const calculator = (subGroupAnswers, allAnswers) => {
           surveyType => ({
             surveyType: readableSurveysNamePairs[surveyType],
             value: calculateAverage(
-              allAnswers.map(otherUserAnswers =>
-                behavioralFormulae.FeedbackUserB2(
-                  answersBaseOnSurveyType[surveyType]
-                )
+              answersPerSurvey[surveyType].map(answersObject =>
+                behavioralFormulae.FeedbackUserB2(answersObject)
               )
             ),
             average: calculateAverage(
-              allAnswers.map(otherUserAnswers =>
-                behavioralFormulae.FeedbackUserB2(
-                  checkAnswer(otherUserAnswers, surveyType)
-                )
+              answersPerSurveyAll[surveyType].map(answersObject =>
+                behavioralFormulae.FeedbackUserB2(answersObject)
               )
             ),
           })
@@ -347,17 +316,13 @@ const calculator = (subGroupAnswers, allAnswers) => {
           surveyType => ({
             surveyType: readableSurveysNamePairs[surveyType],
             value: calculateAverage(
-              allAnswers.map(otherUserAnswers =>
-                behavioralFormulae.FeedbackUserB3(
-                  answersBaseOnSurveyType[surveyType]
-                )
+              answersPerSurvey[surveyType].map(answersObject =>
+                behavioralFormulae.FeedbackUserB3(answersObject)
               )
             ),
             average: calculateAverage(
-              allAnswers.map(otherUserAnswers =>
-                behavioralFormulae.FeedbackUserB3(
-                  checkAnswer(otherUserAnswers, surveyType)
-                )
+              answersPerSurveyAll[surveyType].map(answersObject =>
+                behavioralFormulae.FeedbackUserB3(answersObject)
               )
             ),
           })

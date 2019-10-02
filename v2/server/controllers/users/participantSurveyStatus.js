@@ -8,8 +8,6 @@ module.exports = async (req, res, next) => {
   const { PIN } = req.params;
   const { sessionId } = req.body;
 
-  console.log('REACHED', sessionId);
-
   Promise.all([findParticipantByPIN(PIN), PINfilledPreSurvey(PIN, sessionId)])
     .then(response => {
       res.json(response);

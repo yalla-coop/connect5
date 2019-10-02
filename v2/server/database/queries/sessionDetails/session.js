@@ -98,7 +98,6 @@ module.exports.updateEmailsQuery = async (id, participantsEmails) => {
     ...session.participantsEmails,
     ...changedEmails.map(item => ({ email: item, status: 'new' })),
   ];
-  console.log('update', session);
 
   return session.save();
 };
@@ -163,8 +162,6 @@ const updateAttendeesList = ({
     Object.keys(newEmails).forEach(email => {
       session.participantsEmails.push({ email, status });
     });
-
-    console.log('updateAttendees', session);
 
     // eslint-disable-next-line no-param-reassign
     session.updatedAt = new Date();
