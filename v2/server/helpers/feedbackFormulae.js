@@ -4,6 +4,16 @@ const {
   readableSessionNamePairs,
 } = require('./../constants');
 
+const sortedSessions = {
+  Overall: { name: 'Overall', index: 0 },
+};
+
+Object.entries(readableSessionNamePairs).forEach(([key, value], index) => {
+  sortedSessions[key] = {
+    name: value,
+    index: index + 1,
+  };
+});
 const categoriesPercintage = (_categories, _totalCount, _output, _key) => {
   const clonedOutput = { ..._output };
   let totalCount = 0;
@@ -47,15 +57,14 @@ const feedbackFormulae = (filterdResults, average) => {
   average.forEach(({ categories, options, surveyType, text, totalCount }) => {
     const sessionType = relevantSessionsForSurveys[surveyType];
 
-    const readableSession = readableSessionNamePairs[sessionType];
     const sessionDetails = {
-      surveyType: readableSession,
+      surveyType: sessionType,
       ...categoriesPercintage(categories, totalCount, {}, 'average'),
     };
 
     // add surveys
     if (questions[text]) {
-      questions[text].surveys[readableSession] = sessionDetails;
+      questions[text].surveys[sessionType] = sessionDetails;
 
       // update overall values
       const { totalResponses, categoriesCount } = questions[text].overall.all;
@@ -73,7 +82,7 @@ const feedbackFormulae = (filterdResults, average) => {
         text,
         surveys: {
           Overall: {},
-          [readableSession]: sessionDetails,
+          [sessionType]: sessionDetails,
         },
         options,
         overall: {
@@ -92,18 +101,17 @@ const feedbackFormulae = (filterdResults, average) => {
   filterdResults.forEach(
     ({ categories, options, surveyType, text, totalCount }) => {
       const sessionType = relevantSessionsForSurveys[surveyType];
-      const readableSession = readableSessionNamePairs[sessionType];
-      const { categories: output } = questions[text].surveys[readableSession];
+      const { categories: output } = questions[text].surveys[sessionType];
 
       const sessionDetails = {
-        surveyType: readableSession,
+        surveyType: sessionType,
         ...categoriesPercintage(categories, totalCount, output, 'value'),
         filterdResonses: totalCount,
       };
 
       // add surveys
       if (questions[text]) {
-        questions[text].surveys[readableSession] = sessionDetails;
+        questions[text].surveys[sessionType] = sessionDetails;
 
         // update overall values
         const { totalResponses, categoriesCount } = questions[
@@ -165,7 +173,7 @@ const feedbackFormulae = (filterdResults, average) => {
 
     sessionDetails.filterdResonses = filtered.totalResponses;
 
-    // delete questions[text].overall;
+    delete questions[text].overall;
     questions[text].surveys.Overall = sessionDetails;
   });
 
@@ -192,6 +200,7 @@ const feedbackFormulae = (filterdResults, average) => {
           };
         }
       });
+
       const categoriesArray = Object.entries(categories).map(([key, value]) => {
         return {
           category: key,
@@ -200,6 +209,18 @@ const feedbackFormulae = (filterdResults, average) => {
       });
       survey.categories = categoriesArray;
     });
+  });
+
+  // order the surveys
+  questionArray.forEach(question => {
+    const { surveys } = question;
+    surveys.forEach(survey => {
+      survey.index = sortedSessions[survey.surveyType].index;
+      survey.surveyType = sortedSessions[survey.surveyType].name;
+    });
+
+    const sortedSessionsArray = surveys.sort((a, b) => a.index - b.index);
+    question.surveys = sortedSessionsArray;
   });
 
   return questions;
