@@ -211,12 +211,14 @@ class CreateSession extends Component {
       partnerTrainer1,
     } = inputData;
 
+    console.log("check", inputData);
+
     const isError = !(
       !!startDate &&
       !!inviteesNumber &&
       !!session &&
       !!region &&
-      ((role === 'localLead' && !!partnerTrainer1) || role === 'trainer')
+      ((['localLead', 'admin'].includes(role) && !!partnerTrainer1) || role === 'trainer')
     );
 
     this.props.storeInputData({
@@ -326,6 +328,8 @@ class CreateSession extends Component {
   render() {
     const { sessionCreated, extraInfo, isPostcodeValid } = this.state;
     const { role, inputData, loading, createdSession, name } = this.props;
+
+    console.log("ROLE", role)
 
     const {
       inviteesNumber,
@@ -534,7 +538,7 @@ class CreateSession extends Component {
           )}
 
           <InputDiv>
-            {role === 'localLead' ? (
+            {['localLead', 'admin'].includes(role) ? (
               <Label htmlFor="PartnerTrainer">
                 {!partnerTrainer1 && <RequiredMark>*</RequiredMark>}
                 Trainer:
@@ -547,7 +551,7 @@ class CreateSession extends Component {
               id="PartnerTrainer"
               showSearch
               style={{ width: '100%' }}
-              placeholder={role === 'localLead' ? 'Trainer' : 'Partner Trainer'}
+              placeholder={['localLead', 'admin'].includes(role) ? 'Trainer' : 'Partner Trainer'}
               optionFilterProp="children"
               onChange={onSelectPartner1Change}
               labelInValue
@@ -600,7 +604,7 @@ class CreateSession extends Component {
               <Warning>* required</Warning>
             )}
           </InputDiv>
-          {role === 'localLead' && (
+          {['localLead', 'admin'].includes(role) && (
             <InputDiv>
               <Label htmlFor="PartnerTrainer2">Second Partner Trainer:</Label>
               <Select
