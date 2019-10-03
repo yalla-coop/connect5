@@ -67,8 +67,8 @@ class SubGroupChart extends Component {
     // red lines
     groups
       .append('line')
-      .attr('stroke', d => (d.value && d.average ? `red` : 'none'))
-      .attr('stroke-width', 1)
+      .attr('stroke', d => (d.value && d.average ? `#fc6b6b` : 'none'))
+      .attr('stroke-width', 2)
       .attr('x1', d => bandScale(d.category || d.surveyType))
       .attr('y1', d => chartHeight - yScale(d.average))
       .attr(

@@ -8,6 +8,7 @@ import {
 
 const initState = {
   sessions: [],
+  participantSessions: [],
   sessionsCount: '',
   sessionDetails: {},
   loaded: false,
@@ -22,7 +23,7 @@ const fetchedSessions = (state = initState, action) => {
     case FETCH_ALL_SESSIONS:
       return { ...state, sessions: payload, loaded: true };
     case FETCH_PRTICIPENT_SESSIONS_SUCCESS:
-      return { ...state, sessions: payload };
+      return { ...state, participantSessions: payload };
     case FETCH_SESSION_DETAILS:
       return { ...state, sessionDetails: payload, loaded: true };
     default:

@@ -53,6 +53,7 @@ class TrainerFeedbackOverall extends Component {
       role,
       defaultFilters,
       hiddenFields,
+      surveyList,
     } = this.props;
 
     const { showCharts } = this.state;
@@ -70,7 +71,7 @@ class TrainerFeedbackOverall extends Component {
               />
             )}
             {showCharts ? (
-              <Feedback feedback={feedbackData} />
+              <Feedback feedback={feedbackData} surveyList={surveyList} />
             ) : (
               <Spin style={{ width: '100%', padding: '40px' }} />
             )}

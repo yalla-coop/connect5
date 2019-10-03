@@ -1,19 +1,25 @@
 /* eslint-disable no-param-reassign */
 const {
   relevantSessionsForSurveys,
+  readableSurveysNamePairs,
   readableSessionNamePairs,
 } = require('./../constants');
 
-const sortedSessions = {
-  Overall: { name: 'Overall', index: 0 },
+const sortedSurveys = {
+  Overall: { name: 'Overall', index: 0, readableName: 'Overall' },
 };
 
-Object.entries(readableSessionNamePairs).forEach(([key, value], index) => {
-  sortedSessions[key] = {
-    name: value,
+Object.entries(readableSurveysNamePairs).forEach(([key, value], index) => {
+  const readableName =
+    readableSessionNamePairs[relevantSessionsForSurveys[key]] ||
+    readableSurveysNamePairs[relevantSessionsForSurveys[key]];
+  sortedSurveys[key] = {
+    readableName,
     index: index + 1,
+    name: key,
   };
 });
+
 const categoriesPercintage = (_categories, _totalCount, _output, _key) => {
   const clonedOutput = { ..._output };
   let totalCount = 0;
@@ -55,16 +61,14 @@ const categoriesRaw = (_categories, _totalCount, _output, _totalResponses) => {
 const feedbackFormulae = (filterdResults, average) => {
   const questions = {};
   average.forEach(({ categories, options, surveyType, text, totalCount }) => {
-    const sessionType = relevantSessionsForSurveys[surveyType];
-
     const sessionDetails = {
-      surveyType: sessionType,
+      surveyType,
       ...categoriesPercintage(categories, totalCount, {}, 'average'),
     };
 
     // add surveys
     if (questions[text]) {
-      questions[text].surveys[sessionType] = sessionDetails;
+      questions[text].surveys[surveyType] = sessionDetails;
 
       // update overall values
       const { totalResponses, categoriesCount } = questions[text].overall.all;
@@ -82,7 +86,7 @@ const feedbackFormulae = (filterdResults, average) => {
         text,
         surveys: {
           Overall: {},
-          [sessionType]: sessionDetails,
+          [surveyType]: sessionDetails,
         },
         options,
         overall: {
@@ -100,18 +104,17 @@ const feedbackFormulae = (filterdResults, average) => {
 
   filterdResults.forEach(
     ({ categories, options, surveyType, text, totalCount }) => {
-      const sessionType = relevantSessionsForSurveys[surveyType];
-      const { categories: output } = questions[text].surveys[sessionType];
+      const { categories: output } = questions[text].surveys[surveyType];
 
       const sessionDetails = {
-        surveyType: sessionType,
+        surveyType,
         ...categoriesPercintage(categories, totalCount, output, 'value'),
         filterdResonses: totalCount,
       };
 
       // add surveys
       if (questions[text]) {
-        questions[text].surveys[sessionType] = sessionDetails;
+        questions[text].surveys[surveyType] = sessionDetails;
 
         // update overall values
         const { totalResponses, categoriesCount } = questions[
@@ -215,12 +218,13 @@ const feedbackFormulae = (filterdResults, average) => {
   questionArray.forEach(question => {
     const { surveys } = question;
     surveys.forEach(survey => {
-      survey.index = sortedSessions[survey.surveyType].index;
-      survey.surveyType = sortedSessions[survey.surveyType].name;
+      survey.index = sortedSurveys[survey.surveyType].index;
+      survey.readableName = sortedSurveys[survey.surveyType].readableName;
+      survey.surveyType = sortedSurveys[survey.surveyType].name;
     });
 
-    const sortedSessionsArray = surveys.sort((a, b) => a.index - b.index);
-    question.surveys = sortedSessionsArray;
+    const sortedSurveysArray = surveys.sort((a, b) => a.index - b.index);
+    question.surveys = sortedSurveysArray;
   });
 
   return questions;

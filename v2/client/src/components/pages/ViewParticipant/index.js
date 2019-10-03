@@ -55,6 +55,10 @@ class ViewParticipant extends Component {
                 defaultFilters={{
                   PIN: match.params.PIN,
                 }}
+                surveyList={sessions.reduce((prev, cur) => {
+                  if (cur.surveyType) prev.push(...cur.surveyType);
+                  return prev;
+                }, [])}
               />
             </ContentWrapper>
           ) : (
@@ -73,11 +77,14 @@ class ViewParticipant extends Component {
                   </span>
                 </Session>
               ))}
-
               <Feedback
                 defaultFilters={{
                   PIN: match.params.PIN,
                 }}
+                surveyList={sessions.reduce((prev, cur) => {
+                  prev.push(...cur.surveyType);
+                  return prev;
+                }, [])}
               />
             </ContentWrapper>
           )}
@@ -93,7 +100,7 @@ const mapStateToProps = state => {
     loaded: state.auth.loaded,
     PIN: state.auth.PIN,
     role: state.auth.role,
-    sessions: state.sessions.sessions,
+    sessions: state.sessions.participantSessions,
   };
 };
 

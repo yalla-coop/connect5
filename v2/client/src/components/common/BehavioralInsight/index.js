@@ -45,6 +45,7 @@ class BehavioralTrainerResults extends Component {
       hiddenFields,
       role,
       showFilters,
+      surveyList,
     } = this.props;
 
     const { showCharts } = this.state;
@@ -70,6 +71,7 @@ class BehavioralTrainerResults extends Component {
                 <BehavioralInsight
                   categorized={categorized}
                   nonCategorized={nonCategorized}
+                  surveyList={surveyList}
                 />
               ) : (
                 <Spin style={{ width: '100%', padding: '40px' }} />
