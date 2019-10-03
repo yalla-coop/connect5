@@ -39,7 +39,7 @@ module.exports = async filters => {
 
   const PINMatch = PIN ? { $eq: ['$PIN', PIN] } : true;
 
-  const match = {
+  const filteredResultsMatch = {
     $expr: {
       $and: [
         ageMatch,
@@ -54,14 +54,20 @@ module.exports = async filters => {
     },
   };
 
+  const allResultsMatch = {
+    $expr: {
+      $and: [ageMatch, genderMatch, ethnicMatch, regionMatch, workforceMatch],
+    },
+  };
+
   if (trainer) {
-    match.trainers = {
+    filteredResultsMatch.trainers = {
       $in: trainer.map(_trainerId => mongoose.Types.ObjectId(_trainerId)),
     };
   }
 
   if (manager) {
-    match.trainers = {
+    filteredResultsMatch.trainers = {
       $in: manager.map(_managerId => mongoose.Types.ObjectId(_managerId)),
     };
   }
@@ -128,59 +134,127 @@ module.exports = async filters => {
       },
     },
     {
-      $match: match,
-    },
-    {
-      $lookup: {
-        from: 'answers',
-        localField: 'participant',
-        foreignField: 'participant',
-        as: 'answers',
-      },
-    },
-    {
-      $unwind: '$answers',
-    },
-    {
-      $lookup: {
-        from: 'questions',
-        localField: 'answers.question',
-        foreignField: '_id',
-        as: 'question',
-      },
-    },
-    {
-      $match: {
-        'question.code': { $exists: true },
-      },
-    },
-    {
-      $project: {
-        answer: '$answers.answer',
-        PIN: 1,
-        code: {
-          $arrayElemAt: ['$question.code', 0],
-        },
-        surveyType: 1,
+      $facet: {
+        allResults: [
+          {
+            $match: allResultsMatch,
+          },
+          {
+            $lookup: {
+              from: 'answers',
+              localField: 'participant',
+              foreignField: 'participant',
+              as: 'answers',
+            },
+          },
+          {
+            $unwind: '$answers',
+          },
+          {
+            $lookup: {
+              from: 'questions',
+              localField: 'answers.question',
+              foreignField: '_id',
+              as: 'question',
+            },
+          },
+          {
+            $match: {
+              'question.code': { $exists: true },
+            },
+          },
+          {
+            $project: {
+              answer: '$answers.answer',
+              PIN: 1,
+              code: {
+                $arrayElemAt: ['$question.code', 0],
+              },
+              surveyType: 1,
+            },
+          },
+        ],
+        filteredResults: [
+          {
+            $match: filteredResultsMatch,
+          },
+          {
+            $lookup: {
+              from: 'answers',
+              localField: 'participant',
+              foreignField: 'participant',
+              as: 'answers',
+            },
+          },
+          {
+            $unwind: '$answers',
+          },
+          {
+            $lookup: {
+              from: 'questions',
+              localField: 'answers.question',
+              foreignField: '_id',
+              as: 'question',
+            },
+          },
+          {
+            $match: {
+              'question.code': { $exists: true },
+            },
+          },
+          {
+            $project: {
+              answer: '$answers.answer',
+              PIN: 1,
+              code: {
+                $arrayElemAt: ['$question.code', 0],
+              },
+              surveyType: 1,
+            },
+          },
+        ],
       },
     },
   ]);
 
-  const formedData = {};
-  results.forEach(question => {
+  const formedData = {
+    filteredResults: {},
+    allResults: {},
+  };
+
+  // re-shape the filtered results
+  results[0].filteredResults.forEach(question => {
     const { PIN: _PIN, answer, surveyType: _surveyType, code } = question;
     if (_PIN) {
-      if (!formedData[_PIN]) {
-        formedData[_PIN] = {};
+      if (!formedData.filteredResults[_PIN]) {
+        formedData.filteredResults[_PIN] = {};
       }
-      if (!formedData[_PIN][_surveyType]) {
-        formedData[_PIN][_surveyType] = {};
+      if (!formedData.filteredResults[_PIN][_surveyType]) {
+        formedData.filteredResults[_PIN][_surveyType] = {};
       }
       if (code && (Number(answer) || Number(answer) === 0)) {
-        formedData[_PIN][_surveyType][code] = Number(answer);
+        formedData.filteredResults[_PIN][_surveyType][code] = Number(answer);
       }
     }
   });
 
-  return Object.values(formedData);
+  // re-shape all results
+  results[0].allResults.forEach(question => {
+    const { PIN: _PIN, answer, surveyType: _surveyType, code } = question;
+    if (_PIN) {
+      if (!formedData.allResults[_PIN]) {
+        formedData.allResults[_PIN] = {};
+      }
+      if (!formedData.allResults[_PIN][_surveyType]) {
+        formedData.allResults[_PIN][_surveyType] = {};
+      }
+      if (code && (Number(answer) || Number(answer) === 0)) {
+        formedData.allResults[_PIN][_surveyType][code] = Number(answer);
+      }
+    }
+  });
+
+  formedData.filteredResults = Object.values(formedData.filteredResults);
+  formedData.allResults = Object.values(formedData.allResults);
+  return formedData;
 };

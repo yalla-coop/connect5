@@ -39,7 +39,7 @@ module.exports = async filters => {
 
   const PINMatch = PIN ? { $eq: ['$PIN', PIN] } : true;
 
-  const match = {
+  const filteredResultsMatch = {
     $expr: {
       $and: [
         ageMatch,
@@ -55,14 +55,20 @@ module.exports = async filters => {
     },
   };
 
+  const allResultsMatch = {
+    $expr: {
+      $and: [ageMatch, genderMatch, ethnicMatch, regionMatch, workforceMatch],
+    },
+  };
+
   if (trainer) {
-    match.trainers = {
+    filteredResultsMatch.trainers = {
       $in: trainer.map(_trainerId => mongoose.Types.ObjectId(_trainerId)),
     };
   }
 
   if (manager) {
-    match.trainers = {
+    filteredResultsMatch.trainers = {
       $in: manager.map(_managerId => mongoose.Types.ObjectId(_managerId)),
     };
   }
@@ -162,7 +168,7 @@ module.exports = async filters => {
         filterdResults: [
           {
             // filter the responses, returns all responses if there are no filters
-            $match: match,
+            $match: filteredResultsMatch,
           },
           {
             // re-form data shape
@@ -239,6 +245,10 @@ module.exports = async filters => {
           },
         ],
         allResults: [
+          {
+            // filter all responses base on the participants filters
+            $match: allResultsMatch,
+          },
           {
             // re-form data shape
             $project: {

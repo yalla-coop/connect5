@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Empty } from 'antd';
+
 import Spin from '../Spin';
 import { Container } from './Feedback.style';
 
@@ -55,7 +57,6 @@ class TrainerFeedbackOverall extends Component {
       hiddenFields,
       surveyList,
     } = this.props;
-
     const { showCharts } = this.state;
 
     if (loaded) {
@@ -71,7 +72,17 @@ class TrainerFeedbackOverall extends Component {
               />
             )}
             {showCharts ? (
-              <Feedback feedback={feedbackData} surveyList={surveyList} />
+              <>
+                {Object.keys(feedbackData).length > 0 ? (
+                  <>
+                    <Feedback feedback={feedbackData} surveyList={surveyList} />
+                  </>
+                ) : (
+                  <div>
+                    <Empty description="No results matched" />
+                  </div>
+                )}
+              </>
             ) : (
               <Spin style={{ width: '100%', padding: '40px' }} />
             )}
