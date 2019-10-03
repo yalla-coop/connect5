@@ -165,6 +165,7 @@ class CreateSession extends Component {
     const { leadsAndTrainers, role, localLeadTrainersGroup, id } = this.props;
 
     if (role && role === 'localLead') {
+      const { id, name } = this.props;
       if (localLeadTrainersGroup) {
         return (
           localLeadTrainersGroup
@@ -327,7 +328,7 @@ class CreateSession extends Component {
 
   render() {
     const { sessionCreated, extraInfo, isPostcodeValid } = this.state;
-    const { role, inputData, loading, createdSession, name } = this.props;
+    const { role, inputData, loading, createdSession, name, id } = this.props;
 
     console.log("ROLE", role)
 
@@ -598,6 +599,13 @@ class CreateSession extends Component {
                 </div>
               )}
             >
+              {role !== 'trainer' && <Option
+                  key={id}
+                  value={id}
+                  style={{ textTransform: 'capitalize' }}
+                >
+                  {`${name[0].toUpperCase()}${name.slice(1)}`}{" "}(me)
+                </Option>}
               {this.renderTrainersList(partnerTrainer2)}
             </Select>
             {role === 'localLead' && partnerTrainer1 === null && (
@@ -654,6 +662,13 @@ class CreateSession extends Component {
                   </div>
                 )}
               >
+                {role !== 'trainer' && <Option
+                  key={id}
+                  value={id}
+                  style={{ textTransform: 'capitalize' }}
+                >
+                  {`${name[0].toUpperCase()}${name.slice(1)}`}{" "}(me)
+                </Option>}
                 {this.renderTrainersList(partnerTrainer1)}
               </Select>
             </InputDiv>
@@ -734,6 +749,7 @@ const mapStateToProps = state => {
     loading: state.session.loading,
     inputData,
     createdSession: state.session,
+    userObj: state.auth,
   };
 };
 
