@@ -585,9 +585,6 @@ const yourTrainer1 = surveyType => [
     feedbackText:
       'Your trainees said that you asked questions about how what you are currently learning relates to what you knew before',
   },
-];
-
-const yourTrainer2 = surveyType => [
   {
     code: 'TrainAtt1',
     group: questionConstants.groups.ABOUT_YOUR_TRAINER,
@@ -1116,15 +1113,92 @@ const aboutHowYouExpectToTeach = surveyType => [
 ];
 
 module.exports = () => {
+  // --------------------  SESSION 1 ------------------------
+  // PRE
   const preCourseDay1Questions = [
     ...demographics('pre-day-1'),
     ...behavioural1('pre-day-1'),
-    ...behavioural2('pre-day-1'),
     ...behavioural3('pre-day-1'),
     ...behavioural4('pre-day-1'),
     ...behavioural5('pre-day-1'),
   ];
 
+  // POST
+  const postCourseDay1Questions = [
+    ...behavioural2('post-day-1'),
+    ...yourTrainer1('post-day-1'),
+  ];
+
+  // 3 MONTHS FOLLOW UP
+  const day1FollowUp3Months = [
+    ...behavioural1('3-months-follow-up-day-1'),
+    ...behavioural2('3-months-follow-up-day-1'),
+    ...behavioural3('3-months-follow-up-day-1'),
+    ...behavioural4('3-months-follow-up-day-1'),
+    ...behavioural5('3-months-follow-up-day-1'),
+  ];
+
+  // 6 MONTHS FOLLOW UP
+  const day1FollowUp6Months = [
+    ...behavioural1('6-months-follow-up-day-1'),
+    ...behavioural2('6-months-follow-up-day-1'),
+    ...behavioural3('6-months-follow-up-day-1'),
+    ...behavioural4('6-months-follow-up-day-1'),
+    ...behavioural5('6-months-follow-up-day-1'),
+  ];
+
+  // --------------------------- SESSION 2 -------------------------
+  // POST
+  const postCourseDay2Questions = [
+    ...behavioural2('post-day-2'),
+    ...yourTrainer1('post-day-2'),
+  ];
+
+  // 3 MONTHS FOLLOW UP
+  const day2FollowUp3Months = [
+    ...behavioural1('3-months-follow-up-day-2'),
+    ...behavioural2('3-months-follow-up-day-2'),
+    ...behavioural3('3-months-follow-up-day-2'),
+    ...behavioural4('3-months-follow-up-day-2'),
+    ...behavioural5('3-months-follow-up-day-2'),
+  ];
+
+  // 6 MONTHS FOLLOW UP
+  const day2FollowUp6Months = [
+    ...behavioural1('6-months-follow-up-day-2'),
+    ...behavioural2('6-months-follow-up-day-2'),
+    ...behavioural3('6-months-follow-up-day-2'),
+    ...behavioural4('6-months-follow-up-day-2'),
+    ...behavioural5('6-months-follow-up-day-2'),
+  ];
+
+  // ---------------------------- SESSION 3 --------------------
+  // POST
+  const postCourseDay3Questions = [
+    ...behavioural2('post-day-3'),
+    ...yourTrainer1('post-day-3'),
+  ];
+
+  // 3 MONTHS FOLLOW UP
+  const day3FollowUp3Months = [
+    ...behavioural1('3-months-follow-up-day-3'),
+    ...behavioural2('3-months-follow-up-day-3'),
+    ...behavioural3('3-months-follow-up-day-3'),
+    ...behavioural4('3-months-follow-up-day-3'),
+    ...behavioural5('3-months-follow-up-day-3'),
+  ];
+
+  // 6 MONTHS FOLLOW UP
+  const day3FollowUp6Months = [
+    ...behavioural1('6-months-follow-up-day-3'),
+    ...behavioural2('6-months-follow-up-day-3'),
+    ...behavioural3('6-months-follow-up-day-3'),
+    ...behavioural4('6-months-follow-up-day-3'),
+    ...behavioural5('6-months-follow-up-day-3'),
+  ];
+
+  // ----------------------------- SPECIAL 2 DAYS ------------------
+  // PRE
   const preSpecial2DaysQuestions = [
     ...demographics('pre-special'),
     ...behavioural1('pre-special'),
@@ -1134,98 +1208,128 @@ module.exports = () => {
     ...behavioural5('pre-special'),
   ];
 
-  const postCourseDay1Questions = [
-    ...behavioural2('post-day-1'),
-    ...yourTrainer1('post-day-1'),
-    ...yourTrainer2('post-day-1'),
-  ];
-
-  const postCourseDay2Questions = [
-    ...behavioural2('post-day-2'),
-    ...yourTrainer1('post-day-2'),
-    ...yourTrainer2('post-day-2'),
-  ];
-
-  const postCourseDay3Questions = [
-    ...behavioural2('post-day-3'),
-    ...yourTrainer1('post-day-3'),
-    ...yourTrainer2('post-day-3'),
-  ];
-
+  // POST
   const postSpecial2DaysQuestions = [
     ...behavioural2('post-special'),
     ...yourTrainer1('post-special'),
-    ...yourTrainer2('post-special'),
   ];
 
-  // TTT-Session-1
-  //  - pre -
+  // 3 MONTHS FOLLOW UP
+  const special2DaysFollowUp3Months = [
+    ...behavioural1('3-months-follow-up-special-2-days'),
+    ...behavioural2('3-months-follow-up-special-2-days'),
+    ...behavioural3('3-months-follow-up-special-2-days'),
+    ...behavioural4('3-months-follow-up-special-2-days'),
+    ...behavioural5('3-months-follow-up-special-2-days'),
+  ];
+
+  // 6 MONTHS FOLLOW UP
+  const special2DaysFollowUp6Months = [
+    ...behavioural1('6-months-follow-up-special-2-days'),
+    ...behavioural2('6-months-follow-up-special-2-days'),
+    ...behavioural3('6-months-follow-up-special-2-days'),
+    ...behavioural4('6-months-follow-up-special-2-days'),
+    ...behavioural5('6-months-follow-up-special-2-days'),
+  ];
+
+  // -----------------------  TRAIN TRAINERS SESSION 1 -------------------
+  // PRE
   const preTrainTheTrainerS1Questions = [
     ...demographics('pre-train-trainers-s1'),
     ...yourTeachingWay('pre-train-trainers-s1'),
   ];
-  // - post -
+
+  // POST
   const postTrainTheTrainerS1Questions = [
     ...aboutHowYouExpectToTeach('post-train-trainers-s1'),
   ];
 
-  // TTT-Session-2
-  // - post -
+  // 3 MONTHS FOLLOW UP
+  const trainTheTrainerS1FollowUp3Months = [
+    ...yourTeachingWay('follow-up-3-month-train-trainers-s1'),
+  ];
+
+  // 6 MONTHS FOLLOW UP
+  const trainTheTrainerS1FollowUp6Months = [
+    ...yourTeachingWay('follow-up-6-month-train-trainers-s1'),
+  ];
+
+  // -----------------------  TRAIN TRAINERS SESSION 2 -------------------
+  // POST
   const postTrainTheTrainerS2Questions = [
     ...aboutHowYouExpectToTeach('post-train-trainers-s2'),
   ];
 
-  // event day -> TTT-1-Day-Event
-  // - pre -
+  // 3 MONTHS FOLLOW UP
+  const trainTheTrainerS2FollowUp3Months = [
+    ...yourTeachingWay('follow-up-3-month-train-trainers-s2'),
+  ];
+
+  // 6 MONTHS FOLLOW UP
+  const trainTheTrainerS2FollowUp6Months = [
+    ...yourTeachingWay('follow-up-6-month-train-trainers-s2'),
+  ];
+
+  // -----------------------  TRAIN TRAINERS Day-Event -------------------
+  // PRE
   const preTrainTheTrainerEventQuestions = [
     ...demographics('pre-train-trainers-event'),
     ...yourTeachingWay('pre-train-trainers-event'),
   ];
 
-  // - post -
+  // POST
   const postTrainTheTrainerEventQuestions = [
     ...aboutHowYouExpectToTeach('post-train-trainers-event'),
   ];
 
-  const followUp3MonthsQuestions = [
-    ...behavioural1('follow-up-3-month'),
-    ...behavioural2('follow-up-3-month'),
-    ...behavioural3('follow-up-3-month'),
-    ...behavioural4('follow-up-3-month'),
-    ...behavioural5('follow-up-3-month'),
+  // 3 MONTHS FOLLOW UP
+  const trainTheTrainerEventFollowUp3Months = [
+    ...yourTeachingWay('follow-up-3-month-train-trainers-event'),
   ];
 
-  const followUp6MonthsQuestions = [
-    ...behavioural1('follow-up-6-month'),
-    ...behavioural2('follow-up-6-month'),
-    ...behavioural3('follow-up-6-month'),
-    ...behavioural4('follow-up-6-month'),
-    ...behavioural5('follow-up-6-month'),
-  ];
-
-  const followUpTrainTrainer3MonthsQuestions = [
-    ...aboutHowYouExpectToTeach('follow-up-3-month-train-trainers'),
-  ];
-
-  const followUpTrainTrainer6MonthsQuestions = [
-    ...aboutHowYouExpectToTeach('follow-up-6-month-train-trainers'),
+  // 6 MONTHS FOLLOW UP
+  const trainTheTrainerEventFollowUp6Months = [
+    ...yourTeachingWay('follow-up-6-month-train-trainers-event'),
   ];
 
   return Question.create([
+    // Session1
     ...preCourseDay1Questions,
     ...postCourseDay1Questions,
+    ...day1FollowUp3Months,
+    ...day1FollowUp6Months,
+
+    // Session 2
     ...postCourseDay2Questions,
+    ...day2FollowUp3Months,
+    ...day2FollowUp6Months,
+
+    // Session 3
     ...postCourseDay3Questions,
+    ...day3FollowUp3Months,
+    ...day3FollowUp6Months,
+
+    // Special 2 Days
+    ...preSpecial2DaysQuestions,
     ...postSpecial2DaysQuestions,
+    ...special2DaysFollowUp3Months,
+    ...special2DaysFollowUp6Months,
+
+    // TRAIN TRAINERS SESSION 1
     ...preTrainTheTrainerS1Questions,
     ...postTrainTheTrainerS1Questions,
+    ...trainTheTrainerS1FollowUp3Months,
+    ...trainTheTrainerS1FollowUp6Months,
+
+    // TRAIN TRAINERS SESSION 2
     ...postTrainTheTrainerS2Questions,
+    ...trainTheTrainerS2FollowUp3Months,
+    ...trainTheTrainerS2FollowUp6Months,
+
+    // TRAIN TRAINERS EVENT DAY
     ...preTrainTheTrainerEventQuestions,
     ...postTrainTheTrainerEventQuestions,
-    ...followUp3MonthsQuestions,
-    ...followUp6MonthsQuestions,
-    ...preSpecial2DaysQuestions,
-    ...followUpTrainTrainer3MonthsQuestions,
-    ...followUpTrainTrainer6MonthsQuestions,
+    ...trainTheTrainerEventFollowUp3Months,
+    ...trainTheTrainerEventFollowUp6Months,
   ]);
 };
