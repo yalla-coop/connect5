@@ -823,6 +823,8 @@ const yourTeachingWay = surveyType => [
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
     text: 'When I teach, I am in the habit of listening to the learners',
+    feedbackText:
+      'Your trainees said that when they teach, they are in the habit of listening to the learners',
   },
   {
     code: 'TTHabitAtt2',
@@ -832,6 +834,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach, I am in the habit of responding positively to being asked questions',
+    feedbackText:
+      'Your trainees said that when they teach, they are in the habit of responding positively to being asked questions',
   },
   {
     code: 'TTHabitAtt3',
@@ -841,6 +845,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach, I am in the habit of celebrating learner contributions and successes',
+    feedbackText:
+      'Your trainees said that when they teach, they are in the habit of celebrating learner contributions and successes',
   },
   {
     code: 'TTHabitAtt4',
@@ -850,6 +856,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach, I am in the habit of using language to praise, support and show positive regard to learners',
+    feedbackText:
+      'Your trainees said that when they teach, they are in the habit of using language to praise, support and show positive regard to learners',
   },
   {
     code: 'TTHabitAtt5',
@@ -859,6 +867,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach, I am in the habit of deliberately demonstrating my own lack of understanding (either current or previous)',
+    feedbackText:
+      'Your trainees said that when they teach, they are in the habit of deliberately demonstrating my own lack of understanding (either current or previous)',
   },
   {
     code: 'TTHabitAtt6',
@@ -868,6 +878,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach, I am in the habit of speaking with an enthusiastic tone',
+    feedbackText:
+      'Your trainees said that when they teach, they are in the habit of speaking with an enthusiastic tone',
   },
   {
     code: 'TTHabitAtt7',
@@ -877,6 +889,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach, I am in the habit of making eye contact with multiple learners',
+    feedbackText:
+      'Your trainees said that when they teach, they are in the habit of making eye contact with multiple learners',
   },
   {
     code: 'TTHabitAtt8',
@@ -886,6 +900,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach I am in the habit of using verbal and non-verbal communication to indicate that I am listening to the learners',
+    feedbackText:
+      'Your trainees said that when they teach, they are in the habit of using verbal and non-verbal communication to indicate that I am listening to the learners',
   },
   {
     code: 'TTHabitAtt9',
@@ -895,6 +911,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach, I am in the habit of using words to encourage the learners',
+    feedbackText:
+      'Your trainees said that when they teach, they are in the habit of using words to encourage the learners',
   },
   {
     code: 'TTHabitAtt10',
@@ -903,6 +921,8 @@ const yourTeachingWay = surveyType => [
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
     text: 'When I teach, I am in the habit of using the names of the learners',
+    feedbackText:
+      'Your trainees said that when they teach, they are in the habit of using the names of the learners',
   },
   {
     code: 'TTHabitAtt11',
@@ -912,6 +932,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach, I am in the habit of demonstrating my own curiosity and interest in the topic',
+    feedbackText:
+      'Your trainees said that when they teach, they are in the habit of demonstrating my own curiosity and interest in the topic',
   },
   {
     code: 'TTCapability1',
@@ -921,6 +943,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach, I am conscious of trying to develop what the learners know and / or know how to do (their capabilities)',
+    feedbackText:
+      'Your trainees said that when they teach, they are conscious of trying to develop what the learners know and / or know how to do (their capabilities)',
   },
   {
     code: 'TTOpportunity1',
@@ -930,6 +954,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach, I am conscious of trying to help the learners think about how they might put their learning into practice when they go back to work',
+    feedbackText:
+      'Your trainees said that when they teach, they are conscious of trying to help the learners think about how they might put their learning into practice when they go back to work',
   },
   {
     code: 'TTMotivation1',
@@ -939,6 +965,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       "When I teach, I am conscious of trying to increase the learners' motivation for putting their learning into practice when they go back to work",
+    feedbackText:
+      "Your trainees said that when they teach, they are conscious of trying to increase the learners' motivation for putting their learning into practice when they go back to work",
   },
   {
     code: 'TTOpportunity2',
@@ -948,6 +976,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach, I ask the learners about any barriers they might have when they try to put their learning into practice when they go back to work',
+    feedbackText:
+      'Your trainees said that when they teach, they ask the learners about any barriers they might have when they try to put their learning into practice when they go back to work',
   },
   {
     code: 'TTOpportunity3',
@@ -957,6 +987,8 @@ const yourTeachingWay = surveyType => [
     questionType: questionConstants.questionTypes.radio,
     text:
       'When I teach, I ask the learners to think about how the people they work with might respond if they try to put their learning into practice when they go back to work',
+    feedbackText:
+      'Your trainees said that when they teach, they ask the learners to think about how the people they work with might respond if they try to put their learning into practice when they go back to work',
   },
 ];
 
@@ -967,7 +999,9 @@ const aboutHowYouExpectToTeach = surveyType => [
     group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
     surveyType,
     questionType: questionConstants.questionTypes.fromZeroToTen,
-    text: 'When I teach next time i expect i will  listening to the learners',
+    text: 'When I teach next time i expect i will listen to the learners',
+    feedbackText:
+      'Your trainees said that they expect they will listen to the learners',
   },
   {
     code: 'TTHabitAtt2',
@@ -976,6 +1010,8 @@ const aboutHowYouExpectToTeach = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
       'When I teach next time i expect i will respond positively to being asked question',
+    feedbackText:
+      'Your trainees said that when they teach next time they expect they will respond positively to being asked question',
   },
   {
     code: 'TTHabitAtt3',
@@ -984,6 +1020,8 @@ const aboutHowYouExpectToTeach = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
       'When I teach next time i expect i will celebrate learner contributions and successes',
+    feedbackText:
+      'Your trainees said that when they teach next time they expect they will celebrate learner contributions and successes',
   },
   {
     code: 'TTHabitAtt4',
@@ -991,7 +1029,9 @@ const aboutHowYouExpectToTeach = surveyType => [
     surveyType,
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
-      'When I teach next time  I am will  use language to praise, support and show positive regard to learners',
+      'When I teach next time I am will use language to praise, support and show positive regard to learners',
+    feedbackText:
+      'Your trainees said that when they teach next time they will use language to praise, support and show positive regard to learners',
   },
   {
     code: 'TTHabitAtt5',
@@ -1000,6 +1040,8 @@ const aboutHowYouExpectToTeach = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
       'When I teach next time i expect to demonstrate my own lack of understanding (either current or previous)',
+    feedbackText:
+      'Your trainees said that when they teach next time they expect to demonstrate their own lack of understanding (either current or previous)',
   },
   {
     code: 'TTHabitAtt6',
@@ -1007,7 +1049,9 @@ const aboutHowYouExpectToTeach = surveyType => [
     surveyType,
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
-      'When I teach next time  I expect i will speak with an enthusiastic tone',
+      'When I teach next time I expect i will speak with an enthusiastic tone',
+    feedbackText:
+      'Your trainees said that when they teach next time they expect they will speak with an enthusiastic tone',
   },
   {
     code: 'TTHabitAtt7',
@@ -1015,7 +1059,9 @@ const aboutHowYouExpectToTeach = surveyType => [
     surveyType,
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
-      'When I teach next time I expect to  make eye contact with multiple learners',
+      'When I teach next time I expect to make eye contact with multiple learners',
+    feedbackText:
+      'Your trainees said that when they teach next time they expect to make eye contact with multiple learners',
   },
   {
     code: 'TTHabitAtt8',
@@ -1023,7 +1069,9 @@ const aboutHowYouExpectToTeach = surveyType => [
     surveyType,
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
-      'When I teach next time  I expect i will use  verbal and non-verbal communication to indicate that I am listening to the learners',
+      'When I teach next time I expect i will use verbal and non-verbal communication to indicate that I am listening to the learners',
+    feedbackText:
+      'Your trainees said that when they teach next time they expect they will use verbal and non-verbal communication to indicate that I am listening to the learners',
   },
   {
     code: 'TTHabitAtt9',
@@ -1032,6 +1080,8 @@ const aboutHowYouExpectToTeach = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
       'When I teach next time i expect i will use words to encourage the learner',
+    feedbackText:
+      'Your trainees said that when they teach next time they expect they will use words to encourage the learner',
   },
   {
     code: 'TTHabitAtt10',
@@ -1039,7 +1089,9 @@ const aboutHowYouExpectToTeach = surveyType => [
     surveyType,
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
-      'When I teach next time i expect i will use  the names of the learners',
+      'When I teach next time i expect i will use the names of the learners',
+    feedbackText:
+      'Your trainees said that when they teach next time they expect they will use the names of the learners',
   },
   {
     code: 'TTHabitAtt11',
@@ -1048,6 +1100,8 @@ const aboutHowYouExpectToTeach = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
       'When I teach nect time i expect i will demonstrate my own curiosity and interest in the topic',
+    feedbackText:
+      'Your trainees said that when they teach next time they expect they will demonstrate my own curiosity and interest in the topic',
   },
   {
     code: 'TTCapability1',
@@ -1056,6 +1110,8 @@ const aboutHowYouExpectToTeach = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
       'When I teach next time i expect i will be conscious of trying to develop what the learners know and / or know how to do (their capabilities)',
+    feedbackText:
+      'Your trainees said that when they teach next time they expect they will be conscious of trying to develop what the learners know and / or know how to do (their capabilities)',
   },
   {
     code: 'TTOpportunity1',
@@ -1064,6 +1120,8 @@ const aboutHowYouExpectToTeach = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
       'When I teach next time i expect i will be conscious of trying to help the learners think about how they might put their learning into practice when they go back to work',
+    feedbackText:
+      'Your trainees said that when they teach next time they expect they will be conscious of trying to help the learners think about how they might put their learning into practice when they go back to work',
   },
   {
     code: 'TTMotivation1',
@@ -1071,7 +1129,9 @@ const aboutHowYouExpectToTeach = surveyType => [
     surveyType,
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
-      "When I teach next time  I expect i will be conscious of trying to increase the learners' motivation for putting their learning into practice when they go back to work",
+      "When I teach next time I expect i will be conscious of trying to increase the learners' motivation for putting their learning into practice when they go back to work",
+    feedbackText:
+      "Your trainees said that when they teach next time they expect they will be conscious of trying to increase the learners' motivation for putting their learning into practice when they go back to work",
   },
   {
     code: 'TTOpportunity2',
@@ -1080,6 +1140,8 @@ const aboutHowYouExpectToTeach = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
       'When I teach next time i expect to ask the learners about any barriers they might have when they try to put their learning into practice when they go back to work',
+    feedbackText:
+      'Your trainees said that when they teach next time they expect to ask the learners about any barriers they might have when they try to put their learning into practice when they go back to work',
   },
   {
     code: 'TTOpportunity3',
@@ -1088,27 +1150,38 @@ const aboutHowYouExpectToTeach = surveyType => [
     questionType: questionConstants.questionTypes.fromZeroToTen,
     text:
       'When I teach, I ask the learners to think about how the people they work with might respond if they try to put their learning into practice when they go back to work',
+    feedbackText:
+      'Your trainees said that when they teach they ask the learners to think about how the people they work with might respond if they try to put their learning into practice when they go back to work',
   },
   {
     code: 'TTSessionOverall1',
     group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: 'did the course content meet your expectations',
+    text: 'Did the course content meet your expectations',
+    feedbackText:
+      'Your trainees said that the course content meet their expectations',
   },
   {
     code: 'TTSessionOverall2',
     group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: 'was the course delivered at the right pace for you',
+    text: 'Was the course delivered at the right pace for you',
+    feedbackText:
+      'Your trainees said that the course was delivered at the right pace for them',
   },
   {
     code: 'TTSessionOverall3',
     group: questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH,
+    surveyType,
     options: ['not at all', 'a little', 'a lot', "I'm not sure"],
     questionType: questionConstants.questionTypes.radio,
-    text: 'did you enjoy the connect 5 train the triainer course',
+    text: 'Did you enjoy the connect 5 train the triainer course',
+    feedbackText:
+      'Your trainees said that they enjoyed the connect 5 train the triainer course',
   },
 ];
 

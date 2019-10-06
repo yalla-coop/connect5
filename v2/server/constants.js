@@ -97,11 +97,15 @@ const readableSurveysNamePairs = {
   'follow-up-6-month-train-trainers-s1':
     '6 months train trainers follow-up - Session 1',
 
+  'pre-train-trainers-s2': 'Pre train trainers - Session 2',
+  'post-train-trainers-s2': 'Post train trainers - Session 2',
   'follow-up-3-month-train-trainers-s2':
     '3 months train trainers follow-up - Session 2',
   'follow-up-6-month-train-trainers-s2':
     '6 months train trainers follow-up - Session 2',
 
+  'pre-train-trainers-event': 'Pre train trainers - Event day',
+  'post-train-trainers-event': 'Post train trainers - Event day',
   'follow-up-3-month-train-trainers-event':
     '3 months train trainers follow-up - Event day',
   'follow-up-6-month-train-trainers-event':
