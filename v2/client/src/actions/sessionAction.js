@@ -10,6 +10,7 @@ import {
   STORE_SESSION_DATA,
   LOADING_TRUE,
   LOADING_FALSE,
+  CLEAR_SESSION_DATA,
 } from '../constants/actionTypes';
 
 import history from '../history';
@@ -50,6 +51,13 @@ export const storeInputData = data => async dispatch => {
   dispatch({
     type: STORE_SESSION_DATA,
     payload: data,
+  });
+};
+
+export const clearInputData = () => async dispatch => {
+  dispatch({
+    type: CLEAR_SESSION_DATA,
+    payload: {},
   });
 };
 

@@ -24,7 +24,7 @@ import * as Yup from 'yup';
 
 import { getPostSurveyLink, getPreSurveyLink } from '../../../helpers';
 
-import { MY_SESSIONS_URL } from '../../../constants/navigationRoutes';
+import { MY_SESSIONS_URL, MY_GROUP_SESSIONS_URL } from '../../../constants/navigationRoutes';
 import Header from '../Header';
 import InfoPopUp from '../InfoPopup';
 
@@ -237,13 +237,15 @@ class EditEmail extends Component {
   };
 
   done = () => {
-    const { backCallback } = this.props;
+    const { backCallback, role } = this.props;
+    console.log("ROLE", role);
 
     Modal.success({
       title: 'Done!',
       content: 'Emails have been sent successfully',
       onOk: () => {
         if (typeof backCallback === 'function') return backCallback();
+        if (role !== 'trainer') return history.push(MY_GROUP_SESSIONS_URL);
         return history.push(MY_SESSIONS_URL);
       },
     });
@@ -450,6 +452,7 @@ class EditEmail extends Component {
       endTime,
       backCallback,
       isSchedule,
+      role
     } = this.props;
 
     let title = '';
@@ -809,6 +812,7 @@ class EditEmail extends Component {
                   onClick={() => {
                     if (typeof backCallback === 'function')
                       return backCallback();
+                    if (role !== 'trainer') return history.push(MY_GROUP_SESSIONS_URL);
                     return history.push(MY_SESSIONS_URL);
                   }}
                 >
@@ -827,6 +831,7 @@ const mapStateToProps = state => {
   return {
     name: state.auth.name,
     loading: state.loading.sendEmail,
+    role: state.auth.role,
   };
 };
 

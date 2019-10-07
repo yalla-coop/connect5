@@ -16,6 +16,11 @@ export const CheckboxWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: space-between;
+  padding-bottom: 1rem;
+
+  :last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export const H2 = styled.h2`
