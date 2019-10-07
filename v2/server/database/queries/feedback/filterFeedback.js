@@ -178,10 +178,11 @@ module.exports = async filters => {
               code: 1,
               feedbackText: 1,
               options: {
-                $ifNull: [
-                  '$options',
-                  [0, 1, 2, 3, 4, 5], // for stars questions that has no option
-                ],
+                $cond: {
+                  if: { $gt: [{ $size: '$options' }, 0] },
+                  then: '$options',
+                  else: ['0', '1', '2', '3', '4', '5'],
+                },
               },
               sessionType: 1,
               surveyType: 1,
@@ -257,10 +258,11 @@ module.exports = async filters => {
               code: 1,
               feedbackText: 1,
               options: {
-                $ifNull: [
-                  '$options',
-                  [0, 1, 2, 3, 4, 5], // for stars questions that has no option
-                ],
+                $cond: {
+                  if: { $gt: [{ $size: '$options' }, 0] },
+                  then: '$options',
+                  else: ['0', '1', '2', '3', '4', '5'],
+                },
               },
               sessionType: 1,
               surveyType: 1,
