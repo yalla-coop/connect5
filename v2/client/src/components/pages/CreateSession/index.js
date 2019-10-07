@@ -29,6 +29,7 @@ import {
 import {
   createSessionAction,
   storeInputData,
+  clearInputData,
 } from '../../../actions/sessionAction';
 import { regions } from './options';
 import history from '../../../history';
@@ -91,12 +92,17 @@ class CreateSession extends Component {
       this.props.fetchAllTrainers();
       this.props.fetchLocalLeads();
     }
+    this.setState(initialState);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.id !== prevProps.id) {
       this.fetchLocalLeadsAndTrainers();
     }
+  }
+
+  componentWillUnmount() {
+    this.props.clearInputData();
   }
 
   fetchLocalLeadsAndTrainers = () => {
@@ -210,7 +216,8 @@ class CreateSession extends Component {
       !!inviteesNumber &&
       !!session &&
       !!region &&
-      ((role === 'localLead' && !!partnerTrainer1) || role === 'trainer')
+      ((['localLead', 'admin'].includes(role) && !!partnerTrainer1) ||
+        role === 'trainer')
     );
 
     this.props.storeInputData({
@@ -318,7 +325,7 @@ class CreateSession extends Component {
 
   render() {
     const { sessionCreated, extraInfo, isPostcodeValid } = this.state;
-    const { role, inputData, loading, createdSession, name } = this.props;
+    const { role, inputData, loading, createdSession, name, id } = this.props;
 
     const {
       inviteesNumber,
@@ -403,7 +410,6 @@ class CreateSession extends Component {
               {!session && <RequiredMark>*</RequiredMark>}Session Type:
             </Label>
             <Select
-              mode="multiple"
               showSearch
               id="sessionType"
               style={{ width: '100%' }}
@@ -528,7 +534,7 @@ class CreateSession extends Component {
           )}
 
           <InputDiv>
-            {role === 'localLead' ? (
+            {['localLead', 'admin'].includes(role) ? (
               <Label htmlFor="PartnerTrainer">
                 {!partnerTrainer1 && <RequiredMark>*</RequiredMark>}
                 Trainer:
@@ -541,7 +547,11 @@ class CreateSession extends Component {
               id="PartnerTrainer"
               showSearch
               style={{ width: '100%' }}
-              placeholder={role === 'localLead' ? 'Trainer' : 'Partner Trainer'}
+              placeholder={
+                ['localLead', 'admin'].includes(role)
+                  ? 'Trainer'
+                  : 'Partner Trainer'
+              }
               optionFilterProp="children"
               onChange={onSelectPartner1Change}
               labelInValue
@@ -588,13 +598,22 @@ class CreateSession extends Component {
                 </div>
               )}
             >
+              {role !== 'trainer' && (
+                <Option
+                  key={id}
+                  value={id}
+                  style={{ textTransform: 'capitalize' }}
+                >
+                  {`${name[0].toUpperCase()}${name.slice(1)}`} (me)
+                </Option>
+              )}
               {this.renderTrainersList(partnerTrainer2)}
             </Select>
             {role === 'localLead' && partnerTrainer1 === null && (
               <Warning>* required</Warning>
             )}
           </InputDiv>
-          {role === 'localLead' && (
+          {['localLead', 'admin'].includes(role) && (
             <InputDiv>
               <Label htmlFor="PartnerTrainer2">Second Partner Trainer:</Label>
               <Select
@@ -644,6 +663,15 @@ class CreateSession extends Component {
                   </div>
                 )}
               >
+                {role !== 'trainer' && (
+                  <Option
+                    key={id}
+                    value={id}
+                    style={{ textTransform: 'capitalize' }}
+                  >
+                    {`${name[0].toUpperCase()}${name.slice(1)}`} (me)
+                  </Option>
+                )}
                 {this.renderTrainersList(partnerTrainer1)}
               </Select>
             </InputDiv>
@@ -724,6 +752,7 @@ const mapStateToProps = state => {
     loading: state.session.loading,
     inputData,
     createdSession: state.session,
+    userObj: state.auth,
   };
 };
 
@@ -735,5 +764,6 @@ export default connect(
     fetchLocalLeads,
     fetchLocalLeadTrainersGroup,
     storeInputData,
+    clearInputData,
   }
 )(CreateSession);
