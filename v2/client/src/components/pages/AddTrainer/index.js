@@ -199,7 +199,12 @@ class AddTrainer extends Component {
   };
 
   addOfficialLocalLead = localLead => {
-    this.setState({ officialLocalLeadSelect: localLead });
+    const { additionalManager } = this.state;
+    this.setState({ officialLocalLeadSelect: localLead, userAsManager: true });
+    // if select themselves as local lead, remove from someone else group if selected
+    if (additionalManager && additionalManager.key === localLead.key) {
+      this.setState({ selectOtherGroup: false, additionalManager: '' });
+    }
   };
 
   render() {
@@ -208,6 +213,7 @@ class AddTrainer extends Component {
       selectOtherGroup,
       userAsManager,
       additionalManager,
+      officialLocalLeadSelect,
     } = this.state;
 
     const {
@@ -232,14 +238,20 @@ class AddTrainer extends Component {
 
     const trainerManagersIds = trainersManagers.map(({ _id }) => _id);
 
-    // gets all available managers of a trainer
-
+    // gets all available managers of a trainer other than the user
     const availableManagers =
       localLeads &&
       localLeads
         .map(el => {
-          // check if user selected 'add to my group' and take id out of array
-          if (userAsManager && el._id === userInfo.id) {
+          // remove the user as an option
+          if ( el._id === userInfo.id ) {
+            return null;
+          }
+          // check if user selected themselves as trainer's local lead and take id out of array
+          if (
+            officialLocalLeadSelect &&
+            el._id === officialLocalLeadSelect.key
+          ) {
             return null;
           }
           // check if current manager is inside trainer's managers array and take id out of array
@@ -478,9 +490,19 @@ class AddTrainer extends Component {
                   localLeads={groupedLocalLeads}
                   handleSelectChange={this.addOfficialLocalLead}
                 />
+                {officialLocalLeadSelect &&
+                  userInfo.id === officialLocalLeadSelect.key && (
+                    <Paragraph
+                      style={{ fontStyle: 'italic', textAlign: 'center' }}
+                    >
+                      As their official Local Lead, the trainer will be
+                      automatically added to your group of trainers.
+                    </Paragraph>
+                  )}
               </CheckboxWrapper>
             )}
-            {!userInfo.officialLocalLead && (
+            {(!userInfo.officialLocalLead ||
+              userInfo.id !== officialLocalLeadSelect.key) && (
               <CheckboxWrapper>
                 <Paragraph>
                   <Bold>Step 2:</Bold> Add the trainer to your own group of
@@ -502,8 +524,11 @@ class AddTrainer extends Component {
             )}
             <CheckboxWrapper>
               <Paragraph>
-                <Bold>Step {userInfo.officialLocalLead ? '2' : '3'}:</Bold> Add
-                trainer to a group managed by someone else (optional).
+                <Bold>
+                  Step {userInfo.id === officialLocalLeadSelect.key ? '2' : '3'}
+                  :
+                </Bold>{' '}
+                Add trainer to a group managed by someone else (optional).
               </Paragraph>
               <Checkbox
                 onChange={this.onChangeCheckbox}
@@ -511,6 +536,7 @@ class AddTrainer extends Component {
                   textAlign: 'center',
                   marginBottom: '24px',
                 }}
+                checked={selectOtherGroup}
               >
                 <span style={{ fontSize: '1rem', fontWeight: '700' }}>
                   Add trainer to another group
@@ -526,7 +552,7 @@ class AddTrainer extends Component {
                   placeholder="Select trainer manager/ local lead"
                   option="existing-trainer"
                   getFieldDecorator={getFieldDecorator}
-                  localLeads={groupedLocalLeads}
+                  localLeads={groupedAvailabelManagers}
                   handleSelectChange={this.addManager}
                 />
               </Fragment>
@@ -555,7 +581,7 @@ const OfficialLocalLeadSelect = ({
   handleSelectChange,
 }) => (
   <div className="add-trainer__select">
-    <Item style={{ margin: '20px auto 40px', height: '50px' }}>
+    <Item style={{ margin: '8px auto 16px', height: '50px' }}>
       {getFieldDecorator('localLead', {
         rules: [
           {

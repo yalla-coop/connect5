@@ -15,6 +15,7 @@ import {
   RateDiv,
   QuestionGroup,
   InfoHeader,
+  StyledIframe,
 } from './Questions.style';
 
 const { Option } = Select;
@@ -490,6 +491,7 @@ export default class Questions extends React.Component {
           title="Connect5 Impacting Behaviour"
           visible={modalVisible}
           onOk={toggleModal}
+          onCancel={toggleModal}
           width={800}
         >
           <p>
@@ -502,6 +504,15 @@ export default class Questions extends React.Component {
             helping you with these sorts of conversations, and use this to
             improve the quality of our training
           </p>
+          <StyledIframe>
+            <iframe
+              src="https://www.youtube.com/embed/ZuxBz8RvqY8"
+              frameBorder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="introductionVideo"
+            ></iframe>
+          </StyledIframe>
           <Collapse bordered={false}>
             <Panel header="What are mental wellbeing conversations?" key="1">
               <p>

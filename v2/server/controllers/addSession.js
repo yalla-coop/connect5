@@ -32,7 +32,7 @@ const addSession = async (req, res, next) => {
         trainers.push(partnerTrainer2);
         const trainerInfo = await getUserById(partnerTrainer2);
         managers = [...managers, ...trainerInfo.managers];
-      } else {
+      } else if (user.role === "trainer") {
         trainers.push(user._id);
         trainersNames.push(user.name);
         managers = [...managers, ...user.managers];
