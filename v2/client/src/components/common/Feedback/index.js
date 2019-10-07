@@ -2,9 +2,9 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Icon } from 'antd';
+import { Icon, Empty } from 'antd';
 import Spin from '../Spin';
-import { Wrapper, Description, Container } from './Feedback.style';
+import { Wrapper, Container } from './Feedback.style';
 
 import HorizontalBarComponent from './HorizontalBarComponent';
 import FilterResults from '../FilterResults';
@@ -40,7 +40,7 @@ class TrainerFeedbackOverall extends Component {
     const { showFilter } = this.state;
     const { loaded, feedbackData } = this.props;
     if (feedbackData.length === 0) {
-      return <Description>no data collected yet :( </Description>;
+      return <Empty description="No feedback data collected yet" />;
     }
     if (loaded) {
       if (showFilter) {

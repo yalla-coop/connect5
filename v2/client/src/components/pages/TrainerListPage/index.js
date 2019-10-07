@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import { Modal } from 'antd';
+import { Modal, Empty } from 'antd';
 
 // ROUTES
 import { ADD_TRAINER_URL } from '../../../constants/navigationRoutes';
@@ -124,6 +124,8 @@ class TrainerListPage extends Component {
 
     const { role } = this.props;
 
+    const count = toggle === 'left' ? trainerCount : localLeadCount;
+
     if (!loaded) return <p>Loading...</p>;
     return (
       <Wrapper>
@@ -132,9 +134,7 @@ class TrainerListPage extends Component {
           <HeaderText>
             {toggle === 'left' ? 'Total Trainers:' : 'Total Local Leads:'}
           </HeaderText>
-          <HeaderNumber>
-            {toggle === 'left' ? trainerCount : localLeadCount}
-          </HeaderNumber>
+          <HeaderNumber>{count}</HeaderNumber>
           {role === 'admin' && (
             <Toggle
               leftText="trainers"
@@ -150,11 +150,17 @@ class TrainerListPage extends Component {
           )}
         </HeaderSection>
         <div style={{ maxWidth: '650px', margin: '0 auto', width: '90%' }}>
-          <TrainerList
-            dataList={toggle === 'left' ? trainers : localLeads}
-            role={role}
-            deleteUser={this.showDeleteConfirm}
-          />
+          {count ? (
+            <TrainerList
+              dataList={toggle === 'left' ? trainers : localLeads}
+              role={role}
+              deleteUser={this.showDeleteConfirm}
+            />
+          ) : (
+            <Empty
+              description={toggle === 'left' ? 'No Trainers' : 'No Local Leads'}
+            />
+          )}
         </div>
       </Wrapper>
     );

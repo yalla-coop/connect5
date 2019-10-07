@@ -2,7 +2,7 @@
 /* eslint-disable func-names */
 import React, { Component } from 'react';
 import { Chart, HorizontalBar } from 'react-chartjs-2';
-import { Alert, Spin } from 'antd';
+import { Spin, Empty } from 'antd';
 import { connect } from 'react-redux';
 
 import { fetchTrainerBehavioral as fetchbehavioralInsightAction } from '../../../actions/behavioralInsight';
@@ -151,10 +151,9 @@ class BehavioralTrainerResults extends Component {
                 ))
               ) : (
                 <div style={{ margin: '10px auto', maxWidth: '270px' }}>
-                  <Alert
-                    message="No data collected yet"
-                    type="warning"
-                    showIcon
+                  <Empty
+                    description="No data collected yet"
+                    style={{ paddingBottom: '7rem' }}
                   />
                 </div>
               )}
