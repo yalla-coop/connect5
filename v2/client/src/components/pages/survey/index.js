@@ -358,9 +358,8 @@ class Survey extends Component {
   handleStarChange = (answer, question, participantField) => {
     const { formState } = this.state;
     // remove 1 from the answer so it's 0 to 5 not 1 to 6
-    // then multuply the answer by 2 so it's 0 to 10 not 0 to 5 :)
     const fixedAnswer = {
-      answer: (answer - 1) * 2,
+      answer: answer - 1,
       question,
       participantField,
     };

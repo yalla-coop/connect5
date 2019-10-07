@@ -177,7 +177,7 @@ const renderQuestionInputType = (
             data-group={group.text}
             data-field={participantField}
             onBlur={() => setCurrentQuestion(nextQuestionID)}
-            value={answers[questionId] && answers[questionId].answer / 2 + 1}
+            value={answers[questionId] && answers[questionId].answer + 1}
           />
         </RateDiv>
         {!answers[questionId] && (
