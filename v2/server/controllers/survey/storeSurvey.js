@@ -31,7 +31,7 @@ module.exports = async (req, res, next) => {
     }
 
     // get the participant details from the answers
-    const ParticipantDetailsFromSurvey = await getParticipantDetails(formState);
+    const ParticipantDetailsFromSurvey = getParticipantDetails(formState);
 
     // update participant data or create new participant if the PIN is new
     const storedParticipantDetails = await updateParticipant({
