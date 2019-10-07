@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Question = require('./../../models/Question');
+const { questionConstants } = require('./../../DBConstants');
 
-module.exports = async filters => {
+module.exports = async (filters, isTrainTrainersFeedback) => {
   const {
     // comes from filters
     gender,
@@ -24,6 +25,29 @@ module.exports = async filters => {
   const ethnicMatch = ethnic ? { $in: ['$ethnic', ethnic] } : true;
   const regionMatch = region ? { $in: ['$region', region] } : true;
   const workforceMatch = workforce ? { $in: ['$workforce', workforce] } : true;
+
+  let questionTypeMatch = {
+    'group.text': questionConstants.groups.ABOUT_YOUR_TRAINER.text,
+  };
+
+  if (isTrainTrainersFeedback) {
+    questionTypeMatch = {
+      $and: [
+        {
+          $or: [
+            {
+              'group.text':
+                questionConstants.groups.ABOUT_HOW_YOU_EXPECT_TO_TEACH.text,
+            },
+            {
+              'group.text':
+                questionConstants.groups.ABOUT_YOUR_USUAL_WAY_OF_TEACHING.text,
+            },
+          ],
+        },
+      ],
+    };
+  }
 
   const sessionTypeMatch = sessionType
     ? { $in: ['$sessionType', sessionType] }
@@ -178,22 +202,20 @@ module.exports = async filters => {
               code: 1,
               feedbackText: 1,
               options: {
-                $ifNull: [
-                  '$options',
-                  [0, 1, 2, 3, 4, 5], // for stars questions that has no option
-                ],
+                $cond: {
+                  if: { $gt: [{ $size: '$options' }, 0] },
+                  then: '$options',
+                  else: [0, 1, 2, 3, 4, 5],
+                },
               },
               sessionType: 1,
               surveyType: 1,
+              group: 1,
             },
           },
           {
             // get the feedback questions only
-            $match: {
-              feedbackText: {
-                $exists: true,
-              },
-            },
+            $match: questionTypeMatch,
           },
           {
             // gruop answers with question feedback text and session type
@@ -257,22 +279,20 @@ module.exports = async filters => {
               code: 1,
               feedbackText: 1,
               options: {
-                $ifNull: [
-                  '$options',
-                  [0, 1, 2, 3, 4, 5], // for stars questions that has no option
-                ],
+                $cond: {
+                  if: { $gt: [{ $size: '$options' }, 0] },
+                  then: '$options',
+                  else: [0, 1, 2, 3, 4, 5],
+                },
               },
               sessionType: 1,
               surveyType: 1,
+              group: 1,
             },
           },
           {
             // get the feedback questions only
-            $match: {
-              feedbackText: {
-                $exists: true,
-              },
-            },
+            $match: questionTypeMatch,
           },
           {
             // gruop answers with question feedback text and session type

@@ -101,6 +101,30 @@ const panels = {
       />
     ),
   },
+  trainTrainerFeedback: {
+    text: (
+      <HeaderDiv>
+        Train the Trainer Feedback
+        <Icon
+          onClick={e => {
+            e.stopPropagation();
+            showModal(content.cont2);
+          }}
+          type="info-circle"
+          style={{ marginLeft: '1rem', color: '#1890ff' }}
+        />
+      </HeaderDiv>
+    ),
+    render: ({ resultForRule, filters, hiddenFields }) => (
+      <Feedback
+        role={resultForRule}
+        showFilters
+        defaultFilters={filters}
+        hiddenFields={hiddenFields}
+        isTrainTrainersFeedback
+      />
+    ),
+  },
   behavior: {
     text: (
       <HeaderDiv>

@@ -37,9 +37,13 @@ class TrainerFeedbackOverall extends Component {
   };
 
   getData = filters => {
-    const { fetchTrainerFeedback } = this.props;
+    const { fetchTrainerFeedback, isTrainTrainersFeedback } = this.props;
     this.setState({ showCharts: false }, () => {
-      fetchTrainerFeedback(filters, this.setShowCharts);
+      fetchTrainerFeedback(
+        filters,
+        isTrainTrainersFeedback,
+        this.setShowCharts
+      );
     });
   };
 
@@ -50,14 +54,20 @@ class TrainerFeedbackOverall extends Component {
   render() {
     const {
       loaded,
-      feedbackData,
+      trainerFeedback,
+      trainTrainersFeedback,
       showFilters,
       role,
       defaultFilters,
       hiddenFields,
       surveyList,
+      isTrainTrainersFeedback,
     } = this.props;
     const { showCharts } = this.state;
+
+    const data = isTrainTrainersFeedback
+      ? trainTrainersFeedback
+      : trainerFeedback;
 
     if (loaded) {
       return (
@@ -73,9 +83,9 @@ class TrainerFeedbackOverall extends Component {
             )}
             {showCharts ? (
               <>
-                {Object.keys(feedbackData).length > 0 ? (
+                {Object.keys(data).length > 0 ? (
                   <>
-                    <Feedback feedback={feedbackData} surveyList={surveyList} />
+                    <Feedback feedback={data} surveyList={surveyList} />
                   </>
                 ) : (
                   <div>
@@ -95,7 +105,8 @@ class TrainerFeedbackOverall extends Component {
 }
 
 const mapStateToProps = state => ({
-  feedbackData: state.trainerFeedback.feedback,
+  trainerFeedback: state.trainerFeedback.feedback,
+  trainTrainersFeedback: state.trainerFeedback.trainTrainersFeedback,
   loaded: state.trainerFeedback.loaded,
   isAuthenticated: state.auth.isAuthenticated,
 });
