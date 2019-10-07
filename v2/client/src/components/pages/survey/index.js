@@ -50,7 +50,6 @@ class Survey extends Component {
     section: 'confirmSurvey',
     completionRate: 0,
     currentStep: 1,
-    currentQuestion: null,
   };
 
   componentDidMount() {
@@ -356,10 +355,14 @@ class Survey extends Component {
     });
   };
 
-  handleStarChange = (answer, question) => {
+  handleStarChange = (answer, question, participantField) => {
     const { formState } = this.state;
     // remove 1 from the answer so it's 0 to 5 not 1 to 6
-    const fixedAnswer = { answer: answer - 1, question };
+    const fixedAnswer = {
+      answer: answer - 1,
+      question,
+      participantField,
+    };
     this.setState(
       { formState: { ...formState, [question]: fixedAnswer } },
       () => {
@@ -368,9 +371,9 @@ class Survey extends Component {
     );
   };
 
-  handleDropdown = (answer, question) => {
+  handleDropdown = (answer, question, participantField) => {
     const { formState } = this.state;
-    const answerObj = { answer, question };
+    const answerObj = { answer, question, participantField };
     this.setState(
       { formState: { ...formState, [question]: answerObj } },
       () => {

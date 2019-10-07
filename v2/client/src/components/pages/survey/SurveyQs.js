@@ -58,7 +58,7 @@ const renderQuestionInputType = (
             name={questionId}
             type="text"
             onChange={onChange}
-            data-group={group}
+            data-group={group.text}
             data-field={participantField}
             value={
               answers[questionId] && answers[questionId].answer
@@ -95,7 +95,12 @@ const renderQuestionInputType = (
           id={index}
           name={questionId}
           onChange={value =>
-            handleAntdDatePicker(questionId, value, group, participantField)
+            handleAntdDatePicker(
+              questionId,
+              value,
+              group.text,
+              participantField
+            )
           }
           value={answers[questionId] && answers[questionId].answer}
           onBlur={() => setCurrentQuestion(nextQuestionID)}
@@ -123,7 +128,7 @@ const renderQuestionInputType = (
           type="number"
           min="0"
           onChange={onChange}
-          data-group={group}
+          data-group={group.text}
           data-field={participantField}
           value={
             answers[questionId] && answers[questionId].answer
@@ -163,13 +168,14 @@ const renderQuestionInputType = (
           <Rate
             id={`sliderInput-${index}`}
             name={questionId}
+            allowClear={false}
             count={6}
             onChange={value => {
-              handleStarChange(value, questionId);
+              handleStarChange(value, questionId, participantField);
               return setCurrentQuestion(nextQuestionID);
             }}
             unanswered={errorArray.includes(questionId) && !answers[questionId]}
-            data-group={group}
+            data-group={group.text}
             data-field={participantField}
             onBlur={() => setCurrentQuestion(nextQuestionID)}
             value={answers[questionId] && answers[questionId].answer + 1}
@@ -214,7 +220,7 @@ const renderQuestionInputType = (
                         onChange(radioE);
                         return setCurrentQuestion(nextQuestionID);
                       }}
-                      data-group={group}
+                      data-group={group.text}
                       data-field={participantField}
                     />
                     <span className="checkmark" />
@@ -241,7 +247,7 @@ const renderQuestionInputType = (
                 name={questionId}
                 type="text"
                 onChange={handleOther}
-                data-group={group}
+                data-group={group.text}
                 data-field={participantField}
                 onBlur={() => setCurrentQuestion(nextQuestionID)}
               />
@@ -270,7 +276,7 @@ const renderQuestionInputType = (
           value={answers[questionId] && answers[questionId].answer}
           defaultActiveFirstOption={false}
           onChange={value => {
-            handleDropdown(value, questionId);
+            handleDropdown(value, questionId, participantField);
             return setCurrentQuestion(nextQuestionID);
           }}
           notFoundContent={null}
@@ -296,7 +302,7 @@ const renderQuestionInputType = (
                 name={questionId}
                 type="text"
                 onChange={handleOther}
-                data-group={group}
+                data-group={group.text}
                 data-field={participantField}
                 onBlur={() => setCurrentQuestion(nextQuestionID)}
               />
@@ -510,9 +516,9 @@ export default class Questions extends React.Component {
           <Collapse bordered={false}>
             <Panel header="What are mental wellbeing conversations?" key="1">
               <p>
-                "Mental wellbeing conversations" includes a lot of different
-                types of conversation. Connect5 is targeting three types of
-                conversation. These are:
+                {'"'}Mental wellbeing conversations{'"'} includes a lot of
+                different types of conversation. Connect5 is targeting three
+                types of conversation. These are:
               </p>
               <ol>
                 <li>
@@ -571,11 +577,12 @@ are talking to develop a shared understanding of that person’s mental wellbein
                 for themselves to feel better.
               </p>
               <p>
-                Examples of this type of conversation include "what’s going on
-                for you at the moment?", “when this is happening what kinds of
-                things run through your mind?", "how do you feel about the
-                situation?", "since this has been happening what kind of changes
-                have you noticed in what you do?"
+                Examples of this type of conversation include {'"'}what’s going
+                on for you at the moment?{'"'}, “when this is happening what
+                kinds of things run through your mind?{'"'}, {'"'}how do you
+                feel about the situation?{'"'}, {'"'}since this has been
+                happening what kind of changes have you noticed in what you do?
+                {'"'}
               </p>
             </Panel>
             <Panel
@@ -598,11 +605,12 @@ methods to empower a person to make changes that address their mental wellbeing.
                 experience and provide a framework for these conversations
               </p>
               <p>
-                Examples of this type of conversation are "now we have
+                Examples of this type of conversation are {'"'}now we have
                 identified the problem you want to address let’s figure out what
-                your goal is", "now you have identified you want to change your
-                behaviour, let’s work together to make a plan so that you get
-                more connection, pleasure and achievement over the next week"
+                your goal is{'"'}, {'"'}now you have identified you want to
+                change your behaviour, let’s work together to make a plan so
+                that you get more connection, pleasure and achievement over the
+                next week{'"'}
               </p>
             </Panel>
           </Collapse>
