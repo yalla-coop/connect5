@@ -165,7 +165,6 @@ class CreateSession extends Component {
     const { leadsAndTrainers, role, localLeadTrainersGroup, id } = this.props;
 
     if (role && role === 'localLead') {
-      const { id, name } = this.props;
       if (localLeadTrainersGroup) {
         return (
           localLeadTrainersGroup
@@ -212,14 +211,13 @@ class CreateSession extends Component {
       partnerTrainer1,
     } = inputData;
 
-    console.log("check", inputData);
-
     const isError = !(
       !!startDate &&
       !!inviteesNumber &&
       !!session &&
       !!region &&
-      ((['localLead', 'admin'].includes(role) && !!partnerTrainer1) || role === 'trainer')
+      ((['localLead', 'admin'].includes(role) && !!partnerTrainer1) ||
+        role === 'trainer')
     );
 
     this.props.storeInputData({
@@ -325,12 +323,9 @@ class CreateSession extends Component {
     return null;
   };
 
-
   render() {
     const { sessionCreated, extraInfo, isPostcodeValid } = this.state;
     const { role, inputData, loading, createdSession, name, id } = this.props;
-
-    console.log("ROLE", role)
 
     const {
       inviteesNumber,
@@ -552,7 +547,11 @@ class CreateSession extends Component {
               id="PartnerTrainer"
               showSearch
               style={{ width: '100%' }}
-              placeholder={['localLead', 'admin'].includes(role) ? 'Trainer' : 'Partner Trainer'}
+              placeholder={
+                ['localLead', 'admin'].includes(role)
+                  ? 'Trainer'
+                  : 'Partner Trainer'
+              }
               optionFilterProp="children"
               onChange={onSelectPartner1Change}
               labelInValue
@@ -599,13 +598,15 @@ class CreateSession extends Component {
                 </div>
               )}
             >
-              {role !== 'trainer' && <Option
+              {role !== 'trainer' && (
+                <Option
                   key={id}
                   value={id}
                   style={{ textTransform: 'capitalize' }}
                 >
-                  {`${name[0].toUpperCase()}${name.slice(1)}`}{" "}(me)
-                </Option>}
+                  {`${name[0].toUpperCase()}${name.slice(1)}`} (me)
+                </Option>
+              )}
               {this.renderTrainersList(partnerTrainer2)}
             </Select>
             {role === 'localLead' && partnerTrainer1 === null && (
@@ -662,13 +663,15 @@ class CreateSession extends Component {
                   </div>
                 )}
               >
-                {role !== 'trainer' && <Option
-                  key={id}
-                  value={id}
-                  style={{ textTransform: 'capitalize' }}
-                >
-                  {`${name[0].toUpperCase()}${name.slice(1)}`}{" "}(me)
-                </Option>}
+                {role !== 'trainer' && (
+                  <Option
+                    key={id}
+                    value={id}
+                    style={{ textTransform: 'capitalize' }}
+                  >
+                    {`${name[0].toUpperCase()}${name.slice(1)}`} (me)
+                  </Option>
+                )}
                 {this.renderTrainersList(partnerTrainer1)}
               </Select>
             </InputDiv>
