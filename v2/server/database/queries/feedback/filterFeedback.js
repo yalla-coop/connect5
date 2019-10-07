@@ -215,8 +215,8 @@ module.exports = async filters => {
             $project: {
               text: '$_id.text',
               answer: '$_id.answer',
+              count: { $ifNull: ['$_id.answer', 0] }, // the count of answer on question in survey
               surveyType: '$_id.surveyType',
-              count: 1, // the count of answer on question in survey
               options: 1,
             },
           },
