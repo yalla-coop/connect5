@@ -60,6 +60,23 @@ export const surveysHaveTrainerFeedbackQuestions = [
   'post-special',
 ];
 
+// the surveys that contains train trainer feedback questions
+export const surveysHaveTrainTrainerFeedbackQuestions = [
+  'pre-train-trainers-s1',
+  'post-train-trainers-s1',
+  'follow-up-3-month-train-trainers-s1',
+  'follow-up-6-month-train-trainers-s1',
+
+  'post-train-trainers-s2',
+  'follow-up-3-month-train-trainers-s2',
+  'follow-up-6-month-train-trainers-s2',
+
+  'pre-train-trainers-event',
+  'post-train-trainers-event',
+  'follow-up-3-month-train-trainers-event',
+  'follow-up-6-month-train-trainers-event',
+];
+
 /**
  * an object with { "survey-name": "Survey Name" }
  */

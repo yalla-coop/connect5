@@ -28,6 +28,7 @@ import ExportButton from '../../common/ExportButton';
 import {
   surveysHaveBehavQuestions,
   surveysHaveTrainerFeedbackQuestions,
+  surveysHaveTrainTrainerFeedbackQuestions,
 } from '../../../constants';
 
 const { Panel } = Collapse;
@@ -120,15 +121,10 @@ class SurveyResults extends Component {
                 expandIcon={({ isActive }) => (
                   <Icon type="down" rotate={isActive ? 90 : 0} />
                 )}
-                defaultActiveKey={['1']}
               >
                 {surveysHaveBehavQuestions.includes(params.surveyType) ? (
                   <Panel
-                    key={
-                      surveysHaveBehavQuestions.includes(params.surveyType)
-                        ? '1'
-                        : '0'
-                    }
+                    key="Behavioural Analysis"
                     header="Behavioural Analysis"
                     style={{
                       background: '#f7f7f7',
@@ -156,11 +152,7 @@ class SurveyResults extends Component {
                 ) ? (
                   <Panel
                     header="Trainer feedback"
-                    key={
-                      surveysHaveBehavQuestions.includes(params.surveyType)
-                        ? '0'
-                        : '1'
-                    }
+                    key="Trainer feedback"
                     style={{
                       background: '#f7f7f7',
                       borderRadius: 4,
@@ -177,6 +169,32 @@ class SurveyResults extends Component {
                       }}
                       hiddenFields={['session', 'localLead', 'trainer']}
                       surveyList={[params.surveyType]}
+                    />
+                  </Panel>
+                ) : null}
+                {surveysHaveTrainTrainerFeedbackQuestions.includes(
+                  params.surveyType
+                ) ? (
+                  <Panel
+                    header="Train the Trainer Feedback"
+                    key="Train the Trainer Feedback"
+                    style={{
+                      background: '#f7f7f7',
+                      borderRadius: 4,
+                      overflow: 'hidden',
+                      padding: 0,
+                    }}
+                  >
+                    <Feedback
+                      showFilters
+                      role={role}
+                      defaultFilters={{
+                        sessionId: params.sessionId,
+                        surveyType: [params.surveyType],
+                      }}
+                      hiddenFields={['session', 'localLead', 'trainer']}
+                      surveyList={[params.surveyType]}
+                      isTrainTrainersFeedback
                     />
                   </Panel>
                 ) : null}
