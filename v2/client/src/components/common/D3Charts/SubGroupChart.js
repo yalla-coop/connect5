@@ -143,7 +143,7 @@ class SubGroupChart extends Component {
       .attr('y', 25)
       .attr('width', 150)
       .attr('height', 75)
-      .call(wrapText, chartWidth);
+      .call(wrapText, Math.max(chartWidth, 150));
   }
 
   render() {

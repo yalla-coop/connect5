@@ -73,11 +73,21 @@ const calculator = (subGroupAnswers, allAnswers) => {
   const answersPerSurvey = {
     'pre-day-1': [],
     'post-day-1': [],
+    '3-months-follow-up-day-1': [],
+    '6-months-follow-up-day-1': [],
+
     'post-day-2': [],
+    '3-months-follow-up-day-2': [],
+    '6-months-follow-up-day-2': [],
+
     'post-day-3': [],
+    '3-months-follow-up-day-3': [],
+    '6-months-follow-up-day-3': [],
+
+    'pre-special': [],
     'post-special': [],
-    'follow-up-3-month': [],
-    'follow-up-6-month': [],
+    '3-months-follow-up-special-2-days': [],
+    '6-months-follow-up-special-2-days': [],
   };
 
   subGroupAnswers.forEach(PINsSurvey => {
@@ -89,11 +99,21 @@ const calculator = (subGroupAnswers, allAnswers) => {
   const answersPerSurveyAll = {
     'pre-day-1': [],
     'post-day-1': [],
+    '3-months-follow-up-day-1': [],
+    '6-months-follow-up-day-1': [],
+
     'post-day-2': [],
+    '3-months-follow-up-day-2': [],
+    '6-months-follow-up-day-2': [],
+
     'post-day-3': [],
+    '3-months-follow-up-day-3': [],
+    '6-months-follow-up-day-3': [],
+
+    'pre-special': [],
     'post-special': [],
-    'follow-up-3-month': [],
-    'follow-up-6-month': [],
+    '3-months-follow-up-special-2-days': [],
+    '6-months-follow-up-special-2-days': [],
   };
   allAnswers.forEach(PINsSurvey => {
     Object.entries(PINsSurvey).forEach(([surveyType, answersObject]) => {
@@ -110,9 +130,12 @@ const calculator = (subGroupAnswers, allAnswers) => {
         surveys: [
           'pre-day-1',
           'post-day-1',
-          'post-special',
-          'follow-up-3-month',
-          'follow-up-6-month',
+          '3-months-follow-up-day-1',
+          '6-months-follow-up-day-1',
+
+          'pre-special',
+          '3-months-follow-up-special-2-days',
+          '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
           surveyType,
           readableName: readableSurveysNamePairs[surveyType],
@@ -165,10 +188,13 @@ const calculator = (subGroupAnswers, allAnswers) => {
           'When they think about having a conversation with people in which they develop a shared understanding of their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
         surveys: [
           'pre-day-1',
-          'post-day-2',
-          'post-special',
-          'follow-up-3-month',
-          'follow-up-6-month',
+          'post-day-1',
+          '3-months-follow-up-day-1',
+          '6-months-follow-up-day-1',
+
+          'pre-special',
+          '3-months-follow-up-special-2-days',
+          '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
           surveyType,
           readableName: readableSurveysNamePairs[surveyType],
@@ -221,10 +247,13 @@ const calculator = (subGroupAnswers, allAnswers) => {
           'When they think about using appropriate conversational methods to empower poeple to make a change that addresses their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
         surveys: [
           'pre-day-1',
-          'post-day-3',
-          'post-special',
-          'follow-up-3-month',
-          'follow-up-6-month',
+          'post-day-1',
+          '3-months-follow-up-day-1',
+          '6-months-follow-up-day-1',
+
+          'pre-special',
+          '3-months-follow-up-special-2-days',
+          '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
           surveyType,
           readableName: readableSurveysNamePairs[surveyType],
@@ -277,62 +306,83 @@ const calculator = (subGroupAnswers, allAnswers) => {
       {
         text:
           'They suggested to people who needed it,  ways they could take action on their own mental health or wellbeing',
-        surveys: ['pre-day-1', 'follow-up-3-month', 'follow-up-6-month'].map(
-          surveyType => ({
-            surveyType,
-            readableName: readableSurveysNamePairs[surveyType],
-            value: calculateAverage(
-              answersPerSurvey[surveyType].map(answersObject =>
-                behavioralFormulae.FeedbackUserB1(answersObject)
-              )
-            ),
-            average: calculateAverage(
-              answersPerSurveyAll[surveyType].map(answersObject =>
-                behavioralFormulae.FeedbackUserB1(answersObject)
-              )
-            ),
-          })
-        ),
+        surveys: [
+          'pre-day-1',
+          'post-day-1',
+          '3-months-follow-up-day-1',
+          '6-months-follow-up-day-1',
+
+          'pre-special',
+          '3-months-follow-up-special-2-days',
+          '6-months-follow-up-special-2-days',
+        ].map(surveyType => ({
+          surveyType,
+          readableName: readableSurveysNamePairs[surveyType],
+          value: calculateAverage(
+            answersPerSurvey[surveyType].map(answersObject =>
+              behavioralFormulae.FeedbackUserB1(answersObject)
+            )
+          ),
+          average: calculateAverage(
+            answersPerSurveyAll[surveyType].map(answersObject =>
+              behavioralFormulae.FeedbackUserB1(answersObject)
+            )
+          ),
+        })),
       },
       {
         text:
           'They had a conversation with people who needed it,  in which you developed a shared understanding of their mental health and wellbeing needs',
-        surveys: ['pre-day-1', 'follow-up-3-month', 'follow-up-6-month'].map(
-          surveyType => ({
-            surveyType,
-            readableName: readableSurveysNamePairs[surveyType],
-            value: calculateAverage(
-              answersPerSurvey[surveyType].map(answersObject =>
-                behavioralFormulae.FeedbackUserB2(answersObject)
-              )
-            ),
-            average: calculateAverage(
-              answersPerSurveyAll[surveyType].map(answersObject =>
-                behavioralFormulae.FeedbackUserB2(answersObject)
-              )
-            ),
-          })
-        ),
+        surveys: [
+          'pre-day-1',
+          'post-day-1',
+          '3-months-follow-up-day-1',
+          '6-months-follow-up-day-1',
+
+          'pre-special',
+          '3-months-follow-up-special-2-days',
+          '6-months-follow-up-special-2-days',
+        ].map(surveyType => ({
+          surveyType,
+          readableName: readableSurveysNamePairs[surveyType],
+          value: calculateAverage(
+            answersPerSurvey[surveyType].map(answersObject =>
+              behavioralFormulae.FeedbackUserB2(answersObject)
+            )
+          ),
+          average: calculateAverage(
+            answersPerSurveyAll[surveyType].map(answersObject =>
+              behavioralFormulae.FeedbackUserB2(answersObject)
+            )
+          ),
+        })),
       },
       {
         text:
           'They used appropriate conversational methods to empower people who needed it, to make a change that addresses their mental health and wellbeing needs',
-        surveys: ['pre-day-1', 'follow-up-3-month', 'follow-up-6-month'].map(
-          surveyType => ({
-            surveyType,
-            readableName: readableSurveysNamePairs[surveyType],
-            value: calculateAverage(
-              answersPerSurvey[surveyType].map(answersObject =>
-                behavioralFormulae.FeedbackUserB3(answersObject)
-              )
-            ),
-            average: calculateAverage(
-              answersPerSurveyAll[surveyType].map(answersObject =>
-                behavioralFormulae.FeedbackUserB3(answersObject)
-              )
-            ),
-          })
-        ),
+        surveys: [
+          'pre-day-1',
+          'post-day-1',
+          '3-months-follow-up-day-1',
+          '6-months-follow-up-day-1',
+
+          'pre-special',
+          '3-months-follow-up-special-2-days',
+          '6-months-follow-up-special-2-days',
+        ].map(surveyType => ({
+          surveyType,
+          readableName: readableSurveysNamePairs[surveyType],
+          value: calculateAverage(
+            answersPerSurvey[surveyType].map(answersObject =>
+              behavioralFormulae.FeedbackUserB3(answersObject)
+            )
+          ),
+          average: calculateAverage(
+            answersPerSurveyAll[surveyType].map(answersObject =>
+              behavioralFormulae.FeedbackUserB3(answersObject)
+            )
+          ),
+        })),
       },
     ],
   };
