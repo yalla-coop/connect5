@@ -85,7 +85,11 @@ class TrainerFeedbackOverall extends Component {
               <>
                 {Object.keys(data).length > 0 ? (
                   <>
-                    <Feedback feedback={data} surveyList={surveyList} />
+                    <Feedback
+                      feedback={data}
+                      surveyList={surveyList}
+                      isTrainTrainersFeedback={isTrainTrainersFeedback}
+                    />
                   </>
                 ) : (
                   <div>
