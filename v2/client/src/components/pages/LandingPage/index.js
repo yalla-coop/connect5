@@ -61,6 +61,7 @@ class LandingPage extends Component {
                 width="100%"
                 height="100%"
                 type="primary"
+                data-test-id="trainer-login"
               />
             </ButtonDiv>
           </ButtonLink>

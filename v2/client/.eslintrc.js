@@ -2,7 +2,8 @@ module.exports = {
   "extends": [
     "airbnb",
     "prettier",
-    "prettier/react"
+    "prettier/react",
+    "plugin:cypress/recommended"
   ],
   // babel-eslint parser is used to support experimental features not supported in ESLint itself yet
   "parser": "babel-eslint",
@@ -15,7 +16,7 @@ module.exports = {
   "env": {
     "browser": true,
     "node": true,
-    "jest": true
+    "jest": true,
   },
   "rules": {
     "import/prefer-default-export": 0,

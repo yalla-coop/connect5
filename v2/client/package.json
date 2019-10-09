@@ -9,6 +9,7 @@
     "core-js": "^3.2.1",
     "detect-browser": "^4.7.0",
     "downloadjs": "^1.4.7",
+    "eslint-plugin-cypress": "^2.7.0",
     "history": "^4.9.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
