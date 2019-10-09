@@ -33,7 +33,7 @@ import {
   HeaderDiv,
 } from './UserResults.style';
 
-import TrainerBehavioralInsight from '../../common/BehavioralInsight/Trainer';
+import TrainerBehavioralInsight from '../../common/BehavioralInsight';
 import ExportButton from '../../common/ExportButton';
 import {
   TRAINER_RESULTS_URL,
@@ -51,6 +51,7 @@ const showModal = content => {
     icon: false,
   });
 };
+
 const content = {
   cont1:
     'This section provides an overview of sessions and related surveys collected via the app. I you wish to export the results click on "Export as CSV" and it will export and do',
@@ -59,6 +60,7 @@ const content = {
   cont3:
     'We all know that changing what we do is not as simple as knowing what to do. Just because we CAN do something doesn’t mean that we WILL do it. We will be asking you some questions about what you do in practice, about what you expect you will do when you return to work and about some of the thoughts and feelings you have that make up your capability, opportunity and motivation. This will help you and us understand about experiences of doing the behaviours promoted in Connect 5 as you go about your work.',
 };
+
 const panels = {
   reach: {
     text: (
@@ -90,8 +92,37 @@ const panels = {
         />
       </HeaderDiv>
     ),
-    render: ({ resultsFor, resultForRule }) => (
-      <Feedback trainerId={resultsFor} role={resultForRule} />
+    render: ({ resultForRule, filters, hiddenFields }) => (
+      <Feedback
+        role={resultForRule}
+        showFilters
+        defaultFilters={filters}
+        hiddenFields={hiddenFields}
+      />
+    ),
+  },
+  trainTrainerFeedback: {
+    text: (
+      <HeaderDiv>
+        Train the Trainer Feedback
+        <Icon
+          onClick={e => {
+            e.stopPropagation();
+            showModal(content.cont2);
+          }}
+          type="info-circle"
+          style={{ marginLeft: '1rem', color: '#1890ff' }}
+        />
+      </HeaderDiv>
+    ),
+    render: ({ resultForRule, filters, hiddenFields }) => (
+      <Feedback
+        role={resultForRule}
+        showFilters
+        defaultFilters={filters}
+        hiddenFields={hiddenFields}
+        isTrainTrainersFeedback
+      />
     ),
   },
   behavior: {
@@ -108,12 +139,21 @@ const panels = {
         />
       </HeaderDiv>
     ),
-    render: ({ resultsFor, resultForRule, ...props }) => {
+    render: ({
+      resultsFor,
+      resultForRule,
+      filters,
+      hiddenFields,
+      ...props
+    }) => {
       return (
         <TrainerBehavioralInsight
           {...props}
           trainerId={resultsFor}
           role={resultForRule}
+          defaultFilters={filters}
+          hiddenFields={hiddenFields}
+          showFilters
         />
       );
     },
@@ -125,6 +165,9 @@ class UserResults extends Component {
     resultsFor: null,
     resultForRule: null,
     toggle: 'left',
+    showFilter: false,
+    filters: {},
+    hiddenFields: [],
   };
 
   componentDidMount() {
@@ -139,6 +182,11 @@ class UserResults extends Component {
     }
   }
 
+  isFilterActive = () => {
+    const { showFilter } = this.state;
+    this.setState({ showFilter: !showFilter });
+  };
+
   getData = () => {
     const { userId, history, match, role } = this.props;
     const { localLeadId, trainerId } = match.params;
@@ -152,11 +200,15 @@ class UserResults extends Component {
     let resultsFor;
     let resultForRule;
     let headerTitle;
+    let filters = {};
+    let hiddenFields = [];
     if (match && match.path === MY_RESULTS_URL) {
-      // admin || local-lead || trainer viewing his own results as a trainer
+      // admin || local-lead || trainer viewing their own results as a trainer
       resultsFor = userId;
       resultForRule = 'trainer';
       headerTitle = 'Your ';
+      filters = { trainer: [resultsFor] };
+      hiddenFields = ['localLead', 'trainer'];
 
       this.props.fetchTrainerSessions(resultsFor);
       this.props.fetchUserResults(resultsFor, resultForRule);
@@ -170,14 +222,18 @@ class UserResults extends Component {
         resultsFor = localLeadId;
         resultForRule = 'localLead';
         headerTitle = `${viewdUserName} - Group `;
+        filters = { localLead: [localLeadId] };
+        hiddenFields = ['localLead'];
 
         this.props.fetchLocalLeadSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, resultForRule);
       } else {
-        // local-lead is viewing his group results
+        // local-leads is viewing their group results
         resultsFor = userId;
         resultForRule = 'localLead';
         headerTitle = "Your Group's ";
+        filters = { localLead: [userId] };
+        hiddenFields = ['localLead'];
 
         this.props.fetchLocalLeadSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, resultForRule);
@@ -192,6 +248,7 @@ class UserResults extends Component {
         resultsFor = trainerId;
         resultForRule = 'trainer';
         headerTitle = `${viewdUserName} - `;
+        hiddenFields = ['trainer', 'localLead'];
 
         this.props.fetchTrainerSessions(resultsFor);
         this.props.fetchUserResults(resultsFor, resultForRule);
@@ -201,13 +258,20 @@ class UserResults extends Component {
       resultsFor = userId;
       resultForRule = 'admin';
       headerTitle = 'All - ';
+      // no filters & no hidden fields
 
       this.props.fetchALLSessions();
       this.props.fetchUserResults(resultsFor, resultForRule);
     } else {
       history.push('/unauthorized');
     }
-    this.setState({ resultsFor, resultForRule, headerTitle });
+    this.setState({
+      resultsFor,
+      resultForRule,
+      headerTitle,
+      filters,
+      hiddenFields,
+    });
   };
 
   clickToggle = () => {
@@ -219,7 +283,14 @@ class UserResults extends Component {
   render() {
     const { results, role, history, sessions, userId } = this.props;
     const { state } = history.location;
-    const { toggle, resultsFor, resultForRule, headerTitle } = this.state;
+    const {
+      toggle,
+      resultsFor,
+      resultForRule,
+      headerTitle,
+      filters,
+      hiddenFields,
+    } = this.state;
     // if a user has been passed on then store as the user
     const user = state && state.trainer;
 
@@ -262,6 +333,8 @@ class UserResults extends Component {
                     resultsFor,
                     resultForRule,
                     role,
+                    hiddenFields,
+                    filters,
                   })}
                 </Panel>
               ))}

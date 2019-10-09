@@ -1,23 +1,80 @@
 export const surveysTypes = {
-  1: ['pre-day-1', 'post-day-1'],
-  2: ['post-day-2'],
-  3: ['post-day-3'],
-  'special-2-days': ['pre-special', 'post-special'],
-  'train-trainers-s1': ['pre-train-trainers-s1', 'post-train-trainers-s1'],
-  'train-trainers-s2': ['post-train-trainers-s2'],
+  '1': [
+    'pre-day-1',
+    'post-day-1',
+    '3-months-follow-up-day-1',
+    '6-months-follow-up-day-1',
+  ],
+  '2': ['post-day-2', '3-months-follow-up-day-2', '6-months-follow-up-day-2'],
+  '3': ['post-day-3', '3-months-follow-up-day-3', '6-months-follow-up-day-3'],
+  'special-2-days': [
+    'pre-special',
+    'post-special',
+    '3-months-follow-up-special-2-days',
+    '6-months-follow-up-special-2-days',
+  ],
+  'train-trainers-s1': [
+    'pre-train-trainers-s1',
+    'post-train-trainers-s1',
+    'follow-up-3-month-train-trainers-s1',
+    'follow-up-6-month-train-trainers-s1',
+  ],
+  'train-trainers-s2': [
+    'post-train-trainers-s2',
+    'follow-up-3-month-train-trainers-s2',
+    'follow-up-6-month-train-trainers-s2',
+  ],
   'train-trainers-event': [
     'pre-train-trainers-event',
     'post-train-trainers-event',
+    'follow-up-3-month-train-trainers-event',
+    'follow-up-6-month-train-trainers-event',
   ],
 };
 
 export const surveysHaveBehavQuestions = [
   'pre-day-1',
   'post-day-1',
+  '3-months-follow-up-day-1',
+  '6-months-follow-up-day-1',
+
   'post-day-2',
+  '3-months-follow-up-day-2',
+  '6-months-follow-up-day-2',
+
   'post-day-3',
+  '3-months-follow-up-day-3',
+  '6-months-follow-up-day-3',
+
   'pre-special',
   'post-special',
+  '3-months-follow-up-special-2-days',
+  '6-months-follow-up-special-2-days',
+];
+
+// the surveys that contains trainer feedback questions
+export const surveysHaveTrainerFeedbackQuestions = [
+  'post-day-1',
+  'post-day-2',
+  'post-day-3',
+  'post-special',
+];
+
+// the surveys that contains train trainer feedback questions
+export const surveysHaveTrainTrainerFeedbackQuestions = [
+  'pre-train-trainers-s1',
+  'post-train-trainers-s1',
+  'follow-up-3-month-train-trainers-s1',
+  'follow-up-6-month-train-trainers-s1',
+
+  'post-train-trainers-s2',
+  'follow-up-3-month-train-trainers-s2',
+  'follow-up-6-month-train-trainers-s2',
+
+  'pre-train-trainers-event',
+  'post-train-trainers-event',
+  'follow-up-3-month-train-trainers-event',
+  'follow-up-6-month-train-trainers-event',
 ];
 
 /**
@@ -26,14 +83,38 @@ export const surveysHaveBehavQuestions = [
 export const readableSurveysNamePairs = {
   'pre-day-1': 'Pre-course',
   'post-day-1': 'Post Session 1',
+  '3-months-follow-up-day-1': '3 months Session 1 follow-up',
+  '6-months-follow-up-day-1': '6 months Session 1 follow-up',
+
   'post-day-2': 'Post Session 2',
+  '3-months-follow-up-day-2': '3 months Session 2 follow-up',
+  '6-months-follow-up-day-2': '6 months Session 2 follow-up',
+
   'post-day-3': 'Post Session 3',
+  '3-months-follow-up-day-3': '3 months Session 3 follow-up',
+  '6-months-follow-up-day-3': '6 months Session 3 follow-up',
+
   'pre-special': 'Pre 2-day Intensive',
   'post-special': 'Post 2-day Intensive',
-  'pre-train-trainers': 'Pre train trainers',
-  'post-train-trainers': 'Post train trainers',
-  'follow-up-3-month': '3 month follow-up',
-  'follow-up-6-month': '6 month Follow-up',
+  '3-months-follow-up-special-2-days': '3 months special 2 days follow-up',
+  '6-months-follow-up-special-2-days': '6 months special 2 days follow-up',
+
+  'pre-train-trainers-s1': 'Pre train trainers - Session 1',
+  'post-train-trainers-s1': 'Post train trainers - Session 1',
+  'follow-up-3-month-train-trainers-s1':
+    '3 months train trainers follow-up - Session 1',
+  'follow-up-6-month-train-trainers-s1':
+    '6 months train trainers follow-up - Session 1',
+
+  'follow-up-3-month-train-trainers-s2':
+    '3 months train trainers follow-up - Session 2',
+  'follow-up-6-month-train-trainers-s2':
+    '6 months train trainers follow-up - Session 2',
+
+  'follow-up-3-month-train-trainers-event':
+    '3 months train trainers follow-up - Event day',
+  'follow-up-6-month-train-trainers-event':
+    '6 months train trainers follow-up - Event day',
 };
 
 /**

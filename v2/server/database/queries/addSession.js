@@ -30,9 +30,8 @@ const createNewSession = async ({
   // Add new session
   const createdSession = await newSession.save();
 
-  // schedule 3-month and 6-month follow up emails 
-  console.log("created", createdSession)
-  
+  // schedule 3-month and 6-month follow up emails
+  console.log('created', createdSession);
 
   return Session.findById(createdSession._id).populate('trainers', 'name');
 };

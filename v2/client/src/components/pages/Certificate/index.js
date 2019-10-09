@@ -149,7 +149,7 @@ class Certificate extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  const currentSession = state.sessions.sessions.filter(
+  const currentSession = state.sessions.participantSessions.filter(
     ({ sessions: session }) => session._id === props.match.params.sessionId
   );
   const cleanSession = currentSession[0] && currentSession[0].sessions;

@@ -7,7 +7,6 @@ export const CreateSessionWrapper = styled.div`
   padding: 5rem 0;
   margin: 0 auto;
   max-width: 600px;
-  margin-bottom: 80px;
 `;
 export const Heading = styled.h1`
   font-family: Roboto;
