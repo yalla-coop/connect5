@@ -4,42 +4,15 @@ import history from '../history';
 
 import * as types from '../constants/actionTypes';
 
-export const fetchParticipantBehavioral = (url, role) => async dispatch => {
+export const fetchTrainerBehavioral = (filters, cb) => async dispatch => {
   try {
-    const res = await axios.get(url);
+    const res = await axios.post('/api/behavioral-insight', { filters });
 
     dispatch({
-      type: types.FETCH_PARTICIPANT_BEHAVIORAL,
-      payload: { data: res.data, role },
+      type: types.FETCH_BEHAVIORAL,
+      payload: { data: res.data },
     });
-  } catch (error) {
-    // must check the error status code before
-    history.push('/404err');
-  }
-};
-
-export const fetchSurveyBehavioral = (url, role) => async dispatch => {
-  try {
-    const res = await axios.get(url);
-
-    dispatch({
-      type: types.FETCH_SURVEY_BEHAVIORAL,
-      payload: { data: res.data, role },
-    });
-  } catch (error) {
-    // must check the error status code before
-    history.push('/404err');
-  }
-};
-
-export const fetchTrainerBehavioral = (url, role) => async dispatch => {
-  try {
-    const res = await axios.get(url);
-
-    dispatch({
-      type: types.FETCH_TRAINER_BEHAVIORAL,
-      payload: { data: res.data, role },
-    });
+    cb();
   } catch (error) {
     // must check the error status code before
     history.push('/404err');

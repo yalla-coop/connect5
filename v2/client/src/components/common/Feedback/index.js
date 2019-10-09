@@ -2,96 +2,116 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Icon } from 'antd';
-import Spin from '../Spin';
-import { Wrapper, Description, Container } from './Feedback.style';
+import { Empty } from 'antd';
 
-import HorizontalBarComponent from './HorizontalBarComponent';
+import Spin from '../Spin';
+import { Container } from './Feedback.style';
+
+import Feedback from '../D3Charts/Feedback';
+
 import FilterResults from '../FilterResults';
 
 import { fetchTrainerFeedback as fetchTrainerFeedbackAction } from '../../../actions/users';
-import {
-  WhiteWrapper,
-  FilterHeader,
-} from '../BehavioralInsight/BehavioralInsight.style';
+import { WhiteWrapper } from '../BehavioralInsight/BehavioralInsight.style';
 
 class TrainerFeedbackOverall extends Component {
   state = {
-    showFilter: false,
+    showCharts: true,
   };
 
   componentDidMount() {
-    this.getData();
+    const { defaultFilters } = this.props;
+    this.getData(defaultFilters);
   }
 
   componentDidUpdate(prevProps) {
     const { role: oldRole } = prevProps;
-    const { role } = this.props;
+    const { role, defaultFilters } = this.props;
     if (role !== oldRole) {
-      this.getData();
+      this.getData(defaultFilters);
     }
   }
 
-  isFilterActive = () => {
-    this.setState({ showFilter: !this.state.showFilter });
+  handleFilteredData = filters => {
+    this.getData(filters);
   };
 
-  renderData = () => {
-    const { showFilter } = this.state;
-    const { loaded, feedbackData } = this.props;
-    if (feedbackData.length === 0) {
-      return <Description>no data collected yet :( </Description>;
-    }
+  getData = filters => {
+    const { fetchTrainerFeedback, isTrainTrainersFeedback } = this.props;
+    this.setState({ showCharts: false }, () => {
+      fetchTrainerFeedback(
+        filters,
+        isTrainTrainersFeedback,
+        this.setShowCharts
+      );
+    });
+  };
+
+  setShowCharts = () => {
+    this.setState({ showCharts: true });
+  };
+
+  render() {
+    const {
+      loaded,
+      trainerFeedback,
+      trainTrainersFeedback,
+      showFilters,
+      role,
+      defaultFilters,
+      hiddenFields,
+      surveyList,
+      isTrainTrainersFeedback,
+    } = this.props;
+    const { showCharts } = this.state;
+
+    const data = isTrainTrainersFeedback
+      ? trainTrainersFeedback
+      : trainerFeedback;
+
     if (loaded) {
-      if (showFilter) {
-        return (
-          <Container>
-            <FilterResults />
-          </Container>
-        );
-      }
       return (
         <Container>
           <WhiteWrapper>
-            <HorizontalBarComponent feedbackData={feedbackData} />
+            {showFilters && (
+              <FilterResults
+                role={role}
+                handleFilteredData={this.handleFilteredData}
+                defaultFilters={defaultFilters}
+                hiddenFields={hiddenFields}
+              />
+            )}
+            {showCharts ? (
+              <>
+                {Object.keys(data).length > 0 ? (
+                  <>
+                    <Feedback
+                      feedback={data}
+                      surveyList={surveyList}
+                      isTrainTrainersFeedback={isTrainTrainersFeedback}
+                    />
+                  </>
+                ) : (
+                  <div>
+                    <Empty description="No results matched" />
+                  </div>
+                )}
+              </>
+            ) : (
+              <Spin style={{ width: '100%', padding: '40px' }} />
+            )}
           </WhiteWrapper>
         </Container>
       );
     }
     return <Spin />;
-  };
-
-  getData = () => {
-    const {
-      fetchTrainerFeedback,
-      trainerId,
-      sessionId,
-      surveyType,
-      role,
-    } = this.props;
-    fetchTrainerFeedback({ trainerId, sessionId, surveyType, role });
-  };
-
-  render() {
-    const { showFilter } = this.state;
-    return (
-      <Wrapper>
-        <FilterHeader onClick={this.isFilterActive}>
-          FILTER RESULTS
-          <Icon
-            type={`caret-${showFilter ? 'up' : 'down'}`}
-            style={{ color: '#fff', fontSize: '25px', paddingLeft: '5px' }}
-          />
-        </FilterHeader>
-        {this.renderData()}
-      </Wrapper>
-    );
   }
 }
 
 const mapStateToProps = state => ({
-  feedbackData: state.trainerFeedback.trainer.data,
-  loaded: state.trainerFeedback.trainer.loaded,
+  trainerFeedback: state.trainerFeedback.feedback,
+  trainTrainersFeedback: state.trainerFeedback.trainTrainersFeedback,
+  loaded: state.trainerFeedback.loaded,
   isAuthenticated: state.auth.isAuthenticated,
 });
 

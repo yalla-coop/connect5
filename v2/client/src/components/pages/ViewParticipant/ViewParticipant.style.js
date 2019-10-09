@@ -14,33 +14,6 @@ export const ContentWrapper = styled.div`
   padding-top: 50px;
 `;
 
-export const IndividualQuestion = styled.div`
-  font-family: Roboto;
-  padding: 20px 11px 10px;
-  text-align: left;
-  font-weight: 700;
-  margin-bottom: 0;
-  line-height: 26px;
-  border-bottom: 1px solid #66666666;
-  font-size: 18px;
-`;
-
-export const SessionSpan = styled.span`
-  font-family: Roboto;
-  font-weight: bold;
-  font-size: 16px;
-
-  color: #000000;
-`;
-
-export const Answer = styled.p`
-  font-family: Roboto;
-  padding: 5px 0;
-  font-size: 18px;
-  font-weight: 400;
-  margin: 0;
-`;
-
 export const Session = styled.p`
   font-family: Roboto;
   font-weight: 300;
@@ -53,8 +26,4 @@ export const Session = styled.p`
   .trainer {
     font-weight: 900;
   }
-`;
-
-export const AnswersWrapper = styled.div`
-  padding-left: 11px;
 `;

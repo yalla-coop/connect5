@@ -1,42 +1,36 @@
 import {
-  FETCH_OVERALL_TRAINER_FEEDBACK,
-  PARTICIPANT_FEEDBACK_SUCCESS,
+  FETCH_FEEDBACK,
+  FETCH_TRAIN_TRAINERS_FEEDBACK,
 } from '../constants/actionTypes';
 
 const initialState = {
-  participant: {
-    data: {},
-    loaded: false,
-  },
-  trainer: {
-    data: {},
-    loaded: false,
-  },
+  feedback: {},
+  trainTrainersFeedback: {},
+  loaded: false,
 };
 
 export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case FETCH_OVERALL_TRAINER_FEEDBACK: {
+    case FETCH_FEEDBACK: {
       const { data } = payload;
       return {
         ...state,
-        trainer: {
-          data,
-          loaded: true,
-        },
+        feedback: data,
+        loaded: true,
       };
     }
-    case PARTICIPANT_FEEDBACK_SUCCESS: {
+
+    case FETCH_TRAIN_TRAINERS_FEEDBACK: {
+      const { data } = payload;
       return {
         ...state,
-        participant: {
-          data: payload,
-          loaded: true,
-        },
+        trainTrainersFeedback: data,
+        loaded: true,
       };
     }
+
     default:
       return state;
   }

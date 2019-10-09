@@ -84,9 +84,6 @@ describe('Test /survey/submit/', () => {
     formState[questions[35]._id] = { answer: '4' };
     formState[questions[36]._id] = { answer: '4' };
     formState[questions[37]._id] = { answer: '4' };
-    formState[questions[38]._id] = { answer: '4' };
-    formState[questions[39]._id] = { answer: '4' };
-    formState[questions[40]._id] = { answer: '4' };
 
     const dummyFormResponse = {
       PIN,
@@ -95,10 +92,6 @@ describe('Test /survey/submit/', () => {
       formState,
       questionsForParticipant,
     };
-
-    // console.log(dummyFormResponse)
-    // expect(dummyFormResponse).toBe(0);
-    // expect(dummyFormResponse.formState).toBe(0);
 
     const participantBefore = await Participant.findOne({ PIN });
     expect(participantBefore).toBeNull();
@@ -201,9 +194,6 @@ describe('Test /survey/submit/', () => {
     formState[questions[35]._id] = { answer: '4' };
     formState[questions[36]._id] = { answer: '4' };
     formState[questions[37]._id] = { answer: '4' };
-    formState[questions[38]._id] = { answer: '4' };
-    formState[questions[39]._id] = { answer: '4' };
-    formState[questions[40]._id] = { answer: '4' };
 
     const dummyFormResponse = {
       PIN,

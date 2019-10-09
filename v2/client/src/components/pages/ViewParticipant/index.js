@@ -2,26 +2,19 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Alert } from 'antd';
 
 // // COMMON COMPONENTS
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
-import ParticipantBehavioralInsight from '../../common/BehavioralInsight/Participant';
+import BehavioralInsight from '../../common/BehavioralInsight';
+import Feedback from '../../common/Feedback';
+import { fetchParticipentSessions } from '../../../actions/groupSessionsAction';
 
 // ACTIONS
-import { fetchParticipantFeedBack } from '../../../actions/trainerAction';
+import { readableSurveysNamePairs } from '../../../constants';
 
 // STYLING
-import {
-  PageWrapper,
-  ContentWrapper,
-  IndividualQuestion,
-  SessionSpan,
-  Answer,
-  Session,
-  AnswersWrapper,
-} from './ViewParticipant.style';
+import { PageWrapper, ContentWrapper, Session } from './ViewParticipant.style';
 
 class ViewParticipant extends Component {
   state = {
@@ -30,7 +23,7 @@ class ViewParticipant extends Component {
 
   componentDidMount() {
     const { match } = this.props;
-    this.props.fetchParticipantFeedBack(match.params.PIN);
+    this.props.fetchParticipentSessions(match.params.PIN);
   }
 
   clickToggle = direction => {
@@ -39,8 +32,8 @@ class ViewParticipant extends Component {
 
   render() {
     const { toggle } = this.state;
-    const { match, data } = this.props;
-    const { feedback, sessions } = data;
+    const { match, sessions } = this.props;
+
     return (
       <PageWrapper>
         <Header label={`Viewing ${match.params.PIN}`} type="view" />
@@ -55,52 +48,44 @@ class ViewParticipant extends Component {
         <>
           {toggle === 'left' ? (
             <ContentWrapper>
-              <ParticipantBehavioralInsight
+              <BehavioralInsight
                 backgroundColor="#fff"
                 userRole="participant"
                 idOrPIN={match.params.PIN}
+                defaultFilters={{
+                  PIN: match.params.PIN,
+                }}
+                surveyList={sessions.reduce((prev, cur) => {
+                  if (cur.surveyType) prev.push(...cur.surveyType);
+                  return prev;
+                }, [])}
               />
             </ContentWrapper>
           ) : (
             <ContentWrapper>
               {sessions.map(session => (
                 <Session key={session._id.type}>
-                  {session.surveyType}:{' '}
-                  {session.trainers.map((trainer, index) => (
-                    <span className="trainer" key={trainer._id}>
-                      {index > 0 && ' & '}
-                      {trainer.name}
-                    </span>
-                  ))}
+                  {session.surveyType
+                    .map(surveyType => readableSurveysNamePairs[surveyType])
+                    .join(' / ')}
+                  :
+                  <span
+                    className="trainer"
+                    style={{ textTransform: 'capitalize' }}
+                  >
+                    {session.trainers.map(i => i.name).join(' & ')}
+                  </span>
                 </Session>
               ))}
-              {feedback.length ? (
-                <div style={{ backgroundColor: '#fff', marginTop: '1rem' }}>
-                  {feedback.map(question => (
-                    <IndividualQuestion key={question._id.code}>
-                      <SessionSpan>Q.</SessionSpan>
-                      {question._id.text}
-                      <AnswersWrapper style={{ paddingLeft: '11px' }}>
-                        {question.answers.map((answer, index) => (
-                          // eslint-disable-next-line react/no-array-index-key
-                          <Answer key={answer.id + index}>
-                            <SessionSpan>{answer.surveyType}: </SessionSpan>
-                            {answer.answer}
-                          </Answer>
-                        ))}
-                      </AnswersWrapper>
-                    </IndividualQuestion>
-                  ))}
-                </div>
-              ) : (
-                <div style={{ marginTop: '1rem' }}>
-                  <Alert
-                    message="No behavioural insight data collected yet!"
-                    type="warning"
-                    showIcon
-                  />
-                </div>
-              )}
+              <Feedback
+                defaultFilters={{
+                  PIN: match.params.PIN,
+                }}
+                surveyList={sessions.reduce((prev, cur) => {
+                  prev.push(...cur.surveyType);
+                  return prev;
+                }, [])}
+              />
             </ContentWrapper>
           )}
         </>
@@ -111,11 +96,15 @@ class ViewParticipant extends Component {
 
 const mapStateToProps = state => {
   return {
-    data: state.trainerFeedback.participant.data,
+    isAuthenticated: state.auth.isAuthenticated,
+    loaded: state.auth.loaded,
+    PIN: state.auth.PIN,
+    role: state.auth.role,
+    sessions: state.sessions.participantSessions,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchParticipantFeedBack }
+  { fetchParticipentSessions }
 )(ViewParticipant);

@@ -1,13 +1,18 @@
-// currently uses params as inputs (trainerId and sessionId) from url
-// if only trainerId provided => overall feedback,
-// if trainer and session id => individual session feedback
-
 const boom = require('boom');
-const { feedback } = require('../../database/queries/feedback/feedback');
+const feedbackFormulae = require('../../helpers/feedbackFormulae');
+const filterFeedback = require('./../../database/queries/feedback/filterFeedback');
 
-module.exports = (req, res, next) => {
-  const { trainerId, sessionId, surveyType, role } = req.body;
-  return feedback({ trainerId, sessionId, surveyType, role })
-    .then(result => res.json(result))
-    .catch(err => next(boom.badImplementation('trainer feedback error')));
+module.exports = async (req, res, next) => {
+  const { filters = {}, isTrainTrainersFeedback } = req.body;
+  try {
+    const { filterdResults, allResults } = await filterFeedback(
+      filters,
+      isTrainTrainersFeedback
+    );
+
+    const feedback = feedbackFormulae(filterdResults, allResults);
+    res.json({ feedback });
+  } catch (error) {
+    next(boom.badImplementation(error));
+  }
 };

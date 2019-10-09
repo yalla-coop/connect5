@@ -50,6 +50,54 @@ const getSessionSurveys = sessionType => {
   return surveysTypes[sessionType];
 };
 
+/**
+ *  take an object and the path of the target value
+ *  return the nested values from deep objects
+ * @param  {...any} paths - the chain of the keys to get the target value
+ */
+const checkAnswer = (...paths) => {
+  if ((paths[0] === 0 || paths[0]) && !paths[1]) {
+    // stop and return the value
+    return paths[0];
+  }
+  if (
+    paths[0] &&
+    paths[1] &&
+    (paths[0][paths[1]] || paths[0][paths[1]] === 0)
+  ) {
+    return checkAnswer(paths[0][paths[1]], ...paths.slice(2));
+  }
+
+  return undefined;
+};
+
+const checkAnswer2 = (...paths) => {
+  if ((paths[0] === 0 || paths[0]) && !paths[1]) {
+    // stop and return the value
+    return paths[0];
+  }
+  if (
+    paths[0] &&
+    paths[1] &&
+    (paths[0][paths[1]] || paths[0][paths[1]] === 0)
+  ) {
+    return checkAnswer(paths[0][paths[1]], ...paths.slice(2));
+  }
+
+  return undefined;
+};
+/**
+ * calculate the average for list of numbers
+ * @param {[Number]} array - array of numbers to get the average for them
+ */
+const calculateAverage = array => {
+  const filteredNumbers = array.filter(_item => !!_item || _item === 0);
+  const total = filteredNumbers.reduce((prev, curr) => {
+    return prev + curr;
+  }, 0);
+  return total === 0 ? 0 : total / filteredNumbers.length || 0;
+};
+
 module.exports = {
   uppercaseSurvey,
   surveysTypes,
@@ -57,4 +105,7 @@ module.exports = {
   getPostSurveyLink,
   getAllSurveyLinks,
   getSessionSurveys,
+  checkAnswer,
+  checkAnswer2,
+  calculateAverage,
 };
