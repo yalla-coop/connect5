@@ -4,6 +4,7 @@ import React from 'react';
 import { DatePicker, Rate, Select, Icon, Modal, Collapse } from 'antd';
 // // please leave this inside for antd to style right
 // import 'antd/dist/antd.css';
+import moment from 'moment';
 
 import {
   RadioField,
@@ -41,7 +42,10 @@ const renderQuestionInputType = (
   handleStarChange,
   nextQuestionID,
   setCurrentQuestion,
-  handleDropdown
+  handleDropdown,
+  code,
+  setMaxNumber,
+  testMaxNumber
 ) => {
   if (inputType === 'text') {
     return (
@@ -104,6 +108,7 @@ const renderQuestionInputType = (
           }
           value={answers[questionId] && answers[questionId].answer}
           onBlur={() => setCurrentQuestion(nextQuestionID)}
+          defaultValue={moment()}
         />
         {!answers[questionId] && (
           <Warning>* this question must be answered</Warning>
@@ -112,6 +117,7 @@ const renderQuestionInputType = (
     );
   }
   if (inputType === 'numberPositive') {
+    console.log(code)
     return (
       <TextField
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
@@ -127,15 +133,20 @@ const renderQuestionInputType = (
           name={questionId}
           type="number"
           min="0"
+          max={() => `${testMaxNumber(code)}`}
           onChange={onChange}
           data-group={group.text}
           data-field={participantField}
           value={
             answers[questionId] && answers[questionId].answer
-              ? answers[questionId].answer
-              : ''
+              ? testMaxNumber(code, answers[questionId].answer)
+              : 0
           }
-          onBlur={() => setCurrentQuestion(nextQuestionID)}
+          onBlur={e => {
+            setCurrentQuestion(nextQuestionID);
+            return setMaxNumber(code, e.target.value);
+          }
+          }
           onKeyDown={event => {
             if (event.keyCode === 13) {
               event.preventDefault();
@@ -336,7 +347,9 @@ const questionsRender = (
   handleStarChange,
   setCurrentQuestion,
   handleDropdown,
-  toggleModal
+  toggleModal,
+  setMaxNumber,
+  testMaxNumber
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group.text === 'demographic'
@@ -377,6 +390,7 @@ const questionsRender = (
               options,
               group,
               participantField,
+              code
             } = el;
             const inputType = el.questionType.desc;
             const nextQuestion = section[qIndex + 1];
@@ -409,7 +423,10 @@ const questionsRender = (
                   handleStarChange,
                   nextQuestionID,
                   setCurrentQuestion,
-                  handleDropdown
+                  handleDropdown,
+                  code,
+                  setMaxNumber,
+                  testMaxNumber
                 )}
               </QuestionWrapper>
             );
@@ -422,6 +439,8 @@ export default class Questions extends React.Component {
   state = {
     currentQuestion: null,
     modalVisible: false,
+    maxNum: null,
+    errMsg: null,
   };
 
   componentDidUpdate() {
@@ -450,6 +469,22 @@ export default class Questions extends React.Component {
     this.setState({ modalVisible: !modalVisible });
   };
 
+  // set maxNumber for beahviouralInsights1
+  setMaxNumber = (code, number) => {
+    if (code === "People") {
+      this.setState({ maxNum: number })
+    }
+  }
+
+  // user maxNumber for beahviouralInsights1
+  testMaxNumber = (code, number) => {
+    const { maxNum } = this.state;
+    if (['B1', 'B2', 'B3'].includes(code)) {
+      return maxNum >= number ? number : maxNum;
+    }
+    return number;
+  }
+
   render() {
     const {
       onChange,
@@ -463,7 +498,7 @@ export default class Questions extends React.Component {
       handleDropdown,
     } = this.props;
 
-    const { setCurrentQuestion, toggleModal } = this;
+    const { setCurrentQuestion, toggleModal, setMaxNumber, testMaxNumber } = this;
 
     const { modalVisible } = this.state;
 
@@ -483,7 +518,9 @@ export default class Questions extends React.Component {
             handleStarChange,
             setCurrentQuestion,
             handleDropdown,
-            toggleModal
+            toggleModal,
+            setMaxNumber,
+            testMaxNumber
           )}
           {renderSkipButtons}
         </QuestionGroup>
