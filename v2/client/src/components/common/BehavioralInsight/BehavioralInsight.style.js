@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { breakpoints, colors } from '../../../theme';
+import { breakpoints } from '../../../theme';
 
 export const Wrapper = styled.div`
   background: ${({ backgroundColor }) => backgroundColor || '#f7f8f9'};
