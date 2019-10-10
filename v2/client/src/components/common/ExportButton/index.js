@@ -15,8 +15,8 @@ class ExportButton extends Component {
     // get the view level from the component
     const { exportData, filters } = this.props;
 
-    const cb = this.clickBtn.current.link.click;
-    exportData(filters, cb);
+    const ref = this.clickBtn.current.link;
+    exportData(filters, ref);
   };
 
   render() {

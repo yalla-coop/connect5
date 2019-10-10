@@ -3,7 +3,7 @@ import { message } from 'antd';
 
 import { EXPORT_DATA_SUCCESS } from '../constants/actionTypes';
 
-export const exportDataAction = (filters, cb) => async dispatch => {
+export const exportDataAction = (filters, ref) => async dispatch => {
   const readyFilters = {};
   Object.entries(filters).forEach(([key, array]) => {
     if (array && array.length > 0) {
@@ -15,6 +15,6 @@ export const exportDataAction = (filters, cb) => async dispatch => {
     .then(({ data }) => {
       return dispatch({ type: EXPORT_DATA_SUCCESS, payload: data });
     })
-    .then(cb)
+    .then(() => ref.click())
     .catch(() => message.error('Error! something went wrong'));
 };
