@@ -20,7 +20,7 @@ class ExportButton extends Component {
   };
 
   render() {
-    const { csvData } = this.props;
+    const { csvData, text, width } = this.props;
     return (
       <>
         <CSVLink
@@ -31,10 +31,10 @@ class ExportButton extends Component {
           ref={this.clickBtn}
         />
         <Button
-          label="Export CSV"
+          label={text || 'Export CSV'}
           type="primary"
           onClick={this.fetchExportData}
-          width="200px"
+          width={width || '200px'}
           margin="1rem auto"
           style={{ display: 'block' }}
         />

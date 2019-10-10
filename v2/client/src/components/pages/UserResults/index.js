@@ -345,7 +345,7 @@ class UserResults extends Component {
           </ContentWrapper>
         )}
 
-        <ExportButton />
+        <ExportButton filters={filters} />
       </TrainerResultsWrapper>
     );
   }

@@ -68,13 +68,3 @@ export const ReadMore = styled.span`
   cursor: pointer;
   margin-left: 0.5rem;
 `;
-
-export const FilterHeader = styled.div`
-  background-color: ${colors.black};
-  color: ${colors.offWhite};
-  height: 32px;
-  text-align: center;
-  padding-top: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-`;

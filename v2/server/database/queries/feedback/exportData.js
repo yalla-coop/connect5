@@ -1,11 +1,74 @@
-// ADMIN - all data
-// TRAINER - all data for them
-// LOCAL LEAD -- all data for their trainer group
+const mongoose = require('mongoose');
 
 const Answer = require('../../models/Answer');
 
-module.exports.exportData = () =>
-  Answer.aggregate([
+module.exports.exportData = filters => {
+  const {
+    // comes from filters
+    gender,
+    age,
+    ethnic,
+    region,
+    workforce,
+    trainer,
+    manager,
+    sessionType,
+    surveyType,
+    // for specific session
+    sessionId,
+    // for specific participant
+    PIN,
+  } = filters;
+
+  const ageMatch = age ? { $in: ['$age', age] } : true;
+  const genderMatch = gender ? { $in: ['$gender', [gender]] } : true;
+  const ethnicMatch = ethnic ? { $in: ['$ethnic', ethnic] } : true;
+  const regionMatch = region ? { $in: ['$region', region] } : true;
+  const workforceMatch = workforce ? { $in: ['$workforce', workforce] } : true;
+
+  const sessionTypeMatch = sessionType
+    ? { $in: ['$sessionType', sessionType] }
+    : true;
+
+  const surveyTypeMatch = surveyType
+    ? { $in: ['$surveyType', surveyType] }
+    : true;
+
+  const sessionIdMatch = sessionId
+    ? { $eq: ['$sessionId', mongoose.Types.ObjectId(sessionId)] }
+    : true;
+
+  const PINMatch = PIN ? { $eq: ['$PIN', PIN] } : true;
+
+  const filteredResultsMatch = {
+    $expr: {
+      $and: [
+        ageMatch,
+        genderMatch,
+        ethnicMatch,
+        regionMatch,
+        workforceMatch,
+        sessionTypeMatch,
+        sessionIdMatch,
+        surveyTypeMatch,
+        PINMatch,
+      ],
+    },
+  };
+
+  if (trainer) {
+    filteredResultsMatch.trainers = {
+      $in: trainer.map(_trainerId => mongoose.Types.ObjectId(_trainerId)),
+    };
+  }
+
+  if (manager) {
+    filteredResultsMatch.trainers = {
+      $in: manager.map(_managerId => mongoose.Types.ObjectId(_managerId)),
+    };
+  }
+
+  return Answer.aggregate([
     {
       $lookup: {
         from: 'questions',
@@ -57,6 +120,7 @@ module.exports.exportData = () =>
     {
       $unwind: '$session',
     },
+
     {
       $group: {
         _id: '$response._id',
@@ -66,10 +130,35 @@ module.exports.exportData = () =>
         responseDetails: { $first: '$response' },
       },
     },
+
+    {
+      $addFields: {
+        answer: '$answer.answer',
+        participant: '$participant._id',
+        PIN: '$participant.PIN',
+        age: '$participant.age',
+        gender: '$participant.gender',
+        ethnic: '$participant.ethnic',
+        region: '$participant.region',
+        workforce: '$participant.workforce',
+        occupation: '$participant.occupation',
+
+        managers: '$session.canAccessResults',
+
+        trainers: '$session.trainers',
+        sessionId: '$session._id',
+        sessionDate: '$session.date',
+        sessionType: '$session.type',
+        sessionRegion: '$session.region',
+      },
+    },
+    {
+      $match: filteredResultsMatch,
+    },
     {
       $lookup: {
         from: 'users',
-        localField: 'responseDetails.trainers',
+        localField: 'trainers',
         foreignField: '_id',
         as: 'trainers',
       },
@@ -77,16 +166,18 @@ module.exports.exportData = () =>
     {
       $project: {
         _id: 1,
-        'Participant PIN': '$participant.PIN',
-        'Participant Age': '$participant.age',
-        'Participant Gender': '$participant.gender',
-        'Participant Region': '$participant.region',
-        'Participant Ethnicity': '$participant.ethinc',
-        'Participant Occupation': '$participant.occupation',
-        'Participant Workforce': '$participant.workforce',
-        'Session Date': '$session.date',
-        'Session Type': '$session.type',
-        'Session Region': '$session.region',
+        'Participant PIN': '$PIN',
+        'Participant Age': '$age',
+        'Participant Gender': '$gender',
+        'Participant Region': '$region',
+        'Participant Ethnicity': '$ethnic',
+        'Participant Occupation': '$occupation',
+        'Participant Workforce': '$workforce',
+
+        'Session Date': '$sessionDate',
+        'Session Type': '$sessionType',
+        'Session Region': '$sessionRegion',
+
         'Agreed to Research': '$responseDetails.agreedToResearch',
         'Survey Type': '$responseDetails.surveyType',
         'Trainer 1 ID': { $arrayElemAt: ['$trainers._id', 0] },
@@ -103,17 +194,4 @@ module.exports.exportData = () =>
       },
     },
   ]);
-
-module.exports.trainerFilter = (responses, trainerIDs) => {
-  // expects array of responses from the export data func above and an array of trainer ID(s)
-
-  // filters to only return responses that involve those trainers
-  const filteredResponses = responses.filter(response => {
-    return (
-      trainerIDs.includes(String(response['Trainer 1 ID'])) ||
-      trainerIDs.includes(String(response['Trainer 2 ID']))
-    );
-  });
-
-  return filteredResponses;
 };

@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { Select, Icon } from 'antd';
 
 import { connect } from 'react-redux';
-import { FilterHeader } from '../BehavioralInsight/BehavioralInsight.style';
 import {
   setFilters as setFiltersAction,
   resetFilters as resetFiltersAction,
 } from '../../../actions/filters';
+
+import ExportButton from '../ExportButton';
 
 import Button from '../Button';
 import {
@@ -30,6 +31,7 @@ import {
   InputDiv,
   Label,
   ClearBtn,
+  FilterHeader,
 } from './FilterResults.style';
 
 const { Option } = Select;
@@ -146,6 +148,17 @@ class FilterResults extends Component {
       ethnicity,
       workforce,
     } = this.props;
+
+    const filters = {
+      sessionType,
+      region,
+      localLead,
+      trainer,
+      age,
+      gender,
+      ethnicity,
+      workforce,
+    };
 
     return (
       <FilterWrapper>
@@ -362,6 +375,11 @@ class FilterResults extends Component {
                 type="primary"
                 label="Apply filters"
                 height="40px"
+                width="100%"
+              />
+              <ExportButton
+                filters={filters}
+                text="Export filtered responses"
                 width="100%"
               />
             </InputDiv>

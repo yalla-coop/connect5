@@ -2,19 +2,12 @@
 // if filter is true then it will run trainerFilter func on the overall data
 
 const boom = require('boom');
-const {
-  exportData,
-  trainerFilter,
-} = require('../../database/queries/feedback/exportData');
+const { exportData } = require('../../database/queries/feedback/exportData');
 
 module.exports = async (req, res, next) => {
-  const { searchData } = req.body;
-  const { filter, trainerIDs } = searchData;
+  const { filters = {} } = req.body;
 
-  // const testResponses = await exportData()
-  // console.log("test", testResponses)
-
-  return exportData()
+  return exportData(filters)
     .then(responses => {
       // tidy responses to get all answers within the object
       const cleanedResponses = responses.map(response => {
@@ -42,14 +35,9 @@ module.exports = async (req, res, next) => {
         return newResponseObj;
       });
 
-      if (filter) {
-        const filteredResponses = trainerFilter(cleanedResponses, trainerIDs);
-        if (filteredResponses.length === 0) {
-          filteredResponses.push({ Data: 'No Responses Found' });
-        }
-        return res.json(filteredResponses);
-      }
       return res.json(cleanedResponses);
     })
-    .catch(err => next(boom.badImplementation('CSV data error')));
+    .catch(err => {
+      next(boom.badImplementation('CSV data error'));
+    });
 };
