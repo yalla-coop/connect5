@@ -44,8 +44,7 @@ const renderQuestionInputType = (
   setCurrentQuestion,
   handleDropdown,
   code,
-  setMaxNumber,
-  testMaxNumber
+  setMaxNumber
 ) => {
   if (inputType === 'text') {
     return (
@@ -117,7 +116,6 @@ const renderQuestionInputType = (
     );
   }
   if (inputType === 'numberPositive') {
-    console.log(code)
     return (
       <TextField
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
@@ -133,20 +131,20 @@ const renderQuestionInputType = (
           name={questionId}
           type="number"
           min="0"
-          max={() => `${testMaxNumber(code)}`}
           onChange={onChange}
           data-group={group.text}
           data-field={participantField}
+          data-code={code}
+          data-type={inputType}
           value={
             answers[questionId] && answers[questionId].answer
-              ? testMaxNumber(code, answers[questionId].answer)
-              : 0
+              ? answers[questionId].answer
+              : ''
           }
           onBlur={e => {
             setCurrentQuestion(nextQuestionID);
             return setMaxNumber(code, e.target.value);
-          }
-          }
+          }}
           onKeyDown={event => {
             if (event.keyCode === 13) {
               event.preventDefault();
@@ -349,7 +347,7 @@ const questionsRender = (
   handleDropdown,
   toggleModal,
   setMaxNumber,
-  testMaxNumber
+  testNumber
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group.text === 'demographic'
@@ -390,7 +388,7 @@ const questionsRender = (
               options,
               group,
               participantField,
-              code
+              code,
             } = el;
             const inputType = el.questionType.desc;
             const nextQuestion = section[qIndex + 1];
@@ -426,7 +424,7 @@ const questionsRender = (
                   handleDropdown,
                   code,
                   setMaxNumber,
-                  testMaxNumber
+                  testNumber
                 )}
               </QuestionWrapper>
             );
@@ -439,8 +437,6 @@ export default class Questions extends React.Component {
   state = {
     currentQuestion: null,
     modalVisible: false,
-    maxNum: null,
-    errMsg: null,
   };
 
   componentDidUpdate() {
@@ -469,22 +465,6 @@ export default class Questions extends React.Component {
     this.setState({ modalVisible: !modalVisible });
   };
 
-  // set maxNumber for beahviouralInsights1
-  setMaxNumber = (code, number) => {
-    if (code === "People") {
-      this.setState({ maxNum: number })
-    }
-  }
-
-  // user maxNumber for beahviouralInsights1
-  testMaxNumber = (code, number) => {
-    const { maxNum } = this.state;
-    if (['B1', 'B2', 'B3'].includes(code)) {
-      return maxNum >= number ? number : maxNum;
-    }
-    return number;
-  }
-
   render() {
     const {
       onChange,
@@ -496,9 +476,11 @@ export default class Questions extends React.Component {
       handleAntdDatePicker,
       handleStarChange,
       handleDropdown,
+      setMaxNumber,
+      testNumber
     } = this.props;
 
-    const { setCurrentQuestion, toggleModal, setMaxNumber, testMaxNumber } = this;
+    const { setCurrentQuestion, toggleModal } = this;
 
     const { modalVisible } = this.state;
 
@@ -520,7 +502,7 @@ export default class Questions extends React.Component {
             handleDropdown,
             toggleModal,
             setMaxNumber,
-            testMaxNumber
+            testNumber
           )}
           {renderSkipButtons}
         </QuestionGroup>
