@@ -43,6 +43,7 @@
     "codecov": "^3.1.0",
     "concurrently": "^4.0.1",
     "cookie-parser": "~1.4.3",
+    "cypress": "^3.4.1",
     "dotenv": "^8.0.0",
     "env2": "^2.2.2",
     "express": "~4.16.0",

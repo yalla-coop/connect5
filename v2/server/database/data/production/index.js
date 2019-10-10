@@ -19,9 +19,13 @@ const buildProductionData = () =>
       .catch(reject);
   });
 
-buildProductionData().then(() => {
-  // eslint-disable-next-line no-console
-  console.log('Done!: production DB has been built successfully');
-  // close the connection after build
-  mongoose.disconnect();
-});
+buildProductionData()
+  .then(() => {
+    // eslint-disable-next-line no-console
+    console.log('Done!: production DB has been built successfully');
+    // close the connection after build
+    mongoose.disconnect();
+  })
+  .catch(err => {
+    console.log('err', err);
+  });
