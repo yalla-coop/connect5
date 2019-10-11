@@ -215,7 +215,6 @@ class AddTrainer extends Component {
       additionalManager,
       officialLocalLeadSelect,
     } = this.state;
-
     const {
       form: { getFieldDecorator },
       localLeads,
@@ -508,20 +507,23 @@ class AddTrainer extends Component {
                   <Bold>Step 2:</Bold> Add the trainer to your own group of
                   trainers to manage sessions and view results (optional).
                 </Paragraph>
-
-                <Checkbox
-                  onChange={this.addUserAsManager}
-                  style={{
-                    textAlign: 'center',
-                    marginBottom: '24px',
-                  }}
-                >
-                  <span style={{ fontSize: '1rem', fontWeight: '700' }}>
-                    Add trainer to my group
-                  </span>
-                </Checkbox>
+                {officialLocalLeadSelect.key && (
+                  <Checkbox
+                    disabled={!officialLocalLeadSelect.key}
+                    onChange={this.addUserAsManager}
+                    style={{
+                      textAlign: 'center',
+                      marginBottom: '24px',
+                    }}
+                  >
+                    <span style={{ fontSize: '1rem', fontWeight: '700' }}>
+                      Add trainer to my group
+                    </span>
+                  </Checkbox>
+                )}
               </CheckboxWrapper>
             )}
+
             <CheckboxWrapper>
               <Paragraph>
                 <Bold>
@@ -530,18 +532,21 @@ class AddTrainer extends Component {
                 </Bold>{' '}
                 Add trainer to a group managed by someone else (optional).
               </Paragraph>
-              <Checkbox
-                onChange={this.onChangeCheckbox}
-                style={{
-                  textAlign: 'center',
-                  marginBottom: '24px',
-                }}
-                checked={selectOtherGroup}
-              >
-                <span style={{ fontSize: '1rem', fontWeight: '700' }}>
-                  Add trainer to another group
-                </span>
-              </Checkbox>
+              {officialLocalLeadSelect.key && (
+                <Checkbox
+                  disabled={!officialLocalLeadSelect.key}
+                  onChange={this.onChangeCheckbox}
+                  style={{
+                    textAlign: 'center',
+                    marginBottom: '24px',
+                  }}
+                  checked={selectOtherGroup}
+                >
+                  <span style={{ fontSize: '1rem', fontWeight: '700' }}>
+                    Add trainer to another group
+                  </span>
+                </Checkbox>
+              )}
             </CheckboxWrapper>
             {selectOtherGroup && (
               <Fragment>
@@ -597,7 +602,7 @@ const OfficialLocalLeadSelect = ({
           onChange={handleSelectChange}
         >
           {Object.keys(localLeads).map(item => (
-            <OptGroup key={`OptGroup${item.region}`} label={item}>
+            <OptGroup key={`OptGroup${item}`} label={item}>
               {localLeads[item]
                 .filter(el => el.officialLocalLead === true)
                 .map(_localLead => {
