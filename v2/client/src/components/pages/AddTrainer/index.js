@@ -503,7 +503,9 @@ class AddTrainer extends Component {
             {(!userInfo.officialLocalLead ||
               userInfo.id !== officialLocalLeadSelect.key) && (
               <CheckboxWrapper>
-                <Paragraph>
+                <Paragraph
+                  style={{ opacity: officialLocalLeadSelect.key ? '1' : '0.5' }}
+                >
                   <Bold>Step 2:</Bold> Add the trainer to your own group of
                   trainers to manage sessions and view results (optional).
                 </Paragraph>
@@ -525,7 +527,9 @@ class AddTrainer extends Component {
             )}
 
             <CheckboxWrapper>
-              <Paragraph>
+              <Paragraph
+                style={{ opacity: officialLocalLeadSelect.key ? '1' : '0.5' }}
+              >
                 <Bold>
                   Step {userInfo.id === officialLocalLeadSelect.key ? '2' : '3'}
                   :
