@@ -4,15 +4,17 @@ export const captalizesName = name =>
 export const createGroupedLocalLeads = arr => {
   const groupedLocalLeads = {};
   arr.forEach(item => {
-    groupedLocalLeads[item.region] = groupedLocalLeads[item.region]
-      ? groupedLocalLeads[item.region.toLowerCase()]
+    const capitalizedRegion = item.region.toUpperCase();
+    groupedLocalLeads[capitalizedRegion] = groupedLocalLeads[capitalizedRegion]
+      ? groupedLocalLeads[capitalizedRegion]
       : [];
 
-    groupedLocalLeads[item.region].push({
+    groupedLocalLeads[item.region.toUpperCase()].push({
       name: captalizesName(item.name),
       _id: item._id,
       officialLocalLead: item.officialLocalLead,
     });
   });
+
   return groupedLocalLeads;
 };

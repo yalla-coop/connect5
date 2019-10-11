@@ -244,7 +244,7 @@ class AddTrainer extends Component {
       localLeads
         .map(el => {
           // remove the user as an option
-          if ( el._id === userInfo.id ) {
+          if (el._id === userInfo.id) {
             return null;
           }
           // check if user selected themselves as trainer's local lead and take id out of array
