@@ -502,7 +502,7 @@ class EditEmail extends Component {
         <div ref={this.myRef} />
         <Header label="Edit Session" type="view" />
         <Wrapper>
-          <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
+          {/* <BackLink onClick={history.goBack}>{`< Back`}</BackLink> */}
           {isEditView ? (
             <>
               <SubHeader>Extra information:</SubHeader>
