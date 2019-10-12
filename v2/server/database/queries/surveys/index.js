@@ -16,6 +16,8 @@ module.exports.storeAnswers = answers => Answer.create(answers);
 module.exports.PINResponsesOnSurvey = ({ PIN, surveyType }) =>
   Response.findOne({ PIN, surveyType }).populate('session');
 
+module.exports.findPIN = ({ PIN }) => Response.findOne({ PIN });
+
 module.exports.PINfilledPreSurvey = async (PIN, sessionID) => {
   // get session info
   const session = await Session.findById(sessionID);

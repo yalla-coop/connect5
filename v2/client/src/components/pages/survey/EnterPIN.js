@@ -57,7 +57,6 @@ export default class EnterPIN extends Component {
             minLength="5"
             onChange={handlePIN}
             onBlur={onPINBlur}
-            onFocus={onPINBlur}
             disabled={PINvalid && completionRate > 0}
             value={PIN.length > 0 ? PIN : ''}
             onKeyDown={event =>
