@@ -120,7 +120,6 @@ class AddTrainer extends Component {
     if (officialLocalLeadSelect) {
       managers.push(officialLocalLeadSelect);
     }
-
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         addTrainerToGroupAction({
@@ -200,7 +199,7 @@ class AddTrainer extends Component {
 
   addOfficialLocalLead = localLead => {
     const { additionalManager } = this.state;
-    this.setState({ officialLocalLeadSelect: localLead, userAsManager: true });
+    this.setState({ officialLocalLeadSelect: localLead });
     // if select themselves as local lead, remove from someone else group if selected
     if (additionalManager && additionalManager.key === localLead.key) {
       this.setState({ selectOtherGroup: false, additionalManager: '' });
