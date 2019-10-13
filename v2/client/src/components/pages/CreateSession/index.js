@@ -180,7 +180,7 @@ class CreateSession extends Component {
                   value={_id}
                   style={{ textTransform: 'capitalize' }}
                 >
-                  {`${name[0].toUpperCase()}${name.slice(1)}`}
+                  {`${name[0].toUpperCase()}${name.slice(1)}`}{' '}{_id === id && "(Me)"}
                 </Option>
               );
             })
@@ -598,15 +598,6 @@ class CreateSession extends Component {
                 </div>
               )}
             >
-              {role !== 'trainer' && (
-                <Option
-                  key={id}
-                  value={id}
-                  style={{ textTransform: 'capitalize' }}
-                >
-                  {`${name[0].toUpperCase()}${name.slice(1)}`} (me)
-                </Option>
-              )}
               {this.renderTrainersList(partnerTrainer2)}
             </Select>
             {role === 'localLead' && partnerTrainer1 === null && (
@@ -663,15 +654,6 @@ class CreateSession extends Component {
                   </div>
                 )}
               >
-                {role !== 'trainer' && (
-                  <Option
-                    key={id}
-                    value={id}
-                    style={{ textTransform: 'capitalize' }}
-                  >
-                    {`${name[0].toUpperCase()}${name.slice(1)}`} (me)
-                  </Option>
-                )}
                 {this.renderTrainersList(partnerTrainer1)}
               </Select>
             </InputDiv>
