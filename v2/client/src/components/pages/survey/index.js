@@ -73,41 +73,24 @@ class Survey extends Component {
   sectionChange = (direction, uniqueGroups) => {
     let newSection;
     const { section } = this.state;
+
     if (direction === 'forward') {
+      const foundIndex =
+        uniqueGroups && uniqueGroups.findIndex(e => e === section);
+
       switch (section) {
-        // first section
         case 'confirmSurvey':
           newSection = 'enterPIN';
           break;
-        // second section
         case 'enterPIN':
           [newSection] = uniqueGroups;
           break;
-        // survey groups start here
-        // demographic is always 0
-        // included only in pre day 1 and pre special
-        case 'demographic':
-          newSection = 'Behavioural Insights';
-          break;
-        // Behav. insights included in post day 1, post day 2
-        case 'Behavioural Insights':
-          // trainer feedback included in post day 3, post-special (additionally to behavioural insights)
-          if (uniqueGroups[1] === 'about your trainer') {
-            newSection = 'about your trainer';
-          }
-          break;
         default:
-          newSection = section;
+          newSection = uniqueGroups[foundIndex + 1];
       }
       // backward direction
     } else {
       switch (section) {
-        case 'enterPIN':
-          newSection = 'confirmSurvey';
-          break;
-        case 'demographic':
-          newSection = 'enterPIN';
-          break;
         case 'Behavioural Insights':
           if (uniqueGroups[0] === 'Behavioural Insights') {
             newSection = 'enterPIN';
@@ -119,7 +102,11 @@ class Survey extends Component {
           newSection = 'Behavioural Insights';
           break;
         case 'about your usual way of teaching':
-          newSection = 'enterPIN';
+          if (uniqueGroups[0] === 'demographic') {
+            newSection = 'demographic';
+          } else {
+            newSection = 'enterPIN';
+          }
           break;
         default:
           newSection = section;
@@ -372,7 +359,6 @@ class Survey extends Component {
     return number;
   };
 
-
   // check for any changes to the survey inputs and add them to the formstate
   handleChange = e => {
     const { group, field, code, type } = e.target.dataset;
@@ -385,7 +371,7 @@ class Survey extends Component {
       answer.answer = this.testNumber(code, answer.answer);
       if (answer.answer === '' || answer.answer === null) {
         answer.answer = 0;
-      } 
+      }
     }
     if (group === 'demographic') {
       answer.participantField = field;
