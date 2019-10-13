@@ -260,6 +260,7 @@ class EditSession extends Component {
   };
 
   onSelectPartner1Change = value => {
+    console.log(value);
     this.setState({
       partnerTrainer1: value,
     });
