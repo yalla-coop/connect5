@@ -14,6 +14,8 @@ const {
 // import helpers
 const { getScheduleDates } = require('./../../helpers/get3and6MonthDates');
 
+const { getThreeMonthSurvey, getSixMonthSurvey } = require('./../../helpers');
+
 module.exports = (req, res, next) => {
   const { sessionId } = req.params;
   const { participantsEmails, status, isPartial } = req.body;
@@ -22,34 +24,31 @@ module.exports = (req, res, next) => {
     .then(async () => {
       // get session Details
       const sessionDetails = await getSessionById(sessionId);
+      console.log(sessionDetails, '---------------------------');
       const { date, type } = sessionDetails;
       const sessionDate = date.toString();
       const confirmedEmails = participantsEmails.map(
         participant => participant.email
       );
-      const trainTrainerSessions = [
-        'train-trainers-s1',
-        'train-trainers-s2',
-        'train-trainers-event',
-      ];
-      const ThreeMonthSurvey = trainTrainerSessions.includes(type)
-        ? 'follow-up-3-month-train-trainers'
-        : 'follow-up-3-month';
-      const SixMonthSurvey = trainTrainerSessions.includes(type)
-        ? 'follow-up-6-month-train-trainers'
-        : 'follow-up-6-month';
 
-      console.log('conf', confirmedEmails);
+      const ThreeMonthSurvey = getThreeMonthSurvey(type);
+
+      const SixMonthSurvey = getSixMonthSurvey(type);
+
       // now the event has confirmed emails schedule 3 and 6 month surveys
       // remove existing emails
       await removeEmailBySurveyType({
         sessionId,
-        surveyType: ThreeMonthSurvey,
+        surveyTypes: [ThreeMonthSurvey, SixMonthSurvey],
       });
-      await removeEmailBySurveyType({
-        sessionId,
-        surveyType: SixMonthSurvey,
-      });
+
+      const sessionDetails2 = await getSessionById(sessionId);
+      console.log(sessionDetails2, '++++++++++++++++++++++++++++');
+
+      // await removeEmailBySurveyType({
+      //   sessionId,
+      //   surveyType: SixMonthSurvey,
+      // });
       // add new ones
       await scheduleNewEmail({
         sessionId,
@@ -64,9 +63,13 @@ module.exports = (req, res, next) => {
         date: getScheduleDates(sessionDate, 6),
       });
 
+      const sessionDetails3 = await getSessionById(sessionId);
+      console.log(sessionDetails3, '============================');
+
       return res.json({});
     })
     .catch(err => {
+      console.log(err);
       next(boom.badImplementation());
     });
 };

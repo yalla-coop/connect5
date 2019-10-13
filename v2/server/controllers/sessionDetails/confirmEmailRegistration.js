@@ -13,6 +13,7 @@ const {
 
 // import helpers
 const { getScheduleDates } = require('./../../helpers/get3and6MonthDates');
+const { getThreeMonthSurvey, getSixMonthSurvey } = require('./../../helpers');
 
 module.exports = async (req, res, next) => {
   const { sessionId } = req.params;
@@ -37,27 +38,47 @@ module.exports = async (req, res, next) => {
         .filter(participant => participant.status === 'confirmed')
         .map(participant => participant.email);
 
-      const trainTrainerSessions = [
-        'train-trainers-s1',
-        'train-trainers-s2',
-        'train-trainers-event',
-      ];
-      const ThreeMonthSurvey = trainTrainerSessions.includes(type)
-        ? 'follow-up-3-month-train-trainers'
-        : 'follow-up-3-month';
-      const SixMonthSurvey = trainTrainerSessions.includes(type)
-        ? 'follow-up-6-month-train-trainers'
-        : 'follow-up-6-month';
+      const ThreeMonthSurvey = getThreeMonthSurvey(type);
+
+      const SixMonthSurvey = getSixMonthSurvey(type);
 
       // remove existing emails
       await removeEmailBySurveyType({
         sessionId,
-        surveyType: ThreeMonthSurvey,
+        surveyTypes: [ThreeMonthSurvey, SixMonthSurvey],
       });
-      await removeEmailBySurveyType({
-        sessionId,
-        surveyType: SixMonthSurvey,
-      });
+
+      //       _id
+      // :
+      // 5da3288315895e01bf933ca0
+      // date
+      // :
+      // 2020-01-01T14:08:06.000+00:00
+      // recipients
+      // :
+      // Array
+      // surveyType
+      // :
+      // "3-months-follow-up-day-3"
+      // 1
+      // :
+      // Object
+      // _id
+      // :
+      // 5da3288315895e01bf933ca1
+      // date
+      // :
+      // 2020-04-01T13:08:06.000+00:00
+      // recipients
+      // :
+      // Array
+      // surveyType
+      // :
+      // "6-months-follow-up-day-3"
+      // await removeEmailBySurveyType({
+      //   sessionId,
+      //   surveyType: SixMonthSurvey,
+      // });
       // add new ones
       await scheduleNewEmail({
         sessionId,

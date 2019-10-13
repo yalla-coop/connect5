@@ -98,6 +98,28 @@ const calculateAverage = array => {
   return total === 0 ? 0 : total / filteredNumbers.length || 0;
 };
 
+const getThreeMonthSurvey = type => {
+  const sessionSurveys = surveysTypes[type];
+  const ThreeMonthSurvey =
+    sessionSurveys &&
+    sessionSurveys.find(
+      survey => survey.includes('follow') && survey.includes('3')
+    );
+
+  return ThreeMonthSurvey;
+};
+
+const getSixMonthSurvey = type => {
+  const sessionSurveys = surveysTypes[type];
+
+  const SixMonthSurvey =
+    sessionSurveys &&
+    sessionSurveys.find(
+      survey => survey.includes('follow') && survey.includes('6')
+    );
+  return SixMonthSurvey;
+};
+
 module.exports = {
   uppercaseSurvey,
   surveysTypes,
@@ -108,4 +130,6 @@ module.exports = {
   checkAnswer,
   checkAnswer2,
   calculateAverage,
+  getThreeMonthSurvey,
+  getSixMonthSurvey,
 };
