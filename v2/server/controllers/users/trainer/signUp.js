@@ -4,6 +4,7 @@ const { tokenMaxAge } = require('./../../../constants');
 
 const {
   createNewTrainer,
+  updateTrainer,
 } = require('./../../../database/queries/users/trainer');
 
 const {
@@ -57,6 +58,9 @@ module.exports = async (req, res, next) => {
             }
           );
         } else {
+          // if not a trainer then add their id to their managers array
+          await updateTrainer(trainer._id, { managers: [trainer._id] });
+          // and add themselves to their group
           await addTrainertoLocalLeadGroup(trainer._id, trainer._id).catch(
             err => {
               next(boom.badImplementation(err));
