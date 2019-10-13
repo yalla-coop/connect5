@@ -85,4 +85,11 @@ class SessionTopDetails extends Component {
     );
   }
 }
-export default connect(null)(SessionTopDetails);
+
+const mapStateToProps = state => {
+  return {
+    isMobile: state.checkBrowserWidth.isMobile,
+  };
+};
+
+export default connect(mapStateToProps)(SessionTopDetails);
