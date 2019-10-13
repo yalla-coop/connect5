@@ -40,6 +40,7 @@ class EmailsList extends Component {
   };
 
   render() {
+    console.log(this.props);
     const { dataList } = this.props;
     const { visible, emailId } = this.state;
     const { showDrawer, onDrawerClose } = this;
