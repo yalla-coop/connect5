@@ -23,6 +23,7 @@ class SessionTopDetails extends Component {
       startTime,
       endTime,
       address,
+      numberOfAttendees,
     } = sessionDetails;
     if (!sessionDetails) {
       return <div>loading</div>;
@@ -58,7 +59,7 @@ class SessionTopDetails extends Component {
           </StatisticItems>
           <StatisticItems>
             <StatisticName>Session Capacity</StatisticName>
-            <StatisticValue>{confirmedAttendeesNumber}</StatisticValue>
+            <StatisticValue>{numberOfAttendees}</StatisticValue>
           </StatisticItems>
         </Statistic>
         <SubDetails>
