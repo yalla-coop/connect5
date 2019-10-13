@@ -58,7 +58,7 @@ class SessionTopDetails extends Component {
             <StatisticValue>{type.replace(/-/g, ' ')}</StatisticValue>
           </StatisticItems>
           <StatisticItems>
-            <StatisticName>Session Capacity</StatisticName>
+            <StatisticName>Capacity</StatisticName>
             <StatisticValue>{numberOfAttendees}</StatisticValue>
           </StatisticItems>
         </Statistic>
