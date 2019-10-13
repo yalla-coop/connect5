@@ -56,6 +56,12 @@ module.exports = async (req, res, next) => {
               next(boom.badImplementation(err));
             }
           );
+        } else {
+          await addTrainertoLocalLeadGroup(trainer._id, trainer._id).catch(
+            err => {
+              next(boom.badImplementation(err));
+            }
+          );
         }
 
         res.cookie('token', token, {
