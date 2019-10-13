@@ -200,7 +200,12 @@ class SurveyResults extends Component {
                 ) : null}
               </Collapse>
             </div>
-            <ExportButton />
+            <ExportButton
+              filters={{
+                sessionId: params.sessionId,
+                surveyType: [params.surveyType],
+              }}
+            />
           </>
         ) : (
           <IndividualWrapper>

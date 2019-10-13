@@ -1,6 +1,3 @@
-// expects a boolean value for filter to decide what level of data to show
-// if filter is true then it will run trainerFilter func on the overall data
-
 const boom = require('boom');
 const { exportData } = require('../../database/queries/feedback/exportData');
 

@@ -150,6 +150,7 @@ module.exports.exportData = filters => {
         sessionDate: '$session.date',
         sessionType: '$session.type',
         sessionRegion: '$session.region',
+        surveyType: '$responseDetails.surveyType',
       },
     },
     {
@@ -179,7 +180,7 @@ module.exports.exportData = filters => {
         'Session Region': '$sessionRegion',
 
         'Agreed to Research': '$responseDetails.agreedToResearch',
-        'Survey Type': '$responseDetails.surveyType',
+        'Survey Type': '$surveyType',
         'Trainer 1 ID': { $arrayElemAt: ['$trainers._id', 0] },
         'Trainer 1 Name': { $arrayElemAt: ['$trainers.name', 0] },
         'Trainer 1 Email': { $arrayElemAt: ['$trainers.email', 0] },
