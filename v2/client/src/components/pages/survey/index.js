@@ -535,7 +535,7 @@ class Survey extends Component {
                       PIN={PIN}
                       PINvalid={PINvalid}
                       handlePIN={this.handlePIN}
-                      onPINBlur={() => this.checkPINonBlur}
+                      onPINBlur={this.checkPINonBlur}
                       renderSkipButtons={this.renderSkipButtons(
                         'enterPIN',
                         !PINvalid,
