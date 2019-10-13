@@ -24,7 +24,10 @@ import * as Yup from 'yup';
 
 import { getPostSurveyLink, getPreSurveyLink } from '../../../helpers';
 
-import { MY_SESSIONS_URL, MY_GROUP_SESSIONS_URL } from '../../../constants/navigationRoutes';
+import {
+  MY_SESSIONS_URL,
+  MY_GROUP_SESSIONS_URL,
+} from '../../../constants/navigationRoutes';
 import Header from '../Header';
 import InfoPopUp from '../InfoPopup';
 
@@ -238,7 +241,7 @@ class EditEmail extends Component {
 
   done = () => {
     const { backCallback, role } = this.props;
-    console.log("ROLE", role);
+    console.log('ROLE', role);
 
     Modal.success({
       title: 'Done!',
@@ -452,7 +455,7 @@ class EditEmail extends Component {
       endTime,
       backCallback,
       isSchedule,
-      role
+      role,
     } = this.props;
 
     let title = '';
@@ -795,8 +798,14 @@ class EditEmail extends Component {
                 style={{ marginBottom: '1.5rem' }}
                 loading={loading}
               />
-              <BackLink onClick={() => history.push(MY_SESSIONS_URL)}>
-              Invite people later and go back to session overview
+              <BackLink
+                onClick={() => {
+                  if (role !== 'trainer')
+                    return history.push(MY_GROUP_SESSIONS_URL);
+                  return history.push(MY_SESSIONS_URL);
+                }}
+              >
+                Invite people later and go back to session overview
               </BackLink>
               {error}
               {isEditView && (
@@ -811,7 +820,8 @@ class EditEmail extends Component {
                   onClick={() => {
                     if (typeof backCallback === 'function')
                       return backCallback();
-                    if (role !== 'trainer') return history.push(MY_GROUP_SESSIONS_URL);
+                    if (role !== 'trainer')
+                      return history.push(MY_GROUP_SESSIONS_URL);
                     return history.push(MY_SESSIONS_URL);
                   }}
                 >
