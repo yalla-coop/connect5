@@ -236,7 +236,10 @@ module.exports = async (filters, isTrainTrainersFeedback) => {
             $project: {
               text: '$_id.text',
               answer: '$_id.answer',
-              count: { $ifNull: ['$_id.answer', 0] }, // the count of answer on question in survey
+              // count: { $ifNull: ['$_id.answer', 0] }, // the count of answer on question in survey
+              count: {
+                $cond: ['$_id.answer', '$count', 0],
+              },
               surveyType: '$_id.surveyType',
               options: 1,
             },
