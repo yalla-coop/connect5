@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import swal from 'sweetalert2';
-import { Alert, Modal, Progress } from 'antd';
+import { Alert, Modal, Progress, message } from 'antd';
 
 import Spin from '../../common/Spin';
 import { surveysTypes } from '../../../constants';
@@ -50,6 +50,8 @@ class Survey extends Component {
     section: 'confirmSurvey',
     completionRate: 0,
     currentStep: 1,
+    maxNum: null,
+    minNum: 0,
   };
 
   componentDidMount() {
@@ -340,13 +342,51 @@ class Survey extends Component {
     }
   };
 
+  // set maxNumber for beahviouralInsights1
+  setMaxNumber = (code, number) => {
+    if (code === 'People') {
+      this.setState({ maxNum: number });
+    }
+  };
+
+  // set minNumber the maxNumber can be
+  setMinNumber = number => {
+    const { minNum } = this.state;
+    if (number > minNum) {
+      this.setState({ minNum: number });
+    }
+  };
+
+  // use maxNumber for beahviouralInsights1
+  testNumber = (code, number) => {
+    const { maxNum } = this.state;
+    if (['B1', 'B2', 'B3'].includes(code)) {
+      if (maxNum < number) {
+        message.error(
+          'Number cannot be greater than the total number of people you have seen in the last week'
+        );
+        return maxNum;
+      }
+      return number;
+    }
+    return number;
+  };
+
+
   // check for any changes to the survey inputs and add them to the formstate
   handleChange = e => {
-    const { group, field } = e.target.dataset;
+    const { group, field, code, type } = e.target.dataset;
     const question = e.target.name;
     const { formState } = this.state;
     // if any other type we assign the value to answer and put it in the state
     const answer = { answer: e.target.value, question };
+
+    if (type === 'numberPositive') {
+      answer.answer = this.testNumber(code, answer.answer);
+      if (answer.answer === '' || answer.answer === null) {
+        answer.answer = 0;
+      } 
+    }
     if (group === 'demographic') {
       answer.participantField = field;
     }
@@ -552,6 +592,8 @@ class Survey extends Component {
                               completionRate
                             )}
                             completionRate={completionRate}
+                            setMaxNumber={this.setMaxNumber}
+                            testNumber={this.testNumber}
                             // currentQuestion={currentQuestion}
                             // setCurrentQuestion={this.setCurrentQuestion}
                           />

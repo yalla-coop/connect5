@@ -7,7 +7,7 @@ import Collapse from 'antd/lib/collapse';
 import Icon from 'antd/lib/icon';
 
 import { fetchUserResults } from '../../../actions/users';
-import BehavioralSurveyResults from '../../common/BehavioralInsight/Survey';
+import BehavioralInsight from '../../common/BehavioralInsight';
 import {
   TrainerResultsWrapper,
   StatsDiv,
@@ -21,11 +21,15 @@ import {
   QuestionSpan,
   Answer,
 } from './SurveyResults.style';
-import TrainerFeedback from '../../common/Feedback';
+import Feedback from '../../common/Feedback';
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 import ExportButton from '../../common/ExportButton';
-import { surveysHaveBehavQuestions } from '../../../constants';
+import {
+  surveysHaveBehavQuestions,
+  surveysHaveTrainerFeedbackQuestions,
+  surveysHaveTrainTrainerFeedbackQuestions,
+} from '../../../constants';
 
 const { Panel } = Collapse;
 
@@ -72,6 +76,7 @@ class SurveyResults extends Component {
   render() {
     const {
       match: { params },
+      role,
     } = this.props;
     const {
       toggle,
@@ -116,15 +121,10 @@ class SurveyResults extends Component {
                 expandIcon={({ isActive }) => (
                   <Icon type="down" rotate={isActive ? 90 : 0} />
                 )}
-                defaultActiveKey={['1']}
               >
                 {surveysHaveBehavQuestions.includes(params.surveyType) ? (
                   <Panel
-                    key={
-                      surveysHaveBehavQuestions.includes(params.surveyType)
-                        ? '1'
-                        : '0'
-                    }
+                    key="Behavioural Analysis"
                     header="Behavioural Analysis"
                     style={{
                       background: '#f7f7f7',
@@ -133,31 +133,71 @@ class SurveyResults extends Component {
                       padding: 0,
                     }}
                   >
-                    <BehavioralSurveyResults
+                    <BehavioralInsight
                       sessionId={params.sessionId}
                       surveyType={params.surveyType}
+                      showFilters
+                      role={role}
+                      defaultFilters={{
+                        sessionId: params.sessionId,
+                        surveyType: [params.surveyType],
+                      }}
+                      hiddenFields={['session', 'localLead', 'trainer']}
+                      surveyList={[params.surveyType]}
                     />
                   </Panel>
                 ) : null}
-                <Panel
-                  header="Trainer feedback"
-                  key={
-                    surveysHaveBehavQuestions.includes(params.surveyType)
-                      ? '0'
-                      : '1'
-                  }
-                  style={{
-                    background: '#f7f7f7',
-                    borderRadius: 4,
-                    overflow: 'hidden',
-                    padding: 0,
-                  }}
-                >
-                  <TrainerFeedback
-                    sessionId={params.sessionId}
-                    surveyType={params.surveyType}
-                  />
-                </Panel>
+                {surveysHaveTrainerFeedbackQuestions.includes(
+                  params.surveyType
+                ) ? (
+                  <Panel
+                    header="Trainer feedback"
+                    key="Trainer feedback"
+                    style={{
+                      background: '#f7f7f7',
+                      borderRadius: 4,
+                      overflow: 'hidden',
+                      padding: 0,
+                    }}
+                  >
+                    <Feedback
+                      showFilters
+                      role={role}
+                      defaultFilters={{
+                        sessionId: params.sessionId,
+                        surveyType: [params.surveyType],
+                      }}
+                      hiddenFields={['session', 'localLead', 'trainer']}
+                      surveyList={[params.surveyType]}
+                    />
+                  </Panel>
+                ) : null}
+                {surveysHaveTrainTrainerFeedbackQuestions.includes(
+                  params.surveyType
+                ) ? (
+                  <Panel
+                    header="Train the Trainer Feedback"
+                    key="Train the Trainer Feedback"
+                    style={{
+                      background: '#f7f7f7',
+                      borderRadius: 4,
+                      overflow: 'hidden',
+                      padding: 0,
+                    }}
+                  >
+                    <Feedback
+                      showFilters
+                      role={role}
+                      defaultFilters={{
+                        sessionId: params.sessionId,
+                        surveyType: [params.surveyType],
+                      }}
+                      hiddenFields={['session', 'localLead', 'trainer']}
+                      surveyList={[params.surveyType]}
+                      isTrainTrainersFeedback
+                    />
+                  </Panel>
+                ) : null}
               </Collapse>
             </div>
             <ExportButton />
@@ -215,6 +255,7 @@ class SurveyResults extends Component {
 
 const mapStateToProps = state => ({
   results: state.results,
+  role: state.auth.role,
 });
 
 export default connect(

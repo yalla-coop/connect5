@@ -6,7 +6,7 @@
 
 const mongoose = require('mongoose');
 const Response = require('../../models/Response');
-const User = require('./../../models/User');
+const User = require('../../models/User');
 
 module.exports.feedback = async ({
   trainerId,

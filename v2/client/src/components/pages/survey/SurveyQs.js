@@ -4,6 +4,7 @@ import React from 'react';
 import { DatePicker, Rate, Select, Icon, Modal, Collapse } from 'antd';
 // // please leave this inside for antd to style right
 // import 'antd/dist/antd.css';
+import moment from 'moment';
 
 import {
   RadioField,
@@ -15,6 +16,7 @@ import {
   RateDiv,
   QuestionGroup,
   InfoHeader,
+  StyledIframe,
 } from './Questions.style';
 
 const { Option } = Select;
@@ -40,7 +42,9 @@ const renderQuestionInputType = (
   handleStarChange,
   nextQuestionID,
   setCurrentQuestion,
-  handleDropdown
+  handleDropdown,
+  code,
+  setMaxNumber
 ) => {
   if (inputType === 'text') {
     return (
@@ -103,6 +107,7 @@ const renderQuestionInputType = (
           }
           value={answers[questionId] && answers[questionId].answer}
           onBlur={() => setCurrentQuestion(nextQuestionID)}
+          defaultValue={moment()}
         />
         {!answers[questionId] && (
           <Warning>* this question must be answered</Warning>
@@ -129,12 +134,17 @@ const renderQuestionInputType = (
           onChange={onChange}
           data-group={group.text}
           data-field={participantField}
+          data-code={code}
+          data-type={inputType}
           value={
             answers[questionId] && answers[questionId].answer
               ? answers[questionId].answer
               : ''
           }
-          onBlur={() => setCurrentQuestion(nextQuestionID)}
+          onBlur={e => {
+            setCurrentQuestion(nextQuestionID);
+            return setMaxNumber(code, e.target.value);
+          }}
           onKeyDown={event => {
             if (event.keyCode === 13) {
               event.preventDefault();
@@ -335,7 +345,9 @@ const questionsRender = (
   handleStarChange,
   setCurrentQuestion,
   handleDropdown,
-  toggleModal
+  toggleModal,
+  setMaxNumber,
+  testNumber
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group.text === 'demographic'
@@ -376,6 +388,7 @@ const questionsRender = (
               options,
               group,
               participantField,
+              code,
             } = el;
             const inputType = el.questionType.desc;
             const nextQuestion = section[qIndex + 1];
@@ -408,7 +421,10 @@ const questionsRender = (
                   handleStarChange,
                   nextQuestionID,
                   setCurrentQuestion,
-                  handleDropdown
+                  handleDropdown,
+                  code,
+                  setMaxNumber,
+                  testNumber
                 )}
               </QuestionWrapper>
             );
@@ -460,6 +476,8 @@ export default class Questions extends React.Component {
       handleAntdDatePicker,
       handleStarChange,
       handleDropdown,
+      setMaxNumber,
+      testNumber
     } = this.props;
 
     const { setCurrentQuestion, toggleModal } = this;
@@ -482,7 +500,9 @@ export default class Questions extends React.Component {
             handleStarChange,
             setCurrentQuestion,
             handleDropdown,
-            toggleModal
+            toggleModal,
+            setMaxNumber,
+            testNumber
           )}
           {renderSkipButtons}
         </QuestionGroup>
@@ -490,6 +510,7 @@ export default class Questions extends React.Component {
           title="Connect5 Impacting Behaviour"
           visible={modalVisible}
           onOk={toggleModal}
+          onCancel={toggleModal}
           width={800}
         >
           <p>
@@ -502,6 +523,15 @@ export default class Questions extends React.Component {
             helping you with these sorts of conversations, and use this to
             improve the quality of our training
           </p>
+          <StyledIframe>
+            <iframe
+              src="https://www.youtube.com/embed/ZuxBz8RvqY8"
+              frameBorder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="introductionVideo"
+            ></iframe>
+          </StyledIframe>
           <Collapse bordered={false}>
             <Panel header="What are mental wellbeing conversations?" key="1">
               <p>

@@ -43,6 +43,7 @@ const questionSchema = new Schema({
   options: [Schema.Types.Mixed],
   // "gender" "age" "region" ....
   participantField: String,
+  feedbackText: String,
 });
 
 const Questions = model('questions', questionSchema);

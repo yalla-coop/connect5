@@ -246,3 +246,20 @@ export const InfoHeader = styled(Link)`
     color: ${colors.primary};
   }
 `;
+
+export const StyledIframe = styled.div`
+  position: relative;
+  height: 0;
+  padding-bottom: 56.25%;
+  padding-top: 25px;
+  margin-bottom: 1rem;
+  max-width: 600px;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+`;

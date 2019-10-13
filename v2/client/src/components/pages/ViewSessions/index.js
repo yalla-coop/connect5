@@ -70,7 +70,7 @@ class ViewSessions extends Component {
       } else {
         resultsFor = userId;
         resultForRule = 'localLead';
-        headerTitle = 'Yours Group Sessions';
+        headerTitle = 'Your Group Sessions';
         this.fetchSessionsData(resultForRule, resultsFor);
       }
     } else if (match && match.path === '/all-sessions') {
