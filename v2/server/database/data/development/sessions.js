@@ -25,7 +25,7 @@ module.exports = async () => {
       participantsEmails: [
         { email: 'ramyshurafa@gmail.com', status: 'new' },
         { email: 'abdalsamad.y.m@gmail.com', status: 'new' },
-        { email: 'a.shatat@hotmail.com', status: 'new' },
+        { email: 'a.shatat@hotmail.com', status: 'confirmed' },
       ],
       canAccessResults: [trainers[0].localLead],
     },
@@ -46,7 +46,7 @@ module.exports = async () => {
         { email: 'abd@gmail.com', status: 'new' },
         { email: 'marwa@gmail.com', status: 'new' },
         { email: 'joe@gmail.com', status: 'new' },
-        { email: 'simon@gmail.com', status: 'new' },
+        { email: 'simon@gmail.com', status: 'confirmed' },
       ],
     },
     {
@@ -68,7 +68,7 @@ module.exports = async () => {
         { email: 'abd@gmail.com', status: 'new' },
         { email: 'marwa@gmail.com', status: 'new' },
         { email: 'joe@gmail.com', status: 'new' },
-        { email: 'simon@gmail.com', status: 'new' },
+        { email: 'simon@gmail.com', status: 'confirmed' },
       ],
     },
     {
@@ -90,7 +90,7 @@ module.exports = async () => {
         { email: 'abd@gmail.com', status: 'new' },
         { email: 'marwa@gmail.com', status: 'new' },
         { email: 'joe@gmail.com', status: 'new' },
-        { email: 'simon@gmail.com', status: 'new' },
+        { email: 'simon@gmail.com', status: 'confirmed' },
       ],
     },
     {
@@ -112,7 +112,7 @@ module.exports = async () => {
         { email: 'abd@gmail.com', status: 'new' },
         { email: 'marwa@gmail.com', status: 'new' },
         { email: 'joe@gmail.com', status: 'new' },
-        { email: 'simon@gmail.com', status: 'new' },
+        { email: 'simon@gmail.com', status: 'confirmed' },
       ],
     },
     {
@@ -133,7 +133,7 @@ module.exports = async () => {
         { email: 'alex@gmail.com', status: 'new' },
         { email: 'nancy@gmail.com', status: 'new' },
         { email: 'mark@gmail.com', status: 'new' },
-        { email: 'john@gmail.com', status: 'new' },
+        { email: 'john@gmail.com', status: 'confirmed' },
       ],
     },
     {
@@ -154,7 +154,7 @@ module.exports = async () => {
         { email: 'alex@gmail.com', status: 'new' },
         { email: 'nancy@gmail.com', status: 'new' },
         { email: 'mark@gmail.com', status: 'new' },
-        { email: 'john@gmail.com', status: 'new' },
+        { email: 'john@gmail.com', status: 'confirmed' },
       ],
     },
     {

@@ -27,19 +27,27 @@ const getTopStats = async (userId, userType) => {
     const trainerCount = await User.find({
       $or: [{ role: 'localLead' }, { role: 'trainer' }],
     });
-    const participantCount = await Response.aggregate([
-      {
-        $group: {
-          _id: '$PIN',
-        },
-      },
-    ]);
+    // const participantCount = await Response.aggregate([
+    //   {
+    //     $group: {
+    //       _id: '$PIN',
+    //     },
+    //   },
+    // ]);
+
+    const allEmails = [];
+
+    sessionCount.forEach(session =>
+      session.participantsEmails
+        .filter(email => email.status === 'confirmed')
+        .map(email => allEmails.push(email))
+    );
 
     stats = {
       sessionCount: sessionCount.length,
       responseCount: responseCount.length,
       trainerCount: trainerCount.length,
-      participantCount: participantCount.length,
+      participantCount: allEmails.length,
     };
   } else if (userType === 'localLead') {
     const trainers = user.trainersGroup;
@@ -53,6 +61,7 @@ const getTopStats = async (userId, userType) => {
             $project: {
               _id: 1,
               numberOfAttendees: 1,
+              participantsEmails: 1,
             },
           },
         ])
@@ -88,6 +97,7 @@ const getTopStats = async (userId, userType) => {
             _id: item._id,
             numberOfAttendees: item.numberOfAttendees,
             type: item.type,
+            participantsEmails: item.participantsEmails,
           });
         }
       }
@@ -116,9 +126,19 @@ const getTopStats = async (userId, userType) => {
     //     ? [...new Set(responses[0].map(response => response._id))]
     //     : [];
 
-    const participantCount = uniqueSessions
-      .map(session => session.numberOfAttendees)
-      .reduce((a, b) => a + b, 0);
+    const allEmails = [];
+
+    uniqueSessions.forEach(session =>
+      session.participantsEmails
+        .filter(email => email.status === 'confirmed')
+        .map(email => allEmails.push(email))
+    );
+
+    // const participantCount = uniqueSessions
+    //   .map(session => session.numberOfAttendees)
+    //   .reduce((a, b) => a + b, 0);
+
+    const participantCount = allEmails.length;
 
     stats = {
       sessionCount: uniqueSessions.length,
@@ -136,6 +156,7 @@ const getTopStats = async (userId, userType) => {
     let responseCount = 0;
 
     if (typeof sessions[0] === 'object') {
+      console.log(sessions[0]);
       sessionCount = sessions[0].sessions;
       participantCount = sessions[0].participants;
     }
