@@ -43,7 +43,6 @@ module.exports = async () => {
       role: 'trainer',
       region: regions[0],
       localLead: storedLocalLeads[0],
-      managers: [storedLocalLeads[1]],
       officialLocalLead: false,
     },
     {
@@ -53,7 +52,6 @@ module.exports = async () => {
       role: 'trainer',
       region: regions[0],
       localLead: storedLocalLeads[0],
-      managers: [storedLocalLeads[1]],
       officialLocalLead: false,
     },
   ];
