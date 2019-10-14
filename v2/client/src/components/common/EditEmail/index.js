@@ -377,6 +377,7 @@ class EditEmail extends Component {
       );
     } else {
       this.setState({ error: 'Select schedule date and time' });
+      message.error('Select schedule date and time');
     }
   };
 
@@ -459,9 +460,7 @@ class EditEmail extends Component {
     switch (type) {
       case 'registration':
         title = 'Invite participants via email: ';
-        paragraph = `Send a session invitation to participants via email, providing
-        them a link to register and let you know about any special
-        requirements.`;
+        paragraph = `Send a session invitation to participants via email. The email contains a link to register and the option to add any special requirements.`;
         panelTitle = 'Select from your invitees list';
         break;
 
@@ -504,8 +503,8 @@ class EditEmail extends Component {
             <>
               <SubHeader>Extra information:</SubHeader>
               <Paragraph>
-                Write below any extra information you would like to add to the
-                email before you send out
+                Add further infos/ details you would like to share with the
+                participants
               </Paragraph>
               <TextArea
                 placeholder="Type here extra information to be sent in the email"

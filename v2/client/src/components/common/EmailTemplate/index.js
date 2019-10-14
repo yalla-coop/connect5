@@ -88,8 +88,8 @@ const FirstPargraph = ({ type, trainer }) => {
     case 'registration':
       return (
         <p>
-          {trainer} has invited you to register for an upcoming Connect 5
-          training session.
+          <strong>{trainer.toUpperCase()}</strong> has invited you to register
+          for an upcoming Connect 5 training session.
         </p>
       );
     case 'surveyLink':

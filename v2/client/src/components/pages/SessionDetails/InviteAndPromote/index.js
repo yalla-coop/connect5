@@ -65,14 +65,14 @@ class InviteAndPromote extends Component {
             <RegistrationDiv>
               <RegistrationLink
                 href={`${
-                  process.env.NODE_ENV === 'prodcution' ? 'https://' : 'http://'
+                  process.env.NODE_ENV === 'production' ? 'https://' : 'http://'
                 }${window.location.host}/confirm/${shortId}`}
                 target="_blank"
                 id="registration-link"
                 rel="noopener noreferrer"
               >
                 {`${
-                  process.env.NODE_ENV === 'prodcution' ? 'https://' : 'http://'
+                  process.env.NODE_ENV === 'production' ? 'https://' : 'http://'
                 }${window.location.host}/confirm/${shortId}`}
               </RegistrationLink>
               <CopyLink onClick={onCopyClick}>
