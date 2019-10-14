@@ -1,9 +1,8 @@
 describe('should login correctly', () => {
   beforeEach(() => {
-    Cypress.Cookies.debug(true);
-
     // clear cookies again after visiting to remove
     // any 3rd party cookies picked up such as cloudflare
+    Cypress.Cookies.debug(true);
   });
 
   it('ssss', () => {
