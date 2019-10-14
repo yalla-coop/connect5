@@ -24,10 +24,6 @@ import * as Yup from 'yup';
 
 import { getPostSurveyLink, getPreSurveyLink } from '../../../helpers';
 
-import {
-  MY_SESSIONS_URL,
-  MY_GROUP_SESSIONS_URL,
-} from '../../../constants/navigationRoutes';
 import Header from '../Header';
 import InfoPopUp from '../InfoPopup';
 
@@ -240,16 +236,16 @@ class EditEmail extends Component {
   };
 
   done = () => {
-    const { backCallback, role } = this.props;
-    console.log('ROLE', role);
+    const { backCallback, sessionId, isSchedule } = this.props;
 
     Modal.success({
       title: 'Done!',
-      content: 'Emails have been sent successfully',
+      content: isSchedule
+        ? 'Email successfully scheduled'
+        : 'Emails have been sent successfully',
       onOk: () => {
         if (typeof backCallback === 'function') return backCallback();
-        if (role !== 'trainer') return history.push(MY_GROUP_SESSIONS_URL);
-        return history.push(MY_SESSIONS_URL);
+        return history.push(`/session-details/${sessionId}`);
       },
     });
   };
@@ -286,7 +282,7 @@ class EditEmail extends Component {
         document.execCommand('copy');
         message.success('copied');
       } catch (err) {
-        console.log(err);
+        message.error('Something went wrong');
       }
     }
   };
@@ -377,10 +373,11 @@ class EditEmail extends Component {
           extraInformation,
           recipients: checkedList,
         },
-        this.handleCloseDrawer
+        this.done
       );
     } else {
       this.setState({ error: 'Select schedule date and time' });
+      message.error('Select schedule date and time');
     }
   };
 
@@ -455,7 +452,6 @@ class EditEmail extends Component {
       endTime,
       backCallback,
       isSchedule,
-      role,
     } = this.props;
 
     let title = '';
@@ -796,29 +792,18 @@ class EditEmail extends Component {
                 style={{ marginBottom: '1.5rem' }}
                 loading={loading}
               />
-              <BackLink onClick={() => history.push(MY_SESSIONS_URL)}>
-                Invite people later and go back to session overview
-              </BackLink>
               {error}
-              {isEditView && (
-                <SubHeader
-                  as="button"
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    margin: '0 auto 2rem',
-                  }}
+              {/* after creating session immediately */}
+              {canAddParticipants && (
+                <BackLink
                   onClick={() => {
                     if (typeof backCallback === 'function')
                       return backCallback();
-                    if (role !== 'trainer')
-                      return history.push(MY_GROUP_SESSIONS_URL);
-                    return history.push(MY_SESSIONS_URL);
+                    return history.push(`/session-details/${sessionId}`);
                   }}
                 >
-                  Skip and view my session
-                </SubHeader>
+                  Invite people later and go back to session overview
+                </BackLink>
               )}
             </div>
           )}
