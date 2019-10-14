@@ -7,6 +7,7 @@ const SendReminderEmails = ({
   handleAddEmailsClick,
   name,
   drawerKey,
+  onClose,
 }) => {
   const confirmedEmails = sessionDetails.participantsEmails.filter(
     item => item.status === 'confirmed'
@@ -27,6 +28,7 @@ const SendReminderEmails = ({
       sessionId={sessionDetails._id}
       handleAddEmailsClick={handleAddEmailsClick}
       drawerKey={drawerKey}
+      backCallback={onClose}
     />
   );
 };
