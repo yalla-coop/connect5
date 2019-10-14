@@ -5,6 +5,8 @@ const Session = require('./../../../models/Session');
 
 module.exports.createNewTrainer = data => User.create(data);
 
+module.exports.updateTrainer = (id, data) => User.findByIdAndUpdate(id, data);
+
 module.exports.getTrainerSessionsQuery = id => {
   return Session.find({ trainers: mongoose.Types.ObjectId(id) });
 };

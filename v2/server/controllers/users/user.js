@@ -68,6 +68,16 @@ const getUserResults = async (req, res, next) => {
     // get when the user registered an account
     const registrationDate = await getRegistrationDate(id);
 
+    sessions.forEach(session => {
+      const confirmedEmails = [];
+      session.emails.forEach(emailGroup => {
+        emailGroup
+          .filter(email => email.status === 'confirmed')
+          .map(email => confirmedEmails.push(email));
+      });
+      session.confirmedParticipants = confirmedEmails.length;
+    });
+
     const results = { sessions, newSurveys, registrationDate };
     return res.json(results);
   } catch (err) {

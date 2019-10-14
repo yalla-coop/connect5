@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'antd';
+import { Table, message } from 'antd';
 import styled from 'styled-components';
 
 const sessionsColumns = [
@@ -17,7 +17,7 @@ const sessionsColumns = [
   },
   {
     title: 'Participants',
-    dataIndex: 'participants',
+    dataIndex: 'confirmedParticipants',
     key: '3',
     align: 'center',
   },
@@ -52,6 +52,25 @@ const Head = styled.h3`
 `;
 
 const Reach = ({ data }) => {
+  console.log('REACH', data);
+
+  // check if any response rates are over 100% and if so give the user a message
+  const over100 =
+    data.newSurveys &&
+    data.newSurveys.filter(survey => {
+      const responseRate = survey.responseRate.split('%')[0];
+      return responseRate > 100;
+    });
+
+  if (over100.length > 0) {
+    message.warning(
+      <>
+      <h3 style={{fontSize: "1rem"}}>You have surveys with a response rate over 100%.</h3>
+      <p>This is because you have had more responses than confirmed attendees. To fix this please update your sessions to have the correct number of people who attended</p></>,
+      3
+    );
+  }
+
   return (
     <div>
       <Head>Sessions</Head>

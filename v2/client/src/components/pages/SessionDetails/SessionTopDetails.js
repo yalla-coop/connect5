@@ -23,6 +23,7 @@ class SessionTopDetails extends Component {
       startTime,
       endTime,
       address,
+      numberOfAttendees,
     } = sessionDetails;
     if (!sessionDetails) {
       return <div>loading</div>;
@@ -39,12 +40,6 @@ class SessionTopDetails extends Component {
       }
     }
 
-    const confirmedAttendeesNumber =
-      sessionDetails &&
-      sessionDetails.participantsEmails.filter(
-        item => item.status === 'confirmed'
-      ).length;
-
     return (
       <SessionTopDetailsWrapper>
         <Statistic>
@@ -57,8 +52,8 @@ class SessionTopDetails extends Component {
             <StatisticValue>{type.replace(/-/g, ' ')}</StatisticValue>
           </StatisticItems>
           <StatisticItems>
-            <StatisticName>Session Capacity</StatisticName>
-            <StatisticValue>{confirmedAttendeesNumber}</StatisticValue>
+            <StatisticName>Capacity</StatisticName>
+            <StatisticValue>{numberOfAttendees}</StatisticValue>
           </StatisticItems>
         </Statistic>
         <SubDetails>
@@ -84,4 +79,11 @@ class SessionTopDetails extends Component {
     );
   }
 }
-export default connect(null)(SessionTopDetails);
+
+const mapStateToProps = state => {
+  return {
+    isMobile: state.checkBrowserWidth.isMobile,
+  };
+};
+
+export default connect(mapStateToProps)(SessionTopDetails);

@@ -109,6 +109,7 @@ const getTrainerGroupSessions = async leadId => {
         _id: '$type',
         participants: { $sum: '$numberOfAttendees' },
         sessions: { $sum: 1 },
+        emails: { $push: '$participantsEmails' },
         type: {
           $first: {
             $switch: {

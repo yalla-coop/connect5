@@ -33,7 +33,7 @@ class SessionActions extends Component {
   };
 
   render() {
-    const { sessionDetails } = this.props;
+    const { sessionDetails, isMobile } = this.props;
     const { _id } = sessionDetails;
     const { deleteSession } = this;
     return (
@@ -44,7 +44,7 @@ class SessionActions extends Component {
               type="edit"
               style={{ width: '2rem', height: '2rem', color: '#08c' }}
             />
-            <IconName>Edit Session</IconName>
+            <IconName>Edit {!isMobile && 'Session'}</IconName>
           </SessionEdit>
         </SessionAction>
 
@@ -54,7 +54,7 @@ class SessionActions extends Component {
               type="delete"
               style={{ width: '2rem', height: '2rem', color: 'red' }}
             />
-            <IconName>Delete Session</IconName>
+            <IconName>Delete {!isMobile && 'Session'}</IconName>
           </SessionDelete>
         </SessionAction>
       </SessionActionsWrapper>
@@ -65,6 +65,7 @@ class SessionActions extends Component {
 const mapStateToProps = state => ({
   msg: state.session.msg,
   role: state.auth.role,
+  isMobile: state.checkBrowserWidth.isMobile,
 });
 
 export default connect(
