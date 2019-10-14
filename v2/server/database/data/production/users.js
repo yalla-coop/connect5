@@ -12,7 +12,7 @@ module.exports = async () => {
 
   await User.create(admin);
 
-  const localLeads = [
+  const dummyLeads = [
     {
       name: 'tez',
       email: 'tez.cook@hants.gov.uk',
@@ -22,7 +22,40 @@ module.exports = async () => {
       region: regions[7],
       officialLocalLead: true,
     },
+    {
+      name: 'andra',
+      email: 'Andra.Chiscop@hee.nhs.uk',
+      password: '123456',
+      role: 'localLead',
+      organization: 'HEE',
+      region: regions[0],
+      officialLocalLead: false,
+    },
   ];
 
-  return User.create(localLeads);
+  const storedLocalLeads = await User.create(dummyLeads);
+
+  const dummyTrainers = [
+    {
+      name: 'alex',
+      email: 'alex@connect5.uk',
+      password: '123456',
+      role: 'trainer',
+      region: regions[0],
+      localLead: storedLocalLeads[0],
+      managers: [storedLocalLeads[1]],
+      officialLocalLead: false,
+    },
+    {
+      name: 'mark',
+      email: 'mark@connect5.uk',
+      password: '123456',
+      role: 'trainer',
+      region: regions[0],
+      localLead: storedLocalLeads[0],
+      managers: [storedLocalLeads[1]],
+      officialLocalLead: false,
+    },
+  ];
+  await User.create(dummyTrainers);
 };
