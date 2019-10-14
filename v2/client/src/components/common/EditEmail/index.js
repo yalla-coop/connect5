@@ -794,7 +794,8 @@ class EditEmail extends Component {
                 loading={loading}
               />
               {error}
-              {isEditView && (
+              {/* after creating session immediately */}
+              {canAddParticipants && (
                 <BackLink
                   onClick={() => {
                     if (typeof backCallback === 'function')
