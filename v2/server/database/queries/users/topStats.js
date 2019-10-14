@@ -6,8 +6,8 @@ const Response = require('../../models/Response');
 const User = require('../../models/User');
 
 const {
-  getTrainerSessionCount,
   getTrainerResponseCount,
+  getTrainerSessions,
 } = require('./trainerResults');
 
 //  query  to get the top line stats that are sent to the dashboard
@@ -148,18 +148,22 @@ const getTopStats = async (userId, userType) => {
     };
   } else {
     // this defaults to it being the trainer
-    const sessions = await getTrainerSessionCount(userId);
     const responses = await getTrainerResponseCount(userId);
 
-    let sessionCount = 0;
-    let participantCount = 0;
     let responseCount = 0;
 
-    if (typeof sessions[0] === 'object') {
-      console.log(sessions[0]);
-      sessionCount = sessions[0].sessions;
-      participantCount = sessions[0].participants;
-    }
+    const fullSessions = await getTrainerSessions(userId);
+
+    const confirmedParticipants = [];
+
+    fullSessions.forEach(session =>
+      session.participantsEmails
+        .filter(email => email.status === 'confirmed')
+        .map(email => confirmedParticipants.push(email))
+    );
+
+    const participantCount = confirmedParticipants.length;
+    const sessionCount = fullSessions.length;
 
     if (typeof responses[0] === 'object')
       responseCount = responses[0].responses;

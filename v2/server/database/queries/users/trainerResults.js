@@ -140,6 +140,10 @@ const getTrainerSessionCount = trainerId => {
   ]);
 };
 
+const getTrainerSessions = trainerId => {
+  return Session.find({ trainers: mongoose.Types.ObjectId(trainerId) });
+};
+
 const getTrainerResponseCount = trainerId => {
   return Response.aggregate([
     {
@@ -158,5 +162,6 @@ module.exports = {
   getTrianerSessions,
   getTrainerSuerveys,
   getTrainerSessionCount,
+  getTrainerSessions,
   getTrainerResponseCount,
 };
