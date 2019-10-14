@@ -24,11 +24,6 @@ import * as Yup from 'yup';
 
 import { getPostSurveyLink, getPreSurveyLink } from '../../../helpers';
 
-import {
-  MY_SESSIONS_URL,
-  MY_GROUP_SESSIONS_URL,
-} from '../../../constants/navigationRoutes';
-
 import Header from '../Header';
 import InfoPopUp from '../InfoPopup';
 
@@ -457,7 +452,6 @@ class EditEmail extends Component {
       endTime,
       backCallback,
       isSchedule,
-      role
     } = this.props;
 
     let title = '';
