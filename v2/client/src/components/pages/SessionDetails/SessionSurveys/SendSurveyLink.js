@@ -9,6 +9,7 @@ const SendSurveyLink = ({
   isSchedule,
   surveyType,
   drawerKey,
+  onClose,
 }) => {
   const confirmedEmails = sessionDetails.participantsEmails.filter(
     item => item.status === 'confirmed'
@@ -31,6 +32,7 @@ const SendSurveyLink = ({
       isSchedule={isSchedule}
       surveyType={surveyType}
       drawerKey={drawerKey}
+      backCallback={onClose}
     />
   );
 };
