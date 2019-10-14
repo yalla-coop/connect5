@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "jest": {
-    "testRegex": "./v2/server/__test__/*",
+    "testRegex": "./server/__test__/*",
     "setupFilesAfterEnv": [
       "./jest.setup.js"
     ],
@@ -18,22 +18,22 @@
     ]
   },
   "scripts": {
-    "start": "node ./v2/server/index.js",
-    "server": "nodemon ./v2/server/index.js",
-    "client": "npm start --prefix v2/client",
+    "start": "node ./server/index.js",
+    "server": "nodemon ./server/index.js",
+    "client": "npm start --prefix ./client",
     "dev": "NODE_ENV=dev concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "test": "NODE_ENV=test jest --detectOpenHandles --forceExit --runInBand",
-    "init:both": "cd ./v2 && npm i && cd ./client && npm i ",
+    "init:both": "npm i && cd ./client && npm i ",
     "test:coverage": "NODE_ENV=test  jest --coverage --detectOpenHandles --forceExit --runInBand",
-    "test:client": "cd ./v2/client && npm test",
-    "test:client:coverage": "cd ./v2/client && npm run test:coverage",
-    "client:init": "cd ./v2/client && npm i",
-    "client:dev": "cd ./v2/client && npm start",
-    "client:build": "cd ./v2/client && npm run build",
+    "test:client": "cd ./client && npm test",
+    "test:client:coverage": "cd ./client && npm run test:coverage",
+    "client:init": "cd ./client && npm i",
+    "client:dev": "cd ./client && npm start",
+    "client:build": "cd ./client && npm run build",
     "heroku-postbuild": "npm run client:init && npm run client:build",
     "coverage": "codecov",
-    "build:data:dev": "NODE_ENV=dev node v2/server/database/data/development/index.js",
-    "build:data:prd": "NODE_ENV=production node v2/server/database/data/production/index.js",
+    "build:data:dev": "NODE_ENV=dev node ./server/database/data/development/index.js",
+    "build:data:prd": "NODE_ENV=production node ./server/database/data/production/index.js",
     "lint": "eslint ."
   },
   "dependencies": {
