@@ -81,7 +81,7 @@ export const deleteSessionAction = id => async dispatch => {
     .then(() => {
       Modal.success({
         title: 'success',
-        content: 'session has been successfully delete',
+        content: 'Session has been successfully deleted',
         onOk: () => history.push(MY_SESSIONS_URL),
       });
     })
@@ -101,7 +101,7 @@ export const sessionUpdateAction = (sessionData, id) => async dispatch => {
     .then(res => {
       Swal.fire({
         title: 'success',
-        text: 'session has been successfully edited',
+        text: 'Session has been successfully edited',
         type: 'success',
         confirmButtonText: 'Ok',
       });
@@ -151,14 +151,14 @@ export const sendEmails = ({
       surveyType,
     })
     .then(res => {
-      message.success('Done, Emails sent successfully!');
+      message.success('Done, emails sent successfully!');
       return dispatch({
         type: SEND_SURVEY_EMAIL_SUCCESS,
         payload: res.data,
       });
     })
     .catch(() => {
-      message.error('Error! something went wronge');
+      message.error('Error! Something went wrong');
       history.push('/404err');
     });
 };
@@ -171,7 +171,7 @@ export const fetchParticipentSessions = pin => async dispatch => {
       payload: res.data,
     });
   } catch (error) {
-    message.error('Error! something went wronge');
+    message.error('Error! Something went wrong');
     return history.push('/404err');
   }
 };

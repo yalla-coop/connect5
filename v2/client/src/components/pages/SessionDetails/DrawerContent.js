@@ -67,6 +67,7 @@ const DrawerContent = ({
           handleAddEmailsClick={handleAddEmailsClick}
           name={name}
           drawerKey={drawerKey}
+          onClose={handleCloseDrawer}
         />
       );
 
@@ -121,6 +122,7 @@ const DrawerContent = ({
           handleAddEmailsClick={handleAddEmailsClick}
           name={name}
           drawerKey={drawerKey}
+          onClose={handleCloseDrawer}
         />
       );
 
@@ -147,6 +149,7 @@ const DrawerContent = ({
           handleDrawerOpen={handleDrawerOpen}
           handleAddEmailsClick={handleAddEmailsClick}
           drawerKey={drawerKey}
+          onClose={handleCloseDrawer}
           isSchedule
         />
       );

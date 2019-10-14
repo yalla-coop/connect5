@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import swal from 'sweetalert2';
-import { Alert, Modal, Progress } from 'antd';
+import { Alert, Modal, Progress, message } from 'antd';
 
 import Spin from '../../common/Spin';
 import { surveysTypes } from '../../../constants';
@@ -50,6 +50,8 @@ class Survey extends Component {
     section: 'confirmSurvey',
     completionRate: 0,
     currentStep: 1,
+    maxNum: null,
+    minNum: 0,
   };
 
   componentDidMount() {
@@ -71,41 +73,24 @@ class Survey extends Component {
   sectionChange = (direction, uniqueGroups) => {
     let newSection;
     const { section } = this.state;
+
     if (direction === 'forward') {
+      const foundIndex =
+        uniqueGroups && uniqueGroups.findIndex(e => e === section);
+
       switch (section) {
-        // first section
         case 'confirmSurvey':
           newSection = 'enterPIN';
           break;
-        // second section
         case 'enterPIN':
           [newSection] = uniqueGroups;
           break;
-        // survey groups start here
-        // demographic is always 0
-        // included only in pre day 1 and pre special
-        case 'demographic':
-          newSection = 'Behavioural Insights';
-          break;
-        // Behav. insights included in post day 1, post day 2
-        case 'Behavioural Insights':
-          // trainer feedback included in post day 3, post-special (additionally to behavioural insights)
-          if (uniqueGroups[1] === 'about your trainer') {
-            newSection = 'about your trainer';
-          }
-          break;
         default:
-          newSection = section;
+          newSection = uniqueGroups[foundIndex + 1];
       }
       // backward direction
     } else {
       switch (section) {
-        case 'enterPIN':
-          newSection = 'confirmSurvey';
-          break;
-        case 'demographic':
-          newSection = 'enterPIN';
-          break;
         case 'Behavioural Insights':
           if (uniqueGroups[0] === 'Behavioural Insights') {
             newSection = 'enterPIN';
@@ -117,7 +102,11 @@ class Survey extends Component {
           newSection = 'Behavioural Insights';
           break;
         case 'about your usual way of teaching':
-          newSection = 'enterPIN';
+          if (uniqueGroups[0] === 'demographic') {
+            newSection = 'demographic';
+          } else {
+            newSection = 'enterPIN';
+          }
           break;
         default:
           newSection = section;
@@ -340,13 +329,50 @@ class Survey extends Component {
     }
   };
 
+  // set maxNumber for beahviouralInsights1
+  setMaxNumber = (code, number) => {
+    if (code === 'People') {
+      this.setState({ maxNum: number });
+    }
+  };
+
+  // set minNumber the maxNumber can be
+  setMinNumber = number => {
+    const { minNum } = this.state;
+    if (number > minNum) {
+      this.setState({ minNum: number });
+    }
+  };
+
+  // use maxNumber for beahviouralInsights1
+  testNumber = (code, number) => {
+    const { maxNum } = this.state;
+    if (['B1', 'B2', 'B3'].includes(code)) {
+      if (maxNum < number) {
+        message.error(
+          'Number cannot be greater than the total number of people you have seen in the last week'
+        );
+        return maxNum;
+      }
+      return number;
+    }
+    return number;
+  };
+
   // check for any changes to the survey inputs and add them to the formstate
   handleChange = e => {
-    const { group, field } = e.target.dataset;
+    const { group, field, code, type } = e.target.dataset;
     const question = e.target.name;
     const { formState } = this.state;
     // if any other type we assign the value to answer and put it in the state
     const answer = { answer: e.target.value, question };
+
+    if (type === 'numberPositive') {
+      answer.answer = this.testNumber(code, answer.answer);
+      if (answer.answer === '' || answer.answer === null) {
+        answer.answer = 0;
+      }
+    }
     if (group === 'demographic') {
       answer.participantField = field;
     }
@@ -552,6 +578,8 @@ class Survey extends Component {
                               completionRate
                             )}
                             completionRate={completionRate}
+                            setMaxNumber={this.setMaxNumber}
+                            testNumber={this.testNumber}
                             // currentQuestion={currentQuestion}
                             // setCurrentQuestion={this.setCurrentQuestion}
                           />

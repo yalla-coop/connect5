@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Empty } from 'antd';
-
 import Spin from '../Spin';
 import { Container } from './Feedback.style';
 

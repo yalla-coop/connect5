@@ -4,6 +4,7 @@ import React from 'react';
 import { DatePicker, Rate, Select, Icon, Modal, Collapse } from 'antd';
 // // please leave this inside for antd to style right
 // import 'antd/dist/antd.css';
+import moment from 'moment';
 
 import {
   RadioField,
@@ -41,7 +42,9 @@ const renderQuestionInputType = (
   handleStarChange,
   nextQuestionID,
   setCurrentQuestion,
-  handleDropdown
+  handleDropdown,
+  code,
+  setMaxNumber
 ) => {
   if (inputType === 'text') {
     return (
@@ -104,6 +107,7 @@ const renderQuestionInputType = (
           }
           value={answers[questionId] && answers[questionId].answer}
           onBlur={() => setCurrentQuestion(nextQuestionID)}
+          defaultValue={moment()}
         />
         {!answers[questionId] && (
           <Warning>* this question must be answered</Warning>
@@ -130,12 +134,17 @@ const renderQuestionInputType = (
           onChange={onChange}
           data-group={group.text}
           data-field={participantField}
+          data-code={code}
+          data-type={inputType}
           value={
             answers[questionId] && answers[questionId].answer
               ? answers[questionId].answer
               : ''
           }
-          onBlur={() => setCurrentQuestion(nextQuestionID)}
+          onBlur={e => {
+            setCurrentQuestion(nextQuestionID);
+            return setMaxNumber(code, e.target.value);
+          }}
           onKeyDown={event => {
             if (event.keyCode === 13) {
               event.preventDefault();
@@ -336,7 +345,9 @@ const questionsRender = (
   handleStarChange,
   setCurrentQuestion,
   handleDropdown,
-  toggleModal
+  toggleModal,
+  setMaxNumber,
+  testNumber
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group.text === 'demographic'
@@ -377,6 +388,7 @@ const questionsRender = (
               options,
               group,
               participantField,
+              code,
             } = el;
             const inputType = el.questionType.desc;
             const nextQuestion = section[qIndex + 1];
@@ -409,7 +421,10 @@ const questionsRender = (
                   handleStarChange,
                   nextQuestionID,
                   setCurrentQuestion,
-                  handleDropdown
+                  handleDropdown,
+                  code,
+                  setMaxNumber,
+                  testNumber
                 )}
               </QuestionWrapper>
             );
@@ -461,6 +476,8 @@ export default class Questions extends React.Component {
       handleAntdDatePicker,
       handleStarChange,
       handleDropdown,
+      setMaxNumber,
+      testNumber
     } = this.props;
 
     const { setCurrentQuestion, toggleModal } = this;
@@ -483,7 +500,9 @@ export default class Questions extends React.Component {
             handleStarChange,
             setCurrentQuestion,
             handleDropdown,
-            toggleModal
+            toggleModal,
+            setMaxNumber,
+            testNumber
           )}
           {renderSkipButtons}
         </QuestionGroup>

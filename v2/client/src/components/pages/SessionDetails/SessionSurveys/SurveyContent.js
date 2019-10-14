@@ -16,6 +16,8 @@ import {
   CopyIcon,
 } from './SessionSurveys.Style';
 
+import { readableSurveysNamePairs } from '../../../../constants';
+
 import('moment-timezone');
 
 class SurveyContent extends Component {
@@ -102,10 +104,7 @@ class SurveyContent extends Component {
     return (
       <SurveyContentWrapper>
         <SurveyLinkType to={`/survey/${id}/${type}/results`}>
-          {type.includes('pre') && 'Pre-Session Survey'}
-          {type.includes('post') && 'Post-Session Survey'}
-          {type.includes('follow-up-3-month') && '3-month Follow Up Survey'}
-          {type.includes('follow-up-6-month') && '6-month Follow Up Survey'}
+          {readableSurveysNamePairs[type]} Survey
         </SurveyLinkType>
 
         <SurveyLinkInfo onClick={onInfoClick}>
@@ -134,6 +133,7 @@ class SurveyContent extends Component {
 
         <FeedbackAction
           as="div"
+          to=""
           onClick={handleDrawerOpen}
           data-key="sendSurveyLinkEmail"
           style={{ cursor: 'pointer' }}
@@ -144,6 +144,7 @@ class SurveyContent extends Component {
 
         <FeedbackAction
           as="div"
+          to=""
           onClick={handleDrawerOpen}
           data-key="scheduleTable"
           data-survey-type={type}

@@ -43,11 +43,10 @@ describe('Test 3and6month schedule emails query', () => {
 
     await removeEmailBySurveyType({
       sessionId: foundSession._id,
-      surveyType: 'follow-up-3-month',
+      surveyTypes: ['follow-up-3-month'],
     });
 
     const updatedSession2 = await Session.findById(foundSession._id);
-
     expect(updatedSession2.scheduledEmails.length).toBe(0);
     done();
   });
@@ -57,7 +56,7 @@ describe('Test 3and6month schedule emails query', () => {
 
     await removeEmailBySurveyType({
       sessionId: foundSession._id,
-      surveyType: 'follow-up-3-month',
+      surveyTypes: ['follow-up-3-month'],
     });
 
     const updatedSession = await Session.findById(foundSession._id);

@@ -42,13 +42,13 @@ const demographics = surveyType => [
     surveyType,
     participantField: 'region',
   },
-  {
-    text: 'Please enter the first date of your Connect 5 training session 1',
-    questionType: questionConstants.questionTypes.date,
-    group: questionConstants.groups.DEMOGRAPHIC,
-    surveyType,
-    participantField: 'Session1Date',
-  },
+  // {
+  //   text: 'Please enter the first date of your Connect 5 training session 1',
+  //   questionType: questionConstants.questionTypes.date,
+  //   group: questionConstants.groups.DEMOGRAPHIC,
+  //   surveyType,
+  //   participantField: 'Session1Date',
+  // },
   {
     text: 'Please enter your job title',
     questionType: questionConstants.questionTypes.text,

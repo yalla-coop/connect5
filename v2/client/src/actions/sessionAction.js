@@ -165,7 +165,7 @@ export const sendEmailReminder = (
     });
 };
 
-export const scheduleNewEmail = emailData => dispatch => {
+export const scheduleNewEmail = (emailData, cb) => dispatch => {
   // start loading
   dispatch({
     type: LOADING_TRUE,
@@ -185,11 +185,7 @@ export const scheduleNewEmail = emailData => dispatch => {
         payload: 'sendEmail',
       });
 
-      Modal.success({
-        title: 'Done!',
-        content: 'Email successfully scheduled',
-      });
-
+      cb();
       return dispatch(fetchSessionDetails(emailData.sessionId));
     })
     .catch(error => {
