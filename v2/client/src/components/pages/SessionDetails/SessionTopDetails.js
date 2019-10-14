@@ -40,12 +40,6 @@ class SessionTopDetails extends Component {
       }
     }
 
-    const confirmedAttendeesNumber =
-      sessionDetails &&
-      sessionDetails.participantsEmails.filter(
-        item => item.status === 'confirmed'
-      ).length;
-
     return (
       <SessionTopDetailsWrapper>
         <Statistic>

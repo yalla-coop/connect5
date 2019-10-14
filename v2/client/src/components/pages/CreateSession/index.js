@@ -325,7 +325,7 @@ class CreateSession extends Component {
 
   render() {
     const { sessionCreated, extraInfo, isPostcodeValid } = this.state;
-    const { role, inputData, loading, createdSession, name, id } = this.props;
+    const { role, inputData, loading, createdSession, name } = this.props;
 
     const {
       inviteesNumber,
