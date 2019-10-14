@@ -27,13 +27,6 @@ const getTopStats = async (userId, userType) => {
     const trainerCount = await User.find({
       $or: [{ role: 'localLead' }, { role: 'trainer' }],
     });
-    // const participantCount = await Response.aggregate([
-    //   {
-    //     $group: {
-    //       _id: '$PIN',
-    //     },
-    //   },
-    // ]);
 
     const allEmails = [];
 
@@ -121,11 +114,6 @@ const getTopStats = async (userId, userType) => {
       }
     }
 
-    // const uniqueResponses =
-    //   responses.length > 0
-    //     ? [...new Set(responses[0].map(response => response._id))]
-    //     : [];
-
     const allEmails = [];
 
     uniqueSessions.forEach(session =>
@@ -133,10 +121,6 @@ const getTopStats = async (userId, userType) => {
         .filter(email => email.status === 'confirmed')
         .map(email => allEmails.push(email))
     );
-
-    // const participantCount = uniqueSessions
-    //   .map(session => session.numberOfAttendees)
-    //   .reduce((a, b) => a + b, 0);
 
     const participantCount = allEmails.length;
 

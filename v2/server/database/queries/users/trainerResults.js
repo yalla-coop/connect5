@@ -24,6 +24,7 @@ const getTrianerSessions = trainerId => {
         _id: '$type',
         sessions: { $sum: 1 },
         participants: { $sum: '$numberOfAttendees' },
+        emails: { $push: '$participantsEmails' },
         key: { $first: '$_id' },
         type: {
           $first: {
