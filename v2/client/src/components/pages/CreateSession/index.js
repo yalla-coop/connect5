@@ -364,6 +364,10 @@ class CreateSession extends Component {
       </div>
     );
 
+    // to redirect user to the new session after sending emails or skipping
+    const sendEmailsCallback = () =>
+      history.push(`/session-details/${createdSession._id}`);
+
     if (sessionCreated) {
       return (
         <EditEmail
@@ -380,6 +384,7 @@ class CreateSession extends Component {
           shortId={createdSession.shortId}
           sessionId={createdSession._id}
           extraInfo={extraInfo}
+          backCallback={sendEmailsCallback}
           canAddParticipants
         />
       );

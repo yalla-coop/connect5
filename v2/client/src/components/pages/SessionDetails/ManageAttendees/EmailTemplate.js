@@ -11,6 +11,7 @@ import {
 } from '../SessionDetails.Style';
 
 const EmailTemplate = ({ activeEmailTemplate }) => {
+  console.log('activeEmailTemplate', activeEmailTemplate);
   return (
     <div>
       <EmailWrapper>
@@ -35,7 +36,9 @@ const EmailTemplate = ({ activeEmailTemplate }) => {
             <EmailText>
               <BoldSpan>Session Date:</BoldSpan>{' '}
               {(activeEmailTemplate.sessionDate &&
-                activeEmailTemplate.sessionDate.format('DD MMM YYYY')) ||
+                moment(activeEmailTemplate.sessionDate).format(
+                  'DD MMM YYYY'
+                )) ||
                 'N/A'}
             </EmailText>
           </li>

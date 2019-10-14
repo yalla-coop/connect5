@@ -57,7 +57,7 @@ describe('Test topStats query', () => {
     getTopStats(trainer.id, 'trainer').then(result => {
       expect(result).toBeDefined();
       expect(result.participantCount).toBeDefined();
-      expect(result.responseRate)..toBeDefined();
+      expect(result.responseRate).toBeDefined();
       done();
     });
   });

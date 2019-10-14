@@ -18,7 +18,7 @@ import {
 class InviteEmails extends Component {
   render() {
     const { sessionDetails, emailInfo } = this.props;
-    const { startTime, endTime } = sessionDetails;
+    const { startTime, endTime, shortId } = sessionDetails;
     const {
       date: emailDate,
       sessionDate,
@@ -80,7 +80,9 @@ class InviteEmails extends Component {
             </li>
           </List>
           <p>To confirm your attendance please click this link: </p>
-
+          <p>
+            {window.location.host}/confirm/{shortId}
+          </p>
           {extraInformation && <p>{extraInformation}</p>}
 
           <br />
