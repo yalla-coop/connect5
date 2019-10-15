@@ -2,6 +2,7 @@ const { surveysSessionsPairs } = require('./../constants');
 
 const getResponseRate = (sessions, surveys) => {
   const obj = {};
+  console.log('sessions', sessions);
   sessions.forEach(s => {
     obj[s._id] = s.participants;
 

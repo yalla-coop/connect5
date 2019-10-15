@@ -81,6 +81,7 @@ const getUserResults = async (req, res, next) => {
     const results = { sessions, newSurveys, registrationDate };
     return res.json(results);
   } catch (err) {
+    console.log('err', err);
     return next(boom.badImplementation(err));
   }
 };
