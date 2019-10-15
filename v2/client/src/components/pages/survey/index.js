@@ -348,7 +348,10 @@ class Survey extends Component {
   testNumber = (code, number) => {
     const { maxNum } = this.state;
     if (['B1', 'B2', 'B3'].includes(code)) {
-      if (maxNum < number) {
+      // turn number and maxnumber into numbers for comparison
+      const numInt = Number(number);
+      const maxInt = Number(maxNum);
+      if (maxInt < numInt) {
         message.error(
           'Number cannot be greater than the total number of people you have seen in the last week'
         );
