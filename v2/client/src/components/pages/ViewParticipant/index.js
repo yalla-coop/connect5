@@ -8,7 +8,7 @@ import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 import BehavioralInsight from '../../common/BehavioralInsight';
 import Feedback from '../../common/Feedback';
-import { fetchParticipentSessions } from '../../../actions/groupSessionsAction';
+import { fetchParticipantSessions } from '../../../actions/groupSessionsAction';
 
 // ACTIONS
 import { readableSurveysNamePairs } from '../../../constants';
@@ -23,7 +23,7 @@ class ViewParticipant extends Component {
 
   componentDidMount() {
     const { match } = this.props;
-    this.props.fetchParticipentSessions(match.params.PIN);
+    this.props.fetchParticipantSessions(match.params.PIN);
   }
 
   clickToggle = direction => {
@@ -106,5 +106,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchParticipentSessions }
+  { fetchParticipantSessions }
 )(ViewParticipant);

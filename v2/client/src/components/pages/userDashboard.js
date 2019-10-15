@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
 import moment from 'moment';
 
-import { fetchParticipentSessions } from '../../actions/groupSessionsAction';
+import { fetchParticipantSessions } from '../../actions/groupSessionsAction';
 import { logout } from '../../actions/authAction';
 import { uppercaseSurvey } from '../../helpers';
 
@@ -101,7 +101,7 @@ class UserDashboard extends Component {
     if (!location.state) return;
     const { surveySubmited, sessionId } = location.state;
     if (surveySubmited && sessionId) {
-      this.props.fetchParticipentSessions(PIN);
+      this.props.fetchParticipantSessions(PIN);
     }
   }
 
@@ -212,5 +212,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchParticipentSessions, logout }
+  { fetchParticipantSessions, logout }
 )(UserDashboard);
