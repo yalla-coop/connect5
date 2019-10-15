@@ -281,8 +281,7 @@ class UserResults extends Component {
   };
 
   render() {
-    const { results, role, history, sessions, userId } = this.props;
-    const { state } = history.location;
+    const { results, role, sessions, userId } = this.props;
     const {
       toggle,
       resultsFor,
@@ -292,7 +291,6 @@ class UserResults extends Component {
       hiddenFields,
     } = this.state;
     // if a user has been passed on then store as the user
-    const user = state && state.trainer;
 
     return (
       <TrainerResultsWrapper>
@@ -346,12 +344,8 @@ class UserResults extends Component {
             <SessionList dataList={sessions} />
           </ContentWrapper>
         )}
-        {/* <ButtonWrapper>
-          <Button icon="download" size="large">
-            Export to CSV
-          </Button>
-        </ButtonWrapper> */}
-        <ExportButton filter selectedUser={user} />
+
+        <ExportButton filters={filters} />
       </TrainerResultsWrapper>
     );
   }
