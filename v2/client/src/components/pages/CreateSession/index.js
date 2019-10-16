@@ -180,7 +180,7 @@ class CreateSession extends Component {
                   value={_id}
                   style={{ textTransform: 'capitalize' }}
                 >
-                  {`${name[0].toUpperCase()}${name.slice(1)}`}
+                  {`${name[0].toUpperCase()}${name.slice(1)}`}{' '}{_id === id && "(Me)"}
                 </Option>
               );
             })
@@ -325,7 +325,7 @@ class CreateSession extends Component {
 
   render() {
     const { sessionCreated, extraInfo, isPostcodeValid } = this.state;
-    const { role, inputData, loading, createdSession, name, id } = this.props;
+    const { role, inputData, loading, createdSession, name } = this.props;
 
     const {
       inviteesNumber,
@@ -364,6 +364,10 @@ class CreateSession extends Component {
       </div>
     );
 
+    // to redirect user to the new session after sending emails or skipping
+    const sendEmailsCallback = () =>
+      history.push(`/session-details/${createdSession._id}`);
+
     if (sessionCreated) {
       return (
         <EditEmail
@@ -380,6 +384,7 @@ class CreateSession extends Component {
           shortId={createdSession.shortId}
           sessionId={createdSession._id}
           extraInfo={extraInfo}
+          backCallback={sendEmailsCallback}
           canAddParticipants
         />
       );
@@ -598,15 +603,6 @@ class CreateSession extends Component {
                 </div>
               )}
             >
-              {role !== 'trainer' && (
-                <Option
-                  key={id}
-                  value={id}
-                  style={{ textTransform: 'capitalize' }}
-                >
-                  {`${name[0].toUpperCase()}${name.slice(1)}`} (me)
-                </Option>
-              )}
               {this.renderTrainersList(partnerTrainer2)}
             </Select>
             {role === 'localLead' && partnerTrainer1 === null && (
@@ -663,15 +659,6 @@ class CreateSession extends Component {
                   </div>
                 )}
               >
-                {role !== 'trainer' && (
-                  <Option
-                    key={id}
-                    value={id}
-                    style={{ textTransform: 'capitalize' }}
-                  >
-                    {`${name[0].toUpperCase()}${name.slice(1)}`} (me)
-                  </Option>
-                )}
                 {this.renderTrainersList(partnerTrainer1)}
               </Select>
             </InputDiv>

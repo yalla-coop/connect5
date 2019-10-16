@@ -33,7 +33,8 @@ export const StatisticItems = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
+  padding: 0 0.5rem;
   &:not(:last-child) {
     border-right: ${borders.inputBox};
     /* padding: 0 0.5rem; */
@@ -44,7 +45,7 @@ export const StatisticName = styled.span`
   display: block;
   color: ${colors.blackSecondary};
   text-align: center;
-  margin: 0.8rem 0 0.95rem 0;
+  margin: 0.8rem 0 0 0;
   font-size: 0.9rem;
   @media (min-width: 768px) {
     font-size: 1rem;

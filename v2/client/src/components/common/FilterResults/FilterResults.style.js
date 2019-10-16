@@ -4,7 +4,7 @@ import { colors } from '../../../theme';
 export const FilterWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2rem 0;
+  padding: 1rem 0;
   margin: 0 auto;
   max-width: 450px;
 `;
@@ -47,4 +47,15 @@ export const ClearBtn = styled.button`
   color: #eb5757;
   padding-top: 1rem;
   cursor: pointer;
+`;
+
+export const FilterHeader = styled.div`
+  background-color: ${colors.black};
+  color: ${colors.offWhite};
+  height: 32px;
+  text-align: center;
+  padding-top: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 `;

@@ -24,6 +24,7 @@ const getTrianerSessions = trainerId => {
         _id: '$type',
         sessions: { $sum: 1 },
         participants: { $sum: '$numberOfAttendees' },
+        emails: { $push: '$participantsEmails' },
         key: { $first: '$_id' },
         type: {
           $first: {
@@ -140,6 +141,10 @@ const getTrainerSessionCount = trainerId => {
   ]);
 };
 
+const getTrainerSessions = trainerId => {
+  return Session.find({ trainers: mongoose.Types.ObjectId(trainerId) });
+};
+
 const getTrainerResponseCount = trainerId => {
   return Response.aggregate([
     {
@@ -158,5 +163,6 @@ module.exports = {
   getTrianerSessions,
   getTrainerSuerveys,
   getTrainerSessionCount,
+  getTrainerSessions,
   getTrainerResponseCount,
 };

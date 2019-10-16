@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { breakpoints, colors } from '../../../theme';
+import { breakpoints } from '../../../theme';
 
 export const Wrapper = styled.div`
   background: ${({ backgroundColor }) => backgroundColor || '#f7f8f9'};
@@ -67,14 +67,4 @@ export const ReadMore = styled.span`
   text-decoration-line: underline;
   cursor: pointer;
   margin-left: 0.5rem;
-`;
-
-export const FilterHeader = styled.div`
-  background-color: ${colors.black};
-  color: ${colors.offWhite};
-  height: 32px;
-  text-align: center;
-  padding-top: 5px;
-  cursor: pointer;
-  font-size: 1rem;
 `;

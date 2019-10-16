@@ -4,6 +4,15 @@ const getResponseRate = (sessions, surveys) => {
   const obj = {};
   sessions.forEach(s => {
     obj[s._id] = s.participants;
+
+    const emails = [];
+    s.emails.forEach(emailGroup => {
+      emailGroup
+        .filter(email => email.status === 'confirmed')
+        .map(email => emails.push(email));
+    });
+
+    obj[s._id] = emails.length;
   });
 
   return surveys.map(survey => {

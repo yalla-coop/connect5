@@ -1,7 +1,7 @@
 import { EXPORT_DATA_SUCCESS } from '../constants/actionTypes';
 
 const initialState = {
-  data: null,
+  data: [],
 };
 
 const exportData = (state = initialState, action) => {

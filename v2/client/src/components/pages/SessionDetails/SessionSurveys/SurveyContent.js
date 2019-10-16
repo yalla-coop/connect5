@@ -133,6 +133,7 @@ class SurveyContent extends Component {
 
         <FeedbackAction
           as="div"
+          to=""
           onClick={handleDrawerOpen}
           data-key="sendSurveyLinkEmail"
           style={{ cursor: 'pointer' }}
@@ -143,6 +144,7 @@ class SurveyContent extends Component {
 
         <FeedbackAction
           as="div"
+          to=""
           onClick={handleDrawerOpen}
           data-key="scheduleTable"
           data-survey-type={type}

@@ -14,6 +14,7 @@ exports.getDashboardStats = async (req, res, next) => {
     const stats = await getTopStats(user.id, userType);
     return res.json({ stats, userType, userId: user.id });
   } catch (err) {
+    console.log('ERR', err);
     return next(boom.badImplementation(err));
   }
 };

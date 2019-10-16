@@ -95,7 +95,7 @@ const calculateAverage = array => {
   const total = filteredNumbers.reduce((prev, curr) => {
     return prev + curr;
   }, 0);
-  return total === 0 ? 0 : total / filteredNumbers.length || 0;
+  return total === 0 ? 0 : total / array.length || 0;
 };
 
 const getThreeMonthSurvey = type => {
