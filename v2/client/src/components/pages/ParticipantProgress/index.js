@@ -21,7 +21,6 @@ class ParticipantProgress extends Component {
   render() {
     const { sessions } = this.props;
 
-    console.log('sesss', sessions);
     if (!sessions) {
       return <div>loading</div>;
     }
