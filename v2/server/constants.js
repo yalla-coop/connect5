@@ -39,6 +39,32 @@ const surveysTypes = {
   ],
 };
 
+// survey types excluding follow ups
+
+const surveysTypesNoFollowUps = {
+  '1': [
+    'pre-day-1',
+    'post-day-1',
+  ],
+  '2': ['post-day-2'],
+  '3': ['post-day-3'],
+  'special-2-days': [
+    'pre-special',
+    'post-special',
+  ],
+  'train-trainers-s1': [
+    'pre-train-trainers-s1',
+    'post-train-trainers-s1',
+  ],
+  'train-trainers-s2': [
+    'post-train-trainers-s2',
+  ],
+  'train-trainers-event': [
+    'pre-train-trainers-event',
+    'post-train-trainers-event',
+  ],
+};
+
 // array of plain text of surveys names
 // [ 'pre-day-1', 'post-day-1' , "post-day-2", .....]
 const plainSurveyTypes = [];
@@ -143,4 +169,5 @@ module.exports = {
   readableSessionNamePairs,
   readableSurveysNamePairs,
   relevantSessionsForSurveys,
+  surveysTypesNoFollowUps
 };

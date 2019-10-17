@@ -3,7 +3,7 @@ import {
   FETCH_LOCAL_LEAD_SESSIONS,
   FETCH_ALL_SESSIONS,
   FETCH_SESSION_DETAILS,
-  FETCH_PRTICIPENT_SESSIONS_SUCCESS,
+  FETCH_PARTICIPANT_SESSIONS_SUCCESS ,
 } from '../constants/actionTypes';
 
 const initState = {
@@ -22,7 +22,7 @@ const fetchedSessions = (state = initState, action) => {
       return { ...state, sessions: payload, loaded: true };
     case FETCH_ALL_SESSIONS:
       return { ...state, sessions: payload, loaded: true };
-    case FETCH_PRTICIPENT_SESSIONS_SUCCESS:
+    case FETCH_PARTICIPANT_SESSIONS_SUCCESS:
       return { ...state, participantSessions: payload };
     case FETCH_SESSION_DETAILS:
       return { ...state, sessionDetails: payload, loaded: true };
