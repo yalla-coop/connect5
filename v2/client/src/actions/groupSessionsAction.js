@@ -11,7 +11,7 @@ import {
   EDIT_SESSION_SUCCESS,
   UPDATE_EMAILS_SUCCESS,
   SEND_SURVEY_EMAIL_SUCCESS,
-  FETCH_PRTICIPENT_SESSIONS_SUCCESS,
+  FETCH_PARTICIPANT_SESSIONS_SUCCESS,
   LOADING_FALSE,
   LOADING_TRUE,
 } from '../constants/actionTypes';
@@ -163,11 +163,13 @@ export const sendEmails = ({
     });
 };
 
-export const fetchParticipentSessions = pin => async dispatch => {
+export const fetchParticipantSessions = pin => async dispatch => {
+
   try {
     const res = await axios.get(`/api/participant/${pin}/progress`);
+  console.log('resss', res.data)
     return dispatch({
-      type: FETCH_PRTICIPENT_SESSIONS_SUCCESS,
+      type: FETCH_PARTICIPANT_SESSIONS_SUCCESS,
       payload: res.data,
     });
   } catch (error) {

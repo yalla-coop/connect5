@@ -95,7 +95,7 @@ class Certificate extends Component {
                   }}
                 >
                   <Button type="primary" size="large" block>
-                    Download only
+                    Download Certificate!
                   </Button>
                 </Link>
                 <br />
@@ -106,9 +106,9 @@ class Certificate extends Component {
                     state: { sendEmail: true },
                   }}
                 >
-                  <Button type="primary" size="large" block>
+                  {/* <Button type="primary" size="large" block>
                     Download and send to my email
-                  </Button>
+                  </Button> */}
                 </Link>
               </ButtonsWrapper>
             </Wrapper>

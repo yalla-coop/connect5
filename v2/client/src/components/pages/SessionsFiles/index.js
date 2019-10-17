@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Collapse, Empty } from 'antd';
 
 // Functions
-import { fetchParticipentSessions } from '../../../actions/groupSessionsAction';
+import { fetchParticipantSessions } from '../../../actions/groupSessionsAction';
 
 // Components
 import Header from '../../common/Header';
@@ -25,11 +25,12 @@ const { Panel } = Collapse;
 class SessionsFiles extends Component {
   componentDidMount() {
     const { PIN } = this.props;
-    this.props.fetchParticipentSessions(PIN);
+    this.props.fetchParticipantSessions(PIN);
   }
 
   render() {
     const { sessions } = this.props;
+
     const completedSessions = sessions;
     return (
       <div>
@@ -85,10 +86,10 @@ class SessionsFiles extends Component {
 
 const mapStateToProps = state => ({
   PIN: state.auth.PIN,
-  sessions: state.sessions.sessions,
+  sessions: state.sessions.participantSessions,
 });
 
 export default connect(
   mapStateToProps,
-  { fetchParticipentSessions }
+  { fetchParticipantSessions }
 )(SessionsFiles);
