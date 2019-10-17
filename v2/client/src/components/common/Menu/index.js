@@ -320,7 +320,7 @@ class HumburgerMenu extends Component {
                   </MenuItem>
                   <MenuItem to="/participant-login" dark={dark}>
                     <MenuIcon className="fas fa-sign-in-alt" />
-                    LOGIN AS ACOURSE PARTICIPANT
+                    LOGIN AS A COURSE PARTICIPANT
                   </MenuItem>
                   <MenuItem to={SIGN_UP_URL} dark={dark}>
                     <MenuIcon className="fas fa-user-plus" />
