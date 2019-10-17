@@ -3,7 +3,12 @@ import React, { Component } from 'react';
 import { Select, Icon } from 'antd';
 
 import { connect } from 'react-redux';
-import { FilterHeader } from '../BehavioralInsight/BehavioralInsight.style';
+import {
+  setFilters as setFiltersAction,
+  resetFilters as resetFiltersAction,
+} from '../../../actions/filters';
+
+import ExportButton from '../ExportButton';
 
 import Button from '../Button';
 import {
@@ -26,30 +31,22 @@ import {
   InputDiv,
   Label,
   ClearBtn,
+  FilterHeader,
 } from './FilterResults.style';
 
 const { Option } = Select;
 
-const initialState = {
-  sessionType: [],
-  region: [],
-  localLead: [],
-  trainer: [],
-  age: [],
-  gender: [],
-  ethnicity: [],
-  workforce: [],
-  showFilter: false,
-};
-
 class FilterResults extends Component {
-  state = initialState;
+  state = {
+    showFilter: false,
+  };
 
   componentDidMount() {
     const {
       fetchLocalLeads,
       fetchAllTrainers,
       fetchLocalLeadTrainersGroup: fetchLocalLeadTrainersGroupAction,
+      setFilters,
     } = this.props;
     const { id, role, defaultFilters } = this.props;
 
@@ -60,17 +57,29 @@ class FilterResults extends Component {
       fetchLocalLeads();
     }
 
-    this.setState({ ...defaultFilters });
+    if (defaultFilters) {
+      Object.entries(defaultFilters).forEach(([key, value]) => {
+        setFilters(value, key);
+      });
+    }
   }
 
   clearAllFilter = () => {
-    this.setState(initialState, () => {
-      this.getData();
-    });
-  };
+    const {
+      resetFilters,
+      defaultFilters,
+      setFilters,
+      handleFilteredData,
+    } = this.props;
 
-  onSelectChange = (value, name) => {
-    this.setState({ [name]: value });
+    resetFilters();
+    if (defaultFilters) {
+      Object.entries(defaultFilters).forEach(([key, value]) => {
+        setFilters(value, key);
+      });
+    }
+
+    handleFilteredData(defaultFilters);
   };
 
   handleSubmit = e => {
@@ -89,7 +98,7 @@ class FilterResults extends Component {
       ethnicity,
       workforce,
       sessionId,
-    } = this.state;
+    } = this.props;
 
     const filteredData = {
       sessionType,
@@ -109,6 +118,7 @@ class FilterResults extends Component {
         filters[key] = array;
       }
     });
+
     const { handleFilteredData } = this.props;
     handleFilteredData(filters);
   };
@@ -119,7 +129,16 @@ class FilterResults extends Component {
   };
 
   render() {
+    const { showFilter } = this.state;
+
     const {
+      localLeadsList,
+      trainers,
+      localLeadTrainersGroup,
+      role,
+      hiddenFields = [],
+      setFilters,
+      // filters
       sessionType,
       region,
       localLead,
@@ -128,16 +147,18 @@ class FilterResults extends Component {
       gender,
       ethnicity,
       workforce,
-      showFilter,
-    } = this.state;
-
-    const {
-      localLeadsList,
-      trainers,
-      localLeadTrainersGroup,
-      role,
-      hiddenFields = [],
     } = this.props;
+
+    const filters = {
+      sessionType,
+      region,
+      localLead,
+      trainer,
+      age,
+      gender,
+      ethnicity,
+      workforce,
+    };
 
     return (
       <FilterWrapper>
@@ -160,9 +181,7 @@ class FilterResults extends Component {
                   style={{ width: '100%' }}
                   placeholder="Click to select session No."
                   optionFilterProp="children"
-                  onChange={values =>
-                    this.onSelectChange(values, 'sessionType')
-                  }
+                  onChange={values => setFilters(values, 'sessionType')}
                   size="large"
                   value={sessionType}
                 >
@@ -185,7 +204,7 @@ class FilterResults extends Component {
                   id="localLead"
                   style={{ width: '100%' }}
                   placeholder="localLeads"
-                  onChange={values => this.onSelectChange(values, 'localLead')}
+                  onChange={values => setFilters(values, 'localLead')}
                   size="large"
                   value={localLead}
                 >
@@ -208,7 +227,7 @@ class FilterResults extends Component {
                   style={{ width: '100%' }}
                   placeholder="trainer"
                   optionFilterProp="children"
-                  onChange={values => this.onSelectChange(values, 'trainer')}
+                  onChange={values => setFilters(values, 'trainer')}
                   size="large"
                   value={trainer}
                 >
@@ -238,7 +257,7 @@ class FilterResults extends Component {
                   style={{ width: '100%' }}
                   placeholder="Region"
                   optionFilterProp="children"
-                  onChange={values => this.onSelectChange(values, 'region')}
+                  onChange={values => setFilters(values, 'region')}
                   size="large"
                   value={region}
                 >
@@ -261,7 +280,7 @@ class FilterResults extends Component {
                   style={{ width: '100%' }}
                   placeholder="Ages"
                   optionFilterProp="children"
-                  onChange={values => this.onSelectChange(values, 'age')}
+                  onChange={values => setFilters(values, 'age')}
                   size="large"
                   value={age}
                 >
@@ -284,7 +303,7 @@ class FilterResults extends Component {
                   style={{ width: '100%' }}
                   placeholder="Gender"
                   optionFilterProp="children"
-                  onChange={values => this.onSelectChange(values, 'gender')}
+                  onChange={values => setFilters(values, 'gender')}
                   size="large"
                   value={gender}
                 >
@@ -307,7 +326,7 @@ class FilterResults extends Component {
                   style={{ width: '100%' }}
                   placeholder="Ethnicity"
                   optionFilterProp="children"
-                  onChange={values => this.onSelectChange(values, 'ethnicity')}
+                  onChange={values => setFilters(values, 'ethnicity')}
                   size="large"
                   value={ethnicity}
                 >
@@ -330,7 +349,7 @@ class FilterResults extends Component {
                   style={{ width: '100%' }}
                   placeholder="Workforce"
                   optionFilterProp="children"
-                  onChange={values => this.onSelectChange(values, 'workforce')}
+                  onChange={values => setFilters(values, 'workforce')}
                   size="large"
                   value={workforce}
                 >
@@ -358,6 +377,11 @@ class FilterResults extends Component {
                 height="40px"
                 width="100%"
               />
+              <ExportButton
+                filters={filters}
+                text="Export filtered responses"
+                width="100%"
+              />
             </InputDiv>
           </Form>
         )}
@@ -367,12 +391,33 @@ class FilterResults extends Component {
 }
 
 const mapStateToProps = state => {
+  const {
+    sessionType,
+    region,
+    localLead,
+    trainer,
+    age,
+    gender,
+    ethnicity,
+    workforce,
+    sessionId,
+  } = state.filters;
+
   return {
     id: state.auth.id,
     currentUser: state.auth,
     localLeadTrainersGroup: state.fetchedData.localLeadGroup,
     localLeadsList: state.fetchedData.localLeadsList,
     trainers: state.trainers.trainers,
+    sessionType,
+    region,
+    localLead,
+    trainer,
+    age,
+    gender,
+    ethnicity,
+    workforce,
+    sessionId,
   };
 };
 
@@ -382,5 +427,7 @@ export default connect(
     fetchLocalLeadTrainersGroup,
     fetchLocalLeads: fetchLocalLeadsAction,
     fetchAllTrainers: fetchAllTrainersAction,
+    setFilters: setFiltersAction,
+    resetFilters: resetFiltersAction,
   }
 )(FilterResults);

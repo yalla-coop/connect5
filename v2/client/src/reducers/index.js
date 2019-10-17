@@ -23,6 +23,7 @@ import confirmRegistration from './confirmRegistration';
 import storeSessionData from './storeSessionData';
 import checkBrowserWidth from './checkBrowserWidthReducer';
 import loadingReducer from './loading';
+import filters from './filters';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -46,6 +47,7 @@ const appReducer = combineReducers({
   storeSessionData,
   checkBrowserWidth,
   loading: loadingReducer,
+  filters,
 });
 
 const rootReducer = (state, action) => {
