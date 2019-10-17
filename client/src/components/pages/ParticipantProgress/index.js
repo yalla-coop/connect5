@@ -7,7 +7,7 @@ import Header from '../../common/Header';
 import SessionList from './SessionsList';
 
 // ACTIONS
-import { fetchParticipentSessions } from '../../../actions/groupSessionsAction';
+import { fetchParticipantSessions } from '../../../actions/groupSessionsAction';
 
 // STYLING
 import { Wrapper, Span } from './ParticipantProgress.style';
@@ -15,11 +15,12 @@ import { Wrapper, Span } from './ParticipantProgress.style';
 class ParticipantProgress extends Component {
   componentDidMount() {
     const { PIN } = this.props;
-    this.props.fetchParticipentSessions(PIN);
+    this.props.fetchParticipantSessions(PIN);
   }
 
   render() {
     const { sessions } = this.props;
+
     if (!sessions) {
       return <div>loading</div>;
     }
@@ -39,11 +40,11 @@ const mapStateToProps = state => {
     loaded: state.auth.loaded,
     PIN: state.auth.PIN,
     role: state.auth.role,
-    sessions: state.sessions.sessions,
+    sessions: state.sessions.participantSessions,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchParticipentSessions }
+  { fetchParticipantSessions }
 )(ParticipantProgress);
