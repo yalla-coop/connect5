@@ -92,7 +92,9 @@ const calculator = (subGroupAnswers, allAnswers) => {
 
   subGroupAnswers.forEach(PINsSurvey => {
     Object.entries(PINsSurvey).forEach(([surveyType, answersObject]) => {
-      answersPerSurvey[surveyType].push(answersObject);
+      if (answersPerSurvey[surveyType]) {
+        answersPerSurvey[surveyType].push(answersObject);
+      }
     });
   });
 
@@ -117,7 +119,9 @@ const calculator = (subGroupAnswers, allAnswers) => {
   };
   allAnswers.forEach(PINsSurvey => {
     Object.entries(PINsSurvey).forEach(([surveyType, answersObject]) => {
-      answersPerSurveyAll[surveyType].push(answersObject);
+      if (answersPerSurveyAll[surveyType]) {
+        answersPerSurveyAll[surveyType].push(answersObject);
+      }
     });
   });
 
