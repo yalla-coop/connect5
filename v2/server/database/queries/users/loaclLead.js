@@ -95,7 +95,6 @@ const getTrainerGroupSessions = async leadId => {
     return { case: { $eq: ['$type', pair[0]] }, then: pair[1] };
   });
 
-  console.log('reached');
   const sessions = await Session.aggregate([
     { $match: { canAccessResults: mongoose.Types.ObjectId(leadId) } },
     {
