@@ -16,10 +16,11 @@ const sendLocalLeadEmail = require('../../helpers/emails/sendLocalLeadEmail');
 
 const editProfile = async (req, res, next) => {
   const { user } = req;
-  const {
-    organization = user.organization,
-    localLead = user.localLead,
-  } = req.body;
+  const { organization = user.organization } = req.body;
+  let { localLead } = req.body;
+
+  localLead = localLead || user.localLead;
+
   const data = {};
 
   if (organization) {
