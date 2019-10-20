@@ -67,7 +67,7 @@ module.exports = async filters => {
   }
 
   if (manager) {
-    filteredResultsMatch.trainers = {
+    filteredResultsMatch.managers = {
       $in: manager.map(_managerId => mongoose.Types.ObjectId(_managerId)),
     };
   }
