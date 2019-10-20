@@ -40,7 +40,21 @@ export default {
         />
       </HeaderDiv>
     ),
-    render: ({ results }) => <Reach data={results} />,
+    render: ({
+      results,
+      role,
+      handleFilteredData,
+      defaultFilters,
+      hiddenFields,
+    }) => (
+      <Reach
+        data={results}
+        role={role}
+        handleFilteredData={handleFilteredData}
+        defaultFilters={defaultFilters}
+        hiddenFields={hiddenFields}
+      />
+    ),
   },
   feedback: {
     text: (
@@ -56,9 +70,9 @@ export default {
         />
       </HeaderDiv>
     ),
-    render: ({ resultForRule, filters, hiddenFields }) => (
+    render: ({ resultForRole, filters, hiddenFields }) => (
       <Feedback
-        role={resultForRule}
+        role={resultForRole}
         showFilters
         defaultFilters={filters}
         hiddenFields={hiddenFields}
@@ -79,9 +93,9 @@ export default {
         />
       </HeaderDiv>
     ),
-    render: ({ resultForRule, filters, hiddenFields }) => (
+    render: ({ resultForRole, filters, hiddenFields }) => (
       <Feedback
-        role={resultForRule}
+        role={resultForRole}
         showFilters
         defaultFilters={filters}
         hiddenFields={hiddenFields}
@@ -105,7 +119,7 @@ export default {
     ),
     render: ({
       resultsFor,
-      resultForRule,
+      resultForRole,
       filters,
       hiddenFields,
       ...props
@@ -114,7 +128,7 @@ export default {
         <BehavioralInsight
           {...props}
           trainerId={resultsFor}
-          role={resultForRule}
+          role={resultForRole}
           defaultFilters={filters}
           hiddenFields={hiddenFields}
           showFilters

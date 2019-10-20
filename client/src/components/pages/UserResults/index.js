@@ -44,7 +44,7 @@ const { Panel } = Collapse;
 class UserResults extends Component {
   state = {
     resultsFor: null,
-    resultForRule: null,
+    resultForRole: null,
     toggle: 'left',
     showFilter: false,
     filters: {},
@@ -79,20 +79,20 @@ class UserResults extends Component {
       user && user.name && user.name[0].toUpperCase() + user.name.slice(1);
 
     let resultsFor;
-    let resultForRule;
+    let resultForRole;
     let headerTitle;
     let filters = {};
     let hiddenFields = [];
     if (match && match.path === MY_RESULTS_URL) {
       // admin || local-lead || trainer viewing their own results as a trainer
       resultsFor = userId;
-      resultForRule = 'trainer';
+      resultForRole = 'trainer';
       headerTitle = 'Your ';
       filters = { trainer: [resultsFor] };
       hiddenFields = ['localLead', 'trainer'];
 
       this.props.fetchTrainerSessions(resultsFor);
-      this.props.fetchUserResults(resultsFor, resultForRule);
+      this.props.fetchUserResults(resultsFor, filters);
     } else if (
       match &&
       match.path === GROUP_RESULTS_URL &&
@@ -101,23 +101,23 @@ class UserResults extends Component {
       if (localLeadId && role === 'admin') {
         // admin is viewing local-lead's group results
         resultsFor = localLeadId;
-        resultForRule = 'localLead';
+        resultForRole = 'localLead';
         headerTitle = `${viewdUserName} - Group `;
         filters = { localLead: [localLeadId] };
         hiddenFields = ['localLead'];
 
         this.props.fetchLocalLeadSessions(resultsFor);
-        this.props.fetchUserResults(resultsFor, resultForRule);
+        this.props.fetchUserResults(resultsFor, filters);
       } else {
-        // local-leads is viewing their group results
+        // local-leads are viewing their group results
         resultsFor = userId;
-        resultForRule = 'localLead';
+        resultForRole = 'localLead';
         headerTitle = "Your Group's ";
         filters = { localLead: [userId] };
         hiddenFields = ['localLead'];
 
         this.props.fetchLocalLeadSessions(resultsFor);
-        this.props.fetchUserResults(resultsFor, resultForRule);
+        this.props.fetchUserResults(resultsFor, filters);
       }
     } else if (
       match &&
@@ -127,28 +127,28 @@ class UserResults extends Component {
       // admin || local-lead viewing trainer || local-lead as a trainer result
       if (trainerId) {
         resultsFor = trainerId;
-        resultForRule = 'trainer';
+        resultForRole = 'trainer';
         headerTitle = `${viewdUserName} - `;
         hiddenFields = ['trainer', 'localLead'];
 
         this.props.fetchTrainerSessions(resultsFor);
-        this.props.fetchUserResults(resultsFor, resultForRule);
+        this.props.fetchUserResults(resultsFor, filters);
       }
     } else if (match && match.path === ALL_RESULTS_URL && role === 'admin') {
       // admin viewing all sessions results
       resultsFor = userId;
-      resultForRule = 'admin';
+      resultForRole = 'admin';
       headerTitle = 'All - ';
       // no filters & no hidden fields
 
       this.props.fetchALLSessions();
-      this.props.fetchUserResults(resultsFor, resultForRule);
+      this.props.fetchUserResults(resultsFor, filters);
     } else {
       history.push('/unauthorized');
     }
     this.setState({
       resultsFor,
-      resultForRule,
+      resultForRole,
       headerTitle,
       filters,
       hiddenFields,
@@ -161,12 +161,17 @@ class UserResults extends Component {
     else this.setState({ toggle: 'left' });
   };
 
+  handleFilteredData = filters => {
+    const { resultsFor } = this.state;
+    this.props.fetchUserResults(resultsFor, filters);
+  };
+
   render() {
     const { results, role, sessions, userId } = this.props;
     const {
       toggle,
       resultsFor,
-      resultForRule,
+      resultForRole,
       headerTitle,
       filters,
       hiddenFields,
@@ -210,10 +215,12 @@ class UserResults extends Component {
                   {panels[panel].render({
                     results,
                     resultsFor,
-                    resultForRule,
+                    resultForRole,
                     role,
                     hiddenFields,
                     filters,
+                    handleFilteredData: this.handleFilteredData,
+                    defaultFilters: filters,
                   })}
                 </Panel>
               ))}

@@ -2,6 +2,8 @@ import React from 'react';
 import { Table, message } from 'antd';
 import styled from 'styled-components';
 
+import FilterResults from '../FilterResults';
+
 const sessionsColumns = [
   {
     title: 'Type',
@@ -51,7 +53,13 @@ const Head = styled.h3`
   color: rgba(0, 0, 0, 0.8);
 `;
 
-const Reach = ({ data }) => {
+const Reach = ({
+  data,
+  role,
+  handleFilteredData,
+  defaultFilters,
+  hiddenFields,
+}) => {
   // check if any response rates are over 100% and if so give the user a message
   const over100 =
     data.newSurveys &&
@@ -79,6 +87,12 @@ const Reach = ({ data }) => {
   return (
     <div>
       <Head>Sessions</Head>
+      <FilterResults
+        role={role}
+        handleFilteredData={handleFilteredData}
+        defaultFilters={defaultFilters}
+        hiddenFields={hiddenFields}
+      />
       <Table
         columns={sessionsColumns}
         dataSource={data.sessions}
