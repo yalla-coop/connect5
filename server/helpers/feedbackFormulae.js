@@ -29,6 +29,7 @@ const categoriesPercintage = (_categories, _totalCount, _output, _key) => {
       clonedOutput[category] = {
         ...clonedOutput[category],
         [_key]: (count / _totalCount) * 100,
+        responsesCount: count,
       };
     }
   });
