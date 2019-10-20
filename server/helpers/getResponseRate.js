@@ -21,7 +21,10 @@ const getResponseRate = (sessions, surveys) => {
       const responseRate = survey.responses
         ? `${((survey.responses / obj[session]) * 100).toFixed(1)}%`
         : 'N.A';
-      return { ...survey, responseRate };
+      return {
+        ...survey,
+        responseRate: obj[session] ? responseRate : `No confirmed participants`,
+      };
     }
     const responseRate = 'N.A';
     return { ...survey, responseRate };

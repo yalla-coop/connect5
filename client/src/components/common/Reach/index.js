@@ -26,7 +26,7 @@ const sessionsColumns = [
 const surveysColumns = [
   {
     title: 'Type',
-    dataIndex: '_id',
+    dataIndex: 'type',
     key: '1',
     align: 'center',
   },
@@ -52,8 +52,6 @@ const Head = styled.h3`
 `;
 
 const Reach = ({ data }) => {
-  console.log('REACH', data);
-
   // check if any response rates are over 100% and if so give the user a message
   const over100 =
     data.newSurveys &&
@@ -65,8 +63,15 @@ const Reach = ({ data }) => {
   if (over100.length > 0) {
     message.warning(
       <>
-      <h3 style={{fontSize: "1rem"}}>You have surveys with a response rate over 100%.</h3>
-      <p>This is because you have had more responses than confirmed attendees. To fix this please update your sessions to have the correct number of people who attended</p></>,
+        <h3 style={{ fontSize: '1rem' }}>
+          You have surveys with a response rate over 100%.
+        </h3>
+        <p>
+          This is because you have had more responses than confirmed attendees.
+          To fix this please update your sessions to have the correct number of
+          people who attended
+        </p>
+      </>,
       3
     );
   }
