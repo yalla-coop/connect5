@@ -42,7 +42,10 @@ describe('Testing dashboard stats API', () => {
 
         const trainer = await User.findOne({ role: 'trainer' });
 
-        const resultData = { id: trainer.id, role: 'trainer' };
+        const resultData = {
+          id: trainer.id,
+          filters: { trainer: [trainer.id] },
+        };
 
         request(app)
           .post('/api/users/213123/results')
