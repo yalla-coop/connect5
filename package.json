@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "jest": {
-    "testRegex": "./server/__test__/*",
+    "testRegex": "__test__/*",
     "setupFilesAfterEnv": [
       "./jest.setup.js"
     ],
@@ -15,16 +15,17 @@
       "!**/client/**",
       "!**/server/app.js",
       "!**/coverage/**"
-    ]
+    ],
+    "testEnvironment": "node"
   },
   "scripts": {
     "start": "node ./server/index.js",
     "server": "nodemon ./server/index.js",
     "client": "npm start --prefix ./client",
     "dev": "NODE_ENV=dev concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "test": "NODE_ENV=test jest --detectOpenHandles --forceExit --runInBand",
+    "test": "NODE_ENV=test npm run test:coverage",
     "init:both": "npm i && cd ./client && npm i ",
-    "test:coverage": "NODE_ENV=test  jest --coverage --detectOpenHandles --forceExit --runInBand",
+    "test:coverage": "NODE_ENV=test jest --coverage --runInBand --detectOpenHandles --forceExit",
     "test:client": "cd ./client && npm test",
     "test:client:coverage": "cd ./client && npm run test:coverage",
     "client:init": "cd ./client && npm i",

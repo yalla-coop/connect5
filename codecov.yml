@@ -15,3 +15,6 @@ coverage:
         flags: null
         paths: null
     patch: off
+
+codecov:
+  token: 76e60493-1dd4-46b5-9824-c50b466141b6 
