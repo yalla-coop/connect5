@@ -18,6 +18,7 @@ const dbConnection = () =>
     mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useCreateIndex: true,
+      useUnifiedTopology: true,
     })
   );
 

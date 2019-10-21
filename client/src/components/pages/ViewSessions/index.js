@@ -48,14 +48,14 @@ class ViewSessions extends Component {
     const { userId, match, role } = this.props;
     const { localLeadId, trainerId } = match.params;
     let resultsFor;
-    let resultForRule;
+    let resultForRole;
     let headerTitle;
     // admin || local lead || trainer viewing his own session
     if (match && match.path === '/my-sessions') {
       resultsFor = userId;
-      resultForRule = 'trainer';
+      resultForRole = 'trainer';
       headerTitle = 'Your Sessions';
-      this.fetchSessionsData(resultForRule, resultsFor);
+      this.fetchSessionsData(resultForRole, resultsFor);
     } else if (
       (match &&
         match.path === '/group-results/:trainerId?' &&
@@ -64,28 +64,28 @@ class ViewSessions extends Component {
     ) {
       if (localLeadId) {
         resultsFor = localLeadId;
-        resultForRule = 'localLead';
+        resultForRole = 'localLead';
         headerTitle = 'Group Sessions';
-        this.fetchSessionsData(resultForRule, resultsFor);
+        this.fetchSessionsData(resultForRole, resultsFor);
       } else {
         resultsFor = userId;
-        resultForRule = 'localLead';
+        resultForRole = 'localLead';
         headerTitle = 'Your Group Sessions';
-        this.fetchSessionsData(resultForRule, resultsFor);
+        this.fetchSessionsData(resultForRole, resultsFor);
       }
     } else if (match && match.path === '/all-sessions') {
       resultsFor = userId;
-      resultForRule = 'admin';
+      resultForRole = 'admin';
       headerTitle = 'All Sessions';
 
-      this.fetchSessionsData(resultForRule, resultsFor);
+      this.fetchSessionsData(resultForRole, resultsFor);
     } else if (match && match.path === '/trainer-sessions/trainerId?') {
       if (trainerId) {
         resultsFor = trainerId;
-        resultForRule = 'trainer';
+        resultForRole = 'trainer';
         headerTitle = 'Trainer Sessions';
 
-        this.fetchSessionsData(resultForRule, resultsFor);
+        this.fetchSessionsData(resultForRole, resultsFor);
       }
     }
     this.setState({ headerTitle });

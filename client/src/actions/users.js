@@ -9,10 +9,10 @@ import { checkAuth } from './authAction';
 
 import { captalizesName } from '../helpers/createGroupedLocalLeads';
 
-export const fetchUserResults = (id, role) => async dispatch => {
+export const fetchUserResults = (id, filters) => async dispatch => {
   try {
-    const res = await axios.post(`/api/users/${id}/results`, { id, role });
-    dispatch({
+    const res = await axios.post(`/api/users/${id}/results`, { id, filters });
+    return dispatch({
       type: types.FETCH_USER_RESULTS_SUCCESS,
       payload: res.data,
     });

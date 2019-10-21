@@ -1,26 +1,17 @@
 /* eslint-disable no-param-reassign */
 const boom = require('boom');
-const mongoose = require('mongoose');
+
+const filterSession = require('../../database/queries/users/filterSession');
+const filterSurveys = require('../../database/queries/users/filterSurveys');
 
 const User = require('../../database/models/User');
 
-const {
-  getTrainerGroupSessions,
-  getTrainerGroupSurveys,
-  getMyTrainers,
-} = require('../../database/queries/users/loaclLead');
+const { getMyTrainers } = require('../../database/queries/users/loaclLead');
 
 const {
-  getAdminSessions,
-  getAdminSuerveys,
   getAllTrainers,
   getAllLocalLeads,
 } = require('../../database/queries/users/admin');
-
-const {
-  getTrianerSessions,
-  getTrainerSuerveys,
-} = require('../../database/queries/users/trainerResults');
 
 const { getRegistrationDate } = require('../../database/queries/users');
 
@@ -28,39 +19,19 @@ const getResponseRate = require('../../helpers/getResponseRate');
 
 // get the logged in user results
 const getUserResults = async (req, res, next) => {
-  const { role, id } = req.body;
-  const isValidId = mongoose.Types.ObjectId.isValid(id);
-
-  if (!isValidId) {
-    return next(boom.badData('your data is bad and you should feel bad'));
-  }
+  const { id, filters = {} } = req.body;
 
   try {
-    const user = await User.findById(id);
-    if (!user) {
-      return next(boom.notFound('User not found'));
+    if (id) {
+      const user = await User.findById(id);
+      if (!user) {
+        return next(boom.notFound('User not found'));
+      }
     }
 
-    let sessions;
-    let surveys;
+    const sessions = await filterSession(filters);
 
-    switch (role) {
-      case 'localLead':
-        sessions = await getTrainerGroupSessions(id);
-        surveys = await getTrainerGroupSurveys(id);
-        break;
-
-      case 'admin':
-        sessions = await getAdminSessions(id);
-        surveys = await getAdminSuerveys(id);
-        break;
-
-      // trainer
-      default:
-        sessions = await getTrianerSessions(id);
-        surveys = await getTrainerSuerveys(id);
-        break;
-    }
+    const surveys = await filterSurveys(filters);
 
     // calc the responseRate and add it to the surveys object
     const newSurveys = getResponseRate(sessions, surveys);
