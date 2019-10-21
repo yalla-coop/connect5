@@ -505,6 +505,7 @@ class Survey extends Component {
       'Behavioural Insights',
       'about your trainer',
       'about your usual way of teaching',
+      'about how you expect to teach in the future',
     ];
 
     return (

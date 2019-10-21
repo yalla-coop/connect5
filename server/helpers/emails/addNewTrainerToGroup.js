@@ -43,7 +43,7 @@ const addNewTrainerToGroup = ({
 
   const user = process.env.EMAIL;
   const pass = process.env.EMAIL_PASSWORD;
-  const subject = "You've been added to a localLead group";
+  const subject = "You've been added to a new group";
   const from = 'Connect 5';
 
   const attachments = [

@@ -52,7 +52,6 @@ class BehavioralInsight extends Component {
                 <NCategorizedGroupChart
                   groups={this.getSurveysFromList(question.surveys)}
                   i={`B-NC-${i}`}
-                  legends={['Capability', 'Opportunity', 'Motivation']}
                 />
               </>
             )}

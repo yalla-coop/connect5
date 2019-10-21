@@ -3,6 +3,8 @@ import moment from 'moment';
 import { Icon } from 'antd';
 import Spin from '../Spin';
 
+import { readableSessionNamePairs } from '../../../constants';
+
 import {
   Wrapper,
   Header,
@@ -41,7 +43,9 @@ const SessionList = ({ dataList }) => {
               <Date>{moment(dataItem.date).format('DD/MM/YYYY')}</Date>
               <Type type={dataItem.type}>
                 <p>
-                  {dataItem.type ? dataItem.type.replace(/-/g, ' ') : 'N/A'}
+                  {dataItem.type
+                    ? readableSessionNamePairs[dataItem.type]
+                    : 'N/A'}
                 </p>
               </Type>
               <StyledLink

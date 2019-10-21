@@ -67,7 +67,7 @@ class SubGroupChart extends Component {
     // red lines
     groups
       .append('line')
-      .attr('stroke', d => (d.value && d.average ? `#fc6b6b` : 'none'))
+      .attr('stroke', d => (d.responsesCount ? `#fc6b6b` : 'none'))
       .attr('stroke-width', 2)
       .attr('x1', d => bandScale(d.category || d.surveyType))
       .attr('y1', d => chartHeight - yScale(d.average))
@@ -82,7 +82,7 @@ class SubGroupChart extends Component {
       .append('text')
       .text('No data yet')
       .attr('fill', '#828282')
-      .attr('opacity', d => (d.value ? 0 : 0.7))
+      .attr('opacity', d => (d.responsesCount ? 0 : 0.7))
       .attr(
         'x',
         d => bandScale(d.category || d.surveyType) + bandScale.bandwidth() / 2
@@ -109,7 +109,10 @@ class SubGroupChart extends Component {
       .text(d => `${Math.round(d.value || 0)}%`)
       .attr('class', `chart-sub-groups-${i}-text`)
       .attr('text-anchor', 'middle')
-      .attr('opacity', d => ((d.value || 0) * 0.8) / 100 + 0.2)
+      .attr('opacity', d => {
+        if (d.responsesCount) return ((d.value || 0) * 0.8) / 100 + 0.2;
+        return 0;
+      })
       .attr(
         'x',
         d => bandScale(d.category || d.surveyType) + bandScale.bandwidth() / 2

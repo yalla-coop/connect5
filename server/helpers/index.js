@@ -71,21 +71,6 @@ const checkAnswer = (...paths) => {
   return undefined;
 };
 
-const checkAnswer2 = (...paths) => {
-  if ((paths[0] === 0 || paths[0]) && !paths[1]) {
-    // stop and return the value
-    return paths[0];
-  }
-  if (
-    paths[0] &&
-    paths[1] &&
-    (paths[0][paths[1]] || paths[0][paths[1]] === 0)
-  ) {
-    return checkAnswer(paths[0][paths[1]], ...paths.slice(2));
-  }
-
-  return undefined;
-};
 /**
  * calculate the average for list of numbers
  * @param {[Number]} array - array of numbers to get the average for them
@@ -128,7 +113,6 @@ module.exports = {
   getAllSurveyLinks,
   getSessionSurveys,
   checkAnswer,
-  checkAnswer2,
   calculateAverage,
   getThreeMonthSurvey,
   getSixMonthSurvey,

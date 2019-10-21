@@ -21,7 +21,7 @@ module.exports = async (filters, isTrainTrainersFeedback) => {
   } = filters;
 
   const ageMatch = age ? { $in: ['$age', age] } : true;
-  const genderMatch = gender ? { $in: ['$gender', [gender]] } : true;
+  const genderMatch = gender ? { $in: ['$gender', gender] } : true;
   const ethnicMatch = ethnic ? { $in: ['$ethnic', ethnic] } : true;
   const regionMatch = region ? { $in: ['$region', region] } : true;
   const workforceMatch = workforce ? { $in: ['$workforce', workforce] } : true;

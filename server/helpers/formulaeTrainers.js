@@ -156,6 +156,10 @@ const calculator = (subGroupAnswers, allAnswers) => {
                   behavioralFormulae.FeedbackUserCapabilityB1(answersObject)
                 )
               ),
+              responsesCount: answersPerSurveyAll[surveyType].map(
+                answersObject =>
+                  behavioralFormulae.FeedbackUserCapabilityB1(answersObject)
+              ).length,
             },
             {
               category: 'Opportunity',
@@ -169,6 +173,10 @@ const calculator = (subGroupAnswers, allAnswers) => {
                   behavioralFormulae.FeedbackUserOpportunityB1(answersObject)
                 )
               ),
+              responsesCount: answersPerSurveyAll[surveyType].map(
+                answersObject =>
+                  behavioralFormulae.FeedbackUserOpportunityB1(answersObject)
+              ).length,
             },
             {
               category: 'Motivation',
@@ -182,6 +190,10 @@ const calculator = (subGroupAnswers, allAnswers) => {
                   behavioralFormulae.FeedbackUserMotivationB1(answersObject)
                 )
               ),
+              responsesCount: answersPerSurveyAll[surveyType].map(
+                answersObject =>
+                  behavioralFormulae.FeedbackUserMotivationB1(answersObject)
+              ).length,
             },
           ],
         })),
@@ -215,6 +227,10 @@ const calculator = (subGroupAnswers, allAnswers) => {
                   behavioralFormulae.FeedbackUserCapabilityB2(answersObject)
                 )
               ),
+              responsesCount: answersPerSurveyAll[surveyType].map(
+                answersObject =>
+                  behavioralFormulae.FeedbackUserCapabilityB2(answersObject)
+              ).length,
             },
             {
               category: 'Opportunity',
@@ -228,6 +244,10 @@ const calculator = (subGroupAnswers, allAnswers) => {
                   behavioralFormulae.FeedbackUserOpportunityB2(answersObject)
                 )
               ),
+              responsesCount: answersPerSurveyAll[surveyType].map(
+                answersObject =>
+                  behavioralFormulae.FeedbackUserOpportunityB2(answersObject)
+              ).length,
             },
             {
               category: 'Motivation',
@@ -241,6 +261,10 @@ const calculator = (subGroupAnswers, allAnswers) => {
                   behavioralFormulae.FeedbackUserMotivationB2(answersObject)
                 )
               ),
+              responsesCount: answersPerSurveyAll[surveyType].map(
+                answersObject =>
+                  behavioralFormulae.FeedbackUserMotivationB2(answersObject)
+              ).length,
             },
           ],
         })),
@@ -274,6 +298,10 @@ const calculator = (subGroupAnswers, allAnswers) => {
                   behavioralFormulae.FeedbackUserCapabilityB3(answersObject)
                 )
               ),
+              responsesCount: answersPerSurveyAll[surveyType].map(
+                answersObject =>
+                  behavioralFormulae.FeedbackUserCapabilityB3(answersObject)
+              ).length,
             },
             {
               category: 'Opportunity',
@@ -287,6 +315,10 @@ const calculator = (subGroupAnswers, allAnswers) => {
                   behavioralFormulae.FeedbackUserOpportunityB3(answersObject)
                 )
               ),
+              responsesCount: answersPerSurveyAll[surveyType].map(
+                answersObject =>
+                  behavioralFormulae.FeedbackUserOpportunityB3(answersObject)
+              ).length,
             },
             {
               category: 'Motivation',
@@ -300,6 +332,10 @@ const calculator = (subGroupAnswers, allAnswers) => {
                   behavioralFormulae.FeedbackUserMotivationB3(answersObject)
                 )
               ),
+              responsesCount: answersPerSurveyAll[surveyType].map(
+                answersObject =>
+                  behavioralFormulae.FeedbackUserMotivationB3(answersObject)
+              ).length,
             },
           ],
         })),
@@ -332,6 +368,9 @@ const calculator = (subGroupAnswers, allAnswers) => {
               behavioralFormulae.FeedbackUserB1(answersObject)
             )
           ),
+          responsesCount: answersPerSurveyAll[surveyType].map(answersObject =>
+            behavioralFormulae.FeedbackUserB1(answersObject)
+          ).length,
         })),
       },
       {
@@ -359,6 +398,9 @@ const calculator = (subGroupAnswers, allAnswers) => {
               behavioralFormulae.FeedbackUserB2(answersObject)
             )
           ),
+          responsesCount: answersPerSurveyAll[surveyType].map(answersObject =>
+            behavioralFormulae.FeedbackUserB2(answersObject)
+          ).length,
         })),
       },
       {
@@ -386,6 +428,9 @@ const calculator = (subGroupAnswers, allAnswers) => {
               behavioralFormulae.FeedbackUserB3(answersObject)
             )
           ),
+          responsesCount: answersPerSurveyAll[surveyType].map(answersObject =>
+            behavioralFormulae.FeedbackUserB3(answersObject)
+          ).length,
         })),
       },
     ],

@@ -308,7 +308,7 @@ class FilterResults extends Component {
                   value={gender}
                 >
                   {genders.map(gen => (
-                    <Option key={gen} value={gen}>
+                    <Option key={gen} value={gen.toLowerCase()}>
                       {gen}
                     </Option>
                   ))}

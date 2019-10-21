@@ -3,15 +3,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { Empty } from 'antd';
+
 // // COMMON COMPONENTS
 import Header from '../../common/Header';
 import Toggle from '../../common/Toggle';
 import BehavioralInsight from '../../common/BehavioralInsight';
 import Feedback from '../../common/Feedback';
-import { fetchParticipantSessions } from '../../../actions/groupSessionsAction';
 
 // ACTIONS
-import { readableSurveysNamePairs } from '../../../constants';
+import { fetchParticipantSessions } from '../../../actions/groupSessionsAction';
+
+// CONSTANTS
+import {
+  readableSurveysNamePairs,
+  surveysHaveTrainerFeedbackQuestions,
+} from '../../../constants';
 
 // STYLING
 import { PageWrapper, ContentWrapper, Session } from './ViewParticipant.style';
@@ -33,6 +40,14 @@ class ViewParticipant extends Component {
   render() {
     const { toggle } = this.state;
     const { match, sessions } = this.props;
+    const surveyList = sessions.reduce((prev, cur) => {
+      prev.push(...cur.surveyType);
+      return prev;
+    }, []);
+
+    const surveysIncludeFeedbak = surveyList.some(item =>
+      surveysHaveTrainerFeedbackQuestions.includes(item)
+    );
 
     return (
       <PageWrapper>
@@ -77,15 +92,19 @@ class ViewParticipant extends Component {
                   </span>
                 </Session>
               ))}
-              <Feedback
-                defaultFilters={{
-                  PIN: match.params.PIN,
-                }}
-                surveyList={sessions.reduce((prev, cur) => {
-                  prev.push(...cur.surveyType);
-                  return prev;
-                }, [])}
-              />
+              {surveysIncludeFeedbak ? (
+                <Feedback
+                  defaultFilters={{
+                    PIN: match.params.PIN,
+                  }}
+                  surveyList={surveyList}
+                />
+              ) : (
+                <Empty
+                  description="Surveys aren't include trainer feedback question"
+                  style={{ marginTop: '5rem' }}
+                />
+              )}
             </ContentWrapper>
           )}
         </>
