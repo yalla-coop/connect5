@@ -365,7 +365,12 @@ const questionsRender = (
     question => question.group.text === 'about your usual way of teaching'
   );
 
-  return [demographicQs, behaviourQs, trainerQs, teachingQs]
+  const teachingFutureQs = arrayOfQuestions.filter(
+    question =>
+      question.group.text === 'about how you expect to teach in the future'
+  );
+
+  return [demographicQs, behaviourQs, trainerQs, teachingQs, teachingFutureQs]
     .filter(section => section.length > 0)
     .map((section, index) => (
       // map through each section
@@ -477,7 +482,7 @@ export default class Questions extends React.Component {
       handleStarChange,
       handleDropdown,
       setMaxNumber,
-      testNumber
+      testNumber,
     } = this.props;
 
     const { setCurrentQuestion, toggleModal } = this;
