@@ -16,11 +16,5 @@ coverage:
         paths: null
     patch: off
 
-    
-fixes:
-  - "before/::after/"  # move path   e.g., "before/path" => "after/path"
-  - "::after/"         # move root   e.g., "path/" => "after/path/"
-  - "before/::"        # reduce root e.g., "before/path/" => "path/"
-
 codecov:
   token: 76e60493-1dd4-46b5-9824-c50b466141b6
