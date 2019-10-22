@@ -137,6 +137,7 @@ class SurveyContent extends Component {
           onClick={handleDrawerOpen}
           data-key="sendSurveyLinkEmail"
           style={{ cursor: 'pointer' }}
+          surveyType={subId}
         >
           <p>Email survey to attendees</p>
           <Icon type="right" />

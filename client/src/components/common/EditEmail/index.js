@@ -93,6 +93,7 @@ class EditEmail extends Component {
   topElementRef = React.createRef();
 
   componentDidMount() {
+    console.log('props edit mail', this.props);
     const {
       participantsEmails,
       canAddParticipants,

@@ -11,6 +11,7 @@ const SendSurveyLink = ({
   drawerKey,
   onClose,
 }) => {
+  console.log('surveyType', surveyType);
   const confirmedEmails = sessionDetails.participantsEmails.filter(
     item => item.status === 'confirmed'
   );

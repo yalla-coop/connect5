@@ -5,7 +5,12 @@ const {
 const sendSessionReminder = require('./../../helpers/emails/sendSessionReminder');
 const sendEmailInvitation = require('./../../helpers/emails/sendEmailInvitation');
 const sendSurveyLink = require('./../../helpers/emails/sendSurveyLink');
-const { getPreSurveyLink, getPostSurveyLink } = require('./../../helpers/');
+const {
+  getPreSurveyLink,
+  getPostSurveyLink,
+  getThreeMonthsFollowUpSurveyLink,
+  getSixMonthsFollowUpSurveyLink,
+} = require('./../../helpers/');
 const {
   updateAttendeesList,
 } = require('./../../database/queries/sessionDetails/session');
@@ -15,6 +20,7 @@ module.exports = async (req, res, next) => {
   const { type } = req.query;
   const emailData = req.body;
 
+  console.log('emailData', emailData);
   const preSurveyLink = getPreSurveyLink(
     emailData.sessionType,
     emailData.shortId
@@ -23,6 +29,17 @@ module.exports = async (req, res, next) => {
     emailData.sessionType,
     emailData.shortId
   );
+  const threeMonthsFollowUp = getThreeMonthsFollowUpSurveyLink(
+    emailData.sessionType,
+    emailData.shortId
+  );
+
+  const sixMonthsFollowUp = getSixMonthsFollowUpSurveyLink(
+    emailData.sessionType,
+    emailData.shortId
+  );
+
+  console.log('threeeee', threeMonthsFollowUp);
 
   const sentEmailData = {
     sessionId,
@@ -36,11 +53,11 @@ module.exports = async (req, res, next) => {
   if (type === 'reminder') {
     promises = [addSentEmail(sentEmailData)];
 
-    if (process.env.NODE_ENV === 'production') {
-      promises.push(
-        sendSessionReminder({ ...emailData, preSurveyLink, postSurveyLink })
-      );
-    }
+    // if (process.env.NODE_ENV === 'production') {
+    promises.push(
+      sendSessionReminder({ ...emailData, preSurveyLink, postSurveyLink })
+    );
+    // }
   } else if (type === 'registration') {
     const data = {
       sessionId,
@@ -52,18 +69,25 @@ module.exports = async (req, res, next) => {
     };
 
     promises = [addSentEmail(sentEmailData), updateAttendeesList(data)];
-    if (process.env.NODE_ENV === 'production') {
-      promises.push(sendEmailInvitation(emailData));
-    }
+    // if (process.env.NODE_ENV === 'production') {
+    promises.push(sendEmailInvitation(emailData));
+    // }
   } else if (type === 'surveyLink') {
-    promises = [addSentEmail(sentEmailData)];
-    if (process.env.NODE_ENV === 'production') {
-      promises.push(sendSurveyLink(emailData));
+    if (preSurveyLink) {
+      emailData.preSurveyLink = preSurveyLink;
     }
+    if (postSurveyLink) {
+      emailData.postSurveyLink = postSurveyLink;
+    }
+
+    promises = [addSentEmail(sentEmailData)];
+    // if (process.env.NODE_ENV === 'production') {
+    promises.push(sendSurveyLink(emailData));
+    // }
   }
 
   return Promise.all(promises)
-    .then(() => {
+    .then(resss => {
       return res.json({});
     })
     .catch(err => {

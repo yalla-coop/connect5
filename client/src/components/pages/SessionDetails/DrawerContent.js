@@ -24,6 +24,8 @@ const DrawerContent = ({
   onClear,
   name,
   handleCloseDrawer,
+  surveyType,
+  subId,
   // update
   handleSubmitUpdateAttendees,
   confirmedAttendeesList,
@@ -42,9 +44,10 @@ const DrawerContent = ({
   // feedback
   // schedule list
   handleCancelEmail,
-  surveyType,
+
   handleSubmitSchedule,
 }) => {
+  console.log('ssss', subId);
   switch (drawerKey) {
     case 'viewAttendeesList':
       return (

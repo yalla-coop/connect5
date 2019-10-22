@@ -105,6 +105,20 @@ const getSixMonthSurvey = type => {
   return SixMonthSurvey;
 };
 
+const getThreeMonthsFollowUpSurveyLink = (sessionType, shortId) => {
+  const links = surveysTypes[sessionType].map(item => {
+    return `${process.env.DOMAIN}/survey/${item}&${shortId}`;
+  });
+  return links.find(item => item.includes('3-months'));
+};
+
+const getSixMonthsFollowUpSurveyLink = (sessionType, shortId) => {
+  const links = surveysTypes[sessionType].map(item => {
+    return `${process.env.DOMAIN}/survey/${item}&${shortId}`;
+  });
+  return links.find(item => item.includes('6-months'));
+};
+
 module.exports = {
   uppercaseSurvey,
   surveysTypes,
@@ -116,4 +130,6 @@ module.exports = {
   calculateAverage,
   getThreeMonthSurvey,
   getSixMonthSurvey,
+  getThreeMonthsFollowUpSurveyLink,
+  getSixMonthsFollowUpSurveyLink,
 };
