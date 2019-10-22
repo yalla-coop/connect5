@@ -46,7 +46,7 @@ const ParticipantBehavioral = ({ isAuthenticated, PIN, role }) => {
           title="Connect5 Impacting Behaviour"
           visible={modalVisible}
           onOk={toggleModal}
-          onCancel={toggleModal}
+          cancelButtonProps={{ style: { display: 'none' } }}
           width={800}
         >
           <p>
