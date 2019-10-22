@@ -24,7 +24,7 @@ const behavioralFormulae = require('./behavioralFormulae');
 
     Example
     {
-      'pre-day-1': {
+      'pre-course': {
         KnowB1: 3
       },
       ...
@@ -71,7 +71,7 @@ const behavioralFormulae = require('./behavioralFormulae');
 
 const calculator = (subGroupAnswers, allAnswers) => {
   const answersPerSurvey = {
-    'pre-day-1': [],
+    'pre-course': [],
     'post-day-1': [],
     '3-months-follow-up-day-1': [],
     '6-months-follow-up-day-1': [],
@@ -84,7 +84,7 @@ const calculator = (subGroupAnswers, allAnswers) => {
     '3-months-follow-up-day-3': [],
     '6-months-follow-up-day-3': [],
 
-    'pre-special': [],
+    'pre-course': [],
     'post-special': [],
     '3-months-follow-up-special-2-days': [],
     '6-months-follow-up-special-2-days': [],
@@ -99,7 +99,7 @@ const calculator = (subGroupAnswers, allAnswers) => {
   });
 
   const answersPerSurveyAll = {
-    'pre-day-1': [],
+    'pre-course': [],
     'post-day-1': [],
     '3-months-follow-up-day-1': [],
     '6-months-follow-up-day-1': [],
@@ -112,7 +112,7 @@ const calculator = (subGroupAnswers, allAnswers) => {
     '3-months-follow-up-day-3': [],
     '6-months-follow-up-day-3': [],
 
-    'pre-special': [],
+    'pre-course': [],
     'post-special': [],
     '3-months-follow-up-special-2-days': [],
     '6-months-follow-up-special-2-days': [],
@@ -132,12 +132,12 @@ const calculator = (subGroupAnswers, allAnswers) => {
         text:
           'When they think about suggesting to people ways in which they could take action on their own mental health or wellbeing, you perceive your capability/opportunity/motivation to be:',
         surveys: [
-          'pre-day-1',
+          'pre-course',
           'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
-          'pre-special',
+          'pre-course',
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
@@ -203,12 +203,12 @@ const calculator = (subGroupAnswers, allAnswers) => {
         text:
           'When they think about having a conversation with people in which they develop a shared understanding of their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
         surveys: [
-          'pre-day-1',
+          'pre-course',
           'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
-          'pre-special',
+          'pre-course',
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
@@ -274,12 +274,12 @@ const calculator = (subGroupAnswers, allAnswers) => {
         text:
           'When they think about using appropriate conversational methods to empower poeple to make a change that addresses their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
         surveys: [
-          'pre-day-1',
+          'pre-course',
           'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
-          'pre-special',
+          'pre-course',
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
@@ -347,12 +347,12 @@ const calculator = (subGroupAnswers, allAnswers) => {
         text:
           'They suggested to people who needed it,  ways they could take action on their own mental health or wellbeing',
         surveys: [
-          'pre-day-1',
+          'pre-course',
           'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
-          'pre-special',
+          'pre-course',
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
@@ -377,12 +377,12 @@ const calculator = (subGroupAnswers, allAnswers) => {
         text:
           'They had a conversation with people who needed it,  in which you developed a shared understanding of their mental health and wellbeing needs',
         surveys: [
-          'pre-day-1',
+          'pre-course',
           'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
-          'pre-special',
+          'pre-course',
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
@@ -407,12 +407,12 @@ const calculator = (subGroupAnswers, allAnswers) => {
         text:
           'They used appropriate conversational methods to empower people who needed it, to make a change that addresses their mental health and wellbeing needs',
         surveys: [
-          'pre-day-1',
+          'pre-course',
           'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
-          'pre-special',
+          'pre-course',
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({

@@ -30,7 +30,7 @@ describe('Test Answer schema', () => {
 
   test('should Answer schema store correctly', async done => {
     const response = await Response.findOne({ PIN: 'HIO13' });
-    const question = await Question.find({ surveyType: 'pre-day-1' });
+    const question = await Question.find({ surveyType: 'pre-course' });
 
     const answer = {
       question: question[0],

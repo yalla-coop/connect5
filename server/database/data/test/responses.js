@@ -21,7 +21,7 @@ module.exports = async () => {
     {
       PIN: 'HIO13',
       trainers: [trainers[0], trainers[1]],
-      surveyType: 'pre-day-1',
+      surveyType: 'pre-course',
       session: type1Session,
       participant: participants[0],
     },
@@ -42,7 +42,7 @@ module.exports = async () => {
     {
       PIN: 'RAM14',
       trainers: [trainers[0], trainers[1]],
-      surveyType: 'pre-day-1',
+      surveyType: 'pre-course',
       session: type1Session,
       participant: participants[1],
     },

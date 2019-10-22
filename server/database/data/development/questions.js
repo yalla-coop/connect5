@@ -1189,11 +1189,11 @@ module.exports = () => {
   // --------------------  SESSION 1 ------------------------
   // PRE
   const preCourseDay1Questions = [
-    ...demographics('pre-day-1'),
-    ...behavioural1('pre-day-1'),
-    ...behavioural3('pre-day-1'),
-    ...behavioural4('pre-day-1'),
-    ...behavioural5('pre-day-1'),
+    ...demographics('pre-course'),
+    ...behavioural1('pre-course'),
+    ...behavioural3('pre-course'),
+    ...behavioural4('pre-course'),
+    ...behavioural5('pre-course'),
   ];
 
   // POST
@@ -1273,12 +1273,12 @@ module.exports = () => {
   // ----------------------------- SPECIAL 2 DAYS ------------------
   // PRE
   const preSpecial2DaysQuestions = [
-    ...demographics('pre-special'),
-    ...behavioural1('pre-special'),
-    ...behavioural2('pre-special'),
-    ...behavioural3('pre-special'),
-    ...behavioural4('pre-special'),
-    ...behavioural5('pre-special'),
+    ...demographics('pre-course'),
+    ...behavioural1('pre-course'),
+    ...behavioural2('pre-course'),
+    ...behavioural3('pre-course'),
+    ...behavioural4('pre-course'),
+    ...behavioural5('pre-course'),
   ];
 
   // POST
@@ -1383,7 +1383,7 @@ module.exports = () => {
     ...day3FollowUp6Months,
 
     // Special 2 Days
-    ...preSpecial2DaysQuestions,
+    // ...preSpecial2DaysQuestions,
     ...postSpecial2DaysQuestions,
     ...special2DaysFollowUp3Months,
     ...special2DaysFollowUp6Months,

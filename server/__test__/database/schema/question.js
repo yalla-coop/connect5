@@ -40,7 +40,7 @@ describe('Test Question schema', () => {
       ],
       questionType: { desc: 'radio' },
       group: 'test group',
-      surveyType: 'pre-day-1',
+      surveyType: 'pre-course',
     };
 
     const storedQuestion = await Question.create(question);

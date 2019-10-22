@@ -1,6 +1,6 @@
 export const surveysTypes = {
   '1': [
-    'pre-day-1',
+    'pre-course',
     'post-day-1',
     '3-months-follow-up-day-1',
     '6-months-follow-up-day-1',
@@ -8,7 +8,7 @@ export const surveysTypes = {
   '2': ['post-day-2', '3-months-follow-up-day-2', '6-months-follow-up-day-2'],
   '3': ['post-day-3', '3-months-follow-up-day-3', '6-months-follow-up-day-3'],
   'special-2-days': [
-    'pre-special',
+    'pre-course',
     'post-special',
     '3-months-follow-up-special-2-days',
     '6-months-follow-up-special-2-days',
@@ -33,7 +33,7 @@ export const surveysTypes = {
 };
 
 export const surveysHaveBehavQuestions = [
-  'pre-day-1',
+  'pre-course',
   'post-day-1',
   '3-months-follow-up-day-1',
   '6-months-follow-up-day-1',
@@ -46,7 +46,7 @@ export const surveysHaveBehavQuestions = [
   '3-months-follow-up-day-3',
   '6-months-follow-up-day-3',
 
-  'pre-special',
+  'pre-course',
   'post-special',
   '3-months-follow-up-special-2-days',
   '6-months-follow-up-special-2-days',
@@ -81,7 +81,7 @@ export const surveysHaveTrainTrainerFeedbackQuestions = [
  * an object with { "survey-name": "Survey Name" }
  */
 export const readableSurveysNamePairs = {
-  'pre-day-1': 'Pre-course',
+  'pre-course': 'Pre-course',
   'post-day-1': 'Post Session 1',
   '3-months-follow-up-day-1': '3 months Session 1 follow-up',
   '6-months-follow-up-day-1': '6 months Session 1 follow-up',
@@ -94,7 +94,7 @@ export const readableSurveysNamePairs = {
   '3-months-follow-up-day-3': '3 months Session 3 follow-up',
   '6-months-follow-up-day-3': '6 months Session 3 follow-up',
 
-  'pre-special': 'Pre 2-day Intensive',
+  'pre-course': 'Pre 2-day Intensive',
   'post-special': 'Post 2-day Intensive',
   '3-months-follow-up-special-2-days': '3 months special 2 days follow-up',
   '6-months-follow-up-special-2-days': '6 months special 2 days follow-up',

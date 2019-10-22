@@ -21,7 +21,7 @@ describe('Test /survey/submit/', () => {
   });
 
   test('Test for answers to be submitted', async done => {
-    const surveyType = 'pre-day-1';
+    const surveyType = 'pre-course';
     const singleSession = await Session.findOne({ type: '1' });
     const sessionId = singleSession._id;
     const PIN = 'TES22';
@@ -112,7 +112,7 @@ describe('Test /survey/submit/', () => {
   });
 
   test('Answers dont get stored if not all required answers are filled in', async done => {
-    const surveyType = 'pre-day-1';
+    const surveyType = 'pre-course';
     const singleSession = await Session.findOne({ type: '1' });
     const sessionId = singleSession._id;
     const PIN = 'TES22';
@@ -145,7 +145,7 @@ describe('Test /survey/submit/', () => {
   });
 
   test('Answers dont get stored if PIN has wrong format', async done => {
-    const surveyType = 'pre-day-1';
+    const surveyType = 'pre-course';
     const singleSession = await Session.findOne({ type: '1' });
     const sessionId = singleSession._id;
     const PIN = 'TEST';

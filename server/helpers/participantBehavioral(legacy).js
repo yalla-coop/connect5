@@ -41,7 +41,7 @@ module.exports = rawArray => {
   // array of answers grouped by survey type
   // example
   // [
-  //  {_id: 'pre-day-1', answers: [{ avg: 1, code: "example" }, ... ] },
+  //  {_id: 'pre-course', answers: [{ avg: 1, code: "example" }, ... ] },
   //  {_id: 'pre-day-2', answers: [ { avg: 2, code: "example2"}, ... ] },
   //  ...
   // ]

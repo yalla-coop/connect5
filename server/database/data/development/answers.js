@@ -18,7 +18,7 @@ module.exports = async () => {
     surveyType: 'pre-train-trainers-s1',
   });
 
-  const preDay1Question = await Question.find({ surveyType: 'pre-day-1' });
+  const preDay1Question = await Question.find({ surveyType: 'pre-course' });
   const postDay1Question = await Question.find({ surveyType: 'post-day-1' });
   const postDay2Question2 = await Question.find({ surveyType: 'post-day-2' });
 

@@ -20,7 +20,7 @@ describe('Test exportData query', () => {
   test('gets trainer feedback overall', async done => {
     // const trainer = await User.find({ role: 'admin' });
 
-    const foundResponse = await Response.findOne({ surveyType: 'pre-day-1' });
+    const foundResponse = await Response.findOne({ surveyType: 'pre-course' });
 
     return getResponseCount(
       foundResponse.session,
