@@ -55,19 +55,38 @@ class Survey extends Component {
   };
 
   componentDidMount() {
-    const { location, fetchSurveyData: fetchSurveyDataAction } = this.props;
+    const { location } = this.props;
     const survey = `${location.pathname}`;
     const surveyParts = survey.split('/')[2];
     // gets survey data and set state
-    fetchSurveyDataAction(surveyParts);
-    this.setState({ surveyParts });
-    // info pop up
-    Modal.info({
-      title: 'Important Information',
-      content:
-        'Welcome to the Connect 5 evaluation. Before starting the survey process please make sure all the details related to your session are correct.',
+
+    this.setState({ surveyParts }, () => {
+      this.getData(surveyParts);
+      // info pop up
+      Modal.info({
+        title: 'Important Information',
+        content:
+          'Welcome to the Connect 5 evaluation. Before starting the survey process please make sure all the details related to your session are correct.',
+      });
     });
   }
+
+  componentDidUpdate(prevPros, prevState) {
+    const { surveyParts } = prevState;
+    const { location } = this.props;
+    const survey = `${location.pathname}`;
+    const newSurveyParts = survey.split('/')[2];
+
+    if (newSurveyParts !== surveyParts) {
+      this.getData(newSurveyParts);
+    }
+  }
+
+  getData = surveyParts => {
+    const { fetchSurveyData: fetchSurveyDataAction } = this.props;
+    this.setState({ surveyParts });
+    fetchSurveyDataAction(surveyParts);
+  };
 
   // enables user to change direction of sections (used by back and next buttons)
   sectionChange = (direction, uniqueGroups) => {
