@@ -11,7 +11,7 @@ module.exports.exportData = filters => {
     region,
     workforce,
     trainer,
-    manager,
+    localLead: manager,
     sessionType,
     surveyType,
     // for specific session

@@ -11,7 +11,7 @@ module.exports = async (filters, isTrainTrainersFeedback) => {
     region,
     workforce,
     trainer,
-    manager,
+    localLead: manager,
     sessionType,
     surveyType,
     // for specific session
