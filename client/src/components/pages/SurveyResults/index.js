@@ -142,7 +142,12 @@ class SurveyResults extends Component {
                         sessionId: params.sessionId,
                         surveyType: [params.surveyType],
                       }}
-                      hiddenFields={['session', 'localLead', 'trainer']}
+                      hiddenFields={[
+                        'sessionType',
+                        'localLead',
+                        'trainer',
+                        'surveyType',
+                      ]}
                       surveyList={[params.surveyType]}
                     />
                   </Panel>
@@ -167,7 +172,12 @@ class SurveyResults extends Component {
                         sessionId: params.sessionId,
                         surveyType: [params.surveyType],
                       }}
-                      hiddenFields={['session', 'localLead', 'trainer']}
+                      hiddenFields={[
+                        'sessionType',
+                        'localLead',
+                        'trainer',
+                        'surveyType',
+                      ]}
                       surveyList={[params.surveyType]}
                     />
                   </Panel>
@@ -192,7 +202,12 @@ class SurveyResults extends Component {
                         sessionId: params.sessionId,
                         surveyType: [params.surveyType],
                       }}
-                      hiddenFields={['session', 'localLead', 'trainer']}
+                      hiddenFields={[
+                        'sessionType',
+                        'localLead',
+                        'trainer',
+                        'surveyType',
+                      ]}
                       surveyList={[params.surveyType]}
                       isTrainTrainersFeedback
                     />
@@ -205,6 +220,7 @@ class SurveyResults extends Component {
                 sessionId: params.sessionId,
                 surveyType: [params.surveyType],
               }}
+              text="Export All Responses"
             />
           </>
         ) : (

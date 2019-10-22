@@ -7,7 +7,7 @@ const initialState = {
   trainer: [],
   age: [],
   gender: [],
-  ethnicity: [],
+  ethnic: [],
   workforce: [],
 };
 

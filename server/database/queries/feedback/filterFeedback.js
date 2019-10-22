@@ -20,11 +20,27 @@ module.exports = async (filters, isTrainTrainersFeedback) => {
     PIN,
   } = filters;
 
-  const ageMatch = age ? { $in: ['$age', age] } : true;
-  const genderMatch = gender ? { $in: ['$gender', gender] } : true;
-  const ethnicMatch = ethnic ? { $in: ['$ethnic', ethnic] } : true;
-  const regionMatch = region ? { $in: ['$region', region] } : true;
-  const workforceMatch = workforce ? { $in: ['$workforce', workforce] } : true;
+  const toLowerCaseArray = array => array.map(item => item.toLowerCase());
+
+  const ageMatch = age
+    ? { $in: [{ $toLower: '$age' }, toLowerCaseArray(age)] }
+    : true;
+
+  const genderMatch = gender
+    ? { $in: [{ $toLower: '$gender' }, toLowerCaseArray(gender)] }
+    : true;
+
+  const ethnicMatch = ethnic
+    ? { $in: [{ $toLower: '$ethnic' }, toLowerCaseArray(ethnic)] }
+    : true;
+
+  const regionMatch = region
+    ? { $in: [{ $toLower: '$region' }, toLowerCaseArray(region)] }
+    : true;
+
+  const workforceMatch = workforce
+    ? { $in: [{ $toLower: '$workforce' }, toLowerCaseArray(workforce)] }
+    : true;
 
   let questionTypeMatch = {
     'group.text': questionConstants.groups.ABOUT_YOUR_TRAINER.text,
@@ -61,7 +77,7 @@ module.exports = async (filters, isTrainTrainersFeedback) => {
     ? { $eq: ['$sessionId', mongoose.Types.ObjectId(sessionId)] }
     : true;
 
-  const PINMatch = PIN ? { $eq: ['$PIN', PIN] } : true;
+  const PINMatch = PIN ? { $eq: ['$PIN', PIN.toLowerCase()] } : true;
 
   const filteredResultsMatch = {
     $expr: {

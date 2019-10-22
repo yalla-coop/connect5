@@ -95,7 +95,7 @@ class FilterResults extends Component {
       trainer,
       age,
       gender,
-      ethnicity,
+      ethnic,
       workforce,
       sessionId,
     } = this.props;
@@ -107,7 +107,7 @@ class FilterResults extends Component {
       trainer,
       age,
       gender,
-      ethnicity,
+      ethnic,
       workforce,
       sessionId,
     };
@@ -145,8 +145,10 @@ class FilterResults extends Component {
       trainer,
       age,
       gender,
-      ethnicity,
+      ethnic,
       workforce,
+      sessionId,
+      surveyType,
     } = this.props;
 
     const filters = {
@@ -156,8 +158,10 @@ class FilterResults extends Component {
       trainer,
       age,
       gender,
-      ethnicity,
+      ethnic,
       workforce,
+      sessionId,
+      surveyType,
     };
 
     return (
@@ -326,13 +330,13 @@ class FilterResults extends Component {
                   style={{ width: '100%' }}
                   placeholder="Ethnicity"
                   optionFilterProp="children"
-                  onChange={values => setFilters(values, 'ethnicity')}
+                  onChange={values => setFilters(values, 'ethnic')}
                   size="large"
-                  value={ethnicity}
+                  value={ethnic}
                 >
-                  {ethnics.map(ethnic => (
-                    <Option key={ethnic} value={ethnic}>
-                      {ethnic}
+                  {ethnics.map(_ethnic => (
+                    <Option key={_ethnic} value={_ethnic}>
+                      {_ethnic}
                     </Option>
                   ))}
                 </Select>
@@ -379,7 +383,7 @@ class FilterResults extends Component {
               />
               <ExportButton
                 filters={filters}
-                text="Export filtered responses"
+                text="Export Filtered Responses"
                 width="100%"
               />
             </InputDiv>
@@ -398,9 +402,10 @@ const mapStateToProps = state => {
     trainer,
     age,
     gender,
-    ethnicity,
+    ethnic,
     workforce,
     sessionId,
+    surveyType,
   } = state.filters;
 
   return {
@@ -415,9 +420,10 @@ const mapStateToProps = state => {
     trainer,
     age,
     gender,
-    ethnicity,
+    ethnic,
     workforce,
     sessionId,
+    surveyType,
   };
 };
 
