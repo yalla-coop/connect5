@@ -130,7 +130,9 @@ const calculator = (subGroupAnswers, allAnswers) => {
       // ---------------------------- first chart ------------------
       {
         text:
-          'When they think about suggesting to people ways in which they could take action on their own mental health or wellbeing, you perceive your capability/opportunity/motivation to be:',
+          'When they think about suggesting to people ways in which they could take action on their own mental health or wellbeing, they perceive their capability/opportunity/motivation to be:',
+        textParticipant:
+          'When you think about suggesting to people ways in which they could take action on their own mental health or wellbeing, you perceive your capability/opportunity/motivation to be:',
         surveys: [
           'pre-day-1',
           'post-day-1',
@@ -201,7 +203,10 @@ const calculator = (subGroupAnswers, allAnswers) => {
       // ----------------------------- second chart ---------------
       {
         text:
-          'When they think about having a conversation with people in which they develop a shared understanding of their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
+          'When they think about having a conversation with people in which you develop a shared understanding of their mental health and wellbeing needs, they perceive their capability/opportunity/motivation to be',
+        textParticipant:
+          'When you think about having a conversation with people in which you develop a shared understanding of their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be',
+
         surveys: [
           'pre-day-1',
           'post-day-1',
@@ -272,7 +277,9 @@ const calculator = (subGroupAnswers, allAnswers) => {
       // ----------------------------  third chart ---------------------
       {
         text:
-          'When they think about using appropriate conversational methods to empower poeple to make a change that addresses their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
+          'When they think about using appropriate conversational methods to empower poeple to make a change that addresses their mental health and wellbeing needs, they perceive their capability/opportunity/motivation to be:',
+        textParticipant:
+          'When you think about using appropriate conversational methods to empower poeple to make a change that addresses their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
         surveys: [
           'pre-day-1',
           'post-day-1',
@@ -345,7 +352,9 @@ const calculator = (subGroupAnswers, allAnswers) => {
     nonCategorized: [
       {
         text:
-          'They suggested to people who needed it,  ways they could take action on their own mental health or wellbeing',
+          'They suggested to people who needed it, ways they could take action on their own mental health or wellbeing',
+        textParticipant:
+          'You suggested to people who needed it, ways they could take action on their own mental health or wellbeing',
         surveys: [
           'pre-day-1',
           'post-day-1',
@@ -375,7 +384,9 @@ const calculator = (subGroupAnswers, allAnswers) => {
       },
       {
         text:
-          'They had a conversation with people who needed it,  in which you developed a shared understanding of their mental health and wellbeing needs',
+          'They had a conversation with of people who needed it, in which they developed a shared understanding of their mental health and wellbeing needs',
+        textParticipant:
+          'You had a conversation with of people who needed it, in which you developed a shared understanding of their mental health and wellbeing needs',
         surveys: [
           'pre-day-1',
           'post-day-1',
@@ -406,6 +417,8 @@ const calculator = (subGroupAnswers, allAnswers) => {
       {
         text:
           'They used appropriate conversational methods to empower people who needed it, to make a change that addresses their mental health and wellbeing needs',
+        textParticipant:
+          'You used appropriate conversational methods to empower people who needed it, to make a change that addresses their mental health and wellbeing needs',
         surveys: [
           'pre-day-1',
           'post-day-1',

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Modal, Collapse } from 'antd';
-import ParticipantBehavioralInsight from '../../common/BehavioralInsight';
+import BehavioralInsight from '../../common/BehavioralInsight';
+
 import {
   Wrapper,
   InfoHeader,
@@ -37,10 +38,11 @@ const ParticipantBehavioral = ({ isAuthenticated, PIN, role }) => {
             Click here to learn more
           </InfoHeader>
         </HeaderText>
-        <ParticipantBehavioralInsight
+        <BehavioralInsight
           userRole={role}
           idOrPIN={PIN}
           filters={{ PIN }}
+          participant
         />
         <Modal
           title="Connect5 Impacting Behaviour"
@@ -170,7 +172,6 @@ methods to empower a person to make changes that address their mental wellbeing.
             </Panel>
           </Collapse>
         </Modal>
-        ;
       </Wrapper>
     </>
   );

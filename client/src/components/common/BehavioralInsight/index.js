@@ -46,6 +46,7 @@ class BehavioralTrainerResults extends Component {
       role,
       showFilters,
       surveyList,
+      participant,
     } = this.props;
 
     const { showCharts } = this.state;
@@ -72,6 +73,7 @@ class BehavioralTrainerResults extends Component {
                   categorized={categorized}
                   nonCategorized={nonCategorized}
                   surveyList={surveyList}
+                  participant={participant}
                 />
               ) : (
                 <Spin style={{ width: '100%', padding: '40px' }} />
