@@ -9,6 +9,7 @@ const initialState = {
   gender: [],
   ethnic: [],
   workforce: [],
+  surveyType: [],
 };
 
 export default (state = initialState, action) => {

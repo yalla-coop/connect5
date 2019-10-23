@@ -78,6 +78,11 @@ class TrainerFeedbackOverall extends Component {
                 handleFilteredData={this.handleFilteredData}
                 defaultFilters={defaultFilters}
                 hiddenFields={hiddenFields}
+                target={
+                  isTrainTrainersFeedback
+                    ? 'trainTrainerFeedback'
+                    : 'trainerFeedback'
+                }
               />
             )}
             {showCharts ? (

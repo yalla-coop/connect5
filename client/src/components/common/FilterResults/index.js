@@ -18,7 +18,13 @@ import {
   genders,
   ethnics,
   workforces,
+  surveysTypes,
+  readableSurveysNamePairs,
+  surveysHaveBehavQuestions,
+  surveysHaveTrainerFeedbackQuestions,
+  surveysHaveTrainTrainerFeedbackQuestions,
 } from '../../../constants/index';
+
 import {
   fetchLocalLeads as fetchLocalLeadsAction,
   fetchLocalLeadTrainersGroup,
@@ -98,6 +104,7 @@ class FilterResults extends Component {
       ethnic,
       workforce,
       sessionId,
+      surveyType,
     } = this.props;
 
     const filteredData = {
@@ -110,6 +117,7 @@ class FilterResults extends Component {
       ethnic,
       workforce,
       sessionId,
+      surveyType,
     };
 
     const filters = {};
@@ -149,6 +157,7 @@ class FilterResults extends Component {
       workforce,
       sessionId,
       surveyType,
+      target,
     } = this.props;
 
     const filters = {
@@ -163,6 +172,33 @@ class FilterResults extends Component {
       sessionId,
       surveyType,
     };
+
+    // to be the surveys that related to the selected sessions
+    let surveysForSelectedSessions = [];
+
+    // the surveys related to the filtering type behavioral/feedback/ ...
+    let targetSurveys = [];
+
+    if (target === 'behavioralInsight') {
+      targetSurveys = surveysHaveBehavQuestions;
+    } else if (target === 'trainTrainerFeedback') {
+      targetSurveys = surveysHaveTrainTrainerFeedbackQuestions;
+    } else {
+      // trainerFeedback
+      targetSurveys = surveysHaveTrainerFeedbackQuestions;
+    }
+
+    if (sessionType.length) {
+      sessionType.forEach(session => {
+        surveysTypes[session].forEach(survey => {
+          if (targetSurveys.includes(survey)) {
+            surveysForSelectedSessions.push(survey);
+          }
+        });
+      });
+    } else {
+      surveysForSelectedSessions = targetSurveys;
+    }
 
     return (
       <FilterWrapper>
@@ -196,6 +232,28 @@ class FilterResults extends Component {
                       </Option>
                     )
                   )}
+                </Select>
+              </InputDiv>
+            )}
+
+            {!hiddenFields.includes('surveyType') && (
+              <InputDiv>
+                <Label htmlFor="surveyType">Survey Type(s):</Label>
+                <Select
+                  mode="multiple"
+                  id="surveyType"
+                  style={{ width: '100%' }}
+                  placeholder="Click to select survey type"
+                  optionFilterProp="children"
+                  onChange={values => setFilters(values, 'surveyType')}
+                  size="large"
+                  value={surveyType}
+                >
+                  {surveysForSelectedSessions.map(value => (
+                    <Option key={value} value={value}>
+                      {readableSurveysNamePairs[value]}
+                    </Option>
+                  ))}
                 </Select>
               </InputDiv>
             )}

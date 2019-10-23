@@ -64,6 +64,7 @@ class BehavioralTrainerResults extends Component {
                   handleFilteredData={this.handleFilteredData}
                   defaultFilters={defaultFilters}
                   hiddenFields={hiddenFields}
+                  target="behavioralInsight"
                 />
               )}
               <Explanation />
