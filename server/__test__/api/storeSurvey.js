@@ -16,6 +16,11 @@ describe('Test /survey/submit/', () => {
     done();
   });
 
+  beforeEach(async done => {
+    await buildDB();
+    done();
+  });
+
   afterAll(async () => {
     await mongoose.disconnect();
   });
@@ -33,6 +38,7 @@ describe('Test /survey/submit/', () => {
       answer: 'Under 18',
       participantField: 'age',
     };
+    // expect(formState).toBe('h');
     formState[questions[1]._id] = {
       answer: 'Male',
       participantField: 'gender',
@@ -41,6 +47,7 @@ describe('Test /survey/submit/', () => {
       answer: 'Irish',
       participantField: 'ethnic',
     };
+
     formState[questions[3]._id] = {
       answer: 'London',
       participantField: 'region',

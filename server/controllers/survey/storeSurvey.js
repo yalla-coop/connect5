@@ -20,6 +20,8 @@ module.exports = async (req, res, next) => {
       disagreedToResearch,
     } = req.body;
 
+    // console.log('formState req', formState);
+
     let agreedToResearch = true;
 
     if (disagreedToResearch) {

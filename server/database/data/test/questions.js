@@ -1383,7 +1383,7 @@ module.exports = () => {
     ...day3FollowUp6Months,
 
     // Special 2 Days
-    ...preSpecial2DaysQuestions,
+    // ...preSpecial2DaysQuestions,
     ...postSpecial2DaysQuestions,
     ...special2DaysFollowUp3Months,
     ...special2DaysFollowUp6Months,
