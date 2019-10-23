@@ -7,7 +7,7 @@ module.exports = filters => {
   const {
     // comes from filters
     trainer,
-    manager,
+    localLead: manager,
     sessionType,
     surveyType,
   } = filters;

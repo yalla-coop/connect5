@@ -55,5 +55,11 @@ module.exports = async () => {
       officialLocalLead: false,
     },
   ];
-  await User.create(dummyTrainers);
+  const trainers = await User.create(dummyTrainers);
+
+  const trainersIds = trainers.map(item => item._id);
+  await User.updateOne(
+    { email: 'tez.cook@hants.gov.uk' },
+    { trainersGroup: trainersIds }
+  );
 };

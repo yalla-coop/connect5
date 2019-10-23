@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const Response = require('./../../models/Response');
 
+const { questionConstants } = require('./../../DBConstants');
+
+const behaviouralInsightsGroup = questionConstants.groups.BEHAVIOURAL;
+
 module.exports = async filters => {
   const {
     // comes from filters
@@ -10,7 +14,7 @@ module.exports = async filters => {
     region,
     workforce,
     trainer,
-    manager,
+    localLead: manager,
     sessionType,
     surveyType,
     // for specific session
@@ -19,11 +23,27 @@ module.exports = async filters => {
     PIN,
   } = filters;
 
-  const ageMatch = age ? { $in: ['$age', age] } : true;
-  const genderMatch = gender ? { $in: ['$gender', gender] } : true;
-  const ethnicMatch = ethnic ? { $in: ['$ethnic', ethnic] } : true;
-  const regionMatch = region ? { $in: ['$region', region] } : true;
-  const workforceMatch = workforce ? { $in: ['$workforce', workforce] } : true;
+  const toLowerCaseArray = array => array.map(item => item.toLowerCase());
+
+  const ageMatch = age
+    ? { $in: [{ $toLower: '$age' }, toLowerCaseArray(age)] }
+    : true;
+
+  const genderMatch = gender
+    ? { $in: [{ $toLower: '$gender' }, toLowerCaseArray(gender)] }
+    : true;
+
+  const ethnicMatch = ethnic
+    ? { $in: [{ $toLower: '$ethnic' }, toLowerCaseArray(ethnic)] }
+    : true;
+
+  const regionMatch = region
+    ? { $in: [{ $toLower: '$region' }, toLowerCaseArray(region)] }
+    : true;
+
+  const workforceMatch = workforce
+    ? { $in: [{ $toLower: '$workforce' }, toLowerCaseArray(workforce)] }
+    : true;
 
   const sessionTypeMatch = sessionType
     ? { $in: ['$sessionType', sessionType] }
@@ -37,7 +57,9 @@ module.exports = async filters => {
     ? { $eq: ['$sessionId', mongoose.Types.ObjectId(sessionId)] }
     : true;
 
-  const PINMatch = PIN ? { $eq: ['$PIN', PIN] } : true;
+  const PINMatch = PIN
+    ? { $eq: [{ $toLower: '$PIN' }, PIN.toLowerCase()] }
+    : true;
 
   const filteredResultsMatch = {
     $expr: {
@@ -50,6 +72,7 @@ module.exports = async filters => {
         sessionTypeMatch,
         sessionIdMatch,
         PINMatch,
+        surveyTypeMatch,
       ],
     },
   };
@@ -131,6 +154,39 @@ module.exports = async filters => {
         sessionId: {
           $arrayElemAt: ['$session._id', 0],
         },
+        surveyType: '$surveyType',
+      },
+    },
+    {
+      $lookup: {
+        from: 'answers',
+        localField: '_id',
+        foreignField: 'response',
+        as: 'answers',
+      },
+    },
+    {
+      $unwind: '$answers',
+    },
+    {
+      $lookup: {
+        from: 'questions',
+        localField: 'answers.question',
+        foreignField: '_id',
+        as: 'question',
+      },
+    },
+    {
+      $addFields: {
+        question: {
+          $arrayElemAt: ['$question', 0],
+        },
+      },
+    },
+    {
+      $match: {
+        'question.group.text': behaviouralInsightsGroup.text,
+        'question.code': { $exists: true },
       },
     },
     {
@@ -140,36 +196,10 @@ module.exports = async filters => {
             $match: allResultsMatch,
           },
           {
-            $lookup: {
-              from: 'answers',
-              localField: 'participant',
-              foreignField: 'participant',
-              as: 'answers',
-            },
-          },
-          {
-            $unwind: '$answers',
-          },
-          {
-            $lookup: {
-              from: 'questions',
-              localField: 'answers.question',
-              foreignField: '_id',
-              as: 'question',
-            },
-          },
-          {
-            $match: {
-              'question.code': { $exists: true },
-            },
-          },
-          {
             $project: {
               answer: '$answers.answer',
               PIN: 1,
-              code: {
-                $arrayElemAt: ['$question.code', 0],
-              },
+              code: '$question.code',
               surveyType: 1,
             },
           },
@@ -179,36 +209,10 @@ module.exports = async filters => {
             $match: filteredResultsMatch,
           },
           {
-            $lookup: {
-              from: 'answers',
-              localField: 'participant',
-              foreignField: 'participant',
-              as: 'answers',
-            },
-          },
-          {
-            $unwind: '$answers',
-          },
-          {
-            $lookup: {
-              from: 'questions',
-              localField: 'answers.question',
-              foreignField: '_id',
-              as: 'question',
-            },
-          },
-          {
-            $match: {
-              'question.code': { $exists: true },
-            },
-          },
-          {
             $project: {
               answer: '$answers.answer',
               PIN: 1,
-              code: {
-                $arrayElemAt: ['$question.code', 0],
-              },
+              code: '$question.code',
               surveyType: 1,
             },
           },

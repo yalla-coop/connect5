@@ -18,7 +18,13 @@ import {
   genders,
   ethnics,
   workforces,
+  surveysTypes,
+  readableSurveysNamePairs,
+  surveysHaveBehavQuestions,
+  surveysHaveTrainerFeedbackQuestions,
+  surveysHaveTrainTrainerFeedbackQuestions,
 } from '../../../constants/index';
+
 import {
   fetchLocalLeads as fetchLocalLeadsAction,
   fetchLocalLeadTrainersGroup,
@@ -95,9 +101,10 @@ class FilterResults extends Component {
       trainer,
       age,
       gender,
-      ethnicity,
+      ethnic,
       workforce,
       sessionId,
+      surveyType,
     } = this.props;
 
     const filteredData = {
@@ -107,9 +114,10 @@ class FilterResults extends Component {
       trainer,
       age,
       gender,
-      ethnicity,
+      ethnic,
       workforce,
       sessionId,
+      surveyType,
     };
 
     const filters = {};
@@ -145,8 +153,11 @@ class FilterResults extends Component {
       trainer,
       age,
       gender,
-      ethnicity,
+      ethnic,
       workforce,
+      sessionId,
+      surveyType,
+      target,
     } = this.props;
 
     const filters = {
@@ -156,9 +167,38 @@ class FilterResults extends Component {
       trainer,
       age,
       gender,
-      ethnicity,
+      ethnic,
       workforce,
+      sessionId,
+      surveyType,
     };
+
+    // to be the surveys that related to the selected sessions
+    let surveysForSelectedSessions = [];
+
+    // the surveys related to the filtering type behavioral/feedback/ ...
+    let targetSurveys = [];
+
+    if (target === 'behavioralInsight') {
+      targetSurveys = surveysHaveBehavQuestions;
+    } else if (target === 'trainTrainerFeedback') {
+      targetSurveys = surveysHaveTrainTrainerFeedbackQuestions;
+    } else {
+      // trainerFeedback
+      targetSurveys = surveysHaveTrainerFeedbackQuestions;
+    }
+
+    if (sessionType.length) {
+      sessionType.forEach(session => {
+        surveysTypes[session].forEach(survey => {
+          if (targetSurveys.includes(survey)) {
+            surveysForSelectedSessions.push(survey);
+          }
+        });
+      });
+    } else {
+      surveysForSelectedSessions = targetSurveys;
+    }
 
     return (
       <FilterWrapper>
@@ -192,6 +232,28 @@ class FilterResults extends Component {
                       </Option>
                     )
                   )}
+                </Select>
+              </InputDiv>
+            )}
+
+            {!hiddenFields.includes('surveyType') && (
+              <InputDiv>
+                <Label htmlFor="surveyType">Survey Type(s):</Label>
+                <Select
+                  mode="multiple"
+                  id="surveyType"
+                  style={{ width: '100%' }}
+                  placeholder="Click to select survey type"
+                  optionFilterProp="children"
+                  onChange={values => setFilters(values, 'surveyType')}
+                  size="large"
+                  value={surveyType}
+                >
+                  {surveysForSelectedSessions.map(value => (
+                    <Option key={value} value={value}>
+                      {readableSurveysNamePairs[value]}
+                    </Option>
+                  ))}
                 </Select>
               </InputDiv>
             )}
@@ -326,13 +388,13 @@ class FilterResults extends Component {
                   style={{ width: '100%' }}
                   placeholder="Ethnicity"
                   optionFilterProp="children"
-                  onChange={values => setFilters(values, 'ethnicity')}
+                  onChange={values => setFilters(values, 'ethnic')}
                   size="large"
-                  value={ethnicity}
+                  value={ethnic}
                 >
-                  {ethnics.map(ethnic => (
-                    <Option key={ethnic} value={ethnic}>
-                      {ethnic}
+                  {ethnics.map(_ethnic => (
+                    <Option key={_ethnic} value={_ethnic}>
+                      {_ethnic}
                     </Option>
                   ))}
                 </Select>
@@ -379,7 +441,7 @@ class FilterResults extends Component {
               />
               <ExportButton
                 filters={filters}
-                text="Export filtered responses"
+                text="Export Filtered Responses"
                 width="100%"
               />
             </InputDiv>
@@ -398,9 +460,10 @@ const mapStateToProps = state => {
     trainer,
     age,
     gender,
-    ethnicity,
+    ethnic,
     workforce,
     sessionId,
+    surveyType,
   } = state.filters;
 
   return {
@@ -415,9 +478,10 @@ const mapStateToProps = state => {
     trainer,
     age,
     gender,
-    ethnicity,
+    ethnic,
     workforce,
     sessionId,
+    surveyType,
   };
 };
 
