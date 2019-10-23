@@ -42,7 +42,6 @@ export const StyledLink = styled(Link)`
   font-size: 16px;
   line-height: 19px;
   color: #2f80ed;
-  margin-bottom: 20px;
   display: inline-block;
 `;
 
@@ -50,6 +49,7 @@ export const Paragraph = styled.p`
   font-size: 16px;
   line-height: 19px;
   color: #000000;
+  line-height: 28px;
 `;
 
 export const Label = styled.label`
