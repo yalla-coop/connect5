@@ -10,11 +10,7 @@ module.exports = async (req, res, next) => {
       isTrainTrainersFeedback
     );
 
-    console.log('fitler', filterdResults);
-
     const feedback = feedbackFormulae(filterdResults, allResults);
-
-    console.log('fe', feedback);
 
     res.json({ feedback });
   } catch (error) {

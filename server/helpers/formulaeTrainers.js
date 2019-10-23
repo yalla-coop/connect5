@@ -343,7 +343,6 @@ const calculator = (subGroupAnswers, allAnswers) => {
           'They suggested to people who needed it,  ways they could take action on their own mental health or wellbeing',
         surveys: [
           'pre-course',
-          'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
@@ -372,7 +371,6 @@ const calculator = (subGroupAnswers, allAnswers) => {
           'They had a conversation with people who needed it,  in which you developed a shared understanding of their mental health and wellbeing needs',
         surveys: [
           'pre-course',
-          'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
@@ -401,7 +399,6 @@ const calculator = (subGroupAnswers, allAnswers) => {
           'They used appropriate conversational methods to empower people who needed it, to make a change that addresses their mental health and wellbeing needs',
         surveys: [
           'pre-course',
-          'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
