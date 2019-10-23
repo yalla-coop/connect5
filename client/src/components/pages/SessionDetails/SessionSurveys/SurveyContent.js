@@ -133,9 +133,10 @@ class SurveyContent extends Component {
 
         <FeedbackAction
           as="div"
+          to=""
           onClick={handleDrawerOpen}
           data-key="sendSurveyLinkEmail"
-          data-surveyType={subId}
+          data-survey-type={subId}
           style={{ cursor: 'pointer' }}
         >
           <p>Email survey to attendees</p>

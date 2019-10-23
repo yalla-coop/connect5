@@ -46,7 +46,6 @@ const DrawerContent = ({
   handleCancelEmail,
   handleSubmitSchedule,
 }) => {
-  console.log('surveytype', surveyType);
   switch (drawerKey) {
     case 'viewAttendeesList':
       return (
@@ -70,6 +69,7 @@ const DrawerContent = ({
           name={name}
           drawerKey={drawerKey}
           onClose={handleCloseDrawer}
+          surveyType={surveyType}
         />
       );
 
@@ -125,6 +125,7 @@ const DrawerContent = ({
           name={name}
           drawerKey={drawerKey}
           onClose={handleCloseDrawer}
+          surveyType={surveyType}
         />
       );
 

@@ -208,6 +208,7 @@ class EditEmail extends Component {
       type,
       canAddParticipants,
       name,
+      surveyType,
     } = this.props;
 
     const emailsToSend = canAddParticipants ? participantsEmails : checkedList;
@@ -230,6 +231,7 @@ class EditEmail extends Component {
       extraInformation,
       type,
       trainer: `${name[0].toUpperCase()}${name.slice(1)}`,
+      surveyType,
     };
 
     return sendEmailReminder(emailData, this.done);
@@ -452,6 +454,7 @@ class EditEmail extends Component {
       endTime,
       backCallback,
       isSchedule,
+      surveyType,
     } = this.props;
 
     let title = '';
@@ -759,6 +762,8 @@ class EditEmail extends Component {
               preSurveyLink={preSurveyLink}
               postSurveyLink={postSurveyLink}
               confirmLink={`${window.location.host}/confirm/${shortId}`}
+              surveyType={surveyType}
+              shortId={shortId}
             />
           </>
           {isEditView ? (

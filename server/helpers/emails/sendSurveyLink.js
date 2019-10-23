@@ -1,6 +1,7 @@
 const moment = require('moment');
 
 const mailer = require('./index');
+const { getSurveyLink } = require('./../index');
 
 const sendSurveyLink = ({
   recipients,
@@ -14,8 +15,9 @@ const sendSurveyLink = ({
   preSurveyLink,
   postSurveyLink,
   extraInformation,
+  surveyType,
 }) => {
-  let extraParagraph;
+  let extraParagraph = '';
   let fullAddress = '';
   if (address) {
     const { postcode, addressLine1, addressLine2 } = address;
@@ -36,6 +38,50 @@ const sendSurveyLink = ({
     `;
   }
 
+  if (surveyType && surveyType.includes('follow-up')) {
+    extraParagraph = `
+    <div>
+      <p>
+        To track your own progress and to ensure that our trainings are
+        effective we rely on course participants to fill out surveys after
+        each session. All the data is anonymised.
+      </p>
+       <p>
+         To complete the session please click the following link to fill
+         out the ${surveyType.includes('3') ? '3' : '6'} month follow up
+         survey.
+       </p>
+       <p>
+         <a href="${getSurveyLink(surveyType, shortId)}">Follow up survey</a>
+       </p>
+    </div>
+    `;
+  }
+
+  const firstParagraph =
+    surveyType && surveyType.includes('follow-up')
+      ? `
+      <p>
+       We're looking forward to receiving your ${
+         surveyType.includes('3') ? '3' : '6'
+       }
+       month follow up feedback for the following Connect 5 training session:
+      </p>
+      `
+      : `
+      <p>
+        To track your own progress and to ensure that our
+        trainings are effective we rely on course
+        participants to fill out surveys after each session.
+        All the data is anonymised. After answering surveys
+        you can immediately see your own progress and access
+        certificates via the app.
+      </p>
+      <p>
+        Please make sure you submit surveys for the following Connect 5 training session:
+      </p>
+      `;
+
   const html = `
   <div style="text-align: left;">
     <div style="width: 100%; height: 60px; background-color: #2C3192;">
@@ -43,18 +89,8 @@ const sendSurveyLink = ({
     </div>
     <p>Dear course participants,</p>
 
-    <p>
-      To track your own progress and to ensure that our
-      trainings are effective we rely on course
-      participants to fill out surveys after each session.
-      All the data is anonymised. After answering surveys
-      you can immediately see your own progress and access
-      certificates via the app.
-    </p>
+      ${firstParagraph}
 
-    <p>
-    Please make sure you submit surveys for the following Connect 5 training session:
-    </p>
     <ul style={{listStyle: 'none'}}>
       <li> Session Date: ${(sessionDate &&
         moment(sessionDate).format('DD MMM YYYY')) ||
@@ -66,14 +102,20 @@ const sendSurveyLink = ({
     </ul>
 
 
-    ${preSurveyLink ? extraParagraph : ''}
+    ${extraParagraph}
     </br>
 
-    <div>
-      <p>
-        <b>After the session please click this link and fill out the <a href="${postSurveyLink}">post-survey</a>.</b>
-      </p>
-    </div>
+    ${
+      surveyType && surveyType.includes('follow-up')
+        ? ''
+        : `
+        <div>
+          <p>
+            <b>After the session please click this link and fill out the <a href="${postSurveyLink}">post-survey</a>.</b>
+          </p>
+        </div>
+        `
+    }
 
     ${extraInformation ? `<pre>${extraInformation}</pre>` : ''}
 

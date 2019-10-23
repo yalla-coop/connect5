@@ -5,12 +5,7 @@ const {
 const sendSessionReminder = require('./../../helpers/emails/sendSessionReminder');
 const sendEmailInvitation = require('./../../helpers/emails/sendEmailInvitation');
 const sendSurveyLink = require('./../../helpers/emails/sendSurveyLink');
-const {
-  getPreSurveyLink,
-  getPostSurveyLink,
-  getThreeMonthsFollowUpSurveyLink,
-  getSixMonthsFollowUpSurveyLink,
-} = require('./../../helpers/');
+const { getPreSurveyLink, getPostSurveyLink } = require('./../../helpers/');
 const {
   updateAttendeesList,
 } = require('./../../database/queries/sessionDetails/session');
@@ -20,7 +15,6 @@ module.exports = async (req, res, next) => {
   const { type } = req.query;
   const emailData = req.body;
 
-  console.log('emailData', emailData);
   const preSurveyLink = getPreSurveyLink(
     emailData.sessionType,
     emailData.shortId
@@ -29,17 +23,6 @@ module.exports = async (req, res, next) => {
     emailData.sessionType,
     emailData.shortId
   );
-  const threeMonthsFollowUp = getThreeMonthsFollowUpSurveyLink(
-    emailData.sessionType,
-    emailData.shortId
-  );
-
-  const sixMonthsFollowUp = getSixMonthsFollowUpSurveyLink(
-    emailData.sessionType,
-    emailData.shortId
-  );
-
-  console.log('threeeee', threeMonthsFollowUp);
 
   const sentEmailData = {
     sessionId,

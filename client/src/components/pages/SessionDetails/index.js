@@ -110,7 +110,7 @@ class SessionDetails extends Component {
 
   // open drawer
   handleDrawerOpen = e => {
-    const { key, surveytype: surveyType } = e.target.dataset;
+    const { key, surveyType } = e.target.dataset;
 
     this.setState({
       visible: true,
@@ -308,7 +308,6 @@ class SessionDetails extends Component {
       surveyType,
       dataForCopy,
     } = this.state;
-    console.log('surveyType', surveyType);
     if (!sessionDetails) {
       return Spin;
     }
