@@ -10,6 +10,7 @@ import { updateSessionAttendeesList } from '../../../../actions/sessionAction';
 // COMMON COMPONENTS
 import Header from '../../../common/Header';
 import Button from '../../../common/Button';
+import UserManual from '../UserManual';
 
 import { SelecetWrapper, IconsWrapper } from '../SessionDetails.Style';
 
@@ -21,7 +22,6 @@ const { Option } = Select;
 class InviteeList extends Component {
   state = {
     err: '',
-    focused: false,
   };
 
   componentDidMount() {
@@ -60,6 +60,7 @@ class InviteeList extends Component {
       <>
         <InviteSectionWrapper>
           <Header type="view" label="Invitee List" />
+          <UserManual />
           <Form>
             <InputDiv>
               <SelecetWrapper>
