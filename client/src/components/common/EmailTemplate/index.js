@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-// COMMON COMPONENTS
+import { getSurveyLink } from '../../../helpers';
 
 // STYLE
 import {
@@ -26,6 +26,8 @@ class EmailTemplate extends Component {
       confirmLink,
       preSurveyLink,
       postSurveyLink,
+      surveyType,
+      shortId,
     } = this.props;
 
     let fullAddress = '';
@@ -43,7 +45,13 @@ class EmailTemplate extends Component {
       <EmailInfo>
         <InfoTitle>Message:</InfoTitle>
         <p>Dear course participants,</p>
-        {<FirstPargraph type={type} trainer={trainer} />}
+        {
+          <FirstPargraph
+            type={type}
+            trainer={trainer}
+            surveyType={surveyType}
+          />
+        }
         <List>
           <li>
             <SessionInfoTitle> Session Date:</SessionInfoTitle>{' '}
@@ -69,6 +77,8 @@ class EmailTemplate extends Component {
           confirmLink={confirmLink}
           preSurveyLink={preSurveyLink}
           postSurveyLink={postSurveyLink}
+          surveyType={surveyType}
+          shortId={shortId}
         />
 
         <pre>{extraInformation}</pre>
@@ -83,7 +93,7 @@ class EmailTemplate extends Component {
 
 export default EmailTemplate;
 
-const FirstPargraph = ({ type, trainer }) => {
+const FirstPargraph = ({ type, trainer, surveyType }) => {
   switch (type) {
     case 'registration':
       return (
@@ -93,6 +103,16 @@ const FirstPargraph = ({ type, trainer }) => {
         </p>
       );
     case 'surveyLink':
+      if (surveyType && surveyType.includes('follow-up')) {
+        return (
+          <p>
+            We{"'"}re looking forward to receiving your{' '}
+            {surveyType.includes('3') ? '3' : '6'} months follow up feedback for
+            the following Connect 5 training session:
+          </p>
+        );
+      }
+
       return (
         <p>
           We{"'"}re looking forward to welcome you at our upcoming Connect 5
@@ -117,6 +137,8 @@ const SecondPargraph = ({
   confirmLink,
   preSurveyLink,
   postSurveyLink,
+  surveyType,
+  shortId,
 }) => {
   switch (type) {
     case 'registration':
@@ -129,6 +151,25 @@ const SecondPargraph = ({
 
     case 'reminder':
     case 'surveyLink':
+      if (surveyType && surveyType.includes('follow-up')) {
+        return (
+          <>
+            <p>
+              To track your own progress and to ensure that our trainings are
+              effective we rely on course participants to fill out surveys after
+              each session. All the data is anonymised.
+            </p>
+            <p>
+              To complete the session please click the following link to fill
+              out the {surveyType.includes('3') ? '3' : '6'} month follow up
+              survey.
+            </p>
+            <p>
+              <a href={getSurveyLink(surveyType, shortId)}>Follow up survey</a>
+            </p>
+          </>
+        );
+      }
       return (
         <>
           <p>

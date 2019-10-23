@@ -51,8 +51,8 @@ const sendReminder = ({
         'N/A'}</li>
       <li> Session Type: ${sessionType || 'N/A'}</li>
       <li> Location:  ${fullAddress || 'TBC'}</li>
-      <li> time: ${startTime || '-'} to ${endTime || '-'}</li>
-      <li> trainers: ${trainers || 'N/A'}</li>
+      <li> Time: ${startTime || '-'} to ${endTime || '-'}</li>
+      <li> Trainers: ${trainers || 'N/A'}</li>
     </ul>
     <p>
       To track your own progress and to ensure that our
@@ -60,7 +60,7 @@ const sendReminder = ({
       participants to fill out surveys after each session.
       All the data is anonymised. After answering surveys
       you can immediately see your own progress and access
-      certificates via the app. You will receive a link to the post-session survey  from your trainers.
+      certificates via the app.
     </p>
 
     ${preSurveyLink ? extraParagraph : ''}

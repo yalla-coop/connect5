@@ -105,15 +105,41 @@ const getSixMonthSurvey = type => {
   return SixMonthSurvey;
 };
 
+const getThreeMonthsFollowUpSurveyLink = (sessionType, shortId) => {
+  const links = surveysTypes[sessionType].map(item => {
+    return `${process.env.DOMAIN}/survey/${item}&${shortId}`;
+  });
+  return links.find(item => item.includes('3-months'));
+};
+
+const getSixMonthsFollowUpSurveyLink = (sessionType, shortId) => {
+  const links = surveysTypes[sessionType].map(item => {
+    return `${process.env.DOMAIN}/survey/${item}&${shortId}`;
+  });
+  return links.find(item => item.includes('6-months'));
+};
+
+/**
+ * create survey link using the survey type and the short id
+ * @param {String} surveyType - survey type eg. pre-day-1, post-day-1,....
+ * @param {Strin} shortId - the session short id
+ */
+const getSurveyLink = (surveyType, shortId) => {
+  return `${process.env.DOMAIN}/survey/${surveyType}&${shortId}`;
+};
+
 module.exports = {
   uppercaseSurvey,
   surveysTypes,
   getPreSurveyLink,
   getPostSurveyLink,
   getAllSurveyLinks,
+  getSurveyLink,
   getSessionSurveys,
   checkAnswer,
   calculateAverage,
   getThreeMonthSurvey,
   getSixMonthSurvey,
+  getThreeMonthsFollowUpSurveyLink,
+  getSixMonthsFollowUpSurveyLink,
 };
