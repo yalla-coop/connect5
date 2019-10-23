@@ -516,11 +516,13 @@ class EditEmail extends Component {
 
               <SubHeader>Core information:</SubHeader>
               <Paragraph>
-                This information cannot be edited. To make changes{' '}
+                Details such as type, date, location and trainers cannot be
+                edited here. If you would like to make changes to those basic
+                details please{' '}
                 <StyledLink to={`/session-edit/${sessionId}`}>
-                  click here
+                  go back
                 </StyledLink>{' '}
-                to edit the session directly.
+                and edit the session directly.
               </Paragraph>
             </>
           ) : (

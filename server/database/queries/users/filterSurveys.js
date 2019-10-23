@@ -12,7 +12,7 @@ module.exports = async filters => {
     region,
     workforce,
     trainer,
-    manager,
+    localLead: manager,
     sessionType,
     surveyType,
   } = filters;

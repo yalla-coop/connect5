@@ -21,7 +21,7 @@ class BehavioralInsight extends Component {
   };
 
   render() {
-    const { categorized, nonCategorized, surveyList } = this.props;
+    const { categorized, nonCategorized, surveyList, participant } = this.props;
 
     return (
       <div style={{ padding: '25px', margin: '0 auto' }}>
@@ -29,7 +29,7 @@ class BehavioralInsight extends Component {
           <>
             {this.isQeustionIncludesTheSurveyList(question) && (
               <>
-                <p>{question.text}</p>
+                <p>{participant ? question.textParticipant : question.text}</p>
                 <p>
                   The red line indicates the average across all participants
                 </p>

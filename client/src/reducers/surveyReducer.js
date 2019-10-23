@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
   FETCH_SURVEY_DATA,
   SURVEY_PIN_EXIST_FAIL,
@@ -26,10 +27,12 @@ const fetchedSurveyData = (state = initialState, action) => {
 
   switch (type) {
     case FETCH_SURVEY_DATA:
+      const groups = createGroupsArray(payload.questionsForSurvey);
       return {
         ...state,
         surveyData: payload,
-        uniqueGroups: createGroupsArray(payload.questionsForSurvey),
+        uniqueGroups: groups,
+        uniqueGroupsAll: groups,
         loaded: true,
       };
     case SURVEY_PIN_EXIST_FAIL:
@@ -54,14 +57,23 @@ const fetchedSurveyData = (state = initialState, action) => {
     case GET_PARTICIPANT_BY_PIN_SUCCESS:
       // payload[0] tells if PIN is included in participant table -> demographic data exists
       // payload[1] tells if PIN has filled out a pre-survey if relevant post-session
+
+      const createdGroups = createGroupsArray(
+        state.surveyData.questionsForSurvey
+      );
+
+      const demographicGroup = state.uniqueGroupsAll.find(
+        item => item === 'demographic'
+      );
+
       return {
         ...state,
         skipDemo: true,
         preSurveyResponses: payload[1],
         uniqueGroups:
-          state.uniqueGroups[0] === 'demographic' && payload[0] !== null
-            ? [createGroupsArray(state.surveyData.questionsForSurvey).pop()]
-            : createGroupsArray(state.surveyData.questionsForSurvey),
+          demographicGroup && payload[0]
+            ? createdGroups.filter(item => item !== 'demographic')
+            : createdGroups,
       };
     case GET_PARTICIPANT_BY_PIN_FAIL:
       return {

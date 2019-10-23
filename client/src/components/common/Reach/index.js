@@ -91,7 +91,7 @@ const Reach = ({
         role={role}
         handleFilteredData={handleFilteredData}
         defaultFilters={defaultFilters}
-        hiddenFields={hiddenFields}
+        hiddenFields={[...hiddenFields, 'sessionType', 'surveyType']}
       />
       <Table
         columns={sessionsColumns}

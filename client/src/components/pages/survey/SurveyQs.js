@@ -515,8 +515,8 @@ export default class Questions extends React.Component {
           title="Connect5 Impacting Behaviour"
           visible={modalVisible}
           onOk={toggleModal}
-          onCancel={toggleModal}
           width={800}
+          cancelButtonProps={{ style: { display: 'none' } }}
         >
           <p>
             The aim of Connect5 is to improve population mental wellbeing by

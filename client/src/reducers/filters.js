@@ -7,8 +7,9 @@ const initialState = {
   trainer: [],
   age: [],
   gender: [],
-  ethnicity: [],
+  ethnic: [],
   workforce: [],
+  surveyType: [],
 };
 
 export default (state = initialState, action) => {
