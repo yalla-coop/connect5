@@ -13,7 +13,7 @@ import {
 import Header from '../../common/Header';
 
 const { Panel } = Collapse;
-
+// renders participant behavioural insights
 const ParticipantBehavioral = ({ isAuthenticated, PIN, role }) => {
   const [modalVisible, setModalVisible] = useState(false);
   // toggle modal visibility
