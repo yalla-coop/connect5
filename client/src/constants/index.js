@@ -94,7 +94,6 @@ export const readableSurveysNamePairs = {
   '3-months-follow-up-day-3': '3 months Session 3 follow-up',
   '6-months-follow-up-day-3': '6 months Session 3 follow-up',
 
-  'pre-course': 'Pre 2-day Intensive',
   'post-special': 'Post 2-day Intensive',
   '3-months-follow-up-special-2-days': '3 months special 2 days follow-up',
   '6-months-follow-up-special-2-days': '6 months special 2 days follow-up',

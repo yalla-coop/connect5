@@ -141,7 +141,7 @@ const behavioural2 = surveyType => [
     surveyType,
     text:
       'For 10 patients you saw who could benefit from some improvement in their mental health and wellbeing in how many would you expect to: Suggest ways they could take action on their own mental health or wellbeing',
-    questionType: questionConstants.questionTypes.fromZeroToTen,
+    questionType: questionConstants.questionTypes.positiveNumber,
   },
   {
     code: 'BE2',
@@ -153,7 +153,7 @@ const behavioural2 = surveyType => [
     surveyType,
     text:
       'For 10 patients you saw who could benefit from some improvement in their mental health and wellbeing in how many would you expect to: Have a conversation in which you develop a shared understanding of their mental health and wellbeing needs?',
-    questionType: questionConstants.questionTypes.fromZeroToTen,
+    questionType: questionConstants.questionTypes.positiveNumber,
   },
   {
     code: 'BE3',
@@ -165,7 +165,7 @@ const behavioural2 = surveyType => [
     surveyType,
     text:
       'For 10 patients you saw who could benefit from some improvement in their mental health and wellbeing in how many would you expect to: use appropriate conversational methods to empower them to make a change that addresses their mental health and wellbeing?',
-    questionType: questionConstants.questionTypes.fromZeroToTen,
+    questionType: questionConstants.questionTypes.positiveNumber,
   },
 ];
 
@@ -1383,7 +1383,7 @@ module.exports = () => {
     ...day3FollowUp6Months,
 
     // Special 2 Days
-    ...preSpecial2DaysQuestions,
+    // ...preSpecial2DaysQuestions,
     ...postSpecial2DaysQuestions,
     ...special2DaysFollowUp3Months,
     ...special2DaysFollowUp6Months,

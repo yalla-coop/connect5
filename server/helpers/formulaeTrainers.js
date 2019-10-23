@@ -131,7 +131,7 @@ const calculator = (subGroupAnswers, allAnswers) => {
           'When they think about suggesting to people ways in which they could take action on their own mental health or wellbeing, you perceive your capability/opportunity/motivation to be:',
         surveys: [
           'pre-course',
-          'post-day-1',
+          // 'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
@@ -201,7 +201,7 @@ const calculator = (subGroupAnswers, allAnswers) => {
           'When they think about having a conversation with people in which they develop a shared understanding of their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
         surveys: [
           'pre-course',
-          'post-day-1',
+          // 'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
@@ -271,7 +271,7 @@ const calculator = (subGroupAnswers, allAnswers) => {
           'When they think about using appropriate conversational methods to empower poeple to make a change that addresses their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
         surveys: [
           'pre-course',
-          'post-day-1',
+          // 'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
