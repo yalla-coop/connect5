@@ -27,7 +27,7 @@ class EmailTemplate extends Component {
       preSurveyLink,
       postSurveyLink,
     } = this.props;
-    console.log('prooops', this.props);
+
     let fullAddress = '';
 
     if (address) {
