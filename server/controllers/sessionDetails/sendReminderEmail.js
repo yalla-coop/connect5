@@ -36,11 +36,11 @@ module.exports = async (req, res, next) => {
   if (type === 'reminder') {
     promises = [addSentEmail(sentEmailData)];
 
-    // if (process.env.NODE_ENV === 'production') {
-    promises.push(
-      sendSessionReminder({ ...emailData, preSurveyLink, postSurveyLink })
-    );
-    // }
+    if (process.env.NODE_ENV === 'production') {
+      promises.push(
+        sendSessionReminder({ ...emailData, preSurveyLink, postSurveyLink })
+      );
+    }
   } else if (type === 'registration') {
     const data = {
       sessionId,
@@ -52,9 +52,9 @@ module.exports = async (req, res, next) => {
     };
 
     promises = [addSentEmail(sentEmailData), updateAttendeesList(data)];
-    // if (process.env.NODE_ENV === 'production') {
-    promises.push(sendEmailInvitation(emailData));
-    // }
+    if (process.env.NODE_ENV === 'production') {
+      promises.push(sendEmailInvitation(emailData));
+    }
   } else if (type === 'surveyLink') {
     if (preSurveyLink) {
       emailData.preSurveyLink = preSurveyLink;
@@ -64,9 +64,9 @@ module.exports = async (req, res, next) => {
     }
 
     promises = [addSentEmail(sentEmailData)];
-    // if (process.env.NODE_ENV === 'production') {
-    promises.push(sendSurveyLink(emailData));
-    // }
+    if (process.env.NODE_ENV === 'production') {
+      promises.push(sendSurveyLink(emailData));
+    }
   }
 
   return Promise.all(promises)
