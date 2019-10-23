@@ -84,7 +84,6 @@ const calculator = (subGroupAnswers, allAnswers) => {
     '3-months-follow-up-day-3': [],
     '6-months-follow-up-day-3': [],
 
-    'pre-course': [],
     'post-special': [],
     '3-months-follow-up-special-2-days': [],
     '6-months-follow-up-special-2-days': [],
@@ -112,7 +111,6 @@ const calculator = (subGroupAnswers, allAnswers) => {
     '3-months-follow-up-day-3': [],
     '6-months-follow-up-day-3': [],
 
-    'pre-course': [],
     'post-special': [],
     '3-months-follow-up-special-2-days': [],
     '6-months-follow-up-special-2-days': [],
@@ -137,7 +135,6 @@ const calculator = (subGroupAnswers, allAnswers) => {
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
-          'pre-course',
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
@@ -208,7 +205,6 @@ const calculator = (subGroupAnswers, allAnswers) => {
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
-          'pre-course',
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
@@ -279,7 +275,6 @@ const calculator = (subGroupAnswers, allAnswers) => {
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
-          'pre-course',
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
@@ -352,7 +347,6 @@ const calculator = (subGroupAnswers, allAnswers) => {
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
-          'pre-course',
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
@@ -382,7 +376,6 @@ const calculator = (subGroupAnswers, allAnswers) => {
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
-          'pre-course',
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
@@ -412,7 +405,6 @@ const calculator = (subGroupAnswers, allAnswers) => {
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
-          'pre-course',
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
