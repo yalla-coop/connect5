@@ -1271,15 +1271,6 @@ module.exports = () => {
   ];
 
   // ----------------------------- SPECIAL 2 DAYS ------------------
-  // PRE
-  const preSpecial2DaysQuestions = [
-    ...demographics('pre-course'),
-    ...behavioural1('pre-course'),
-    ...behavioural2('pre-course'),
-    ...behavioural3('pre-course'),
-    ...behavioural4('pre-course'),
-    ...behavioural5('pre-course'),
-  ];
 
   // POST
   const postSpecial2DaysQuestions = [
