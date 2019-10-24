@@ -48,11 +48,23 @@ class FilterResults extends Component {
   };
 
   componentDidMount() {
+    this.updateFilters();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { id, role } = this.props;
+    if (role !== prevProps.role || id !== prevProps.id) {
+      this.updateFilters();
+    }
+  }
+
+  updateFilters = () => {
     const {
       fetchLocalLeads,
       fetchAllTrainers,
       fetchLocalLeadTrainersGroup: fetchLocalLeadTrainersGroupAction,
       setFilters,
+      resetFilters,
     } = this.props;
     const { id, role, defaultFilters } = this.props;
 
@@ -62,13 +74,13 @@ class FilterResults extends Component {
       fetchAllTrainers();
       fetchLocalLeads();
     }
-
+    resetFilters();
     if (defaultFilters) {
       Object.entries(defaultFilters).forEach(([key, value]) => {
         setFilters(value, key);
       });
     }
-  }
+  };
 
   clearAllFilter = () => {
     const {
