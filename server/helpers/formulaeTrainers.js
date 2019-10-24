@@ -72,19 +72,15 @@ const behavioralFormulae = require('./behavioralFormulae');
 const calculator = (subGroupAnswers, allAnswers) => {
   const answersPerSurvey = {
     'pre-course': [],
-    'post-day-1': [],
     '3-months-follow-up-day-1': [],
     '6-months-follow-up-day-1': [],
 
-    'post-day-2': [],
     '3-months-follow-up-day-2': [],
     '6-months-follow-up-day-2': [],
 
-    'post-day-3': [],
     '3-months-follow-up-day-3': [],
     '6-months-follow-up-day-3': [],
 
-    'post-special': [],
     '3-months-follow-up-special-2-days': [],
     '6-months-follow-up-special-2-days': [],
   };
@@ -99,19 +95,15 @@ const calculator = (subGroupAnswers, allAnswers) => {
 
   const answersPerSurveyAll = {
     'pre-course': [],
-    'post-day-1': [],
     '3-months-follow-up-day-1': [],
     '6-months-follow-up-day-1': [],
 
-    'post-day-2': [],
     '3-months-follow-up-day-2': [],
     '6-months-follow-up-day-2': [],
 
-    'post-day-3': [],
     '3-months-follow-up-day-3': [],
     '6-months-follow-up-day-3': [],
 
-    'post-special': [],
     '3-months-follow-up-special-2-days': [],
     '6-months-follow-up-special-2-days': [],
   };
@@ -136,6 +128,12 @@ const calculator = (subGroupAnswers, allAnswers) => {
           // 'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
+
+          '3-months-follow-up-day-2',
+          '6-months-follow-up-day-2',
+
+          '3-months-follow-up-day-3',
+          '6-months-follow-up-day-3',
 
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
@@ -210,6 +208,12 @@ const calculator = (subGroupAnswers, allAnswers) => {
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
 
+          '3-months-follow-up-day-2',
+          '6-months-follow-up-day-2',
+
+          '3-months-follow-up-day-3',
+          '6-months-follow-up-day-3',
+
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',
         ].map(surveyType => ({
@@ -281,6 +285,12 @@ const calculator = (subGroupAnswers, allAnswers) => {
           // 'post-day-1',
           '3-months-follow-up-day-1',
           '6-months-follow-up-day-1',
+
+          '3-months-follow-up-day-2',
+          '6-months-follow-up-day-2',
+
+          '3-months-follow-up-day-3',
+          '6-months-follow-up-day-3',
 
           '3-months-follow-up-special-2-days',
           '6-months-follow-up-special-2-days',

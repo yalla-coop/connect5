@@ -34,20 +34,15 @@ export const surveysTypes = {
 
 export const surveysHaveBehavQuestions = [
   'pre-course',
-  'post-day-1',
   '3-months-follow-up-day-1',
   '6-months-follow-up-day-1',
 
-  'post-day-2',
   '3-months-follow-up-day-2',
   '6-months-follow-up-day-2',
 
-  'post-day-3',
   '3-months-follow-up-day-3',
   '6-months-follow-up-day-3',
 
-  'pre-course',
-  'post-special',
   '3-months-follow-up-special-2-days',
   '6-months-follow-up-special-2-days',
 ];
