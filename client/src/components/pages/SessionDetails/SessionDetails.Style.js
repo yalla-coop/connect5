@@ -308,3 +308,16 @@ export const ViewMore = styled.button`
   cursor: pointer;
   margin-top: 1rem;
 `;
+
+export const InfoHeader = styled(Link)`
+  font-weight: 300;
+  color: ${colors.primary};
+  text-decoration: italic;
+  margin: 0;
+  padding: 0;
+  font-style: text-wrap
+
+  :hover {
+    color: ${colors.primary};
+  }
+`;
