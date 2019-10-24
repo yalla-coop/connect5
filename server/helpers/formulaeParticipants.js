@@ -22,7 +22,7 @@ const behavioralFormulae = require('./behavioralFormulae');
 
     Example
     {
-      'pre-day-1': {
+      'pre-course': {
         KnowB1: 3
       },
       ...
@@ -68,7 +68,7 @@ const behavioralFormulae = require('./behavioralFormulae');
  */
 
 const calculator = (answers, allAnswers) => {
-  const preDay1Answers = checkAnswer(answers, 'pre-day-1');
+  const preDay1Answers = checkAnswer(answers, 'pre-course');
   const postDay1Answers = checkAnswer(answers, 'post-day-1');
   const postDay2Answers = checkAnswer(answers, 'post-day-2');
   const postDay3Answers = checkAnswer(answers, 'post-day-3');
@@ -77,7 +77,7 @@ const calculator = (answers, allAnswers) => {
   const followup6Months = checkAnswer(answers, 'follow-up-6-month');
 
   const answersBaseOnSurveyType = {
-    'pre-day-1': preDay1Answers,
+    'pre-course': preDay1Answers,
     'post-day-1': postDay1Answers,
     'post-day-2': postDay2Answers,
     'post-day-3': postDay3Answers,
@@ -93,7 +93,7 @@ const calculator = (answers, allAnswers) => {
         text:
           'When you think about suggesting to people ways in which they could take action on their own mental health or wellbeing, you perceive your capability/opportunity/motivation to be:',
         surveys: [
-          'pre-day-1',
+          'pre-course',
           'post-day-1',
           'post-special',
           'follow-up-3-month',
@@ -148,7 +148,7 @@ const calculator = (answers, allAnswers) => {
         text:
           'When you think about having a conversation with people in which you develop a shared understanding of their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
         surveys: [
-          'pre-day-1',
+          'pre-course',
           'post-day-2',
           'post-special',
           'follow-up-3-month',
@@ -203,7 +203,7 @@ const calculator = (answers, allAnswers) => {
         text:
           'When you think about using appropriate conversational methods to empower poeple to make a change that addresses their mental health and wellbeing needs, you perceive your capability/opportunity/motivation to be:',
         surveys: [
-          'pre-day-1',
+          'pre-course',
           'post-day-3',
           'post-special',
           'follow-up-3-month',
@@ -259,7 +259,7 @@ const calculator = (answers, allAnswers) => {
       {
         text:
           'You suggested to people who needed it,  ways they could take action on their own mental health or wellbeing',
-        surveys: ['pre-day-1', 'follow-up-3-month', 'follow-up-6-month'].map(
+        surveys: ['pre-course', 'follow-up-3-month', 'follow-up-6-month'].map(
           surveyType => ({
             surveyType: readableSurveysNamePairs[surveyType],
             value: behavioralFormulae.FeedbackUserB1(
@@ -278,7 +278,7 @@ const calculator = (answers, allAnswers) => {
       {
         text:
           'You had a conversation with people who needed it,  in which you developed a shared understanding of their mental health and wellbeing needs',
-        surveys: ['pre-day-1', 'follow-up-3-month', 'follow-up-6-month'].map(
+        surveys: ['pre-course', 'follow-up-3-month', 'follow-up-6-month'].map(
           surveyType => ({
             surveyType: readableSurveysNamePairs[surveyType],
             value: behavioralFormulae.FeedbackUserB2(
@@ -297,7 +297,7 @@ const calculator = (answers, allAnswers) => {
       {
         text:
           'You used appropriate conversational methods to empower people who needed it, to make a change that addresses their mental health and wellbeing needs',
-        surveys: ['pre-day-1', 'follow-up-3-month', 'follow-up-6-month'].map(
+        surveys: ['pre-course', 'follow-up-3-month', 'follow-up-6-month'].map(
           surveyType => ({
             surveyType: readableSurveysNamePairs[surveyType],
             value: behavioralFormulae.FeedbackUserB3(

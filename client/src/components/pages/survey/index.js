@@ -378,6 +378,14 @@ class Survey extends Component {
       }
       return number;
     }
+
+    if (['BE1', 'BE2', 'BE3'].includes(code)) {
+      const value = Math.max(0, Math.min(Number(number), 10));
+      if (value !== Number(number)) {
+        message.error('Number cannot be greater than 10 and less than 0');
+      }
+      return value;
+    }
     return number;
   };
 

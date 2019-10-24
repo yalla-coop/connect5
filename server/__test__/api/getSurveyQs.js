@@ -19,7 +19,7 @@ describe('test get survey questions route', () => {
   });
 
   test('test for get survey questions route', async done => {
-    const surveyType = 'pre-day-1';
+    const surveyType = 'pre-course';
     const singleSession = await Session.findOne({ type: '1' });
     const { shortId } = singleSession;
     request(app)
@@ -33,7 +33,7 @@ describe('test get survey questions route', () => {
       });
   });
   test("Test survey doesn't load if session doesn't exist", async done => {
-    const response = await request(app).get('/api/survey/pre-day-1_0123456');
+    const response = await request(app).get('/api/survey/pre-course_0123456');
     expect(response.statusCode).toBe(500);
     done();
   });
