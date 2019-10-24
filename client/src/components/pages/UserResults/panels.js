@@ -42,14 +42,14 @@ export default {
     ),
     render: ({
       results,
-      role,
       handleFilteredData,
       defaultFilters,
       hiddenFields,
+      resultForRole,
     }) => (
       <Reach
         data={results}
-        role={role}
+        role={resultForRole}
         handleFilteredData={handleFilteredData}
         defaultFilters={defaultFilters}
         hiddenFields={hiddenFields}

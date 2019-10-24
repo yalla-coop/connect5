@@ -365,9 +365,14 @@ class EditEmail extends Component {
       checkedList,
     } = this.state;
     const { scheduleNewEmail, sessionId, surveyType } = this.props;
+
+    if (checkedList.length < 1) {
+      return message.error('You should add recipients emails');
+    }
+
     if (scheduledDate && selectedTime) {
       const date = moment(`${scheduledDate} ${selectedTime}`);
-      scheduleNewEmail(
+      return scheduleNewEmail(
         {
           date,
           sessionId,
@@ -377,10 +382,9 @@ class EditEmail extends Component {
         },
         this.done
       );
-    } else {
-      this.setState({ error: 'Select schedule date and time' });
-      message.error('Select schedule date and time');
     }
+    this.setState({ error: 'Select schedule date and time' });
+    return message.error('Select schedule date and time');
   };
 
   handleAddEmailsClick = () => {

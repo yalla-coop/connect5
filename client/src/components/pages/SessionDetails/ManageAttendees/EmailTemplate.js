@@ -11,7 +11,6 @@ import {
 } from '../SessionDetails.Style';
 
 const EmailTemplate = ({ activeEmailTemplate }) => {
-  console.log('activeEmailTemplate', activeEmailTemplate);
   return (
     <div>
       <EmailWrapper>
