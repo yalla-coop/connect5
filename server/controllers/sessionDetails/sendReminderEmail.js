@@ -56,6 +56,13 @@ module.exports = async (req, res, next) => {
       promises.push(sendEmailInvitation(emailData));
     }
   } else if (type === 'surveyLink') {
+    if (preSurveyLink) {
+      emailData.preSurveyLink = preSurveyLink;
+    }
+    if (postSurveyLink) {
+      emailData.postSurveyLink = postSurveyLink;
+    }
+
     promises = [addSentEmail(sentEmailData)];
     if (process.env.NODE_ENV === 'production') {
       promises.push(sendSurveyLink(emailData));
@@ -63,7 +70,7 @@ module.exports = async (req, res, next) => {
   }
 
   return Promise.all(promises)
-    .then(() => {
+    .then(resss => {
       return res.json({});
     })
     .catch(err => {

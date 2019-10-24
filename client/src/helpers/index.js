@@ -64,6 +64,22 @@ export const getAllSurveyLinks = (sessionType, shortId) => {
 };
 
 /**
+ * create survey link using the survey type and the short id
+ * @param {String} surveyType - survey type eg. pre-day-1, post-day-1,....
+ * @param {Strin} shortId - the session short id
+ */
+export const getSurveyLink = (surveyType, shortId) => {
+  const surveyURL = `${window.location.host}/survey/${surveyType}&${shortId}`;
+  let url = `https://${surveyURL}`;
+
+  if (process.env.NODE_ENV === 'development') {
+    url = `http://${surveyURL}`;
+  }
+
+  return url;
+};
+
+/**
  * return array of surveys for the session base on the survey type
  * @param {String} sessionType - session type ["1","2","3","special-2-days"...]
  */

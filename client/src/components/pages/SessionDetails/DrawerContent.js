@@ -24,6 +24,8 @@ const DrawerContent = ({
   onClear,
   name,
   handleCloseDrawer,
+  surveyType,
+  state,
   // update
   handleSubmitUpdateAttendees,
   confirmedAttendeesList,
@@ -42,7 +44,6 @@ const DrawerContent = ({
   // feedback
   // schedule list
   handleCancelEmail,
-  surveyType,
   handleSubmitSchedule,
 }) => {
   switch (drawerKey) {
@@ -68,6 +69,7 @@ const DrawerContent = ({
           name={name}
           drawerKey={drawerKey}
           onClose={handleCloseDrawer}
+          surveyType={surveyType}
         />
       );
 
@@ -123,6 +125,7 @@ const DrawerContent = ({
           name={name}
           drawerKey={drawerKey}
           onClose={handleCloseDrawer}
+          surveyType={surveyType}
         />
       );
 

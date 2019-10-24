@@ -16,24 +16,25 @@ const sendSurvey = ({ surveyURLs, participantsList, extraInformation }) => {
     <div style="text-align: left;">
       <p style="font-weight: 700;">Hi,</p>
       ${surveyURLs.map(survey => {
+        console.log(survey);
         return `<p>Here is the link for the "${uppercaseSurvey(
           survey.surveyType
         )}" survey</p>
-        <p>Click the below link to fill, please</p>
-        
+        <p>Please click the link below to start the survey process</p>
+
         <div style="text-align: center;">
           <a href="${
             survey.surveyURL
           }" style="display: inline-block; padding: 0.5rem 1rem; background-color: #2C3192; color: white; font-size: 20px; font-weight: 900; border-radius: 10px; box-shadow: 0px 5px 11px 1px #9e9e9e7d; text-decoration: none;">Fill the survey</a>
         </div>
-        <p>or copy the link below into your browser to fill the survey</p>
+        <p>you can also copy the link and paste it into your browser's address bar.</p>
         <p style="font-weight: 700;">${survey.surveyURL}</p>`;
       })}
       ${extraInformation || ''}
       <p style="margin-bottom: 0;">Thanks,</p>
       <p style="margin-bottom: 0;">Connect 5</p>
-    </div>  
-  </div>  
+    </div>
+  </div>
 `;
 
   const user = process.env.EMAIL;
