@@ -50,7 +50,7 @@ class SubGroupChart extends Component {
           d3.select(this)
             .append('text')
             .attr('fill', '#fc6b6b')
-            .text(d => Math.round(d.average * 10) / 10)
+            .text(d => Math.round(d.average))
             .attr(
               'x',
               d =>
@@ -136,7 +136,8 @@ class SubGroupChart extends Component {
       .attr('class', `chart-sub-groups-${i}-text`)
       .attr('text-anchor', 'middle')
       .attr('opacity', d => {
-        if (d.responsesCount) return ((d.value || 0) * 0.8) / 100 + 0.2;
+        if (d.responsesCount) return 0.8;
+        // if (d.responsesCount) return ((d.value || 0) * 0.8) / 100 + 0.2;
         return 0;
       })
       .attr(
