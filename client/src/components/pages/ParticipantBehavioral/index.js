@@ -10,6 +10,7 @@ import {
   StyledIframe,
   HeaderText,
 } from './ParticipantBehavioral.style';
+
 import Header from '../../common/Header';
 
 const { Panel } = Collapse;
@@ -19,6 +20,10 @@ const ParticipantBehavioral = ({ isAuthenticated, PIN, role }) => {
   // toggle modal visibility
   const toggleModal = () => {
     setModalVisible(!modalVisible);
+  };
+
+  const handleCancel = e => {
+    setModalVisible(false);
   };
 
   if (!isAuthenticated || role !== 'participant' || !PIN) {
@@ -48,6 +53,7 @@ const ParticipantBehavioral = ({ isAuthenticated, PIN, role }) => {
           title="Connect5 Impacting Behaviour"
           visible={modalVisible}
           onOk={toggleModal}
+          onCancel={handleCancel}
           cancelButtonProps={{ style: { display: 'none' } }}
           width={800}
         >
