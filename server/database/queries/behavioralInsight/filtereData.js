@@ -260,5 +260,6 @@ module.exports = async filters => {
 
   formedData.filteredResults = Object.values(formedData.filteredResults);
   formedData.allResults = Object.values(formedData.allResults);
+
   return formedData;
 };

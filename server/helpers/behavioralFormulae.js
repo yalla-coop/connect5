@@ -93,6 +93,7 @@ const calculatedAnswersByCode = {
   // for "in last week"
   FeedbackUserB1: survey => {
     // (B1/People)*100
+    // console.log('Check', checkAnswer(survey, 'B1'), survey);
     return (
       (checkAnswer(survey, 'B1') / checkAnswer(survey, 'People')) * 100 || null
     );

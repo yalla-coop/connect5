@@ -34,7 +34,7 @@ describe('Test Response schema', () => {
     const response = {
       PIN: 'HIO13',
       trainers: [trainer],
-      surveyType: 'pre-day-1',
+      surveyType: 'pre-course',
       session,
     };
     const storedRespons = await Response.create(response);

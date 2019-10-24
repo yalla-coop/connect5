@@ -9,6 +9,7 @@ module.exports = async (req, res, next) => {
     const { filteredResults, allResults } = await filtereData(filters);
 
     const results = behavioralCalculator(filteredResults, allResults);
+
     return res.json(results);
   } catch (error) {
     return next(boom.badImplementation());

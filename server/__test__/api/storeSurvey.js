@@ -16,12 +16,17 @@ describe('Test /survey/submit/', () => {
     done();
   });
 
+  beforeEach(async done => {
+    await buildDB();
+    done();
+  });
+
   afterAll(async () => {
     await mongoose.disconnect();
   });
 
   test('Test for answers to be submitted', async done => {
-    const surveyType = 'pre-day-1';
+    const surveyType = 'pre-course';
     const singleSession = await Session.findOne({ type: '1' });
     const sessionId = singleSession._id;
     const PIN = 'TES22';
@@ -33,6 +38,7 @@ describe('Test /survey/submit/', () => {
       answer: 'Under 18',
       participantField: 'age',
     };
+    // expect(formState).toBe('h');
     formState[questions[1]._id] = {
       answer: 'Male',
       participantField: 'gender',
@@ -41,6 +47,7 @@ describe('Test /survey/submit/', () => {
       answer: 'Irish',
       participantField: 'ethnic',
     };
+
     formState[questions[3]._id] = {
       answer: 'London',
       participantField: 'region',
@@ -112,7 +119,7 @@ describe('Test /survey/submit/', () => {
   });
 
   test('Answers dont get stored if not all required answers are filled in', async done => {
-    const surveyType = 'pre-day-1';
+    const surveyType = 'pre-course';
     const singleSession = await Session.findOne({ type: '1' });
     const sessionId = singleSession._id;
     const PIN = 'TES22';
@@ -145,7 +152,7 @@ describe('Test /survey/submit/', () => {
   });
 
   test('Answers dont get stored if PIN has wrong format', async done => {
-    const surveyType = 'pre-day-1';
+    const surveyType = 'pre-course';
     const singleSession = await Session.findOne({ type: '1' });
     const sessionId = singleSession._id;
     const PIN = 'TEST';

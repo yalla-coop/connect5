@@ -11,6 +11,7 @@ module.exports = async (req, res, next) => {
     );
 
     const feedback = feedbackFormulae(filterdResults, allResults);
+
     res.json({ feedback });
   } catch (error) {
     next(boom.badImplementation(error));

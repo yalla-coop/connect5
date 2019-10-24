@@ -21,7 +21,7 @@ describe('Tests for storing responses and answers in database', () => {
   });
 
   test('get survey questions for survey type', async done => {
-    const surveyType = 'pre-day-1';
+    const surveyType = 'pre-course';
     const singleSession = await Session.findOne({ type: '1' });
     const { shortId } = singleSession;
 
