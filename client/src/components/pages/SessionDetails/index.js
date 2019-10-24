@@ -166,7 +166,6 @@ class SessionDetails extends Component {
     this.setState({
       visible: true,
       drawerKey: nextKey,
-      surveyType: null,
     });
   };
 

@@ -14,6 +14,8 @@ import {
   FormWrapper,
 } from '../SessionDetails.Style';
 
+import { readableSurveysNamePairs } from '../../../../constants/index';
+
 const ScheduleEmailsList = ({
   handleDrawerOpen,
   scheduledEmails,
@@ -39,9 +41,11 @@ const ScheduleEmailsList = ({
       {filteredScheduledEmails && filteredScheduledEmails.length > 0 ? (
         <TableWrapper>
           <TableHeader>
-            <Text>
+            <Text style={{ fontWeight: 500 }}>
               Currently scheduled{' '}
-              {surveyType.includes('pre') ? 'Pre-Session' : 'Post-Session'}{' '}
+              <span style={{ fontWeight: 700, textDecoration: 'underline' }}>
+                {readableSurveysNamePairs[surveyType]}
+              </span>{' '}
               Survey Email
             </Text>
           </TableHeader>
