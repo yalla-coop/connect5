@@ -1205,7 +1205,6 @@ module.exports = () => {
   // 3 MONTHS FOLLOW UP
   const day1FollowUp3Months = [
     ...behavioural1('3-months-follow-up-day-1'),
-    ...behavioural2('3-months-follow-up-day-1'),
     ...behavioural3('3-months-follow-up-day-1'),
     ...behavioural4('3-months-follow-up-day-1'),
     ...behavioural5('3-months-follow-up-day-1'),
@@ -1214,7 +1213,6 @@ module.exports = () => {
   // 6 MONTHS FOLLOW UP
   const day1FollowUp6Months = [
     ...behavioural1('6-months-follow-up-day-1'),
-    ...behavioural2('6-months-follow-up-day-1'),
     ...behavioural3('6-months-follow-up-day-1'),
     ...behavioural4('6-months-follow-up-day-1'),
     ...behavioural5('6-months-follow-up-day-1'),
@@ -1230,7 +1228,6 @@ module.exports = () => {
   // 3 MONTHS FOLLOW UP
   const day2FollowUp3Months = [
     ...behavioural1('3-months-follow-up-day-2'),
-    ...behavioural2('3-months-follow-up-day-2'),
     ...behavioural3('3-months-follow-up-day-2'),
     ...behavioural4('3-months-follow-up-day-2'),
     ...behavioural5('3-months-follow-up-day-2'),
@@ -1239,7 +1236,6 @@ module.exports = () => {
   // 6 MONTHS FOLLOW UP
   const day2FollowUp6Months = [
     ...behavioural1('6-months-follow-up-day-2'),
-    ...behavioural2('6-months-follow-up-day-2'),
     ...behavioural3('6-months-follow-up-day-2'),
     ...behavioural4('6-months-follow-up-day-2'),
     ...behavioural5('6-months-follow-up-day-2'),
@@ -1255,7 +1251,6 @@ module.exports = () => {
   // 3 MONTHS FOLLOW UP
   const day3FollowUp3Months = [
     ...behavioural1('3-months-follow-up-day-3'),
-    ...behavioural2('3-months-follow-up-day-3'),
     ...behavioural3('3-months-follow-up-day-3'),
     ...behavioural4('3-months-follow-up-day-3'),
     ...behavioural5('3-months-follow-up-day-3'),
@@ -1264,7 +1259,6 @@ module.exports = () => {
   // 6 MONTHS FOLLOW UP
   const day3FollowUp6Months = [
     ...behavioural1('6-months-follow-up-day-3'),
-    ...behavioural2('6-months-follow-up-day-3'),
     ...behavioural3('6-months-follow-up-day-3'),
     ...behavioural4('6-months-follow-up-day-3'),
     ...behavioural5('6-months-follow-up-day-3'),
@@ -1275,7 +1269,6 @@ module.exports = () => {
   const preSpecial2DaysQuestions = [
     ...demographics('pre-special'),
     ...behavioural1('pre-special'),
-    ...behavioural2('pre-special'),
     ...behavioural3('pre-special'),
     ...behavioural4('pre-special'),
     ...behavioural5('pre-special'),
@@ -1290,7 +1283,6 @@ module.exports = () => {
   // 3 MONTHS FOLLOW UP
   const special2DaysFollowUp3Months = [
     ...behavioural1('3-months-follow-up-special-2-days'),
-    ...behavioural2('3-months-follow-up-special-2-days'),
     ...behavioural3('3-months-follow-up-special-2-days'),
     ...behavioural4('3-months-follow-up-special-2-days'),
     ...behavioural5('3-months-follow-up-special-2-days'),
@@ -1299,7 +1291,6 @@ module.exports = () => {
   // 6 MONTHS FOLLOW UP
   const special2DaysFollowUp6Months = [
     ...behavioural1('6-months-follow-up-special-2-days'),
-    ...behavioural2('6-months-follow-up-special-2-days'),
     ...behavioural3('6-months-follow-up-special-2-days'),
     ...behavioural4('6-months-follow-up-special-2-days'),
     ...behavioural5('6-months-follow-up-special-2-days'),
