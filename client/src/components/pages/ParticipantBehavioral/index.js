@@ -46,7 +46,9 @@ const ParticipantBehavioral = ({ isAuthenticated, PIN, role }) => {
         <BehavioralInsight
           userRole={role}
           idOrPIN={PIN}
-          filters={{ PIN }}
+          defaultFilters={{
+            PIN,
+          }}
           participant
         />
         <Modal
