@@ -108,8 +108,8 @@ class App extends Component {
       checkBrowserWidth: checkBrowserWidthActionCreator,
     } = this.props;
     const { width } = this.state;
-    const isMobile = width <= 500;
-    const isDeskTop = width >= 500;
+    const isMobile = width <= 700;
+    const isDeskTop = width >= 700;
 
     const data = {
       width,
@@ -124,8 +124,8 @@ class App extends Component {
     const { checkBrowserWidth: checkBrowserWidthActionCreator } = this.props;
 
     const { width } = this.state;
-    const isMobile = width <= 500;
-    const isDeskTop = width >= 500;
+    const isMobile = width <= 700;
+    const isDeskTop = width >= 700;
 
     const data = {
       width,

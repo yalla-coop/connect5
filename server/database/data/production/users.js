@@ -44,6 +44,7 @@ module.exports = async () => {
       region: regions[0],
       localLead: storedLocalLeads[0],
       officialLocalLead: false,
+      managers: [storedLocalLeads[0]],
     },
     {
       name: 'mark',
@@ -53,13 +54,16 @@ module.exports = async () => {
       region: regions[0],
       localLead: storedLocalLeads[0],
       officialLocalLead: false,
+      managers: [storedLocalLeads[0]],
     },
   ];
   const trainers = await User.create(dummyTrainers);
 
   const trainersIds = trainers.map(item => item._id);
+  const Tez = await User.findOne({ email: 'tez.cook@hants.gov.uk' });
+
   await User.updateOne(
     { email: 'tez.cook@hants.gov.uk' },
-    { trainersGroup: trainersIds }
+    { trainersGroup: [...trainersIds, Tez._id] }
   );
 };

@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 import { colors } from './constants';
@@ -32,7 +33,10 @@ class SubGroupChart extends Component {
       .append('svg')
       .attr('width', chartWidth)
       .attr('height', chartHeight)
-      .attr('style', 'display: block; margin: 25px auto 0');
+      .attr(
+        'style',
+        'display: block; margin: 25px auto 0; pointer-events: none'
+      );
 
     // bars groups
     const groups = svg
@@ -40,7 +44,28 @@ class SubGroupChart extends Component {
       .data(dataset)
       .enter()
       .append('g')
-      .attr('class', `chart-sub-groups-${i}-g`);
+      .attr('class', `chart-sub-groups-${i}-g`)
+      .on('mouseover', function(_d, _i) {
+        if (_d.average > 0) {
+          d3.select(this)
+            .append('text')
+            .attr('fill', '#fc6b6b')
+            .text(d => Math.round(d.average))
+            .attr(
+              'x',
+              d =>
+                bandScale(d.category || d.surveyType) +
+                bandScale.bandwidth() / 2
+            )
+            .attr('y', d => chartHeight - yScale(Math.min(d.average, 90)) - 2)
+            .attr('text-anchor', 'middle')
+            .attr('id', `${i}-g-${_i}`);
+        }
+      })
+      .on('mouseout', function(_d, _i) {
+        d3.select(`#${i}-g-${_i}`).remove();
+      })
+      .attr('style', 'pointer-events: all');
 
     // empty bars
     groups
@@ -83,6 +108,7 @@ class SubGroupChart extends Component {
       .text('No data yet')
       .attr('fill', '#828282')
       .attr('opacity', d => (d.responsesCount ? 0 : 0.7))
+      .attr('display', d => (d.responsesCount ? 'none' : 'block'))
       .attr(
         'x',
         d => bandScale(d.category || d.surveyType) + bandScale.bandwidth() / 2
@@ -110,7 +136,8 @@ class SubGroupChart extends Component {
       .attr('class', `chart-sub-groups-${i}-text`)
       .attr('text-anchor', 'middle')
       .attr('opacity', d => {
-        if (d.responsesCount) return ((d.value || 0) * 0.8) / 100 + 0.2;
+        if (d.responsesCount) return 0.8;
+        // if (d.responsesCount) return ((d.value || 0) * 0.8) / 100 + 0.2;
         return 0;
       })
       .attr(
