@@ -49,7 +49,7 @@ class SubGroupChart extends Component {
         if (_d.average > 0) {
           d3.select(this)
             .append('text')
-            .attr('fill', '#fc6b6b')
+            .attr('fill', '#000000')
             .text(d => Math.round(d.average))
             .attr(
               'x',
@@ -89,10 +89,10 @@ class SubGroupChart extends Component {
       })
       .attr('fill', d => ordinalScale(d.category || d.surveyType));
 
-    // red lines
+    // average lines
     groups
       .append('line')
-      .attr('stroke', d => (d.responsesCount ? `#fc6b6b` : 'none'))
+      .attr('stroke', d => (d.responsesCount ? `#000000` : 'none'))
       .attr('stroke-width', 2)
       .attr('x1', d => bandScale(d.category || d.surveyType))
       .attr('y1', d => chartHeight - yScale(d.average))
