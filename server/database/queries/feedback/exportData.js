@@ -197,7 +197,9 @@ module.exports.exportData = filters => {
         'Session Type': '$sessionType',
         'Session Region': '$sessionRegion',
 
-        'Agreed to Research': '$responseDetails.agreedToResearch',
+        'Agreed to Research': {
+          $cond: ['$responseDetails.agreedToResearch', 'true', 'false'],
+        },
         'Survey Type': '$surveyType',
         'Trainer 1 ID': { $arrayElemAt: ['$trainers._id', 0] },
         'Trainer 1 Name': { $arrayElemAt: ['$trainers.name', 0] },
