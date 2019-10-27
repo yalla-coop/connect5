@@ -160,6 +160,10 @@ export const TextField = styled(CommonStyles)`
   }
 `;
 
+export const QuestionText = styled.h4`
+  display: inline;
+`;
+
 export const Warning = styled.p`
   color: ${colors.errorRed};
   font-size: 14px;

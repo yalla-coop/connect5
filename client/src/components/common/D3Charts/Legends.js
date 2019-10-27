@@ -11,7 +11,6 @@ class Legends extends Component {
         id={`chart-legends-${i}`}
         style={{
           display: 'flex',
-          justifyContent: 'space-around',
           alignItems: 'center',
           flexWrap: 'wrap',
         }}
@@ -21,7 +20,7 @@ class Legends extends Component {
             style={{
               display: 'flex',
               alignItems: 'center',
-              marginRight: '0.5rem',
+              marginRight: '2rem',
             }}
           >
             <div
