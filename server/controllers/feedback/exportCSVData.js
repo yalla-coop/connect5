@@ -11,21 +11,26 @@ module.exports = async (req, res, next) => {
         const newResponseObj = { ...response };
 
         if (response.answers && response.answers.length > 0) {
-          response.answers.map(answer => {
-            const { question } = answer;
-            let subGroupText = '';
+          response.answers
+            .map(answer => {
+              const { question } = answer;
+              let subGroupText = '';
 
-            if (question.subGroup && question.subGroup.text) {
-              subGroupText = question.subGroup.text;
-            }
+              if (question.subGroup && question.subGroup.text) {
+                subGroupText = question.subGroup.text;
+              }
 
-            newResponseObj[
-              `${question.group.text} ${
-                question.code ? `(${question.code})` : ''
-              }: ${subGroupText} ${question.text}`
-            ] = answer.answer;
-            return newResponseObj;
-          });
+              if (question.group.text !== 'demographic') {
+                newResponseObj[
+                  `${question.group.text} ${
+                    question.code ? `(${question.code})` : ''
+                  }: ${subGroupText} ${question.text}`
+                ] = answer.answer;
+                return newResponseObj;
+              }
+              return undefined;
+            })
+            .filter(item => item);
         }
 
         // now answers assigned, remove answers array from obj
