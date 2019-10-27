@@ -208,6 +208,7 @@ module.exports.exportData = filters => {
         'answers._id': 1,
         'answers.answer': 1,
         'answers.question.text': 1,
+        'answers.question.code': 1,
         'answers.question.group.text': 1,
         'answers.question.subGroup': 1,
       },

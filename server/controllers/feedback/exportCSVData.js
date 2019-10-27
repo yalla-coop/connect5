@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
     .then(responses => {
       // tidy responses to get all answers within the object
       const cleanedResponses = responses.map(response => {
-        const newResponseObj = response;
+        const newResponseObj = { ...response };
 
         if (response.answers && response.answers.length > 0) {
           response.answers.map(answer => {
@@ -20,7 +20,9 @@ module.exports = async (req, res, next) => {
             }
 
             newResponseObj[
-              `${question.group.text}: ${subGroupText} ${question.text}`
+              `${question.group.text} ${
+                question.code ? `(${question.code})` : ''
+              }: ${subGroupText} ${question.text}`
             ] = answer.answer;
             return newResponseObj;
           });
