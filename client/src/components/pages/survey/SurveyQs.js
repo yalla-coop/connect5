@@ -61,7 +61,7 @@ const renderQuestionInputType = (
               onClick={toggleModal}
               style={{
                 display: 'inline',
-                marginRight: '0.75rem',
+                marginLeft: '0.75rem',
                 color: '#1890ff',
               }}
             />
@@ -113,7 +113,7 @@ const renderQuestionInputType = (
               onClick={toggleModal}
               style={{
                 display: 'inline',
-                marginRight: '0.75rem',
+                marginLeft: '0.75rem',
                 color: '#1890ff',
               }}
             />
@@ -156,7 +156,7 @@ const renderQuestionInputType = (
               onClick={toggleModal}
               style={{
                 display: 'inline',
-                marginRight: '0.75rem',
+                marginLeft: '0.75rem',
                 color: '#1890ff',
               }}
             />
@@ -213,7 +213,7 @@ const renderQuestionInputType = (
               onClick={toggleModal}
               style={{
                 display: 'inline',
-                marginRight: '0.75rem',
+                marginLeft: '0.75rem',
                 color: '#1890ff',
               }}
             />
@@ -262,7 +262,7 @@ const renderQuestionInputType = (
               onClick={toggleModal}
               style={{
                 display: 'inline',
-                marginRight: '0.75rem',
+                marginLeft: '0.75rem',
                 color: '#1890ff',
               }}
             />
@@ -349,7 +349,7 @@ const renderQuestionInputType = (
               onClick={toggleModal}
               style={{
                 display: 'inline',
-                marginRight: '0.75rem',
+                marginLeft: '0.75rem',
                 color: '#1890ff',
               }}
             />
