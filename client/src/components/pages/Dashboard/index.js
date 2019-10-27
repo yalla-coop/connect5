@@ -53,16 +53,20 @@ class Dashboard extends Component {
   }
 
   checkResponseRate = responseRate => {
-    console.log(responseRate)
     if (responseRate > 100) {
       message.warning(
         <>
-        <h3 style={{fontSize: "1rem"}}>Your response rate is over 100%.</h3>
-        <p>This is because you have had more responses than confirmed attendees. To fix this please update your sessions to have the correct number of people who attended</p></>,
+          <h3 style={{ fontSize: '1rem' }}>Your response rate is over 100%.</h3>
+          <p>
+            This is because you have had more responses than confirmed
+            attendees. To fix this please update your sessions to have the
+            correct number of people who attended
+          </p>
+        </>,
         3
       );
     }
-  }
+  };
 
   render() {
     const {
@@ -139,8 +143,10 @@ class Dashboard extends Component {
               {role === 'trainer' ? (
                 <StatItem to={MY_RESULTS_URL}>
                   <Label>Response Rate</Label>
-                  <StatNumber>{stats.responseRate || '0'}%
-                  {this.checkResponseRate(stats.responseRate || 0)}</StatNumber>
+                  <StatNumber>
+                    {stats.responseRate || '0'}%
+                    {this.checkResponseRate(stats.responseRate || 0)}
+                  </StatNumber>
                 </StatItem>
               ) : (
                 <StatItem to={TRAINERS_URL}>

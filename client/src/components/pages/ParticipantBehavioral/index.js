@@ -22,7 +22,7 @@ const ParticipantBehavioral = ({ isAuthenticated, PIN, role }) => {
     setModalVisible(!modalVisible);
   };
 
-  const handleCancel = e => {
+  const handleCancel = () => {
     setModalVisible(false);
   };
 
@@ -46,7 +46,9 @@ const ParticipantBehavioral = ({ isAuthenticated, PIN, role }) => {
         <BehavioralInsight
           userRole={role}
           idOrPIN={PIN}
-          filters={{ PIN }}
+          defaultFilters={{
+            PIN,
+          }}
           participant
         />
         <Modal
