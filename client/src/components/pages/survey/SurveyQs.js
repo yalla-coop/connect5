@@ -17,6 +17,7 @@ import {
   QuestionGroup,
   InfoHeader,
   StyledIframe,
+  QuestionText,
 } from './Questions.style';
 
 const { Option } = Select;
@@ -44,14 +45,27 @@ const renderQuestionInputType = (
   setCurrentQuestion,
   handleDropdown,
   code,
-  setMaxNumber
+  setMaxNumber,
+  toggleModal
 ) => {
   if (inputType === 'text') {
     return (
       <TextField>
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
-          <h4 id={index}>{questionText}</h4>
+          <QuestionText id={index}>{questionText}</QuestionText>
+          {group.text === 'Behavioural Insights' && (
+            <Icon
+              type="info-circle"
+              fontSize={14}
+              onClick={toggleModal}
+              style={{
+                display: 'inline',
+                marginRight: '0.75rem',
+                color: '#1890ff',
+              }}
+            />
+          )}
           <p className="helpertext">{helperText}</p>
         </header>
 
@@ -91,7 +105,19 @@ const renderQuestionInputType = (
       >
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
-          <h4 id={index}>{questionText}</h4>
+          <QuestionText id={index}>{questionText}</QuestionText>
+          {group.text === 'Behavioural Insights' && (
+            <Icon
+              type="info-circle"
+              fontSize={14}
+              onClick={toggleModal}
+              style={{
+                display: 'inline',
+                marginRight: '0.75rem',
+                color: '#1890ff',
+              }}
+            />
+          )}
           <p className="helpertext">{helperText}</p>
         </header>
         <DatePicker
@@ -122,8 +148,21 @@ const renderQuestionInputType = (
       >
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
-          <h4 id={index}>{questionText}</h4>
+          <QuestionText id={index}>{questionText}</QuestionText>
+          {group.text === 'Behavioural Insights' && (
+            <Icon
+              type="info-circle"
+              fontSize={14}
+              onClick={toggleModal}
+              style={{
+                display: 'inline',
+                marginRight: '0.75rem',
+                color: '#1890ff',
+              }}
+            />
+          )}
           <p className="helpertext">Please specify number</p>
+
           <p className="helpertext">{helperText}</p>
         </header>
         <input
@@ -166,7 +205,19 @@ const renderQuestionInputType = (
       >
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
-          <h4 id={index}>{questionText}</h4>
+          <QuestionText id={index}>{questionText}</QuestionText>
+          {group.text === 'Behavioural Insights' && (
+            <Icon
+              type="info-circle"
+              fontSize={14}
+              onClick={toggleModal}
+              style={{
+                display: 'inline',
+                marginRight: '0.75rem',
+                color: '#1890ff',
+              }}
+            />
+          )}
           <p className="helpertext">
             Please choose: 1 star (strongly disagree) to 6 stars (strongly
             agree)
@@ -203,7 +254,19 @@ const renderQuestionInputType = (
       >
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
-          <h4 id={index}>{questionText}</h4>
+          <QuestionText id={index}>{questionText}</QuestionText>
+          {group.text === 'Behavioural Insights' && (
+            <Icon
+              type="info-circle"
+              fontSize={14}
+              onClick={toggleModal}
+              style={{
+                display: 'inline',
+                marginRight: '0.75rem',
+                color: '#1890ff',
+              }}
+            />
+          )}
           <p className="helpertext">{helperText}</p>
         </header>
         <div className="answers">
@@ -278,7 +341,19 @@ const renderQuestionInputType = (
       >
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
-          <h4 id={index}>{questionText}</h4>
+          <QuestionText id={index}>{questionText}</QuestionText>
+          {group.text === 'Behavioural Insights' && (
+            <Icon
+              type="info-circle"
+              fontSize={14}
+              onClick={toggleModal}
+              style={{
+                display: 'inline',
+                marginRight: '0.75rem',
+                color: '#1890ff',
+              }}
+            />
+          )}
           <p className="helpertext">{helperText}</p>
         </header>
         <Select
@@ -346,8 +421,7 @@ const questionsRender = (
   setCurrentQuestion,
   handleDropdown,
   toggleModal,
-  setMaxNumber,
-  testNumber
+  setMaxNumber
 ) => {
   const demographicQs = arrayOfQuestions.filter(
     question => question.group.text === 'demographic'
@@ -378,8 +452,17 @@ const questionsRender = (
         <SectionCategory>{section[0] && section[0].group.text}</SectionCategory>
         {section[0] && section[0].group.text === 'Behavioural Insights' && (
           <InfoHeader to="#" onClick={toggleModal}>
-            <Icon type="info-circle" fontSize={14} /> Why are you asking me
-            these questions?
+            <Icon
+              type="info-circle"
+              fontSize={14}
+              onClick={toggleModal}
+              style={{
+                display: 'inline',
+                marginRight: '0.75rem',
+                color: '#1890ff',
+              }}
+            />
+            Why are you asking me these questions?
           </InfoHeader>
         )}
         {section &&
@@ -429,7 +512,7 @@ const questionsRender = (
                   handleDropdown,
                   code,
                   setMaxNumber,
-                  testNumber
+                  toggleModal
                 )}
               </QuestionWrapper>
             );
@@ -515,6 +598,7 @@ export default class Questions extends React.Component {
           title="Connect5 Impacting Behaviour"
           visible={modalVisible}
           onOk={toggleModal}
+          onCancel={toggleModal}
           width={800}
           cancelButtonProps={{ style: { display: 'none' } }}
         >
