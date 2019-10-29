@@ -157,8 +157,8 @@ class SubGroupChart extends Component {
     const svg2 = d3
       .select(`#chart-sub-groups-${i}`)
       .append('svg')
-      .attr('width', 150)
-      .attr('height', 75)
+      .attr('width', Math.max(150, chartWidth))
+      .attr('height', Math.max(150, chartWidth) / 2)
       .attr('style', 'display: block; margin: 0 auto');
 
     svg2
@@ -169,10 +169,10 @@ class SubGroupChart extends Component {
       .text(d => (replies ? `${d} (${replies}+replies)` : d))
       .attr('text-anchor', 'middle')
       .attr('alignment-base', 'bottom')
-      .attr('x', 150 / 2)
+      .attr('x', Math.max(150, chartWidth) / 2)
       .attr('y', 25)
-      .attr('width', 150)
-      .attr('height', 75)
+      .attr('width', Math.max(150, chartWidth))
+      .attr('height', Math.max(150, chartWidth) / 2)
       .call(wrapText, Math.max(chartWidth, 150));
   }
 
