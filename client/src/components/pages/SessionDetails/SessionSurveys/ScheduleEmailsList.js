@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Empty, Popconfirm } from 'antd';
+import { Empty, Popconfirm, Button as AntdButton } from 'antd';
 import moment from 'moment';
 
 import Button from '../../../common/Button';
@@ -58,15 +58,32 @@ const ScheduleEmailsList = ({
               }}
             >
               <Row enabled>
-                {moment(scheduledEmail.date).format('DD-MM-YYYY')}
-                <Popconfirm
-                  title="Are you sure you want to cancel this email?"
-                  onConfirm={() => handleCancelEmail(scheduledEmail._id)}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <DrawerLink style={{ cursor: 'pointer' }}>Cancel</DrawerLink>
-                </Popconfirm>
+                <DrawerLink as="span">
+                  {moment(scheduledEmail.date).format('DD-MM-YYYY')}
+                </DrawerLink>
+                <div style={{ display: 'flex' }}>
+                  <AntdButton
+                    type="link"
+                    onClick={handleDrawerOpen}
+                    data-key="viewScheduledEmail"
+                    data-survey-type={surveyType}
+                    data-email-id={scheduledEmail._id}
+                  >
+                    View
+                  </AntdButton>
+                  <Popconfirm
+                    title="Are you sure you want to cancel this email?"
+                    onConfirm={() => handleCancelEmail(scheduledEmail._id)}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <span style={{ display: 'flex' }}>
+                      <AntdButton type="link" style={{ color: 'red' }}>
+                        cancel
+                      </AntdButton>
+                    </span>
+                  </Popconfirm>
+                </div>
               </Row>
             </SubDetails>
           ))}

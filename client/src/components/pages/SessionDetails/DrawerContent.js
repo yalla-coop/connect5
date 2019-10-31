@@ -14,6 +14,8 @@ import SendInvitation from './InviteAndPromote/SendInvitation';
 import InviteeList from './InviteAndPromote/InviteeList';
 import EmailsList from '../../common/List/EmailsList';
 
+import ScheduledEmailPreview from './SessionSurveys/ScheduledEmailPreview';
+
 const DrawerContent = ({
   sessionDetails,
   loading,
@@ -25,7 +27,6 @@ const DrawerContent = ({
   name,
   handleCloseDrawer,
   surveyType,
-  state,
   // update
   handleSubmitUpdateAttendees,
   confirmedAttendeesList,
@@ -45,6 +46,7 @@ const DrawerContent = ({
   // schedule list
   handleCancelEmail,
   handleSubmitSchedule,
+  emailId,
 }) => {
   switch (drawerKey) {
     case 'viewAttendeesList':
@@ -91,15 +93,14 @@ const DrawerContent = ({
     // Invite And Promote
     case 'send-invitation':
       return (
-        <>
-          <SendInvitation
-            sessionDetails={sessionDetails}
-            handleAddEmailsClick={handleAddEmailsClick}
-            drawerKey={drawerKey}
-            onClose={handleCloseDrawer}
-          />
-        </>
+        <SendInvitation
+          sessionDetails={sessionDetails}
+          handleAddEmailsClick={handleAddEmailsClick}
+          drawerKey={drawerKey}
+          onClose={handleCloseDrawer}
+        />
       );
+
     case 'view-invitees':
       return (
         <InviteeList
@@ -154,6 +155,15 @@ const DrawerContent = ({
           drawerKey={drawerKey}
           onClose={handleCloseDrawer}
           isSchedule
+        />
+      );
+
+    case 'viewScheduledEmail':
+      return (
+        <ScheduledEmailPreview
+          emailId={emailId}
+          sessionDetails={sessionDetails}
+          scheduledEmails={sessionDetails.scheduledEmails}
         />
       );
 

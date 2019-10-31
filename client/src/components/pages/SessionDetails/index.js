@@ -46,6 +46,7 @@ class SessionDetails extends Component {
     openSection: '1',
     visible: false,
     drawerKey: null,
+    emailId: null,
   };
 
   componentDidMount() {
@@ -110,11 +111,12 @@ class SessionDetails extends Component {
 
   // open drawer
   handleDrawerOpen = e => {
-    const { key, surveyType } = e.target.dataset;
+    const { key, surveyType, emailId } = e.target.dataset;
 
     this.setState({
       visible: true,
       drawerKey: key,
+      emailId,
       surveyType,
     });
   };
@@ -306,6 +308,7 @@ class SessionDetails extends Component {
       newEmails,
       surveyType,
       dataForCopy,
+      emailId,
     } = this.state;
     if (!sessionDetails) {
       return Spin;
@@ -446,6 +449,7 @@ class SessionDetails extends Component {
                 handleCancelEmail={this.handleCancelEmail}
                 surveyType={surveyType}
                 handleSubmitSchedule={this.handleSubmitSchedule}
+                emailId={emailId}
               />
             </>
           </Drawer>
