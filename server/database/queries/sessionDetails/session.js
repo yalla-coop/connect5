@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Session = require('./../../models/Session');
+const Response = require('./../../models/Response');
+const Answer = require('./../../models/Answer');
 
 module.exports.getSessionById = id => Session.findById(id);
 
@@ -40,8 +42,16 @@ module.exports.getSessionDetails = ({ id, shortId }) => {
   ]);
 };
 
-module.exports.deleteSession = id => {
-  return Session.findByIdAndDelete(id);
+module.exports.deleteSession = async id => {
+  // get all responses related to the session
+  const responses = await Response.find({ session: id });
+  const responseIds = responses.map(({ _id }) => _id);
+  // delete all answers for that session
+  await Answer.deleteMany({ response: { $in: responseIds } });
+  // delete the session itself
+  await Session.findByIdAndDelete(id);
+  // delete all responses related to that session
+  return Response.deleteMany({ session: id });
 };
 
 module.exports.editSessionQuery = async (
