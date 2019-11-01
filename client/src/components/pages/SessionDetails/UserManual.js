@@ -50,9 +50,10 @@ export default () => {
                 marginTop: '0.75rem',
               }}
             >
-              You can either copy an existing list of emails separated by
-              commas, spaces etc. or input each address manually. If you wanted
-              to copy a list of emails from a session you can click the copy
+              You can either copy an existing list of emails or input each
+              address manually. When copying a list of emails externally, they
+              would need to be separated by commas/semicolons. If you wanted to
+              copy a list of emails from another session you can click the copy
               icon above the input field. When choosing to input emails manually
               - clicking your mouse or pressing enter will store each email
               address.
