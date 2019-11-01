@@ -770,6 +770,7 @@ class EditEmail extends Component {
               confirmLink={`${window.location.host}/confirm/${shortId}`}
               surveyType={surveyType}
               shortId={shortId}
+              recipients={checkedList}
             />
           </>
           {isEditView ? (

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
+import { Divider } from 'antd';
 import { getSurveyLink } from '../../../helpers';
 
 // STYLE
@@ -28,6 +29,8 @@ class EmailTemplate extends Component {
       postSurveyLink,
       surveyType,
       shortId,
+      recipients,
+      scheduleTime,
     } = this.props;
 
     let fullAddress = '';
@@ -43,6 +46,12 @@ class EmailTemplate extends Component {
 
     return (
       <EmailInfo>
+        {scheduleTime && (
+          <div>
+            <InfoTitle style={{ display: 'inline' }}>Scheduled At: </InfoTitle>{' '}
+            <span>{scheduleTime}</span>
+          </div>
+        )}
         <InfoTitle>Message:</InfoTitle>
         <p>Dear course participants,</p>
         {
@@ -86,6 +95,16 @@ class EmailTemplate extends Component {
         <p>Sincerely,</p>
 
         <p>your Connect 5 team.</p>
+
+        {recipients && (
+          <div>
+            <Divider />
+            <InfoTitle>
+              <span>Send To:</span>
+            </InfoTitle>
+            {recipients && recipients.map(email => <p key={email}>{email}</p>)}
+          </div>
+        )}
       </EmailInfo>
     );
   }
