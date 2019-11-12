@@ -24,6 +24,7 @@ import {
   SessionDetailsWrapper,
   BackWrapper,
   HeaderDiv,
+  InfoHeader,
 } from './SessionDetails.Style';
 
 // SUB COMPONENTS
@@ -314,6 +315,17 @@ class SessionDetails extends Component {
       return Spin;
     }
 
+    const { _id, date, region, shortId, trainers, type } = sessionDetails;
+    console.log('sessionDetails', sessionDetails);
+    const printContent = {
+      sessionId: _id,
+      sessionDate: date,
+      sessionRegion: region,
+      sessionShortId: shortId,
+      sessionTrainers: trainers,
+      sessionType: type,
+    };
+
     const content = {
       cont1:
         'This section provides an overview about the basic session details. You can edit those details by clicking "Edit Session" or delete the session by clicking "Delete Session".',
@@ -466,6 +478,17 @@ class SessionDetails extends Component {
           }}
         >
           {dataForCopy}
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <InfoHeader
+            style={{ fontSize: '19px' }}
+            to={{
+              pathname: `/print/${sessionDetails._id}`,
+              state: { details: printContent },
+            }}
+          >
+            Click here to create printable PDF
+          </InfoHeader>
         </div>
       </SessionDetailsWrapper>
     );
