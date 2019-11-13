@@ -21,7 +21,7 @@ const { Option } = Select;
 
 class InviteeList extends Component {
   state = {
-    err: '',
+    err: ''
   };
 
   componentDidMount() {
@@ -32,11 +32,13 @@ class InviteeList extends Component {
       // ignore the error
     }
     const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+    if (evt.clipboardData || window.clipboardData) {
+      (evt.clipboardData || window.clipboardData).setData('text/plain', '');
 
-    document.addEventListener('paste', this.pasteEmails);
+      document.addEventListener('paste', this.pasteEmails);
 
-    document.dispatchEvent(evt);
+      document.dispatchEvent(evt);
+    }
   }
 
   componentWillUnmount() {

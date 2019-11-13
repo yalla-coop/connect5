@@ -142,9 +142,11 @@ class EditEmail extends Component {
       // ignore the error
     }
     const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
-    document.addEventListener('paste', this.pasteEmails);
-    document.dispatchEvent(evt);
+    if (evt.clipboardData || window.clipboardData) {
+      (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+      document.addEventListener('paste', this.pasteEmails);
+      document.dispatchEvent(evt);
+    }
   }
 
   componentWillUnmount() {
@@ -652,7 +654,7 @@ class EditEmail extends Component {
                           width: '0',
                           hieght: '0',
                           // to prevent Y scroll
-                          left: '-100000rem',
+                          left: '-100000rem'
                         }}
                       >
                         {participantsEmails && participantsEmails.join(';')}
@@ -736,7 +738,7 @@ class EditEmail extends Component {
                               style={{
                                 width: '90%',
                                 borderTop: '1px solid #E9E9E9',
-                                margin: '0.5rem auto',
+                                margin: '0.5rem auto'
                               }}
                             >
                               <AddEmailsButton

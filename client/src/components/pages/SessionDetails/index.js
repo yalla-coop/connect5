@@ -58,9 +58,11 @@ class SessionDetails extends Component {
       // ignore the error
     }
     const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
-    document.addEventListener('paste', this.pasteEmails);
-    document.dispatchEvent(evt);
+    if (evt.clipboardData || window.clipboardData) {
+      (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+      document.addEventListener('paste', this.pasteEmails);
+      document.dispatchEvent(evt);
+    }
 
     const { id } = this.props.match.params;
     // call action and pass it the id of session to fetch it's details
