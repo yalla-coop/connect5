@@ -28,14 +28,14 @@ const AboutUs = () => (
     <H3>Who Are We?</H3>
     <Paragraph>
       Connect 5 has been developed by a unique partnership of academic, clinical
-      and public mental health expertise based in Greater Manchester.
+      and public mental wellbeing expertise based in Greater Manchester.
     </Paragraph>
 
     <H3>What is Connect 5?</H3>
     <Paragraph>
       Connect 5 is a workforce training programme, created to upskill non-mental
-      health staff to better understand and successfully address mental health
-      issues within their everyday practice.
+      health staff to better understand and successfully address mental
+      wellbeing issues within their everyday practice.
     </Paragraph>
     <Paragraph>
       Connect 5 is an evidenced based collaborative prevention toolkit that
@@ -54,8 +54,8 @@ const AboutUs = () => (
       based psychologically informed tools.
     </Paragraph>
     <Paragraph>
-      Understanding mental health and wellbeing as an everyday experience whom
-      everyone has the skills to understand and change.
+      Understanding mental wellbeing and wellbeing as an everyday experience
+      whom everyone has the skills to understand and change.
     </Paragraph>
 
     <Mission>
@@ -70,7 +70,7 @@ const AboutUs = () => (
         </Li>
         <Li>
           2. Connect with individuals experiencing subthreshold or low levels of
-          common mental health problems: helping them help themselves.
+          common mental wellbeing problems: helping them help themselves.
         </Li>
         <Li>
           3. Connect with individuals experiencing high levels of mental
@@ -113,10 +113,10 @@ const AboutUs = () => (
     <H3>Who is connect5 for?</H3>
     <Paragraph>
       Connect 5 is relevant to a wide range of non-specialist frontline staff
-      who work with people at risk of poor mental health. It uniquely optimises
-      opportunities for building a culture of self-management, prevention and
-      improved access to psychological approaches for mental health and
-      wellbeing.
+      who work with people at risk of poor mental wellbeing. It uniquely
+      optimises opportunities for building a culture of self-management,
+      prevention and improved access to psychological approaches for mental
+      health and wellbeing.
     </Paragraph>
 
     <FilesWrapper>

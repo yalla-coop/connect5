@@ -65,10 +65,10 @@ export default class ConfirmSurvey extends Component {
           <strong>Important notice</strong>:{' '}
           <em>
             All data collected will be anonymised and used to evaluate Connect 5
-            as a mental health training programme. Moreover the participant will
-            be able to see own results. By clicking Yes the participant agrees
-            that submitted feedback data will be used for internal evaluation
-            procedures.
+            as a mental wellbeing training programme. Moreover the participant
+            will be able to see own results. By clicking Yes the participant
+            agrees that submitted feedback data will be used for internal
+            evaluation procedures.
           </em>
         </ImportantNote>
         <PromptHeadline>Are these details correct?</PromptHeadline>
@@ -94,7 +94,7 @@ export default class ConfirmSurvey extends Component {
                 title: 'Wrong Survey?',
                 content:
                   "Please make sure that you fill out the correct survey for your session. If these details aren't correct please contact your trainer.",
-                onOk: sectionChange('back'),
+                onOk: sectionChange('back')
               });
             }}
           />
