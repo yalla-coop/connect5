@@ -158,7 +158,6 @@ class App extends Component {
               loaded={loaded}
               allowedRoles={['trainer', 'admin', 'localLead']}
               role={role}
-              navbar
             />
             <PrivateRoute
               exact

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Collapse from 'antd/lib/collapse';
 import * as Yup from 'yup';
-import { Icon, Drawer, Modal, message } from 'antd';
+import { Icon, Drawer, Modal, message, Button } from 'antd';
 import AntdModal from '../../common/AntdModal';
 
 import { fetchSessionDetails } from '../../../actions/groupSessionsAction';
@@ -315,8 +315,16 @@ class SessionDetails extends Component {
       return Spin;
     }
 
-    const { _id, date, region, shortId, trainers, type } = sessionDetails;
-    console.log('sessionDetails', sessionDetails);
+    const {
+      _id,
+      date,
+      region,
+      shortId,
+      trainers,
+      type,
+      address,
+    } = sessionDetails;
+
     const printContent = {
       sessionId: _id,
       sessionDate: date,
@@ -324,6 +332,7 @@ class SessionDetails extends Component {
       sessionShortId: shortId,
       sessionTrainers: trainers,
       sessionType: type,
+      address,
     };
 
     const content = {
@@ -427,7 +436,7 @@ class SessionDetails extends Component {
                 <p
                   style={{
                     marginLeft: '1rem',
-                    marginBottom: '0',
+                    marginBottom: '0'
                   }}
                 >
                   Back
@@ -480,15 +489,17 @@ class SessionDetails extends Component {
           {dataForCopy}
         </div>
         <div style={{ textAlign: 'center' }}>
-          <InfoHeader
-            style={{ fontSize: '19px' }}
-            to={{
-              pathname: `/print/${sessionDetails._id}`,
-              state: { details: printContent },
-            }}
-          >
-            Click here to create printable PDF
-          </InfoHeader>
+          <Button>
+            <InfoHeader
+              style={{ fontSize: '19px' }}
+              to={{
+                pathname: `/print/${sessionDetails._id}`,
+                state: { details: printContent },
+              }}
+            >
+              Click here to create printable PDF
+            </InfoHeader>
+          </Button>
         </div>
       </SessionDetailsWrapper>
     );

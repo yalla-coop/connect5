@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { colors, shadows } from '../../../theme';
+import { colors, shadows, breakpoints } from '../../../theme';
 
 export const Wrapper = styled.div`
   padding: 80px 1rem;
@@ -62,5 +62,37 @@ export const StyledLink = styled(Link)`
 
   :hover {
     color: ${colors.red};
+  }
+`;
+
+export const BackContainer = styled.div`
+  width: 90%;
+  padding: 0 20px;
+  align-self: center;
+  padding: 3rem 1rem 1rem;
+`;
+
+export const BackLink = styled.button`
+  border: none;
+  background: none;
+  color: ${colors.lightPrimary};
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+
+  :focus,
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
+export const Title = styled.h1`
+  font-weight: 300;
+  font-size: 24px;
+  text-align: center;
+  color: #000000;
+
+  @media ${breakpoints.mobileXL} {
+    font-size: 32px;
   }
 `;
