@@ -1,24 +1,71 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 import { Button } from 'antd';
-import { getAllSurveyLinks, getSessionSurveys } from '../../../helpers';
 import Header from '../../common/Header';
 import Spin from '../../common/Spin';
+import PrintableComponent from './PrintableComponent';
 import history from '../../../history';
 
 // STYLING
-import {
-  Wrapper,
-  DetailsContent,
-  Detail,
-  BoldSpan,
-  Row,
-  BackContainer,
-  BackLink,
-  Title,
-} from './PrintSessionDetails.style';
+import { Wrapper, BackContainer, BackLink } from './PrintSessionDetails.style';
 
 export default class PrintSessionDetails extends Component {
+  print = () => {
+    const {
+      location: {
+        state: { details },
+      },
+    } = this.props;
+
+    const {
+      sessionDate,
+      sessionRegion,
+      sessionShortId,
+      sessionTrainers,
+      sessionType,
+      address,
+    } = details;
+
+    // create new window
+    const mywindow = window.open('', 'PRINT', 'height=400,width=400');
+    //
+    const dummyDiv = document.createElement('div');
+
+    ReactDOM.render(
+      <PrintableComponent
+        sessionType={sessionType}
+        sessionDate={sessionDate}
+        sessionRegion={sessionRegion}
+        address={address}
+        sessionTrainers={sessionTrainers}
+        sessionShortId={sessionShortId}
+      />,
+      dummyDiv
+    );
+
+    mywindow.document.write(dummyDiv.outerHTML);
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+
+    // set font family to the new document
+    const link = mywindow.document.createElement('link');
+    link.setAttribute(
+      'href',
+      'https://fonts.googleapis.com/css?family=Roboto:300,300i,400,500,700'
+    );
+    link.setAttribute('rel', 'stylesheet');
+
+    mywindow.document.head.appendChild(link);
+
+    // print the new document
+    mywindow.print();
+    mywindow.addEventListener('afterprint', () => {
+      mywindow.close();
+    });
+  };
+
   render() {
     const {
       location: {
@@ -38,100 +85,26 @@ export default class PrintSessionDetails extends Component {
       address,
     } = details;
 
-    let fullAddress = 'TBA';
-
-    if (address) {
-      const { addressLine1, addressLine2, postcode } = address;
-      fullAddress = [addressLine1, addressLine2, postcode]
-        .filter(item => !!item)
-        .join(', ');
-    }
-
-    const links = getAllSurveyLinks(sessionType, sessionShortId);
-
-    const captialize = words =>
-      words
-        .split(' ')
-        .map(w => w.substring(0, 1).toUpperCase() + w.substring(1))
-        .join(' ');
-
     return (
-      <Wrapper>
-        <Header type="section" label="Connect 5 Session Details" />
-        <BackContainer>
-          <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
-        </BackContainer>
-        <DetailsContent>
-          <Title>Connect 5 Session Details</Title>
-
-          <Row>
-            <Detail>
-              <BoldSpan>Session Type: </BoldSpan>
-              {sessionType}
-            </Detail>
-          </Row>
-          <Row>
-            <Detail>
-              <BoldSpan>Date: </BoldSpan>
-              {sessionDate}
-            </Detail>
-          </Row>
-          <Row>
-            <Detail>
-              <BoldSpan>Region: </BoldSpan>
-              {captialize(sessionRegion)}
-            </Detail>
-          </Row>
-          <Row>
-            <Detail>
-              <BoldSpan>Location:</BoldSpan> {fullAddress}
-            </Detail>
-          </Row>
-          <Row>
-            <Detail>
-              <BoldSpan>Trainers: </BoldSpan>
-              {sessionTrainers.map(el => (
-                <div>
-                  <span>{captialize(el.name)} </span> ({el.email})
-                </div>
-              ))}
-            </Detail>
-          </Row>
-          <Row>
-            <Detail>
-              {getSessionSurveys(sessionType).map((survey, index) => (
-                <div>
-                  <li style={{ listStyleType: 'none' }}>
-                    {' '}
-                    <BoldSpan>
-                      {`${captialize(survey.split('-')[0])}-${captialize(
-                        survey.split('-')[1]
-                      )}-Survey`}
-                      :{' '}
-                    </BoldSpan>
-                    {links[index]}
-                  </li>
-                </div>
-              ))}
-            </Detail>
-          </Row>
-          <Row>
-            <Detail>
-              <BoldSpan>
-                Important information for course participants:{' '}
-              </BoldSpan>
-              <br></br>
-              We kindly ask you to fill in required surveys. As soon as you've
-              submitted your first Connect 5 survey you will be able to log in
-              using the Connect 5 App (www.c5.training). You can then donwload
-              your certificate, view behavioural insights and course materials.
-            </Detail>
-          </Row>
-        </DetailsContent>
-        <div>
-          <Button onClick={() => window.print()}>PRINT</Button>
-        </div>
-      </Wrapper>
+      <div>
+        <Wrapper>
+          <Header type="section" label="Connect 5 Session Details" />
+          <BackContainer>
+            <BackLink onClick={history.goBack}>{`< Back`}</BackLink>
+          </BackContainer>
+          <PrintableComponent
+            sessionType={sessionType}
+            sessionDate={sessionDate}
+            sessionRegion={sessionRegion}
+            address={address}
+            sessionTrainers={sessionTrainers}
+            sessionShortId={sessionShortId}
+          />
+          <div>
+            <Button onClick={this.print}>PRINT</Button>
+          </div>
+        </Wrapper>
+      </div>
     );
   }
 }

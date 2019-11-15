@@ -12,32 +12,34 @@ export const Wrapper = styled.div`
   margin: 0 auto;
 `;
 
-export const DetailsContent = styled.div`
-  background-color: ${colors.white};
-  display: flex;
-  width: 100%;
-  box-shadow: ${shadows.primary};
-  margin-bottom: 1rem;
-  padding: 2rem 1rem;
-  flex-direction: column;
-`;
+export const DetailsContentS = {
+  fontFamily: 'Roboto',
+  backgroundColor: colors.white,
+  display: 'flex',
+  width: '100%',
+  boxShadow: shadows.primary,
+  marginBottom: '1rem',
+  padding: '2rem 1rem',
+  flexDirection: 'column',
+};
+export const DetailsContent = styled.div(DetailsContentS);
 
-export const Detail = styled.h2`
-  font-size: 1rem;
-  margin-bottom: 0rem;
-  font-weight: 300;
-`;
+export const DetailS = {
+  fontSize: '1rem',
+  marginBottom: '0rem',
+  fontWeight: '300',
+};
+export const Detail = styled.h2(DetailS);
 
-export const BoldSpan = styled.span`
-  font-weight: 500;
-  cursor: ${pointer => pointer && 'pointer'};
-`;
+export const BoldSpanS = { fontWeight: '500' };
+export const BoldSpan = styled.span(BoldSpanS);
 
-export const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-`;
+export const RowS = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  marginBottom: '1rem',
+};
+export const Row = styled.div(RowS);
 
 export const DeteteAccountBtn = styled.div`
   margin: 0 auto;
@@ -86,12 +88,16 @@ export const BackLink = styled.button`
   }
 `;
 
-export const Title = styled.h1`
-  font-weight: 300;
-  font-size: 24px;
-  text-align: center;
-  color: #000000;
+export const TitleS = {
+  fontWeight: '300',
+  fontSize: '24px',
+  textAlign: 'center',
+  color: '#000000',
+};
 
+export const Title = styled.h1.attrs({
+  style: TitleS,
+})`
   @media ${breakpoints.mobileXL} {
     font-size: 32px;
   }
