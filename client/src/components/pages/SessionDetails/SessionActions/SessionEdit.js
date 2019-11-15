@@ -85,11 +85,11 @@ class EditSession extends Component {
       // ignore the error
     }
     const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
-
-    document.addEventListener('paste', this.pasteEmails);
-
-    document.dispatchEvent(evt);
+    if (evt.clipboardData || window.clipboardData) {
+      (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+      document.addEventListener('paste', this.pasteEmails);
+      document.dispatchEvent(evt);
+    }
 
     // call action and pass it the id of session to fetch it's details
     this.props.fetchSessionDetails(id);
@@ -289,7 +289,7 @@ class EditSession extends Component {
 
     if (incorrectEmails.length > 0) {
       this.setState({
-        emailErr: '* Please enter a valid email',
+        emailErr: '* Please enter a valid email'
       });
     } else if (newEmails.length > 0) {
       const newEmailObjs = newEmails.map(email => ({ email, status: 'new' }));

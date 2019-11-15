@@ -16,7 +16,6 @@ const sendSurvey = ({ surveyURLs, participantsList, extraInformation }) => {
     <div style="text-align: left;">
       <p style="font-weight: 700;">Hi,</p>
       ${surveyURLs.map(survey => {
-        console.log(survey);
         return `<p>Here is the link for the "${uppercaseSurvey(
           survey.surveyType
         )}" survey</p>

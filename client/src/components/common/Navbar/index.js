@@ -87,6 +87,7 @@ class Navbar extends Component {
   render() {
     const { role } = this.props;
     const { activeSub } = this.state;
+
     return (
       <Wrapper>
         {/* TRAINER */}

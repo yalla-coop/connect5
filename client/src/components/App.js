@@ -45,7 +45,7 @@ import MyProfile from './pages/MyProfile';
 import LocalLeadsAndManagersList from './pages/LocalLeadsAndManagersList';
 import AboutUs from './pages/LandingPage/AboutUs';
 import ConfirmTrainerRemoval from './pages/ConfirmTrainerRemoval/index';
-
+import PrintSessionDetails from './pages/SessionDetails/PrintSessionDetails';
 // Error Pages
 import NotFound from './pages/ErrorPages/404';
 import ServerError from './pages/ErrorPages/500';
@@ -150,6 +150,15 @@ class App extends Component {
       <Wrapper id="wrapper">
         <Router history={history}>
           <Switch>
+            <PrivateRoute
+              exact
+              path="/print/:sessionId"
+              Component={PrintSessionDetails}
+              isAuthenticated={isAuthenticated}
+              loaded={loaded}
+              allowedRoles={['trainer', 'admin', 'localLead']}
+              role={role}
+            />
             <PrivateRoute
               exact
               path="/survey/:sessionId/:surveyType/results"

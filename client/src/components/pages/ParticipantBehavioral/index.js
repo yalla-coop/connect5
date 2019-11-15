@@ -71,12 +71,14 @@ const ParticipantBehavioral = ({ isAuthenticated, PIN, role }) => {
           </p>
           <StyledIframe>
             <iframe
-              src="https://www.youtube.com/embed/ZuxBz8RvqY8"
+              src="https://player.vimeo.com/video/190771407"
+              width="640"
+              height="360"
               frameBorder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allow="autoplay; fullscreen"
               allowFullScreen
-              title="introductionVideo"
-            ></iframe>
+              title="COM-B explanation Video"
+            />
           </StyledIframe>
           <Collapse bordered={false}>
             <Panel header="What are mental wellbeing conversations?" key="1">
