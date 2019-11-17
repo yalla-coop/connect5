@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Collapse from 'antd/lib/collapse';
 import * as Yup from 'yup';
-import { Icon, Drawer, Modal, message } from 'antd';
+import { Icon, Drawer, Modal, message, Button } from 'antd';
 import AntdModal from '../../common/AntdModal';
 
 import { fetchSessionDetails } from '../../../actions/groupSessionsAction';
@@ -24,6 +24,7 @@ import {
   SessionDetailsWrapper,
   BackWrapper,
   HeaderDiv,
+  InfoHeader,
 } from './SessionDetails.Style';
 
 // SUB COMPONENTS
@@ -46,6 +47,7 @@ class SessionDetails extends Component {
     openSection: '1',
     visible: false,
     drawerKey: null,
+    emailId: null,
   };
 
   componentDidMount() {
@@ -56,9 +58,11 @@ class SessionDetails extends Component {
       // ignore the error
     }
     const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    (evt.clipboardData || window.clipboardData).setData('text/plain', '');
-    document.addEventListener('paste', this.pasteEmails);
-    document.dispatchEvent(evt);
+    if (evt.clipboardData || window.clipboardData) {
+      (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+      document.addEventListener('paste', this.pasteEmails);
+      document.dispatchEvent(evt);
+    }
 
     const { id } = this.props.match.params;
     // call action and pass it the id of session to fetch it's details
@@ -110,11 +114,12 @@ class SessionDetails extends Component {
 
   // open drawer
   handleDrawerOpen = e => {
-    const { key, surveyType } = e.target.dataset;
+    const { key, surveyType, emailId } = e.target.dataset;
 
     this.setState({
       visible: true,
       drawerKey: key,
+      emailId,
       surveyType,
     });
   };
@@ -306,10 +311,31 @@ class SessionDetails extends Component {
       newEmails,
       surveyType,
       dataForCopy,
+      emailId,
     } = this.state;
     if (!sessionDetails) {
       return Spin;
     }
+
+    const {
+      _id,
+      date,
+      region,
+      shortId,
+      trainers,
+      type,
+      address,
+    } = sessionDetails;
+
+    const printContent = {
+      sessionId: _id,
+      sessionDate: date,
+      sessionRegion: region,
+      sessionShortId: shortId,
+      sessionTrainers: trainers,
+      sessionType: type,
+      address,
+    };
 
     const content = {
       cont1:
@@ -412,7 +438,7 @@ class SessionDetails extends Component {
                 <p
                   style={{
                     marginLeft: '1rem',
-                    marginBottom: '0',
+                    marginBottom: '0'
                   }}
                 >
                   Back
@@ -446,6 +472,7 @@ class SessionDetails extends Component {
                 handleCancelEmail={this.handleCancelEmail}
                 surveyType={surveyType}
                 handleSubmitSchedule={this.handleSubmitSchedule}
+                emailId={emailId}
               />
             </>
           </Drawer>
@@ -462,6 +489,19 @@ class SessionDetails extends Component {
           }}
         >
           {dataForCopy}
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <Button>
+            <InfoHeader
+              style={{ fontSize: '19px' }}
+              to={{
+                pathname: `/print/${sessionDetails._id}`,
+                state: { details: printContent },
+              }}
+            >
+              Click here to create printable PDF
+            </InfoHeader>
+          </Button>
         </div>
       </SessionDetailsWrapper>
     );

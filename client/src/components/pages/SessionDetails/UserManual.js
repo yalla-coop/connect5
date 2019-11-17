@@ -47,15 +47,21 @@ export default () => {
               style={{
                 fontSize: '16px',
                 marginBottom: '0.75rem',
-                marginTop: '0.75rem',
+                marginTop: '0.75rem'
               }}
             >
-              You can either copy an existing list of emails separated by
-              commas, spaces etc. or input each address manually. If you wanted
-              to copy a list of emails from a session you can click the copy
-              icon above the input field. When choosing to input emails manually
-              - clicking your mouse or pressing enter will store each email
-              address.
+              You can either copy an existing list of emails or input each
+              address manually.{' '}
+              <strong>
+                To copy email lists from other sources you will need to use the
+                latest versions of Google Chrome/Mozilla Firefox!
+              </strong>
+              <br></br>
+              When copying a list of emails externally, they would need to be
+              separated by commas/semicolons. If you wanted to copy a list of
+              emails from another session you can click the copy icon above the
+              input field. When choosing to input emails manually - clicking
+              your mouse or pressing enter will store each email address.
             </SubDetailsContent>
             <SubDetailsContent
               style={{
@@ -72,7 +78,7 @@ export default () => {
                 fontWeight: '700',
                 fontSize: '16px',
                 textDecoration: 'underline',
-                marginBottom: '0.75rem',
+                marginBottom: '0.75rem'
               }}
             >
               Removing emails:
@@ -81,7 +87,7 @@ export default () => {
               style={{
                 fontSize: '16px',
                 marginBottom: '0.75rem',
-                marginTop: '0.75rem',
+                marginTop: '0.75rem'
               }}
             >
               You can click the x icon next to each email address. This will
@@ -112,7 +118,7 @@ export default () => {
             <SubDetailsContent
               style={{
                 fontSize: '16px',
-                marginBottom: '0.75rem',
+                marginBottom: '0.75rem'
               }}
             >
               Then click the update button to store the updated list.

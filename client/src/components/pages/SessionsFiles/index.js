@@ -56,7 +56,7 @@ class SessionsFiles extends Component {
                         style={{
                           padding: '1rem',
                           width: '90%',
-                          margin: '0 auto',
+                          margin: '0 auto'
                         }}
                       >
                         {materials[session.sessions.type].map(resource => (
@@ -75,7 +75,7 @@ class SessionsFiles extends Component {
                   )
               )
             ) : (
-              <Empty description="No Material" />
+              <Empty description="No Course Materials" />
             )}
           </Collapse>
         </Wrapper>

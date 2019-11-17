@@ -37,7 +37,7 @@ const regions = [
   'East of England',
   'London',
   'South East',
-  'South West',
+  'South West'
 ];
 
 class SignUp extends Component {
@@ -151,7 +151,7 @@ class SignUp extends Component {
           content: (
             <div>
               <p>
-                To make sure Connect 5 succeeds as a mental health training
+                To make sure Connect 5 succeeds as a mental wellbeing training
                 programme we depend on monitoring and feedback data related to
                 course participants and trainers. If you do not agree to giving
                 your local lead/ managing organisation permission to access
@@ -218,6 +218,15 @@ class SignUp extends Component {
         </LoginHeading>
         <Wrapper className="sign-up">
           <ContentWrapper>
+            <p style={{ color: 'red', textAlign: 'center' }}>
+              <strong>Important Notice:</strong> Only Connect 5 staff members
+              (trainers, local leads etc.) are supposed to sign up.
+              <br></br>
+              <AnotherLink to="/participant-login">
+                Course participants will be able to log in here!
+              </AnotherLink>
+            </p>
+
             <Form
               onSubmit={this.handleSubmit}
               className="login-form"
@@ -228,11 +237,11 @@ class SignUp extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please input your name!',
+                      message: 'Please input your name!'
                     },
                     {
                       min: 3,
-                      message: 'Please input valid name',
+                      message: 'Please input valid name'
                     },
                   ],
                 })(<Input placeholder="Name" size="large" />)}
@@ -243,11 +252,11 @@ class SignUp extends Component {
                   rules: [
                     {
                       type: 'email',
-                      message: 'The input is not valid E-mail!',
+                      message: 'The input is not valid E-mail!'
                     },
                     {
                       required: true,
-                      message: 'Please input your E-mail!',
+                      message: 'Please input your E-mail!'
                     },
                     {
                       message: 'Already taken',
@@ -274,22 +283,22 @@ class SignUp extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please input your password!',
+                      message: 'Please input your password!'
                     },
                     {
                       pattern: /(?=.*[a-z])/,
                       message:
-                        'Password must contain at least 1 lowercase alphabetical character',
+                        'Password must contain at least 1 lowercase alphabetical character'
                     },
                     {
                       pattern: /(?=.*[A-Z])/,
                       message:
-                        'Password must contain at least 1 uppercase alphabetical character',
+                        'Password must contain at least 1 uppercase alphabetical character'
                     },
                     {
                       pattern: /(?=.*[0-9])/,
                       message:
-                        'Password must contain at least 1 numeric character',
+                        'Password must contain at least 1 numeric character'
                     },
                     {
                       pattern: /(?=.{8,})/,
@@ -401,7 +410,7 @@ class SignUp extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please select your region',
+                      message: 'Please select your region'
                     },
                   ],
                 })(

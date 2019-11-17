@@ -195,17 +195,19 @@ class TrainerList extends Component {
                       View
                     </AntButton>
                   </ArrowWrapper>
-                  <ArrowWrapper>
-                    <AntButton
-                      type="danger"
-                      ghost
-                      onClick={() => deleteUser(dataItem._id)}
-                      style={{ marginLeft: '2px' }}
-                      disabled={dataItem._id === userId}
-                    >
-                      Delete
-                    </AntButton>
-                  </ArrowWrapper>
+                  {role !== 'admin' && (
+                    <ArrowWrapper>
+                      <AntButton
+                        type="danger"
+                        ghost
+                        onClick={() => deleteUser(dataItem._id)}
+                        style={{ marginLeft: '2px' }}
+                        disabled={dataItem._id === userId}
+                      >
+                        Delete
+                      </AntButton>
+                    </ArrowWrapper>
+                  )}
                 </Row>
               ))}
         </List>

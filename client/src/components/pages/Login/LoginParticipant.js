@@ -21,7 +21,7 @@ import { loginParticipant } from '../../../actions/authAction';
 
 class ParticipantLogin extends Component {
   state = {
-    PIN: '',
+    PIN: ''
   };
 
   componentDidUpdate(prevProps) {
@@ -97,11 +97,16 @@ class ParticipantLogin extends Component {
         </LoginHeading>
         <LoginPINForm onSubmit={onFormSubmit}>
           <LoginHeading>
+            <Content style={{ color: 'red' }}>
+              <strong>Important:</strong> course participants cannot register on
+              the app. You need to submit at least one survey before you can log
+              in!
+            </Content>
             <Content>
-              {`To access your results, please enter your unique pin. This is the
+              To access your results, please enter your unique pin. This is the
               third letter of your first name, the first two letters of your
               mother's first name and the date you were born (e.g., you would
-              type 18 if you were born on the 18th of July)`}
+              type 18 if you were born on the 18th of July)
             </Content>
           </LoginHeading>
           <InputDiv>

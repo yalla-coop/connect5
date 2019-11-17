@@ -74,7 +74,6 @@ class LocalLeadsAndManagersList extends Component {
             <StyledLink to={MY_PROFILE_URL} target="_blank">
               <span style={{ fontWeight: 'bold', textDecoration: 'underline' }}>
                 {' '}
-                Profile
               </span>
             </StyledLink>
           </Hint>
