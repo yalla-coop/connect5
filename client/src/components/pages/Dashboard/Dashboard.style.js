@@ -95,6 +95,8 @@ export const LogOut = styled.div`
   color: ${colors.profileFontColor};
   padding: 0.5rem 0;
   cursor: pointer;
+  background: none;
+  border: none;
 
   :hover {
     color: ${colors.red};
