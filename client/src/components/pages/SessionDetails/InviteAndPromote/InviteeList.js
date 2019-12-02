@@ -21,23 +21,25 @@ const { Option } = Select;
 
 class InviteeList extends Component {
   state = {
-    err: ''
+    err: '',
   };
 
   componentDidMount() {
-    let dT = null;
-    try {
-      dT = new DataTransfer();
-    } catch (e) {
-      // ignore the error
-    }
-    const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    if (evt.clipboardData || window.clipboardData) {
-      (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+    if (window.ClipboardEvent) {
+      let dT = null;
+      try {
+        dT = new DataTransfer();
+      } catch (e) {
+        // ignore the error
+      }
+      const evt = new ClipboardEvent('paste', { clipboardData: dT });
+      if (evt.clipboardData || window.clipboardData) {
+        (evt.clipboardData || window.clipboardData).setData('text/plain', '');
 
-      document.addEventListener('paste', this.pasteEmails);
+        document.addEventListener('paste', this.pasteEmails);
 
-      document.dispatchEvent(evt);
+        document.dispatchEvent(evt);
+      }
     }
   }
 
