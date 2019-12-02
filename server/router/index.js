@@ -43,7 +43,7 @@ router.get('/participant/:id/progress', getParticipantSessions);
 router.post('/participant/:PIN', participantSurveyStatus);
 router.post('/certificate/:sessionId', generateCertificate);
 router.post('/login', loginController);
-router.get('/logout', logoutController);
+router.post('/logout', logoutController);
 router.post('/add-session', authentication(), addSessionController);
 
 // Route = "/session?shortId=:shortId"
