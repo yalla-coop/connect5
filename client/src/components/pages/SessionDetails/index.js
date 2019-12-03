@@ -13,6 +13,8 @@ import {
   cancelScheduledEmail as cancelScheduledEmailAction,
 } from '../../../actions/sessionAction';
 
+import { splitEmailsList } from '../../../helpers';
+
 // ANTD COMPONENTS
 import Spin from '../../common/Spin';
 
@@ -261,11 +263,8 @@ class SessionDetails extends Component {
     if (focused) {
       event.preventDefault();
       const pastedString = event.clipboardData.getData('text/plain');
-      const splittedEmails = pastedString.split(/[, ;]/);
 
-      emailsArray = splittedEmails
-        .map(item => item.trim())
-        .filter(item => !!item);
+      emailsArray = splitEmailsList(pastedString);
 
       const { [`${status}Emails`]: oldEmails } = this.state;
 

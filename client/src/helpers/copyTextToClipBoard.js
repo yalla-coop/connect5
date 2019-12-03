@@ -1,9 +1,9 @@
 import Swal from 'sweetalert2';
 
 // Copy the text and fire pop up for success
-const copyTextToClipBoard = text => {
+export const copyTextToClipBoard = text => {
   const element = document.createElement('p');
-  element.textContent = 'text';
+  element.textContent = text;
   element.setAttribute('id', 'text-element-id');
 
   let range;
@@ -40,4 +40,10 @@ const copyTextToClipBoard = text => {
   }
 };
 
-export default copyTextToClipBoard;
+export const splitEmailsList = emailsAsString => {
+  // split on "," & ";" and " "
+  const splittedEmails = emailsAsString.split(/[, ;]/g);
+  return splittedEmails.splittedEmails
+    .filter(item => !!item)
+    .map(item => item.trim());
+};

@@ -22,7 +22,11 @@ import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
-import { getPostSurveyLink, getPreSurveyLink } from '../../../helpers';
+import {
+  getPostSurveyLink,
+  getPreSurveyLink,
+  splitEmailsList,
+} from '../../../helpers';
 
 import Header from '../Header';
 import InfoPopUp from '../InfoPopup';
@@ -300,12 +304,8 @@ class EditEmail extends Component {
     if (focused) {
       event.preventDefault();
       const pastedString = event.clipboardData.getData('text/plain');
-      // split on "," & ";" and " "
-      const splittedEmails = pastedString.split(/[, ;]/);
 
-      emailsArray = splittedEmails
-        .filter(item => !!item)
-        .map(item => item.trim());
+      emailsArray = splitEmailsList(pastedString);
 
       this.handleUpdateEmails([...participantsEmails, ...emailsArray]);
     }

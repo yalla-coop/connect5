@@ -14,7 +14,7 @@ import {
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { validPostcode } from '../../../../helpers';
+import { validPostcode, splitEmailsList } from '../../../../helpers';
 import history from '../../../../history';
 import Button from '../../../common/Button';
 import InfoPopUp from '../../../common/InfoPopup';
@@ -175,13 +175,9 @@ class EditSession extends Component {
       event.preventDefault();
       const pastedString = event.clipboardData.getData('text/plain');
 
-      // split on "," & ";" and " "
-      const splittedEmails = pastedString.split(/[, ;]/);
-
-      emailsArray = splittedEmails
-        .filter(item => !!item)
-        .map(item => item.trim())
-        .filter(item => !emails.includes(item));
+      emailsArray = splitEmailsList(pastedString).filter(
+        item => !emails.includes(item)
+      );
 
       this.onEmailChange([...emails.map(item => item.email), ...emailsArray]);
     }

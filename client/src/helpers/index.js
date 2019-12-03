@@ -1,5 +1,8 @@
 import { surveysTypes } from '../constants';
-import copyText from './copyTextToClipBoard';
+import {
+  copyTextToClipBoard as copyText,
+  splitEmailsList as splitEmails,
+} from './copyTextToClipBoard';
 
 export const uppercaseSurvey = surveyType =>
   surveyType
@@ -100,3 +103,4 @@ export const handleEnterKey = (event, cb) => {
 };
 
 export const copyTextToClipBoard = copyText;
+export const splitEmailsList = splitEmails;
