@@ -52,6 +52,8 @@ class SessionDetails extends Component {
     emailId: null,
   };
 
+  selectRef = React.createRef();
+
   componentDidMount() {
     if (window.ClipboardEvent) {
       let dT = null;
@@ -129,25 +131,73 @@ class SessionDetails extends Component {
   };
 
   // update the attendees list status = (new || confirmed)
-  handleUpdateAttendees = (values, status) => {
+  handleUpdateAttendees = (values, status, blur) => {
     const validEmails = [];
     values.forEach(item => {
       try {
-        const validEmail = emailSchema.validateSync(item);
+        const validEmail = emailSchema.validateSync(
+          item.replace(/[, ;"']/g, '')
+        );
 
-        if (validEmail) {
-          validEmails.push(item);
+        if (
+          validEmail &&
+          item &&
+          (!validEmails.includes(item.replace(/[, ;"']/g, '')) &&
+            !validEmails.includes(item))
+        ) {
+          validEmails.push(item.replace(/[, ;"']/g, ''));
         }
       } catch (err) {
-        Modal.error({
-          title: 'Invalid!',
-          content: err.errors[0],
-        });
+        if (!blur && item.split('@').length < 3) {
+          Modal.error({
+            title: 'Invalid!',
+            content: err.errors[0],
+          });
+        }
       }
     });
 
     // { newEmails||confirmedEmails: ["emails"]}
-    this.setState({ [`${status}Emails`]: validEmails });
+    this.setState({ [`${status}Emails`]: validEmails }, () => {
+      if (blur) {
+        const select = this.selectRef.current;
+        select.blur();
+        setTimeout(() => {
+          select.focus();
+        }, 200);
+      }
+    });
+  };
+
+  onTypingEmails = (value, status) => {
+    const { [`${status}Emails`]: oldEmails } = this.state;
+    if (
+      value &&
+      (value.includes(' ') || value.includes(',') || value.includes(';'))
+    ) {
+      const splittedEmails = splitEmailsList(value);
+
+      // get latest added email
+      const latestEmail =
+        splittedEmails && splittedEmails[splittedEmails.length - 1];
+
+      if (latestEmail.includes('@') && latestEmail.includes('.')) {
+        this.handleUpdateAttendees(
+          [...splittedEmails, ...oldEmails],
+          status,
+          true
+        );
+      } else {
+        this.handleUpdateAttendees(
+          [
+            ...splittedEmails.slice(0, splitEmailsList.length - 1),
+            ...oldEmails,
+          ],
+          status,
+          true
+        );
+      }
+    }
   };
 
   // submit the updated emails
@@ -474,6 +524,8 @@ class SessionDetails extends Component {
                 surveyType={surveyType}
                 handleSubmitSchedule={this.handleSubmitSchedule}
                 emailId={emailId}
+                onTypingEmails={this.onTypingEmails}
+                selectRef={this.selectRef}
               />
             </>
           </Drawer>

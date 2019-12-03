@@ -43,7 +43,5 @@ export const copyTextToClipBoard = text => {
 export const splitEmailsList = emailsAsString => {
   // split on "," & ";" and " "
   const splittedEmails = emailsAsString.split(/[, ;]/g);
-  return splittedEmails.splittedEmails
-    .filter(item => !!item)
-    .map(item => item.trim());
+  return splittedEmails.filter(item => !!item).map(item => item.trim());
 };
