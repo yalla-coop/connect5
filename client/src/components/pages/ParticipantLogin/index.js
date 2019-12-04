@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Input } from 'antd';
+import { Input, Tabs } from 'antd';
+
 import Button from '../../common/Button';
 import HumburgerMenu from '../../common/Menu';
 import logo from '../../../assets/logo.png';
@@ -18,10 +19,16 @@ import {
   H4,
 } from '../Login/Login.style';
 import { loginParticipant } from '../../../actions/authAction';
+import AccessResultsTab from './AccessResultsTab';
+import AccessSurveysTab from './AccessSurveysTab';
+
+const { TabPane } = Tabs;
 
 class ParticipantLogin extends Component {
   state = {
     PIN: '',
+    email: null,
+    activeTab: '1',
   };
 
   componentDidUpdate(prevProps) {
@@ -41,6 +48,10 @@ class ParticipantLogin extends Component {
       });
     }
   }
+
+  updateActiveTab = key => {
+    this.setState({ activeTab: key });
+  };
 
   updateLogin = error => {
     if (error.id === 'LOGIN_FAIL') {
@@ -83,7 +94,7 @@ class ParticipantLogin extends Component {
   };
 
   render() {
-    const { PIN, error, msg } = this.state;
+    const { PIN, error, msg, email } = this.state;
     const { onFormSubmit, onInputChange } = this;
     const { isDeskTop, loading } = this.props;
     return (
@@ -96,45 +107,28 @@ class ParticipantLogin extends Component {
           <H4>Login to your account</H4>
         </LoginHeading>
         <LoginPINForm onSubmit={onFormSubmit}>
-          <LoginHeading>
-            <Content style={{ color: 'red' }}>
-              <strong>Important:</strong> course participants cannot register on
-              the app. You need to submit at least one survey before you can log
-              in!
-            </Content>
-            <Content>
-              To access your results, please enter your unique pin. This is the
-              third letter of your first name, the first two letters of your
-              mother&apos;s first name and the date you were born (e.g., you
-              would type 18 if you were born on the 18th of July)
-            </Content>
-          </LoginHeading>
-          <InputDiv>
-            <Input
-              placeholder="Enter your PIN"
-              name="PIN"
-              type="text"
-              value={PIN}
-              onChange={onInputChange}
-              size="large"
-              pattern="^[a-z]{3}[0-9]{1,2}$"
-              required
-            />
-            <LoginFail>{error}</LoginFail>
-          </InputDiv>
-          <InputDiv>
-            <Button
-              onClick={onFormSubmit}
-              type="primary"
-              label="LOGIN"
-              height="40px"
-              width="100%"
-              loading={loading}
-            />
-          </InputDiv>
-          <InputDiv>
-            <LoginFail>{msg}</LoginFail>
-          </InputDiv>
+          <Tabs tabPosition="top" onChange={this.updateActiveTab}>
+            <TabPane tab="Access Results" key="1">
+              <AccessResultsTab
+                PIN={PIN}
+                onInputChange={onInputChange}
+                error={error}
+                loading={loading}
+                msg={msg}
+                onFormSubmit={onFormSubmit}
+              />
+            </TabPane>
+            <TabPane tab="Access Surveys" key="2">
+              <AccessSurveysTab
+                email={email}
+                onInputChange={onInputChange}
+                error={error}
+                loading={loading}
+                msg={msg}
+                onFormSubmit={onFormSubmit}
+              />
+            </TabPane>
+          </Tabs>
           <NoAccount>
             <Paragraph>
               Not a participant?{' '}
