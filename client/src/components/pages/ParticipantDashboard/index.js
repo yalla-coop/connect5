@@ -7,14 +7,14 @@ import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
 import moment from 'moment';
 
-import { fetchParticipantSessions } from '../../actions/groupSessionsAction';
-import { logout } from '../../actions/authAction';
-import { uppercaseSurvey } from '../../helpers';
+import { fetchParticipantSessions } from '../../../actions/groupSessionsAction';
+import { logout } from '../../../actions/authAction';
+import { uppercaseSurvey } from '../../../helpers';
 
-import { colors } from '../../theme';
-import { surveysTypes } from '../../constants';
+import { colors } from '../../../theme';
+import { surveysTypes } from '../../../constants';
 
-import Header from '../common/Header';
+import Header from '../../common/Header';
 
 const DashboardWrapper = styled.div`
   width: 90%;

@@ -17,7 +17,7 @@ import { colors } from '../theme';
 import CreateSession from './pages/CreateSession';
 import Login from './pages/Login/Login';
 import ParticipantLogin from './pages/ParticipantLogin';
-import UserDashboard from './pages/userDashboard';
+import UserDashboard from './pages/ParticipantDashboard';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/LandingPage';
 import SignUp from './pages/SignUp';
