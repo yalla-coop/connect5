@@ -33,7 +33,7 @@ module.exports = () => async (req, res, next) => {
       if (id) {
         user = await getParticipantById(id);
       } else if (email) {
-        user.email = 'participant';
+        user.email = email;
       }
       user.role = 'participant';
     } else {
@@ -44,7 +44,6 @@ module.exports = () => async (req, res, next) => {
     req.user = user;
     return next();
   } catch (error) {
-    console.log(error);
     return next(boom.badImplementation());
   }
 };

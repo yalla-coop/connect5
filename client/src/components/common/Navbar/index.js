@@ -85,7 +85,7 @@ class Navbar extends Component {
   };
 
   render() {
-    const { role } = this.props;
+    const { role, PIN } = this.props;
     const { activeSub } = this.state;
 
     return (
@@ -223,7 +223,7 @@ class Navbar extends Component {
           </>
         )}
         {/* USER */}
-        {role === USER_TYPES.participant && (
+        {role === USER_TYPES.participant && PIN && (
           <>
             <MenuItem to="/participant-dashboard">
               <MenuIcon className="fas fa-home" />

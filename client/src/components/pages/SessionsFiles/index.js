@@ -25,7 +25,7 @@ const { Panel } = Collapse;
 class SessionsFiles extends Component {
   componentDidMount() {
     const { PIN } = this.props;
-    this.props.fetchParticipantSessions(PIN);
+    this.props.fetchParticipantSessions({ PIN });
   }
 
   render() {
@@ -56,7 +56,7 @@ class SessionsFiles extends Component {
                         style={{
                           padding: '1rem',
                           width: '90%',
-                          margin: '0 auto'
+                          margin: '0 auto',
                         }}
                       >
                         {materials[session.sessions.type].map(resource => (

@@ -11,5 +11,20 @@ module.exports.updateUserPasswordById = (userId, password) => {
 };
 
 module.exports.findParticipantByPIN = PIN => Participant.findOne({ PIN });
-module.exports.findParticipantByEmailFromSession = email =>
-  Session.find({ 'participantsEmails.email': email });
+
+module.exports.findSessionsIncludeParticipantEmail = email =>
+  Session.aggregate([
+    {
+      $match: {
+        'participantsEmails.email': email,
+      },
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'trainers',
+        foreignField: '_id',
+        as: 'trainers',
+      },
+    },
+  ]);

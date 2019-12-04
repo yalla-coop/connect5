@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { tokenMaxAge } = require('./../constants');
 const {
   findParticipantByPIN,
-  findParticipantByEmailFromSession,
+  findSessionsIncludeParticipantEmail,
 } = require('./../database/queries/user');
 
 module.exports = async (req, res, next) => {
@@ -26,7 +26,7 @@ module.exports = async (req, res, next) => {
         role: 'participant',
       };
     } else if (email) {
-      sessions = await findParticipantByEmailFromSession(email);
+      sessions = await findSessionsIncludeParticipantEmail(email);
       responseInfo = {
         email,
         role: 'participant',

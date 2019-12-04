@@ -79,17 +79,16 @@ class HumburgerMenu extends Component {
   };
 
   handleSubClick = target => {
-    this.setState({
-      listOpen: !this.state.listOpen,
+    this.setState(prevStat => ({
+      listOpen: !prevStat.listOpen,
       activeSub: target,
-    });
+    }));
   };
 
   render() {
     const { toggleShow, activeSub, listOpen } = this.state;
 
-    const { role, logout: logoutAction, dark } = this.props;
-
+    const { role, logout: logoutAction, dark, PIN } = this.props;
     return (
       <MenuDiv>
         {role && (
@@ -290,22 +289,36 @@ class HumburgerMenu extends Component {
               {/* USER */}
               {role === USER_TYPES.participant && (
                 <>
-                  <MenuItem to="/participant-dashboard">
-                    <MenuIcon className="fas fa-home" />
-                    Home
-                  </MenuItem>
-                  <MenuItem to="/participant/behavioral-insight">
-                    <MenuIcon className="fas fa-poll-h" />
-                    Insights
-                  </MenuItem>
-                  <MenuItem to="/participant/progress">
-                    <MenuIcon className="fas fa-tasks" />
-                    Progress
-                  </MenuItem>
-                  <MenuItem to="/sessions-files">
-                    <MenuIcon className="fas fa-tasks" />
-                    Materials
-                  </MenuItem>
+                  {PIN && (
+                    <MenuItem to="/participant-dashboard">
+                      <MenuIcon className="fas fa-home" />
+                      Home
+                    </MenuItem>
+                  )}
+                  {PIN && (
+                    <MenuItem to="/participant/behavioral-insight">
+                      <MenuIcon className="fas fa-poll-h" />
+                      Insights
+                    </MenuItem>
+                  )}
+                  {PIN && (
+                    <MenuItem to="/participant/progress">
+                      <MenuIcon className="fas fa-tasks" />
+                      Progress
+                    </MenuItem>
+                  )}
+                  {PIN && (
+                    <MenuItem to="/sessions-files">
+                      <MenuIcon className="fas fa-tasks" />
+                      Materials
+                    </MenuItem>
+                  )}
+                  {!PIN && (
+                    <MenuItem to="/participant-sessions-list">
+                      <MenuIcon className="fas fa-tasks" />
+                      Sessions
+                    </MenuItem>
+                  )}
                   <LogOut onClick={logoutAction}>
                     <MenuIcon className="fas fa-sign-out-alt" />
                     Logout
@@ -338,6 +351,7 @@ class HumburgerMenu extends Component {
 
 const mapStateToProps = state => ({
   role: state.auth.role,
+  PIN: state.auth.PIN,
   loaded: state.auth.loaded,
   isDeskTop: state.checkBrowserWidth.isDeskTop,
 });

@@ -15,7 +15,7 @@ import {
 
 class SessionTopDetails extends Component {
   render() {
-    const { sessionDetails } = this.props;
+    const { sessionDetails, trainerView } = this.props;
     const {
       date,
       type,
@@ -51,16 +51,18 @@ class SessionTopDetails extends Component {
             <StatisticName>Type</StatisticName>
             <StatisticValue>{type.replace(/-/g, ' ')}</StatisticValue>
           </StatisticItems>
-          <StatisticItems>
-            <StatisticName>Capacity</StatisticName>
-            <StatisticValue>{numberOfAttendees}</StatisticValue>
-          </StatisticItems>
+          {trainerView && (
+            <StatisticItems>
+              <StatisticName>Capacity</StatisticName>
+              <StatisticValue>{numberOfAttendees}</StatisticValue>
+            </StatisticItems>
+          )}
         </Statistic>
         <SubDetails>
           <SubDetailsTitle>Trainer(s):</SubDetailsTitle>
-          <TrainersName to="/">{trainers[0].name}</TrainersName>
+          <TrainersName to="#">{trainers[0].name}</TrainersName>
           {trainers[1] && (
-            <TrainersName to="/">
+            <TrainersName to="#">
               &<span style={{ marginLeft: '.5rem' }}>{trainers[1].name}</span>
             </TrainersName>
           )}

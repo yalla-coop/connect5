@@ -50,6 +50,7 @@ import PrintSessionDetails from './pages/SessionDetails/PrintSessionDetails';
 import NotFound from './pages/ErrorPages/404';
 import ServerError from './pages/ErrorPages/500';
 import Unauthorized from './pages/ErrorPages/403';
+import ParticipantSessions from './pages/ParticipantSessions';
 
 // COMPONENTS
 import PrivateRoute from './common/PrivateRoute';
@@ -78,6 +79,7 @@ import {
   ABOUT_URL,
   TRAINER_MANAGERS_GROUPS,
   REMOVE_TRAINER_FROM_GROUP,
+  PARTICIPANT_SESSIONS_LIST,
 } from '../constants/navigationRoutes';
 
 import history from '../history';
@@ -475,6 +477,16 @@ class App extends Component {
               role={role}
               navbar
             />
+            <PrivateRoute
+              exact
+              path={PARTICIPANT_SESSIONS_LIST}
+              loaded={loaded}
+              isAuthenticated={isAuthenticated}
+              Component={ParticipantSessions}
+              allowedRoles={['participant']}
+              role={role}
+            />
+
             <Route
               exact
               path="/confirm/:shortId"

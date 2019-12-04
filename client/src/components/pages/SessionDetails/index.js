@@ -369,7 +369,7 @@ class SessionDetails extends Component {
             }
             key="1"
           >
-            <SessionTopDetails sessionDetails={sessionDetails} />
+            <SessionTopDetails sessionDetails={sessionDetails} trainerView />
             <SessionActions sessionDetails={sessionDetails} />
           </Panel>
           <Panel
@@ -438,7 +438,7 @@ class SessionDetails extends Component {
                 <p
                   style={{
                     marginLeft: '1rem',
-                    marginBottom: '0'
+                    marginBottom: '0',
                   }}
                 >
                   Back
