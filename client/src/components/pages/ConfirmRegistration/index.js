@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 import { message as AntdMessage, Modal, Alert } from 'antd';
 import * as Yup from 'yup';
 
@@ -124,10 +125,19 @@ class ConfirmRegistration extends Component {
                   <Details>
                     <BoldSpan>Location:</BoldSpan> {fullAddress || 'N/A'}
                   </Details>
-                  <Details center>
+                  <Details>
+                    By clicking confirm you agree that your email address will
+                    be stored in a secured database as part of this Connect 5
+                    session details. We will not contact this email address for
+                    commercial/ advertising purposes. You will need to use this
+                    email address if you wish to access surveys via the Connect
+                    5 App using{' '}
                     <BoldSpan>
-                      Please enter your email below to confirm your attendance
+                      <Link to="/participant-login">
+                        {window.location.host}/participant-login
+                      </Link>
                     </BoldSpan>
+                    .
                   </Details>
                   <Input
                     placeholder="Enter Your Email"
