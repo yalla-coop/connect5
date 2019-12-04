@@ -134,23 +134,13 @@ export const checkAuth = () => async dispatch => {
 };
 
 // Login participant
-export const loginParticipant = PIN => dispatch => {
-  // Headers
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  // Request body
-  const body = JSON.stringify({ PIN });
-
+export const loginParticipant = ({ PIN, email }) => dispatch => {
   dispatch({
     type: LOADING_TRUE,
     payload: 'loginParticipantsLoading',
   });
   axios
-    .post('/api/participant-login', body, config)
+    .post('/api/participant-login', { PIN, email })
     .then(res => {
       dispatch({
         type: LOGIN_SUCCESS,

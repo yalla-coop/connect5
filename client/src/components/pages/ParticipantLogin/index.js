@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Input, Tabs } from 'antd';
+import { Tabs } from 'antd';
+import * as Yup from 'yup';
 
 import Button from '../../common/Button';
 import HumburgerMenu from '../../common/Menu';
@@ -12,7 +13,6 @@ import {
   LoginPINForm,
   LoginFail,
   NoAccount,
-  Content,
   AnotherLink,
   Paragraph,
   Logo,
@@ -23,10 +23,13 @@ import AccessResultsTab from './AccessResultsTab';
 import AccessSurveysTab from './AccessSurveysTab';
 
 const { TabPane } = Tabs;
+const emailSchema = Yup.string()
+  .email()
+  .required();
 
 class ParticipantLogin extends Component {
   state = {
-    PIN: '',
+    PIN: null,
     email: null,
     activeTab: '1',
   };
@@ -50,7 +53,7 @@ class ParticipantLogin extends Component {
   }
 
   updateActiveTab = key => {
-    this.setState({ activeTab: key });
+    this.setState({ activeTab: key, error: null });
   };
 
   updateLogin = error => {
@@ -63,29 +66,52 @@ class ParticipantLogin extends Component {
 
   validateForm = () => {
     let formIsValid = true;
-    const { PIN } = this.state;
+    const { PIN, email, activeTab } = this.state;
     let error = '';
-    const regex = new RegExp('^[a-z]{3}[0-9]{1,2}$', 'i');
-    if (regex.test(PIN)) {
-      formIsValid = true;
-      error = '';
+    if (activeTab === '1') {
+      const regex = new RegExp('^[a-z]{3}[0-9]{1,2}$', 'i');
+      if (regex.test(PIN)) {
+        formIsValid = true;
+        error = '';
+      } else {
+        formIsValid = false;
+        error = '*Please enter valid pin';
+      }
     } else {
-      formIsValid = false;
-      error = '*Please enter valid pin';
+      try {
+        const validEmail = emailSchema.validateSync(email);
+
+        if (validEmail) {
+          formIsValid = true;
+          error = '';
+        } else {
+          formIsValid = false;
+          error = '*Please enter valid email';
+        }
+      } catch (err) {
+        formIsValid = false;
+        error = '*Please enter valid email';
+      }
     }
     this.setState({ error });
     return formIsValid;
   };
 
   onFormSubmit = e => {
-    const { PIN } = this.state;
+    const { PIN, email, activeTab } = this.state;
     const { loginParticipant: loginParticipantActionCreator } = this.props;
     e.preventDefault();
     const isValide = this.validateForm();
     if (isValide) {
-      this.setState({ PIN: '' });
-      // CALL ACTION CREATOR AND PASS IT THE VALUE
-      loginParticipantActionCreator(PIN.toUpperCase());
+      if (activeTab === '1') {
+        this.setState({ PIN: '' });
+        // CALL ACTION CREATOR AND PASS IT THE VALUE
+        loginParticipantActionCreator({ PIN: PIN.toUpperCase() });
+      } else {
+        this.setState({ email: '' });
+        // CALL ACTION CREATOR AND PASS IT THE VALUE
+        loginParticipantActionCreator({ email: email.toLowerCase() });
+      }
     }
   };
 
@@ -98,7 +124,7 @@ class ParticipantLogin extends Component {
     const { onFormSubmit, onInputChange } = this;
     const { isDeskTop, loading } = this.props;
     return (
-      <>
+      <div style={{ paddingBottom: '4rem' }}>
         {isDeskTop && <HumburgerMenu dark="dark" />}
         <LoginHeading>
           <AnotherLink to="/">
@@ -129,6 +155,20 @@ class ParticipantLogin extends Component {
               />
             </TabPane>
           </Tabs>
+          <InputDiv>
+            <Button
+              onClick={onFormSubmit}
+              type="primary"
+              label="LOGIN"
+              height="40px"
+              width="100%"
+              loading={loading}
+            />
+          </InputDiv>
+          <InputDiv>
+            <LoginFail>{msg}</LoginFail>
+          </InputDiv>
+
           <NoAccount>
             <Paragraph>
               Not a participant?{' '}
@@ -136,7 +176,7 @@ class ParticipantLogin extends Component {
             </Paragraph>
           </NoAccount>
         </LoginPINForm>
-      </>
+      </div>
     );
   }
 }

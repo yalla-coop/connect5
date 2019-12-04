@@ -1,25 +1,14 @@
 import React from 'react';
 import { Input } from 'antd';
-import Button from '../../common/Button';
 
 import {
   LoginHeading,
   InputDiv,
   LoginFail,
-  NoAccount,
   Content,
-  AnotherLink,
-  Paragraph,
 } from '../Login/Login.style';
 
-const AccessSurveysTab = ({
-  PIN,
-  onInputChange,
-  error,
-  loading,
-  msg,
-  onFormSubmit,
-}) => {
+const AccessSurveysTab = ({ PIN, onInputChange, error }) => {
   return (
     <div>
       <LoginHeading>
@@ -46,19 +35,6 @@ const AccessSurveysTab = ({
           required
         />
         <LoginFail>{error}</LoginFail>
-      </InputDiv>
-      <InputDiv>
-        <Button
-          onClick={onFormSubmit}
-          type="primary"
-          label="LOGIN"
-          height="40px"
-          width="100%"
-          loading={loading}
-        />
-      </InputDiv>
-      <InputDiv>
-        <LoginFail>{msg}</LoginFail>
       </InputDiv>
     </div>
   );

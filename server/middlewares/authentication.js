@@ -25,12 +25,16 @@ module.exports = () => async (req, res, next) => {
     }
 
     // get the user  Id  and the role from token
-    const { id, role } = decoded;
-    let user;
+    const { id, role, email } = decoded;
+    let user = {};
     // check for the role
     // role = participant get data from participant table
     if (role === 'participant') {
-      user = await getParticipantById(id);
+      if (id) {
+        user = await getParticipantById(id);
+      } else if (email) {
+        user.email = 'participant';
+      }
       user.role = 'participant';
     } else {
       // role === admin, localLead, trainer
@@ -40,6 +44,7 @@ module.exports = () => async (req, res, next) => {
     req.user = user;
     return next();
   } catch (error) {
+    console.log(error);
     return next(boom.badImplementation());
   }
 };
