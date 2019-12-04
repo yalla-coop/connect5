@@ -16,12 +16,12 @@ import {
   Paragraph,
   Logo,
   H4,
-} from './Login.style';
+} from '../Login/Login.style';
 import { loginParticipant } from '../../../actions/authAction';
 
 class ParticipantLogin extends Component {
   state = {
-    PIN: ''
+    PIN: '',
   };
 
   componentDidUpdate(prevProps) {
@@ -105,8 +105,8 @@ class ParticipantLogin extends Component {
             <Content>
               To access your results, please enter your unique pin. This is the
               third letter of your first name, the first two letters of your
-              mother's first name and the date you were born (e.g., you would
-              type 18 if you were born on the 18th of July)
+              mother&apos;s first name and the date you were born (e.g., you
+              would type 18 if you were born on the 18th of July)
             </Content>
           </LoginHeading>
           <InputDiv>
