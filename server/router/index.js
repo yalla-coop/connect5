@@ -39,7 +39,8 @@ const getResponseCount = require('../controllers/feedback/getResponseCount');
 const router = express.Router();
 
 router.post('/participant-login', ParticipantLoginController);
-router.get('/participant/:id/progress', getParticipantSessions);
+router.get('/participant/PIN/:PIN/progress', getParticipantSessions);
+router.get('/participant/email/:email/progress', getParticipantSessions);
 router.post('/participant/:PIN', participantSurveyStatus);
 router.post('/certificate/:sessionId', generateCertificate);
 router.post('/login', loginController);

@@ -9,6 +9,7 @@ module.exports = (req, res, next) => {
         id: user._id,
         PIN: user.PIN,
         role: 'participant',
+        email: user.email,
       };
     } else {
       userInfo = {

@@ -2,92 +2,26 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { Modal } from 'antd';
 import moment from 'moment';
 
-import { fetchParticipantSessions } from '../../actions/groupSessionsAction';
-import { logout } from '../../actions/authAction';
-import { uppercaseSurvey } from '../../helpers';
+import { fetchParticipantSessions } from '../../../actions/groupSessionsAction';
+import { logout } from '../../../actions/authAction';
+import { uppercaseSurvey } from '../../../helpers';
 
-import { colors } from '../../theme';
-import { surveysTypes } from '../../constants';
+import { surveysTypes } from '../../../constants';
 
-import Header from '../common/Header';
+import Header from '../../common/Header';
 
-const DashboardWrapper = styled.div`
-  width: 90%;
-  margin: 0 auto;
-  padding-top: 3rem;
-`;
-
-const H3 = styled.h3`
-  text-align: center;
-  margin: 0 auto;
-  padding-top: 3rem;
-`;
-
-const Content = styled.p`
-  text-align: center;
-  margin-top: 3rem;
-`;
-
-const Span = styled.span`
-  text-align: center;
-  display: block;
-`;
-
-const Pin = styled.span`
-  text-align: center;
-  font-weight: 600;
-  font-size: 1.5rem;
-  display: block;
-  margin-top: 1.5rem;
-  margin-bottom: 3rem;
-`;
-
-const LinkBtn = styled(Link)`
-  background-color: ${colors.lightPrimary};
-  border-radius: 28px;
-  border: 1px solid ${colors.lightPrimary};
-  width: 200px;
-  display: block;
-  text-align: center;
-  margin: 0 auto;
-  margin-bottom: 2rem;
-  cursor: pointer;
-  color: ${colors.white};
-  font-size: 1.2rem;
-  padding: 14px 30px;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #2f6627;
-
-  &:hover {
-    background-color: ${colors.white};
-    color: ${colors.lightPrimary};
-    border: 1px solid ${colors.lightPrimary};
-  }
-
-  &:active {
-    position: relative;
-    top: 1px;
-  }
-`;
-
-const LogOut = styled.div`
-  font-weight: 300;
-  font-size: 14px;
-  color: ${colors.profileFontColor};
-  padding: 0.5rem 0;
-  width: 100%;
-  text-align: center;
-  cursor: pointer;
-
-  :hover {
-    color: ${colors.red};
-  }
-`;
+import {
+  DashboardWrapper,
+  H3,
+  LinkBtn,
+  LogOut,
+  Pin,
+  Content,
+  Span,
+} from './ParticipantDashboard.style';
 
 class UserDashboard extends Component {
   state = {
@@ -101,7 +35,7 @@ class UserDashboard extends Component {
     if (!location.state) return;
     const { surveySubmited, sessionId } = location.state;
     if (surveySubmited && sessionId) {
-      this.props.fetchParticipantSessions(PIN);
+      this.props.fetchParticipantSessions({ PIN });
     }
   }
 
@@ -167,7 +101,7 @@ class UserDashboard extends Component {
   };
 
   render() {
-    const { PIN, logout: logoutAction } = this.props;
+    const { PIN, logout: logoutAction, email } = this.props;
     const {
       popupVisible,
       canGetCertivicate,
@@ -177,28 +111,40 @@ class UserDashboard extends Component {
     return (
       <DashboardWrapper>
         <Header type="home" />
-        <Modal
-          title={canGetCertivicate ? 'Congratulations: 🎉🎉' : 'Thank you!'}
-          visible={popupVisible && !dismissed}
-          onOk={this.handleOk}
-          okText={canGetCertivicate ? 'Get the cirtificate' : 'Fill the survey'}
-          cancelText="Skip"
-          onCancel={this.handleCancel}
-        >
-          {canGetCertivicate ? (
-            <p>You successfully completed the session{"'"}s surveys</p>
-          ) : (
-            <p>Fill the survey {remainedSessionCapital}</p>
-          )}
-        </Modal>
+        {PIN && (
+          <>
+            <Modal
+              title={canGetCertivicate ? 'Congratulations: 🎉🎉' : 'Thank you!'}
+              visible={popupVisible && !dismissed}
+              onOk={this.handleOk}
+              okText={
+                canGetCertivicate ? 'Get the cirtificate' : 'Fill the survey'
+              }
+              cancelText="Skip"
+              onCancel={this.handleCancel}
+            >
+              {canGetCertivicate ? (
+                <p>You successfully completed the session{"'"}s surveys</p>
+              ) : (
+                <p>Fill the survey {remainedSessionCapital}</p>
+              )}
+            </Modal>
+          </>
+        )}
         <H3>Welcome back</H3>
         <Content>
-          <Span>my PIN:</Span>
-          <Pin>{PIN}</Pin>
+          {PIN ? <Span>my PIN:</Span> : <Span>my email:</Span>}
+          <Pin>{PIN || email}</Pin>
         </Content>
-        <LinkBtn to="/participant/behavioral-insight">Insights</LinkBtn>
-        <LinkBtn to="/participant/progress">Progress</LinkBtn>
-        <LinkBtn to="/sessions-files">Materials</LinkBtn>
+
+        {(PIN && (
+          <>
+            <LinkBtn to="/participant/behavioral-insight">Insights</LinkBtn>
+            <LinkBtn to="/participant/progress">Progress</LinkBtn>
+            <LinkBtn to="/sessions-files">Materials</LinkBtn>
+          </>
+        )) || <LinkBtn to="/participant-sessions-list">Session</LinkBtn>}
+
         <LogOut onClick={logoutAction}>Log out</LogOut>
       </DashboardWrapper>
     );
@@ -207,6 +153,7 @@ class UserDashboard extends Component {
 
 const mapStateToProps = state => ({
   PIN: state.auth.PIN,
+  email: state.auth.email,
   sessions: state.sessions.sessions,
 });
 

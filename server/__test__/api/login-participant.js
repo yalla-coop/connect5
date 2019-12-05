@@ -31,11 +31,11 @@ describe('Tesing for login participant route', () => {
   });
 
   test('test with invalid pin', done => {
-    const PIN = '78YG';
+    const data = { PIN: '78YG' };
 
     request(app)
       .post('/api/participant-login')
-      .send(PIN)
+      .send(data)
       .expect('Content-Type', /json/)
       .expect(401)
       .end(async (err, res) => {

@@ -420,7 +420,7 @@ class SessionDetails extends Component {
             }
             key="1"
           >
-            <SessionTopDetails sessionDetails={sessionDetails} />
+            <SessionTopDetails sessionDetails={sessionDetails} trainerView />
             <SessionActions sessionDetails={sessionDetails} />
           </Panel>
           <Panel
