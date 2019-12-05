@@ -31,6 +31,7 @@ const DrawerContent = ({
   handleSubmitUpdateAttendees,
   confirmedAttendeesList,
   handleUpdateAttendees,
+  onTypingEmails,
   // send emails
   handleAddEmailsClick,
   // emails list
@@ -47,6 +48,7 @@ const DrawerContent = ({
   handleCancelEmail,
   handleSubmitSchedule,
   emailId,
+  selectRef,
 }) => {
   switch (drawerKey) {
     case 'viewAttendeesList':
@@ -55,6 +57,8 @@ const DrawerContent = ({
           handleSubmitUpdateAttendees={handleSubmitUpdateAttendees}
           confirmedAttendeesList={confirmedAttendeesList}
           handleUpdateAttendees={handleUpdateAttendees}
+          onTypingEmails={onTypingEmails}
+          selectRef={selectRef}
           onSelectBlur={onSelectBlur}
           onSelectFocus={onSelectFocus}
           onCopy={onCopy}
@@ -107,6 +111,8 @@ const DrawerContent = ({
           dataList={sessionDetails}
           handleSubmitUpdateAttendees={handleSubmitUpdateAttendees}
           handleUpdateAttendees={handleUpdateAttendees}
+          onTypingEmails={onTypingEmails}
+          selectRef={selectRef}
           participantsEmails={newAndSentEmailsList}
           onSelectBlur={onSelectBlur}
           onSelectFocus={onSelectFocus}

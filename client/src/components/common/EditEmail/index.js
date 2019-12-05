@@ -22,7 +22,11 @@ import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
-import { getPostSurveyLink, getPreSurveyLink } from '../../../helpers';
+import {
+  getPostSurveyLink,
+  getPreSurveyLink,
+  splitEmailsList,
+} from '../../../helpers';
 
 import Header from '../Header';
 import InfoPopUp from '../InfoPopup';
@@ -89,6 +93,8 @@ class EditEmail extends Component {
     isAllChecked: true,
     isNewChecked: true,
   };
+
+  selectRef = React.createRef();
 
   topElementRef = React.createRef();
 
@@ -169,26 +175,73 @@ class EditEmail extends Component {
     this.setState({ extraInformation: value });
   };
 
-  handleUpdateEmails = values => {
+  handleUpdateEmails = (values, blur) => {
     const validEmails = [];
 
     values.forEach(email => {
-      if (!validEmails.some(_item => _item === email)) {
+      if (
+        !validEmails.some(
+          _item =>
+            _item.replace(/[, ;"']/g, '') === email.replace(/[, ;"']/g, '')
+        )
+      ) {
         try {
-          const validEmail = emailSchema.validateSync(email);
+          const validEmail = emailSchema.validateSync(
+            email.replace(/[, ;"']/g, '')
+          );
           if (validEmail) {
-            validEmails.push(email);
+            validEmails.push(email.replace(/[, ;"']/g, ''));
           }
         } catch (err) {
-          Modal.error({
-            title: 'Invalid!',
-            content: err.errors[0],
-          });
+          if (!blur && email.split('@').length < 3) {
+            Modal.error({
+              title: 'Invalid!',
+              content: err.errors[0],
+            });
+          }
         }
       }
     });
 
-    this.setState({ participantsEmails: validEmails });
+    this.setState({ participantsEmails: validEmails }, () => {
+      if (blur) {
+        const select = this.selectRef.current;
+        select.blur();
+        setTimeout(() => {
+          select.focus();
+        }, 200);
+      }
+    });
+  };
+
+  onTypingEmails = value => {
+    const { participantsEmails } = this.state;
+
+    if (
+      value &&
+      (value.includes(' ') || value.includes(',') || value.includes(';'))
+    ) {
+      const splittedEmails = splitEmailsList(value);
+
+      // get latest added email
+      const latestEmail =
+        splittedEmails && splittedEmails[splittedEmails.length - 1];
+
+      if (latestEmail.includes('@') && latestEmail.includes('.')) {
+        this.handleUpdateEmails(
+          [...splittedEmails, ...participantsEmails],
+          true
+        );
+      } else {
+        this.handleUpdateEmails(
+          [
+            ...splittedEmails.slice(0, splitEmailsList.length - 1),
+            ...participantsEmails,
+          ],
+          true
+        );
+      }
+    }
   };
 
   handleSendEmail = () => {
@@ -300,12 +353,8 @@ class EditEmail extends Component {
     if (focused) {
       event.preventDefault();
       const pastedString = event.clipboardData.getData('text/plain');
-      // split on "," & ";" and " "
-      const splittedEmails = pastedString.split(/[, ;]/);
 
-      emailsArray = splittedEmails
-        .filter(item => !!item)
-        .map(item => item.trim());
+      emailsArray = splitEmailsList(pastedString);
 
       this.handleUpdateEmails([...participantsEmails, ...emailsArray]);
     }
@@ -640,6 +689,8 @@ class EditEmail extends Component {
                         size="large"
                         onBlur={this.onSelectBlur}
                         onFocus={this.onSelectFocus}
+                        onSearch={this.onTypingEmails}
+                        ref={this.selectRef}
                       >
                         {participantsEmails.map(email => (
                           <Option value={email} key={email}>

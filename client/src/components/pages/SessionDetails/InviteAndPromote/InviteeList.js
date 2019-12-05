@@ -57,7 +57,9 @@ class InviteeList extends Component {
       onSelectFocus,
       handleSubmitUpdateAttendees,
       handleUpdateAttendees,
+      onTypingEmails,
       participantsEmails = [],
+      selectRef,
     } = this.props;
 
     return (
@@ -93,6 +95,8 @@ class InviteeList extends Component {
                   size="large"
                   placeholder="emails"
                   onChange={values => handleUpdateAttendees(values, 'new')}
+                  onSearch={value => onTypingEmails(value, 'new')}
+                  ref={selectRef}
                   value={participantsEmails}
                   style={{ width: '100%', height: '100%' }}
                   onBlur={onSelectBlur}
