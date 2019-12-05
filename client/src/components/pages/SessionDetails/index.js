@@ -51,17 +51,19 @@ class SessionDetails extends Component {
   };
 
   componentDidMount() {
-    let dT = null;
-    try {
-      dT = new DataTransfer();
-    } catch (e) {
-      // ignore the error
-    }
-    const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    if (evt.clipboardData || window.clipboardData) {
-      (evt.clipboardData || window.clipboardData).setData('text/plain', '');
-      document.addEventListener('paste', this.pasteEmails);
-      document.dispatchEvent(evt);
+    if (window.ClipboardEvent) {
+      let dT = null;
+      try {
+        dT = new DataTransfer();
+      } catch (e) {
+        // ignore the error
+      }
+      const evt = new ClipboardEvent('paste', { clipboardData: dT });
+      if (evt.clipboardData || window.clipboardData) {
+        (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+        document.addEventListener('paste', this.pasteEmails);
+        document.dispatchEvent(evt);
+      }
     }
 
     const { id } = this.props.match.params;
@@ -438,7 +440,7 @@ class SessionDetails extends Component {
                 <p
                   style={{
                     marginLeft: '1rem',
-                    marginBottom: '0'
+                    marginBottom: '0',
                   }}
                 >
                   Back

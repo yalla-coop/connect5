@@ -37,7 +37,7 @@ const regions = [
   'East of England',
   'London',
   'South East',
-  'South West'
+  'South West',
 ];
 
 class SignUp extends Component {
@@ -101,6 +101,7 @@ class SignUp extends Component {
   };
 
   handleSubmit = e => {
+    console.log('-------------');
     const { role, givenPermission, officialLocalLead } = this.state;
 
     const { form, signUpTrainer: signUpTrainerActionCreator } = this.props;
@@ -237,11 +238,11 @@ class SignUp extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please input your name!'
+                      message: 'Please input your name!',
                     },
                     {
                       min: 3,
-                      message: 'Please input valid name'
+                      message: 'Please input valid name',
                     },
                   ],
                 })(<Input placeholder="Name" size="large" />)}
@@ -252,11 +253,11 @@ class SignUp extends Component {
                   rules: [
                     {
                       type: 'email',
-                      message: 'The input is not valid E-mail!'
+                      message: 'The input is not valid E-mail!',
                     },
                     {
                       required: true,
-                      message: 'Please input your E-mail!'
+                      message: 'Please input your E-mail!',
                     },
                     {
                       message: 'Already taken',
@@ -283,22 +284,22 @@ class SignUp extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please input your password!'
+                      message: 'Please input your password!',
                     },
                     {
                       pattern: /(?=.*[a-z])/,
                       message:
-                        'Password must contain at least 1 lowercase alphabetical character'
+                        'Password must contain at least 1 lowercase alphabetical character',
                     },
                     {
                       pattern: /(?=.*[A-Z])/,
                       message:
-                        'Password must contain at least 1 uppercase alphabetical character'
+                        'Password must contain at least 1 uppercase alphabetical character',
                     },
                     {
                       pattern: /(?=.*[0-9])/,
                       message:
-                        'Password must contain at least 1 numeric character'
+                        'Password must contain at least 1 numeric character',
                     },
                     {
                       pattern: /(?=.{8,})/,
@@ -410,7 +411,7 @@ class SignUp extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Please select your region'
+                      message: 'Please select your region',
                     },
                   ],
                 })(
@@ -455,6 +456,7 @@ class SignUp extends Component {
                   style={{ fontSize: '19px' }}
                   loading={loading}
                   disabled={!givenPermission}
+                  onClick={this.handleSubmit}
                 >
                   Sign Up
                 </Button>

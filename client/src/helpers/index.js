@@ -1,4 +1,5 @@
 import { surveysTypes } from '../constants';
+import copyText from './copyTextToClipBoard';
 
 export const uppercaseSurvey = surveyType =>
   surveyType
@@ -97,3 +98,5 @@ export const handleEnterKey = (event, cb) => {
   event.preventDefault();
   return cb(event);
 };
+
+export const copyTextToClipBoard = copyText;
