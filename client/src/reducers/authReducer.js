@@ -42,7 +42,10 @@ export default function(state = initialState, action) {
 
     case LOGIN_FAIL:
     case LOGOUT:
-      return {};
+      return {
+        ...initialState,
+        loaded: true,
+      };
 
     case CHECK_UNIQUE_EMAIL_UNIQUE:
       return {
