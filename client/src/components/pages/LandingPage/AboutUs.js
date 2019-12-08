@@ -124,7 +124,7 @@ const AboutUs = () => (
         <>
           <p style={{ marginTop: '1.4rem' }}>{fileArray.sectionTitle}</p>
           <Resources>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               {fileArray.files.map(file => (
                 <FileCard>
                   <a
@@ -138,6 +138,7 @@ const AboutUs = () => (
                         style={{
                           display: 'flex',
                           alignItems: 'center',
+                          flexWrap: 'wrap',
                         }}
                       >
                         {file.extension === 'pdf' ? (
