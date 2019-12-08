@@ -16,7 +16,7 @@ const demographics = surveyType => [
   {
     text: 'Gender',
     helperText: ['To which gender do you most identify?'],
-    options: ['Male', 'Female'],
+    options: ['Male', 'Female', 'Other'],
     questionType: questionConstants.questionTypes.radio,
     group: questionConstants.groups.DEMOGRAPHIC,
     surveyType,
