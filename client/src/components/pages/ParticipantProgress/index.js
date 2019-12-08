@@ -15,7 +15,7 @@ import { Wrapper, Span } from './ParticipantProgress.style';
 class ParticipantProgress extends Component {
   componentDidMount() {
     const { PIN } = this.props;
-    this.props.fetchParticipantSessions(PIN);
+    this.props.fetchParticipantSessions({ PIN });
   }
 
   render() {

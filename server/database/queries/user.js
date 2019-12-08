@@ -1,5 +1,6 @@
 const User = require('./../models/User');
 const Participant = require('./../models/Participant');
+const Session = require('./../models/Session');
 
 module.exports.findByEmail = email => User.findOne({ email });
 module.exports.getUserById = id => User.findById(id);
@@ -10,3 +11,20 @@ module.exports.updateUserPasswordById = (userId, password) => {
 };
 
 module.exports.findParticipantByPIN = PIN => Participant.findOne({ PIN });
+
+module.exports.findSessionsIncludeParticipantEmail = email =>
+  Session.aggregate([
+    {
+      $match: {
+        'participantsEmails.email': email,
+      },
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'trainers',
+        foreignField: '_id',
+        as: 'trainers',
+      },
+    },
+  ]);

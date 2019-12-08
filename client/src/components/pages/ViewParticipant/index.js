@@ -30,7 +30,7 @@ class ViewParticipant extends Component {
 
   componentDidMount() {
     const { match } = this.props;
-    this.props.fetchParticipantSessions(match.params.PIN);
+    this.props.fetchParticipantSessions({ PIN: match.params.PIN });
   }
 
   clickToggle = direction => {

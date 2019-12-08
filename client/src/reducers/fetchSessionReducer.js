@@ -3,12 +3,14 @@ import {
   FETCH_LOCAL_LEAD_SESSIONS,
   FETCH_ALL_SESSIONS,
   FETCH_SESSION_DETAILS,
-  FETCH_PARTICIPANT_SESSIONS_SUCCESS ,
+  FETCH_PARTICIPANT_SESSIONS_SUCCESS,
+  FETCH_PARTICIPANT_SESSIONS_BY_EMAIL_SUCCESS,
 } from '../constants/actionTypes';
 
 const initState = {
   sessions: [],
   participantSessions: [],
+  participantSessionsByEmail: [],
   sessionsCount: '',
   sessionDetails: {},
   loaded: false,
@@ -24,6 +26,8 @@ const fetchedSessions = (state = initState, action) => {
       return { ...state, sessions: payload, loaded: true };
     case FETCH_PARTICIPANT_SESSIONS_SUCCESS:
       return { ...state, participantSessions: payload };
+    case FETCH_PARTICIPANT_SESSIONS_BY_EMAIL_SUCCESS:
+      return { ...state, participantSessionsByEmail: payload };
     case FETCH_SESSION_DETAILS:
       return { ...state, sessionDetails: payload, loaded: true };
     default:

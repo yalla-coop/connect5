@@ -1,10 +1,10 @@
 // this is where we map through all the questions
 // and populate the Survey component
-import React from "react";
-import { DatePicker, Rate, Select, Icon, Modal, Collapse } from "antd";
+import React from 'react';
+import { DatePicker, Rate, Select, Icon, Modal, Collapse } from 'antd';
 // // please leave this inside for antd to style right
 // import 'antd/dist/antd.css';
-import moment from "moment";
+import moment from 'moment';
 
 import {
   RadioField,
@@ -17,8 +17,8 @@ import {
   QuestionGroup,
   InfoHeader,
   StyledIframe,
-  QuestionText
-} from "./Questions.style";
+  QuestionText,
+} from './Questions.style';
 
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -48,21 +48,21 @@ const renderQuestionInputType = (
   setMaxNumber,
   toggleModal
 ) => {
-  if (inputType === "text") {
+  if (inputType === 'text') {
     return (
       <TextField>
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <QuestionText id={index}>{questionText}</QuestionText>
-          {group.text === "Behavioural Insights" && (
+          {group.text === 'Behavioural Insights' && (
             <Icon
               type="info-circle"
               fontSize={14}
               onClick={toggleModal}
               style={{
-                display: "inline",
-                marginLeft: "0.75rem",
-                color: "#1890ff"
+                display: 'inline',
+                marginLeft: '0.75rem',
+                color: '#1890ff',
               }}
             />
           )}
@@ -80,7 +80,7 @@ const renderQuestionInputType = (
             value={
               answers[questionId] && answers[questionId].answer
                 ? answers[questionId].answer
-                : ""
+                : ''
             }
             onBlur={() => setCurrentQuestion(nextQuestionID)}
             onKeyDown={event => {
@@ -93,12 +93,12 @@ const renderQuestionInputType = (
           />
         </div>
         <Warning>
-          {!answers[questionId] && "* this question must be answered"}
+          {!answers[questionId] && '* this question must be answered'}
         </Warning>
       </TextField>
     );
   }
-  if (inputType === "date") {
+  if (inputType === 'date') {
     return (
       <TextField
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
@@ -106,15 +106,15 @@ const renderQuestionInputType = (
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <QuestionText id={index}>{questionText}</QuestionText>
-          {group.text === "Behavioural Insights" && (
+          {group.text === 'Behavioural Insights' && (
             <Icon
               type="info-circle"
               fontSize={14}
               onClick={toggleModal}
               style={{
-                display: "inline",
-                marginLeft: "0.75rem",
-                color: "#1890ff"
+                display: 'inline',
+                marginLeft: '0.75rem',
+                color: '#1890ff',
               }}
             />
           )}
@@ -141,7 +141,7 @@ const renderQuestionInputType = (
       </TextField>
     );
   }
-  if (inputType === "numberPositive") {
+  if (inputType === 'numberPositive') {
     return (
       <TextField
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
@@ -149,15 +149,15 @@ const renderQuestionInputType = (
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <QuestionText id={index}>{questionText}</QuestionText>
-          {group.text === "Behavioural Insights" && (
+          {group.text === 'Behavioural Insights' && (
             <Icon
               type="info-circle"
               fontSize={14}
               onClick={toggleModal}
               style={{
-                display: "inline",
-                marginLeft: "0.75rem",
-                color: "#1890ff"
+                display: 'inline',
+                marginLeft: '0.75rem',
+                color: '#1890ff',
               }}
             />
           )}
@@ -178,7 +178,7 @@ const renderQuestionInputType = (
           value={
             answers[questionId] && answers[questionId].answer
               ? answers[questionId].answer
-              : ""
+              : ''
           }
           onBlur={e => {
             setCurrentQuestion(nextQuestionID);
@@ -198,7 +198,7 @@ const renderQuestionInputType = (
       </TextField>
     );
   }
-  if (inputType === "numberZeroTen") {
+  if (inputType === 'numberZeroTen') {
     return (
       <TextField
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
@@ -206,15 +206,15 @@ const renderQuestionInputType = (
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <QuestionText id={index}>{questionText}</QuestionText>
-          {group.text === "Behavioural Insights" && (
+          {group.text === 'Behavioural Insights' && (
             <Icon
               type="info-circle"
               fontSize={14}
               onClick={toggleModal}
               style={{
-                display: "inline",
-                marginLeft: "0.75rem",
-                color: "#1890ff"
+                display: 'inline',
+                marginLeft: '0.75rem',
+                color: '#1890ff',
               }}
             />
           )}
@@ -247,7 +247,7 @@ const renderQuestionInputType = (
       </TextField>
     );
   }
-  if (inputType === "radio") {
+  if (inputType === 'radio') {
     return (
       <RadioField
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
@@ -255,15 +255,15 @@ const renderQuestionInputType = (
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <QuestionText id={index}>{questionText}</QuestionText>
-          {group.text === "Behavioural Insights" && (
+          {group.text === 'Behavioural Insights' && (
             <Icon
               type="info-circle"
               fontSize={14}
               onClick={toggleModal}
               style={{
-                display: "inline",
-                marginLeft: "0.75rem",
-                color: "#1890ff"
+                display: 'inline',
+                marginLeft: '0.75rem',
+                color: '#1890ff',
               }}
             />
           )}
@@ -283,7 +283,7 @@ const renderQuestionInputType = (
                         answers[questionId] &&
                         answers[questionId].answer === value
                           ? value
-                          : ""
+                          : ''
                       }
                       id={uniqueId}
                       name={questionId}
@@ -307,7 +307,7 @@ const renderQuestionInputType = (
           {/* Load "Other" div */}
           {answers[questionId] &&
           answers[questionId].answer &&
-          answers[questionId].answer.includes("Other") ? (
+          answers[questionId].answer.includes('Other') ? (
             <TextField
               unanswered={
                 errorArray.includes(questionId) && !answers[questionId]
@@ -325,7 +325,7 @@ const renderQuestionInputType = (
               />
             </TextField>
           ) : (
-            ""
+            ''
           )}
         </div>
         {!answers[questionId] && (
@@ -334,7 +334,7 @@ const renderQuestionInputType = (
       </RadioField>
     );
   }
-  if (inputType === "dropdown") {
+  if (inputType === 'dropdown') {
     return (
       <RadioField
         unanswered={errorArray.includes(questionId) && !answers[questionId]}
@@ -342,15 +342,15 @@ const renderQuestionInputType = (
         <header>
           {subGroup && <SubGroup>{subGroup}</SubGroup>}
           <QuestionText id={index}>{questionText}</QuestionText>
-          {group.text === "Behavioural Insights" && (
+          {group.text === 'Behavioural Insights' && (
             <Icon
               type="info-circle"
               fontSize={14}
               onClick={toggleModal}
               style={{
-                display: "inline",
-                marginLeft: "0.75rem",
-                color: "#1890ff"
+                display: 'inline',
+                marginLeft: '0.75rem',
+                color: '#1890ff',
               }}
             />
           )}
@@ -374,7 +374,7 @@ const renderQuestionInputType = (
           {/* Load "Other" div */}
           {answers[questionId] &&
           answers[questionId].answer &&
-          answers[questionId].answer.includes("Other") ? (
+          answers[questionId].answer.includes('Other') ? (
             <TextField
               unanswered={
                 errorArray.includes(questionId) && !answers[questionId]
@@ -392,7 +392,7 @@ const renderQuestionInputType = (
               />
             </TextField>
           ) : (
-            ""
+            ''
           )}
         </div>
         {!answers[questionId] && (
@@ -424,24 +424,24 @@ const questionsRender = (
   setMaxNumber
 ) => {
   const demographicQs = arrayOfQuestions.filter(
-    question => question.group.text === "demographic"
+    question => question.group.text === 'demographic'
   );
 
   const behaviourQs = arrayOfQuestions.filter(
-    question => question.group.text === "Behavioural Insights"
+    question => question.group.text === 'Behavioural Insights'
   );
 
   const trainerQs = arrayOfQuestions.filter(
-    question => question.group.text === "about your trainer"
+    question => question.group.text === 'about your trainer'
   );
 
   const teachingQs = arrayOfQuestions.filter(
-    question => question.group.text === "about your usual way of teaching"
+    question => question.group.text === 'about your usual way of teaching'
   );
 
   const teachingFutureQs = arrayOfQuestions.filter(
     question =>
-      question.group.text === "about how you expect to teach in the future"
+      question.group.text === 'about how you expect to teach in the future'
   );
 
   return [demographicQs, behaviourQs, trainerQs, teachingQs, teachingFutureQs]
@@ -450,16 +450,16 @@ const questionsRender = (
       // map through each section
       <QuestionGroup key={section[0].group}>
         <SectionCategory>{section[0] && section[0].group.text}</SectionCategory>
-        {section[0] && section[0].group.text === "Behavioural Insights" && (
+        {section[0] && section[0].group.text === 'Behavioural Insights' && (
           <InfoHeader to="#" onClick={toggleModal}>
             <Icon
               type="info-circle"
               fontSize={14}
               onClick={toggleModal}
               style={{
-                display: "inline",
-                marginRight: "0.75rem",
-                color: "#1890ff"
+                display: 'inline',
+                marginRight: '0.75rem',
+                color: '#1890ff',
               }}
             />
             Why are you asking me these questions?
@@ -476,11 +476,11 @@ const questionsRender = (
               options,
               group,
               participantField,
-              code
+              code,
             } = el;
             const inputType = el.questionType.desc;
             const nextQuestion = section[qIndex + 1];
-            const nextQuestionID = nextQuestion ? nextQuestion._id : "end";
+            const nextQuestionID = nextQuestion ? nextQuestion._id : 'end';
             const prevQuestion = section[qIndex - 1];
             const prevQuestionID = prevQuestion && prevQuestion._id;
             return (
@@ -524,17 +524,22 @@ const questionsRender = (
 export default class Questions extends React.Component {
   state = {
     currentQuestion: null,
-    modalVisible: false
+    modalVisible: false,
   };
 
   componentDidUpdate() {
     const { currentQuestion } = this.state;
     const element = document.getElementById(currentQuestion);
-    if (element && currentQuestion !== "end") {
-      setTimeout(() => {
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
-      }, 100);
-    } else if (currentQuestion === "end") {
+    if (element && currentQuestion !== 'end') {
+      const isSmoothScrollSupported =
+        'scrollBehavior' in document.documentElement.style;
+
+      if (isSmoothScrollSupported) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    } else if (currentQuestion === 'end') {
       setTimeout(() => {
         // scroll.scrollToBottom();
         this.setState({ currentQuestion: null });
@@ -565,7 +570,7 @@ export default class Questions extends React.Component {
       handleStarChange,
       handleDropdown,
       setMaxNumber,
-      testNumber
+      testNumber,
     } = this.props;
 
     const { setCurrentQuestion, toggleModal } = this;
@@ -600,7 +605,7 @@ export default class Questions extends React.Component {
           onOk={toggleModal}
           onCancel={toggleModal}
           width={800}
-          cancelButtonProps={{ style: { display: "none" } }}
+          cancelButtonProps={{ style: { display: 'none' } }}
         >
           <p>
             The aim of Connect5 is to improve population mental wellbeing by

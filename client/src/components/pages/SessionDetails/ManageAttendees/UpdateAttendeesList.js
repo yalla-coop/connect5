@@ -17,11 +17,13 @@ const UpdateAttendeesList = ({
   handleSubmitUpdateAttendees,
   confirmedAttendeesList,
   handleUpdateAttendees,
+  onTypingEmails,
   onSelectBlur,
   onSelectFocus,
   loading,
   onCopy,
   onClear,
+  selectRef,
 }) => {
   return (
     <>
@@ -54,10 +56,12 @@ const UpdateAttendeesList = ({
             value={confirmedAttendeesList}
             placeholder="Select users"
             onChange={values => handleUpdateAttendees(values, 'confirmed')}
+            onSearch={value => onTypingEmails(value, 'confirmed')}
             style={{ width: '100%' }}
             size="large"
             onBlur={onSelectBlur}
             onFocus={onSelectFocus}
+            ref={selectRef}
           >
             {confirmedAttendeesList.map(item => (
               <Option value={item} key={item}>

@@ -156,7 +156,9 @@ class Dashboard extends Component {
               )}
             </StatsWrapper>
             <StyledLink to="/change-password">Change Password</StyledLink>
-            <LogOut onClick={logoutAction}>Log out</LogOut>
+            <LogOut as="button" onClick={logoutAction}>
+              Log out
+            </LogOut>
           </>
         )}
       </Wrapper>

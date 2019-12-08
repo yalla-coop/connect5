@@ -21,23 +21,25 @@ const { Option } = Select;
 
 class InviteeList extends Component {
   state = {
-    err: ''
+    err: '',
   };
 
   componentDidMount() {
-    let dT = null;
-    try {
-      dT = new DataTransfer();
-    } catch (e) {
-      // ignore the error
-    }
-    const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    if (evt.clipboardData || window.clipboardData) {
-      (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+    if (window.ClipboardEvent) {
+      let dT = null;
+      try {
+        dT = new DataTransfer();
+      } catch (e) {
+        // ignore the error
+      }
+      const evt = new ClipboardEvent('paste', { clipboardData: dT });
+      if (evt.clipboardData || window.clipboardData) {
+        (evt.clipboardData || window.clipboardData).setData('text/plain', '');
 
-      document.addEventListener('paste', this.pasteEmails);
+        document.addEventListener('paste', this.pasteEmails);
 
-      document.dispatchEvent(evt);
+        document.dispatchEvent(evt);
+      }
     }
   }
 
@@ -55,7 +57,9 @@ class InviteeList extends Component {
       onSelectFocus,
       handleSubmitUpdateAttendees,
       handleUpdateAttendees,
+      onTypingEmails,
       participantsEmails = [],
+      selectRef,
     } = this.props;
 
     return (
@@ -91,6 +95,8 @@ class InviteeList extends Component {
                   size="large"
                   placeholder="emails"
                   onChange={values => handleUpdateAttendees(values, 'new')}
+                  onSearch={value => onTypingEmails(value, 'new')}
+                  ref={selectRef}
                   value={participantsEmails}
                   style={{ width: '100%', height: '100%' }}
                   onBlur={onSelectBlur}

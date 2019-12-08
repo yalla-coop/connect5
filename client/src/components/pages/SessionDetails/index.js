@@ -13,6 +13,8 @@ import {
   cancelScheduledEmail as cancelScheduledEmailAction,
 } from '../../../actions/sessionAction';
 
+import { splitEmailsList } from '../../../helpers';
+
 // ANTD COMPONENTS
 import Spin from '../../common/Spin';
 
@@ -50,18 +52,22 @@ class SessionDetails extends Component {
     emailId: null,
   };
 
+  selectRef = React.createRef();
+
   componentDidMount() {
-    let dT = null;
-    try {
-      dT = new DataTransfer();
-    } catch (e) {
-      // ignore the error
-    }
-    const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    if (evt.clipboardData || window.clipboardData) {
-      (evt.clipboardData || window.clipboardData).setData('text/plain', '');
-      document.addEventListener('paste', this.pasteEmails);
-      document.dispatchEvent(evt);
+    if (window.ClipboardEvent) {
+      let dT = null;
+      try {
+        dT = new DataTransfer();
+      } catch (e) {
+        // ignore the error
+      }
+      const evt = new ClipboardEvent('paste', { clipboardData: dT });
+      if (evt.clipboardData || window.clipboardData) {
+        (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+        document.addEventListener('paste', this.pasteEmails);
+        document.dispatchEvent(evt);
+      }
     }
 
     const { id } = this.props.match.params;
@@ -125,25 +131,73 @@ class SessionDetails extends Component {
   };
 
   // update the attendees list status = (new || confirmed)
-  handleUpdateAttendees = (values, status) => {
+  handleUpdateAttendees = (values, status, blur) => {
     const validEmails = [];
     values.forEach(item => {
       try {
-        const validEmail = emailSchema.validateSync(item);
+        const validEmail = emailSchema.validateSync(
+          item.replace(/[, ;"']/g, '')
+        );
 
-        if (validEmail) {
-          validEmails.push(item);
+        if (
+          validEmail &&
+          item &&
+          (!validEmails.includes(item.replace(/[, ;"']/g, '')) &&
+            !validEmails.includes(item))
+        ) {
+          validEmails.push(item.replace(/[, ;"']/g, ''));
         }
       } catch (err) {
-        Modal.error({
-          title: 'Invalid!',
-          content: err.errors[0],
-        });
+        if (!blur && item.split('@').length < 3) {
+          Modal.error({
+            title: 'Invalid!',
+            content: err.errors[0],
+          });
+        }
       }
     });
 
     // { newEmails||confirmedEmails: ["emails"]}
-    this.setState({ [`${status}Emails`]: validEmails });
+    this.setState({ [`${status}Emails`]: validEmails }, () => {
+      if (blur) {
+        const select = this.selectRef.current;
+        select.blur();
+        setTimeout(() => {
+          select.focus();
+        }, 200);
+      }
+    });
+  };
+
+  onTypingEmails = (value, status) => {
+    const { [`${status}Emails`]: oldEmails } = this.state;
+    if (
+      value &&
+      (value.includes(' ') || value.includes(',') || value.includes(';'))
+    ) {
+      const splittedEmails = splitEmailsList(value);
+
+      // get latest added email
+      const latestEmail =
+        splittedEmails && splittedEmails[splittedEmails.length - 1];
+
+      if (latestEmail.includes('@') && latestEmail.includes('.')) {
+        this.handleUpdateAttendees(
+          [...splittedEmails, ...oldEmails],
+          status,
+          true
+        );
+      } else {
+        this.handleUpdateAttendees(
+          [
+            ...splittedEmails.slice(0, splitEmailsList.length - 1),
+            ...oldEmails,
+          ],
+          status,
+          true
+        );
+      }
+    }
   };
 
   // submit the updated emails
@@ -259,11 +313,8 @@ class SessionDetails extends Component {
     if (focused) {
       event.preventDefault();
       const pastedString = event.clipboardData.getData('text/plain');
-      const splittedEmails = pastedString.split(/[, ;]/);
 
-      emailsArray = splittedEmails
-        .map(item => item.trim())
-        .filter(item => !!item);
+      emailsArray = splitEmailsList(pastedString);
 
       const { [`${status}Emails`]: oldEmails } = this.state;
 
@@ -369,7 +420,7 @@ class SessionDetails extends Component {
             }
             key="1"
           >
-            <SessionTopDetails sessionDetails={sessionDetails} />
+            <SessionTopDetails sessionDetails={sessionDetails} trainerView />
             <SessionActions sessionDetails={sessionDetails} />
           </Panel>
           <Panel
@@ -438,7 +489,7 @@ class SessionDetails extends Component {
                 <p
                   style={{
                     marginLeft: '1rem',
-                    marginBottom: '0'
+                    marginBottom: '0',
                   }}
                 >
                   Back
@@ -473,6 +524,8 @@ class SessionDetails extends Component {
                 surveyType={surveyType}
                 handleSubmitSchedule={this.handleSubmitSchedule}
                 emailId={emailId}
+                onTypingEmails={this.onTypingEmails}
+                selectRef={this.selectRef}
               />
             </>
           </Drawer>

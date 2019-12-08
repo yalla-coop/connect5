@@ -30,7 +30,7 @@ describe('Tesing for logout route', () => {
         const token = res.headers['set-cookie'][0].split(';')[0];
 
         request(app)
-          .get(`/api/logout`)
+          .post(`/api/logout`)
           .set('Cookie', [token])
           .expect(200)
           .end(async (error, result) => {
@@ -52,7 +52,7 @@ describe('Tesing for logout route', () => {
         const token = res.headers['set-cookie'][0].split(';')[0];
 
         request(app)
-          .get(`/api/logout`)
+          .post(`/api/logout`)
           .set('Cookie', [token])
           .expect(200)
           .end(async (error, result) => {

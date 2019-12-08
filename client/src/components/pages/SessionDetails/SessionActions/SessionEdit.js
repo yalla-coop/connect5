@@ -14,7 +14,7 @@ import {
 import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { validPostcode } from '../../../../helpers';
+import { validPostcode, splitEmailsList } from '../../../../helpers';
 import history from '../../../../history';
 import Button from '../../../common/Button';
 import InfoPopUp from '../../../common/InfoPopup';
@@ -74,23 +74,25 @@ class EditSession extends Component {
     responses: [],
   };
 
+  selectRef = React.createRef();
+
   componentDidMount() {
     const { id } = this.props.match.params;
     const { role, userId } = this.props;
-
-    let dT = null;
-    try {
-      dT = new DataTransfer();
-    } catch (e) {
-      // ignore the error
+    if (window.ClipboardEvent) {
+      let dT = null;
+      try {
+        dT = new DataTransfer();
+      } catch (e) {
+        // ignore the error
+      }
+      const evt = new ClipboardEvent('paste', { clipboardData: dT });
+      if (evt.clipboardData || window.clipboardData) {
+        (evt.clipboardData || window.clipboardData).setData('text/plain', '');
+        document.addEventListener('paste', this.pasteEmails);
+        document.dispatchEvent(evt);
+      }
     }
-    const evt = new ClipboardEvent('paste', { clipboardData: dT });
-    if (evt.clipboardData || window.clipboardData) {
-      (evt.clipboardData || window.clipboardData).setData('text/plain', '');
-      document.addEventListener('paste', this.pasteEmails);
-      document.dispatchEvent(evt);
-    }
-
     // call action and pass it the id of session to fetch it's details
     this.props.fetchSessionDetails(id);
 
@@ -175,15 +177,41 @@ class EditSession extends Component {
       event.preventDefault();
       const pastedString = event.clipboardData.getData('text/plain');
 
-      // split on "," & ";" and " "
-      const splittedEmails = pastedString.split(/[, ;]/);
-
-      emailsArray = splittedEmails
-        .filter(item => !!item)
-        .map(item => item.trim())
-        .filter(item => !emails.includes(item));
+      emailsArray = splitEmailsList(pastedString).filter(
+        item => !emails.includes(item)
+      );
 
       this.onEmailChange([...emails.map(item => item.email), ...emailsArray]);
+    }
+  };
+
+  onTypingEmails = value => {
+    const { emails } = this.state;
+
+    if (
+      value &&
+      (value.includes(' ') || value.includes(',') || value.includes(';'))
+    ) {
+      const splittedEmails = splitEmailsList(value);
+
+      // get latest added email
+      const latestEmail =
+        splittedEmails && splittedEmails[splittedEmails.length - 1];
+
+      if (latestEmail.includes('@') && latestEmail.includes('.')) {
+        this.onEmailChange(
+          [...splittedEmails, ...emails.map(item => item.email)],
+          true
+        );
+      } else {
+        this.onEmailChange(
+          [
+            ...splittedEmails.slice(0, splitEmailsList.length - 1),
+            ...emails.map(item => item.email),
+          ],
+          true
+        );
+      }
     }
   };
 
@@ -260,7 +288,6 @@ class EditSession extends Component {
   };
 
   onSelectPartner1Change = value => {
-    console.log(value);
     this.setState({
       partnerTrainer1: value,
     });
@@ -272,7 +299,7 @@ class EditSession extends Component {
     });
   };
 
-  onEmailChange = value => {
+  onEmailChange = (value, blur) => {
     const { emails } = this.state;
     // remove emailError
     this.setState({ emailErr: null });
@@ -281,31 +308,58 @@ class EditSession extends Component {
     const remainingEmails = emails.filter(item => value.includes(item.email));
 
     // check if there's a new email
-    const justEmails = remainingEmails.map(email => email && email.email);
-    const newEmails = value.filter(item => justEmails.indexOf(item) === -1);
+    const justEmails = remainingEmails.map(
+      email => email && email.email.replace(/[, ;"']/g, '')
+    );
+    const newEmails = value.filter(
+      item => justEmails.indexOf(item.replace(/[, ;"']/g, '')) === -1
+    );
 
     // check valid new email
-    const incorrectEmails = newEmails.filter(item => !pattern.test(item));
+    const incorrectEmails = newEmails.filter(
+      item => !pattern.test(item.replace(/[, ;"']/g, ''))
+    );
 
     if (incorrectEmails.length > 0) {
-      this.setState({
-        emailErr: '* Please enter a valid email'
+      incorrectEmails.forEach(item => {
+        if (!blur && item.split('@').length < 3) {
+          if (blur) {
+            const select = this.selectRef.current;
+            select.blur();
+            setTimeout(() => {
+              select.focus();
+            }, 200);
+          }
+          this.setState({
+            emailErr: '* Please enter a valid email',
+          });
+        }
       });
     } else if (newEmails.length > 0) {
-      const newEmailObjs = newEmails.map(email => ({ email, status: 'new' }));
-      this.setState({ emails: [...remainingEmails, ...newEmailObjs] });
+      const newEmailObjs = newEmails.map(email => ({
+        email: email.replace(/[, ;"']/g, ''),
+        status: 'new',
+      }));
+      this.setState({ emails: [...remainingEmails, ...newEmailObjs] }, () => {
+        if (blur) {
+          const select = this.selectRef.current;
+          select.blur();
+          setTimeout(() => {
+            select.focus();
+          }, 200);
+        }
+      });
     } else {
-      this.setState({ emails: remainingEmails });
+      this.setState({ emails: remainingEmails }, () => {
+        if (blur) {
+          const select = this.selectRef.current;
+          select.blur();
+          setTimeout(() => {
+            select.focus();
+          }, 200);
+        }
+      });
     }
-
-    // if (!pattern.test(value.email)) {
-    //   this.setState({
-    //     err: '*please enter valid email',
-    //   });
-    // }
-    // this.setState({
-    //   emails: value,
-    // });
   };
 
   onCopy = () => {
@@ -684,6 +738,8 @@ class EditSession extends Component {
                   style={{ width: '100%', height: '100%' }}
                   onBlur={this.onSelectBlur}
                   onFocus={this.onSelectFocus}
+                  onSearch={this.onTypingEmails}
+                  ref={this.selectRef}
                 >
                   {participantsEmails.map(item => (
                     <Option key={item.email} value={item.email}>
