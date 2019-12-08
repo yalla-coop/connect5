@@ -3,6 +3,7 @@ import { Input } from 'antd';
 import { connect } from 'react-redux';
 import Button from '../../common/Button';
 import HumburgerMenu from '../../common/Menu';
+import IEMessage from '../../common/IEMessage';
 
 import {
   LoginHeading,
@@ -132,6 +133,7 @@ class Login extends Component {
           <H4>Login to your account</H4>
         </LoginHeading>
         <LoginDiv>
+          <IEMessage />
           <LoginForm onSubmit={onFormSubmit}>
             <InputDiv>
               <Input

@@ -25,6 +25,7 @@ import {
   Logo,
   AnotherLink,
 } from './SignUp.style';
+import IEMessage from '../../common/IEMessage';
 
 const { Option, OptGroup } = Select;
 
@@ -218,6 +219,8 @@ class SignUp extends Component {
           <H4>Create a new account</H4>
         </LoginHeading>
         <Wrapper className="sign-up">
+          <IEMessage />
+
           <ContentWrapper>
             <p style={{ color: 'red', textAlign: 'center' }}>
               <strong>Important Notice:</strong> Only Connect 5 staff members
