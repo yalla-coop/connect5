@@ -13,8 +13,9 @@ const AccessResultsTab = ({ email, onInputChange, error }) => {
     <div>
       <LoginHeading>
         <Content>
-          To access your surveys, please enter your email. the used email must
-          be added at least in one of Connect5 sessions
+          To access relevant surveys, please enter your email below. Please note
+          that your email address must be registered for the respective Connect5
+          training session before you can log in.
         </Content>
       </LoginHeading>
       <InputDiv>
