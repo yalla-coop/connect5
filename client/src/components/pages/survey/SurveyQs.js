@@ -307,6 +307,7 @@ const renderQuestionInputType = (
           {/* Load "Other" div */}
           {answers[questionId] &&
           answers[questionId].answer &&
+          questionText !== 'Gender' &&
           answers[questionId].answer.includes('Other') ? (
             <TextField
               unanswered={

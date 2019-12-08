@@ -46,7 +46,7 @@ const getParticipantsDemogrphics = () =>
         gender: [
           {
             $match: {
-              gender: { $in: ['male', 'female'] },
+              gender: { $in: ['male', 'female', 'other'] },
             },
           },
           {

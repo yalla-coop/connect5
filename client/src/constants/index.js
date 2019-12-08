@@ -150,7 +150,7 @@ export const ages = [
   'Over 64',
 ];
 
-export const genders = ['Male', 'Female'];
+export const genders = ['Male', 'Female', 'Other'];
 
 export const ethnics = [
   'English/Welsh/Scottish/Northern Irish/British',
