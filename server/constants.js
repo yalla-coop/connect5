@@ -80,6 +80,7 @@ Object.entries(surveysTypes).forEach(([sessionType, surveysArray]) => {
   surveysArray.forEach(survey => {
     surveysSessionsPairs[survey] = sessionType;
   });
+  surveysSessionsPairs['pre-course'] = '1';
 });
 
 /**
