@@ -136,55 +136,16 @@ class HumburgerMenu extends Component {
                     <MenuIcon className="fas fa-home" />
                     Home
                   </MenuItem>
-                  <MenuItem
-                    as="div"
-                    onClick={() => this.handleSubClick('results')}
-                    block
-                  >
-                    {listOpen && activeSub === 'results' ? (
-                      <MenuIcon className="fas fa-angle-down" />
-                    ) : (
-                      <MenuIcon className="fas fa-angle-right" />
-                    )}
-                    Results
-                    {listOpen && activeSub === 'results' && (
-                      <>
-                        <MenuItem to={MY_RESULTS_URL} block sub>
-                          <MenuIcon className="fas fa-poll-h" />
-                          Your Results
-                        </MenuItem>
-                        <MenuItem to={ALL_RESULTS_URL} block sub>
-                          <MenuIcon className="fas fa-poll-h" />
-                          All Results
-                        </MenuItem>
-                      </>
-                    )}
+                  <MenuItem to={ALL_RESULTS_URL}>
+                    <MenuIcon className="fas fa-poll-h" />
+                    All Results
                   </MenuItem>
 
-                  <MenuItem
-                    as="div"
-                    onClick={() => this.handleSubClick('sessions')}
-                    block
-                  >
-                    {listOpen && activeSub === 'sessions' ? (
-                      <MenuIcon className="fas fa-angle-down" />
-                    ) : (
-                      <MenuIcon className="fas fa-angle-right" />
-                    )}
-                    Sessions
-                    {listOpen && activeSub === 'sessions' && (
-                      <>
-                        <MenuItem to={MY_SESSIONS_URL} block sub>
-                          <MenuIcon className="far fa-calendar-alt" />
-                          Your Sessions
-                        </MenuItem>
-                        <MenuItem to={ALL_SESSIONS_URL} block sub>
-                          <MenuIcon className="far fa-calendar-alt" />
-                          All Sessions
-                        </MenuItem>
-                      </>
-                    )}
+                  <MenuItem to={ALL_SESSIONS_URL}>
+                    <MenuIcon className="far fa-calendar-alt" />
+                    All Sessions
                   </MenuItem>
+
                   <MenuItem to={TRAINERS_URL}>
                     <MenuIcon className="fas fa-users" />
                     Trainers & Local Leads
