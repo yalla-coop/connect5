@@ -40,7 +40,7 @@
     "@hapi/joi": "^15.0.3",
     "bcryptjs": "^2.4.3",
     "boom": "^7.3.0",
-    "codecov": "^3.1.0",
+    "codecov": "^3.7.1",
     "concurrently": "^4.0.1",
     "cookie-parser": "~1.4.3",
     "dotenv": "^8.0.0",
