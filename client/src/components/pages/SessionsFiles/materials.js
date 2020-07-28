@@ -2,7 +2,7 @@ const materials = {
   1: [
     {
       displayName: 'Participant notes',
-      link: 'http://online.anyflip.com/qage/giec/mobile/index.html',
+      link: 'https://anyflip.com/jlxyc/yxzs/',
     },
     {
       displayName: 'Self help resources',
@@ -18,7 +18,7 @@ const materials = {
   2: [
     {
       displayName: 'Participant notes',
-      link: 'http://online.anyflip.com/qage/xhwd/mobile/index.html',
+      link: 'https://anyflip.com/jlxyc/vsin',
     },
     {
       displayName: 'Suicide prevention resourcres',
@@ -30,7 +30,7 @@ const materials = {
   3: [
     {
       displayName: 'Participant notes',
-      link: 'http://online.anyflip.com/qage/vuzc/mobile/index.html',
+      link: 'https://anyflip.com/jlxyc/pxwi',
     },
     {
       displayName: 'Toolbox',
