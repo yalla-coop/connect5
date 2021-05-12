@@ -53,7 +53,7 @@
     "mongoose": "^5.3.12",
     "morgan": "~1.9.0",
     "node-cron": "^2.0.3",
-    "nodemailer": "^6.2.1",
+    "nodemailer": "^6.4.16",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "react-csv": "^1.1.1",
