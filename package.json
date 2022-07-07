@@ -48,7 +48,7 @@
     "express": "~4.16.0",
     "hummus": "^1.0.104",
     "jsonwebtoken": "^8.4.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.26",
     "mongoose": "^5.3.12",
     "morgan": "~1.9.0",
