@@ -47,7 +47,7 @@
     "env2": "^2.2.2",
     "express": "~4.16.0",
     "hummus": "^1.0.104",
-    "jsonwebtoken": "^8.4.0",
+    "jsonwebtoken": "^9.0.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
     "mongoose": "^5.3.12",
