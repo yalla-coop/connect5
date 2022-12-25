@@ -17,7 +17,7 @@ ewillaims@RSPH.org.uk
 
 
 ## The Team
-![teamc5](https://user-images.githubusercontent.com/23721486/51249138-437da600-198a-11e9-8330-b052824ec543.png)
+![teamc5](https://user-images.githubusercontent.com/34250163/209471166-fc89c239-d3fd-4bf0-b5df-3abbac042963.png)
 [Ramy](https://github.com/ramyalshurafa) | [Marwa](https://github.com/marwajomaa) | [Simon](https://github.com/dupreesi) | [Joe](https://github.com/thejoefriel)
 
 ## Tech Stack
